@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Messages - LAKUM</title>
+    <link rel="icon" href="../../assest/favicon.png" type="image/png">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="admin-style.css">
+    <link rel="stylesheet" href="../assest/popup-notification.css">
+    <style>
+        .messages-container {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 20px;
+            min-height: 600px;
+        }
+
+        .messages-list {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #e0e0e0;
+        }
+
+        .message-item {
+            padding: 15px;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .message-item:hover {
+            background: #f9f9f9;
+        }
+
+        .message-item.active {
+            background: #f0f0f0;
+            border-left: 4px solid #1a1a1a;
+        }
+
+        .message-item__name {
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 5px;
+        }
+
+        .message-item__subject {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .message-item__date {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .message-item__badge {
+            display: inline-block;
+            background: #dc3545;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            margin-top: 5px;
+        }
+
+        .message-detail {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .message-detail__header {
+            border-bottom: 1px solid #f0f0f0;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+        }
+
+        .message-detail__title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .message-detail__meta {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            font-size: 14px;
+        }
+
+        .message-detail__meta-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .message-detail__meta-label {
+            color: #999;
+            font-size: 12px;
+            margin-bottom: 3px;
+        }
+
+        .message-detail__meta-value {
+            color: #1a1a1a;
+            font-weight: 500;
+        }
+
+        .message-detail__content {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 4px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .message-detail__response {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .message-detail__response-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .response-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .response-form textarea {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: Arial, sans-serif;
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .response-form button {
+            padding: 10px 20px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .response-form button:hover {
+            background: #218838;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .status-badge.new {
+            background: #dc3545;
+            color: white;
+        }
+
+        .status-badge.read {
+            background: #ffc107;
+            color: #333;
+        }
+
+        .status-badge.responded {
+            background: #28a745;
+            color: white;
+        }
+
+        @media (max-width: 1024px) {
+            .messages-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="admin-container">
+        <aside class="sidebar">
+            <div class="logo">
+                <h3 style="font-size: 24px; font-weight: 300; letter-spacing: 2px; margin: 0;">LAKUM</h3>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item">
+                    <i class="ri-dashboard-line"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="events.html" class="nav-item">
+                    <i class="ri-calendar-event-line"></i>
+                    <span>Events</span>
+                </a>
+                <a href="blogs.html" class="nav-item">
+                    <i class="ri-article-line"></i>
+                    <span>Blogs</span>
+                </a>
+                <a href="press.html" class="nav-item">
+                    <i class="ri-newspaper-line"></i>
+                    <span>Press</span>
+                </a>
+                <a href="pricing.html" class="nav-item">
+                    <i class="ri-price-tag-3-line"></i>
+                    <span>Pricing</span>
+                </a>
+                <a href="messages.html" class="nav-item active">
+                    <i class="ri-mail-line"></i>
+                    <span>Messages</span>
+                </a>
+                <a href="settings.html" class="nav-item">
+                    <i class="ri-settings-3-line"></i>
+                    <span>Settings</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="login.html" class="logout-btn">
+                    <i class="ri-logout-box-line"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header>
+                <h1><i class="ri-mail-line"></i> Contact Messages</h1>
+            </header>
+
+            <div class="messages-container">
+                <div class="messages-list" id="messagesList">
+                    <div style="padding: 20px; text-align: center; color: #999;">Loading messages...</div>
+                </div>
+
+                <div class="message-detail" id="messageDetail">
+                    <div style="text-align: center; color: #999;">Select a message to view details</div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        let messages = [];
+        let selectedMessageId = null;
+
+        async function loadMessages() {
+            try {
+                const response = await fetch('../api/get-messages.php');
+                const data = await response.json();
+
+                if (data.success) {
+                    messages = data.messages;
+                    displayMessages();
+                    
+                    // Load first message if available
+                    if (messages.length > 0) {
+                        selectMessage(messages[0].id);
+                    }
+                } else {
+                    document.getElementById('messagesList').innerHTML = '<div style="padding: 20px; color: #999;">No messages found</div>';
+                }
+            } catch (error) {
+                console.error('Error loading messages:', error);
+                document.getElementById('messagesList').innerHTML = '<div style="padding: 20px; color: #999;">Error loading messages</div>';
+            }
+        }
+
+        function displayMessages() {
+            const list = document.getElementById('messagesList');
+            list.innerHTML = messages.map(msg => `
+                <div class="message-item ${msg.id === selectedMessageId ? 'active' : ''}" onclick="selectMessage(${msg.id})">
+                    <div class="message-item__name">${msg.name}</div>
+                    <div class="message-item__subject">${msg.subject}</div>
+                    <div class="message-item__date">${new Date(msg.created_at).toLocaleDateString()}</div>
+                    ${msg.status === 'new' ? '<div class="message-item__badge">NEW</div>' : ''}
+                </div>
+            `).join('');
+        }
+
+        function selectMessage(id) {
+            selectedMessageId = id;
+            const message = messages.find(m => m.id === id);
+            
+            if (message) {
+                displayMessageDetail(message);
+                displayMessages();
+                
+                // Mark as read
+                markAsRead(id);
+            }
+        }
+
+        function displayMessageDetail(message) {
+            const detail = document.getElementById('messageDetail');
+            detail.innerHTML = `
+                <div class="message-detail__header">
+                    <div class="message-detail__title">${message.subject}</div>
+                    <div style="margin-top: 10px;">
+                        <span class="status-badge ${message.status}">${message.status.toUpperCase()}</span>
+                    </div>
+                </div>
+
+                <div class="message-detail__meta">
+                    <div class="message-detail__meta-item">
+                        <div class="message-detail__meta-label">From</div>
+                        <div class="message-detail__meta-value">${message.name}</div>
+                    </div>
+                    <div class="message-detail__meta-item">
+                        <div class="message-detail__meta-label">Email</div>
+                        <div class="message-detail__meta-value"><a href="mailto:${message.email}">${message.email}</a></div>
+                    </div>
+                    <div class="message-detail__meta-item">
+                        <div class="message-detail__meta-label">Phone</div>
+                        <div class="message-detail__meta-value">${message.phone || 'Not provided'}</div>
+                    </div>
+                    <div class="message-detail__meta-item">
+                        <div class="message-detail__meta-label">Date</div>
+                        <div class="message-detail__meta-value">${new Date(message.created_at).toLocaleString()}</div>
+                    </div>
+                </div>
+
+                <div class="message-detail__content">${message.message}</div>
+
+                <div class="message-detail__response">
+                    <div class="message-detail__response-title">Send Response</div>
+                    <form class="response-form" onsubmit="sendResponse(event, ${message.id})">
+                        <textarea name="response" placeholder="Type your response here..." required></textarea>
+                        <button type="submit">Send Response</button>
+                    </form>
+                </div>
+            `;
+        }
+
+        async function markAsRead(id) {
+            try {
+                await fetch('../api/mark-message-read.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id: id })
+                });
+                
+                // Update local message status
+                const msg = messages.find(m => m.id === id);
+                if (msg && msg.status === 'new') {
+                    msg.status = 'read';
+                }
+            } catch (error) {
+                console.error('Error marking as read:', error);
+            }
+        }
+
+        async function sendResponse(event, messageId) {
+            event.preventDefault();
+            
+            const response = event.target.querySelector('textarea').value;
+            const btn = event.target.querySelector('button');
+            const originalText = btn.textContent;
+            
+            btn.textContent = 'Sending...';
+            btn.disabled = true;
+
+            try {
+                const result = await fetch('../api/respond-to-message.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id: messageId, response: response })
+                });
+
+                const data = await result.json();
+
+                if (data.success) {
+                    alert('Response sent successfully!');
+                    
+                    // Update message status
+                    const msg = messages.find(m => m.id === messageId);
+                    if (msg) {
+                        msg.status = 'responded';
+                        msg.response_message = response;
+                        selectMessage(messageId);
+                    }
+                    
+                    event.target.reset();
+                } else {
+                    alert('Error: ' + (data.message || 'Failed to send response'));
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error sending response: ' + error.message);
+            } finally {
+                btn.textContent = originalText;
+                btn.disabled = false;
+            }
+        }
+
+        // Load messages on page load
+        window.addEventListener('load', loadMessages);
+    </script>
+
+    <script src="../assest/popup-notification.js?v=5.0.0" defer></script>
+</body>
+
+</html>

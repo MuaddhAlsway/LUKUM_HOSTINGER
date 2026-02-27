@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test JSON Debug</title>
+    <style>
+        body { font-family: monospace; padding: 20px; }
+        pre { background: #f0f0f0; padding: 10px; overflow-x: auto; }
+        button { padding: 10px 20px; font-size: 16px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>Test JSON Debug</h1>
+    <button onclick="testJSON()">Test JSON</button>
+    <hr>
+    <h2>Result:</h2>
+    <pre id="result">Click button to test...</pre>
+
+    <script>
+        async function testJSON() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.textContent = 'Testing...';
+
+            const data = {
+                old_password: 'test123',
+                new_password: 'newpass123',
+                confirm_password: 'newpass123'
+            };
+            
+            const jsonString = JSON.stringify(data);
+            console.log('Sending JSON:', jsonString);
+            
+            try {
+                const response = await fetch('test-simple-json.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: jsonString,
+                    credentials: 'same-origin'
+                });
+
+                const responseText = await response.text();
+                console.log('Response:', responseText);
+                resultDiv.textContent = responseText;
+            } catch (error) {
+                resultDiv.textContent = 'Error: ' + error.message + '\n\n' + error.stack;
+            }
+        }
+    </script>
+</body>
+</html>

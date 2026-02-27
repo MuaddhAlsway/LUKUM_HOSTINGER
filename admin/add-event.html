@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Event - LAKUM</title>
+    <link rel="icon" href="../../assest/favicon.png" type="image/png">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="admin-style.css">
+    <link rel="stylesheet" href="event-form-style.css">
+    <link rel="stylesheet" href="../assest/popup-notification.css">
+    <style>
+        #coverImg {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="admin-container">
+        <aside class="sidebar">
+            <!-- Logo -->
+            <div class="logo">
+                <h3 style="font-size: 24px; font-weight: 300; letter-spacing: 2px; margin: 0;">LAKUM</h3>
+            </div>
+
+            <!-- Language Toggle -->
+            <div class="sidebar-lang-toggle">
+                <a href="?lang=ar" class="sidebar-lang-btn">
+            <i class="ri-global-line"></i>
+            <span>العربية</span>
+        </a>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item ">
+            <i class="ri-dashboard-line"></i>
+            <span>Dashboard</span>
+        </a>
+
+                <a href="events.html" class="nav-item active">
+            <i class="ri-calendar-event-line"></i>
+            <span>Events</span>
+        </a>
+
+                <a href="blogs.html" class="nav-item ">
+            <i class="ri-article-line"></i>
+            <span>Blogs</span>
+        </a>
+
+                <a href="press.html" class="nav-item ">
+            <i class="ri-newspaper-line"></i>
+            <span>Press</span>
+        </a>
+
+                <a href="pricing.html" class="nav-item ">
+            <i class="ri-price-tag-3-line"></i>
+            <span>Pricing</span>
+        </a>
+
+                <a href="legal-pages.html" class="nav-item ">
+            <i class="ri-file-text-line"></i>
+            <span>Legal Pages</span>
+        </a>
+
+                <a href="settings.html" class="nav-item ">
+            <i class="ri-settings-3-line"></i>
+            <span>Settings</span>
+        </a>
+            </nav>
+
+            <!-- Logout Button -->
+            <div class="sidebar-footer">
+                <a href="login.html" class="logout-btn">
+            <i class="ri-logout-box-line"></i>
+            <span>Logout</span>
+        </a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <!-- Floating View Website Button -->
+            <a href="../../index.html" target="_blank" class="admin-floating-btn" title="View Website">
+    <i class="ri-external-link-line"></i>
+</a>
+
+            <header>
+                <h1><i class="ri-add-circle-line"></i> Add New Event</h1>
+                <a href="events.html" class="btn-secondary"><i class="ri-arrow-left-line"></i> Back</a>
+            </header>
+
+            <div class="modern-form-container">
+                <form enctype="multipart/form-data" id="eventForm">
+
+                    <!-- Cover Image Section -->
+                    <div class="cover-upload-section">
+                        <div class="cover-preview" id="coverPreview">
+                            <div class="cover-placeholder">
+                                <i class="ri-image-add-line"></i>
+                                <p>Click to upload cover image</p>
+                                <span>Recommended: 1200x800px</span>
+                            </div>
+                            <img id="coverImg" style="display: none;">
+                            <button type="button" class="remove-cover" id="removeCover" style="display: none;">
+                                <i class="ri-close-line"></i>
+                            </button>
+                        </div>
+                        <input type="file" id="cover_image" name="cover_image" accept="image/*" style="display: none;">
+                    </div>
+
+                    <!-- Event Details -->
+                    <div class="form-section">
+                        <h3><i class="ri-information-line"></i> Event Details</h3>
+
+                        <!-- English Section -->
+                        <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; margin-bottom: 30px; border-left: 4px solid #000;">
+                            <h4 style="margin: 0 0 16px 0; font-size: 1rem; font-weight: 600;">English</h4>
+                            
+                            <div class="form-group">
+                                <label for="title_en">Event Title (EN) *</label>
+                                <input type="text" id="title_en" name="title_en" placeholder="Enter event title in English" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="description_en">Description (EN)</label>
+                                <textarea id="description_en" name="description_en" rows="5" placeholder="Describe your event in English..."></textarea>
+                                <div class="char-count"><span id="charCount_en">0</span> characters</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="location_en">Location (EN)</label>
+                                <select id="location_select_en" name="location_select_en" onchange="handleLocationChange(this, 'en')">
+                                    <option value="">Select location...</option>
+                                    <option value="Hall 1">Hall 1</option>
+                                    <option value="Hall 2">Hall 2</option>
+                                    <option value="Café">Café</option>
+                                    <option value="Meeting Room">Meeting Room</option>
+                                    <option value="other">Other (Custom)</option>
+                                </select>
+                                <input type="text" id="location_en" name="location_en" placeholder="Enter custom location" style="display: none; margin-top: 10px;">
+                            </div>
+                        </div>
+
+                        <!-- Arabic Section -->
+                        <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; margin-bottom: 30px; border-left: 4px solid #999;">
+                            <h4 style="margin: 0 0 16px 0; font-size: 1rem; font-weight: 600;">العربية</h4>
+                            
+                            <div class="form-group">
+                                <label for="title_ar">Event Title (AR)</label>
+                                <input type="text" id="title_ar" name="title_ar" placeholder="أدخل عنوان الحدث بالعربية" dir="rtl">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="description_ar">Description (AR)</label>
+                                <textarea id="description_ar" name="description_ar" rows="5" placeholder="صف حدثك بالعربية..." dir="rtl"></textarea>
+                                <div class="char-count"><span id="charCount_ar">0</span> characters</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="location_ar">Location (AR)</label>
+                                <select id="location_select_ar" name="location_select_ar" onchange="handleLocationChange(this, 'ar')">
+                                    <option value="">اختر الموقع...</option>
+                                    <option value="Hall 1">Hall 1</option>
+                                    <option value="Hall 2">Hall 2</option>
+                                    <option value="Café">Café</option>
+                                    <option value="Meeting Room">Meeting Room</option>
+                                    <option value="other">أخرى (مخصص)</option>
+                                </select>
+                                <input type="text" id="location_ar" name="location_ar" placeholder="أدخل موقع مخصص" style="display: none; margin-top: 10px;" dir="rtl">
+                            </div>
+                        </div>
+
+                        <script>
+                            function handleLocationChange(select, lang) {
+                                const customInput = document.getElementById('location_' + lang);
+                                if (select.value === 'other') {
+                                    customInput.style.display = 'block';
+                                    customInput.required = true;
+                                    customInput.value = '';
+                                } else {
+                                    customInput.style.display = 'none';
+                                    customInput.required = false;
+                                    customInput.value = select.value;
+                                }
+                                
+                                // Auto-sync Arabic location with English location if both are the same value
+                                if (lang === 'en') {
+                                    const selectAr = document.getElementById('location_select_ar');
+                                    if (selectAr && select.value !== 'other') {
+                                        // Set Arabic location to same value as English
+                                        selectAr.value = select.value;
+                                        handleLocationChange(selectAr, 'ar');
+                                    }
+                                }
+                            }
+                            // Set initial values
+                            document.addEventListener('DOMContentLoaded', function() {
+                                const selectEn = document.getElementById('location_select_en');
+                                const selectAr = document.getElementById('location_select_ar');
+                                if (selectEn) handleLocationChange(selectEn, 'en');
+                                if (selectAr) handleLocationChange(selectAr, 'ar');
+                            });
+                        </script>
+                    </div>
+
+                    <!-- Date & Time Section -->
+                    <div class="form-section">
+                        <h3><i class="ri-calendar-line"></i> Date & Time</h3>
+
+                        <!-- Event Duration Type Radio Buttons -->
+                        <div class="form-group" style="margin-bottom: 30px;">
+                            <label style="display: block; margin-bottom: 12px; font-weight: 500;">
+                                Event Duration                            </label>
+                            <div style="display: flex; gap: 24px;">
+                                <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                    <input type="radio" name="event_duration_type" value="same_day" id="sameDayRadio" checked style="width: 18px; height: 18px; cursor: pointer;">
+                                    <span style="font-weight: 400;">Same Day Event</span>
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                    <input type="radio" name="event_duration_type" value="multi_day" id="multiDayRadio" style="width: 18px; height: 18px; cursor: pointer;">
+                                    <span style="font-weight: 400;">Multi-Day Event</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Start Date Section -->
+                        <div style="background: #f6f6eb; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                            <h4 style="margin: 0 0 16px 0; font-size: 1.1rem; font-weight: 500;">
+                                <i class="ri-play-circle-line"></i> Start Date </h4>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="event_date">Date *</label>
+                                    <input type="date" id="event_date" name="event_date" required>
+                                    <small>You can select past dates to show historical events</small>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="event_time">Start Time</label>
+                                    <input type="time" id="event_time" name="event_time">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="event_end_time">End Time</label>
+                                    <input type="time" id="event_end_time" name="event_end_time">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- End Date Section (Hidden by default, shown for multi-day events) -->
+                        <div id="endDateSection" style="background: #edecdf; padding: 20px; border-radius: 8px; margin-bottom: 20px; display: none;">
+                            <h4 style="margin: 0 0 16px 0; font-size: 1.1rem; font-weight: 500;">
+                                <i class="ri-stop-circle-line"></i> End Date </h4>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="end_date">Date</label>
+                                    <input type="date" id="end_date" name="end_date">
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="end_date_start_time">Start Time</label>
+                                    <input type="time" id="end_date_start_time" name="end_date_start_time">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="end_time">End Time</label>
+                                    <input type="time" id="end_time" name="end_time">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="date-validation-msg" id="dateValidation"></div>
+                    </div>
+
+                    <script>
+                        // Toggle End Date Section based on radio button selection
+                        document.addEventListener('DOMContentLoaded', function() {
+                            const sameDayRadio = document.getElementById('sameDayRadio');
+                            const multiDayRadio = document.getElementById('multiDayRadio');
+                            const endDateSection = document.getElementById('endDateSection');
+                            const endDateInput = document.getElementById('end_date');
+                            const endDateStartTime = document.getElementById('end_date_start_time');
+                            const endTime = document.getElementById('end_time');
+
+                            function toggleEndDateSection() {
+                                if (multiDayRadio.checked) {
+                                    endDateSection.style.display = 'block';
+                                } else {
+                                    endDateSection.style.display = 'none';
+                                    // Clear end date fields when hiding
+                                    endDateInput.value = '';
+                                    endDateStartTime.value = '';
+                                    endTime.value = '';
+                                }
+                            }
+
+                            sameDayRadio.addEventListener('change', toggleEndDateSection);
+                            multiDayRadio.addEventListener('change', toggleEndDateSection);
+
+                            // Initial state
+                            toggleEndDateSection();
+
+                            // Handle form submission
+                            console.log('Attaching form submission handler...');
+                            const eventForm = document.getElementById('eventForm');
+                            console.log('eventForm element:', eventForm);
+                            
+                            if (eventForm) {
+                                eventForm.addEventListener('submit', async (e) => {
+                                    e.preventDefault();
+
+                                    console.log('=== ADD EVENT FORM SUBMISSION STARTED ===');
+                                    console.log('window.galleryFiles at submission time:', window.galleryFiles);
+                                    console.log('window.galleryFiles length:', window.galleryFiles ? window.galleryFiles.length : 'undefined');
+                                
+                                // Store in localStorage for debugging
+                                localStorage.setItem('lastFormSubmission', JSON.stringify({
+                                    timestamp: new Date().toISOString(),
+                                    galleryFilesLength: window.galleryFiles ? window.galleryFiles.length : 0,
+                                    galleryFilesNames: window.galleryFiles ? window.galleryFiles.map(f => f.name) : []
+                                }));
+
+                                const submitBtn = document.getElementById('submitBtn');
+                                const originalBtnText = submitBtn.innerHTML;
+                                
+                                // Show loading state
+                                submitBtn.disabled = true;
+                                submitBtn.innerHTML = '<i class="ri-loader-4-line" style="animation: spin 1s linear infinite;"></i> Creating...';
+
+                                try {
+                                    let coverImagePath = 'assest/img-4.png'; // default
+                                    const fileInput = document.getElementById('cover_image');
+                                    
+                                    // Handle image upload
+                                    if (fileInput.files && fileInput.files[0]) {
+                                        console.log('File selected for upload:', fileInput.files[0].name);
+                                        const file = fileInput.files[0];
+                                        
+                                        // Validate file size
+                                        if (file.size > getMaxImageSizeMB() * 1024 * 1024) {
+                                            throw new Error('Image size exceeds ' + getMaxImageSizeMB() + 'MB limit');
+                                        }
+                                        
+                                        // Validate file type
+                                        if (!isAllowedImageType(file.type)) {
+                                            throw new Error('Invalid image type. Allowed: JPG, PNG, GIF, WebP');
+                                        }
+                                        
+                                        const formData = new FormData();
+                                        formData.append('file', file);
+                                        
+                                        try {
+                                            console.log('Uploading image...');
+                                            const uploadResponse = await fetch(getApiUrl('upload_cover_image.php'), {
+                                                method: 'POST',
+                                                body: formData
+                                            });
+                                            
+                                            const uploadResult = await uploadResponse.json();
+                                            console.log('Upload response:', uploadResult);
+                                            
+                                            if (uploadResult.success) {
+                                                coverImagePath = uploadResult.path;
+                                                console.log('Image uploaded successfully:', coverImagePath);
+                                            } else {
+                                                throw new Error(uploadResult.message || 'Image upload failed');
+                                            }
+                                        } catch (error) {
+                                            console.error('Image upload error:', error);
+                                            throw new Error('Error uploading image: ' + error.message);
+                                        }
+                                    } else {
+                                        console.log('No image selected - using default');
+                                    }
+
+                                    // Get form values - English (required)
+                                    const title_en = document.getElementById('title_en').value.trim();
+                                    const description_en = document.getElementById('description_en').value.trim();
+                                    const location_en = document.getElementById('location_en').value.trim();
+                                    
+                                    // Get form values - Arabic (optional)
+                                    const title_ar = document.getElementById('title_ar').value.trim();
+                                    const description_ar = document.getElementById('description_ar').value.trim();
+                                    const location_ar = document.getElementById('location_ar').value.trim();
+                                    
+                                    // DEBUG: Log what we're reading
+                                    console.log('=== FORM VALUES BEFORE SUBMISSION ===');
+                                    console.log('title_ar:', title_ar);
+                                    console.log('description_ar:', description_ar);
+                                    console.log('location_ar:', location_ar);
+                                    console.log('location_ar field value:', document.getElementById('location_ar').value);
+                                    console.log('location_ar field display:', document.getElementById('location_ar').style.display);
+                                    console.log('location_select_ar value:', document.getElementById('location_select_ar').value);
+                                    
+                                    // Get base fields
+                                    const event_date = document.getElementById('event_date').value;
+                                    const event_time = document.getElementById('event_time').value || '10:00';
+                                    const event_end_time = document.getElementById('event_end_time').value || '18:00';
+                                    const end_date = document.getElementById('end_date').value || null;
+                                    const video_url = document.getElementById('video_url').value.trim() || '';
+
+                                    // Validate required fields
+                                    if (!title_en) {
+                                        throw new Error('Event title (English) is required');
+                                    }
+                                    if (!event_date) {
+                                        throw new Error('Event date is required');
+                                    }
+                                    if (!location_en) {
+                                        throw new Error('Location (English) is required');
+                                    }
+
+                                    // Validate dates
+                                    if (event_time && event_end_time) {
+                                        if (event_time >= event_end_time) {
+                                            throw new Error('End time must be after start time');
+                                        }
+                                    }
+
+                                    if (end_date && event_date >= end_date) {
+                                        throw new Error('End date must be after start date');
+                                    }
+
+                                    // Build event object with bilingual data
+                                    const newEvent = {
+                                        // English translations
+                                        title_en: title_en,
+                                        description_en: description_en,
+                                        location_en: location_en,
+                                        
+                                        // Arabic translations (optional)
+                                        // IMPORTANT: Send empty strings, not null, so they get saved to database
+                                        title_ar: title_ar,
+                                        description_ar: description_ar,
+                                        location_ar: location_ar,
+                                        
+                                        // Base fields
+                                        event_date: event_date,
+                                        event_time: event_time + ':00',
+                                        event_end_time: event_end_time + ':00',
+                                        end_date: end_date,
+                                        video_url: video_url,
+                                        category: 'exhibition',
+                                        cover_image: coverImagePath
+                                    };
+
+                                    console.log('=== EVENT DATA BEING SENT TO API ===');
+                                    console.log(JSON.stringify(newEvent, null, 2));
+
+                                    // Send to database API
+                                    const response = await fetch(getApiUrl('add_event_simple.php'), {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        },
+                                        body: JSON.stringify(newEvent)
+                                    });
+
+                                    const result = await response.json();
+                                    console.log('Add response:', result);
+                                    
+                                    if (result.success) {
+                                        const eventId = result.event_id;
+                                        console.log('Event created with ID:', eventId);
+                                        
+                                    // Upload gallery images if any
+                                        // Use global galleryFiles from event-form.js
+                                        console.log('=== GALLERY UPLOAD CHECK ===');
+                                        console.log('window.galleryFiles exists:', !!window.galleryFiles);
+                                        console.log('window.galleryFiles length:', window.galleryFiles ? window.galleryFiles.length : 'N/A');
+                                        
+                                        // Store in localStorage
+                                        localStorage.setItem('galleryUploadCheck', JSON.stringify({
+                                            timestamp: new Date().toISOString(),
+                                            exists: !!window.galleryFiles,
+                                            length: window.galleryFiles ? window.galleryFiles.length : 0
+                                        }));
+                                        
+                                        let galleryUploadComplete = false;
+                                        
+                                        if (window.galleryFiles && window.galleryFiles.length > 0) {
+                                            console.log('Uploading gallery images:', window.galleryFiles.length);
+                                            
+                                            const formData = new FormData();
+                                            formData.append('event_id', eventId);
+                                            
+                                            // Add all files to FormData
+                                            for (let i = 0; i < window.galleryFiles.length; i++) {
+                                                console.log('Adding file to FormData:', window.galleryFiles[i].name);
+                                                formData.append('images[]', window.galleryFiles[i]);
+                                            }
+                                            
+                                            // Debug: Log FormData contents
+                                            console.log('FormData contents:');
+                                            for (let pair of formData.entries()) {
+                                                console.log(pair[0], ':', pair[1].name || pair[1]);
+                                            }
+                                            
+                                            console.log('FormData prepared, calling upload API...');
+                                            
+                                            try {
+                                                const galleryResponse = await fetch(getApiUrl('upload_event_gallery.php'), {
+                                                    method: 'POST',
+                                                    body: formData
+                                                });
+                                                
+                                                console.log('Upload API response status:', galleryResponse.status);
+                                                
+                                                const galleryResult = await galleryResponse.json();
+                                                console.log('Gallery upload response:', galleryResult);
+                                                
+                                                // Store in localStorage
+                                                localStorage.setItem('lastGalleryUpload', JSON.stringify({
+                                                    timestamp: new Date().toISOString(),
+                                                    status: galleryResponse.status,
+                                                    success: galleryResult.success,
+                                                    message: galleryResult.message
+                                                }));
+                                                
+                                                if (galleryResult.success) {
+                                                    console.log('Gallery images uploaded successfully');
+                                                    showPopup('Event created with gallery images!', 'success');
+                                                } else {
+                                                    console.warn('Gallery upload failed:', galleryResult.message);
+                                                    showPopup('Event created but gallery upload failed', 'warning');
+                                                }
+                                                galleryUploadComplete = true;
+                                            } catch (error) {
+                                                console.error('Gallery upload error:', error);
+                                                showPopup('Event created but gallery upload error', 'warning');
+                                                galleryUploadComplete = true;
+                                            }
+                                        } else {
+                                            console.log('No gallery images to upload');
+                                            showPopup('Event created successfully!', 'success');
+                                            galleryUploadComplete = true;
+                                        }
+                                        
+                                        // Wait for gallery upload to complete, then redirect
+                                        const checkInterval = setInterval(() => {
+                                            if (galleryUploadComplete) {
+                                                clearInterval(checkInterval);
+                                                setTimeout(() => {
+                                                    window.location.href = 'events.html';
+                                                }, 500);
+                                            }
+                                        }, 100);
+                                        
+                                        // Fallback: redirect after 5 seconds max
+                                        setTimeout(() => {
+                                            window.location.href = 'events.html';
+                                        }, 5000);
+                                    } else {
+                                        throw new Error(result.message || 'Failed to create event');
+                                    }
+                                } catch (error) {
+                                    console.error('Error:', error);
+                                    showPopup('Error: ' + error.message, 'error');
+                                    
+                                    // Reset button
+                                    submitBtn.disabled = false;
+                                    submitBtn.innerHTML = originalBtnText;
+                                }
+                            });
+                            } else {
+                                console.error('❌ eventForm element NOT found!');
+                            }
+                        });
+                    </script>
+
+                    <!-- Video Section -->
+                    <div class="form-section">
+                        <h3><i class="ri-video-line"></i> Event Video (Optional)</h3>
+
+                        <div class="form-group">
+                            <label for="video_url">Video URL</label>
+                            <input type="url" id="video_url" name="video_url" placeholder="https://www.youtube.com/watch?v=5.0.0 or https://vimeo.com/...">
+                            <small>Paste a YouTube or Vimeo video URL. The video will be embedded on the event page.</small>
+                        </div>
+                    </div>
+
+                    <!-- Gallery Images Section -->
+                    <div class="form-section">
+                        <h3><i class="ri-gallery-line"></i> Gallery Images</h3>
+
+                        <div class="gallery-upload-area" id="galleryUploadArea">
+                            <i class="ri-image-add-line"></i>
+                            <p>Click or drag images here</p>
+                            <span>You can upload multiple images</span>
+                        </div>
+                        <input type="file" id="event_images" name="event_images[]" accept="image/*" multiple style="display: none;">
+
+                        <div class="gallery-preview" id="galleryPreview"></div>
+                    </div>
+
+                    <!-- Form Actions -->
+                    <div class="form-actions-modern">
+                        <button type="submit" class="btn-primary-modern" id="submitBtn">
+                            <i class="ri-check-line"></i> Create                        </button>
+                        <a href="events.html" class="btn-secondary-modern">
+                            <i class="ri-close-line"></i> Cancel                        </a>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="form-reset.js"></script>
+    <script src="event-form.js"></script>
+    <script src="../assest/popup-notification.js?v=5.0.0" defer></script>
+</body>
+
+</html>

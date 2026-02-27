@@ -1,0 +1,1655 @@
+/* ========================================
+   LAKUM ARTSPACE - SPACES PAGE STYLES
+   Perfect, Stunning, Minimalistic Design
+   ======================================== */
+
+/* ===== CONTAINER ===== */
+
+.lakum-container {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 clamp(20px, 5vw, 60px);
+}
+
+/* ===== HERO SECTION ===== */
+
+.lakum-spaces-hero {
+    position: relative;
+    width: 100%;
+    height: 85vh;
+    min-height: 600px;
+    background-image: url('assest/img-3.JPG');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.lakum-spaces-hero__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient( to bottom, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.5) 100%);
+    z-index: 1;
+}
+
+.lakum-spaces-hero__content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: #ffffff;
+    max-width: 1000px;
+    padding: 0 clamp(20px, 3vw, 32px);
+}
+
+.lakum-spaces-hero__title {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin: 0 0 clamp(32px, 4vw, 48px) 0;
+    color: #ffffff;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    text-align: center !important;
+    /* Force center alignment */
+    white-space: nowrap;
+    overflow: visible;
+}
+
+/* Allow title to wrap on smaller screens */
+
+@media (max-width: 1024px) {
+    .lakum-spaces-hero__title {
+        white-space: normal;
+    }
+}
+
+.lakum-spaces-hero__title span {
+    font-weight: 500;
+}
+
+.lakum-spaces-hero__tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: clamp(16px, 2vw, 24px);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.lakum-spaces-hero__tag {
+    font-size: clamp(1rem, 1.5vw, 1.25rem);
+    font-weight: 400;
+    color: #ffffff;
+    padding: clamp(8px, 1.5vw, 12px) clamp(20px, 3vw, 32px);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: var(--radius-sm);
+    transition: all 0.3s ease;
+}
+
+.lakum-spaces-hero__tag:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+/* ===== VENUE INTRODUCTION ===== */
+
+.lakum-spaces-intro {
+    padding: clamp(40px, 5vw, 64px) 0;
+    background: #f6f6eb;
+}
+
+.lakum-spaces-intro__title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    color: #1a1a1a;
+    margin: 0 0 clamp(48px, 6vw, 80px) 0;
+    line-height: 1.2;
+    text-align: center !important;
+    /* Force center alignment */
+}
+
+.lakum-spaces-intro__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(48px, 8vw, 96px);
+    align-items: center;
+}
+
+.lakum-spaces-intro__text {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(20px, 3vw, 32px);
+}
+
+.lakum-spaces-intro__text p {
+    font-size: clamp(1rem, 1.5vw, 1.1rem);
+    font-weight: 300;
+    line-height: 1.8;
+    color: #525252;
+    margin: 0;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+.lakum-spaces-intro__image {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 550px;
+}
+
+.lakum-spaces-intro__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: var(--radius-sm);
+}
+
+/* ===== FLOOR MAP SECTION ===== */
+
+.lakum-spaces-floor {
+    padding: clamp(40px, 5vw, 64px) 0;
+    background: #ffffff;
+}
+
+.lakum-spaces-floor__title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    color: #1a1a1a;
+    text-align: center;
+    margin: 0 0 clamp(48px, 6vw, 80px) 0;
+    line-height: 1.2;
+}
+
+.lakum-spaces-floor__grid {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(48px, 6vw, 80px);
+}
+
+.lakum-spaces-floor__row {
+    width: 100%;
+}
+
+.lakum-spaces-floor__row-title {
+    font-size: clamp(1.5rem, 2.5vw, 2rem);
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #1a1a1a;
+    text-align: center;
+    margin: 0 0 clamp(24px, 3vw, 32px) 0;
+}
+
+.lakum-spaces-floor__images {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(24px, 3vw, 32px);
+}
+
+.lakum-spaces-floor__image {
+    width: 100%;
+}
+
+.lakum-spaces-floor__image img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-sm);
+    display: block;
+}
+
+/* ===== GALLERY SLIDER ===== */
+
+.lakum-spaces-gallery {
+    padding: clamp(40px, 5vw, 64px) 0;
+    background: #f6f6eb;
+    overflow: hidden;
+}
+
+.lakum-spaces-gallery__slider {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.lakum-spaces-gallery__track {
+    display: flex;
+    gap: clamp(24px, 3vw, 32px);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: grab;
+}
+
+.lakum-spaces-gallery__track:active {
+    cursor: grabbing;
+}
+
+.lakum-spaces-gallery__slide {
+    flex-shrink: 0;
+    width: clamp(300px, 30vw, 450px);
+    height: clamp(350px, 35vw, 500px);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+}
+
+.lakum-spaces-gallery__slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.lakum-spaces-gallery__slide:hover img {
+    transform: scale(1.05);
+}
+
+.lakum-spaces-gallery__nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: clamp(40px, 5vw, 56px);
+    height: clamp(40px, 5vw, 56px);
+    background: rgba(255, 255, 255, 0.95);
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(20px, 3vw, 28px);
+    color: #1a1a1a;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.lakum-spaces-gallery__nav:hover {
+    background: #ffffff;
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.lakum-spaces-gallery__nav--prev {
+    left: clamp(10px, 2vw, 20px);
+}
+
+.lakum-spaces-gallery__nav--next {
+    right: clamp(10px, 2vw, 20px);
+}
+
+/* ===== PRICING SECTION ===== */
+
+.lakum-spaces-pricing {
+    padding: clamp(40px, 5vw, 64px) 0;
+    background: #ffffff;
+}
+
+.lakum-spaces-pricing__title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    color: #1a1a1a;
+    text-align: center;
+    margin: 0 0 clamp(64px, 8vw, 96px) 0;
+    line-height: 1.2;
+}
+
+.lakum-spaces-pricing__grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: clamp(32px, 4vw, 48px);
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Pricing Card - Expandable */
+
+.lakum-pricing-card {
+    background: #f6f6eb;
+    border-radius: var(--radius-sm);
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    flex: 0 1 calc(33.333% - clamp(22px, 3vw, 32px));
+    min-width: 300px;
+    max-width: 400px;
+    overflow: hidden;
+}
+
+.lakum-pricing-card--expandable {
+    padding: 0;
+}
+
+.lakum-pricing-card--expandable .lakum-pricing-card__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: clamp(24px, 3vw, 32px);
+    margin: 0;
+    border-bottom: none;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    user-select: none;
+    background: #f6f6eb;
+    z-index: 10;
+    position: relative;
+}
+
+.lakum-pricing-card--expandable .lakum-pricing-card__header:hover {
+    background: rgba(0, 0, 0, 0.02);
+}
+
+.lakum-pricing-card__header-content {
+    text-align: left;
+    flex: 1;
+}
+
+.lakum-pricing-card__toggle {
+    width: 40px;
+    height: 40px;
+    background: #1a1a1a;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-size: 20px;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    margin-left: 16px;
+}
+
+.lakum-pricing-card.expanded .lakum-pricing-card__toggle {
+    background: #525252;
+    transform: rotate(180deg);
+}
+
+.lakum-pricing-card__name {
+    font-size: clamp(1.25rem, 2vw, 1.5rem);
+    font-weight: 400;
+    color: #1a1a1a;
+    margin: 0 0 clamp(8px, 1vw, 12px) 0;
+    line-height: 1.3;
+}
+
+.lakum-pricing-card__price {
+    display: flex;
+    align-items: baseline;
+    gap: clamp(6px, 1vw, 10px);
+    flex-wrap: wrap;
+}
+
+.lakum-pricing-card__price--multi {
+    flex-direction: column;
+    gap: 4px;
+    font-size: clamp(0.95rem, 1.3vw, 1.05rem);
+    color: #525252;
+    font-weight: 300;
+}
+
+.lakum-pricing-card__price--multi strong {
+    font-weight: 500;
+    color: #1a1a1a;
+}
+
+.lakum-pricing-card__amount {
+    font-size: clamp(2rem, 3vw, 2.5rem);
+    font-weight: 300;
+    color: #1a1a1a;
+    line-height: 1;
+    letter-spacing: -0.02em;
+}
+
+.lakum-pricing-card__currency {
+    font-size: clamp(0.9rem, 1.3vw, 1rem);
+    font-weight: 400;
+    color: #525252;
+}
+
+.lakum-pricing-card__vat {
+    display: block;
+    font-size: clamp(0.8rem, 1vw, 0.85rem);
+    font-weight: 300;
+    color: #8a8a8a;
+    margin-top: 6px;
+}
+
+/* Expanded Content */
+
+.lakum-pricing-card__expanded {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), padding 0.4s ease;
+    padding: 0 clamp(24px, 3vw, 32px);
+    background: #ffffff;
+}
+
+.lakum-pricing-card.expanded .lakum-pricing-card__expanded {
+    max-height: 800px;
+    padding: clamp(24px, 3vw, 32px);
+    border-top: 1px solid rgba(209, 209, 209, 0.3);
+}
+
+.lakum-pricing-card__expanded-title {
+    font-size: clamp(1.1rem, 1.5vw, 1.2rem);
+    font-weight: 500;
+    color: #1a1a1a;
+    margin: 0 0 16px 0;
+}
+
+.lakum-pricing-card__service {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.lakum-pricing-card__service-icon {
+    font-size: 18px;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.lakum-pricing-card__service strong {
+    display: block;
+    font-size: clamp(0.95rem, 1.3vw, 1rem);
+    font-weight: 500;
+    color: #1a1a1a;
+    margin-bottom: 6px;
+}
+
+.lakum-pricing-card__service p {
+    font-size: clamp(0.9rem, 1.2vw, 0.95rem);
+    font-weight: 300;
+    line-height: 1.7;
+    color: #525252;
+    margin: 0;
+    text-align: justify;
+}
+
+.lakum-pricing-card__intro {
+    font-size: clamp(0.95rem, 1.3vw, 1rem);
+    font-weight: 400;
+    color: #1a1a1a;
+    margin: 0 0 16px 0;
+}
+
+.lakum-pricing-card__list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px 0;
+}
+
+.lakum-pricing-card__list li {
+    font-size: clamp(0.9rem, 1.2vw, 0.95rem);
+    font-weight: 300;
+    line-height: 1.6;
+    color: #525252;
+    padding: 8px 0 8px 24px;
+    position: relative;
+}
+
+.lakum-pricing-card__list li::before {
+    content: '•';
+    position: absolute;
+    left: 8px;
+    color: #1a1a1a;
+}
+
+.lakum-pricing-card__note {
+    background: #f6f6eb;
+    padding: 16px;
+    border-radius: var(--radius-sm);
+    margin-bottom: 20px;
+}
+
+.lakum-pricing-card__note strong {
+    display: block;
+    font-size: clamp(0.9rem, 1.2vw, 0.95rem);
+    font-weight: 500;
+    color: #1a1a1a;
+    margin-bottom: 8px;
+}
+
+.lakum-pricing-card__note p {
+    font-size: clamp(0.85rem, 1.1vw, 0.9rem);
+    font-weight: 300;
+    line-height: 1.6;
+    color: #525252;
+    margin: 0;
+}
+
+.lakum-pricing-card__features-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 24px 0;
+}
+
+.lakum-pricing-card__features-list li {
+    font-size: clamp(0.9rem, 1.2vw, 0.95rem);
+    font-weight: 300;
+    line-height: 1.7;
+    color: #525252;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(209, 209, 209, 0.2);
+}
+
+.lakum-pricing-card__features-list li:last-child {
+    border-bottom: none;
+}
+
+.lakum-pricing-card__features-list li strong {
+    font-weight: 500;
+    color: #1a1a1a;
+}
+
+.lakum-pricing-card__expanded p {
+    font-size: clamp(0.9rem, 1.2vw, 0.95rem);
+    font-weight: 300;
+    line-height: 1.7;
+    color: #525252;
+    margin: 0 0 16px 0;
+    text-align: justify;
+}
+
+.lakum-pricing-card__expanded .lakum-btn {
+    margin-top: 8px;
+}
+
+/* Legacy non-expandable card styles */
+
+.lakum-pricing-card:not(.lakum-pricing-card--expandable) {
+    padding: clamp(32px, 4vw, 48px);
+}
+
+.lakum-pricing-card:not(.lakum-pricing-card--expandable):hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+}
+
+.lakum-pricing-card:not(.lakum-pricing-card--expandable) .lakum-pricing-card__header {
+    text-align: center;
+    margin-bottom: clamp(24px, 3vw, 32px);
+    padding-bottom: clamp(24px, 3vw, 32px);
+    border-bottom: 1px solid rgba(209, 209, 209, 0.3);
+}
+
+.lakum-pricing-card__features {
+    list-style: none;
+    margin: 0 0 clamp(32px, 4vw, 48px) 0;
+    padding: 0;
+    flex: 1;
+}
+
+.lakum-pricing-card__features li {
+    font-size: clamp(0.95rem, 1.5vw, 1.05rem);
+    font-weight: 300;
+    line-height: 1.6;
+    color: #525252;
+    padding: clamp(10px, 1.5vw, 14px) 0;
+    border-bottom: 1px solid rgba(209, 209, 209, 0.2);
+}
+
+.lakum-pricing-card__features li:last-child {
+    border-bottom: none;
+}
+
+/* ===== CONTACT FORM ===== */
+
+.lakum-spaces-form {
+    padding: clamp(40px, 5vw, 64px) 0;
+    background: #f6f6eb;
+}
+
+.lakum-spaces-form__title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    color: #1a1a1a;
+    text-align: center;
+    margin: 0 0 clamp(16px, 2vw, 24px) 0;
+    line-height: 1.2;
+}
+
+.lakum-spaces-form__subtitle {
+    font-size: clamp(1rem, 1.5vw, 1.1rem);
+    font-weight: 300;
+    color: #525252;
+    text-align: center;
+    margin: 0 0 clamp(48px, 6vw, 64px) 0;
+    line-height: 1.6;
+}
+
+.lakum-form {
+    max-width: 900px;
+    margin: 0 auto;
+    background: #ffffff;
+    padding: clamp(40px, 5vw, 64px);
+    border-radius: var(--radius-sm);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+.lakum-form__row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(20px, 3vw, 32px);
+    margin-bottom: clamp(20px, 3vw, 32px);
+}
+
+.lakum-form__group {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(8px, 1.5vw, 12px);
+}
+
+.lakum-form__label {
+    font-size: clamp(0.95rem, 1.5vw, 1.05rem);
+    font-weight: 400;
+    color: #1a1a1a;
+}
+
+.lakum-form__input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.lakum-form__icon {
+    position: absolute;
+    left: clamp(14px, 2vw, 18px);
+    font-size: clamp(18px, 2vw, 20px);
+    color: #8a8a8a;
+    pointer-events: none;
+}
+
+.lakum-form__input,
+.lakum-form__textarea {
+    width: 100%;
+    padding: clamp(14px, 2vw, 16px) clamp(14px, 2vw, 16px) clamp(14px, 2vw, 16px) clamp(44px, 5vw, 52px);
+    font-family: 'Atyp Kido TRIAL', sans-serif;
+    font-size: clamp(0.95rem, 1.5vw, 1.05rem);
+    font-weight: 300;
+    color: #1a1a1a;
+    background: #f6f6eb;
+    border: 1px solid rgba(209, 209, 209, 0.3);
+    border-radius: var(--radius-sm);
+    transition: all 0.3s ease;
+}
+
+.lakum-form__textarea {
+    padding-left: clamp(14px, 2vw, 18px);
+    resize: vertical;
+    min-height: 140px;
+}
+
+.lakum-form__input:focus,
+.lakum-form__textarea:focus {
+    outline: none;
+    border-color: #1a1a1a;
+    background: #ffffff;
+}
+
+.lakum-form__input::placeholder,
+.lakum-form__textarea::placeholder {
+    color: #8a8a8a;
+}
+
+/* ===== BUTTONS ===== */
+
+.lakum-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(14px, 2vw, 18px) clamp(36px, 5vw, 48px);
+    font-family: 'Atyp Kido TRIAL', sans-serif;
+    font-size: clamp(0.95rem, 1.5vw, 1.05rem);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    text-transform: capitalize;
+    border-radius: var(--radius-sm);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    border: none;
+}
+
+.lakum-btn--primary {
+    background: #1a1a1a;
+    color: #ffffff;
+    border: 2px solid #1a1a1a;
+}
+
+.lakum-btn--primary:hover {
+    background: #2d2d2d;
+    border-color: #2d2d2d;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.lakum-btn--large {
+    width: 100%;
+    padding: clamp(16px, 2.5vw, 20px) clamp(40px, 5vw, 56px);
+    font-size: clamp(1rem, 1.5vw, 1.1rem);
+    margin-top: clamp(16px, 2vw, 24px);
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+
+/* Tablet */
+
+@media (max-width: 1024px) {
+    .lakum-spaces-hero {
+        height: 70vh;
+        min-height: 500px;
+    }
+    .lakum-spaces-intro__grid,
+    .lakum-spaces-floor__grid {
+        grid-template-columns: 1fr;
+        gap: clamp(20px, 3vw, 32px);
+    }
+    .lakum-spaces-intro__image {
+        min-height: 450px;
+    }
+    .lakum-spaces-gallery__slide {
+        width: clamp(280px, 35vw, 400px);
+        height: clamp(320px, 40vw, 450px);
+    }
+    .lakum-pricing-card {
+        flex: 0 1 calc(50% - clamp(16px, 2.5vw, 32px));
+        min-width: 280px;
+    }
+    .lakum-form__row {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Mobile */
+
+@media (max-width: 768px) {
+    .lakum-spaces-hero {
+        height: 60vh;
+        min-height: 450px;
+    }
+    .lakum-spaces-hero__tags {
+        gap: clamp(12px, 2vw, 16px);
+    }
+    .lakum-spaces-intro__image {
+        min-height: 400px;
+    }
+    .lakum-spaces-gallery__slide {
+        width: clamp(250px, 40vw, 350px);
+        height: clamp(300px, 45vw, 400px);
+    }
+    .lakum-pricing-card {
+        flex: 1 1 100%;
+        max-width: 500px;
+    }
+}
+
+/* Small Mobile */
+
+@media (max-width: 480px) {
+    .lakum-spaces-hero {
+        height: 55vh;
+        min-height: 400px;
+    }
+    .lakum-spaces-hero__tags {
+        gap: 10px;
+    }
+    .lakum-spaces-intro__image {
+        min-height: 350px;
+    }
+    .lakum-spaces-gallery__slide {
+        width: 85vw;
+        height: 350px;
+    }
+    .lakum-form {
+        padding: clamp(24px, 4vw, 32px);
+    }
+}
+
+/* ===== PRICING CARD WRAPPER ===== */
+
+.pricing-card-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 0 1 calc(33.333% - 32px);
+    min-width: 300px;
+    max-width: 400px;
+    align-self: flex-start;
+}
+
+/* ===== PRICING ACCORDION (using native details/summary) ===== */
+
+.pricing-accordion {
+    background: #f6f6eb;
+    border-radius: 2px 2px 0 0;
+    overflow: hidden;
+    flex: 1 1 auto;
+}
+
+.pricing-accordion__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 28px;
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+    transition: background 0.3s ease;
+}
+
+.pricing-accordion__header::-webkit-details-marker {
+    display: none;
+}
+
+.pricing-accordion__header:hover {
+    background: rgba(0, 0, 0, 0.03);
+}
+
+.pricing-accordion__info {
+    flex: 1;
+}
+
+.pricing-accordion__name {
+    font-size: 1.35rem;
+    font-weight: 400;
+    color: #1a1a1a;
+    margin: 0 0 10px 0;
+    line-height: 1.3;
+}
+
+.pricing-accordion__price {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.pricing-accordion__price--multi {
+    flex-direction: column;
+    gap: 4px;
+    font-size: 0.95rem;
+    color: #525252;
+    font-weight: 300;
+}
+
+.pricing-accordion__price--multi strong {
+    font-weight: 500;
+    color: #1a1a1a;
+}
+
+.pricing-accordion__amount {
+    font-size: 2.2rem;
+    font-weight: 300;
+    color: #1a1a1a;
+    line-height: 1;
+    letter-spacing: -0.02em;
+}
+
+.pricing-accordion__currency {
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: #525252;
+}
+
+.pricing-accordion__vat {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 300;
+    color: #8a8a8a;
+    margin-top: 6px;
+}
+
+.pricing-accordion__icon {
+    width: 36px;
+    height: 36px;
+    background: #1a1a1a;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-left: 16px;
+    position: relative;
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.pricing-accordion__icon::before,
+.pricing-accordion__icon::after {
+    content: '';
+    position: absolute;
+    background: #ffffff;
+    transition: transform 0.3s ease;
+}
+
+.pricing-accordion__icon::before {
+    width: 14px;
+    height: 2px;
+}
+
+.pricing-accordion__icon::after {
+    width: 2px;
+    height: 14px;
+}
+
+.pricing-accordion[open] .pricing-accordion__icon {
+    background: #525252;
+}
+
+.pricing-accordion[open] .pricing-accordion__icon::after {
+    transform: rotate(90deg);
+    opacity: 0;
+}
+
+.pricing-accordion__content {
+    padding: 0 28px 28px 28px;
+    background: #f6f6eb;
+    border-top: 1px solid rgba(209, 209, 209, 0.3);
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.pricing-accordion__content h4 {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #1a1a1a;
+    margin: 20px 0 16px 0;
+}
+
+.pricing-accordion__service {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 18px;
+    padding-top: 18px;
+}
+
+.pricing-accordion__service:first-child {
+    padding-top: 20px;
+}
+
+.pricing-accordion__service span {
+    font-size: 16px;
+    flex-shrink: 0;
+}
+
+.pricing-accordion__service strong {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #1a1a1a;
+    margin-bottom: 6px;
+}
+
+.pricing-accordion__service p {
+    font-size: 0.9rem;
+    font-weight: 300;
+    line-height: 1.7;
+    color: #525252;
+    margin: 0;
+    text-align: justify;
+}
+
+.pricing-accordion__content p {
+    font-size: 0.9rem;
+    font-weight: 300;
+    line-height: 1.7;
+    color: #525252;
+    margin: 16px 0;
+    text-align: justify;
+}
+
+.pricing-accordion__intro {
+    font-weight: 400 !important;
+    color: #1a1a1a !important;
+    margin-top: 20px !important;
+}
+
+.pricing-accordion__list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px 0;
+}
+
+.pricing-accordion__list li {
+    font-size: 0.9rem;
+    font-weight: 300;
+    line-height: 1.6;
+    color: #525252;
+    padding: 8px 0 8px 20px;
+    position: relative;
+}
+
+.pricing-accordion__list li::before {
+    content: '•';
+    position: absolute;
+    left: 6px;
+    color: #1a1a1a;
+}
+
+.pricing-accordion__note {
+    background: #f6f6eb;
+    padding: 16px;
+    border-radius: 2px;
+    margin: 16px 0;
+}
+
+.pricing-accordion__note strong {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #1a1a1a;
+    margin-bottom: 8px;
+}
+
+.pricing-accordion__note p {
+    font-size: 0.85rem;
+    margin: 0 !important;
+}
+
+.pricing-accordion__features {
+    list-style: none;
+    padding: 0;
+    margin: 16px 0 24px 0;
+}
+
+.pricing-accordion__features li {
+    font-size: 0.9rem;
+    font-weight: 300;
+    line-height: 1.7;
+    color: #525252;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(209, 209, 209, 0.2);
+}
+
+.pricing-accordion__features li:last-child {
+    border-bottom: none;
+}
+
+.pricing-accordion__features li strong {
+    font-weight: 500;
+    color: #1a1a1a;
+}
+
+.pricing-accordion__content .lakum-btn {
+    margin-top: 8px;
+}
+
+/* Responsive */
+
+@media (max-width: 1024px) {
+    .pricing-card-wrapper {
+        flex: 0 1 calc(50% - 24px);
+        min-width: 280px;
+    }
+}
+
+@media (max-width: 768px) {
+    .pricing-card-wrapper {
+        flex: 1 1 100%;
+        max-width: 500px;
+    }
+}
+
+/* ===== BOOK YOUR SPACE SECTION ===== */
+
+.lakum-spaces-booking {
+    padding: clamp(40px, 5vw, 60px) 0;
+    background: #1a1a1a;
+    text-align: center;
+}
+
+.lakum-spaces-booking__content {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.lakum-spaces-booking__title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+    margin: 0 0 clamp(16px, 2vw, 24px) 0;
+    line-height: 1.2;
+}
+
+.lakum-spaces-booking__text {
+    font-size: clamp(1rem, 1.5vw, 1.15rem);
+    font-weight: 300;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0 0 clamp(32px, 4vw, 48px) 0;
+}
+
+.lakum-spaces-booking .lakum-btn--primary {
+    background: #ffffff;
+    color: #1a1a1a;
+    border-color: #ffffff;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.lakum-spaces-booking .lakum-btn--primary:hover {
+    background: #f6f6eb;
+    border-color: #f6f6eb;
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+}
+
+.lakum-spaces-booking .lakum-btn--primary i {
+    font-size: 18px;
+}
+
+/* ===== INTRO SECTION (without image) ===== */
+
+.lakum-spaces-intro__content {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.lakum-spaces-intro__content p {
+    font-size: clamp(1rem, 1.5vw, 1.1rem);
+    font-weight: 300;
+    line-height: 1.8;
+    color: #525252;
+    margin: 0 0 clamp(20px, 3vw, 32px) 0;
+    text-align: left;
+    letter-spacing: 0.3px;
+}
+
+.lakum-spaces-intro__content p:last-child {
+    margin-bottom: 0;
+}
+
+/* ===== FACILITIES SECTION ===== */
+
+.lakum-spaces-facilities {
+    padding: clamp(40px, 5vw, 64px) 0;
+    background: #f6f6eb;
+}
+
+.lakum-spaces-facilities__title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    color: #1a1a1a;
+    text-align: center;
+    margin: 0 0 clamp(48px, 6vw, 64px) 0;
+    line-height: 1.2;
+}
+
+.lakum-spaces-facilities__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(24px, 3vw, 32px);
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.lakum-facility-card {
+    background: #ffffff;
+    border-radius: 2px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.lakum-facility-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+}
+
+.lakum-facility-card__image {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+}
+
+.lakum-facility-card__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.lakum-facility-card:hover .lakum-facility-card__image img {
+    transform: scale(1.05);
+}
+
+.lakum-facility-card__name {
+    font-size: clamp(1rem, 1.5vw, 1.15rem);
+    font-weight: 400;
+    color: #1a1a1a;
+    text-align: center;
+    padding: clamp(16px, 2vw, 20px);
+    margin: 0;
+}
+
+/* ===== FACILITY POPUP ===== */
+
+.lakum-facility-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.lakum-facility-popup.active {
+    display: flex;
+}
+
+.lakum-facility-popup__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+}
+
+.lakum-facility-popup__content {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    width: 90%;
+    text-align: center;
+}
+
+.lakum-facility-popup__close {
+    position: absolute;
+    top: -50px;
+    right: 0;
+    background: rgba(0, 0, 0, 0.85);
+    border: none;
+    color: #ffffff;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 24px;
+    transition: all 0.3s ease;
+    z-index: 10;
+    padding: 0;
+    overflow: visible;
+}
+
+.lakum-facility-popup__close i {
+    display: block;
+    width: 24px;
+    height: 24px;
+    font-size: 24px;
+    line-height: 24px;
+    font-style: normal;
+    color: #ffffff;
+    text-align: center;
+    position: relative;
+}
+
+/* Ensure icon is always visible */
+
+.lakum-facility-popup__close i::before {
+    display: block;
+    width: 100%;
+    height: 100%;
+    line-height: 24px;
+    color: #ffffff;
+}
+
+.lakum-facility-popup__close:hover {
+    background: rgba(0, 0, 0, 1);
+    transform: scale(1.1);
+}
+
+.lakum-facility-popup__title {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 300;
+    color: #ffffff;
+    margin: 0 0 24px 0;
+}
+
+.lakum-facility-popup__slider {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.lakum-facility-popup__image-wrapper {
+    flex: 1;
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.lakum-facility-popup__image-wrapper img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 2px;
+}
+
+.lakum-facility-popup__nav {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: #ffffff;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 24px;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.lakum-facility-popup__nav:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.lakum-facility-popup__counter {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-top: 16px;
+}
+
+/* ===== PAST EXHIBITIONS SECTION ===== */
+
+.lakum-spaces-exhibitions {
+    padding: clamp(40px, 5vw, 64px) 0;
+    background: #ffffff;
+}
+
+.lakum-spaces-exhibitions__title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    color: #1a1a1a;
+    text-align: center;
+    margin: 0 0 clamp(32px, 4vw, 48px) 0;
+    line-height: 1.2;
+}
+
+.lakum-spaces-exhibitions__carousel {
+    width: 100%;
+    overflow: hidden;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+.lakum-spaces-exhibitions__carousel:active {
+    cursor: grabbing;
+}
+
+.lakum-spaces-exhibitions__track {
+    display: flex;
+    gap: clamp(20px, 3vw, 32px);
+    will-change: transform;
+    transition: transform 0.1s linear;
+    padding: 0 clamp(20px, 5vw, 60px);
+}
+
+.lakum-spaces-exhibitions__track.animating {
+    transition: none;
+}
+
+.lakum-spaces-exhibition-slide {
+    flex: 0 0 clamp(300px, 35vw, 450px);
+    flex-shrink: 0;
+    background: #f6f6eb;
+    border-radius: 2px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.lakum-spaces-exhibition-slide:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+}
+
+.lakum-spaces-exhibition-slide__image {
+    width: 100%;
+    height: clamp(250px, 30vw, 350px);
+    overflow: hidden;
+}
+
+.lakum-spaces-exhibition-slide__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+    pointer-events: none;
+}
+
+.lakum-spaces-exhibition-slide:hover .lakum-spaces-exhibition-slide__image img {
+    transform: scale(1.05);
+}
+
+.lakum-spaces-exhibition-slide__content {
+    padding: clamp(16px, 2vw, 24px);
+}
+
+.lakum-spaces-exhibition-slide__title {
+    font-size: clamp(1rem, 1.5vw, 1.15rem);
+    font-weight: 400;
+    color: #1a1a1a;
+    margin: 0 0 8px 0;
+    line-height: 1.4;
+}
+
+.lakum-spaces-exhibition-slide__date {
+    font-size: 0.9rem;
+    color: #8a8a8a;
+    font-weight: 300;
+}
+
+.lakum-spaces-exhibitions__empty {
+    text-align: center;
+    padding: 60px 20px;
+    color: #8a8a8a;
+}
+
+.lakum-spaces-exhibitions__empty i {
+    font-size: 48px;
+    display: block;
+    margin-bottom: 16px;
+}
+
+/* Responsive */
+
+@media (max-width: 1024px) {
+    .lakum-spaces-facilities__grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .lakum-facility-popup__close {
+        top: 10px;
+        right: 10px;
+        width: 48px;
+        height: 48px;
+        font-size: 26px;
+        background: rgba(0, 0, 0, 0.95);
+    }
+    .lakum-facility-popup__close i {
+        width: 26px;
+        height: 26px;
+        font-size: 26px;
+        line-height: 26px;
+    }
+    .lakum-facility-popup__close i::before {
+        line-height: 26px;
+    }
+    .lakum-facility-popup__content {
+        width: 92%;
+    }
+    .lakum-facility-popup__title {
+        margin-top: 70px;
+    }
+}
+
+@media (max-width: 768px) {
+    .lakum-spaces-facilities__grid {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+    }
+    .lakum-facility-popup__close {
+        top: 10px;
+        right: 10px;
+        width: 44px;
+        height: 44px;
+        font-size: 28px;
+        background: rgba(0, 0, 0, 0.95);
+    }
+    .lakum-facility-popup__close i {
+        width: 28px;
+        height: 28px;
+        font-size: 28px;
+        line-height: 28px;
+    }
+    .lakum-facility-popup__close i::before {
+        line-height: 28px;
+    }
+    .lakum-facility-popup__image-wrapper {
+        height: 300px;
+    }
+    .lakum-facility-popup__content {
+        width: 95%;
+    }
+    .lakum-facility-popup__title {
+        margin-top: 60px;
+    }
+}
+
+/* ===== PRICING BUTTON FIXED AT BOTTOM ===== */
+
+.pricing-button-fixed {
+    background: #f6f6eb;
+    padding: 0 28px 28px 28px;
+    border-radius: 0 0 2px 2px;
+    display: none;
+}
+
+.pricing-card-wrapper:has(.pricing-accordion[open]) .pricing-button-fixed {
+    display: block;
+}
+
+/* ===== PRICING ACCORDION TRANSITIONS ===== */
+
+.pricing-accordion {
+    transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+}
+
+/* ===== LAKUM ARTSPACES GALLERY SECTION ===== */
+
+.lakum-gallery-section {
+    padding: clamp(80px, 10vw, 120px) 0;
+    background: #ffffff;
+    overflow: hidden;
+}
+
+.lakum-gallery-section__title {
+    font-size: clamp(2rem, 3.5vw, 2.75rem);
+    font-weight: 300;
+    color: #1a1a1a;
+    text-align: center;
+    margin: 0 0 clamp(40px, 6vw, 80px) 0;
+    letter-spacing: -0.02em;
+}
+
+.lakum-gallery-carousel {
+    width: 100%;
+    overflow: hidden;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+.lakum-gallery-carousel:active {
+    cursor: grabbing;
+}
+
+.lakum-gallery-track {
+    display: flex;
+    gap: clamp(16px, 2vw, 24px);
+    will-change: transform;
+    transition: transform 0.1s linear;
+}
+
+.lakum-gallery-track.animating {
+    transition: none;
+}
+
+.lakum-gallery-item {
+    flex-shrink: 0;
+    width: clamp(280px, 25vw, 400px);
+    height: clamp(350px, 30vw, 500px);
+    border-radius: 4px;
+    overflow: hidden;
+    background: #f6f6eb;
+    position: relative;
+}
+
+.lakum-gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+}
+
+.lakum-gallery-item:hover img {
+    transform: scale(1.05);
+}
+
+/* RTL Support */
+
+[dir="rtl"] .lakum-gallery-track {
+    direction: ltr;
+}
+
+/* Responsive adjustments */
+
+@media (max-width: 768px) {
+    .lakum-gallery-section {
+        padding: clamp(60px, 8vw, 80px) 0;
+    }
+    .lakum-gallery-item {
+        width: clamp(240px, 60vw, 320px);
+        height: clamp(300px, 75vw, 400px);
+    }
+}

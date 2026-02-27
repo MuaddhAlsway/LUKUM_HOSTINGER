@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LAKUM Admin Panel - Index</title>
+    <link rel="icon" href="../../assest/favicon.png" type="image/png">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+    <script>
+        // Check login status and redirect immediately
+        (function() {
+            const isLoggedIn = sessionStorage.getItem('admin_logged_in') === 'true';
+            
+            if (isLoggedIn) {
+                // User is logged in, redirect to dashboard
+                window.location.href = 'dashboard.html';
+            } else {
+                // User is not logged in, redirect to login
+                window.location.href = 'login.html';
+            }
+        })();
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Atyp Kido TRIAL', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f6f6eb;
+            color: #1a1a1a;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        header h1 {
+            font-size: 48px;
+            font-weight: 300;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+
+        header p {
+            font-size: 18px;
+            color: #525252;
+            font-weight: 300;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            border: 1px solid #e5e5d8;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            transform: translateY(-4px);
+        }
+
+        .card-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .card h3 {
+            font-size: 20px;
+            font-weight: 400;
+            margin-bottom: 10px;
+            letter-spacing: -0.3px;
+        }
+
+        .card p {
+            font-size: 14px;
+            color: #8a8a8a;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .card-links {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .card-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 15px;
+            background: #f6f6eb;
+            border: 1px solid #e5e5d8;
+            border-radius: 4px;
+            color: #1a1a1a;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 400;
+            transition: all 0.3s ease;
+        }
+
+        .card-link:hover {
+            background: #1a1a1a;
+            color: white;
+            border-color: #1a1a1a;
+        }
+
+        .section {
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 400;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e5e5d8;
+            letter-spacing: -0.3px;
+        }
+
+        .quick-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .quick-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px;
+            background: white;
+            border: 1px solid #e5e5d8;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #1a1a1a;
+            transition: all 0.3s ease;
+        }
+
+        .quick-link:hover {
+            background: #f6f6eb;
+            border-color: #1a1a1a;
+        }
+
+        .quick-link i {
+            font-size: 20px;
+        }
+
+        .quick-link span {
+            font-size: 13px;
+            font-weight: 400;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 60px;
+        }
+
+        .stat {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #e5e5d8;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: #8a8a8a;
+            font-weight: 400;
+        }
+
+        footer {
+            text-align: center;
+            padding-top: 40px;
+            border-top: 1px solid #e5e5d8;
+            color: #8a8a8a;
+            font-size: 13px;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            background: #1a1a1a;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 400;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: #525252;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 32px;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>LAKUM Admin Panel</h1>
+            <p>Complete Management System</p>
+        </header>
+
+        <!-- Quick Stats -->
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-number">16</div>
+                <div class="stat-label">HTML Pages</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">2</div>
+                <div class="stat-label">CSS Files</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">3</div>
+                <div class="stat-label">JS Files</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">7</div>
+                <div class="stat-label">Sections</div>
+            </div>
+        </div>
+
+        <!-- Main Sections -->
+        <div class="section">
+            <h2 class="section-title"><i class="ri-dashboard-line"></i> Core Pages</h2>
+            <div class="grid">
+                <div class="card">
+                    <div class="card-icon"><i class="ri-login-box-line"></i></div>
+                    <h3>Login</h3>
+                    <p>Admin authentication page with secure login form.</p>
+                    <div class="card-links">
+                        <a href="login.html" class="card-link">
+                            <i class="ri-arrow-right-line"></i> Go to Login
+                        </a>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon"><i class="ri-dashboard-line"></i></div>
+                    <h3>Dashboard</h3>
+                    <p>Main dashboard with statistics and recent items overview.</p>
+                    <div class="card-links">
+                        <a href="dashboard.html" class="card-link">
+                            <i class="ri-arrow-right-line"></i> Go to Dashboard
+                        </a>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon"><i class="ri-settings-3-line"></i></div>
+                    <h3>Settings</h3>
+                    <p>Configure admin settings and website links.</p>
+                    <div class="card-links">
+                        <a href="settings.html" class="card-link">
+                            <i class="ri-arrow-right-line"></i> Go to Settings
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Events Management -->
+        <div class="section">
+            <h2 class="section-title"><i class="ri-calendar-event-line"></i> Events Management</h2>
+            <div class="grid">
+                <div class="card">
+                    <div class="card-icon"><i class="ri-list-check-2"></i></div>
+                    <h3>Events List</h3>
+                    <p>View, search, and manage all events with edit/delete options.</p>
+                    <div class="card-links">
+                        <a href="events.html" class="card-link">
+                            <i class="ri-arrow-right-line"></i> View Events
+                        </a>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon"><i class="ri-add-circle-line"></i></div>
+                    <h3>Add Event</h3>
+                    <p>Create new event with cover image, gallery, and details.</p>
+                    <div class="card-links">
+                        <a href="add-event.html" class="card-link">
+                            <i class="ri-arrow-right-line"></i> Add Event
+                        </a>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon"><i class="ri-edit-line"></i></div>
+                    <h3>Edit Event</h3>
+                    <p>Edit existing event details and information.</p>
+                    <div class="card-links">
+                        <a href="events.html" class="card-link">
+                            <i class="ri-arrow-right-line"></i> Select Event to Edit
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Blogs Management -->
+        <div class="section">
+            <h2 class="section-title"><i class="ri-article-line"></i> Blogs Management</h2>
+            <div class="grid">
+                <div class="card">
+                    <div class="card-icon"><i class="ri-list-check-2"></i></div>
+                    <h3>Blogs List</h3>
+                    <p>View, search, and manage all blog posts.</p>
+                    <div class="card-links">
+                        <a href="blogs.html" class="card-link">
+                            <i class="ri-arrow-right-line"></i> View Blogs
+                        </a>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon"><i class="ri-add-circle-line"></i></div>
+                    <h3>Add Blog</h3>
+                    <p>Create new blog post with rich text editor.</p>
+                    <div class="card-links">
+                        <a href="add-blog.html" class="card-link">
+                            <i class="ri-arrow-right-line"></i> Add Blog
+                        </a>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon"><i class="ri-edit-line"></i></div>
+                    <h3>Edit Blog</h3>
+                    <p>Edit existing blog post content.</p>
+                    <div class="card-links">
+                        <a href="blogs.html" class="card-link">
+                            <i class="ri-arrow-right-line"></i> Select Blog to Edit
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Press Management -->
+        <div class="section">
+            <h2 class="section-title"><i class="ri-newspaper-line"></i> Press Management</h2>
+            <div class="grid">
+                <div class="card">
+                    <div class="card-icon"><i class="ri-list-check-2"></i></div>
+                    <h3>Press List</h3>
+                    <p>View and manage all press releases.</p>
+                    <div class="card-links">
+                        <a href="press.html" class="card-link">
+                            <i class="ri-arrow-right-line"></i> View Press
+                        </a>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon"><i class="ri-add-circle-line"></i></div>
+                    <h3>Add Press</h3>
+                    <p>Create new press release with rich content.</p>
+                    <div class="card-links">
+                        <a href="add-press.html" class="card-link">
+                            <i class="ri-arrow-right-line"></i> Add Press
+                        </a>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon"><i class="ri-edit-line"></i></div>
+                    <h3>Edit Press</h3>
+                    <p>Edit existing press release.</p>
+                    <div class="card-links">
+                        <a href="press.html" class="card-link">
+                            <i class="ri-arrow-right-line"></i> Select Press to Edit
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pricing Management -->
+        <div class="section">
+            <h2 class="section-title"><i class="ri-price-tag-3-line"></i> Pricing Management</h2>
+            <div class="grid">
+                <div class="card">
+                    <div class="card-icon"><i class="ri-list-check-2"></i></div>
+                    <h3>Pricing List</h3>
+                    <p>View and manage all pricing plans.</p>
+                    <div class="card-links">
+                        <a href="pricing.html" class="card-link">
+                            <i class="ri-arrow-right-line"></i> View Pricing
+                        </a>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon"><i class="ri-add-circle-line"></i></div>
+                    <h3>Add Pricing</h3>
+                    <p>Create new pricing plan with details.</p>
+                    <div class="card-links">
+                        <a href="add-pricing.html" class="card-link">
+                            <i class="ri-arrow-right-line"></i> Add Pricing
+                        </a>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon"><i class="ri-edit-line"></i></div>
+                    <h3>Edit Pricing</h3>
+                    <p>Edit existing pricing plan.</p>
+                    <div class="card-links">
+                        <a href="pricing.html" class="card-link">
+                            <i class="ri-arrow-right-line"></i> Select Pricing to Edit
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Legal Pages -->
+        <div class="section">
+            <h2 class="section-title"><i class="ri-file-text-line"></i> Legal Pages</h2>
+            <div class="grid">
+                <div class="card">
+                    <div class="card-icon"><i class="ri-file-list-line"></i></div>
+                    <h3>Legal Pages</h3>
+                    <p>Manage Terms & Conditions and Privacy Policy.</p>
+                    <div class="card-links">
+                        <a href="legal-pages.html" class="card-link">
+                            <i class="ri-arrow-right-line"></i> Edit Legal Pages
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Navigation -->
+        <div class="section">
+            <h2 class="section-title"><i class="ri-links-line"></i> Quick Navigation</h2>
+            <div class="quick-links">
+                <a href="login.html" class="quick-link">
+                    <i class="ri-login-box-line"></i>
+                    <span>Login</span>
+                </a>
+                <a href="dashboard.html" class="quick-link">
+                    <i class="ri-dashboard-line"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="events.html" class="quick-link">
+                    <i class="ri-calendar-event-line"></i>
+                    <span>Events</span>
+                </a>
+                <a href="blogs.html" class="quick-link">
+                    <i class="ri-article-line"></i>
+                    <span>Blogs</span>
+                </a>
+                <a href="press.html" class="quick-link">
+                    <i class="ri-newspaper-line"></i>
+                    <span>Press</span>
+                </a>
+                <a href="pricing.html" class="quick-link">
+                    <i class="ri-price-tag-3-line"></i>
+                    <span>Pricing</span>
+                </a>
+                <a href="legal-pages.html" class="quick-link">
+                    <i class="ri-file-text-line"></i>
+                    <span>Legal</span>
+                </a>
+                <a href="settings.html" class="quick-link">
+                    <i class="ri-settings-3-line"></i>
+                    <span>Settings</span>
+                </a>
+            </div>
+        </div>
+
+        <footer>
+            <p>LAKUM Artspace Admin Panel © 2025 | All Rights Reserved</p>
+        </footer>
+    </div>
+</body>
+</html>
+
+

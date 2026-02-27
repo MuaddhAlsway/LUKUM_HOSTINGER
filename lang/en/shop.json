@@ -1,0 +1,111 @@
+{
+  "page_title": "Shop - LAKUM Artspace",
+  "page_description": "Discover LAKUM Concept Shop. Browse our curated collection of art, merchandise, and cultural products.",
+  
+  "hero_title": "Discover Lakum Concept Shop",
+  "hero_subtitle": "Explore our curated collection of art, merchandise, and cultural products",
+  "hero_button": "Explore Shop",
+  "hero_button_tooltip": "Visit our online shop",
+  
+  "shop_description": "Welcome to LAKUM Concept Shop",
+  "shop_intro": "Discover a carefully curated collection of art, merchandise, and cultural products that celebrate creativity and cultural exchange.",
+  
+  "shop_categories": "Shop Categories",
+  "shop_featured": "Featured Products",
+  "shop_new_arrivals": "New Arrivals",
+  "shop_bestsellers": "Best Sellers",
+  "shop_limited_edition": "Limited Edition",
+  
+  "shop_art_prints": "Art Prints",
+  "shop_merchandise": "Merchandise",
+  "shop_books": "Books",
+  "shop_gifts": "Gifts",
+  "shop_accessories": "Accessories",
+  "shop_home_decor": "Home Decor",
+  
+  "shop_price": "Price",
+  "shop_add_to_cart": "Add to Cart",
+  "shop_view_details": "View Details",
+  "shop_out_of_stock": "Out of Stock",
+  "shop_in_stock": "In Stock",
+  
+  "shop_filter": "Filter",
+  "shop_sort": "Sort By",
+  "shop_sort_newest": "Newest",
+  "shop_sort_price_low": "Price: Low to High",
+  "shop_sort_price_high": "Price: High to Low",
+  "shop_sort_popular": "Most Popular",
+  
+  "shop_search": "Search Products",
+  "shop_search_placeholder": "Search for art, merchandise, or gifts...",
+  "shop_no_results": "No products found",
+  "shop_no_results_message": "Try adjusting your search or filter criteria",
+  
+  "shop_about": "About Our Shop",
+  "shop_about_text": "LAKUM Concept Shop offers a carefully curated selection of art, merchandise, and cultural products that celebrate creativity and cultural exchange. Each item is selected to reflect our commitment to supporting artists and promoting cultural appreciation.",
+  
+  "shop_shipping": "Shipping & Delivery",
+  "shop_shipping_text": "We offer fast and reliable shipping to all locations. Standard delivery takes 3-5 business days.",
+  
+  "shop_returns": "Returns & Exchanges",
+  "shop_returns_text": "We offer a 30-day return policy on all items. If you're not satisfied, we'll make it right.",
+  
+  "shop_support": "Customer Support",
+  "shop_support_text": "Have questions? Our customer support team is here to help. Contact us anytime.",
+  
+  "shop_contact_support": "Contact Support",
+  "shop_faq": "Frequently Asked Questions",
+  
+  "shop_faq_shipping_q": "How long does shipping take?",
+  "shop_faq_shipping_a": "Standard shipping takes 3-5 business days. Express shipping is available for faster delivery.",
+  
+  "shop_faq_returns_q": "What is your return policy?",
+  "shop_faq_returns_a": "We offer a 30-day return policy on all items. Items must be in original condition.",
+  
+  "shop_faq_payment_q": "What payment methods do you accept?",
+  "shop_faq_payment_a": "We accept all major credit cards, debit cards, and digital payment methods.",
+  
+  "shop_faq_tracking_q": "Can I track my order?",
+  "shop_faq_tracking_a": "Yes, you'll receive a tracking number via email once your order ships.",
+  
+  "shop_faq_gift_q": "Do you offer gift wrapping?",
+  "shop_faq_gift_a": "Yes, we offer complimentary gift wrapping for all orders.",
+  
+  "shop_faq_bulk_q": "Do you offer bulk orders?",
+  "shop_faq_bulk_a": "Yes, we offer special pricing for bulk orders. Please contact us for details.",
+  
+  "shop_newsletter": "Subscribe to Our Newsletter",
+  "shop_newsletter_text": "Get updates on new products, special offers, and exclusive deals",
+  "shop_newsletter_placeholder": "Enter your email",
+  "shop_newsletter_subscribe": "Subscribe",
+  
+  "shop_follow_us": "Follow Us",
+  "shop_follow_text": "Stay connected with LAKUM Artspace on social media",
+  
+  "shop_secure": "Secure Shopping",
+  "shop_secure_text": "Your security is our priority. All transactions are encrypted and secure.",
+  
+  "shop_quality": "Quality Guaranteed",
+  "shop_quality_text": "All products are carefully selected and quality-checked before shipping.",
+  
+  "shop_support_24": "24/7 Support",
+  "shop_support_24_text": "Our customer support team is available to help you anytime.",
+  
+  "home": "Home",
+  "about": "About",
+  "spaces": "Spaces",
+  "exhibitions": "Exhibitions",
+  "calendar": "Calendar",
+  "blog": "Blog",
+  "press": "Press",
+  "contact_us": "Contact",
+  "shop": "Shop",
+  
+  "footer_navigate": "Navigate",
+  "footer_explore": "Explore",
+  "footer_connect": "Connect",
+  "footer_tagline": "Where Encounters Shape Culture",
+  "footer_copyright": "© 2025 - 2027 LAKUM Artspace. All rights reserved.",
+  "footer_terms": "Terms & Conditions",
+  "footer_privacy": "Privacy Policy"
+}

@@ -1,0 +1,650 @@
+﻿<?php
+require_once 'lang/loader.php';
+?><!DOCTYPE html>
+<html <?php echo getLanguageAttributes(); ?>>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">Blog - LAKUM Artspace</title>
+    <link rel="icon" href="assest/favicon.png" type="image/png">
+
+    <!-- Inline Critical CSS for Instant LCP -->
+    <style>
+        /* Critical CSS - Inline for instant rendering */
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        html {
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            background: #f6f6eb;
+            color: #1a1a1a;
+            overflow-x: hidden;
+            line-height: 1.6
+        }
+        
+        * {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+        }
+
+        .lakum-hero {
+            position: relative;
+            width: 100%;
+            height: 85vh;
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #1a1a1a;
+            contain: layout style paint
+        }
+
+        .lakum-hero__image-wrapper {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            overflow: hidden
+        }
+
+        .lakum-hero__image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            will-change: transform;
+            transform: translateZ(0)
+        }
+
+        .lakum-hero__overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.65) 100%);
+            z-index: 2
+        }
+
+        .lakum-hero__content {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            color: #fff;
+            max-width: 1400px;
+            width: 90%;
+            padding: 0 20px
+        }
+
+        .lakum-hero__title {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 300;
+            line-height: 1.2;
+            margin: 0 0 20px 0;
+            color: #fff;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3)
+        }
+
+        .lakum-hero__subtitle {
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
+            font-weight: 300;
+            line-height: 1.6;
+            color: #fff;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3)
+        }
+
+        @media(max-width:768px) {
+            .lakum-hero {
+                height: 60vh;
+                min-height: 450px
+            }
+        }
+
+        @media(max-width:480px) {
+            .lakum-hero {
+                height: 50vh;
+                min-height: 400px
+            }
+        }
+    </style>
+
+    <!-- Preload Hero Image (Critical for LCP) -->
+    <link rel="preload" as="image" href="assest/img-4.png" fetchpriority="high">
+
+    <!-- DNS Prefetch for external resources -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+
+    <!-- Preconnect to external domains -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+
+    <!-- Preload critical assets -->
+    <link rel="preload" href="global-styles.css" as="style">
+    <link rel="preload" href="lakum-components.css" as="style">
+
+    <!-- Preload critical fonts -->
+    <link rel="prefetch" href="assest/fonts/GretaArabicAR+LT-Regular.otf" as="font" type="font/otf" crossorigin>
+    <link rel="prefetch" href="assest/fonts/GretaArabicAR+LT-Light.otf" as="font" type="font/otf" crossorigin>
+
+    <!-- Greta Arabic Font - Universal for both Arabic and English -->
+    <!-- Core Styles - Critical CSS loaded synchronously -->
+    <link rel="stylesheet" href="global-styles.css">
+    <link rel="stylesheet" href="lakum-components.css">
+    <link rel="stylesheet" href="Home.css">
+
+    <!-- RTL Styles -->
+    <link rel="stylesheet" href="rtl.css">
+
+    <!-- Fonts -->
+    <link rel="stylesheet" href="fonts/greta-arabic.css">
+
+    <!-- Remixicon Font for Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet"></noscript>
+
+    <!-- Event Detail Styles -->
+    <link rel="stylesheet" href="event-detail.css">
+
+    <!-- Blog Styles -->
+    <link rel="stylesheet" href="blog.css">
+
+    <!-- Blog Page Details Styles -->
+    <link rel="stylesheet" href="blog-page-details.css">
+
+    <!-- Image Optimizer - Critical for performance -->
+    <script src="assest/navbar-mobile-toggle.js?v=5.0.0" defer></script>
+
+    <!-- Scripts - Defer non-critical JavaScript -->
+    <script src="assest/settings-links-loader.js?v=5.0.0" defer></script>
+    <script>
+        // Set current language from PHP
+        window.LAKUM_LANG = '<?php echo getCurrentLanguage(); ?>';
+        window.LAKUM_DIR = window.LAKUM_LANG === 'ar' ? 'rtl' : 'ltr';
+    </script>
+<link rel="alternate" hreflang="en" href="https://lakumartspace.infinityfree.me/blogPageDetails.php?lang=en" />
+<link rel="alternate" hreflang="ar" href="https://lakumartspace.infinityfree.me/blogPageDetails.php?lang=ar" />
+    <script src="assest/static-json-translator.js?v=1.0.0" defer></script></head>
+
+<body>
+    <div class="lakum-page-loader" id="pageLoader">
+        <div class="lakum-page-loader__content">
+            <div class="lakum-page-loader__spinner"></div>
+        </div>
+    </div>
+
+    <header class="lakum-header">
+        <div class="lakum-header__container">
+            <div class="lakum-header__logo">
+                <a href="index.php" class="lakum-logo">
+                    <!-- English: Swapped -->
+                    <img src="assest/logo/right_section.png" alt="LAKUM" class="lakum-logo__left">
+                    <img src="assest/logo/left_section.png" alt="Artspace" class="lakum-logo__right">
+                </a>
+            </div>
+
+            <nav class="lakum-nav">
+                <ul class="lakum-nav__list">
+                    <li class="lakum-nav__item">
+                        <a href="index.php" class="lakum-nav__link "><?php echo t('home', 'Home'); ?></a>
+                    </li>
+                    <li class="lakum-nav__item">
+                        <a href="about.php" class="lakum-nav__link "><?php echo t('about', 'About'); ?></a>
+                    </li>
+                    <li class="lakum-nav__item">
+                        <a href="spaces.php" class="lakum-nav__link "><?php echo t('spaces', 'Spaces'); ?></a>
+                    </li>
+                    <li class="lakum-nav__item">
+                        <a href="exhibitions.php" class="lakum-nav__link "><?php echo t('exhibitions', 'Exhibitions'); ?></a>
+                    </li>
+                    <li class="lakum-nav__item">
+                        <a href="calendar.php" class="lakum-nav__link "><?php echo t('calendar', 'Calendar'); ?></a>
+                    </li>
+                    <li class="lakum-nav__item">
+                        <a href="blog.php" class="lakum-nav__link lakum-nav__link--active"><?php echo t('blog', 'Blog'); ?></a>
+                    </li>
+                    <li class="lakum-nav__item">
+                        <a href="press.php" class="lakum-nav__link "><?php echo t('press', 'Press'); ?></a>
+                    </li>
+                    <li class="lakum-nav__item">
+                        <a href="contact.php" class="lakum-nav__link "><?php echo t('contact_us', 'Contact'); ?></a>
+                    </li>
+                    <li class="lakum-nav__item">
+                        <a href="shop.php" class="lakum-nav__link "><?php echo t('shop', 'Shop'); ?></a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Language Switcher -->
+            <div class="lakum-language-switcher">
+                <a href="<?php echo buildLanguageSwitcherUrl(); ?>" class="lakum-lang-link" title="<?php echo isArabic() ? 'Language: English' : 'Language: العربية'; ?>">
+                <i class="ri-global-line"></i>
+                <span class="lakum-lang-text"><?php echo isArabic() ? 'EN' : 'AR'; ?></span>
+            </a>
+            </div>
+
+            <button class="lakum-header__mobile-toggle" aria-label="Toggle menu">
+            <span class="lakum-header__mobile-icon"></span>
+        </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="event-hero">
+        <div class="event-hero__image-wrapper">
+            <img id="hero-image" src="assest/img-4.png" alt="Blog" class="event-hero__image">
+            <div class="event-hero__overlay"></div>
+        </div>
+        <div class="event-hero__content">
+            <div class="event-container">
+                <h1 class="event-hero__title" id="blog-title">Loading...</h1>
+                <div class="event-hero__meta">
+                    <span class="event-hero__meta-item">
+                        <i class="ri-calendar-line"></i>
+                        <span id="blog-date">Loading...</span>
+                    </span>
+                    <span class="event-hero__meta-item">
+                        <i class="ri-user-line"></i>
+                        <span id="blog-author">Loading...</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Description -->
+    <section class="event-section">
+        <div class="event-container event-container--narrow">
+            <div class="event-description">
+                <h2 class="event-section__title">Article</h2>
+                <div class="event-description__text" id="blog-content">
+                    Loading...
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Blogs -->
+    <section class="event-section">
+        <div class="event-container">
+            <h2 class="event-section__title">Related Articles</h2>
+            <div class="event-related" id="related-blogs">
+                <!-- Related blogs will be loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="lakum-footer">
+        <div class="lakum-footer__container">
+            <div class="lakum-footer__content">
+                <div class="lakum-footer__brand">
+                    <div class="lakum-footer__logo">
+                        <img src="assest/logo/right_section.png" alt="LAKUM" class="lakum-footer__logo-left">
+                        <img src="assest/logo/left_section.png" alt="Artspace" class="lakum-footer__logo-right">
+                    </div>
+                    <p class="lakum-footer__tagline"><?php echo t('tagline', 'Where Encounters Shape Culture'); ?></p>
+                </div>
+                <nav class="lakum-footer__nav">
+                    <h4 class="lakum-footer__nav-title"><?php echo t('navigate', 'Navigate'); ?></h4>
+                    <ul class="lakum-footer__nav-list">
+                        <li><a href="index.php" class="lakum-footer__link"><?php echo t('home', 'Home'); ?></a></li>
+                        <li><a href="about.php" class="lakum-footer__link"><?php echo t('about', 'About'); ?></a></li>
+                        <li><a href="spaces.php" class="lakum-footer__link"><?php echo t('spaces', 'Spaces'); ?></a></li>
+                        <li><a href="exhibitions.php" class="lakum-footer__link"><?php echo t('exhibitions', 'Exhibitions'); ?></a></li>
+                    </ul>
+                </nav>
+                <nav class="lakum-footer__nav">
+                    <h4 class="lakum-footer__nav-title"><?php echo t('explore', 'Explore'); ?></h4>
+                    <ul class="lakum-footer__nav-list">
+                        <li><a href="calendar.php" class="lakum-footer__link"><?php echo t('calendar', 'Calendar'); ?></a></li>
+                        <li><a href="blog.php" class="lakum-footer__link"><?php echo t('blog', 'Blog'); ?></a></li>
+                        <li><a href="press.php" class="lakum-footer__link"><?php echo t('press', 'Press'); ?></a></li>
+                        <li><a href="contact.php" class="lakum-footer__link"><?php echo t('contact_us', 'Contact'); ?></a></li>
+                    </ul>
+                </nav>
+                <div class="lakum-footer__social">
+                    <h4 class="lakum-footer__nav-title"><?php echo t('connect', 'Connect'); ?></h4>
+                    <div class="lakum-footer__social-links">
+                        <a href="https://www.instagram.com/lakumartspace/" target="_blank" class="lakum-footer__social-link" aria-label="Instagram">
+                            <i class="ri-instagram-fill"></i>
+                        </a>
+                        <a href="https://x.com/Lakumartspace" target="_blank" class="lakum-footer__social-link" aria-label="Twitter">
+                            <i class="ri-twitter-x-fill"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="lakum-footer__bottom">
+                <p class="lakum-footer__copyright">© 2025 - 2027 LAKUM Artspace. <?php echo t('all_rights_reserved', 'All rights reserved.'); ?></p>
+                <div class="lakum-footer__legal">
+                    <a href="terms.php" class="lakum-footer__legal-link"><?php echo t('terms', 'Terms & Conditions'); ?></a>
+                    <span class="lakum-footer__legal-divider">|</span>
+                    <a href="privacy.php" class="lakum-footer__legal-link"><?php echo t('privacy', 'Privacy Policy'); ?></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="lakum-contact-fab" id="lakumContactFab">
+        <button class="lakum-contact-fab__trigger" id="fabTrigger" aria-label="Contact options">
+            <i class="ri-mail-line lakum-contact-fab__icon"></i>
+            <i class="ri-close-line lakum-contact-fab__close"></i>
+        </button>
+        <div class="lakum-contact-fab__menu" id="fabMenu">
+            <a href="tel:+966920012083" class="lakum-contact-fab__item" data-tooltip="<?php echo t('call_us', 'Call us'); ?>">
+                <i class="ri-phone-line"></i>
+            </a>
+            <a href="https://wa.me/966920012083" target="_blank" class="lakum-contact-fab__item" data-tooltip="WhatsApp">
+                <i class="ri-whatsapp-line"></i>
+            </a>
+            <a href="mailto:info@lakumartspace.com" class="lakum-contact-fab__item" data-tooltip="<?php echo t('email', 'Email'); ?>">
+                <i class="ri-mail-line"></i>
+            </a>
+        </div>
+    </div>
+
+    <script src="assest/fun-interactions.js?v=5.0.0" defer></script>
+    <script src="mobile-performance-optimizer.js?v=5.0.0" defer></script>
+
+    <script>
+        // Blog Details Page Script
+        const blogId = new URLSearchParams(window.location.search).get('id');
+        const urlLang = new URLSearchParams(window.location.search).get('lang');
+
+        async function loadBlogDetails() {
+            try {
+                if (!blogId) {
+                    console.error('No blog ID provided');
+                    document.getElementById('blog-title').textContent = 'Blog not found';
+                    return;
+                }
+
+                // Fetch blog details from API with language parameter
+                // Priority: URL parameter > window.LAKUM_LANG > localStorage > 'en'
+                const lang = urlLang || window.LAKUM_LANG || localStorage.getItem('lakum_language') || 'en';
+                const response = await fetch(`api/get_blogs_working.php?id=${blogId}&lang=${lang}`);
+                const result = await response.json();
+
+                if (result.success && result.data) {
+                    const blog = result.data;
+
+                    // Update page title
+                    document.title = `${blog.title} - LAKUM Artspace`;
+                    document.getElementById('page-title').textContent = `${blog.title} - LAKUM Artspace`;
+
+                    // Update hero section
+                    document.getElementById('blog-title').textContent = blog.title;
+                    document.getElementById('blog-date').textContent = new Date(blog.created_at).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                    });
+                    document.getElementById('blog-author').textContent = blog.author || 'LAKUM Team';
+
+                    // Update hero image
+                    if (blog.cover_image) {
+                        document.getElementById('hero-image').src = blog.cover_image;
+                    }
+
+                    // Update content
+                    document.getElementById('blog-content').innerHTML = blog.content;
+
+                    // Load gallery images if available
+                    if (blog.gallery && blog.gallery.length > 0) {
+                        loadGallery(blog.gallery);
+                    }
+
+                    // Load related blogs
+                    loadRelatedBlogs(blog.id);
+                } else {
+                    document.getElementById('blog-title').textContent = 'Blog not found';
+                }
+            } catch (error) {
+                console.error('Error loading blog details:', error);
+                document.getElementById('blog-title').textContent = 'Error loading blog';
+            }
+        }
+
+        function loadGallery(images) {
+            const gallery = document.getElementById('blog-gallery');
+            gallery.innerHTML = '';
+
+            images.forEach((image, index) => {
+                const item = document.createElement('div');
+                item.className = 'event-gallery__item';
+                item.innerHTML = `<img src="${image}" alt="Blog gallery image ${index + 1}" loading="lazy">`;
+                gallery.appendChild(item);
+            });
+        }
+
+        async function loadRelatedBlogs(currentBlogId) {
+            try {
+                const lang = urlLang || window.LAKUM_LANG || localStorage.getItem('lakum_language') || 'en';
+                const response = await fetch(`api/get_blogs_working.php?limit=3&lang=${lang}`);
+                const result = await response.json();
+
+                if (result.success && result.data) {
+                    const relatedBlogs = result.data.filter(blog => blog.id !== currentBlogId).slice(0, 3);
+                    const container = document.getElementById('related-blogs');
+                    container.innerHTML = '';
+
+                    relatedBlogs.forEach(blog => {
+                        const card = document.createElement('div');
+                        card.className = 'event-related__item';
+                        card.innerHTML = `
+                            <a href="blogPageDetails.php?id=${blog.id}" class="event-related__link">
+                                <div class="event-related__image">
+                                    <img src="${blog.cover_image}" alt="${blog.title}" loading="lazy">
+                                </div>
+                                <div class="event-related__content">
+                                    <h3 class="event-related__title">${blog.title}</h3>
+                                    <p class="event-related__date">${new Date(blog.created_at).toLocaleDateString()}</p>
+                                </div>
+                            </a>
+                        `;
+                        container.appendChild(card);
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading related blogs:', error);
+            }
+        }
+
+        // Load blog details when page loads
+        document.addEventListener('DOMContentLoaded', loadBlogDetails);
+    </script>
+
+    <script>
+        // Listen for dynamic content loaded event and render blog details based on language
+        document.addEventListener('lakum-content-loaded', (e) => {
+            if (e.detail.contentType === 'blog') {
+                const blogs = e.detail.content;
+                
+                if (!blogs || blogs.length === 0) return;
+                
+                // Get blog ID from URL
+                const urlParams = new URLSearchParams(window.location.search);
+                const blogId = parseInt(urlParams.get('id'));
+                
+                // Find the blog with matching ID
+                const blog = Array.isArray(blogs) ? blogs.find(b => b.id === blogId) : blogs;
+                
+                if (!blog) return;
+                
+                // Update page content
+                const titleEl = document.getElementById('blog-title');
+                const contentEl = document.getElementById('blog-content');
+                const authorEl = document.getElementById('blog-author');
+                const coverEl = document.getElementById('blog-cover');
+                
+                if (titleEl) titleEl.textContent = blog.title;
+                if (contentEl) contentEl.innerHTML = blog.content;
+                if (authorEl) authorEl.textContent = blog.author || 'LAKUM Team';
+                if (coverEl && blog.cover_image) coverEl.src = blog.cover_image;
+            }
+        });
+    </script>
+
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js').catch(err => console.log('SW registration failed:', err));
+        }
+    </script>
+
+    <script>
+        // Translation strings for JavaScript
+        const translations = {
+            nav_home: "<?php echo t('home', 'Home'); ?>",
+            nav_about: "<?php echo t('about', 'About'); ?>",
+            nav_spaces: "<?php echo t('spaces', 'Spaces'); ?>",
+            nav_exhibitions: "<?php echo t('exhibitions', 'Exhibitions'); ?>",
+            nav_calendar: "<?php echo t('calendar', 'Calendar'); ?>",
+            nav_blog: "<?php echo t('blog', 'Blog'); ?>",
+            nav_press: "<?php echo t('press', 'Press'); ?>",
+            nav_contact: "<?php echo t('contact_us', 'Contact'); ?>",
+            nav_shop: "<?php echo t('shop', 'Shop'); ?>",
+            footer_tagline: "<?php echo t('footer_tagline', 'Where Encounters Shape Culture'); ?>",
+            footer_navigate: "<?php echo t('footer_navigate', 'Navigate'); ?>",
+            footer_explore: "<?php echo t('footer_explore', 'Explore'); ?>",
+            footer_connect: "<?php echo t('footer_connect', 'Connect'); ?>",
+            footer_copyright: "<?php echo t('footer_copyright', '© 2026 LAKUM Artspace. All rights reserved.'); ?>",
+            footer_terms: "<?php echo t('footer_terms', 'Terms & Conditions'); ?>",
+            footer_privacy: "<?php echo t('footer_privacy', 'Privacy Policy'); ?>"
+        };
+
+        // Update navbar and footer text when language changes
+        function updateNavbarFooterLanguage() {
+            // Navbar links
+            const navLinks = {
+                'home': translations.nav_home || 'Home',
+                'about': translations.nav_about || 'About',
+                'spaces': translations.nav_spaces || 'Spaces',
+                'exhibitions': translations.nav_exhibitions || 'Exhibitions',
+                'calendar': translations.nav_calendar || 'Calendar',
+                'blog': translations.nav_blog || 'Blog',
+                'press': translations.nav_press || 'Press',
+                'contact_us': translations.nav_contact || 'Contact',
+                'shop': translations.nav_shop || 'Shop'
+            };
+
+            // Update navbar
+            const navItems = document.querySelectorAll('.lakum-nav__link');
+            navItems.forEach(link => {
+                const href = link.getAttribute('href');
+                if (href === 'index.php') link.textContent = navLinks.home;
+                else if (href === 'about.php') link.textContent = navLinks.about;
+                else if (href === 'spaces.php') link.textContent = navLinks.spaces;
+                else if (href === 'exhibitions.php') link.textContent = navLinks.exhibitions;
+                else if (href === 'calendar.php') link.textContent = navLinks.calendar;
+                else if (href === 'blog.php') link.textContent = navLinks.blog;
+                else if (href === 'press.php') link.textContent = navLinks.press;
+                else if (href === 'contact.php') link.textContent = navLinks.contact_us;
+                else if (href === 'shop.php') link.textContent = navLinks.shop;
+            });
+
+            // Update footer tagline
+            const footerTagline = document.querySelector('.lakum-footer__tagline');
+            if (footerTagline) {
+                footerTagline.textContent = translations.footer_tagline || 'Where Encounters Shape Culture';
+            }
+
+            // Update footer navigation titles
+            const footerNavTitles = document.querySelectorAll('.lakum-footer__nav-title');
+            if (footerNavTitles.length >= 3) {
+                footerNavTitles[0].textContent = translations.footer_navigate || 'Navigate';
+                footerNavTitles[1].textContent = translations.footer_explore || 'Explore';
+                footerNavTitles[2].textContent = translations.footer_connect || 'Connect';
+            }
+
+            // Update footer links
+            const footerLinks = document.querySelectorAll('.lakum-footer__link');
+            footerLinks.forEach(link => {
+                const href = link.getAttribute('href');
+                if (href === 'index.php') link.textContent = navLinks.home;
+                else if (href === 'about.php') link.textContent = navLinks.about;
+                else if (href === 'spaces.php') link.textContent = navLinks.spaces;
+                else if (href === 'exhibitions.php') link.textContent = navLinks.exhibitions;
+                else if (href === 'calendar.php') link.textContent = navLinks.calendar;
+                else if (href === 'blog.php') link.textContent = navLinks.blog;
+                else if (href === 'press.php') link.textContent = navLinks.press;
+                else if (href === 'contact.php') link.textContent = navLinks.contact_us;
+            });
+
+            // Update footer bottom
+            const footerCopyright = document.querySelector('.lakum-footer__copyright');
+            if (footerCopyright) {
+                footerCopyright.textContent = translations.footer_copyright || '© 2026 LAKUM Artspace. All rights reserved.';
+            }
+
+            const footerTermsLink = document.querySelector('.lakum-footer__legal-link:first-child');
+            if (footerTermsLink) {
+                footerTermsLink.textContent = translations.footer_terms || 'Terms & Conditions';
+            }
+
+            const footerPrivacyLink = document.querySelector('.lakum-footer__legal-link:last-child');
+            if (footerPrivacyLink) {
+                footerPrivacyLink.textContent = translations.footer_privacy || 'Privacy Policy';
+            }
+        }
+
+        // Listen for language changes
+        document.addEventListener('lakum-language-changed', (e) => {
+            const lang = e.detail?.lang || document.documentElement.lang;
+            // Reload translations for the new language
+            fetch(`api/get-translations.php?lang=${lang}`)
+                .then(r => r.json())
+                .then(data => {
+                    if (data.success && data.translations) {
+                        // Update translations object
+                        Object.assign(translations, data.translations);
+                        // Update navbar and footer
+                        updateNavbarFooterLanguage();
+                    }
+                })
+                .catch(err => console.log('Language update skipped'));
+        });
+
+        // Also listen for storage changes (multi-tab sync)
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'lakum_language' && e.newValue) {
+                const lang = e.newValue;
+                fetch(`api/get-translations.php?lang=${lang}`)
+                    .then(r => r.json())
+                    .then(data => {
+                        if (data.success && data.translations) {
+                            Object.assign(translations, data.translations);
+                            updateNavbarFooterLanguage();
+                        }
+                    })
+                    .catch(err => console.log('Language update skipped'));
+            }
+        });
+
+        // Call on page load
+        updateNavbarFooterLanguage();
+    </script>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+

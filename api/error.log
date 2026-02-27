@@ -1,0 +1,30 @@
+[27-Feb-2026 11:02:18 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'u812122863_neama'@'77.37.35.182' (using password: YES) in /home/u812122863/domains/lakumartspace.com/public_html/config.php:7
+Stack trace:
+#0 /home/u812122863/domains/lakumartspace.com/public_html/config.php(7): mysqli_connect()
+#1 /home/u812122863/domains/lakumartspace.com/public_html/api/update_event_featured.php(23): require_once('/home/u81212286...')
+#2 {main}
+  thrown in /home/u812122863/domains/lakumartspace.com/public_html/config.php on line 7
+[27-Feb-2026 11:04:20 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'u812122863_neama'@'77.37.35.182' (using password: YES) in /home/u812122863/domains/lakumartspace.com/public_html/config.php:7
+Stack trace:
+#0 /home/u812122863/domains/lakumartspace.com/public_html/config.php(7): mysqli_connect()
+#1 /home/u812122863/domains/lakumartspace.com/public_html/api/update_event_featured.php(19): require_once('/home/u81212286...')
+#2 {main}
+  thrown in /home/u812122863/domains/lakumartspace.com/public_html/config.php on line 7
+[27-Feb-2026 11:07:32 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'u812122863_neama'@'77.37.35.182' (using password: YES) in /home/u812122863/domains/lakumartspace.com/public_html/config.php:7
+Stack trace:
+#0 /home/u812122863/domains/lakumartspace.com/public_html/config.php(7): mysqli_connect()
+#1 /home/u812122863/domains/lakumartspace.com/public_html/api/update_event_featured.php(19): require_once('/home/u81212286...')
+#2 {main}
+  thrown in /home/u812122863/domains/lakumartspace.com/public_html/config.php on line 7
+[27-Feb-2026 11:09:49 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'u812122863_neama'@'77.37.35.182' (using password: YES) in /home/u812122863/domains/lakumartspace.com/public_html/config.php:7
+Stack trace:
+#0 /home/u812122863/domains/lakumartspace.com/public_html/config.php(7): mysqli_connect()
+#1 /home/u812122863/domains/lakumartspace.com/public_html/api/update_event_featured.php(19): require_once('/home/u81212286...')
+#2 {main}
+  thrown in /home/u812122863/domains/lakumartspace.com/public_html/config.php on line 7
+[27-Feb-2026 11:09:57 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'u812122863_neama'@'77.37.35.182' (using password: YES) in /home/u812122863/domains/lakumartspace.com/public_html/config.php:7
+Stack trace:
+#0 /home/u812122863/domains/lakumartspace.com/public_html/config.php(7): mysqli_connect()
+#1 /home/u812122863/domains/lakumartspace.com/public_html/api/update_event_featured.php(19): require_once('/home/u81212286...')
+#2 {main}
+  thrown in /home/u812122863/domains/lakumartspace.com/public_html/config.php on line 7

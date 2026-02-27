@@ -1,0 +1,89 @@
+/**
+ * Language Switcher Styles
+ * Supports both LTR and RTL layouts
+ */
+
+.lakum-language-switcher {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.lakum-lang-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px 14px;
+    background: transparent;
+    border: 1px solid rgba(26, 26, 26, 0.2);
+    border-radius: 4px;
+    color: #1a1a1a;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.3px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.lakum-lang-link:hover {
+    background: rgba(26, 26, 26, 0.05);
+    border-color: rgba(26, 26, 26, 0.4);
+    transform: translateY(-1px);
+}
+
+.lakum-lang-link.active {
+    background: #1a1a1a;
+    color: #000;
+    border-color: #1a1a1a;
+}
+
+.lakum-lang-link i {
+    font-size: 16px;
+}
+
+.lakum-lang-text {
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+/* RTL Support */
+[dir="rtl"] .lakum-language-switcher {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .lakum-lang-link {
+    flex-direction: row-reverse;
+}
+
+/* Dark theme support */
+@media (prefers-color-scheme: dark) {
+    .lakum-lang-link {
+        border-color: rgba(255, 255, 255, 0.2);
+        color: #000;
+    }
+
+    .lakum-lang-link:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.4);
+    }
+
+    .lakum-lang-link.active {
+        background: #ffffff;
+        color: #1a1a1a;
+        border-color: #ffffff;
+    }
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .lakum-lang-link {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+
+    .lakum-lang-link i {
+        font-size: 14px;
+    }
+}

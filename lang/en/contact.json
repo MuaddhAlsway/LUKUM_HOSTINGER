@@ -1,0 +1,112 @@
+{
+  "page_title": "Contact Us - LAKUM Artspace",
+  "page_description": "Get in touch with LAKUM Artspace. Contact us for inquiries, bookings, collaborations, and more.",
+  
+  "hero_title": "Get In Touch",
+  "hero_subtitle": "Have a question or want to collaborate? We'd love to hear from you. Reach out and let's create something amazing together.",
+  
+  "contact_info_title": "Contact Information",
+  
+  "contact_visit_title": "Visit Us",
+  "contact_visit_address": "Al Urubah Branch Rd, Umm Al Hamam Al Gharbi",
+  "contact_visit_city": "Riyadh 12328, Saudi Arabia",
+  
+  "contact_call_title": "Call Us",
+  "contact_call_number": "+966 920 012 083",
+  
+  "contact_email_title": "Email Us",
+  "contact_email_address": "info@lakumartspace.com",
+  
+  "contact_hours_title": "Opening Hours",
+  "contact_hours_weekday": "Sunday - Thursday: 10:00 AM - 10:00 PM",
+  "contact_hours_weekend": "Friday - Saturday: 2:00 PM - 11:00 PM",
+  
+  "contact_connect_title": "Connect",
+  "contact_instagram": "Instagram",
+  "contact_twitter": "Twitter",
+  
+  "form_title": "Send Us a Message",
+  "form_name_label": "Full Name",
+  "form_name_placeholder": "John Doe",
+  "form_email_label": "Email Address",
+  "form_email_placeholder": "john@example.com",
+  "form_phone_label": "Phone Number",
+  "form_phone_placeholder": "+966 5XX XXX XXX",
+  "form_subject_label": "Subject",
+  "form_subject_placeholder": "Select a subject",
+  "form_subject_general": "General Inquiry",
+  "form_subject_exhibition": "Exhibition Booking",
+  "form_subject_workshop": "Workshop Information",
+  "form_subject_venue": "Venue Rental",
+  "form_subject_collaboration": "Collaboration",
+  "form_subject_other": "Other",
+  "form_message_label": "Message",
+  "form_message_placeholder": "Tell us more about your inquiry...",
+  "form_required": "Required field",
+  "form_submit": "Send Message",
+  "form_sending": "Sending...",
+  "form_success": "Message sent successfully! We'll get back to you soon.",
+  "form_error": "Error sending message. Please try again.",
+  
+  "map_title": "Find Us",
+  "map_description": "Visit LAKUM Artspace in the heart of Riyadh",
+  
+  "faq_title": "Frequently Asked Questions",
+  "faq_hours_q": "What are your opening hours?",
+  "faq_hours_a": "We're open Sunday - Thursday from 10:00 AM to 10:00 PM, and Friday - Saturday from 2:00 PM to 11:00 PM.",
+  "faq_location_q": "Where is LAKUM Artspace located?",
+  "faq_location_a": "We're located at Al Urubah Branch Rd, Umm Al Hamam Al Gharbi, Riyadh 12328, Saudi Arabia.",
+  "faq_booking_q": "How do I book a venue?",
+  "faq_booking_a": "You can contact us directly via phone, email, or fill out the contact form with your venue rental inquiry.",
+  "faq_exhibition_q": "How can I exhibit my work?",
+  "faq_exhibition_a": "Please reach out to us with details about your work and exhibition concept. We review all proposals and will get back to you.",
+  "faq_workshop_q": "Do you offer workshops?",
+  "faq_workshop_a": "Yes! We offer various workshops and seminars. Check our calendar or contact us for current offerings.",
+  "faq_collaboration_q": "Are you open to collaborations?",
+  "faq_collaboration_a": "Absolutely! We love collaborating with artists, organizations, and creative professionals. Let's talk!",
+  
+  "response_time": "We typically respond within 24-48 hours",
+  "contact_preference": "Preferred contact method",
+  "contact_preference_email": "Email",
+  "contact_preference_phone": "Phone",
+  "contact_preference_whatsapp": "WhatsApp",
+  
+  "social_media": "Follow us on social media",
+  "newsletter_signup": "Subscribe to our newsletter",
+  "newsletter_placeholder": "Enter your email",
+  "newsletter_subscribe": "Subscribe",
+  
+  "directions": "Get Directions",
+  "call_now": "Call Now",
+  "email_now": "Email Now",
+  "whatsapp_now": "WhatsApp Now",
+  
+  "thank_you": "Thank you for reaching out!",
+  "thank_you_message": "We appreciate your interest in LAKUM Artspace. We'll review your message and get back to you as soon as possible.",
+  
+  "error_name": "Please enter your name",
+  "error_email": "Please enter a valid email address",
+  "error_message": "Please enter your message",
+  "error_subject": "Please select a subject",
+  
+  "success_title": "Message Sent!",
+  "success_message": "Thank you for contacting us. We'll be in touch shortly.",
+  
+  "home": "Home",
+  "about": "About",
+  "spaces": "Spaces",
+  "exhibitions": "Exhibitions",
+  "calendar": "Calendar",
+  "blog": "Blog",
+  "press": "Press",
+  "contact_us": "Contact",
+  "shop": "Shop",
+  
+  "footer_navigate": "Navigate",
+  "footer_explore": "Explore",
+  "footer_connect": "Connect",
+  "footer_tagline": "Where Encounters Shape Culture",
+  "footer_copyright": "© 2025 - 2027 LAKUM Artspace. All rights reserved.",
+  "footer_terms": "Terms & Conditions",
+  "footer_privacy": "Privacy Policy"
+}

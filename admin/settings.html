@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - LAKUM</title>
+    <link rel="icon" href="../../assest/favicon.png" type="image/png">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="admin-style.css">
+    <link rel="stylesheet" href="event-form-style.css">
+    <link rel="stylesheet" href="../assest/popup-notification.css">
+</head>
+
+<body>
+    <div class="admin-container">
+        <aside class="sidebar">
+            <div class="logo">
+                <h3 style="font-size: 24px; font-weight: 300; letter-spacing: 2px; margin: 0;">LAKUM</h3>
+            </div>
+
+            <div class="sidebar-lang-toggle">
+                <a href="?lang=ar" class="sidebar-lang-btn">
+                    <i class="ri-global-line"></i>
+                    <span>العربية</span>
+                </a>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item">
+                    <i class="ri-dashboard-line"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="events.html" class="nav-item">
+                    <i class="ri-calendar-event-line"></i>
+                    <span>Events</span>
+                </a>
+                <a href="blogs.html" class="nav-item">
+                    <i class="ri-article-line"></i>
+                    <span>Blogs</span>
+                </a>
+                <a href="press.html" class="nav-item">
+                    <i class="ri-newspaper-line"></i>
+                    <span>Press</span>
+                </a>
+                <a href="pricing.html" class="nav-item">
+                    <i class="ri-price-tag-3-line"></i>
+                    <span>Pricing</span>
+                </a>
+                <a href="legal-pages.html" class="nav-item">
+                    <i class="ri-file-text-line"></i>
+                    <span>Legal Pages</span>
+                </a>
+                <a href="settings.html" class="nav-item active">
+                    <i class="ri-settings-3-line"></i>
+                    <span>Settings</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="login.html" class="logout-btn">
+                    <i class="ri-logout-box-line"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <a href="../../index.html" target="_blank" class="admin-floating-btn" title="View Website">
+                <i class="ri-external-link-line"></i>
+            </a>
+
+            <header>
+                <h1><i class="ri-settings-3-line"></i> Settings</h1>
+            </header>
+
+            <div class="modern-form-container">
+                <form method="POST" id="settingsForm">
+                    <div class="form-section">
+                        <h3><i class="ri-link"></i> Link Settings</h3>
+
+                        <div class="form-group">
+                            <label for="booking_link">Booking Link</label>
+                            <input type="url" id="booking_link" name="booking_link" placeholder="https://forms.google.com/..." required>
+                            <small>Enter the COMPLETE URL including https://</small>
+                        </div>
+
+                        <div style="background: #f6f6eb; padding: 16px; border-radius: 8px; margin-top: 16px;">
+                            <strong style="display: block; margin-bottom: 8px;">Preview:</strong>
+                            <a href="#" target="_blank" id="bookingLinkPreview" style="color: #1a1a1a; word-break: break-all;">
+                                #
+                            </a>
+                        </div>
+
+                        <div class="form-group" style="margin-top: 32px;">
+                            <label for="shop_link">Shop Link</label>
+                            <input type="url" id="shop_link" name="shop_link" placeholder="https://shop.example.com/..." required>
+                            <small>Enter the COMPLETE URL including https://</small>
+                        </div>
+
+                        <div style="background: #f6f6eb; padding: 16px; border-radius: 8px; margin-top: 16px;">
+                            <strong style="display: block; margin-bottom: 8px;">Preview:</strong>
+                            <a href="#" target="_blank" id="shopLinkPreview" style="color: #1a1a1a; word-break: break-all;">
+                                #
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="form-actions-modern">
+                        <button type="submit" class="btn-primary-modern">
+                            <i class="ri-check-line"></i> Save Settings                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Password Reset Section -->
+            <div class="modern-form-container" style="margin-top: 32px;">
+                <form id="changePasswordForm">
+                    <div class="form-section">
+                        <h3><i class="ri-lock-password-line"></i> Change Password</h3>
+
+                        <div class="form-group">
+                            <label for="old_password">Current Password</label>
+                            <input type="password" id="old_password" name="old_password" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="new_password">New Password</label>
+                            <input type="password" id="new_password" name="new_password" required minlength="6">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="confirm_password">Confirm Password</label>
+                            <input type="password" id="confirm_password" name="confirm_password" required minlength="6">
+                        </div>
+                    </div>
+
+                    <div class="form-actions-modern">
+                        <button type="submit" class="btn-primary-modern">
+                            <i class="ri-lock-line"></i> Update Password                        </button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load settings on page load
+            loadSettings();
+
+            // Handle settings form submission
+            const settingsForm = document.getElementById('settingsForm');
+            if (settingsForm) {
+                settingsForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    saveSettings();
+                });
+            }
+
+            // Handle change password form submission
+            const changePasswordForm = document.getElementById('changePasswordForm');
+            if (changePasswordForm) {
+                changePasswordForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    changePassword();
+                });
+            }
+        });
+
+        async function loadSettings() {
+            try {
+                const response = await fetch('../api/get_settings.php');
+                const result = await response.json();
+
+                if (result.success && result.data) {
+                    document.getElementById('booking_link').value = result.data.booking_link || '';
+                    document.getElementById('shop_link').value = result.data.shop_link || '';
+
+                    // Update previews
+                    updateBookingPreview();
+                    updateShopPreview();
+                }
+            } catch (error) {
+                console.error('Error loading settings:', error);
+            }
+        }
+
+        async function saveSettings() {
+            const bookingLink = document.getElementById('booking_link').value.trim();
+            const shopLink = document.getElementById('shop_link').value.trim();
+
+            if (!bookingLink || !shopLink) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            try {
+                const response = await fetch('../api/save_settings.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        booking_link: bookingLink,
+                        shop_link: shopLink
+                    }),
+                    credentials: 'same-origin'
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    alert('Settings saved successfully!');
+                } else {
+                    alert('Error: ' + result.message);
+                }
+            } catch (error) {
+                console.error('Error saving settings:', error);
+                alert('Error saving settings: ' + error.message);
+            }
+        }
+
+        async function changePassword() {
+            const oldPassword = document.getElementById('old_password').value;
+            const newPassword = document.getElementById('new_password').value;
+            const confirmPassword = document.getElementById('confirm_password').value;
+
+            // Validation
+            if (!oldPassword || !newPassword || !confirmPassword) {
+                alert('All fields are required');
+                return;
+            }
+
+            if (newPassword.length < 6) {
+                alert('New password must be at least 6 characters');
+                return;
+            }
+
+            if (newPassword !== confirmPassword) {
+                alert('Passwords do not match');
+                return;
+            }
+
+            if (oldPassword === newPassword) {
+                alert('New password must be different from current password');
+                return;
+            }
+
+            try {
+                const response = await fetch('./change_password.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        old_password: oldPassword,
+                        new_password: newPassword,
+                        confirm_password: confirmPassword
+                    }),
+                    credentials: 'same-origin'
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    alert('Password changed successfully!');
+                    document.getElementById('changePasswordForm').reset();
+                } else {
+                    alert('Error: ' + (data.message || 'Failed to change password'));
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred while changing password');
+            }
+        }
+
+        function updateBookingPreview() {
+            const bookingLinkInput = document.getElementById('booking_link');
+            const bookingLinkPreview = document.getElementById('bookingLinkPreview');
+
+            if (bookingLinkInput && bookingLinkPreview) {
+                const value = bookingLinkInput.value.trim();
+                if (value) {
+                    bookingLinkPreview.href = value;
+                    bookingLinkPreview.textContent = value;
+                } else {
+                    bookingLinkPreview.href = '#';
+                    bookingLinkPreview.textContent = '#';
+                }
+            }
+        }
+
+        function updateShopPreview() {
+            const shopLinkInput = document.getElementById('shop_link');
+            const shopLinkPreview = document.getElementById('shopLinkPreview');
+
+            if (shopLinkInput && shopLinkPreview) {
+                const value = shopLinkInput.value.trim();
+                if (value) {
+                    shopLinkPreview.href = value;
+                    shopLinkPreview.textContent = value;
+                } else {
+                    shopLinkPreview.href = '#';
+                    shopLinkPreview.textContent = '#';
+                }
+            }
+        }
+
+        // Update previews on input
+        document.getElementById('booking_link').addEventListener('input', updateBookingPreview);
+        document.getElementById('shop_link').addEventListener('input', updateShopPreview);
+
+        const newPassword = document.getElementById('new_password');
+        const confirmPassword = document.getElementById('confirm_password');
+
+        if (newPassword && confirmPassword) {
+            confirmPassword.addEventListener('input', function() {
+                if (this.value !== newPassword.value) {
+                    this.setCustomValidity('Passwords do not match');
+                } else {
+                    this.setCustomValidity('');
+                }
+            });
+
+            newPassword.addEventListener('input', function() {
+                if (confirmPassword.value && confirmPassword.value !== this.value) {
+                    confirmPassword.setCustomValidity('Passwords do not match');
+                } else {
+                    confirmPassword.setCustomValidity('');
+                }
+            });
+        }
+    </script>
+    <script src="form-reset.js"></script>
+</body>
+
+</html>
+
+
+
+    <script src="../assest/popup-notification.js?v=5.0.0" defer></script>

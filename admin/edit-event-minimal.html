@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Event - Minimal</title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        .form-group { margin: 15px 0; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; }
+        input, textarea, select { width: 100%; padding: 8px; }
+        button { padding: 10px 20px; background: #007bff; color: white; border: none; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>Edit Event</h1>
+    <div id="loading">Loading event...</div>
+    <form id="eventForm" style="display: none;">
+        <input type="hidden" id="eventId">
+        
+        <div class="form-group">
+            <label>Title</label>
+            <input type="text" id="title_en">
+        </div>
+        
+        <div class="form-group">
+            <label>Description</label>
+            <textarea id="description_en" rows="5"></textarea>
+        </div>
+        
+        <div class="form-group">
+            <label>Location</label>
+            <input type="text" id="location_en">
+        </div>
+        
+        <div class="form-group">
+            <label>Date</label>
+            <input type="date" id="event_date">
+        </div>
+        
+        <div class="form-group">
+            <label>Start Time</label>
+            <input type="time" id="event_time">
+        </div>
+        
+        <div class="form-group">
+            <label>End Time</label>
+            <input type="time" id="event_end_time">
+        </div>
+        
+        <button type="submit">Update Event</button>
+        <a href="events.html" style="margin-left: 10px;">Back</a>
+    </form>
+
+    <script>
+        async function loadEvent() {
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id');
+            
+            if (!id) {
+                document.getElementById('loading').innerHTML = 'No event ID provided';
+                return;
+            }
+            
+            try {
+                const response = await fetch(`../api/get_event_details_simple.php?id=${id}`);
+                const data = await response.json();
+                
+                if (data.success && data.data) {
+                    const event = data.data;
+                    
+                    document.getElementById('eventId').value = event.id;
+                    document.getElementById('title_en').value = event.title || '';
+                    document.getElementById('description_en').value = event.description || '';
+                    document.getElementById('location_en').value = event.location || '';
+                    document.getElementById('event_date').value = event.event_date || '';
+                    document.getElementById('event_time').value = event.event_time || '';
+                    document.getElementById('event_end_time').value = event.event_end_time || '';
+                    
+                    document.getElementById('loading').style.display = 'none';
+                    document.getElementById('eventForm').style.display = 'block';
+                } else {
+                    document.getElementById('loading').innerHTML = 'Error: ' + (data.error || 'Unknown error');
+                }
+            } catch (error) {
+                document.getElementById('loading').innerHTML = 'Error: ' + error.message;
+            }
+        }
+        
+        document.getElementById('eventForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const data = {
+                id: document.getElementById('eventId').value,
+                title: document.getElementById('title_en').value,
+                description: document.getElementById('description_en').value,
+                location: document.getElementById('location_en').value,
+                event_date: document.getElementById('event_date').value,
+                event_time: document.getElementById('event_time').value,
+                event_end_time: document.getElementById('event_end_time').value
+            };
+            
+            try {
+                const response = await fetch('../api/edit_event_simple.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    alert('Event updated successfully!');
+                    window.location.href = 'events.html';
+                } else {
+                    alert('Error: ' + result.message);
+                }
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
+        });
+        
+        loadEvent();
+    </script>
+</body>
+</html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legal Pages - LAKUM</title>
+    <link rel="icon" href="../../assest/favicon.png" type="image/png">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="admin-style.css">
+    <link rel="stylesheet" href="event-form-style.css">
+    <link rel="stylesheet" href="../assest/popup-notification.css">
+</head>
+
+<body>
+    <div class="admin-container">
+        <aside class="sidebar">
+            <div class="logo">
+                <h3 style="font-size: 24px; font-weight: 300; letter-spacing: 2px; margin: 0;">LAKUM</h3>
+            </div>
+
+            <div class="sidebar-lang-toggle">
+                <a href="?lang=ar" class="sidebar-lang-btn">
+                    <i class="ri-global-line"></i>
+                    <span>العربية</span>
+                </a>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item">
+                    <i class="ri-dashboard-line"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="events.html" class="nav-item">
+                    <i class="ri-calendar-event-line"></i>
+                    <span>Events</span>
+                </a>
+                <a href="blogs.html" class="nav-item">
+                    <i class="ri-article-line"></i>
+                    <span>Blogs</span>
+                </a>
+                <a href="press.html" class="nav-item">
+                    <i class="ri-newspaper-line"></i>
+                    <span>Press</span>
+                </a>
+                <a href="pricing.html" class="nav-item">
+                    <i class="ri-price-tag-3-line"></i>
+                    <span>Pricing</span>
+                </a>
+                <a href="legal-pages.html" class="nav-item active">
+                    <i class="ri-file-text-line"></i>
+                    <span>Legal Pages</span>
+                </a>
+                <a href="settings.html" class="nav-item">
+                    <i class="ri-settings-3-line"></i>
+                    <span>Settings</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="login.html" class="logout-btn">
+                    <i class="ri-logout-box-line"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <a href="../../index.html" target="_blank" class="admin-floating-btn" title="View Website">
+                <i class="ri-external-link-line"></i>
+            </a>
+
+            <header>
+                <h1><i class="ri-file-text-line"></i> Legal Pages</h1>
+            </header>
+
+            <!-- Terms & Conditions -->
+            <div class="modern-form-container" style="margin-bottom: 40px;">
+                <form method="POST" id="terms-form">
+                    <input type="hidden" name="page_type" value="terms">
+
+                    <div class="form-section">
+                        <h3><i class="ri-file-list-line"></i> Terms & Conditions</h3>
+
+                        <!-- English Section -->
+                        <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; margin-bottom: 30px; border-left: 4px solid #000;">
+                            <h4 style="margin: 0 0 16px 0; font-size: 1rem; font-weight: 600;">English</h4>
+                            
+                            <div class="form-group">
+                                <label for="terms-title-en">Title (EN)</label>
+                                <input type="text" id="terms-title-en" name="title_en" placeholder="e.g., Terms & Conditions" value="Terms & Conditions">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="terms-editor-en">Content (EN) *</label>
+                                <textarea id="terms-editor-en" name="content_en" style="min-height: 400px;" placeholder="Enter Terms & Conditions in English..."></textarea>
+                                <small>Use HTML for formatting.</small>
+                            </div>
+                        </div>
+
+                        <!-- Arabic Section -->
+                        <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; margin-bottom: 30px; border-left: 4px solid #999;">
+                            <h4 style="margin: 0 0 16px 0; font-size: 1rem; font-weight: 600;">العربية</h4>
+                            
+                            <div class="form-group">
+                                <label for="terms-title-ar">Title (AR)</label>
+                                <input type="text" id="terms-title-ar" name="title_ar" placeholder="مثال: الشروط والأحكام" dir="rtl">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="terms-editor-ar">Content (AR)</label>
+                                <textarea id="terms-editor-ar" name="content_ar" style="min-height: 400px;" placeholder="أدخل الشروط والأحكام بالعربية..." dir="rtl"></textarea>
+                                <small>استخدم HTML للتنسيق.</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions-modern">
+                        <button type="submit" class="btn-primary-modern">
+                            <i class="ri-save-line"></i> Save Terms & Conditions
+                        </button>
+                        <a href="../../terms.php" target="_blank" class="btn-secondary-modern">
+                            <i class="ri-external-link-line"></i> Preview
+                        </a>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Privacy Policy -->
+            <div class="modern-form-container">
+                <form method="POST" id="privacy-form">
+                    <input type="hidden" name="page_type" value="privacy">
+
+                    <div class="form-section">
+                        <h3><i class="ri-shield-check-line"></i> Privacy Policy</h3>
+
+                        <!-- English Section -->
+                        <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; margin-bottom: 30px; border-left: 4px solid #000;">
+                            <h4 style="margin: 0 0 16px 0; font-size: 1rem; font-weight: 600;">English</h4>
+                            
+                            <div class="form-group">
+                                <label for="privacy-title-en">Title (EN)</label>
+                                <input type="text" id="privacy-title-en" name="title_en" placeholder="e.g., Privacy Policy" value="Privacy Policy">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="privacy-editor-en">Content (EN) *</label>
+                                <textarea id="privacy-editor-en" name="content_en" style="min-height: 400px;" placeholder="Enter Privacy Policy in English..."></textarea>
+                                <small>Use HTML for formatting.</small>
+                            </div>
+                        </div>
+
+                        <!-- Arabic Section -->
+                        <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; margin-bottom: 30px; border-left: 4px solid #999;">
+                            <h4 style="margin: 0 0 16px 0; font-size: 1rem; font-weight: 600;">العربية</h4>
+                            
+                            <div class="form-group">
+                                <label for="privacy-title-ar">Title (AR)</label>
+                                <input type="text" id="privacy-title-ar" name="title_ar" placeholder="مثال: سياسة الخصوصية" dir="rtl">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="privacy-editor-ar">Content (AR)</label>
+                                <textarea id="privacy-editor-ar" name="content_ar" style="min-height: 400px;" placeholder="أدخل سياسة الخصوصية بالعربية..." dir="rtl"></textarea>
+                                <small>استخدم HTML للتنسيق.</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions-modern">
+                        <button type="submit" class="btn-primary-modern">
+                            <i class="ri-save-line"></i> Save Privacy Policy
+                        </button>
+                        <a href="../../privacy.php" target="_blank" class="btn-secondary-modern">
+                            <i class="ri-external-link-line"></i> Preview
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <script src="form-reset.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const termsForm = document.getElementById('terms-form');
+            const privacyForm = document.getElementById('privacy-form');
+            
+            const termsEditorEn = document.getElementById('terms-editor-en');
+            const termsEditorAr = document.getElementById('terms-editor-ar');
+            const termsTitleEn = document.getElementById('terms-title-en');
+            const termsTitleAr = document.getElementById('terms-title-ar');
+            
+            const privacyEditorEn = document.getElementById('privacy-editor-en');
+            const privacyEditorAr = document.getElementById('privacy-editor-ar');
+            const privacyTitleEn = document.getElementById('privacy-title-en');
+            const privacyTitleAr = document.getElementById('privacy-title-ar');
+
+            // Load existing content
+            loadLegalPageContent('terms', termsEditorEn, termsEditorAr, termsTitleEn, termsTitleAr);
+            loadLegalPageContent('privacy', privacyEditorEn, privacyEditorAr, privacyTitleEn, privacyTitleAr);
+
+            // Handle form submissions
+            if (termsForm) {
+                termsForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    saveLegalPageContent('terms', termsTitleEn.value, termsEditorEn.value, termsTitleAr.value, termsEditorAr.value);
+                });
+            }
+
+            if (privacyForm) {
+                privacyForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    saveLegalPageContent('privacy', privacyTitleEn.value, privacyEditorEn.value, privacyTitleAr.value, privacyEditorAr.value);
+                });
+            }
+        });
+
+        async function loadLegalPageContent(pageType, editorEnElement, editorArElement, titleEnElement, titleArElement) {
+            try {
+                // Load English content
+                const enResponse = await fetch(`../api/get_legal_page.php?page_key=${pageType}&lang=en`);
+                const enData = await enResponse.json();
+
+                if (enData.success && enData.data) {
+                    if (titleEnElement) titleEnElement.value = enData.data.title || '';
+                    if (editorEnElement) editorEnElement.value = enData.data.content || '';
+                    console.log(`Loaded ${pageType} English content from database`);
+                }
+
+                // Load Arabic content
+                const arResponse = await fetch(`../api/get_legal_page.php?page_key=${pageType}&lang=ar`);
+                const arData = await arResponse.json();
+
+                if (arData.success && arData.data) {
+                    if (titleArElement) titleArElement.value = arData.data.title || '';
+                    if (editorArElement) editorArElement.value = arData.data.content || '';
+                    console.log(`Loaded ${pageType} Arabic content from database`);
+                }
+            } catch (error) {
+                console.error(`Error loading ${pageType} content:`, error);
+            }
+        }
+
+        async function saveLegalPageContent(pageType, titleEn, contentEn, titleAr, contentAr) {
+            try {
+                // Validate English content is not empty
+                if (!contentEn || contentEn.trim().length === 0) {
+                    alert(`Error: ${pageType} English content is required.`);
+                    return;
+                }
+                
+                const payload = {
+                    page_key: pageType,
+                    title_en: titleEn || pageType.charAt(0).toUpperCase() + pageType.slice(1),
+                    content_en: contentEn,
+                    title_ar: titleAr || null,
+                    content_ar: contentAr || null
+                };
+                
+                console.log('Sending payload:', payload);
+                
+                const response = await fetch('../api/save_legal_page.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                const responseText = await response.text();
+                console.log('Raw response:', responseText);
+                
+                const data = JSON.parse(responseText);
+
+                if (data.success) {
+                    alert(`${pageType.charAt(0).toUpperCase() + pageType.slice(1)} page saved successfully!`);
+                    // Reload the content to show it was saved
+                    if (pageType === 'terms') {
+                        loadLegalPageContent('terms', 
+                            document.getElementById('terms-editor-en'),
+                            document.getElementById('terms-editor-ar'),
+                            document.getElementById('terms-title-en'),
+                            document.getElementById('terms-title-ar')
+                        );
+                    } else {
+                        loadLegalPageContent('privacy',
+                            document.getElementById('privacy-editor-en'),
+                            document.getElementById('privacy-editor-ar'),
+                            document.getElementById('privacy-title-en'),
+                            document.getElementById('privacy-title-ar')
+                        );
+                    }
+                } else {
+                    alert(`Error saving ${pageType} page: ${data.message}`);
+                }
+            } catch (error) {
+                console.error(`Error saving ${pageType} content:`, error);
+                alert(`Error saving ${pageType} content: ${error.message}`);
+            }
+        }
+    </script>
+</body>
+
+</html>
+
+
+
+    <script src="../assest/popup-notification.js?v=5.0.0" defer></script>

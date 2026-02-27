@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blogs Management - LAKUM Admin</title>
+<link rel="icon" href="../assest/favicon.png" type="image/png">
+<link rel="stylesheet" href="admin-style.css">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="../assest/popup-notification.css">
+<style>
+.admin-container { display: flex; min-height: 100vh; }
+.sidebar { width: 280px; background: #1a1a1a; color: white; padding: 0; position: fixed; height: 100vh; overflow-y: auto; }
+.main-content { margin-left: 280px; flex: 1; padding: 40px; }
+.blogs-table { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+.blogs-table th { background: #f6f6eb; padding: 15px; text-align: left; font-weight: 500; border-bottom: 1px solid #e0e0e0; }
+.blogs-table td { padding: 15px; border-bottom: 1px solid #e0e0e0; }
+.blogs-table tbody tr:hover { background: #f9f9f9; }
+.action-buttons { display: flex; gap: 10px; }
+.btn-edit, .btn-delete { padding: 8px 12px; border: none; border-radius: 4px; cursor: pointer; font-size: 12px; }
+.btn-edit { background: #2e7d32; color: white; }
+.btn-delete { background: #c2185b; color: white; }
+.btn-add { background: #1a1a1a; color: white; padding: 12px 24px; border: none; border-radius: 4px; cursor: pointer; margin-bottom: 20px; }
+.badge { padding: 4px 8px; border-radius: 4px; font-size: 12px; }
+.badge.featured { background: rgba(255,107,53,0.1); color: #ff6b35; }
+</style>
+</head>
+<body>
+<div class="admin-container">
+<aside class="sidebar">
+<div class="logo" style="padding: 30px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1);">
+<h2 style="font-size: 18px; font-weight: 300;">LAKUM Admin</h2>
+</div>
+<nav style="padding: 20px;">
+<a href="dashboard.html" style="display: block; padding: 12px 16px; color: rgba(255,255,255,0.7); text-decoration: none; margin-bottom: 8px; border-radius: 4px;"><i class="ri-dashboard-line"></i> Dashboard</a>
+<a href="events-management.html" style="display: block; padding: 12px 16px; color: rgba(255,255,255,0.7); text-decoration: none; margin-bottom: 8px; border-radius: 4px;"><i class="ri-calendar-line"></i> Events</a>
+<a href="blogs-management.html" style="display: block; padding: 12px 16px; color: white; text-decoration: none; margin-bottom: 8px; border-radius: 4px; background: rgba(255,255,255,0.1);"><i class="ri-article-line"></i> Blogs</a>
+<a href="pricing-management.html" style="display: block; padding: 12px 16px; color: rgba(255,255,255,0.7); text-decoration: none; margin-bottom: 8px; border-radius: 4px;"><i class="ri-price-tag-line"></i> Pricing</a>
+</nav>
+</aside>
+
+<main class="main-content">
+<header style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid #e0e0e0;">
+<h1 style="font-size: 28px; font-weight: 300;"><i class="ri-article-line"></i> Blogs Management</h1>
+<a href="add-blog.html" class="btn-add"><i class="ri-add-line"></i> Add Blog</a>
+</header>
+
+<div id="alertContainer"></div>
+
+<table class="blogs-table">
+<thead>
+<tr>
+<th>Title</th>
+<th>Author</th>
+<th>Category</th>
+<th>Read Time</th>
+<th>Featured</th>
+<th>Created</th>
+<th>Actions</th>
+</tr>
+</thead>
+<tbody id="blogsTableBody">
+<tr><td colspan="7" style="text-align: center; padding: 40px;">Loading...</td></tr>
+</tbody>
+</table>
+</main>
+</div>
+
+<script>
+class BlogsManagement {
+  constructor() {
+    this.blogs = [];
+    this.init();
+  }
+
+  async init() {
+    await this.loadBlogs();
+    this.setupEventListeners();
+  }
+
+  async loadBlogs() {
+    try {
+      const response = await fetch('../api/get_blogs.php');
+      const data = await response.json();
+      
+      if (data.success) {
+        this.blogs = data.data;
+      } else {
+        this.loadMockData();
+      }
+    } catch (error) {
+      this.loadMockData();
+    }
+    
+    this.render();
+  }
+
+  loadMockData() {
+    fetch('../data/mock-data.json')
+      .then(r => r.json())
+      .then(data => {
+        this.blogs = data.blogs;
+        this.render();
+      });
+  }
+
+  setupEventListeners() {
+    document.addEventListener('click', (e) => {
+      if (e.target.classList.contains('btn-delete')) {
+        const blogId = e.target.dataset.id;
+        if (confirm('Are you sure you want to delete this blog?')) {
+          this.deleteBlog(blogId);
+        }
+      }
+    });
+  }
+
+  async deleteBlog(blogId) {
+    try {
+      const response = await fetch('../api/delete_blog_simple.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: blogId })
+      });
+      
+      const data = await response.json();
+      if (data.success) {
+        this.showAlert('Blog deleted successfully', 'success');
+        this.blogs = this.blogs.filter(b => b.id !== blogId);
+        this.render();
+      } else {
+        this.showAlert('Error deleting blog', 'error');
+      }
+    } catch (error) {
+      this.showAlert('Error deleting blog', 'error');
+    }
+  }
+
+  showAlert(message, type) {
+    const alertContainer = document.getElementById('alertContainer');
+    const alert = document.createElement('div');
+    alert.className = `alert alert-${type}`;
+    alert.textContent = message;
+    alertContainer.appendChild(alert);
+    
+    setTimeout(() => alert.remove(), 3000);
+  }
+
+  render() {
+    const tbody = document.getElementById('blogsTableBody');
+    
+    if (this.blogs.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 40px;">No blogs found</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = this.blogs.map(blog => {
+      const createdDate = new Date(blog.created_at);
+      const featured = blog.is_featured ? '<span class="badge featured">Featured</span>' : '-';
+
+      return `
+        <tr>
+          <td><strong>${blog.title}</strong></td>
+          <td>${blog.author}</td>
+          <td>${blog.category}</td>
+          <td>${blog.read_time} min</td>
+          <td>${featured}</td>
+          <td>${createdDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</td>
+          <td>
+            <div class="action-buttons">
+              <a href="edit-blog.html?id=${blog.id}" class="btn-edit"><i class="ri-edit-line"></i> Edit</a>
+              <button class="btn-delete" data-id="${blog.id}"><i class="ri-delete-line"></i> Delete</button>
+            </div>
+          </td>
+        </tr>
+      `;
+    }).join('');
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  new BlogsManagement();
+});
+</script>
+</body>
+</html>
+
+
+
+<script src="../assest/popup-notification.js?v=5.0.0" defer></script>

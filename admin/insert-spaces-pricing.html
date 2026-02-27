@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insert Spaces Pricing - LAKUM</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .info {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .btn-primary {
+            background: #2196F3;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #1976D2;
+        }
+        .btn-secondary {
+            background: #757575;
+            color: white;
+        }
+        .btn-secondary:hover {
+            background: #616161;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 4px;
+            display: none;
+        }
+        .result.success {
+            background: #c8e6c9;
+            border-left: 4px solid #4caf50;
+            color: #2e7d32;
+            display: block;
+        }
+        .result.error {
+            background: #ffcdd2;
+            border-left: 4px solid #f44336;
+            color: #c62828;
+            display: block;
+        }
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #2196F3;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .pricing-list {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-size: 13px;
+        }
+        .pricing-list h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .pricing-list ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        .pricing-list li {
+            margin: 5px 0;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Insert Spaces Pricing Data</h1>
+        
+        <div class="info">
+            <strong>ℹ️ Info:</strong> This tool inserts the 6 pricing options from the public spaces.html page into the database.
+        </div>
+
+        <div class="pricing-list">
+            <h3>Pricing Options to Insert:</h3>
+            <ul>
+                <li><strong>Hall 1:</strong> 12,000 SAR/day</li>
+                <li><strong>Hall 2:</strong> 7,200 SAR/day</li>
+                <li><strong>Hourly Rate:</strong> Hall 1: 1,000/hour, Hall 2: 600/hour</li>
+                <li><strong>Set up/Dismantle Day:</strong> 3,400 SAR/day</li>
+                <li><strong>Café:</strong> 3,400 SAR/day</li>
+                <li><strong>Meeting Room:</strong> 60 SAR/hour</li>
+            </ul>
+        </div>
+
+        <div class="button-group">
+            <button class="btn-primary" onclick="insertPricing()">Insert Pricing Data</button>
+            <button class="btn-secondary" onclick="goBack()">Back to Pricing</button>
+        </div>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Inserting pricing data...</p>
+        </div>
+
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        async function insertPricing() {
+            const loading = document.getElementById('loading');
+            const result = document.getElementById('result');
+            
+            loading.style.display = 'block';
+            result.style.display = 'none';
+            
+            try {
+                const response = await fetch('../api/insert_spaces_pricing.php', {
+                    method: 'POST'
+                });
+                
+                const data = await response.json();
+                
+                loading.style.display = 'none';
+                
+                if (data.success) {
+                    result.className = 'result success';
+                    result.innerHTML = `
+                        <strong>✓ Success!</strong><br>
+                        ${data.message}<br>
+                        Inserted: ${data.inserted_count} pricing options
+                    `;
+                    setTimeout(() => {
+                        window.location.href = 'pricing.html';
+                    }, 2000);
+                } else {
+                    result.className = 'result error';
+                    result.innerHTML = `
+                        <strong>✗ Error:</strong><br>
+                        ${data.message}
+                    `;
+                }
+            } catch (error) {
+                loading.style.display = 'none';
+                result.className = 'result error';
+                result.innerHTML = `
+                    <strong>✗ Error:</strong><br>
+                    ${error.message}
+                `;
+            }
+        }
+
+        function goBack() {
+            window.location.href = 'pricing.html';
+        }
+    </script>
+</body>
+</html>
+
+

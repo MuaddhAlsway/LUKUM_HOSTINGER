@@ -1,0 +1,217 @@
+/**
+ * Greta Arabic Font Family
+ * Complete font-face declarations for all weights
+ * Works for both Arabic and Latin characters
+ */
+
+/* Greta Arabic - Black (900) */
+
+@font-face {
+    font-family: 'Greta Arabic';
+    src: url('GretaArabicAR+LT-Black.otf') format('opentype');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Greta Arabic - Heavy (800) */
+
+@font-face {
+    font-family: 'Greta Arabic';
+    src: url('GretaArabicAR+LT-Heavy.otf') format('opentype');
+    font-weight: 800;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Greta Arabic - Bold (700) */
+
+@font-face {
+    font-family: 'Greta Arabic';
+    src: url('GretaArabicAR+LT-Bold.otf') format('opentype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Greta Arabic - SemiBold (600) */
+
+@font-face {
+    font-family: 'Greta Arabic';
+    src: url('GretaArabicAR+LT-SemiBold.otf') format('opentype');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Greta Arabic - Medium (500) */
+
+@font-face {
+    font-family: 'Greta Arabic';
+    src: url('GretaArabicAR+LT-Medium.otf') format('opentype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Greta Arabic - Regular (400) */
+
+@font-face {
+    font-family: 'Greta Arabic';
+    src: url('GretaArabicAR+LT-Regular.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Greta Arabic - Light (300) */
+
+@font-face {
+    font-family: 'Greta Arabic';
+    src: url('GretaArabicAR+LT-Light.otf') format('opentype');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Greta Arabic - ExtraLight (200) */
+
+@font-face {
+    font-family: 'Greta Arabic';
+    src: url('GretaArabicAR+LT-ExtraLight.otf') format('opentype');
+    font-weight: 200;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Greta Arabic - Thin (100) */
+
+@font-face {
+    font-family: 'Greta Arabic';
+    src: url('GretaArabicAR+LT-Thin.otf') format('opentype');
+    font-weight: 100;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Greta Arabic - Hairline (50) */
+
+@font-face {
+    font-family: 'Greta Arabic';
+    src: url('GretaArabicAR+LT-Hairline.otf') format('opentype');
+    font-weight: 50;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Greta Text Arabic - Bold */
+
+@font-face {
+    font-family: 'Greta Text Arabic';
+    src: url('GretaTextArabicAR+LT-Bold.otf') format('opentype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Greta Text Arabic - Medium */
+
+@font-face {
+    font-family: 'Greta Text Arabic';
+    src: url('GretaTextArabicAR+LT-Medium.otf') format('opentype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Greta Text Arabic - Regular */
+
+@font-face {
+    font-family: 'Greta Text Arabic';
+    src: url('GretaTextArabicAR+LT-Regular.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Greta Text Arabic - Light */
+
+@font-face {
+    font-family: 'Greta Text Arabic';
+    src: url('GretaTextArabicAR+LT-Light.otf') format('opentype');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+/**
+ * Global Font Application
+ * Apply Greta Arabic to all elements EXCEPT icon fonts
+ */
+
+/* Preserve icon fonts - CRITICAL */
+
+i,
+i::before,
+i::after,
+[class*="ri-"],
+[class*="ri-"]::before,
+[class*="ri-"]::after,
+[class*="fa-"],
+[class*="fa-"]::before,
+[class*="fa-"]::after {
+    font-family: 'remixicon', 'Font Awesome 5 Free', 'FontAwesome' !important;
+}
+
+/* Apply Greta Arabic to everything else */
+
+*:not(i):not([class*="ri-"]):not([class*="fa-"]) {
+    font-family: 'Greta Arabic', 'Greta Text Arabic', -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+body {
+    font-family: 'Greta Arabic', 'Greta Text Arabic', -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+/* Ensure all text elements use Greta Arabic - but not icons */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span:not([class*="ri-"]):not([class*="fa-"]),
+div:not([class*="ri-"]):not([class*="fa-"]),
+a:not([class*="ri-"]):not([class*="fa-"]),
+button,
+input,
+textarea,
+select,
+label,
+li,
+td,
+th,
+caption,
+.lakum-hero__title,
+.lakum-hero__subtitle,
+.lakum-section-header__title,
+.lakum-section-header__subtitle {
+    font-family: 'Greta Arabic', 'Greta Text Arabic', -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+/* Admin panel - excluding icons */
+
+.admin-container,
+.admin-container *:not(i):not([class*="ri-"]):not([class*="fa-"]) {
+    font-family: 'Greta Arabic', 'Greta Text Arabic', -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+/* Ensure proper rendering for both Arabic and Latin */
+
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}

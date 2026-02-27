@@ -1,0 +1,28 @@
+[20-Feb-2026 17:44:24 Europe/Berlin] === GET_BLOGS_DEBUG START ===
+[20-Feb-2026 17:44:24 Europe/Berlin] GET params: {"type":"all","lang":"en"}
+[20-Feb-2026 17:44:24 Europe/Berlin] Connecting to database...
+[20-Feb-2026 17:44:24 Europe/Berlin] Connected successfully
+[20-Feb-2026 17:44:24 Europe/Berlin] Language: en
+[20-Feb-2026 17:44:24 Europe/Berlin] Limit: 100, Offset: 0
+[20-Feb-2026 17:44:24 Europe/Berlin] Query: 
+        SELECT 
+            b.id,
+            b.author,
+            b.category,
+            b.cover_image,
+            b.views,
+            b.is_published,
+            b.created_at,
+            t.title,
+            t.excerpt,
+            t.content,
+            t.slug
+        FROM blogs b
+        LEFT JOIN blog_translations t ON b.id = t.blog_id AND t.language = 'en'
+        ORDER BY b.created_at DESC
+        LIMIT 100 OFFSET 0
+    
+[20-Feb-2026 17:44:24 Europe/Berlin] Query executed successfully
+[20-Feb-2026 17:44:24 Europe/Berlin] Blogs fetched: 5
+[20-Feb-2026 17:44:24 Europe/Berlin] Response sent successfully
+[20-Feb-2026 17:44:24 Europe/Berlin] === GET_BLOGS_DEBUG END ===

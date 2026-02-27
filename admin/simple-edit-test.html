@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Edit Test</title>
+</head>
+<body>
+    <h1>Simple Edit Event Test</h1>
+    <p>Event ID: <span id="eventId">Loading...</span></p>
+    <p>API Response: <pre id="apiResponse">Loading...</pre></p>
+    
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get('id');
+        
+        document.getElementById('eventId').textContent = id || 'NOT PROVIDED';
+        
+        if (id) {
+            fetch(`../api/get_event_details_simple.php?id=${id}`)
+                .then(r => r.json())
+                .then(data => {
+                    document.getElementById('apiResponse').textContent = JSON.stringify(data, null, 2);
+                    if (data.success && data.data) {
+                        document.body.innerHTML += `
+                            <h2>Event Loaded Successfully!</h2>
+                            <p>Title: ${data.data.title}</p>
+                            <p>Location: ${data.data.location}</p>
+                            <p>Date: ${data.data.event_date}</p>
+                        `;
+                    }
+                })
+                .catch(e => {
+                    document.getElementById('apiResponse').textContent = 'Error: ' + e.message;
+                });
+        }
+    </script>
+</body>
+</html>

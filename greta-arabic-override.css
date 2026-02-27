@@ -1,0 +1,278 @@
+/**
+ * Greta Arabic Font - Universal Override
+ * This file ensures Greta Arabic is used everywhere on the site
+ * for both English and Arabic content
+ * 
+ * IMPORTANT: Excludes icon fonts (Remix Icon, Font Awesome, etc.)
+ */
+
+/* ============================================
+   ICON FONT EXCLUSIONS - CRITICAL
+   ============================================ */
+
+/* Preserve Remix Icon font */
+
+i,
+i::before,
+i::after,
+[class*="ri-"],
+[class*="ri-"]::before,
+[class*="ri-"]::after,
+.remixicon,
+.remixicon::before,
+.remixicon::after,
+.lightbox__close i,
+.lightbox__prev i,
+.lightbox__next i {
+    font-family: 'remixicon' !important;
+}
+
+/* Preserve Font Awesome if used */
+
+[class*="fa-"],
+[class*="fa-"]::before,
+[class*="fa-"]::after,
+.fa,
+.fas,
+.far,
+.fal,
+.fab {
+    font-family: 'Font Awesome 5 Free', 'Font Awesome 5 Pro', 'FontAwesome' !important;
+}
+
+/* ============================================
+   GRETA ARABIC APPLICATION
+   ============================================ */
+
+/* Universal font application - but NOT for icons */
+
+*:not(i):not([class*="ri-"]):not([class*="fa-"]),
+*:not(i):not([class*="ri-"]):not([class*="fa-"])::before:not([class*="ri-"]):not([class*="fa-"]),
+*:not(i):not([class*="ri-"]):not([class*="fa-"])::after:not([class*="ri-"]):not([class*="fa-"]),
+html,
+body {
+    font-family: 'Greta Arabic', 'Greta Text Arabic', -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+/* All text elements - excluding icons */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span:not([class*="ri-"]):not([class*="fa-"]),
+div:not([class*="ri-"]):not([class*="fa-"]),
+a:not([class*="ri-"]):not([class*="fa-"]),
+button,
+input,
+textarea,
+select,
+option,
+label,
+li,
+ul,
+ol,
+td,
+th,
+caption,
+legend,
+fieldset,
+blockquote,
+cite,
+q,
+code,
+pre,
+kbd,
+samp,
+var,
+small,
+strong,
+em:not([class*="ri-"]):not([class*="fa-"]),
+b:not([class*="ri-"]):not([class*="fa-"]),
+u,
+s,
+mark,
+del,
+ins,
+sub,
+sup {
+    font-family: 'Greta Arabic', 'Greta Text Arabic', -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+/* Navigation */
+
+.lakum-nav,
+.lakum-nav__link,
+.lakum-nav__item {
+    font-family: 'Greta Arabic', 'Greta Text Arabic', -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+/* Footer */
+
+.lakum-footer,
+.lakum-footer__tagline,
+.lakum-footer__nav-title,
+.lakum-footer__link,
+.lakum-footer__copyright {
+    font-family: 'Greta Arabic', 'Greta Text Arabic', -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+/* Buttons - text only, not icons inside */
+
+.btn,
+.lakum-btn,
+button:not(.lightbox__close):not(.lightbox__prev):not(.lightbox__next),
+[type="button"],
+[type="submit"],
+[type="reset"] {
+    font-family: 'Greta Arabic', 'Greta Text Arabic', -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+/* Lightbox buttons - preserve icon font */
+
+.lightbox__close,
+.lightbox__prev,
+.lightbox__next {
+    font-family: 'remixicon' !important;
+}
+
+/* Forms */
+
+input,
+textarea,
+select,
+option {
+    font-family: 'Greta Arabic', 'Greta Text Arabic', -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+/* Language switcher - text only */
+
+.lakum-lang-link {
+    font-family: 'Greta Arabic', 'Greta Text Arabic', -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+/* Hero sections */
+
+.lakum-hero__title,
+.lakum-hero__subtitle {
+    font-family: 'Greta Arabic', 'Greta Text Arabic', -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+/* Section headers */
+
+.lakum-section-header__title,
+.lakum-section-header__subtitle {
+    font-family: 'Greta Arabic', 'Greta Text Arabic', -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+/* Cards */
+
+.lakum-card,
+.lakum-event-card,
+.lakum-event-card__title,
+.lakum-event-card__link,
+.lakum-blog-card {
+    font-family: 'Greta Arabic', 'Greta Text Arabic', -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+/* Specific legacy classes from Home.css */
+
+.banner .bannerText,
+.bannnerArtPaceGallary .Higlight,
+.COVER .date p,
+.COVER .titleCover,
+.COVER .time,
+.COVER .dateCover,
+.COVERAboutUsPageLukum,
+.COVERAboutUs,
+.driveyoursoul,
+.bannerleftside {
+    font-family: 'Greta Arabic', 'Greta Text Arabic', -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+/* Spaces page specific */
+
+.lakum-pricing-card,
+.lakum-facility-card {
+    font-family: 'Greta Arabic', 'Greta Text Arabic', -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+/* Admin panel - excluding icons */
+
+.admin-container,
+.admin-container *:not(i):not([class*="ri-"]):not([class*="fa-"]) {
+    font-family: 'Greta Arabic', 'Greta Text Arabic', -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+/* RTL specific - excluding icons */
+
+[dir="rtl"] *:not(i):not([class*="ri-"]):not([class*="fa-"]),
+[dir="rtl"] body,
+[dir="rtl"] h1,
+[dir="rtl"] h2,
+[dir="rtl"] h3,
+[dir="rtl"] h4,
+[dir="rtl"] h5,
+[dir="rtl"] h6,
+[dir="rtl"] p,
+[dir="rtl"] span:not([class*="ri-"]):not([class*="fa-"]),
+[dir="rtl"] div:not([class*="ri-"]):not([class*="fa-"]),
+[dir="rtl"] a:not([class*="ri-"]):not([class*="fa-"]),
+[dir="rtl"] button {
+    font-family: 'Greta Arabic', 'Greta Text Arabic', -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+/* Ensure proper font rendering */
+
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "kern" 1, "liga" 1;
+}
+
+/* Font weight mapping for Greta Arabic */
+
+.font-hairline {
+    font-weight: 50 !important;
+}
+
+.font-thin {
+    font-weight: 100 !important;
+}
+
+.font-extralight {
+    font-weight: 200 !important;
+}
+
+.font-light {
+    font-weight: 300 !important;
+}
+
+.font-normal,
+.font-regular {
+    font-weight: 400 !important;
+}
+
+.font-medium {
+    font-weight: 500 !important;
+}
+
+.font-semibold {
+    font-weight: 600 !important;
+}
+
+.font-bold {
+    font-weight: 700 !important;
+}
+
+.font-heavy {
+    font-weight: 800 !important;
+}
+
+.font-black {
+    font-weight: 900 !important;
+}

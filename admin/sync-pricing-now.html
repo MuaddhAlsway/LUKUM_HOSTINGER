@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sync Spaces Pricing - LAKUM</title>
+    <link rel="icon" href="../../assest/favicon.png" type="image/png">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="admin-style.css">
+    <style>
+        .sync-container {
+            max-width: 600px;
+            margin: 100px auto;
+            padding: 40px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .sync-status {
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 4px;
+            display: none;
+        }
+        .sync-status.success {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #4caf50;
+            display: block;
+        }
+        .sync-status.error {
+            background: #ffebee;
+            color: #c2185b;
+            border: 1px solid #f44336;
+            display: block;
+        }
+        .sync-status.loading {
+            background: #e3f2fd;
+            color: #1976d2;
+            border: 1px solid #2196f3;
+            display: block;
+        }
+        .sync-btn {
+            background: #1a1a1a;
+            color: white;
+            padding: 12px 32px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 20px 0;
+        }
+        .sync-btn:hover {
+            background: #333;
+        }
+        .sync-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .pricing-list {
+            text-align: left;
+            margin: 20px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 4px;
+        }
+        .pricing-item {
+            padding: 10px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .pricing-item:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sync-container">
+        <h1><i class="ri-refresh-line"></i> Sync Spaces Pricing</h1>
+        <p>This will sync the real Spaces pricing data from spaces.php to the database.</p>
+        
+        <div class="pricing-list">
+            <h3>Pricing Items to Sync:</h3>
+            <div class="pricing-item">1. Hall 1 - 12,000 SAR/day</div>
+            <div class="pricing-item">2. Hall 2 - 7,200 SAR/day</div>
+            <div class="pricing-item">3. Hourly Rate - Hall 1: 1,000 SAR/hour | Hall 2: 600 SAR/hour</div>
+            <div class="pricing-item">4. Set up/Dismantle Day - 3,400 SAR/day</div>
+            <div class="pricing-item">5. Café - 3,400 SAR/day</div>
+            <div class="pricing-item">6. Meeting Room - 60 SAR/hour</div>
+        </div>
+
+        <button class="sync-btn" id="syncBtn" onclick="syncPricing()">
+            <i class="ri-refresh-line"></i> Sync Now
+        </button>
+
+        <div id="syncStatus" class="sync-status"></div>
+
+        <div style="margin-top: 30px;">
+            <a href="pricing.html" class="btn-secondary" style="display: inline-block; padding: 10px 20px; background: #f0f0f0; text-decoration: none; border-radius: 4px;">
+                <i class="ri-arrow-left-line"></i> Back to Pricing
+            </a>
+        </div>
+    </div>
+
+    <script>
+        async function syncPricing() {
+            const btn = document.getElementById('syncBtn');
+            const status = document.getElementById('syncStatus');
+            
+            btn.disabled = true;
+            status.className = 'sync-status loading';
+            status.innerHTML = '<i class="ri-loader-4-line"></i> Syncing pricing data...';
+
+            try {
+                const response = await fetch('../api/sync-spaces-pricing.php');
+                const data = await response.json();
+
+                if (data.success) {
+                    status.className = 'sync-status success';
+                    status.innerHTML = `<i class="ri-check-circle-line"></i> <strong>Success!</strong><br>${data.message}<br><br>You can now edit pricing items and they will match the Spaces Pricing data.`;
+                    
+                    // Redirect to pricing page after 2 seconds
+                    setTimeout(() => {
+                        window.location.href = 'pricing.html';
+                    }, 2000);
+                } else {
+                    status.className = 'sync-status error';
+                    status.innerHTML = `<i class="ri-error-warning-line"></i> <strong>Error:</strong><br>${data.message}`;
+                    btn.disabled = false;
+                }
+            } catch (error) {
+                status.className = 'sync-status error';
+                status.innerHTML = `<i class="ri-error-warning-line"></i> <strong>Error:</strong><br>${error.message}`;
+                btn.disabled = false;
+            }
+        }
+
+        // Auto-sync on page load
+        window.addEventListener('load', function() {
+            // Uncomment the line below to auto-sync on page load
+            // syncPricing();
+        });
+    </script>
+</body>
+
+</html>

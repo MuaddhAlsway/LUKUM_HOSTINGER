@@ -1,0 +1,112 @@
+{
+  "page_title": "اتصل بنا - LAKUM Artspace",
+  "page_description": "تواصل مع LAKUM Artspace. اتصل بنا للاستفسارات والحجوزات والتعاون والمزيد.",
+  
+  "hero_title": "تواصل معنا",
+  "hero_subtitle": "هل لديك سؤال أو تريد التعاون؟ نود أن نسمع منك. تواصل معنا ودعنا ننشئ شيئاً رائعاً معاً.",
+  
+  "contact_info_title": "معلومات الاتصال",
+  
+  "contact_visit_title": "زيارتنا",
+  "contact_visit_address": "طريق فرع العروبة، أم الحمام الغربي",
+  "contact_visit_city": "الرياض 12328، المملكة العربية السعودية",
+  
+  "contact_call_title": "اتصل بنا",
+  "contact_call_number": "+966 920 012 083",
+  
+  "contact_email_title": "راسلنا بالبريد الإلكتروني",
+  "contact_email_address": "info@lakumartspace.com",
+  
+  "contact_hours_title": "ساعات العمل",
+  "contact_hours_weekday": "الأحد - الخميس: 10:00 صباحاً - 10:00 مساءً",
+  "contact_hours_weekend": "الجمعة - السبت: 2:00 مساءً - 11:00 مساءً",
+  
+  "contact_connect_title": "تواصل معنا",
+  "contact_instagram": "إنستغرام",
+  "contact_twitter": "تويتر",
+  
+  "form_title": "أرسل لنا رسالة",
+  "form_name_label": "الاسم الكامل",
+  "form_name_placeholder": "محمد أحمد",
+  "form_email_label": "عنوان البريد الإلكتروني",
+  "form_email_placeholder": "محمد@مثال.com",
+  "form_phone_label": "رقم الهاتف",
+  "form_phone_placeholder": "+966 5XX XXX XXX",
+  "form_subject_label": "الموضوع",
+  "form_subject_placeholder": "اختر موضوعاً",
+  "form_subject_general": "استفسار عام",
+  "form_subject_exhibition": "حجز معرض",
+  "form_subject_workshop": "معلومات الورشة",
+  "form_subject_venue": "استئجار المكان",
+  "form_subject_collaboration": "التعاون",
+  "form_subject_other": "أخرى",
+  "form_message_label": "الرسالة",
+  "form_message_placeholder": "أخبرنا المزيد عن استفسارك...",
+  "form_required": "حقل مطلوب",
+  "form_submit": "إرسال الرسالة",
+  "form_sending": "جاري الإرسال...",
+  "form_success": "تم إرسال الرسالة بنجاح! سنعود إليك قريباً.",
+  "form_error": "خطأ في إرسال الرسالة. يرجى المحاولة مرة أخرى.",
+  
+  "map_title": "ابحث عنا",
+  "map_description": "زر LAKUM Artspace في قلب الرياض",
+  
+  "faq_title": "الأسئلة الشائعة",
+  "faq_hours_q": "ما هي ساعات عملك؟",
+  "faq_hours_a": "نحن مفتوحون من الأحد إلى الخميس من الساعة 10:00 صباحاً إلى 10:00 مساءً، والجمعة والسبت من 2:00 مساءً إلى 11:00 مساءً.",
+  "faq_location_q": "أين يقع LAKUM Artspace؟",
+  "faq_location_a": "نحن موجودون في طريق فرع العروبة، أم الحمام الغربي، الرياض 12328، المملكة العربية السعودية.",
+  "faq_booking_q": "كيف أحجز مكاناً؟",
+  "faq_booking_a": "يمكنك الاتصال بنا مباشرة عبر الهاتف أو البريد الإلكتروني أو ملء نموذج الاتصال مع استفسار استئجار المكان.",
+  "faq_exhibition_q": "كيف يمكنني عرض عملي؟",
+  "faq_exhibition_a": "يرجى التواصل معنا بتفاصيل عملك ومفهوم المعرض. نراجع جميع الاقتراحات وسنعود إليك.",
+  "faq_workshop_q": "هل تقدمون ورش عمل؟",
+  "faq_workshop_a": "نعم! نقدم ورش عمل وندوات مختلفة. تحقق من تقويمنا أو اتصل بنا للحصول على العروض الحالية.",
+  "faq_collaboration_q": "هل أنتم مفتوحون للتعاون؟",
+  "faq_collaboration_a": "بالتأكيد! نحب التعاون مع الفنانين والمنظمات والمحترفين الإبداعيين. دعنا نتحدث!",
+  
+  "response_time": "نحن عادة نرد خلال 24-48 ساعة",
+  "contact_preference": "طريقة الاتصال المفضلة",
+  "contact_preference_email": "البريد الإلكتروني",
+  "contact_preference_phone": "الهاتف",
+  "contact_preference_whatsapp": "واتس آب",
+  
+  "social_media": "تابعنا على وسائل التواصل الاجتماعي",
+  "newsletter_signup": "اشترك في نشرتنا الإخبارية",
+  "newsletter_placeholder": "أدخل بريدك الإلكتروني",
+  "newsletter_subscribe": "اشترك",
+  
+  "directions": "احصل على الاتجاهات",
+  "call_now": "اتصل الآن",
+  "email_now": "راسل الآن",
+  "whatsapp_now": "واتس آب الآن",
+  
+  "thank_you": "شكراً لتواصلك معنا!",
+  "thank_you_message": "نقدر اهتمامك بـ LAKUM Artspace. سنراجع رسالتك وسنعود إليك في أقرب وقت ممكن.",
+  
+  "error_name": "يرجى إدخال اسمك",
+  "error_email": "يرجى إدخال عنوان بريد إلكتروني صحيح",
+  "error_message": "يرجى إدخال رسالتك",
+  "error_subject": "يرجى اختيار موضوع",
+  
+  "success_title": "تم إرسال الرسالة!",
+  "success_message": "شكراً لتواصلك معنا. سنتواصل معك قريباً.",
+  
+  "home": "الرئيسية",
+  "about": " عن لكم",
+  "spaces": "المساحات",
+  "exhibitions": "المعارض",
+  "calendar": "التقويم",
+  "blog": "المدونة",
+  "press": "الصحافة",
+  "contact_us": "اتصل",
+  "shop": "المتجر",
+  
+  "footer_navigate": "التنقل",
+  "footer_explore": "استكشف",
+  "footer_connect": "تواصل",
+  "footer_tagline": "حيث تشكل اللقاءات الثقافة",
+  "footer_copyright": "© 2025 - 2027 LAKUM Artspace. جميع الحقوق محفوظة.",
+  "footer_terms": "الشروط والأحكام",
+  "footer_privacy": "سياسة الخصوصية"
+}

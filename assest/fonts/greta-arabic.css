@@ -1,0 +1,60 @@
+/**
+ * Greta Arabic Font Family - Simplified
+ * Uses system fonts as fallback to prevent blank pages
+ */
+
+/* Preserve icon fonts - CRITICAL */
+i,
+i::before,
+i::after,
+[class*="ri-"],
+[class*="ri-"]::before,
+[class*="ri-"]::after,
+[class*="fa-"],
+[class*="fa-"]::before,
+[class*="fa-"]::after {
+    font-family: 'remixicon', 'Font Awesome 5 Free', 'FontAwesome' !important;
+}
+
+/* Use system fonts for better compatibility */
+body,
+html {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+/* Ensure proper rendering for both Arabic and Latin */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+div,
+a,
+button,
+input,
+textarea,
+select,
+label,
+li,
+td,
+th,
+caption,
+.lakum-hero__title,
+.lakum-hero__subtitle,
+.lakum-section-header__title,
+.lakum-section-header__subtitle {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+}
+
+/* Exclude icons from font override */
+i,
+[class*="ri-"],
+[class*="fa-"] {
+    font-family: 'remixicon', 'Font Awesome 5 Free', 'FontAwesome' !important;
+}

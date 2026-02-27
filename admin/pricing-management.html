@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pricing Management - LAKUM Admin</title>
+<link rel="icon" href="../assest/favicon.png" type="image/png">
+<link rel="stylesheet" href="admin-style.css">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+<style>
+.admin-container { display: flex; min-height: 100vh; }
+.sidebar { width: 280px; background: #1a1a1a; color: white; padding: 0; position: fixed; height: 100vh; overflow-y: auto; }
+.main-content { margin-left: 280px; flex: 1; padding: 40px; }
+.pricing-table { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+.pricing-table th { background: #f6f6eb; padding: 15px; text-align: left; font-weight: 500; border-bottom: 1px solid #e0e0e0; }
+.pricing-table td { padding: 15px; border-bottom: 1px solid #e0e0e0; }
+.pricing-table tbody tr:hover { background: #f9f9f9; }
+.action-buttons { display: flex; gap: 10px; }
+.btn-edit, .btn-delete { padding: 8px 12px; border: none; border-radius: 4px; cursor: pointer; font-size: 12px; }
+.btn-edit { background: #2e7d32; color: white; }
+.btn-delete { background: #c2185b; color: white; }
+.btn-add { background: #1a1a1a; color: white; padding: 12px 24px; border: none; border-radius: 4px; cursor: pointer; margin-bottom: 20px; }
+.badge { padding: 4px 8px; border-radius: 4px; font-size: 12px; }
+.badge.active { background: rgba(46,125,50,0.1); color: #2e7d32; }
+.badge.inactive { background: rgba(194,24,91,0.1); color: #c2185b; }
+</style>
+</head>
+<body>
+<div class="admin-container">
+<aside class="sidebar">
+<div class="logo" style="padding: 30px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1);">
+<h2 style="font-size: 18px; font-weight: 300;">LAKUM Admin</h2>
+</div>
+<nav style="padding: 20px;">
+<a href="dashboard.html" style="display: block; padding: 12px 16px; color: rgba(255,255,255,0.7); text-decoration: none; margin-bottom: 8px; border-radius: 4px;"><i class="ri-dashboard-line"></i> Dashboard</a>
+<a href="events-management.html" style="display: block; padding: 12px 16px; color: rgba(255,255,255,0.7); text-decoration: none; margin-bottom: 8px; border-radius: 4px;"><i class="ri-calendar-line"></i> Events</a>
+<a href="blogs-management.html" style="display: block; padding: 12px 16px; color: rgba(255,255,255,0.7); text-decoration: none; margin-bottom: 8px; border-radius: 4px;"><i class="ri-article-line"></i> Blogs</a>
+<a href="pricing-management.html" style="display: block; padding: 12px 16px; color: white; text-decoration: none; margin-bottom: 8px; border-radius: 4px; background: rgba(255,255,255,0.1);"><i class="ri-price-tag-line"></i> Pricing</a>
+</nav>
+</aside>
+
+<main class="main-content">
+<header style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid #e0e0e0;">
+<h1 style="font-size: 28px; font-weight: 300;"><i class="ri-price-tag-line"></i> Pricing Management</h1>
+<a href="add-pricing.html" class="btn-add"><i class="ri-add-line"></i> Add Pricing</a>
+</header>
+
+<div id="alertContainer"></div>
+
+<table class="pricing-table">
+<thead>
+<tr>
+<th>Title</th>
+<th>Price</th>
+<th>Period</th>
+<th>Status</th>
+<th>Order</th>
+<th>Created</th>
+<th>Actions</th>
+</tr>
+</thead>
+<tbody id="pricingTableBody">
+<tr><td colspan="7" style="text-align: center; padding: 40px;">Loading...</td></tr>
+</tbody>
+</table>
+</main>
+</div>
+
+<script>
+class PricingManagement {
+  constructor() {
+    this.pricing = [];
+    this.init();
+  }
+
+  async init() {
+    await this.loadPricing();
+    this.setupEventListeners();
+  }
+
+  async loadPricing() {
+    try {
+      const response = await fetch('../api/get_pricing.php');
+      const data = await response.json();
+      
+      if (data.success) {
+        this.pricing = data.data;
+      } else {
+        this.loadMockData();
+      }
+    } catch (error) {
+      this.loadMockData();
+    }
+    
+    this.render();
+  }
+
+  loadMockData() {
+    fetch('../data/mock-data.json')
+      .then(r => r.json())
+      .then(data => {
+        this.pricing = data.pricing;
+        this.render();
+      });
+  }
+
+  setupEventListeners() {
+    document.addEventListener('click', (e) => {
+      if (e.target.classList.contains('btn-delete')) {
+        const pricingId = e.target.dataset.id;
+        if (confirm('Are you sure you want to delete this pricing?')) {
+          this.deletePricing(pricingId);
+        }
+      }
+    });
+  }
+
+  async deletePricing(pricingId) {
+    try {
+      const response = await fetch('../api/delete_pricing.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: pricingId })
+      });
+      
+      const data = await response.json();
+      if (data.success) {
+        this.showAlert('Pricing deleted successfully', 'success');
+        this.pricing = this.pricing.filter(p => p.id !== pricingId);
+        this.render();
+      } else {
+        this.showAlert('Error deleting pricing', 'error');
+      }
+    } catch (error) {
+      this.showAlert('Error deleting pricing', 'error');
+    }
+  }
+
+  showAlert(message, type) {
+    const alertContainer = document.getElementById('alertContainer');
+    const alert = document.createElement('div');
+    alert.className = `alert alert-${type}`;
+    alert.textContent = message;
+    alertContainer.appendChild(alert);
+    
+    setTimeout(() => alert.remove(), 3000);
+  }
+
+  render() {
+    const tbody = document.getElementById('pricingTableBody');
+    
+    if (this.pricing.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 40px;">No pricing found</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = this.pricing
+      .sort((a, b) => a.display_order - b.display_order)
+      .map(pricing => {
+        const createdDate = new Date(pricing.created_at);
+        const status = pricing.is_active ? 'Active' : 'Inactive';
+        const statusBadge = pricing.is_active ? 'active' : 'inactive';
+
+        return `
+          <tr>
+            <td><strong>${pricing.title}</strong></td>
+            <td>${pricing.price} ${pricing.price_unit}</td>
+            <td>${pricing.price_sec}</td>
+            <td><span class="badge ${statusBadge}">${status}</span></td>
+            <td>${pricing.display_order}</td>
+            <td>${createdDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</td>
+            <td>
+              <div class="action-buttons">
+                <a href="edit-pricing.html?id=${pricing.id}" class="btn-edit"><i class="ri-edit-line"></i> Edit</a>
+                <button class="btn-delete" data-id="${pricing.id}"><i class="ri-delete-line"></i> Delete</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  new PricingManagement();
+});
+</script>
+</body>
+</html>
+
+

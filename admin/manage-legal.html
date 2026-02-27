@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Legal Pages - LAKUM Admin</title>
+    <link rel="icon" href="../assest/favicon.png" type="image/png">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="../global-styles.css">
+    <link rel="stylesheet" href="../lakum-components.css">
+    <link rel="stylesheet" href="../Home.css">
+    <link rel="stylesheet" href="../rtl.css">
+    <link rel="stylesheet" href="../assest/popup-notification.css">
+    <style>
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .admin-header {
+            margin-bottom: 40px;
+        }
+
+        .admin-header h1 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: #1a1a1a;
+            margin-bottom: 10px;
+        }
+
+        .admin-header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .tab-button {
+            padding: 15px 25px;
+            background: none;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+            color: #666;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .tab-button.active {
+            color: #1a1a1a;
+            border-bottom-color: #1a1a1a;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #1a1a1a;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            min-height: 400px;
+            resize: vertical;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #1a1a1a;
+            box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.1);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: #1a1a1a;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #333;
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #1a1a1a;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .preview-section {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 4px;
+            margin-top: 30px;
+        }
+
+        .preview-section h3 {
+            margin-bottom: 15px;
+            color: #1a1a1a;
+        }
+
+        .preview-content {
+            background: white;
+            padding: 20px;
+            border-radius: 4px;
+            max-height: 400px;
+            overflow-y: auto;
+            line-height: 1.6;
+        }
+
+        .preview-content h2 {
+            font-size: 1.3rem;
+            margin: 20px 0 10px 0;
+            font-weight: 500;
+        }
+
+        .preview-content p {
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        .preview-content ul {
+            margin-left: 20px;
+            margin-bottom: 10px;
+        }
+
+        .preview-content li {
+            margin-bottom: 5px;
+            color: #555;
+        }
+    </style>
+</head>
+
+<body class="lang-en ltr">
+
+    <header class="lakum-header">
+        <div class="lakum-header__container">
+            <div class="lakum-header__logo">
+                <a href="../" class="lakum-logo">
+                    <img src="../assest/logo/right_section.png" alt="LAKUM" class="lakum-logo__left">
+                    <img src="../assest/logo/left_section.png" alt="Artspace" class="lakum-logo__right">
+                </a>
+            </div>
+
+            <nav class="lakum-nav">
+                <ul class="lakum-nav__list">
+                    <li class="lakum-nav__item"><a href="../" class="lakum-nav__link">Home</a></li>
+                    <li class="lakum-nav__item"><a href="add-event.html" class="lakum-nav__link">Add Event</a></li>
+                    <li class="lakum-nav__item"><a href="manage-legal.html" class="lakum-nav__link lakum-nav__link--active">Legal Pages</a></li>
+                </ul>
+            </nav>
+
+            <button class="lakum-header__mobile-toggle" aria-label="Toggle menu">
+                <span class="lakum-header__mobile-icon"></span>
+            </button>
+        </div>
+    </header>
+
+    <div class="admin-container">
+        <div class="admin-header">
+            <h1>Manage Legal Pages</h1>
+            <p>Edit Privacy Policy and Terms & Conditions</p>
+        </div>
+
+        <div id="alert-container"></div>
+
+        <div class="tabs">
+            <button class="tab-button active" data-tab="privacy">Privacy Policy</button>
+            <button class="tab-button" data-tab="terms">Terms & Conditions</button>
+        </div>
+
+        <!-- Privacy Tab -->
+        <div id="privacy" class="tab-content active">
+            <form id="privacy-form">
+                <!-- English Section -->
+                <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; margin-bottom: 30px; border-left: 4px solid #000;">
+                    <h4 style="margin: 0 0 16px 0; font-size: 1rem; font-weight: 600;">English</h4>
+                    
+                    <div class="form-group">
+                        <label for="privacy-title-en">Title (EN)</label>
+                        <input type="text" id="privacy-title-en" name="title_en" value="Privacy Policy" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="privacy-content-en">Content (EN) - HTML supported</label>
+                        <textarea id="privacy-content-en" name="content_en" required></textarea>
+                    </div>
+                </div>
+
+                <!-- Arabic Section -->
+                <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; margin-bottom: 30px; border-left: 4px solid #999;">
+                    <h4 style="margin: 0 0 16px 0; font-size: 1rem; font-weight: 600;">العربية</h4>
+                    
+                    <div class="form-group">
+                        <label for="privacy-title-ar">Title (AR)</label>
+                        <input type="text" id="privacy-title-ar" name="title_ar" value="سياسة الخصوصية" dir="rtl" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="privacy-content-ar">Content (AR) - HTML supported</label>
+                        <textarea id="privacy-content-ar" name="content_ar" required dir="rtl"></textarea>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button type="submit" class="btn btn-primary">Save Privacy Policy</button>
+                    <button type="button" class="btn btn-secondary" onclick="previewPrivacy()">Preview</button>
+                </div>
+            </form>
+
+            <div class="preview-section" id="privacy-preview" style="display: none;">
+                <h3>Preview</h3>
+                <div class="preview-content" id="privacy-preview-content"></div>
+            </div>
+        </div>
+
+        <!-- Terms Tab -->
+        <div id="terms" class="tab-content">
+            <form id="terms-form">
+                <!-- English Section -->
+                <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; margin-bottom: 30px; border-left: 4px solid #000;">
+                    <h4 style="margin: 0 0 16px 0; font-size: 1rem; font-weight: 600;">English</h4>
+                    
+                    <div class="form-group">
+                        <label for="terms-title-en">Title (EN)</label>
+                        <input type="text" id="terms-title-en" name="title_en" value="Terms & Conditions" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="terms-content-en">Content (EN) - HTML supported</label>
+                        <textarea id="terms-content-en" name="content_en" required></textarea>
+                    </div>
+                </div>
+
+                <!-- Arabic Section -->
+                <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; margin-bottom: 30px; border-left: 4px solid #999;">
+                    <h4 style="margin: 0 0 16px 0; font-size: 1rem; font-weight: 600;">العربية</h4>
+                    
+                    <div class="form-group">
+                        <label for="terms-title-ar">Title (AR)</label>
+                        <input type="text" id="terms-title-ar" name="title_ar" value="الشروط والأحكام" dir="rtl" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="terms-content-ar">Content (AR) - HTML supported</label>
+                        <textarea id="terms-content-ar" name="content_ar" required dir="rtl"></textarea>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button type="submit" class="btn btn-primary">Save Terms & Conditions</button>
+                    <button type="button" class="btn btn-secondary" onclick="previewTerms()">Preview</button>
+                </div>
+            </form>
+
+            <div class="preview-section" id="terms-preview" style="display: none;">
+                <h3>Preview</h3>
+                <div class="preview-content" id="terms-preview-content"></div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="lakum-footer">
+        <div class="lakum-footer__container">
+            <div class="lakum-footer__content">
+                <div class="lakum-footer__brand">
+                    <div class="lakum-footer__logo">
+                        <img src="../assest/logo/right_section.png" alt="LAKUM" class="lakum-footer__logo-left">
+                        <img src="../assest/logo/left_section.png" alt="Artspace" class="lakum-footer__logo-right">
+                    </div>
+                    <p class="lakum-footer__tagline">Where Encounters Shape Culture</p>
+                </div>
+            </div>
+
+            <div class="lakum-footer__bottom">
+                <p class="lakum-footer__copyright">© 2025 - 2027 LAKUM Artspace. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Tab switching
+        document.querySelectorAll('.tab-button').forEach(button => {
+            button.addEventListener('click', function() {
+                const tabName = this.getAttribute('data-tab');
+                
+                // Hide all tabs
+                document.querySelectorAll('.tab-content').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+                
+                // Remove active class from all buttons
+                document.querySelectorAll('.tab-button').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                
+                // Show selected tab
+                document.getElementById(tabName).classList.add('active');
+                this.classList.add('active');
+            });
+        });
+
+        // Load saved content from localStorage
+        function loadContent() {
+            const privacyContentEn = localStorage.getItem('privacy-content-en');
+            const privacyContentAr = localStorage.getItem('privacy-content-ar');
+            const privacyTitleEn = localStorage.getItem('privacy-title-en');
+            const privacyTitleAr = localStorage.getItem('privacy-title-ar');
+            const termsContentEn = localStorage.getItem('terms-content-en');
+            const termsContentAr = localStorage.getItem('terms-content-ar');
+            const termsTitleEn = localStorage.getItem('terms-title-en');
+            const termsTitleAr = localStorage.getItem('terms-title-ar');
+
+            if (privacyContentEn) {
+                document.getElementById('privacy-content-en').value = privacyContentEn;
+            }
+            if (privacyContentAr) {
+                document.getElementById('privacy-content-ar').value = privacyContentAr;
+            }
+            if (privacyTitleEn) {
+                document.getElementById('privacy-title-en').value = privacyTitleEn;
+            }
+            if (privacyTitleAr) {
+                document.getElementById('privacy-title-ar').value = privacyTitleAr;
+            }
+            if (termsContentEn) {
+                document.getElementById('terms-content-en').value = termsContentEn;
+            }
+            if (termsContentAr) {
+                document.getElementById('terms-content-ar').value = termsContentAr;
+            }
+            if (termsTitleEn) {
+                document.getElementById('terms-title-en').value = termsTitleEn;
+            }
+            if (termsTitleAr) {
+                document.getElementById('terms-title-ar').value = termsTitleAr;
+            }
+        }
+
+        // Save Privacy Policy
+        document.getElementById('privacy-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const titleEn = document.getElementById('privacy-title-en').value;
+            const titleAr = document.getElementById('privacy-title-ar').value;
+            const contentEn = document.getElementById('privacy-content-en').value;
+            const contentAr = document.getElementById('privacy-content-ar').value;
+
+            if (!titleEn) {
+                showAlert('Privacy Policy title (English) is required', 'error');
+                return;
+            }
+            if (!titleAr) {
+                showAlert('Privacy Policy title (Arabic) is required', 'error');
+                return;
+            }
+            if (!contentEn) {
+                showAlert('Privacy Policy content (English) is required', 'error');
+                return;
+            }
+            if (!contentAr) {
+                showAlert('Privacy Policy content (Arabic) is required', 'error');
+                return;
+            }
+
+            localStorage.setItem('privacy-title-en', titleEn);
+            localStorage.setItem('privacy-title-ar', titleAr);
+            localStorage.setItem('privacy-content-en', contentEn);
+            localStorage.setItem('privacy-content-ar', contentAr);
+
+            showAlert('Privacy Policy saved successfully!', 'success');
+        });
+
+        // Save Terms & Conditions
+        document.getElementById('terms-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const titleEn = document.getElementById('terms-title-en').value;
+            const titleAr = document.getElementById('terms-title-ar').value;
+            const contentEn = document.getElementById('terms-content-en').value;
+            const contentAr = document.getElementById('terms-content-ar').value;
+
+            if (!titleEn) {
+                showAlert('Terms & Conditions title (English) is required', 'error');
+                return;
+            }
+            if (!titleAr) {
+                showAlert('Terms & Conditions title (Arabic) is required', 'error');
+                return;
+            }
+            if (!contentEn) {
+                showAlert('Terms & Conditions content (English) is required', 'error');
+                return;
+            }
+            if (!contentAr) {
+                showAlert('Terms & Conditions content (Arabic) is required', 'error');
+                return;
+            }
+
+            localStorage.setItem('terms-title-en', titleEn);
+            localStorage.setItem('terms-title-ar', titleAr);
+            localStorage.setItem('terms-content-en', contentEn);
+            localStorage.setItem('terms-content-ar', contentAr);
+
+            showAlert('Terms & Conditions saved successfully!', 'success');
+        });
+
+        // Preview functions
+        function previewPrivacy() {
+            const lang = localStorage.getItem('lakum_language') || 'en';
+            const contentKey = lang === 'ar' ? 'privacy-content-ar' : 'privacy-content-en';
+            const content = document.getElementById(contentKey.replace('-', '_')).value || localStorage.getItem(contentKey);
+            const preview = document.getElementById('privacy-preview');
+            const previewContent = document.getElementById('privacy-preview-content');
+            
+            previewContent.innerHTML = content;
+            preview.style.display = 'block';
+        }
+
+        function previewTerms() {
+            const lang = localStorage.getItem('lakum_language') || 'en';
+            const contentKey = lang === 'ar' ? 'terms-content-ar' : 'terms-content-en';
+            const content = document.getElementById(contentKey.replace('-', '_')).value || localStorage.getItem(contentKey);
+            const preview = document.getElementById('terms-preview');
+            const previewContent = document.getElementById('terms-preview-content');
+            
+            previewContent.innerHTML = content;
+            preview.style.display = 'block';
+        }
+
+        // Show alert
+        function showAlert(message, type) {
+            const alertContainer = document.getElementById('alert-container');
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type}`;
+            alert.textContent = message;
+            
+            alertContainer.innerHTML = '';
+            alertContainer.appendChild(alert);
+            
+            setTimeout(() => {
+                alert.remove();
+            }, 5000);
+        }
+
+        // Load content on page load
+        window.addEventListener('DOMContentLoaded', loadContent);
+
+        // Mobile menu toggle
+        document.querySelector('.lakum-header__mobile-toggle').addEventListener('click', function() {
+            this.classList.toggle('lakum-header__mobile-toggle--active');
+            document.querySelector('.lakum-nav').classList.toggle('lakum-nav--active');
+        });
+    </script>
+</body>
+
+</html>
+
+
+
+    <script src="config.js"></script>
+    <script src="../assest/popup-notification.js?v=5.0.0" defer></script>

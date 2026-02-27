@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Edit Pricing - LAKUM</title>
+    <link rel="icon" href="../../assest/favicon.png" type="image/png">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="admin-style.css?v=3">
+    <link rel="stylesheet" href="event-form-style.css?v=3">
+    <link rel="stylesheet" href="../assest/popup-notification.css?v=3">
+</head>
+
+<body>
+    <div class="admin-container">
+        <aside class="sidebar">
+            <div class="logo">
+                <h3 style="font-size: 24px; font-weight: 300; letter-spacing: 2px; margin: 0;">LAKUM</h3>
+            </div>
+
+            <div class="sidebar-lang-toggle">
+                <a href="?lang=ar" class="sidebar-lang-btn">
+                    <i class="ri-global-line"></i>
+                    <span>العربية</span>
+                </a>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item">
+                    <i class="ri-dashboard-line"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="events.html" class="nav-item">
+                    <i class="ri-calendar-event-line"></i>
+                    <span>Events</span>
+                </a>
+                <a href="blogs.html" class="nav-item">
+                    <i class="ri-article-line"></i>
+                    <span>Blogs</span>
+                </a>
+                <a href="press.html" class="nav-item">
+                    <i class="ri-newspaper-line"></i>
+                    <span>Press</span>
+                </a>
+                <a href="pricing.html" class="nav-item active">
+                    <i class="ri-price-tag-3-line"></i>
+                    <span>Pricing</span>
+                </a>
+                <a href="legal-pages.html" class="nav-item">
+                    <i class="ri-file-text-line"></i>
+                    <span>Legal Pages</span>
+                </a>
+                <a href="settings.html" class="nav-item">
+                    <i class="ri-settings-3-line"></i>
+                    <span>Settings</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="login.html" class="logout-btn">
+                    <i class="ri-logout-box-line"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <a href="../../index.html" target="_blank" class="admin-floating-btn" title="View Website">
+                <i class="ri-external-link-line"></i>
+            </a>
+
+            <header>
+                <h1><i class="ri-edit-line"></i> Edit Pricing</h1>
+                <a href="pricing.html" class="btn-secondary"><i class="ri-arrow-left-line"></i> Back</a>
+            </header>
+
+            <div class="modern-form-container">
+                <form method="POST" id="pricingForm">
+                    <input type="hidden" name="id" id="pricingId">
+
+                    <div class="form-section">
+                        <h3><i class="ri-information-line"></i> Pricing Details</h3>
+
+                        <!-- English Section -->
+                        <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; margin-bottom: 30px; border-left: 4px solid #000;">
+                            <h4 style="margin: 0 0 16px 0; font-size: 1rem; font-weight: 600;">English</h4>
+                            
+                            <div class="form-group">
+                                <label for="name_en">Price Name (EN) *</label>
+                                <input type="text" id="name_en" name="name_en" placeholder="e.g., Hall 1, Meeting Room" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="description_en">Description (EN)</label>
+                                <textarea id="description_en" name="description_en" rows="6" placeholder="Enter description in English..."></textarea>
+                                <div class="char-count"><span id="charCount_en">0</span> characters</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="duration_en">Duration (EN)</label>
+                                <input type="text" id="duration_en" name="duration_en" placeholder="e.g., Full day, Half day">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="features_en">Features (EN)</label>
+                                <textarea id="features_en" name="features_en" rows="4" placeholder="Feature 1, Feature 2, Feature 3..."></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Arabic Section -->
+                        <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; margin-bottom: 30px; border-left: 4px solid #999;">
+                            <h4 style="margin: 0 0 16px 0; font-size: 1rem; font-weight: 600;">العربية</h4>
+                            
+                            <div class="form-group">
+                                <label for="name_ar">Price Name (AR) *</label>
+                                <input type="text" id="name_ar" name="name_ar" placeholder="مثال: القاعة 1، غرفة الاجتماعات" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="description_ar">Description (AR)</label>
+                                <textarea id="description_ar" name="description_ar" rows="6" placeholder="أدخل الوصف بالعربية..." dir="rtl"></textarea>
+                                <div class="char-count"><span id="charCount_ar">0</span> characters</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="duration_ar">Duration (AR)</label>
+                                <input type="text" id="duration_ar" name="duration_ar" placeholder="مثال: يوم كامل، نصف يوم" dir="rtl">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="features_ar">Features (AR)</label>
+                                <textarea id="features_ar" name="features_ar" rows="4" placeholder="الميزة 1، الميزة 2، الميزة 3..." dir="rtl"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="price">Amount</label>
+                                <input type="text" id="price" name="price" placeholder="e.g., 12000">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="price_unit">Price Unit</label>
+                                <select id="price_unit" name="price_unit">
+                                    <option value="SAR/day">SAR/day</option>
+                                    <option value="SAR/hour">SAR/hour</option>
+                                    <option value="SAR">SAR</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="price_sec">Secondary Price</label>
+                            <input type="text" id="price_sec" name="price_sec" placeholder="e.g., Hall 1: 1,000 SAR/hour">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="vat_note">VAT Note</label>
+                            <input type="text" id="vat_note" name="vat_note" value="*(excluding VAT)">
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="display_order">Display Order</label>
+                                <input type="number" id="display_order" name="display_order" value="0">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Status</label>
+                                <label style="display: flex; align-items: center; gap: 8px; margin-top: 10px; cursor: pointer;">
+                                    <input type="checkbox" id="is_active" name="is_active" checked style="width: 18px; height: 18px;">
+                                    Active (visible on website)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions-modern">
+                        <button type="submit" class="btn-primary-modern">
+                            <i class="ri-check-line"></i> Update
+                        </button>
+                        <a href="pricing.html" class="btn-secondary-modern">
+                            <i class="ri-close-line"></i> Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <script src="config.js?v=2"></script>
+    <script src="form-reset.js?v=2"></script>
+    <script>
+        console.log('Edit Pricing Form Loaded');
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM Content Loaded');
+            const pricingForm = document.getElementById('pricingForm');
+            const priceInput = document.getElementById('price');
+            const nameArField = document.getElementById('name_ar');
+            
+            console.log('Form found:', !!pricingForm);
+            console.log('Name AR field found:', !!nameArField);
+            console.log('Price input found:', !!priceInput);
+
+            if (priceInput) {
+                priceInput.addEventListener('input', function() {
+                    this.value = this.value.replace(/[^\d]/g, '');
+                });
+            }
+
+            // Character count for English
+            const descEn = document.getElementById('description_en');
+            const charCountEn = document.getElementById('charCount_en');
+            if (descEn && charCountEn) {
+                descEn.addEventListener('input', () => {
+                    charCountEn.textContent = descEn.value.length;
+                });
+            }
+
+            // Character count for Arabic
+            const descAr = document.getElementById('description_ar');
+            const charCountAr = document.getElementById('charCount_ar');
+            if (descAr && charCountAr) {
+                descAr.addEventListener('input', () => {
+                    charCountAr.textContent = descAr.value.length;
+                });
+            }
+
+            if (pricingForm) {
+                pricingForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    
+                    const name_en = document.getElementById('name_en').value.trim();
+                    const name_ar = document.getElementById('name_ar').value.trim();
+                    
+                    if (!name_en) {
+                        showPopup('Price name (English) is required', 'error');
+                        return false;
+                    }
+                    if (!name_ar) {
+                        showPopup('Price name (Arabic) is required', 'error');
+                        return false;
+                    }
+
+                    const submitBtn = this.querySelector('button[type="submit"]');
+                    if (submitBtn) {
+                        submitBtn.innerHTML = '<i class="ri-loader-4-line"></i> Updating...';
+                        submitBtn.disabled = true;
+                    }
+
+                    const updatedPricing = {
+                        id: document.getElementById('pricingId').value,
+                        name_en: name_en,
+                        name_ar: name_ar,
+                        description_en: document.getElementById('description_en').value.trim(),
+                        description_ar: document.getElementById('description_ar').value.trim(),
+                        duration_en: document.getElementById('duration_en').value.trim(),
+                        duration_ar: document.getElementById('duration_ar').value.trim(),
+                        features_en: document.getElementById('features_en').value.trim(),
+                        features_ar: document.getElementById('features_ar').value.trim(),
+                        price: document.getElementById('price').value.replace(/,/g, ''),
+                        price_unit: document.getElementById('price_unit').value,
+                        price_sec: document.getElementById('price_sec').value.trim(),
+                        vat_note: document.getElementById('vat_note').value.trim(),
+                        display_order: document.getElementById('display_order').value,
+                        is_active: document.getElementById('is_active').checked ? '1' : '0'
+                    };
+
+                    try {
+                        const response = await fetch(getApiUrl('edit_pricing.php'), {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(updatedPricing)
+                        });
+
+                        const data = await response.json();
+
+                        if (data.success) {
+                            showPopup('Pricing updated successfully!', 'success');
+                            setTimeout(() => {
+                                window.location.href = 'pricing.html';
+                            }, 1500);
+                        } else {
+                            showPopup('Error: ' + (data.message || 'Failed to update pricing'), 'error');
+                            if (submitBtn) {
+                                submitBtn.innerHTML = '<i class="ri-check-line"></i> Update';
+                                submitBtn.disabled = false;
+                            }
+                        }
+                    } catch (error) {
+                        console.error('Error updating pricing:', error);
+                        showPopup('Error: ' + error.message, 'error');
+                        if (submitBtn) {
+                            submitBtn.innerHTML = '<i class="ri-check-line"></i> Update';
+                            submitBtn.disabled = false;
+                        }
+                    }
+                });
+            }
+
+            // Load pricing data
+            loadPricing();
+        });
+
+        async function loadPricing() {
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id');
+            
+            if (!id) {
+                console.warn('No pricing ID provided');
+                return;
+            }
+
+            try {
+                const response = await fetch(getApiUrl('get_pricing_by_id.php') + '?id=' + id);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                
+                if (data.success && data.data) {
+                    populateForm(data.data);
+                } else {
+                    console.warn('Failed to load pricing data: ' + (data.message || 'Unknown error'));
+                }
+            } catch (error) {
+                console.error('Error loading pricing:', error);
+            }
+        }
+
+        function populateForm(pricing) {
+            document.getElementById('pricingId').value = pricing.id;
+            document.getElementById('name_en').value = pricing.name_en || pricing.title || '';
+            document.getElementById('description_en').value = pricing.description_en || '';
+            document.getElementById('duration_en').value = pricing.duration_en || '';
+            document.getElementById('features_en').value = pricing.features_en || '';
+            
+            document.getElementById('name_ar').value = pricing.name_ar || '';
+            document.getElementById('description_ar').value = pricing.description_ar || '';
+            document.getElementById('duration_ar').value = pricing.duration_ar || '';
+            document.getElementById('features_ar').value = pricing.features_ar || '';
+            
+            document.getElementById('price').value = pricing.price || '';
+            document.getElementById('price_unit').value = pricing.price_unit || 'SAR/day';
+            document.getElementById('price_sec').value = pricing.price_secondary || '';
+            document.getElementById('vat_note').value = pricing.vat_note || '*(excluding VAT)';
+            document.getElementById('display_order').value = pricing.display_order || 0;
+            document.getElementById('is_active').checked = pricing.is_active;
+            
+            // Update character counts
+            document.getElementById('charCount_en').textContent = (pricing.description_en || '').length;
+            document.getElementById('charCount_ar').textContent = (pricing.description_ar || '').length;
+        }
+
+        function getApiUrl(endpoint) {
+            const baseUrl = window.location.pathname.split('/admin/')[0];
+            return baseUrl + '/api/' + endpoint;
+        }
+    </script>
+
+    <script src="../assest/popup-notification.js?v=6.0.0" defer></script>
+</body>
+
+</html>

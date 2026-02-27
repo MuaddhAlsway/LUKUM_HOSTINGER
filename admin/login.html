@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - LAKUM Artspace</title>
+    <link rel="icon" href="../../assest/favicon.png" type="image/png">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="../assest/popup-notification.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Atyp Kido TRIAL', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-weight: 300;
+            background: #f6f6eb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .login-container {
+            background: white;
+            padding: clamp(40px, 5vw, 60px);
+            border-radius: 2px;
+            border: 1px solid #e5e5d8;
+            width: 100%;
+            max-width: 440px;
+            animation: slideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .lang-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        .lang-toggle a {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            background: #f6f6eb;
+            border: 1px solid #e5e5d8;
+            border-radius: 2px;
+            color: #1a1a1a;
+            text-decoration: none;
+            font-size: 13px;
+            transition: all 0.3s ease;
+        }
+
+        .lang-toggle a:hover {
+            background: #1a1a1a;
+            color: white;
+            border-color: #1a1a1a;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 40px;
+            margin-top: 20px;
+        }
+
+        .logo img {
+            width: 140px;
+            height: auto;
+            object-fit: contain;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #1a1a1a;
+            font-size: 28px;
+            font-weight: 300;
+            letter-spacing: -0.5px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #1a1a1a;
+            font-weight: 400;
+            font-size: 14px;
+            letter-spacing: 0.3px;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid #e5e5d8;
+            border-radius: 2px;
+            font-size: 14px;
+            font-family: inherit;
+            font-weight: 300;
+            color: #1a1a1a;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            outline: none;
+            border-color: #1a1a1a;
+            box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.05);
+        }
+
+        .error {
+            background: rgba(194, 24, 91, 0.1);
+            color: #c2185b;
+            padding: 14px 16px;
+            border-radius: 2px;
+            margin-bottom: 24px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 300;
+            border: 1px solid rgba(194, 24, 91, 0.2);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        .error.show {
+            display: flex;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .error i {
+            font-size: 18px;
+        }
+
+        button {
+            width: 100%;
+            padding: 16px;
+            background: #1a1a1a;
+            color: white;
+            border: none;
+            border-radius: 2px;
+            font-size: 15px;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        button:hover {
+            background: #525252;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        button i {
+            font-size: 18px;
+        }
+
+        .login-footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid #e5e5d8;
+            color: #8a8a8a;
+            font-size: 13px;
+            font-weight: 300;
+        }
+
+        .login-footer a {
+            color: #1a1a1a;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 20px;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        .login-footer a:hover {
+            color: #525252;
+        }
+
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 30px 24px;
+            }
+            h2 {
+                font-size: 24px;
+            }
+        }
+
+        [dir="rtl"] body {
+            font-family: 'Tajawal', 'Cairo', sans-serif;
+        }
+
+        [dir="rtl"] label,
+        [dir="rtl"] input,
+        [dir="rtl"] .form-group {
+            text-align: right;
+        }
+
+        [dir="rtl"] input::placeholder {
+            text-align: right;
+        }
+
+        [dir="rtl"] button {
+            flex-direction: row-reverse;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-container">
+        <div class="lang-toggle">
+            <a href="login.html?lang=ar">
+                <i class="ri-global-line"></i>
+                العربية
+            </a>
+        </div>
+
+        <div class="logo">
+            <h3 style="font-size: 32px; font-weight: 300; letter-spacing: 2px;">LAKUM</h3>
+        </div>
+        <h2>Admin Panel</h2>
+
+        <div class="error" id="errorMessage">
+            <i class="ri-error-warning-line"></i>
+            <span id="errorText">Invalid username or password</span>
+        </div>
+
+        <form method="POST" action="" id="loginForm">
+            <div class="form-group">
+                <label for="username">Email</label>
+                <input type="text" id="username" name="username" placeholder="Enter your email" required autofocus>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            </div>
+            <button type="submit">
+                <i class="ri-login-box-line"></i>
+                Sign In
+            </button>
+        </form>
+
+        <div class="login-footer">
+            <a href="forgot_password.html">
+                <i class="ri-lock-unlock-line"></i> Forgot Password?
+            </a>
+            <div style="padding-top: 20px; border-top: 1px solid #e5e5d8;">
+                LAKUM Artspace © 2026
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Valid admin credentials (from DATABASE_SETUP.sql)
+        const VALID_CREDENTIALS = {
+            'admin@lakumartspace.com': 'admin123'
+        };
+        
+        // Handle login form submission
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const errorMessage = document.getElementById('errorMessage');
+            const errorText = document.getElementById('errorText');
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalHTML = submitBtn.innerHTML;
+            
+            // Validate inputs
+            if (!email || !password) {
+                errorText.textContent = 'Please enter both email and password';
+                errorMessage.classList.add('show');
+                return;
+            }
+            
+            // Show loading state
+            submitBtn.innerHTML = '<i class="ri-loader-4-line" style="animation: spin 1s linear infinite;"></i> Signing in...';
+            submitBtn.disabled = true;
+            
+            // Try backend API first
+            fetch('../api/auth.php?action=login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: email,
+                    password: password
+                }),
+                timeout: 5000
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Successful login via backend
+                    errorMessage.classList.remove('show');
+                    // Store session info in sessionStorage (persists during browser session)
+                    sessionStorage.setItem('admin_logged_in', 'true');
+                    sessionStorage.setItem('admin_email', email);
+                    sessionStorage.setItem('admin_name', data.admin?.name || 'Admin');
+                    sessionStorage.setItem('admin_login_time', new Date().getTime());
+                    // Redirect to dashboard
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 300);
+                } else {
+                    // Failed login
+                    errorText.textContent = data.message || 'Invalid email or password';
+                    errorMessage.classList.add('show');
+                    shakeError(errorMessage);
+                }
+                
+                // Reset button
+                submitBtn.innerHTML = originalHTML;
+                submitBtn.disabled = false;
+            })
+            .catch(error => {
+                // Backend unavailable, use fallback authentication
+                console.log('Backend unavailable, using fallback auth');
+                
+                if (VALID_CREDENTIALS[email] && VALID_CREDENTIALS[email] === password) {
+                    // Successful login via fallback
+                    errorMessage.classList.remove('show');
+                    // Store session info in sessionStorage (persists during browser session)
+                    sessionStorage.setItem('admin_logged_in', 'true');
+                    sessionStorage.setItem('admin_email', email);
+                    sessionStorage.setItem('admin_name', 'Admin');
+                    sessionStorage.setItem('admin_login_time', new Date().getTime());
+                    // Redirect to dashboard
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 300);
+                } else {
+                    // Failed login
+                    errorText.textContent = 'Invalid email or password';
+                    errorMessage.classList.add('show');
+                    shakeError(errorMessage);
+                }
+                
+                // Reset button
+                submitBtn.innerHTML = originalHTML;
+                submitBtn.disabled = false;
+            });
+        });
+        
+        function shakeError(element) {
+            element.style.animation = 'none';
+            setTimeout(() => {
+                element.style.animation = 'shake 0.5s ease-in-out';
+            }, 10);
+        }
+        
+        // Clear error message when user starts typing
+        document.getElementById('username').addEventListener('input', function() {
+            document.getElementById('errorMessage').classList.remove('show');
+        });
+        
+        document.getElementById('password').addEventListener('input', function() {
+            document.getElementById('errorMessage').classList.remove('show');
+        });
+    </script>
+</body>
+
+</html>
+
+
+
+    <script src="../assest/popup-notification.js?v=5.0.0" defer></script>

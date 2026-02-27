@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - LAKUM</title>
+    <link rel="icon" href="../../assest/favicon.png" type="image/png">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="admin-style.css">
+    <link rel="stylesheet" href="../assest/popup-notification.css">
+</head>
+
+<body>
+    <div class="admin-container">
+        <aside class="sidebar">
+            <!-- Logo -->
+            <div class="logo">
+                <h3 style="font-size: 24px; font-weight: 300; letter-spacing: 2px; margin: 0;">LAKUM</h3>
+            </div>
+
+            <!-- Language Toggle -->
+            <div class="sidebar-lang-toggle">
+                <a href="dashboard.html?lang=ar" class="sidebar-lang-btn">
+                    <i class="ri-global-line"></i>
+                    <span>العربية</span>
+                </a>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item active">
+                    <i class="ri-dashboard-line"></i>
+                    <span>Dashboard</span>
+                </a>
+
+                <a href="events.html" class="nav-item">
+                    <i class="ri-calendar-event-line"></i>
+                    <span>Events</span>
+                </a>
+
+                <a href="blogs.html" class="nav-item">
+                    <i class="ri-article-line"></i>
+                    <span>Blogs</span>
+                </a>
+
+                <a href="press.html" class="nav-item">
+                    <i class="ri-newspaper-line"></i>
+                    <span>Press</span>
+                </a>
+
+                <a href="pricing.html" class="nav-item">
+                    <i class="ri-price-tag-3-line"></i>
+                    <span>Pricing</span>
+                </a>
+
+                <a href="legal-pages.html" class="nav-item">
+                    <i class="ri-file-text-line"></i>
+                    <span>Legal Pages</span>
+                </a>
+
+                <a href="settings.html" class="nav-item">
+                    <i class="ri-settings-3-line"></i>
+                    <span>Settings</span>
+                </a>
+            </nav>
+
+            <!-- Logout Button -->
+            <div class="sidebar-footer">
+                <a href="#" class="logout-btn" onclick="logout(); return false;">
+                    <i class="ri-logout-box-line"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header>
+                <h1><i class="ri-dashboard-line"></i> <span id="pageTitle">Dashboard</span></h1>
+                <div class="user-info">
+                    <span>Welcome, Admin</span>
+                </div>
+            </header>
+
+            <!-- Floating View Website Button -->
+            <a href="../../" target="_blank" class="admin-floating-btn" title="View Website">
+                <i class="ri-external-link-line"></i>
+            </a>
+
+            <!-- OVERVIEW SECTION -->
+            <div id="overviewSection" class="content-section">
+                <!-- Stats Grid -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="ri-calendar-line"></i></div>
+                        <div class="stat-info">
+                            <h3 id="totalEvents">0</h3>
+                            <p>Total Events</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="ri-calendar-check-line"></i></div>
+                        <div class="stat-info">
+                            <h3 id="upcomingCount">0</h3>
+                            <p>Upcoming Events</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="ri-calendar-close-line"></i></div>
+                        <div class="stat-info">
+                            <h3 id="previousCount">0</h3>
+                            <p>Previous Events</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Upcoming Events -->
+                <div class="recent-events">
+                    <h2>Upcoming Events</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Date</th>
+                                <th>Location</th>
+                                <th>Category</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="upcomingEventsBody">
+                            <tr><td colspan="6" style="text-align: center; padding: 20px;">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Previous Events -->
+                <div class="recent-events" style="margin-top: 40px;">
+                    <h2>Previous Events</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Date</th>
+                                <th>Location</th>
+                                <th>Category</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="previousEventsBody">
+                            <tr><td colspan="6" style="text-align: center; padding: 20px;">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- EVENTS SECTION -->
+            <div id="eventsSection" class="content-section" style="display: none;">
+                <div style="margin-bottom: 20px;">
+                    <a href="add-event.html" class="btn-primary" style="display: inline-block; padding: 10px 20px; background: #1a1a1a; color: white; text-decoration: none; border-radius: 4px;">
+                        <i class="ri-add-line"></i> Add New Event
+                    </a>
+                </div>
+                <div class="recent-events">
+                    <h2>All Events</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Date</th>
+                                <th>Location</th>
+                                <th>Category</th>
+                                <th>Status</th>
+                                <th>Featured</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="allEventsBody">
+                            <tr><td colspan="7" style="text-align: center; padding: 20px;">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- BLOGS SECTION -->
+            <div id="blogsSection" class="content-section" style="display: none;">
+                <div style="margin-bottom: 20px;">
+                    <a href="add-blog.html" class="btn-primary" style="display: inline-block; padding: 10px 20px; background: #1a1a1a; color: white; text-decoration: none; border-radius: 4px;">
+                        <i class="ri-add-line"></i> Add New Blog
+                    </a>
+                </div>
+                <div class="recent-events">
+                    <h2>All Blogs</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Author</th>
+                                <th>Category</th>
+                                <th>Date</th>
+                                <th>Featured</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="allBlogsBody">
+                            <tr><td colspan="6" style="text-align: center; padding: 20px;">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- PRICING SECTION -->
+            <div id="pricingSection" class="content-section" style="display: none;">
+                <div style="margin-bottom: 20px;">
+                    <a href="add-pricing.html" class="btn-primary" style="display: inline-block; padding: 10px 20px; background: #1a1a1a; color: white; text-decoration: none; border-radius: 4px;">
+                        <i class="ri-add-line"></i> Add New Pricing
+                    </a>
+                </div>
+                <div class="recent-events">
+                    <h2>All Pricing Options</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Price</th>
+                                <th>Unit</th>
+                                <th>Active</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="allPricingBody">
+                            <tr><td colspan="5" style="text-align: center; padding: 20px;">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- PRESS SECTION -->
+            <div id="pressSection" class="content-section" style="display: none;">
+                <div style="margin-bottom: 20px;">
+                    <a href="add-press.html" class="btn-primary" style="display: inline-block; padding: 10px 20px; background: #1a1a1a; color: white; text-decoration: none; border-radius: 4px;">
+                        <i class="ri-add-line"></i> Add Press Release
+                    </a>
+                </div>
+                <div class="recent-events">
+                    <h2>Press Releases</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Date</th>
+                                <th>Category</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="allPressBody">
+                            <tr><td colspan="4" style="text-align: center; padding: 20px;">No press releases yet</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Check if user is logged in
+        (function() {
+            const isLoggedIn = sessionStorage.getItem('admin_logged_in') === 'true';
+            if (!isLoggedIn) {
+                // Not logged in, redirect to login
+                window.location.href = 'login.html';
+            }
+        })();
+
+        // Logout function
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                // Clear session storage
+                sessionStorage.removeItem('admin_logged_in');
+                sessionStorage.removeItem('admin_email');
+                sessionStorage.removeItem('admin_name');
+                sessionStorage.removeItem('admin_login_time');
+                // Redirect to login
+                window.location.href = 'login.html';
+            }
+        }
+
+        class Dashboard {
+            constructor() {
+                this.upcomingEvents = [];
+                this.previousEvents = [];
+                this.allEvents = [];
+                this.allBlogs = [];
+                this.allPricing = [];
+                this.allPress = [];
+                this.currentSection = 'overview';
+                this.init();
+            }
+
+            async init() {
+                await this.loadAllData();
+                console.log('Data loaded:', {
+                    allEvents: this.allEvents.length,
+                    upcomingEvents: this.upcomingEvents.length,
+                    previousEvents: this.previousEvents.length,
+                    allBlogs: this.allBlogs.length,
+                    allPricing: this.allPricing.length,
+                    allPress: this.allPress.length
+                });
+                this.updateStats();
+                this.renderEvents();
+                this.renderBlogs();
+                this.renderPricing();
+                this.renderPress();
+            }
+
+            async loadAllData() {
+                try {
+                    // Load all events from database API
+                    const timestamp = new Date().getTime();
+                    const allEventsRes = await fetch(`../api/get_events.php?type=all&limit=1000&t=${timestamp}`, {
+                        cache: 'no-store'
+                    });
+                    const allEventsData = await allEventsRes.json();
+                    
+                    if (allEventsData.success && allEventsData.data && allEventsData.data.length > 0) {
+                        this.allEvents = allEventsData.data;
+                    } else {
+                        this.allEvents = [];
+                    }
+
+                    // Load all blogs (allow empty array)
+                    const blogsRes = await fetch('../api/get_blogs.php?limit=1000');
+                    const blogsData = await blogsRes.json();
+                    if (blogsData.success && blogsData.data) {
+                        this.allBlogs = blogsData.data;
+                    } else {
+                        this.allBlogs = [];
+                    }
+
+                    // Load all pricing
+                    const pricingRes = await fetch('../api/get_pricing.php?limit=1000');
+                    const pricingData = await pricingRes.json();
+                    if (pricingData.success && pricingData.data && pricingData.data.length > 0) {
+                        this.allPricing = pricingData.data;
+                    } else {
+                        this.allPricing = [];
+                    }
+
+                    // Load all press (allow empty array)
+                    const pressRes = await fetch('../api/get_press.php?limit=1000');
+                    const pressData = await pressRes.json();
+                    if (pressData.success && pressData.data) {
+                        this.allPress = pressData.data;
+                    } else {
+                        this.allPress = [];
+                    }
+                } catch (error) {
+                    console.error('Error loading data:', error);
+                    alert('ERROR: Cannot connect to database. Make sure:\n1. XAMPP is running\n2. Apache is started\n3. You are accessing via http://localhost/');
+                    throw error;
+                }
+
+                // Filter upcoming and previous
+                const now = new Date();
+                now.setHours(0, 0, 0, 0);
+                this.upcomingEvents = this.allEvents.filter(e => {
+                    const eventDate = new Date(e.event_date);
+                    eventDate.setHours(0, 0, 0, 0);
+                    return eventDate >= now;
+                }).sort((a, b) => new Date(a.event_date) - new Date(b.event_date));
+                
+                this.previousEvents = this.allEvents.filter(e => {
+                    const eventDate = new Date(e.event_date);
+                    eventDate.setHours(0, 0, 0, 0);
+                    return eventDate < now;
+                }).sort((a, b) => new Date(b.event_date) - new Date(a.event_date));
+                
+                console.log('Filtered events:', {
+                    total: this.allEvents.length,
+                    upcoming: this.upcomingEvents.length,
+                    previous: this.previousEvents.length
+                });
+            }
+
+            getMockEvents() {
+                console.warn('Using fallback mock data - database may be unavailable');
+                return [
+                    { id: 1, title: 'Contemporary Art Exhibition 2026', event_date: '2026-03-15', location: 'Main Gallery', category: 'exhibition', is_featured: 1 },
+                    { id: 2, title: 'Photography Workshop - Advanced Techniques', event_date: '2026-03-20', location: 'Studio A', category: 'workshop', is_featured: 1 },
+                    { id: 3, title: 'Digital Art Masterclass - 3D Design', event_date: '2026-03-25', location: 'Tech Studio', category: 'masterclass', is_featured: 0 }
+                ];
+            }
+
+            getMockBlogs() {
+                console.warn('Using fallback mock data - database may be unavailable');
+                return [
+                    { id: 1, title: 'The Evolution of Contemporary Art', author: 'Sarah Johnson', category: 'Art History', created_at: '2026-02-01' },
+                    { id: 2, title: 'Photography Tips for Beginners', author: 'Michael Chen', category: 'Photography', created_at: '2026-02-03' }
+                ];
+            }
+
+            getMockPricing() {
+                console.warn('Using fallback mock data - database may be unavailable');
+                return [
+                    { id: 1, name: 'Single Workshop', price: 150, currency: 'SAR', duration: 'per session' },
+                    { id: 2, name: 'Monthly Membership', price: 499, currency: 'SAR', duration: 'per month' }
+                ];
+            }
+
+            getMockPress() {
+                console.warn('Using fallback mock data - database may be unavailable');
+                return [
+                    { id: 1, title: 'LAKUM Artspace Launches New Digital Gallery', press_date: '2026-02-01', category: 'Announcement' },
+                    { id: 2, title: 'Award-Winning Artists Join LAKUM Collective', press_date: '2026-01-28', category: 'News' }
+                ];
+            }
+
+            updateStats() {
+                const total = this.allEvents.length;
+                console.log('Updating stats:', {
+                    total: total,
+                    upcoming: this.upcomingEvents.length,
+                    previous: this.previousEvents.length
+                });
+                document.getElementById('totalEvents').textContent = total;
+                document.getElementById('upcomingCount').textContent = this.upcomingEvents.length;
+                document.getElementById('previousCount').textContent = this.previousEvents.length;
+            }
+
+            renderEvents() {
+                this.renderUpcomingEvents();
+                this.renderPreviousEvents();
+                this.renderAllEvents();
+            }
+
+            renderUpcomingEvents() {
+                const tbody = document.getElementById('upcomingEventsBody');
+                
+                // Use current data
+                if (this.upcomingEvents.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 20px;">No upcoming events</td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = this.upcomingEvents.slice(0, 5).map(event => {
+                    const eventDate = new Date(event.event_date);
+                    return `
+                        <tr>
+                            <td><strong>${event.title}</strong></td>
+                            <td>${eventDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</td>
+                            <td>${event.location}</td>
+                            <td>${event.category}</td>
+                            <td><span class="badge upcoming">Upcoming</span></td>
+                            <td>
+                                <a href="edit-event.html?id=${event.id}" class="btn-small">Edit</a>
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+            }
+
+            renderPreviousEvents() {
+                const tbody = document.getElementById('previousEventsBody');
+                
+                if (this.previousEvents.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 20px;">No previous events</td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = this.previousEvents.slice(0, 5).map(event => {
+                    const eventDate = new Date(event.event_date);
+                    return `
+                        <tr>
+                            <td><strong>${event.title}</strong></td>
+                            <td>${eventDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</td>
+                            <td>${event.location}</td>
+                            <td>${event.category}</td>
+                            <td><span class="badge past">Previous</span></td>
+                            <td>
+                                <a href="edit-event.html?id=${event.id}" class="btn-small">Edit</a>
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+            }
+
+            renderAllEvents() {
+                const tbody = document.getElementById('allEventsBody');
+                
+                if (this.allEvents.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 20px;">No events found</td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = this.allEvents.map(event => {
+                    const eventDate = new Date(event.event_date);
+                    const isUpcoming = eventDate >= new Date();
+                    const status = isUpcoming ? 'Upcoming' : 'Past';
+                    const statusClass = isUpcoming ? 'upcoming' : 'past';
+                    
+                    return `
+                        <tr>
+                            <td><strong>${event.title}</strong></td>
+                            <td>${eventDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</td>
+                            <td>${event.location}</td>
+                            <td>${event.category}</td>
+                            <td><span class="badge ${statusClass}">${status}</span></td>
+                            <td>${event.is_featured ? '<i class="ri-star-fill" style="color: #ff6b35;"></i>' : '-'}</td>
+                            <td>
+                                <a href="edit-event.html?id=${event.id}" class="btn-small">Edit</a>
+                                <button onclick="dashboard.deleteEvent(${event.id}, '${event.title}')" class="btn-small" style="background: #c2185b; color: white; border: none; cursor: pointer;">Delete</button>
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+            }
+
+            renderBlogs() {
+                const tbody = document.getElementById('allBlogsBody');
+                
+                if (this.allBlogs.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 20px;">No blogs found</td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = this.allBlogs.map(blog => {
+                    const createdDate = new Date(blog.created_at);
+                    return `
+                        <tr>
+                            <td><strong>${blog.title}</strong></td>
+                            <td>${blog.author}</td>
+                            <td>${blog.category}</td>
+                            <td>${createdDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</td>
+                            <td>${blog.is_featured ? '<i class="ri-star-fill" style="color: #ff6b35;"></i>' : '-'}</td>
+                            <td>
+                                <a href="edit-blog.html?id=${blog.id}" class="btn-small">Edit</a>
+                                <button onclick="dashboard.deleteBlog(${blog.id}, '${blog.title}')" class="btn-small" style="background: #c2185b; color: white; border: none; cursor: pointer;">Delete</button>
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+            }
+
+            renderPricing() {
+                const tbody = document.getElementById('allPricingBody');
+                
+                if (this.allPricing.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 20px;">No pricing found</td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = this.allPricing.map(pricing => {
+                    return `
+                        <tr>
+                            <td><strong>${pricing.name}</strong></td>
+                            <td>${pricing.price} ${pricing.currency}</td>
+                            <td>${pricing.duration}</td>
+                            <td>${pricing.is_active ? '<span style="color: green;">✓ Active</span>' : '<span style="color: red;">✗ Inactive</span>'}</td>
+                            <td>
+                                <a href="edit-pricing.html?id=${pricing.id}" class="btn-small">Edit</a>
+                                <button onclick="dashboard.deletePricing(${pricing.id}, '${pricing.name}')" class="btn-small" style="background: #c2185b; color: white; border: none; cursor: pointer;">Delete</button>
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+            }
+
+            renderPress() {
+                const tbody = document.getElementById('allPressBody');
+                
+                if (this.allPress.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; padding: 20px;">No press releases found</td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = this.allPress.map(press => {
+                    const pressDate = new Date(press.press_date);
+                    return `
+                        <tr>
+                            <td><strong>${press.title}</strong></td>
+                            <td>${pressDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</td>
+                            <td>${press.category}</td>
+                            <td>
+                                <a href="edit-press.html?id=${press.id}" class="btn-small">Edit</a>
+                                <button onclick="dashboard.deletePress(${press.id}, '${press.title}')" class="btn-small" style="background: #c2185b; color: white; border: none; cursor: pointer;">Delete</button>
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+            }
+
+            getMockPress() {
+                // Mock data archived - see MOCK_DATA_ARCHIVE folder
+                console.warn('Using fallback mock data - database may be unavailable');
+                return [];
+            }
+
+            showSection(section) {
+                // Hide all sections
+                document.querySelectorAll('.content-section').forEach(el => el.style.display = 'none');
+                
+                // Show selected section
+                const sectionEl = document.getElementById(section + 'Section');
+                if (sectionEl) {
+                    sectionEl.style.display = 'block';
+                }
+
+                // Update page title
+                const titles = {
+                    'overview': 'Dashboard',
+                    'events': 'Events Management',
+                    'blogs': 'Blogs Management',
+                    'pricing': 'Pricing Management',
+                    'press': 'Press Releases'
+                };
+                document.getElementById('pageTitle').textContent = titles[section] || 'Dashboard';
+
+                // Update active nav item
+                document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+                event.target.closest('.nav-item').classList.add('active');
+
+                this.currentSection = section;
+            }
+
+            async deleteEvent(id, title) {
+                if (!confirm(`Delete event "${title}"?`)) return;
+                
+                try {
+                    const response = await fetch('../api/delete_event.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ id: id })
+                    });
+                    
+                    const data = await response.json();
+                    if (data.success) {
+                        alert('Event deleted successfully');
+                        this.allEvents = this.allEvents.filter(e => e.id !== id);
+                        this.upcomingEvents = this.upcomingEvents.filter(e => e.id !== id);
+                        this.previousEvents = this.previousEvents.filter(e => e.id !== id);
+                        this.updateStats();
+                        this.renderEvents();
+                    } else {
+                        alert('Error deleting event');
+                    }
+                } catch (error) {
+                    console.error('Delete error:', error);
+                    alert('Error deleting event');
+                }
+            }
+
+            async deleteBlog(id, title) {
+                if (!confirm(`Delete blog "${title}"?`)) return;
+                
+                try {
+                    const response = await fetch('../api/delete_blog_simple.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ id: id })
+                    });
+                    
+                    const data = await response.json();
+                    if (data.success) {
+                        alert('Blog deleted successfully');
+                        this.allBlogs = this.allBlogs.filter(b => b.id !== id);
+                        this.renderBlogs();
+                    } else {
+                        alert('Error deleting blog');
+                    }
+                } catch (error) {
+                    console.error('Delete error:', error);
+                    alert('Error deleting blog');
+                }
+            }
+
+            async deletePricing(id, title) {
+                if (!confirm(`Delete pricing "${title}"?`)) return;
+                
+                try {
+                    const response = await fetch('../api/delete_pricing.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ id: id })
+                    });
+                    
+                    const data = await response.json();
+                    if (data.success) {
+                        alert('Pricing deleted successfully');
+                        this.allPricing = this.allPricing.filter(p => p.id !== id);
+                        this.renderPricing();
+                    } else {
+                        alert('Error deleting pricing');
+                    }
+                } catch (error) {
+                    console.error('Delete error:', error);
+                    alert('Error deleting pricing');
+                }
+            }
+
+            async deletePress(id, title) {
+                if (!confirm(`Delete press release "${title}"?`)) return;
+                
+                try {
+                    const response = await fetch('../api/delete_press.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ id: id })
+                    });
+                    
+                    const data = await response.json();
+                    if (data.success) {
+                        alert('Press release deleted successfully');
+                        this.allPress = this.allPress.filter(p => p.id !== id);
+                        this.renderPress();
+                    } else {
+                        alert('Error deleting press release');
+                    }
+                } catch (error) {
+                    console.error('Delete error:', error);
+                    alert('Error deleting press release');
+                }
+            }
+        }
+
+        let dashboard;
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            dashboard = new Dashboard();
+            
+            // Reload events when page becomes visible (after returning from edit)
+            document.addEventListener('visibilitychange', () => {
+                if (!document.hidden) {
+                    dashboard.loadAllData();
+                    dashboard.updateStats();
+                    dashboard.renderEvents();
+                }
+            });
+            
+            // Also reload on page focus
+            window.addEventListener('focus', () => {
+                dashboard.loadAllData();
+                dashboard.updateStats();
+                dashboard.renderEvents();
+            });
+        });
+    </script>
+</body>
+
+</html>
+
+
+
+    <script src="../assest/popup-notification.js?v=5.0.0" defer></script>

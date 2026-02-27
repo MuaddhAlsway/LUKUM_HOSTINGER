@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Event - LAKUM</title>
+    <link rel="icon" href="../../assest/favicon.png" type="image/png">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="admin-style.css">
+    <link rel="stylesheet" href="event-form-style.css">
+    <link rel="stylesheet" href="../assest/popup-notification.css">
+    <style>
+        #coverImg {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="admin-container">
+        <aside class="sidebar">
+            <div class="logo">
+                <h3 style="font-size: 24px; font-weight: 300; letter-spacing: 2px; margin: 0;">LAKUM</h3>
+            </div>
+
+            <div class="sidebar-lang-toggle">
+                <a href="?lang=ar" class="sidebar-lang-btn">
+                    <i class="ri-global-line"></i>
+                    <span>العربية</span>
+                </a>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item">
+                    <i class="ri-dashboard-line"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="events.html" class="nav-item active">
+                    <i class="ri-calendar-event-line"></i>
+                    <span>Events</span>
+                </a>
+                <a href="blogs.html" class="nav-item">
+                    <i class="ri-article-line"></i>
+                    <span>Blogs</span>
+                </a>
+                <a href="press.html" class="nav-item">
+                    <i class="ri-newspaper-line"></i>
+                    <span>Press</span>
+                </a>
+                <a href="pricing.html" class="nav-item">
+                    <i class="ri-price-tag-3-line"></i>
+                    <span>Pricing</span>
+                </a>
+                <a href="legal-pages.html" class="nav-item">
+                    <i class="ri-file-text-line"></i>
+                    <span>Legal Pages</span>
+                </a>
+                <a href="settings.html" class="nav-item">
+                    <i class="ri-settings-3-line"></i>
+                    <span>Settings</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="login.html" class="logout-btn">
+                    <i class="ri-logout-box-line"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <a href="../../index.html" target="_blank" class="admin-floating-btn" title="View Website">
+                <i class="ri-external-link-line"></i>
+            </a>
+
+            <header>
+                <h1><i class="ri-edit-line"></i> Edit Event</h1>
+                <a href="events.html" class="btn-secondary"><i class="ri-arrow-left-line"></i> Back</a>
+            </header>
+
+            <div class="modern-form-container">
+                <form method="POST" enctype="multipart/form-data" id="eventForm">
+                    <input type="hidden" name="id" id="eventId">
+
+                    <!-- Cover Image Section -->
+                    <div class="cover-upload-section">
+                        <div class="cover-preview" id="coverPreview">
+                            <div class="cover-placeholder">
+                                <i class="ri-image-add-line"></i>
+                                <p>Click to upload cover image</p>
+                                <span>Recommended: 1200x800px</span>
+                            </div>
+                            <img id="coverImg" style="display: none;">
+                            <button type="button" class="remove-cover" id="removeCover" style="display: none;">
+                                <i class="ri-close-line"></i>
+                            </button>
+                        </div>
+                        <input type="file" id="cover_image" name="cover_image" accept="image/*" style="display: none;">
+                    </div>
+
+                    <!-- Event Details -->
+                    <div class="form-section">
+                        <h3><i class="ri-information-line"></i> Event Details</h3>
+
+                        <!-- English Section -->
+                        <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; margin-bottom: 30px; border-left: 4px solid #000;">
+                            <h4 style="margin: 0 0 16px 0; font-size: 1rem; font-weight: 600;">English</h4>
+                            
+                            <div class="form-group">
+                                <label for="title_en">Event Title (EN) *</label>
+                                <input type="text" id="title_en" name="title_en" placeholder="Enter event title in English" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="description_en">Description (EN)</label>
+                                <textarea id="description_en" name="description_en" rows="5" placeholder="Describe your event in English..."></textarea>
+                                <div class="char-count"><span id="charCount_en">0</span> characters</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="location_en">Location (EN)</label>
+                                <select id="location_select_en" name="location_select_en" onchange="handleLocationChange(this, 'en')">
+                                    <option value="">Select location...</option>
+                                    <option value="Hall 1">Hall 1</option>
+                                    <option value="Hall 2">Hall 2</option>
+                                    <option value="Café">Café</option>
+                                    <option value="Meeting Room">Meeting Room</option>
+                                    <option value="other">Other (Custom)</option>
+                                </select>
+                                <input type="text" id="location_en" name="location_en" placeholder="Enter custom location" style="display: none; margin-top: 10px;">
+                            </div>
+                        </div>
+
+                        <!-- Arabic Section -->
+                        <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; margin-bottom: 30px; border-left: 4px solid #999;">
+                            <h4 style="margin: 0 0 16px 0; font-size: 1rem; font-weight: 600;">العربية</h4>
+                            
+                            <div class="form-group">
+                                <label for="title_ar">Event Title (AR)</label>
+                                <input type="text" id="title_ar" name="title_ar" placeholder="أدخل عنوان الحدث بالعربية" dir="rtl">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="description_ar">Description (AR)</label>
+                                <textarea id="description_ar" name="description_ar" rows="5" placeholder="صف حدثك بالعربية..." dir="rtl"></textarea>
+                                <div class="char-count"><span id="charCount_ar">0</span> characters</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="location_ar">Location (AR)</label>
+                                <select id="location_select_ar" name="location_select_ar" onchange="handleLocationChange(this, 'ar')">
+                                    <option value="">اختر الموقع...</option>
+                                    <option value="Hall 1">Hall 1</option>
+                                    <option value="Hall 2">Hall 2</option>
+                                    <option value="Café">Café</option>
+                                    <option value="Meeting Room">Meeting Room</option>
+                                    <option value="other">أخرى (مخصص)</option>
+                                </select>
+                                <input type="text" id="location_ar" name="location_ar" placeholder="أدخل موقع مخصص" style="display: none; margin-top: 10px;" dir="rtl">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Date & Time Section -->
+                    <div class="form-section">
+                        <h3><i class="ri-calendar-line"></i> Date & Time</h3>
+
+                        <div class="form-group" style="margin-bottom: 30px;">
+                            <label style="display: block; margin-bottom: 12px; font-weight: 500;">Event Duration</label>
+                            <div style="display: flex; gap: 24px;">
+                                <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                    <input type="radio" name="event_duration_type" value="same_day" id="sameDayRadio" checked style="width: 18px; height: 18px; cursor: pointer;">
+                                    <span style="font-weight: 400;">Same Day Event</span>
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                    <input type="radio" name="event_duration_type" value="multi_day" id="multiDayRadio" style="width: 18px; height: 18px; cursor: pointer;">
+                                    <span style="font-weight: 400;">Multi-Day Event</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div style="background: #f6f6eb; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                            <h4 style="margin: 0 0 16px 0; font-size: 1.1rem; font-weight: 500;">
+                                <i class="ri-play-circle-line"></i> Start Date </h4>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="event_date">Date *</label>
+                                    <input type="date" id="event_date" name="event_date" required>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="event_time">Start Time</label>
+                                    <input type="time" id="event_time" name="event_time">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="event_end_time">End Time</label>
+                                    <input type="time" id="event_end_time" name="event_end_time">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="endDateSection" style="background: #edecdf; padding: 20px; border-radius: 8px; margin-bottom: 20px; display: none;">
+                            <h4 style="margin: 0 0 16px 0; font-size: 1.1rem; font-weight: 500;">
+                                <i class="ri-stop-circle-line"></i> End Date </h4>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="end_date">Date</label>
+                                    <input type="date" id="end_date" name="end_date">
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="end_date_start_time">Start Time</label>
+                                    <input type="time" id="end_date_start_time" name="end_date_start_time">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="end_time">End Time</label>
+                                    <input type="time" id="end_time" name="end_time">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="date-validation-msg" id="dateValidation"></div>
+                    </div>
+
+                    <!-- Video Section -->
+                    <div class="form-section">
+                        <h3><i class="ri-video-line"></i> Event Video (Optional)</h3>
+
+                        <div id="videoPreviewSection" style="display: none; margin-bottom: 20px; padding: 15px; background: #f9f9f9; border-radius: 8px;">
+                            <h4 style="margin: 0 0 12px 0; font-size: 0.95rem;">Current Video</h4>
+                            <div id="videoPreview" style="position: relative; width: 100%; max-width: 400px; margin-bottom: 10px;">
+                                <iframe id="videoFrame" width="100%" height="225" style="border-radius: 8px; border: none;" allowfullscreen></iframe>
+                            </div>
+                            <button type="button" id="removeVideoBtn" class="btn-danger" style="padding: 8px 16px; background: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;">
+                                <i class="ri-delete-bin-line"></i> Remove Video
+                            </button>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="video_url">Video URL</label>
+                            <input type="url" id="video_url" name="video_url" placeholder="https://www.youtube.com/watch?v=5.0.0 or https://vimeo.com/...">
+                            <small>Paste a YouTube or Vimeo video URL. Leave empty to remove the video.</small>
+                        </div>
+                    </div>
+
+                    <!-- Gallery Images Section -->
+                    <div class="form-section">
+                        <h3><i class="ri-gallery-line"></i> Gallery Images</h3>
+
+                        <div id="existingGallery" class="existing-gallery" style="display: none;">
+                            <h4>Existing Images</h4>
+                            <div class="gallery-preview" id="existingGalleryPreview"></div>
+                        </div>
+
+                        <div class="gallery-upload-area" id="galleryUploadArea">
+                            <i class="ri-image-add-line"></i>
+                            <p>Click or drag images here</p>
+                            <span>You can upload multiple images</span>
+                        </div>
+                        <input type="file" id="event_images" name="event_images[]" accept="image/*" multiple style="display: none;">
+
+                        <div class="gallery-preview" id="galleryPreview"></div>
+                    </div>
+
+                    <!-- Form Actions -->
+                    <div class="form-actions-modern">
+                        <button type="submit" class="btn-primary-modern" id="submitBtn">
+                            <i class="ri-check-line"></i> Update                        </button>
+                        <a href="events.html" class="btn-secondary-modern">
+                            <i class="ri-close-line"></i> Cancel                        </a>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <script src="form-reset.js"></script>
+    <script src="event-form.js"></script>
+    <script>
+        // Mock events data - archived and hidden from UI
+        // See MOCK_DATA_ARCHIVE folder for reference
+        // System now uses real database data
+        const mockEvents = [];
+
+        // Load event data from database API
+        async function loadEvent() {
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id') || null;
+            const lang = params.get('lang') || 'en';
+            
+            console.log('=== EDIT EVENT PAGE LOADED ===');
+            console.log('Event ID:', id);
+            console.log('Language:', lang);
+            
+            if (!id) {
+                alert('No event ID provided');
+                window.location.href = 'events.html';
+                return;
+            }
+
+            try {
+                // Try to fetch event details with gallery from API (with language parameter)
+                const response = await fetch(`../api/get_event_details_simple.php?id=${id}&lang=${lang}`);
+                const data = await response.json();
+                
+                console.log('Event API Response:', data);
+                console.log('Response status:', response.status);
+                
+                let event = null;
+                let gallery = [];
+                
+                if (data.success && data.data) {
+                    event = data.data;
+                    gallery = data.gallery || [];
+                    console.log('Loaded event from database:', event);
+                } else {
+                    console.warn('API returned error or no event:', data.message || data.error);
+                    alert('Error loading event: ' + (data.error || data.message || 'Unknown error'));
+                    // Try to load from mock data as fallback
+                    event = getMockEvent(id);
+                    if (event) {
+                        console.log('Using mock event data:', event);
+                    }
+                }
+                
+                if (event) {
+                    console.log('Loading event:', event);
+                    console.log('Form element exists:', !!document.getElementById('eventForm'));
+                    console.log('Title field exists:', !!document.getElementById('title_en'));
+                    populateForm(event);
+                    // Reinitialize multi-day toggle after form is populated
+                    initMultiDayToggle();
+                    if (gallery && gallery.length > 0) {
+                        console.log('Gallery images found:', gallery.length);
+                        displayExistingGallery(gallery);
+                    } else {
+                        console.log('No gallery images for this event');
+                    }
+                    console.log('=== FORM POPULATED SUCCESSFULLY ===');
+                } else {
+                    alert('Event not found');
+                    window.location.href = 'events.html';
+                }
+            } catch (error) {
+                console.error('Error loading event:', error);
+                alert('Error: ' + error.message);
+                // Try mock data as fallback
+                const mockEvent = getMockEvent(id);
+                if (mockEvent) {
+                    console.log('Using mock event due to error:', mockEvent);
+                    populateForm(mockEvent);
+                    initMultiDayToggle();
+                } else {
+                    alert('Error loading event: ' + error.message);
+                    window.location.href = 'events.html';
+                }
+            }
+        }
+
+        function getMockEvent(id) {
+            // Mock events data for testing
+            const mockEvents = {
+                1: {
+                    id: 1,
+                    title: 'Contemporary Art Exhibition 2025',
+                    description: 'Explore the latest contemporary art pieces from emerging artists around the world.',
+                    location: 'Main Gallery',
+                    event_date: '2025-02-15',
+                    event_time: '10:00',
+                    event_end_time: '18:00',
+                    category: 'exhibition',
+                    cover_image: 'assest/img-4.png'
+                }
+            };
+            return mockEvents[id] || null;
+        }
+
+        function displayExistingGallery(gallery) {
+            const existingGalleryDiv = document.getElementById('existingGallery');
+            const existingGalleryPreview = document.getElementById('existingGalleryPreview');
+            
+            if (gallery && gallery.length > 0) {
+                existingGalleryDiv.style.display = 'block';
+                existingGalleryPreview.innerHTML = gallery.map((img, index) => {
+                    // Fix image path - use absolute URL
+                    let imagePath = img.image_url;
+                    if (!imagePath.startsWith('http') && !imagePath.startsWith('/')) {
+                        imagePath = '../' + imagePath;
+                    }
+                    return `
+                    <div class="gallery-item" data-image-id="${img.id}" style="position: relative; display: inline-block; margin: 10px; border-radius: 8px; overflow: hidden;">
+                        <img src="${imagePath}" alt="Gallery image" style="width: 150px; height: 150px; object-fit: cover; border-radius: 8px;" onerror="this.src='../assest/img-4.png'">
+                        <button type="button" onclick="removeGalleryImage(${img.id})" style="position: absolute; top: 5px; right: 5px; background: rgba(0,0,0,0.7); color: white; border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+                            <i class="ri-close-line"></i>
+                        </button>
+                    </div>
+                `;
+                }).join('');
+            }
+        }
+
+        function removeGalleryImage(imageId) {
+            console.log('Remove gallery image ID:', imageId);
+            if (confirm('Are you sure you want to delete this image?')) {
+                fetch('../api/delete_event_gallery.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ id: imageId })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Remove from UI
+                        const galleryItem = document.querySelector(`[data-image-id="${imageId}"]`);
+                        if (galleryItem) {
+                            galleryItem.remove();
+                        }
+                        console.log('Image deleted successfully');
+                    } else {
+                        alert('Error deleting image: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error deleting image:', error);
+                    alert('Error deleting image');
+                });
+            }
+        }
+
+        // Video URL handling
+        function getVideoEmbedUrl(url) {
+            if (!url) return null;
+            
+            // YouTube
+            const youtubeRegex = /(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+            const youtubeMatch = url.match(youtubeRegex);
+            if (youtubeMatch) {
+                return `https://www.youtube.com/embed/${youtubeMatch[1]}`;
+            }
+            
+            // Vimeo
+            const vimeoRegex = /vimeo\.com\/(\d+)/;
+            const vimeoMatch = url.match(vimeoRegex);
+            if (vimeoMatch) {
+                return `https://player.vimeo.com/video/${vimeoMatch[1]}`;
+            }
+            
+            return null;
+        }
+
+        function displayVideoPreview(videoUrl) {
+            const videoPreviewSection = document.getElementById('videoPreviewSection');
+            const videoFrame = document.getElementById('videoFrame');
+            
+            if (!videoUrl) {
+                videoPreviewSection.style.display = 'none';
+                return;
+            }
+            
+            const embedUrl = getVideoEmbedUrl(videoUrl);
+            if (embedUrl) {
+                videoFrame.src = embedUrl;
+                videoPreviewSection.style.display = 'block';
+            } else {
+                videoPreviewSection.style.display = 'none';
+            }
+        }
+
+        function removeVideo() {
+            document.getElementById('video_url').value = '';
+            document.getElementById('videoPreviewSection').style.display = 'none';
+            console.log('Video removed');
+        }
+
+        // Initialize multi-day event toggle
+        function initMultiDayToggle() {
+            const sameDayRadio = document.getElementById('sameDayRadio');
+            const multiDayRadio = document.getElementById('multiDayRadio');
+            const endDateSection = document.getElementById('endDateSection');
+            const endDate = document.getElementById('end_date');
+
+            if (sameDayRadio && multiDayRadio && endDateSection) {
+                // Handle radio button changes
+                sameDayRadio.addEventListener('change', () => {
+                    if (sameDayRadio.checked) {
+                        endDateSection.style.display = 'none';
+                        // Clear end date fields when switching to same-day
+                        if (endDate) endDate.value = '';
+                        const endDateStartTime = document.getElementById('end_date_start_time');
+                        const endTime = document.getElementById('end_time');
+                        if (endDateStartTime) endDateStartTime.value = '';
+                        if (endTime) endTime.value = '';
+                        validateDates();
+                    }
+                });
+
+                multiDayRadio.addEventListener('change', () => {
+                    if (multiDayRadio.checked) {
+                        endDateSection.style.display = 'block';
+                        validateDates();
+                    }
+                });
+            }
+        }
+
+        function populateForm(event) {
+            console.log('Populating form with event:', event);
+            
+            // Scroll to top to ensure form is visible
+            window.scrollTo(0, 0);
+            document.querySelector('.main-content').scrollTop = 0;
+            
+            document.getElementById('eventId').value = event.id;
+            
+            // Populate English fields - use title_en as primary, fallback to title
+            const titleEn = event.title_en || event.title || '';
+            const descEn = event.description_en || event.description || '';
+            const locEn = event.location_en || event.location || '';
+            
+            document.getElementById('title_en').value = titleEn;
+            document.getElementById('description_en').value = descEn;
+            
+            // Populate Arabic fields - these should come from database
+            // IMPORTANT: Use title_ar, description_ar, location_ar from API response
+            const titleAr = event.title_ar || '';
+            const descAr = event.description_ar || '';
+            const locAr = event.location_ar || '';
+            
+            console.log('Arabic data from API:', { titleAr, descAr, locAr });
+            
+            document.getElementById('title_ar').value = titleAr;
+            document.getElementById('description_ar').value = descAr;
+            
+            console.log('Arabic fields populated:');
+            console.log('title_ar value:', document.getElementById('title_ar').value);
+            console.log('description_ar value:', document.getElementById('description_ar').value);
+            
+            // Populate base fields
+            document.getElementById('event_date').value = event.event_date || '';
+            document.getElementById('event_time').value = event.event_time || '';
+            document.getElementById('event_end_time').value = event.event_end_time || '';
+            document.getElementById('video_url').value = event.video_url || '';
+            
+            // Handle multi-day events
+            const endDateSection = document.getElementById('endDateSection');
+            const endDate = document.getElementById('end_date');
+            
+            if (event.end_date) {
+                console.log('Event has end_date:', event.end_date);
+                document.getElementById('multiDayRadio').checked = true;
+                document.getElementById('sameDayRadio').checked = false;
+                if (endDate) endDate.value = event.end_date;
+                if (endDateSection) endDateSection.style.display = 'block';
+            } else {
+                console.log('Event is same-day only');
+                document.getElementById('sameDayRadio').checked = true;
+                document.getElementById('multiDayRadio').checked = false;
+                if (endDateSection) endDateSection.style.display = 'none';
+            }
+            
+            // Set location select for English
+            const locationSelectEn = document.getElementById('location_select_en');
+            const locationInputEn = document.getElementById('location_en');
+            if (locationSelectEn && locationInputEn) {
+                const options = Array.from(locationSelectEn.options).map(o => o.value);
+                if (options.includes(locEn)) {
+                    locationSelectEn.value = locEn;
+                    locationInputEn.style.display = 'none';
+                    locationInputEn.value = locEn; // Set to actual value, not empty
+                } else if (locEn) {
+                    locationSelectEn.value = 'other';
+                    locationInputEn.style.display = 'block';
+                    locationInputEn.value = locEn;
+                } else {
+                    locationSelectEn.value = '';
+                    locationInputEn.style.display = 'none';
+                    locationInputEn.value = '';
+                }
+            }
+            
+            // Set location select for Arabic
+            const locationSelectAr = document.getElementById('location_select_ar');
+            const locationInputAr = document.getElementById('location_ar');
+            if (locationSelectAr && locationInputAr) {
+                const options = Array.from(locationSelectAr.options).map(o => o.value);
+                if (options.includes(locAr)) {
+                    locationSelectAr.value = locAr;
+                    locationInputAr.style.display = 'none';
+                    locationInputAr.value = locAr; // Set to actual value, not empty
+                } else if (locAr) {
+                    locationSelectAr.value = 'other';
+                    locationInputAr.style.display = 'block';
+                    locationInputAr.value = locAr;
+                } else {
+                    locationSelectAr.value = '';
+                    locationInputAr.style.display = 'none';
+                    locationInputAr.value = '';
+                }
+            }
+            
+            // Fix image path - use absolute URL
+            if (event.cover_image) {
+                const coverImg = document.getElementById('coverImg');
+                let imagePath = event.cover_image;
+                
+                // Convert to absolute URL
+                if (!imagePath.startsWith('http')) {
+                    imagePath = '../' + imagePath;
+                }
+                
+                console.log('Setting cover image:', imagePath);
+                coverImg.src = imagePath;
+                coverImg.style.display = 'block';
+                const placeholder = document.querySelector('.cover-placeholder');
+                if (placeholder) placeholder.style.display = 'none';
+                document.getElementById('removeCover').style.display = 'flex';
+            }
+            
+            // Handle video preview
+            if (event.video_url) {
+                console.log('Setting video URL:', event.video_url);
+                displayVideoPreview(event.video_url);
+            }
+            
+            console.log('Form population complete');
+        }
+
+        function handleLocationChange(select, lang) {
+            const customInput = document.getElementById('location_' + lang);
+            if (select.value === 'other') {
+                customInput.style.display = 'block';
+                customInput.required = true;
+                customInput.value = '';
+            } else {
+                customInput.style.display = 'none';
+                customInput.required = false;
+                customInput.value = select.value;
+            }
+        }
+
+        // Handle form submission - save to database
+        document.getElementById('eventForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            console.log('=== EVENT FORM SUBMISSION STARTED ===');
+
+            const eventId = parseInt(document.getElementById('eventId').value);
+            let coverImagePath = null;
+            const fileInput = document.getElementById('cover_image');
+            
+            // Handle cover image upload
+            if (fileInput.files && fileInput.files[0]) {
+                console.log('File selected for upload:', fileInput.files[0].name);
+                const file = fileInput.files[0];
+                const formData = new FormData();
+                formData.append('file', file);
+                
+                try {
+                    console.log('Uploading cover image...');
+                    const uploadResponse = await fetch('../api/upload_cover_image.php', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    const uploadResult = await uploadResponse.json();
+                    console.log('Upload response:', uploadResult);
+                    
+                    if (uploadResult.success) {
+                        coverImagePath = uploadResult.path;
+                        console.log('Cover image uploaded successfully:', coverImagePath);
+                    } else {
+                        console.error('Cover image upload failed:', uploadResult.message);
+                        alert('Cover image upload failed: ' + uploadResult.message);
+                        return;
+                    }
+                } catch (error) {
+                    console.error('Cover image upload error:', error);
+                    alert('Error uploading cover image: ' + error.message);
+                    return;
+                }
+            } else {
+                console.log('No new cover image selected - keeping existing image');
+            }
+
+            // Handle gallery images upload
+            const galleryInput = document.getElementById('event_images');
+            const galleryImages = [];
+            
+            if (galleryInput && galleryInput.files && galleryInput.files.length > 0) {
+                console.log('Gallery images selected:', galleryInput.files.length);
+                
+                const formData = new FormData();
+                formData.append('event_id', eventId);
+                
+                // Add all files to FormData
+                for (let i = 0; i < galleryInput.files.length; i++) {
+                    formData.append('images[]', galleryInput.files[i]);
+                }
+                
+                try {
+                    console.log('Uploading gallery images...');
+                    const uploadResponse = await fetch('../api/upload_event_gallery.php', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    const uploadResult = await uploadResponse.json();
+                    console.log('Gallery upload response:', uploadResult);
+                    
+                    if (uploadResult.success && uploadResult.images) {
+                        uploadResult.images.forEach((img, index) => {
+                            galleryImages.push({
+                                image_url: img.url,
+                                caption: img.name
+                            });
+                        });
+                        console.log('Gallery images uploaded:', galleryImages);
+                    } else {
+                        console.warn('Gallery upload failed:', uploadResult.message);
+                    }
+                } catch (error) {
+                    console.error('Gallery upload error:', error);
+                }
+            } else {
+                console.log('No gallery images selected');
+            }
+
+            // Get bilingual form values
+            const title_en = document.getElementById('title_en').value.trim();
+            const description_en = document.getElementById('description_en').value.trim();
+            const location_en = document.getElementById('location_en').value.trim();
+            
+            const title_ar = document.getElementById('title_ar').value.trim();
+            const description_ar = document.getElementById('description_ar').value.trim();
+            const location_ar = document.getElementById('location_ar').value.trim();
+
+            console.log('Form values before submission:', {
+                title_en, description_en, location_en,
+                title_ar, description_ar, location_ar
+            });
+
+            const updatedEvent = {
+                id: eventId,
+                // English translations (required)
+                title_en: title_en || null,
+                description_en: description_en || null,
+                location_en: location_en || null,
+                
+                // Arabic translations - ALWAYS send them, even if empty
+                // This ensures they get updated in the database
+                title_ar: title_ar,
+                description_ar: description_ar,
+                location_ar: location_ar,
+                
+                // Base fields
+                event_date: document.getElementById('event_date').value,
+                event_time: document.getElementById('event_time').value,
+                event_end_time: document.getElementById('event_end_time').value,
+                end_date: document.getElementById('end_date').value || null,
+                video_url: document.getElementById('video_url').value,
+                category: 'exhibition'
+            };
+            
+            // Only include cover_image if it was updated
+            if (coverImagePath !== null) {
+                updatedEvent.cover_image = coverImagePath;
+            }
+
+            console.log('Submitting event:', updatedEvent);
+
+            try {
+                // Send update to database API
+                const response = await fetch('../api/edit_event_simple.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(updatedEvent)
+                });
+
+                const result = await response.json();
+                console.log('Update response:', result);
+                
+                if (result.success) {
+                    alert('Event updated successfully');
+                    window.location.href = 'events.html';
+                } else {
+                    alert('Error updating event: ' + (result.message || 'Unknown error'));
+                }
+            } catch (error) {
+                console.error('Error updating event:', error);
+                alert('Error updating event. Please try again.');
+            }
+        });
+
+        // Video URL input handler
+        const videoUrlInput = document.getElementById('video_url');
+        if (videoUrlInput) {
+            videoUrlInput.addEventListener('change', (e) => {
+                console.log('Video URL changed:', e.target.value);
+                displayVideoPreview(e.target.value);
+            });
+            
+            videoUrlInput.addEventListener('input', (e) => {
+                // Show preview as user types
+                if (e.target.value) {
+                    displayVideoPreview(e.target.value);
+                }
+            });
+        }
+
+        // Remove video button handler
+        const removeVideoBtn = document.getElementById('removeVideoBtn');
+        if (removeVideoBtn) {
+            removeVideoBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                removeVideo();
+            });
+        }
+
+        window.addEventListener('load', loadEvent);
+    </script>
+</body>
+
+</html>
+
+
+
+    <script src="../assest/popup-notification.js?v=5.0.0" defer></script>

@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Event Gallery - LAKUM Admin</title>
+    <link rel="icon" href="../assest/favicon.png" type="image/png">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="../global-styles.css">
+    <link rel="stylesheet" href="admin-style.css">
+    <link rel="stylesheet" href="../assest/popup-notification.css">
+    <style>
+        .gallery-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .gallery-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .gallery-header h1 {
+            font-size: 2rem;
+            color: #1a1a1a;
+        }
+
+        .event-selector {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .event-selector select {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            min-width: 250px;
+        }
+
+        .upload-section {
+            background: #f9f9f9;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border: 2px dashed #ddd;
+        }
+
+        .upload-area {
+            text-align: center;
+            padding: 40px 20px;
+            border: 2px dashed #ccc;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #fff;
+        }
+
+        .upload-area:hover {
+            border-color: #1a1a1a;
+            background: #f6f6eb;
+        }
+
+        .upload-area.dragover {
+            border-color: #1a1a1a;
+            background: #f0f0f0;
+        }
+
+        .upload-area i {
+            font-size: 3rem;
+            color: #999;
+            margin-bottom: 15px;
+        }
+
+        .upload-area p {
+            color: #666;
+            margin: 10px 0;
+        }
+
+        .upload-area .small {
+            font-size: 0.9rem;
+            color: #999;
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #f0f0f0;
+            aspect-ratio: 1;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .gallery-item-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-item-overlay {
+            opacity: 1;
+        }
+
+        .gallery-item-overlay button {
+            background: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .gallery-item-overlay button:hover {
+            background: #f0f0f0;
+        }
+
+        .gallery-item-overlay .delete-btn {
+            background: #ff4444;
+            color: #fff;
+        }
+
+        .gallery-item-overlay .delete-btn:hover {
+            background: #cc0000;
+        }
+
+        .gallery-item-order {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .empty-state p {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: #1a1a1a;
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: #333;
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #1a1a1a;
+            border: 1px solid #ddd;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #999;
+        }
+
+        .loading i {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .message {
+            padding: 15px 20px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+
+        .caption-input {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.9);
+            color: #fff;
+            padding: 10px;
+            font-size: 0.85rem;
+            max-height: 60px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    </style>
+</head>
+<body>
+    <div class="gallery-container">
+        <div class="gallery-header">
+            <h1>Manage Event Gallery</h1>
+            <div class="event-selector">
+                <label for="eventSelect">Select Event:</label>
+                <select id="eventSelect">
+                    <option value="">Loading events...</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="message" class="message"></div>
+
+        <div class="upload-section" id="uploadSection" style="display: none;">
+            <h2>Upload Gallery Images</h2>
+            <div class="upload-area" id="uploadArea">
+                <i class="ri-upload-cloud-2-line"></i>
+                <p>Drag and drop images here or click to select</p>
+                <p class="small">Supported formats: JPG, PNG, WebP (Max 5MB each)</p>
+                <input type="file" id="fileInput" multiple accept="image/*">
+            </div>
+            <div class="action-buttons">
+                <button class="btn btn-primary" id="uploadBtn" style="display: none;">Upload Selected Images</button>
+            </div>
+        </div>
+
+        <div id="galleryContent">
+            <div class="empty-state">
+                <i class="ri-image-add-line"></i>
+                <p>Select an event to manage its gallery</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedEventId = null;
+        let selectedFiles = [];
+
+        // Load events on page load
+        async function loadEvents() {
+            try {
+                const response = await fetch('../api/get_events.php?limit=100');
+                const data = await response.json();
+                const events = data.data || [];
+
+                const select = document.getElementById('eventSelect');
+                select.innerHTML = '<option value="">Select an event...</option>';
+
+                events.forEach(event => {
+                    const option = document.createElement('option');
+                    option.value = event.id;
+                    option.textContent = `${event.title} (${event.event_date})`;
+                    select.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error loading events:', error);
+                showMessage('Error loading events', 'error');
+            }
+        }
+
+        // Event selector change
+        document.getElementById('eventSelect').addEventListener('change', async (e) => {
+            selectedEventId = e.target.value;
+            if (selectedEventId) {
+                document.getElementById('uploadSection').style.display = 'block';
+                await loadGallery();
+            } else {
+                document.getElementById('uploadSection').style.display = 'none';
+                document.getElementById('galleryContent').innerHTML = `
+                    <div class="empty-state">
+                        <i class="ri-image-add-line"></i>
+                        <p>Select an event to manage its gallery</p>
+                    </div>
+                `;
+            }
+        });
+
+        // Upload area drag and drop
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+
+        uploadArea.addEventListener('click', () => fileInput.click());
+
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            handleFiles(e.dataTransfer.files);
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            handleFiles(e.target.files);
+        });
+
+        function handleFiles(files) {
+            selectedFiles = Array.from(files).filter(file => file.type.startsWith('image/'));
+            if (selectedFiles.length > 0) {
+                document.getElementById('uploadBtn').style.display = 'inline-block';
+                showMessage(`${selectedFiles.length} image(s) selected`, 'success');
+            }
+        }
+
+        // Upload images
+        document.getElementById('uploadBtn').addEventListener('click', async () => {
+            if (!selectedEventId || selectedFiles.length === 0) {
+                showMessage('Please select an event and images', 'error');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('event_id', selectedEventId);
+            selectedFiles.forEach(file => {
+                formData.append('images[]', file);
+            });
+
+            try {
+                const response = await fetch('../api/upload_event_gallery.php', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+                if (result.success) {
+                    showMessage('Images uploaded successfully', 'success');
+                    selectedFiles = [];
+                    fileInput.value = '';
+                    document.getElementById('uploadBtn').style.display = 'none';
+                    await loadGallery();
+                } else {
+                    showMessage(result.message || 'Upload failed', 'error');
+                }
+            } catch (error) {
+                console.error('Upload error:', error);
+                showMessage('Error uploading images', 'error');
+            }
+        });
+
+        // Load gallery images
+        async function loadGallery() {
+            if (!selectedEventId) return;
+
+            const galleryContent = document.getElementById('galleryContent');
+            galleryContent.innerHTML = '<div class="loading"><i class="ri-loader-4-line"></i> Loading gallery...</div>';
+
+            try {
+                const response = await fetch(`../api/get_event_details.php?id=${selectedEventId}`);
+                const data = await response.json();
+
+                if (data.gallery && data.gallery.length > 0) {
+                    let html = '<div class="gallery-grid">';
+                    data.gallery.forEach((image, index) => {
+                        html += `
+                            <div class="gallery-item">
+                                <img src="${image.image_url}" alt="${image.caption || 'Gallery image'}">
+                                <div class="gallery-item-order">${index + 1}</div>
+                                <div class="gallery-item-overlay">
+                                    <button class="delete-btn" onclick="deleteImage(${image.id})">
+                                        <i class="ri-delete-bin-line"></i> Delete
+                                    </button>
+                                </div>
+                                ${image.caption ? `<div class="caption-input">${image.caption}</div>` : ''}
+                            </div>
+                        `;
+                    });
+                    html += '</div>';
+                    galleryContent.innerHTML = html;
+                } else {
+                    galleryContent.innerHTML = `
+                        <div class="empty-state">
+                            <i class="ri-image-add-line"></i>
+                            <p>No gallery images yet</p>
+                            <p class="small">Upload images above to get started</p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error loading gallery:', error);
+                galleryContent.innerHTML = `
+                    <div class="empty-state">
+                        <i class="ri-error-warning-line"></i>
+                        <p>Error loading gallery</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Delete image
+        async function deleteImage(imageId) {
+            if (!confirm('Are you sure you want to delete this image?')) return;
+
+            try {
+                const response = await fetch('../api/delete_event_gallery.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id: imageId })
+                });
+
+                const result = await response.json();
+                if (result.success) {
+                    showMessage('Image deleted successfully', 'success');
+                    await loadGallery();
+                } else {
+                    showMessage(result.message || 'Delete failed', 'error');
+                }
+            } catch (error) {
+                console.error('Delete error:', error);
+                showMessage('Error deleting image', 'error');
+            }
+        }
+
+        // Show message
+        function showMessage(text, type) {
+            const messageEl = document.getElementById('message');
+            messageEl.textContent = text;
+            messageEl.className = `message ${type}`;
+            setTimeout(() => {
+                messageEl.className = 'message';
+            }, 5000);
+        }
+
+        // Initialize
+        loadEvents();
+    </script>
+</body>
+</html>
+
+
+
+    <script src="../assest/popup-notification.js?v=5.0.0" defer></script>

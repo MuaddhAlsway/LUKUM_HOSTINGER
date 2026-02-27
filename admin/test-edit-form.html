@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Edit Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        pre {
+            background: #f4f4f4;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .success {
+            color: green;
+        }
+        .error {
+            color: red;
+        }
+        input, select, textarea {
+            padding: 8px;
+            margin: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 100%;
+            max-width: 400px;
+        }
+        .form-preview {
+            background: #f9f9f9;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        .form-field {
+            margin: 10px 0;
+            padding: 10px;
+            background: white;
+            border: 1px solid #eee;
+            border-radius: 4px;
+        }
+        .form-field label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-field value {
+            color: #007bff;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Test Edit Form - Blog ID 6</h1>
+        
+        <div class="test-section">
+            <h2>Step 1: Fetch Blog Data</h2>
+            <button onclick="fetchBlogData()">Fetch Blog ID 6</button>
+            <pre id="result1"></pre>
+        </div>
+
+        <div class="test-section">
+            <h2>Step 2: Form Preview</h2>
+            <div class="form-preview" id="formPreview">
+                <p>Click "Fetch Blog Data" first to see form preview</p>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>Step 3: Test Edit Form</h2>
+            <button onclick="openEditForm()">Open Edit Form</button>
+            <p>This will open the actual edit form in a new tab</p>
+        </div>
+
+        <div class="test-section">
+            <h2>Step 4: Manual Test</h2>
+            <p>Go to: <a href="edit-blog.html?id=6" target="_blank">http://localhost/LUKUM(main)/admin/edit-blog.html?id=6</a></p>
+            <p>Check if form fields are populated with blog data</p>
+        </div>
+    </div>
+
+    <script>
+        async function fetchBlogData() {
+            const result = document.getElementById('result1');
+            result.textContent = 'Fetching...';
+            
+            try {
+                const response = await fetch('../api/get_blogs.php?id=6');
+                const data = await response.json();
+                
+                result.textContent = JSON.stringify(data, null, 2);
+                
+                if (data.success && data.data) {
+                    result.innerHTML += `<p class="success">✓ Blog data received</p>`;
+                    showFormPreview(data.data);
+                } else {
+                    result.innerHTML += `<p class="error">✗ Error: ${data.error}</p>`;
+                }
+            } catch (error) {
+                result.textContent = `Error: ${error.message}`;
+                result.innerHTML += `<p class="error">✗ Failed to fetch</p>`;
+            }
+        }
+
+        function showFormPreview(blog) {
+            const preview = document.getElementById('formPreview');
+            preview.innerHTML = `
+                <h3>Blog Data Preview</h3>
+                <div class="form-field">
+                    <label>ID:</label>
+                    <value>${blog.id}</value>
+                </div>
+                <div class="form-field">
+                    <label>Title:</label>
+                    <value>${blog.title}</value>
+                </div>
+                <div class="form-field">
+                    <label>Author:</label>
+                    <value>${blog.author}</value>
+                </div>
+                <div class="form-field">
+                    <label>Category:</label>
+                    <value>${blog.category}</value>
+                </div>
+                <div class="form-field">
+                    <label>Excerpt:</label>
+                    <value>${blog.excerpt}</value>
+                </div>
+                <div class="form-field">
+                    <label>Content (first 100 chars):</label>
+                    <value>${blog.content.substring(0, 100)}...</value>
+                </div>
+                <div class="form-field">
+                    <label>Cover Image:</label>
+                    <value>${blog.cover_image}</value>
+                </div>
+                <div class="form-field">
+                    <label>Created:</label>
+                    <value>${blog.created_at}</value>
+                </div>
+            `;
+        }
+
+        function openEditForm() {
+            window.open('edit-blog.html?id=6', '_blank');
+        }
+
+        // Auto-fetch on load
+        window.addEventListener('load', () => {
+            console.log('Test page loaded');
+        });
+    </script>
+</body>
+</html>
+
+

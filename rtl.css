@@ -1,0 +1,1326 @@
+/**
+ * LAKUM Artspace - RTL (Right-to-Left) Styles
+ * Arabic Language Support
+ */
+
+/* ============================================
+   GLOBAL RTL STYLES
+   ============================================ */
+
+/* Arabic Font - Use Greta Arabic for both languages */
+
+[dir="rtl"] body,
+[dir="rtl"] * {
+    font-family: 'Greta Arabic', 'Greta Text Arabic', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Text Direction */
+
+[dir="rtl"] {
+    direction: rtl;
+    text-align: right;
+}
+
+/* Remove letter-spacing for Arabic */
+
+[dir="rtl"] h1,
+[dir="rtl"] h2,
+[dir="rtl"] h3,
+[dir="rtl"] h4,
+[dir="rtl"] h5,
+[dir="rtl"] h6 {
+    letter-spacing: 0;
+}
+
+/* Adjust line height for better Arabic readability */
+
+[dir="rtl"] body {
+    line-height: 1.8;
+}
+
+/* ============================================
+   HEADER & NAVIGATION
+   ============================================ */
+
+/* Header Container */
+
+[dir="rtl"] .lakum-header__container {
+    flex-direction: row-reverse;
+}
+
+/* Logo */
+
+[dir="rtl"] .lakum-header__logo {
+    margin-right: 0;
+    margin-left: 40px;
+}
+
+/* Navigation - No reordering for RTL */
+
+[dir="rtl"] .lakum-nav__item {
+    /* Spacing stays the same */
+}
+
+/* Language Switcher */
+
+[dir="rtl"] .lakum-language-switcher {
+    margin-right: auto;
+    margin-left: 20px;
+}
+
+[dir="rtl"] .lakum-lang-link {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .lakum-lang-link i {
+    margin-left: 0;
+    margin-right: 6px;
+}
+
+/* Mobile Toggle */
+
+[dir="rtl"] .lakum-header__mobile-toggle {
+    right: auto;
+    left: 20px;
+}
+
+/* Mobile Menu */
+
+[dir="rtl"] .lakum-nav {
+    right: auto;
+    left: 0;
+}
+
+/* ============================================
+   HERO SECTION
+   ============================================ */
+
+/* Hero content should be centered in both languages */
+
+[dir="rtl"] .lakum-hero__content {
+    text-align: center;
+}
+
+[dir="rtl"] .lakum-hero__title,
+[dir="rtl"] .lakum-hero__subtitle {
+    text-align: center !important;
+}
+
+/* ============================================
+   SECTIONS
+   ============================================ */
+
+/* Section headers should be centered in both languages */
+
+[dir="rtl"] .lakum-section-header__title,
+[dir="rtl"] .lakum-section-header__subtitle {
+    text-align: center !important;
+}
+
+/* ============================================
+   ABOUT PAGE
+   ============================================ */
+
+[dir="rtl"] .lakum-about-text__title {
+    text-align: right;
+}
+
+[dir="rtl"] .lakum-about-text__paragraphs p {
+    text-align: right;
+    direction: rtl;
+}
+
+[dir="rtl"] .lakum-workshops-text__title,
+[dir="rtl"] .lakum-workshops-text__content {
+    text-align: right;
+    direction: rtl;
+}
+
+[dir="rtl"] .lakum-tagline__title,
+[dir="rtl"] .lakum-tagline__subtitle {
+    text-align: right;
+    direction: rtl;
+}
+
+[dir="rtl"] .lakum-about-grid {
+    direction: rtl;
+}
+
+[dir="rtl"] .lakum-workshops-grid {
+    direction: rtl;
+}
+
+/* ============================================
+   CONTACT PAGE
+   ============================================ */
+
+[dir="rtl"] .contact-hero-content h1,
+[dir="rtl"] .contact-hero-content p {
+    text-align: right;
+    direction: rtl;
+}
+
+[dir="rtl"] .contact-grid {
+    direction: rtl;
+}
+
+[dir="rtl"] .contact-info-card h2,
+[dir="rtl"] .contact-form-card h2 {
+    text-align: right;
+}
+
+[dir="rtl"] .contact-info-item {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .contact-info-content h3,
+[dir="rtl"] .contact-info-content p {
+    text-align: right;
+}
+
+[dir="rtl"] .form-group label {
+    text-align: right;
+}
+
+[dir="rtl"] .form-group input,
+[dir="rtl"] .form-group textarea,
+[dir="rtl"] .form-group select {
+    text-align: right;
+    direction: rtl;
+}
+
+[dir="rtl"] .social-links {
+    flex-direction: row-reverse;
+}
+
+/* LAKUM Contact Page RTL */
+
+[dir="rtl"] .lakum-contact-hero__title,
+[dir="rtl"] .lakum-contact-hero__subtitle {
+    text-align: center !important;
+    /* Center in both languages */
+    direction: rtl;
+}
+
+[dir="rtl"] .lakum-contact-grid {
+    direction: rtl;
+}
+
+[dir="rtl"] .lakum-contact-info__title,
+[dir="rtl"] .lakum-contact-form__title {
+    text-align: right;
+}
+
+[dir="rtl"] .lakum-contact-item {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .lakum-contact-item {
+    /* Swap positions: icon on right, content on left */
+}
+
+[dir="rtl"] .lakum-contact-item__icon {
+    order: 2;
+    /* Move icon to the right */
+    margin-left: 20px;
+    margin-right: 0;
+}
+
+[dir="rtl"] .lakum-contact-item__content {
+    order: 1;
+    /* Move content to the left */
+    text-align: right;
+}
+
+[dir="rtl"] .lakum-contact-item__title,
+[dir="rtl"] .lakum-contact-item__text {
+    text-align: right;
+}
+
+[dir="rtl"] .lakum-contact-social {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+[dir="rtl"] .lakum-contact-social__title {
+    text-align: right;
+}
+
+[dir="rtl"] .lakum-contact-social__links {
+    justify-content: flex-end;
+}
+
+[dir="rtl"] .lakum-contact-social__links {
+    justify-content: flex-end;
+}
+
+[dir="rtl"] .lakum-form__label {
+    text-align: right;
+}
+
+[dir="rtl"] .lakum-form__input,
+[dir="rtl"] .lakum-form__select,
+[dir="rtl"] .lakum-form__textarea {
+    text-align: right;
+    direction: rtl;
+}
+
+[dir="rtl"] .lakum-form__input-wrapper {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .lakum-form__icon {
+    right: auto;
+    left: 16px;
+}
+
+/* ============================================
+   SPACES PAGE
+   ============================================ */
+
+[dir="rtl"] .lakum-spaces-hero__title {
+    text-align: center !important;
+    /* Center in both languages */
+    direction: rtl;
+}
+
+[dir="rtl"] .lakum-spaces-hero__tags {
+    direction: rtl;
+    justify-content: center;
+}
+
+[dir="rtl"] .lakum-spaces-intro__title,
+[dir="rtl"] .lakum-spaces-intro__content p {
+    text-align: center !important;
+    /* Center title in both languages */
+    direction: rtl;
+}
+
+/* Keep paragraph text right-aligned for readability */
+
+[dir="rtl"] .lakum-spaces-intro__content p {
+    text-align: right !important;
+}
+
+[dir="rtl"] .lakum-spaces-facilities__title,
+[dir="rtl"] .lakum-spaces-floor__title,
+[dir="rtl"] .lakum-spaces-exhibitions__title,
+[dir="rtl"] .lakum-spaces-pricing__title {
+    text-align: center !important;
+    /* Center in both languages */
+}
+
+[dir="rtl"] .lakum-facility-card__name {
+    text-align: center !important;
+}
+
+[dir="rtl"] .lakum-spaces-floor__caption {
+    text-align: right;
+    direction: rtl;
+}
+
+[dir="rtl"] .lakum-spaces-booking__title,
+[dir="rtl"] .lakum-spaces-booking__text {
+    text-align: center !important;
+    /* Center in both languages */
+    direction: rtl;
+}
+
+[dir="rtl"] .pricing-accordion__header {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .pricing-accordion__info {
+    text-align: right;
+}
+
+[dir="rtl"] .pricing-accordion__content {
+    text-align: right;
+    direction: rtl;
+}
+
+/* RTL Bullet Points and Lists */
+
+[dir="rtl"] .pricing-accordion__list {
+    padding: 0;
+    margin: 0 0 20px 0;
+    list-style: none;
+    /* Remove default list style */
+}
+
+[dir="rtl"] .pricing-accordion__list li {
+    padding: 8px 20px 8px 0;
+    text-align: right;
+    position: relative;
+}
+
+[dir="rtl"] .pricing-accordion__list li::before {
+    content: '•';
+    position: absolute;
+    left: auto;
+    right: 6px;
+    color: #1a1a1a;
+}
+
+[dir="rtl"] .pricing-accordion__service {
+    flex-direction: row-reverse;
+    text-align: right;
+}
+
+[dir="rtl"] .pricing-accordion__service p {
+    text-align: right;
+}
+
+[dir="rtl"] .pricing-accordion__content p {
+    text-align: right;
+}
+
+[dir="rtl"] .pricing-accordion__content h4 {
+    text-align: right;
+}
+
+[dir="rtl"] .pricing-accordion__features {
+    text-align: right;
+}
+
+[dir="rtl"] .pricing-accordion__features li {
+    text-align: right;
+}
+
+[dir="rtl"] .pricing-accordion__note {
+    text-align: right;
+}
+
+[dir="rtl"] .pricing-accordion__note strong {
+    text-align: right;
+}
+
+[dir="rtl"] .pricing-accordion__note p {
+    text-align: right;
+}
+
+/* Ensure all content inside pricing accordion is right-aligned in RTL */
+
+[dir="rtl"] .pricing-accordion__content * {
+    text-align: right !important;
+}
+
+/* Override for centered elements if any */
+
+[dir="rtl"] .pricing-accordion__content ul,
+[dir="rtl"] .pricing-accordion__content ol {
+    padding-right: 20px;
+    padding-left: 0;
+    margin-right: 0;
+    list-style-position: outside;
+    direction: rtl;
+}
+
+[dir="rtl"] .pricing-accordion__content ul li,
+[dir="rtl"] .pricing-accordion__content ol li {
+    text-align: right !important;
+    direction: rtl;
+    padding-right: 0;
+    padding-left: 0;
+}
+
+/* Remove custom bullets for standard lists in RTL */
+
+[dir="rtl"] .pricing-accordion__content ul li::before,
+[dir="rtl"] .pricing-accordion__content ol li::before {
+    content: none !important;
+    display: none !important;
+}
+
+/* Use browser default bullets positioned on the right */
+
+[dir="rtl"] .pricing-accordion__content ul {
+    list-style-type: disc;
+}
+
+[dir="rtl"] .pricing-accordion__content ol {
+    list-style-type: decimal;
+}
+
+[dir="rtl"] .pricing-accordion__header {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .pricing-accordion__icon {
+    margin-left: 0;
+    margin-right: 16px;
+    order: -1;
+}
+
+[dir="rtl"] .pricing-accordion__info {
+    text-align: right;
+}
+
+[dir="rtl"] .pricing-accordion__name {
+    text-align: right;
+}
+
+[dir="rtl"] .pricing-accordion__price {
+    text-align: right;
+}
+
+[dir="rtl"] .pricing-accordion__vat {
+    text-align: right;
+}
+
+[dir="rtl"] .lakum-facility-popup__title {
+    text-align: right;
+}
+
+[dir="rtl"] .lakum-facility-popup__nav--prev {
+    right: auto;
+    left: 10px;
+}
+
+[dir="rtl"] .lakum-facility-popup__nav--next {
+    left: auto;
+    right: 10px;
+}
+
+[dir="rtl"] .lakum-facility-popup__close {
+    right: auto;
+    left: 20px;
+}
+
+[dir="rtl"] .lakum-facility-popup__close i {
+    display: block;
+    width: 24px;
+    height: 24px;
+}
+
+/* RTL Responsive adjustments */
+
+@media (max-width: 1024px) {
+    [dir="rtl"] .lakum-facility-popup__close {
+        left: 10px;
+    }
+    [dir="rtl"] .lakum-facility-popup__close i {
+        width: 26px;
+        height: 26px;
+    }
+}
+
+@media (max-width: 768px) {
+    [dir="rtl"] .lakum-facility-popup__close {
+        left: 10px;
+    }
+    [dir="rtl"] .lakum-facility-popup__close i {
+        width: 28px;
+        height: 28px;
+    }
+}
+
+/* ============================================
+   CALENDAR PAGE
+   ============================================ */
+
+[dir="rtl"] .lakum-calendar-hero__title,
+[dir="rtl"] .lakum-calendar-hero__subtitle {
+    text-align: center !important;
+    /* Center in both languages */
+    direction: rtl;
+}
+
+[dir="rtl"] .lakum-calendar-sidebar__title {
+    text-align: right;
+}
+
+[dir="rtl"] .lakum-calendar-featured__title {
+    text-align: right;
+}
+
+/* ============================================
+   BLOG PAGE
+   ============================================ */
+
+[dir="rtl"] .lakum-blog-hero__title,
+[dir="rtl"] .lakum-blog-hero__subtitle {
+    text-align: center !important;
+    /* Center in both languages */
+    direction: rtl;
+}
+
+[dir="rtl"] .lakum-blog-filters {
+    direction: rtl;
+}
+
+/* ============================================
+   PRESS PAGE
+   ============================================ */
+
+[dir="rtl"] .lakum-press-hero__title,
+[dir="rtl"] .lakum-press-hero__subtitle {
+    text-align: center !important;
+    /* Center in both languages */
+    direction: rtl;
+}
+
+[dir="rtl"] .lakum-press-card__content {
+    text-align: right;
+}
+
+[dir="rtl"] .lakum-press-card__title,
+[dir="rtl"] .lakum-press-card__description {
+    text-align: right;
+    direction: rtl;
+}
+
+[dir="rtl"] .lakum-press-card__footer {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .lakum-press-card__footer {
+    /* Swap positions: date on right, link on left */
+}
+
+[dir="rtl"] .lakum-press-card__date {
+    order: 2;
+    /* Move date to the right */
+}
+
+[dir="rtl"] .lakum-press-card__link {
+    flex-direction: row-reverse;
+    order: 1;
+    /* Move link to the left */
+}
+
+[dir="rtl"] .lakum-press-card__link i {
+    margin-left: 0;
+    margin-right: 6px;
+}
+
+/* ============================================
+   EXHIBITIONS PAGE
+   ============================================ */
+
+/* Exhibition titles should be centered in both languages */
+
+[dir="rtl"] .lakum-exhibitions-upcoming__title,
+[dir="rtl"] .lakum-exhibitions-previous__title {
+    text-align: center !important;
+}
+
+[dir="rtl"] .lakum-exhibitions-cta__title,
+[dir="rtl"] .lakum-exhibitions-cta__text {
+    text-align: center !important;
+    direction: rtl;
+}
+
+[dir="rtl"] .lakum-section-divider__title {
+    text-align: center !important;
+}
+
+/* ============================================
+   CARDS & GRIDS
+   ============================================ */
+
+/* Exhibition Grid */
+
+[dir="rtl"] .lakum-exhibition-grid {
+    direction: rtl;
+}
+
+/* Exhibition Card */
+
+[dir="rtl"] .lakum-exhibition-card__content {
+    text-align: right;
+}
+
+[dir="rtl"] .lakum-exhibition-card__title {
+    text-align: right;
+}
+
+/* Upcoming Card */
+
+[dir="rtl"] .lakum-upcoming-card__content {
+    text-align: right;
+}
+
+[dir="rtl"] .lakum-upcoming-card__title {
+    text-align: right;
+}
+
+[dir="rtl"] .lakum-upcoming-card__link i {
+    margin-left: 0;
+    margin-right: 8px;
+    transform: rotate(180deg);
+}
+
+/* Date Badge */
+
+[dir="rtl"] .lakum-upcoming-card__date-badge {
+    right: auto;
+    left: 10px;
+}
+
+/* ============================================
+   BUTTONS
+   ============================================ */
+
+[dir="rtl"] .lakum-btn {
+    text-align: center;
+}
+
+/* Button with icon */
+
+[dir="rtl"] .lakum-btn i {
+    margin-left: 0;
+    margin-right: 8px;
+}
+
+/* ============================================
+   CTA SECTIONS
+   ============================================ */
+
+/* CTA content should be centered in both languages */
+
+[dir="rtl"] .lakum-cta__content {
+    text-align: center;
+}
+
+[dir="rtl"] .lakum-cta__title,
+[dir="rtl"] .lakum-cta__text {
+    text-align: center !important;
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+
+/* Footer Container */
+
+[dir="rtl"] .lakum-footer__content {
+    flex-direction: row-reverse;
+}
+
+/* Footer Brand */
+
+[dir="rtl"] .lakum-footer__brand {
+    text-align: right;
+}
+
+[dir="rtl"] .lakum-footer__tagline {
+    text-align: right;
+}
+
+/* Footer Navigation */
+
+[dir="rtl"] .lakum-footer__nav {
+    text-align: right;
+}
+
+[dir="rtl"] .lakum-footer__nav-title {
+    text-align: right;
+}
+
+[dir="rtl"] .lakum-footer__nav-list {
+    text-align: right;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+[dir="rtl"] .lakum-footer__nav-list li {
+    text-align: right;
+}
+
+/* Social Links */
+
+[dir="rtl"] .lakum-footer__social {
+    text-align: right;
+}
+
+[dir="rtl"] .lakum-footer__social-links {
+    justify-content: flex-end;
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .lakum-footer__social-link {
+    margin-right: 0;
+    margin-left: 15px;
+}
+
+[dir="rtl"] .lakum-footer__social-link:last-child {
+    margin-left: 0;
+}
+
+/* Footer Bottom */
+
+[dir="rtl"] .lakum-footer__bottom {
+    flex-direction: row-reverse;
+    text-align: right;
+}
+
+[dir="rtl"] .lakum-footer__copyright {
+    text-align: right;
+}
+
+[dir="rtl"] .lakum-footer__legal {
+    text-align: left;
+}
+
+/* ============================================
+   FLOATING ACTION BUTTON (FAB)
+   ============================================ */
+
+[dir="rtl"] .lakum-contact-fab {
+    right: auto;
+    left: 30px;
+}
+
+[dir="rtl"] .lakum-contact-fab__menu {
+    right: auto;
+    left: 0;
+    align-items: flex-start;
+}
+
+[dir="rtl"] .lakum-contact-fab__item {
+    transform-origin: left center;
+}
+
+[dir="rtl"] .lakum-contact-fab__item[data-tooltip]::before {
+    right: auto;
+    left: 60px;
+}
+
+/* FAB hover animations for RTL */
+
+[dir="rtl"] .lakum-contact-fab--active .lakum-contact-fab__item:nth-child(1) {
+    transform: translateX(0);
+}
+
+[dir="rtl"] .lakum-contact-fab--active .lakum-contact-fab__item:nth-child(2) {
+    transform: translateX(0);
+}
+
+[dir="rtl"] .lakum-contact-fab--active .lakum-contact-fab__item:nth-child(3) {
+    transform: translateX(0);
+}
+
+/* ============================================
+   FORMS
+   ============================================ */
+
+[dir="rtl"] .form-group {
+    text-align: right;
+}
+
+[dir="rtl"] .form-group label {
+    text-align: right;
+}
+
+[dir="rtl"] .form-control {
+    text-align: right;
+    direction: rtl;
+}
+
+[dir="rtl"] input[type="text"],
+[dir="rtl"] input[type="email"],
+[dir="rtl"] input[type="tel"],
+[dir="rtl"] textarea {
+    text-align: right;
+    direction: rtl;
+}
+
+/* Form Buttons */
+
+[dir="rtl"] .form-actions {
+    text-align: left;
+}
+
+[dir="rtl"] .btn-submit {
+    margin-left: 0;
+    margin-right: 10px;
+}
+
+/* ============================================
+   EMPTY STATES
+   ============================================ */
+
+[dir="rtl"] .lakum-empty-state {
+    text-align: center;
+}
+
+[dir="rtl"] .lakum-empty-state__title,
+[dir="rtl"] .lakum-empty-state__text {
+    text-align: center;
+}
+
+/* ============================================
+   FEATURED BANNER
+   ============================================ */
+
+[dir="rtl"] .lakum-upcoming-banner__content {
+    text-align: right;
+}
+
+[dir="rtl"] .lakum-upcoming-banner__text {
+    text-align: right;
+}
+
+[dir="rtl"] .lakum-upcoming-banner__title,
+[dir="rtl"] .lakum-upcoming-banner__date,
+[dir="rtl"] .lakum-upcoming-banner__year,
+[dir="rtl"] .lakum-upcoming-banner__description {
+    text-align: right;
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+
+/* Text Alignment */
+
+[dir="rtl"] .text-left {
+    text-align: right !important;
+}
+
+[dir="rtl"] .text-right {
+    text-align: left !important;
+}
+
+/* Float */
+
+[dir="rtl"] .float-left {
+    float: right !important;
+}
+
+[dir="rtl"] .float-right {
+    float: left !important;
+}
+
+/* Margin */
+
+[dir="rtl"] .ml-auto {
+    margin-left: 0 !important;
+    margin-right: auto !important;
+}
+
+[dir="rtl"] .mr-auto {
+    margin-right: 0 !important;
+    margin-left: auto !important;
+}
+
+/* Padding */
+
+[dir="rtl"] .pl-0 {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+[dir="rtl"] .pr-0 {
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+}
+
+/* ============================================
+   RESPONSIVE RTL ADJUSTMENTS
+   ============================================ */
+
+@media (max-width: 768px) {
+    [dir="rtl"] .lakum-header__container {
+        grid-template-columns: auto auto 1fr auto;
+    }
+    [dir="rtl"] .lakum-header__mobile-toggle {
+        order: 4;
+        left: auto;
+        right: 20px;
+    }
+    [dir="rtl"] .lakum-header__logo {
+        order: 2;
+    }
+    [dir="rtl"] .lakum-language-switcher {
+        order: 1;
+        margin: 0;
+    }
+    [dir="rtl"] .lakum-nav {
+        left: 0;
+        right: auto;
+        transform: translateX(-100%);
+    }
+    [dir="rtl"] .lakum-nav--active {
+        transform: translateX(0);
+    }
+    [dir="rtl"] .lakum-contact-fab {
+        left: 24px;
+        right: auto;
+    }
+}
+
+/* ============================================
+   LANGUAGE SWITCHER STYLES
+   ============================================ */
+
+.lakum-language-switcher {
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+}
+
+.lakum-lang-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 20px;
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.lakum-lang-link i {
+    font-size: 16px;
+    transition: transform 0.3s ease;
+}
+
+.lakum-lang-link:hover {
+    background: rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.lakum-lang-link:hover i {
+    transform: rotate(180deg);
+}
+
+[dir="rtl"] .lakum-lang-link {
+    font-family: 'Greta Arabic', 'Greta Text Arabic', sans-serif;
+}
+
+.lakum-lang-text {
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+}
+
+[dir="rtl"] .lakum-language-switcher {
+    right: auto;
+    left: 70px;
+}
+
+}
+
+/* ============================================
+   HOMELUKUM / EXHIBITIONS PAGE RTL
+   ============================================ */
+
+/* Title sections */
+
+[dir="rtl"] .LukumContiner .title h4,
+[dir="rtl"] .titlePreviousEventWrapper h4 {
+    text-align: right;
+}
+
+/* Past Exhibit Layout */
+
+[dir="rtl"] .pastExhibitLukum {
+    direction: rtl;
+}
+
+[dir="rtl"] .pastExhibitLukum .imgleft,
+[dir="rtl"] .pastExhibitLukum .imgMiddle,
+[dir="rtl"] .pastExhibitLukum .imgright {
+    text-align: right;
+}
+
+[dir="rtl"] .pastExhibitLukum p {
+    text-align: right;
+}
+
+/* Column Container */
+
+[dir="rtl"] .ColumnContainer {
+    direction: rtl;
+}
+
+[dir="rtl"] .PhotoEventColumn {
+    text-align: right;
+}
+
+[dir="rtl"] .PhotoEventRow {
+    text-align: right;
+}
+
+[dir="rtl"] .PhotoEventRow p span {
+    text-align: right;
+}
+
+/* Explore Cover Section */
+
+[dir="rtl"] .ExploreCoverLakum {
+    direction: rtl;
+}
+
+[dir="rtl"] .CoverImageLakum h4 {
+    text-align: center;
+}
+
+[dir="rtl"] .ExploreMoreButton {
+    text-align: center;
+}
+
+/* Featured Event Cover */
+
+[dir="rtl"] .COVERLAKUM {
+    right: auto;
+    left: 0;
+    text-align: right;
+}
+
+[dir="rtl"] .titleCOVERLAKUM p,
+[dir="rtl"] .paragraphCOVERLAKUM p,
+[dir="rtl"] .date p {
+    text-align: right;
+}
+
+[dir="rtl"] .buttonDiscoverMoreLAKUM,
+[dir="rtl"] .buttonDiscoverMoreLAKUMLEFT {
+    text-align: right;
+}
+
+[dir="rtl"] .buttonDiscoverMoreLAKUMLEFT {
+    right: auto;
+    left: 0;
+}
+
+/* ============================================
+   ABOUT PAGE RTL
+   ============================================ */
+
+/* About Text Section */
+
+[dir="rtl"] .lakum-about-text {
+    text-align: right;
+}
+
+[dir="rtl"] .lakum-about-text__title {
+    text-align: center !important;
+    /* Center in both languages */
+}
+
+[dir="rtl"] .lakum-about-text__paragraphs {
+    text-align: right;
+}
+
+[dir="rtl"] .lakum-about-text__paragraphs p {
+    text-align: right;
+    direction: rtl;
+}
+
+/* Workshops Section */
+
+[dir="rtl"] .lakum-workshops-text {
+    text-align: right;
+}
+
+[dir="rtl"] .lakum-workshops-text__title {
+    text-align: center !important;
+    /* Center in both languages */
+}
+
+[dir="rtl"] .lakum-workshops-text__content {
+    text-align: right;
+    direction: rtl;
+}
+
+/* Stats Section */
+
+[dir="rtl"] .lakum-stat__label {
+    text-align: center;
+}
+
+/* Tagline Section */
+
+[dir="rtl"] .lakum-tagline__title,
+[dir="rtl"] .lakum-tagline__subtitle {
+    text-align: center !important;
+    /* Center in both languages */
+}
+
+/* About Events Section */
+
+[dir="rtl"] .lakum-about-events__title {
+    text-align: center !important;
+    /* Center in both languages */
+}
+
+/* About Grid */
+
+[dir="rtl"] .lakum-about-grid {
+    direction: rtl;
+}
+
+[dir="rtl"] .lakum-workshops-grid {
+    direction: rtl;
+}
+
+/* ============================================
+   LEGAL PAGES (Terms & Privacy)
+   ============================================ */
+
+[dir="rtl"] .lakum-legal-hero__title {
+    text-align: center;
+}
+
+[dir="rtl"] .lakum-legal-content h2 {
+    text-align: right;
+}
+
+[dir="rtl"] .lakum-legal-content p {
+    text-align: right;
+    direction: rtl;
+}
+
+[dir="rtl"] .lakum-legal-content ul {
+    padding-left: 0;
+    padding-right: 24px;
+}
+
+[dir="rtl"] .lakum-legal-content li {
+    text-align: right;
+    direction: rtl;
+}
+
+[dir="rtl"] .lakum-legal-content__date {
+    text-align: right;
+}
+
+/* ============================================
+   SHOP PAGE
+   ============================================ */
+
+[dir="rtl"] .lakum-shop-hero__title {
+    text-align: center;
+}
+
+[dir="rtl"] .lakum-shop-hero__btn {
+    flex-direction: row-reverse;
+}
+
+/* ============================================
+   EVENT DETAIL PAGE
+   ============================================ */
+
+[dir="rtl"] .event-hero__title {
+    text-align: right;
+}
+
+[dir="rtl"] .event-hero__meta {
+    justify-content: flex-end;
+}
+
+[dir="rtl"] .event-hero__meta-item {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .event-section__title {
+    text-align: right;
+}
+
+[dir="rtl"] .event-description__text {
+    text-align: right;
+    direction: rtl;
+}
+
+[dir="rtl"] .event-cta__title,
+[dir="rtl"] .event-cta__text {
+    text-align: right;
+    direction: rtl;
+}
+
+[dir="rtl"] .event-cta__button {
+    flex-direction: row-reverse;
+}
+
+/* ============================================
+   BLOG DETAIL PAGE
+   ============================================ */
+
+[dir="rtl"] .blog-detail-hero__title {
+    text-align: right;
+}
+
+[dir="rtl"] .blog-detail-hero__meta {
+    justify-content: flex-end;
+}
+
+[dir="rtl"] .blog-detail-hero__meta span {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .blog-detail-content__text {
+    text-align: right;
+    direction: rtl;
+}
+
+[dir="rtl"] .blog-detail-gallery__title,
+[dir="rtl"] .blog-related__title {
+    text-align: center;
+}
+
+/* ============================================
+   BLOG CARDS RTL
+   ============================================ */
+
+[dir="rtl"] .lakum-blog-card__content {
+    text-align: right;
+}
+
+[dir="rtl"] .lakum-blog-card__title {
+    text-align: right;
+}
+
+[dir="rtl"] .lakum-blog-card__excerpt {
+    text-align: right;
+    direction: rtl;
+}
+
+[dir="rtl"] .lakum-blog-card__meta {
+    justify-content: flex-end;
+}
+
+[dir="rtl"] .lakum-blog-card__meta-item {
+    flex-direction: row-reverse;
+}
+
+/* Blog Card Footer - Arabic Layout: Profile Picture (right) → Name → Read More (left) */
+
+[dir="rtl"] .lakum-blog-card__footer {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .lakum-blog-card__footer {
+    /* Swap positions: author on right, read-more on left */
+}
+
+[dir="rtl"] .lakum-blog-card__author {
+    flex-direction: row-reverse;
+    order: 2;
+    /* Move author to the right */
+}
+
+[dir="rtl"] .lakum-blog-card__author-avatar {
+    order: 2;
+    /* Avatar on the right */
+}
+
+[dir="rtl"] .lakum-blog-card__author-name {
+    order: 1;
+    /* Name on the left */
+}
+
+[dir="rtl"] .lakum-blog-card__read-more {
+    flex-direction: row-reverse;
+    order: 1;
+    /* Move read-more to the left */
+}

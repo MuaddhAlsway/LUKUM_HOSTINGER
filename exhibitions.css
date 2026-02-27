@@ -1,0 +1,545 @@
+/* ========================================
+   LAKUM ARTSPACE - EXHIBITIONS PAGE STYLES
+   Perfect, Stunning, Minimalistic Design
+   ======================================== */
+
+/* ===== CONTAINER ===== */
+
+.lakum-container {
+   max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 clamp(20px, 5vw, 60px);
+}
+
+/* ===== HERO SECTION ===== */
+
+.lakum-exhibitions-hero {
+    width: 100%;
+    height: 65vh;
+    min-height: 450px;
+    max-height: 650px;
+    overflow: hidden;
+}
+
+.lakum-exhibitions-hero__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* ===== UPCOMING SECTION ===== */
+
+.lakum-exhibitions-upcoming {
+    padding: clamp(40px, 5vw, 64px) 0;
+    background: #f6f6eb;
+}
+
+.lakum-exhibitions-upcoming__title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    color: #1a1a1a;
+    margin: 0 0 clamp(32px, 4vw, 48px) 0;
+    line-height: 1.2;
+    text-align: center !important;
+    /* Force center alignment */
+}
+
+.lakum-exhibitions-upcoming__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: clamp(32px, 4vw, 48px);
+}
+/* Upcoming Card */
+
+.lakum-upcoming-card {
+    background: #fff;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    width: 100%;
+    height: 485.56px;
+    display: flex;
+    flex-direction: column;
+}
+
+.lakum-upcoming-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+}
+
+.lakum-upcoming-card__image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 320px;
+    overflow: hidden;
+    background: #edecdf;
+    flex-shrink: 0;
+}
+
+.lakum-upcoming-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.lakum-upcoming-card:hover .lakum-upcoming-card__image {
+    transform: scale(1.05);
+}
+
+.lakum-upcoming-card__content {
+    padding: clamp(20px, 3vw, 32px);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.lakum-upcoming-card__title {
+    font-size: clamp(1.25rem, 2vw, 1.5rem);
+    font-weight: 400;
+    color: #1a1a1a;
+    margin: 0 0 clamp(8px, 1.5vw, 12px) 0;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.lakum-upcoming-card__date {
+    font-size: clamp(0.9rem, 1.2vw, 0.95rem);
+    font-weight: 400;
+    color: #8a8a8a;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0;
+}
+
+/* ===== FEATURED EVENT BANNER ===== */
+
+.lakum-exhibitions-featured {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 450px;
+    background:  #ffffff;
+    overflow: hidden;
+    gap: 0;
+}
+
+@media (max-width: 1024px) {
+    .lakum-exhibitions-featured {
+        grid-template-columns: 1fr;
+        min-height: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .lakum-exhibitions-featured {
+        grid-template-columns: 1fr;
+    }
+}
+
+.lakum-exhibitions-featured__image {
+    width: 100%;
+        height: 550px;
+    overflow: hidden;
+}
+
+.lakum-exhibitions-featured__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.lakum-exhibitions-featured__content {
+    display: flex;
+    align-items: center;
+    padding: clamp(40px, 6vw, 80px) clamp(40px, 6vw, 80px);
+    background: #1a1a1a;
+    color: rgb(255, 255, 255);
+    overflow: hidden;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-clamp: 2; word-break: break-word;
+}
+
+.lakum-exhibitions-featured__text {
+    max-width: 800px;
+    width: 100%;
+    overflow: hidden;
+    color: rgb(255, 255, 255);
+}
+
+.lakum-exhibitions-featured__date {
+    display: block;
+    font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+    font-weight: 400;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: clamp(16px, 2vw, 24px);
+    color: #666;
+}
+
+.lakum-exhibitions-featured__title {
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin: 0 0 clamp(24px, 3vw, 32px) 0;
+    color: #d1d1d1;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.lakum-exhibitions-featured__description {
+    font-size: clamp(0.95rem, 1.3vw, 1.05rem);
+    font-weight: 300;
+    line-height: 1.8;
+    margin: 0 0 clamp(28px, 4vw, 40px) 0;
+    color: #d1d1d1;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Ensure button in featured banner has dark border */
+
+.lakum-exhibitions-featured .lakum-btn--primary {
+    border: 2px solid #1a1a1a !important;
+    background: transparent !important;
+    color: #ffffff !important;
+    border:solid #ffff 1px !important;
+}
+
+.lakum-exhibitions-featured .lakum-btn--primary:hover {
+    border-color: #333 !important;
+    background: #333 !important;
+}
+
+/* ===== PREVIOUS EXHIBITIONS SECTION ===== */
+
+.lakum-exhibitions-previous {
+    padding: clamp(40px, 5vw, 64px) 0;
+    background: #f6f6eb;
+}
+
+.lakum-exhibitions-previous__title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    color: #1a1a1a;
+    margin: 0 0 clamp(48px, 6vw, 80px) 0;
+    line-height: 1.2;
+    text-align: center !important;
+    /* Force center alignment */
+}
+
+.lakum-exhibitions-previous__grid {
+       display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: clamp(32px, 4vw, 48px);
+}
+
+/* Previous Card */
+
+.lakum-previous-card {
+    background: #f6f6eb;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    width: 100%;
+    height: 485.56px;
+    display: flex;
+    flex-direction: column;
+}
+
+.lakum-previous-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+}
+
+.lakum-previous-card__image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 320px;
+    overflow: hidden;
+    background: #edecdf;
+    flex-shrink: 0;
+}
+
+.lakum-previous-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.lakum-previous-card:hover .lakum-previous-card__image {
+    transform: scale(1.05);
+}
+
+.lakum-previous-card__content {
+    padding: clamp(16px, 2.5vw, 24px);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.lakum-previous-card__title {
+    font-size: clamp(1.1rem, 1.8vw, 1.25rem);
+    font-weight: 400;
+    color: #1a1a1a;
+    margin: 0 0 clamp(6px, 1vw, 8px) 0;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.lakum-previous-card__date {
+    font-size: clamp(0.85rem, 1.2vw, 0.9rem);
+    font-weight: 400;
+    color: #8a8a8a;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0;
+}
+
+/* ===== CTA SECTION ===== */
+
+.lakum-exhibitions-cta {
+    position: relative;
+    padding: clamp(40px, 5vw, 64px) 0;
+   background: #000000;
+    color: #ffffff;
+    text-align: center;
+    overflow: hidden;
+}
+
+.lakum-exhibitions-cta__background {
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient( #1a1a1ad3), url('uploads/covers/event_11_1765952986.jpg');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.15;
+    z-index: 1;
+}
+
+.lakum-exhibitions-cta__content {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 clamp(20px, 3vw, 32px);
+}
+
+.lakum-exhibitions-cta__title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 300;
+    font-style: italic;
+    letter-spacing: -0.01em;
+    margin: 0 0 clamp(16px, 2vw, 24px) 0;
+    color: #ffffff;
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: visible;
+    text-align: center !important;
+    /* Force center alignment */
+}
+
+/* Allow title to wrap on smaller screens */
+
+@media (max-width: 1024px) {
+    .lakum-exhibitions-cta__title {
+        white-space: normal;
+    }
+}
+
+.lakum-exhibitions-cta__text {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    font-weight: 300;
+    line-height: 1.8;
+    margin: 0 0 clamp(32px, 4vw, 48px) 0;
+    color: rgba(255, 255, 255, 0.9);
+    text-align: center;
+}
+
+/* ===== BUTTONS ===== */
+
+.lakum-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(14px, 2vw, 18px) clamp(36px, 5vw, 48px);
+    font-family: 'Atyp Kido TRIAL', sans-serif;
+    font-size: clamp(0.95rem, 1.5vw, 1.05rem);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    text-transform: capitalize;
+    border-radius: var(--radius-sm);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    border: none;
+}
+
+.lakum-btn--primary {
+    background: #1a1a1a;
+    color: #ffffff;
+    border: 2px solid #1a1a1a !important;
+}
+
+.lakum-btn--primary:hover {
+    background: #2d2d2d;
+    border-color: #2d2d2d !important;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.lakum-btn--outline-light {
+    background: transparent;
+    color: #ffffff;
+    border: 2px solid #ffffff;
+}
+
+.lakum-btn--outline-light:hover {
+    background: #ffffff;
+    color: #1a1a1a;
+    transform: translateY(-2px);
+}
+
+/* ===== SKELETON LOADING ===== */
+
+.lakum-skeleton-card {
+    background: #ffffff;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    height: 480px;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+.lakum-exhibitions-previous .lakum-skeleton-card {
+    background: #f6f6eb;
+    height: 380px;
+}
+
+@keyframes pulse {
+    0%,
+    100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+/* ===== EMPTY STATE ===== */
+
+.lakum-empty-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: clamp(48px, 6vw, 80px) clamp(20px, 3vw, 32px);
+}
+
+.lakum-empty-state__icon {
+    font-size: clamp(3rem, 5vw, 4rem);
+    color: #d1d1d1;
+    margin-bottom: clamp(16px, 2vw, 24px);
+}
+
+.lakum-empty-state__title {
+    font-size: clamp(1.25rem, 2vw, 1.5rem);
+    font-weight: 400;
+    color: #525252;
+    margin: 0 0 clamp(8px, 1.5vw, 12px) 0;
+}
+
+.lakum-empty-state__text {
+    font-size: clamp(0.95rem, 1.5vw, 1.05rem);
+    font-weight: 300;
+    color: #8a8a8a;
+    margin: 0;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+
+/* Tablet */
+
+@media (max-width: 1024px) {
+    .lakum-exhibitions-hero {
+        height: 55vh;
+        min-height: 400px;
+    }
+    .lakum-exhibitions-upcoming__grid {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+    .lakum-upcoming-card__image-wrapper {
+        height: 350px;
+    }
+    .lakum-exhibitions-featured {
+        grid-template-columns: 1fr;
+        min-height: auto;
+    }
+    .lakum-exhibitions-featured__image {
+        width: 100%;
+        height: 300px;
+    }
+    .lakum-exhibitions-previous__grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
+}
+
+/* Mobile */
+
+@media (max-width: 768px) {
+    .lakum-exhibitions-hero {
+        height: 50vh;
+        min-height: 350px;
+    }
+    .lakum-exhibitions-upcoming__grid {
+        grid-template-columns: 1fr;
+    }
+    .lakum-upcoming-card__image-wrapper {
+        height: 320px;
+    }
+    .lakum-exhibitions-featured {
+        grid-template-columns: 1fr;
+    }
+    .lakum-exhibitions-featured__image {
+        width: 100%;
+        height: 250px;
+    }
+    .lakum-exhibitions-previous__grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+    .lakum-previous-card__image-wrapper {
+        height: 280px;
+    }
+}
+
+/* Small Mobile */
+
+@media (max-width: 480px) {
+    .lakum-exhibitions-hero {
+        height: 45vh;
+        min-height: 300px;
+    }
+    .lakum-upcoming-card__image-wrapper {
+        height: 300px;
+    }
+    .lakum-exhibitions-featured__content {
+        padding: clamp(30px, 5vw, 40px);
+    }
+    .lakum-exhibitions-previous__grid {
+        grid-template-columns: 1fr;
+    }
+    .lakum-previous-card__image-wrapper {
+        height: 260px;
+    }
+}

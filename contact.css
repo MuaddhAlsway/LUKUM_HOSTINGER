@@ -1,0 +1,396 @@
+/* ========================================
+   LAKUM ARTSPACE - CONTACT PAGE STYLES
+   Perfect, Stunning, Minimalistic Design
+   ======================================== */
+
+/* ===== CONTAINER ===== */
+
+.lakum-container {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 clamp(20px, 5vw, 60px);
+}
+
+/* ===== HERO SECTION ===== */
+
+.lakum-contact-hero {
+    position: relative;
+    padding: clamp(100px, 12vw, 140px) 0 clamp(70px, 9vw, 100px) 0;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    color: #ffffff;
+    text-align: center;
+    overflow: hidden;
+}
+
+.lakum-contact-hero__overlay {
+    position: absolute;
+    inset: 0;
+    background-image: url('assest/img-4.png');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.1;
+    z-index: 1;
+}
+
+.lakum-contact-hero__content {
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.lakum-contact-hero__title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+    margin: 0 0 clamp(16px, 2vw, 24px) 0;
+    line-height: 1.2;
+    text-align: center !important;
+    /* Force center alignment */
+}
+
+.lakum-contact-hero__subtitle {
+    font-size: clamp(1rem, 1.5vw, 1.2rem);
+    font-weight: 300;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center !important;
+    /* Force center alignment */
+}
+
+/* ===== CONTACT CONTENT ===== */
+
+.lakum-contact-content {
+    padding: clamp(30px, 4vw, 48px) 0;
+    background: #ffffff;
+    position: relative;
+    margin-top: clamp(-40px, -5vw, -60px);
+    z-index: 10;
+}
+
+.lakum-contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(40px, 5vw, 64px);
+}
+
+/* ===== CONTACT INFO ===== */
+
+.lakum-contact-info {
+    background: #f6f6eb;
+    padding: clamp(32px, 4vw, 48px);
+    border-radius: var(--radius-sm);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+}
+
+.lakum-contact-info__title {
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    color: #1a1a1a;
+    margin: 0 0 clamp(32px, 4vw, 48px) 0;
+    line-height: 1.2;
+}
+
+.lakum-contact-info__items {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(24px, 3vw, 32px);
+    margin-bottom: clamp(32px, 4vw, 48px);
+}
+
+/* Contact Item */
+
+.lakum-contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: clamp(16px, 2vw, 20px);
+    padding-bottom: clamp(24px, 3vw, 32px);
+    border-bottom: 1px solid rgba(209, 209, 209, 0.3);
+}
+
+.lakum-contact-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.lakum-contact-item__icon {
+    width: clamp(48px, 6vw, 56px);
+    height: clamp(48px, 6vw, 56px);
+    background: linear-gradient(135deg, #edecdf 0%, #e0dfd0 100%);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(22px, 3vw, 26px);
+    color: #1a1a1a;
+    flex-shrink: 0;
+}
+
+.lakum-contact-item__content {
+    flex: 1;
+}
+
+.lakum-contact-item__title {
+    font-size: clamp(1rem, 1.5vw, 1.15rem);
+    font-weight: 500;
+    color: #1a1a1a;
+    margin: 0 0 clamp(6px, 1vw, 8px) 0;
+    line-height: 1.3;
+}
+
+.lakum-contact-item__text {
+    font-size: clamp(0.95rem, 1.5vw, 1.05rem);
+    font-weight: 300;
+    line-height: 1.7;
+    color: #525252;
+    margin: 0;
+}
+
+.lakum-contact-item__text a {
+    color: #1a1a1a;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.lakum-contact-item__text a:hover {
+    color: #8a7968;
+}
+
+/* Social Links */
+
+.lakum-contact-social {
+    padding-top: clamp(24px, 3vw, 32px);
+    border-top: 1px solid rgba(209, 209, 209, 0.3);
+}
+
+.lakum-contact-social__title {
+    font-size: clamp(1rem, 1.5vw, 1.15rem);
+    font-weight: 500;
+    color: #1a1a1a;
+    margin: 0 0 clamp(16px, 2vw, 20px) 0;
+}
+
+.lakum-contact-social__links {
+    display: flex;
+    gap: clamp(12px, 2vw, 16px);
+}
+
+.lakum-contact-social__link {
+    width: clamp(44px, 5vw, 52px);
+    height: clamp(44px, 5vw, 52px);
+    background: #edecdf;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(20px, 2.5vw, 24px);
+    color: #1a1a1a;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.lakum-contact-social__link:hover {
+    background: #1a1a1a;
+    color: #f6f6eb;
+    transform: translateY(-4px);
+}
+
+/* ===== CONTACT FORM ===== */
+
+.lakum-contact-form-wrapper {
+    background: #ffffff;
+    padding: clamp(32px, 4vw, 48px);
+    border-radius: var(--radius-sm);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+}
+
+.lakum-contact-form__title {
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    color: #1a1a1a;
+    margin: 0 0 clamp(32px, 4vw, 48px) 0;
+    line-height: 1.2;
+}
+
+.lakum-form__group {
+    margin-bottom: clamp(20px, 3vw, 28px);
+}
+
+.lakum-form__label {
+    display: block;
+    font-size: clamp(0.9rem, 1.2vw, 1rem);
+    font-weight: 500;
+    color: #1a1a1a;
+    margin-bottom: clamp(8px, 1.5vw, 10px);
+}
+
+.lakum-form__input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.lakum-form__icon {
+    position: absolute;
+    left: clamp(14px, 2vw, 18px);
+    font-size: clamp(18px, 2vw, 20px);
+    color: #8a8a8a;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.lakum-form__input,
+.lakum-form__select,
+.lakum-form__textarea {
+    width: 100%;
+    padding: clamp(12px, 2vw, 16px) clamp(12px, 2vw, 16px) clamp(12px, 2vw, 16px) clamp(44px, 5vw, 52px);
+    font-family: 'Atyp Kido TRIAL', sans-serif;
+    font-size: clamp(0.95rem, 1.5vw, 1.05rem);
+    font-weight: 300;
+    color: #1a1a1a;
+    background: #f6f6eb;
+    border: 2px solid rgba(209, 209, 209, 0.3);
+    border-radius: var(--radius-sm);
+    transition: all 0.3s ease;
+}
+
+.lakum-form__select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238a8a8a' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right clamp(14px, 2vw, 18px) center;
+    padding-right: clamp(40px, 5vw, 48px);
+}
+
+.lakum-form__textarea {
+    padding-left: clamp(14px, 2vw, 18px);
+    resize: vertical;
+    min-height: 150px;
+}
+
+.lakum-form__input:focus,
+.lakum-form__select:focus,
+.lakum-form__textarea:focus {
+    outline: none;
+    border-color: #1a1a1a;
+    background: #ffffff;
+}
+
+.lakum-form__input::placeholder,
+.lakum-form__textarea::placeholder {
+    color: #8a8a8a;
+}
+
+/* ===== BUTTONS ===== */
+
+.lakum-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(14px, 2vw, 18px) clamp(36px, 5vw, 48px);
+    font-family: 'Atyp Kido TRIAL', sans-serif;
+    font-size: clamp(0.95rem, 1.5vw, 1.05rem);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    text-transform: capitalize;
+    border-radius: var(--radius-sm);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    border: none;
+}
+
+.lakum-btn--primary {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    color: #ffffff;
+    border: 2px solid #1a1a1a;
+}
+
+.lakum-btn--primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.lakum-btn--primary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.lakum-btn--large {
+    width: 100%;
+    padding: clamp(16px, 2.5vw, 20px) clamp(40px, 5vw, 56px);
+    font-size: clamp(1rem, 1.5vw, 1.15rem);
+    margin-top: clamp(8px, 1.5vw, 12px);
+}
+
+/* ===== MAP SECTION ===== */
+
+.lakum-contact-map {
+    padding: clamp(30px, 4vw, 48px) 0 clamp(80px, 10vw, 128px) 0;
+    background: #ffffff;
+}
+
+.lakum-contact-map__wrapper {
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    height: clamp(400px, 50vw, 500px);
+}
+
+.lakum-contact-map__iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+
+/* Tablet */
+
+@media (max-width: 1024px) {
+    .lakum-contact-grid {
+        grid-template-columns: 1fr;
+        gap: clamp(32px, 4vw, 48px);
+    }
+    .lakum-contact-content {
+        margin-top: clamp(-30px, -4vw, -40px);
+    }
+}
+
+/* Mobile */
+
+@media (max-width: 768px) {
+    .lakum-contact-info,
+    .lakum-contact-form-wrapper {
+        padding: clamp(24px, 3vw, 32px);
+    }
+    .lakum-contact-map__wrapper {
+        height: clamp(350px, 45vw, 400px);
+    }
+}
+
+/* Small Mobile */
+
+@media (max-width: 480px) {
+    .lakum-contact-info,
+    .lakum-contact-form-wrapper {
+        padding: clamp(20px, 3vw, 24px);
+    }
+    .lakum-contact-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: clamp(12px, 2vw, 16px);
+    }
+    .lakum-contact-map__wrapper {
+        height: 320px;
+    }
+}

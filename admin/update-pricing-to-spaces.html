@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Pricing to Spaces - LAKUM Admin</title>
+    <link rel="stylesheet" href="admin-style.css">
+    <style>
+        .update-container {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 30px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .update-status {
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            display: none;
+        }
+        .update-status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+        .update-status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+        .update-status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+            display: block;
+        }
+        .pricing-preview {
+            background: white;
+            padding: 20px;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+        .pricing-item {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+        }
+        .pricing-item:last-child {
+            border-bottom: none;
+        }
+        .btn-update {
+            background: #007bff;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+        .btn-update:hover {
+            background: #0056b3;
+        }
+        .btn-update:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="update-container">
+        <h1>Update Pricing to Space Rental Rates</h1>
+        <p>This will replace the old workshop pricing with the correct space rental pricing.</p>
+
+        <div class="pricing-preview">
+            <h3>New Pricing Data:</h3>
+            <div class="pricing-item">
+                <span><strong>Hall 1</strong> - Main exhibition hall</span>
+                <span>12,000 SAR/day</span>
+            </div>
+            <div class="pricing-item">
+                <span><strong>Hall 2</strong> - Secondary exhibition hall</span>
+                <span>7,200 SAR/day</span>
+            </div>
+            <div class="pricing-item">
+                <span><strong>Hourly Rate</strong> - Short-format experiences</span>
+                <span>1,000 SAR/hour</span>
+            </div>
+            <div class="pricing-item">
+                <span><strong>Set up/Dismantle Day</strong> - Setup or dismantling</span>
+                <span>3,400 SAR/day</span>
+            </div>
+            <div class="pricing-item">
+                <span><strong>Café</strong> - Café rental with credit</span>
+                <span>3,400 SAR/day</span>
+            </div>
+            <div class="pricing-item">
+                <span><strong>Meeting Room</strong> - Private meeting room</span>
+                <span>60 SAR/hour</span>
+            </div>
+        </div>
+
+        <div id="statusMessage"></div>
+
+        <button class="btn-update" id="updateBtn" onclick="updatePricing()">Update Pricing Now</button>
+    </div>
+
+    <script>
+        async function updatePricing() {
+            const btn = document.getElementById('updateBtn');
+            const statusDiv = document.getElementById('statusMessage');
+            
+            btn.disabled = true;
+            statusDiv.innerHTML = '<div class="update-status info">Updating pricing...</div>';
+
+            try {
+                const response = await fetch('../api/update_pricing_to_spaces.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    statusDiv.innerHTML = `
+                        <div class="update-status success">
+                            <strong>Success!</strong><br>
+                            ${data.message}<br>
+                            ${data.rows_affected} pricing items updated.
+                        </div>
+                    `;
+                    setTimeout(() => {
+                        window.location.href = 'pricing.html';
+                    }, 2000);
+                } else {
+                    statusDiv.innerHTML = `
+                        <div class="update-status error">
+                            <strong>Error:</strong><br>
+                            ${data.message}
+                        </div>
+                    `;
+                    btn.disabled = false;
+                }
+            } catch (error) {
+                statusDiv.innerHTML = `
+                    <div class="update-status error">
+                        <strong>Error:</strong><br>
+                        ${error.message}
+                    </div>
+                `;
+                btn.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>
+
+
