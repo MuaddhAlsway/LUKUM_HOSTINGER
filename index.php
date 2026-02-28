@@ -230,6 +230,7 @@ margin: 0 auto;}
                     <li class="lakum-nav__item"><a href="press.php" class="lakum-nav__link"><?php echo t('press', 'Press'); ?></a></li>
                     <li class="lakum-nav__item"><a href="contact.php" class="lakum-nav__link"><?php echo t('contact_us', 'Contact'); ?></a></li>
                     <li class="lakum-nav__item"><a href="shop.php" class="lakum-nav__link"><?php echo t('shop', 'Shop'); ?></a></li>
+                    <li class="lakum-nav__item"><a href="test.php" class="lakum-nav__link">TEST</a></li>
                 </ul>
             </nav>
             <div class="lakum-language-switcher">
