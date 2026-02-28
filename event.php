@@ -545,6 +545,7 @@ require_once 'lang/loader.php';
                 // If event not found and ID was default (1), try to get first available event
                 if (!data.success && eventTitleParam === '1') {
                     console.log('Event not found, fetching first available event...');
+                    const lang = localStorage.getItem('language') || 'en';
                     response = await fetch(`api/get_events.php?lang=${lang}`);
                     const eventsData = await response.json();
                     

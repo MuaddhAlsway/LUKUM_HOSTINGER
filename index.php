@@ -411,7 +411,7 @@ margin: 0 auto;}
             try {
                 // Add timestamp to bypass cache
                 const timestamp = new Date().getTime();
-                const lang = window.LAKUM_LANG || localStorage.getItem('lakum_language') || 'en';
+                const lang = localStorage.getItem('language') || 'en';
                 const response = await fetch(`api/get_events.php?type=all&limit=1000&lang=${lang}&t=${timestamp}`, {
                     cache: 'no-store'
                 });

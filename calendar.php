@@ -719,7 +719,7 @@ require_once 'lang/loader.php';
         };
 
         // Load ALL events (including past) - real database data only
-        const lang = window.LAKUM_LANG || localStorage.getItem('lakum_language') || 'en';
+        const lang = localStorage.getItem('language') || 'en';
         const timestamp = new Date().getTime();
         fetch(`api/get_events.php?type=all&lang=${lang}&t=${timestamp}`, {
             cache: 'no-store'
@@ -1099,7 +1099,7 @@ require_once 'lang/loader.php';
 
         // Load closest 2 upcoming events for featured section
         function loadFeaturedEvents() {
-            const lang = window.LAKUM_LANG || localStorage.getItem('lakum_language') || 'en';
+            const lang = localStorage.getItem('language') || 'en';
             // Use type=upcoming to only get future events (today or later)
             fetch(`api/get_events.php?type=upcoming&limit=2&lang=${lang}`)
                 .then(response => response.json())

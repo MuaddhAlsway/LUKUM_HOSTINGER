@@ -1100,7 +1100,7 @@ require_once 'lang/loader.php';
         // Load Past Exhibitions Dynamically
         async function loadPastExhibitions() {
             try {
-                const lang = window.LAKUM_LANG || localStorage.getItem('lakum_language') || 'en';
+                const lang = localStorage.getItem('language') || 'en';
                 const response = await fetch(`api/get_events.php?type=all&limit=1000&lang=${lang}`);
                 const data = await response.json();
                 
