@@ -11,16 +11,9 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3
-
-      - name: Validate Secrets
-        run: |
-          echo "🔍 Checking FTP credentials..."
-          if [ -z "${{ secrets.FTP_HOST }}" ] || [ -z "${{ secrets.FTP_USER }}" ] || [ -z "${{ secrets.FTP_PASSWORD }}" ]; then
-            echo "❌ Missing FTP credentials!"
-            exit 1
-          fi
-          echo "✅ Secrets OK"
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
 
       - name: Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
@@ -28,24 +21,18 @@ jobs:
           server: ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASSWORD }}
-
-          # ✅ IMPORTANT FIX HERE
           server-dir: /public_html/
-
-          # ✅ Deploy everything from root
           local-dir: ./
-
-          # ✅ Faster & safer sync
           state-name: .ftp-deploy-sync-state.json
-
-          # ✅ Do NOT wipe server
           dangerous-clean-slate: false
-
           exclude: |
             **/.git*
             **/.github*
             **/node_modules/**
             **/.env*
+            **/config.local.php
+            **/config.local.*.php
+            **/database.local.php
             **/logs/**
             **/cache/**
             **/tmp/**
@@ -59,6 +46,8 @@ jobs:
             **/*.backup
             **/vendor/**
             **/composer.lock
-
-      - name: Done
-        run: echo "🚀 Deployment complete!"
+            **/.ftp-deploy-sync-state.json
+            **/eventfile/**
+            **/uploads/**
+            **/assest/blog-uploads/**
+            **/assest/press-uploads/**
