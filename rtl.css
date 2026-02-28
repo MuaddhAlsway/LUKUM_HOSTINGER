@@ -7,22 +7,29 @@
    GLOBAL RTL STYLES
    ============================================ */
 
-/* Arabic Font - Use Greta Arabic for both languages */
+/* Apply RTL direction to HTML element */
+html[dir="rtl"] {
+    direction: rtl;
+}
 
+html[dir="rtl"] body {
+    direction: rtl;
+    text-align: right;
+}
+
+/* Arabic Font - Use Greta Arabic for both languages */
 [dir="rtl"] body,
 [dir="rtl"] * {
     font-family: 'Greta Arabic', 'Greta Text Arabic', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 /* Text Direction */
-
 [dir="rtl"] {
     direction: rtl;
     text-align: right;
 }
 
 /* Remove letter-spacing for Arabic */
-
 [dir="rtl"] h1,
 [dir="rtl"] h2,
 [dir="rtl"] h3,
@@ -33,43 +40,57 @@
 }
 
 /* Adjust line height for better Arabic readability */
-
 [dir="rtl"] body {
     line-height: 1.8;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+/* Ensure HTML doesn't have overflow */
+html[dir="rtl"] {
+    overflow-x: hidden;
 }
 
 /* ============================================
    HEADER & NAVIGATION
    ============================================ */
 
-/* Header Container */
-
+/* Header Container - Fix layout shift */
 [dir="rtl"] .lakum-header__container {
     flex-direction: row-reverse;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
-/* Logo */
-
+/* Logo - Remove extra margin */
 [dir="rtl"] .lakum-header__logo {
     margin-right: 0;
     margin-left: 40px;
+    flex-shrink: 0;
 }
 
-/* Navigation - No reordering for RTL */
+/* Navigation - Ensure no extra spacing */
+[dir="rtl"] .lakum-nav {
+    margin: 0;
+    padding: 0;
+}
 
 [dir="rtl"] .lakum-nav__item {
-    /* Spacing stays the same */
+    margin: 0;
+    padding: 0;
 }
 
-/* Language Switcher */
-
+/* Language Switcher - Fix positioning */
 [dir="rtl"] .lakum-language-switcher {
     margin-right: auto;
     margin-left: 20px;
+    flex-shrink: 0;
 }
 
 [dir="rtl"] .lakum-lang-link {
     flex-direction: row-reverse;
+    white-space: nowrap;
 }
 
 [dir="rtl"] .lakum-lang-link i {
@@ -78,17 +99,17 @@
 }
 
 /* Mobile Toggle */
-
 [dir="rtl"] .lakum-header__mobile-toggle {
     right: auto;
     left: 20px;
+    flex-shrink: 0;
 }
 
 /* Mobile Menu */
-
 [dir="rtl"] .lakum-nav {
     right: auto;
     left: 0;
+    margin: 0;
 }
 
 /* ============================================
@@ -923,26 +944,42 @@
    RESPONSIVE RTL ADJUSTMENTS
    ============================================ */
 
+/* Ensure no horizontal overflow on any screen size */
+[dir="rtl"] * {
+    max-width: 100%;
+}
+
+[dir="rtl"] body,
+[dir="rtl"] html {
+    width: 100%;
+    overflow-x: hidden;
+}
+
 @media (max-width: 768px) {
     [dir="rtl"] .lakum-header__container {
         grid-template-columns: auto auto 1fr auto;
+        padding: 0 16px;
     }
     [dir="rtl"] .lakum-header__mobile-toggle {
         order: 4;
         left: auto;
-        right: 20px;
+        right: 16px;
     }
     [dir="rtl"] .lakum-header__logo {
         order: 2;
+        margin-left: 20px;
     }
     [dir="rtl"] .lakum-language-switcher {
         order: 1;
         margin: 0;
+        margin-left: 10px;
     }
     [dir="rtl"] .lakum-nav {
         left: 0;
         right: auto;
         transform: translateX(-100%);
+        width: 100%;
+        max-width: 100%;
     }
     [dir="rtl"] .lakum-nav--active {
         transform: translateX(0);

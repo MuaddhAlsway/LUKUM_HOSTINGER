@@ -4,13 +4,7 @@
    ======================================== */
 
 /* ===== UNIVERSAL FONT FAMILY ===== */
-* {
-    font-family: 'Greta Arabic', 'Greta Text Arabic', -apple-system, BlinkMacSystemFont, sans-serif !important;
-}
-
-body {
-    font-family: 'Greta Arabic', 'Greta Text Arabic', -apple-system, BlinkMacSystemFont, sans-serif !important;
-}
+/* Font is applied via greta-arabic.css - no need for !important overrides */
 
 /* ===== CSS VARIABLES - DESIGN TOKENS ===== */
 
@@ -150,7 +144,6 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: 'Greta Arabic', 'Greta Text Arabic', -apple-system, BlinkMacSystemFont, sans-serif;
     font-weight: var(--font-weight-medium);
     line-height: var(--line-height-tight);
     color: var(--color-text-primary);
@@ -195,7 +188,6 @@ p {
     text-justify: inter-word;
     color: var(--color-text-secondary);
     font-size: var(--font-size-base);
-    font-family: 'Greta Arabic', 'Greta Text Arabic', -apple-system, BlinkMacSystemFont, sans-serif;
     font-weight: var(--font-weight-light);
 }
 
@@ -203,7 +195,6 @@ a {
     color: inherit;
     text-decoration: none;
     transition: color var(--transition-base);
-    font-family: 'Greta Arabic', 'Greta Text Arabic', -apple-system, BlinkMacSystemFont, sans-serif;
     font-weight: var(--font-weight-light);
 }
 
@@ -233,7 +224,6 @@ a:hover {
     align-items: center;
     justify-content: center;
     padding: var(--spacing-md) var(--spacing-xl);
-    font-family: 'Greta Arabic', 'Greta Text Arabic', -apple-system, BlinkMacSystemFont, sans-serif;
     font-size: var(--font-size-base);
     font-weight: var(--font-weight-light);
     line-height: 1;
@@ -537,6 +527,14 @@ img.loaded {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 var(--spacing-xl);
+}
+
+/* RTL Container Fix - Prevent layout shift */
+[dir="rtl"] .container,
+[dir="rtl"] .container-wide,
+[dir="rtl"] .container-narrow {
+    padding-left: var(--spacing-xl);
+    padding-right: var(--spacing-xl);
 }
 
 /* Grid System - Minimalistic */
@@ -979,7 +977,6 @@ img.loaded {
     font-weight: var(--font-weight-medium);
     margin-bottom: var(--spacing-lg);
     letter-spacing: -0.02em;
-    font-family: 'Greta Arabic', 'Greta Text Arabic', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 /* Lakum specific hero title */
@@ -989,7 +986,6 @@ img.loaded {
     line-height: 1.2;
     margin: 0 0 20px 0;
     color: #fff;
-    font-family: 'Greta Arabic', 'Greta Text Arabic', -apple-system, BlinkMacSystemFont, sans-serif !important;
     letter-spacing: -0.02em;
 }
 
