@@ -14,7 +14,7 @@ return [
     'db' => [
         'host'     => 'localhost',              // Hostinger: use localhost
         'user'     => 'u812122863_neama',       // Hostinger database user
-        'password' => 'Neama@2024',             // Hostinger database password
+        'password' => 'Nema202610!LakumDB',     // Hostinger database password
         'database' => 'u812122863_lakum_artspace', // Hostinger database name
         'port'     => 3306,                     // MySQL port
         'charset'  => 'utf8mb4',                // Character set
