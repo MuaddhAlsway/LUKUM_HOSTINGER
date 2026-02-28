@@ -464,7 +464,16 @@ require_once 'lang/loader.php';
         }
 
         // Load blog details when page loads
-        document.addEventListener('DOMContentLoaded', loadBlogDetails);
+        function initBlogDetailsPage() {
+            if (typeof LanguageManager === 'undefined') {
+                console.warn('LanguageManager not ready, retrying...');
+                setTimeout(initBlogDetailsPage, 100);
+                return;
+            }
+            loadBlogDetails();
+        }
+        
+        document.addEventListener('DOMContentLoaded', initBlogDetailsPage);
     </script>
 
     <script>

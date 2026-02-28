@@ -671,10 +671,19 @@ require_once 'lang/loader.php';
         }
 
         // Load press releases when page loads
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', loadPressReleases);
-        } else {
+        function initPressPage() {
+            if (typeof LanguageManager === 'undefined') {
+                console.warn('LanguageManager not ready, retrying...');
+                setTimeout(initPressPage, 100);
+                return;
+            }
             loadPressReleases();
+        }
+        
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initPressPage);
+        } else {
+            initPressPage();
         }
     </script>
 

@@ -610,16 +610,25 @@ html[lang="ar"] .lakum-event-card__date {
     }
 
     // Initialize
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', loadUpcomingEvents);
-    } else {
+    function initAboutPage() {
+        if (typeof LanguageManager === 'undefined') {
+            console.warn('LanguageManager not ready, retrying...');
+            setTimeout(initAboutPage, 100);
+            return;
+        }
         loadUpcomingEvents();
+    }
+    
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initAboutPage);
+    } else {
+        initAboutPage();
     }
 
     // Reload when page becomes visible
     document.addEventListener('visibilitychange', () => {
         if (!document.hidden) {
-            loadUpcomingEvents();
+            initAboutPage();
         }
     });
 </script>

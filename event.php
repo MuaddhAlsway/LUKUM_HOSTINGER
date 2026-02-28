@@ -830,7 +830,16 @@ require_once 'lang/loader.php';
         }
 
         // Load event data on page load
-        window.addEventListener('DOMContentLoaded', loadEventData);
+        function initEventPage() {
+            if (typeof LanguageManager === 'undefined') {
+                console.warn('LanguageManager not ready, retrying...');
+                setTimeout(initEventPage, 100);
+                return;
+            }
+            loadEventData();
+        }
+        
+        window.addEventListener('DOMContentLoaded', initEventPage);
         
         // Listen for URL changes (when user clicks different event links)
         window.addEventListener('popstate', loadEventData);

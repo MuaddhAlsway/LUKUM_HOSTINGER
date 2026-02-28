@@ -720,11 +720,12 @@ require_once 'lang/loader.php';
         };
 
         // Load ALL events (including past) - real database data only
-        const lang = LanguageManager.getLanguage();
-        const timestamp = new Date().getTime();
-        fetch(`api/get_events.php?type=all&lang=${lang}&t=${timestamp}`, {
-            cache: 'no-store'
-        })
+        function loadAllEventsFromDatabase() {
+            const lang = LanguageManager.getLanguage();
+            const timestamp = new Date().getTime();
+            fetch(`api/get_events.php?type=all&lang=${lang}&t=${timestamp}`, {
+                cache: 'no-store'
+            })
             .then(response => response.json())
             .then(apiResponse => {
                 // Extract data from API response
@@ -876,6 +877,7 @@ require_once 'lang/loader.php';
                 // Show empty state on error - no mock data
                 loadEventsData([]);
             });
+        }
 
         // Function to process and display events
         function loadEventsData(events) {
@@ -1213,7 +1215,22 @@ require_once 'lang/loader.php';
         }
 
         // Call the function when page loads
-        loadFeaturedEvents();
+        function initCalendarPage() {
+            if (typeof LanguageManager === 'undefined') {
+                console.warn('LanguageManager not ready, retrying...');
+                setTimeout(initCalendarPage, 100);
+                return;
+            }
+            loadAllEventsFromDatabase();
+            loadFeaturedEvents();
+        }
+        
+        // Initialize when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initCalendarPage);
+        } else {
+            initCalendarPage();
+        }
     </script>
 
     <!-- Mobile Performance Optimizer -->

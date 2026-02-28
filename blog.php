@@ -908,7 +908,20 @@ require_once 'lang/loader.php';
         });
 
         // Load blogs on page load
-        loadBlogs();
+        function initBlogPage() {
+            if (typeof LanguageManager === 'undefined') {
+                console.warn('LanguageManager not ready, retrying...');
+                setTimeout(initBlogPage, 100);
+                return;
+            }
+            loadBlogs();
+        }
+        
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initBlogPage);
+        } else {
+            initBlogPage();
+        }
     </script>
 
     <script>

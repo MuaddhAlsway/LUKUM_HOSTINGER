@@ -581,6 +581,13 @@ margin: 0 auto;}
 
         // Initialize
         async function initPage() {
+            // Ensure LanguageManager is initialized
+            if (typeof LanguageManager === 'undefined') {
+                console.warn('LanguageManager not ready, retrying...');
+                setTimeout(initPage, 100);
+                return;
+            }
+            
             const featuredId = await loadFeaturedEvent();
             await loadUpcomingEvents(featuredId);
             await loadPreviousEvents();

@@ -1160,7 +1160,16 @@ require_once 'lang/loader.php';
         }
 
         // Load past exhibitions when page loads
-        document.addEventListener('DOMContentLoaded', loadPastExhibitions);
+        function initSpacesPage() {
+            if (typeof LanguageManager === 'undefined') {
+                console.warn('LanguageManager not ready, retrying...');
+                setTimeout(initSpacesPage, 100);
+                return;
+            }
+            loadPastExhibitions();
+        }
+        
+        document.addEventListener('DOMContentLoaded', initSpacesPage);
 
         // Keyboard navigation for facility popup
         document.addEventListener('keydown', (e) => {

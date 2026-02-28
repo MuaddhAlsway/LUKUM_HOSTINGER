@@ -183,6 +183,20 @@ require_once 'lang/loader.php';
     <script src="assest/navbar-mobile-toggle.js?v=5.0.0" defer></script>
     <script src="js/LanguageManager.js?v=1.0.0"></script>
     <script>
+        // Wait for LanguageManager to be ready before calling functions
+        function initPage() {
+            // Ensure LanguageManager is initialized
+            if (typeof LanguageManager === 'undefined') {
+                console.warn('LanguageManager not ready, retrying...');
+                setTimeout(initPage, 100);
+                return;
+            }
+            
+            // Load upcoming events which will display featured event
+            loadUpcomingEvents();
+            loadPreviousExhibitions();
+        }
+        
         // Set current language from PHP
         window.LAKUM_LANG = '<?php echo getCurrentLanguage(); ?>';
         
@@ -340,12 +354,6 @@ require_once 'lang/loader.php';
                         container.innerHTML = `<div class="lakum-empty-state"><h3>${translations.noPreviousExhibitions}</h3></div>`;
                     }
                 });
-        }
-
-        function initPage() {
-            // Load upcoming events which will display featured event
-            loadUpcomingEvents();
-            loadPreviousExhibitions();
         }
 
         // Initialize when DOM is ready

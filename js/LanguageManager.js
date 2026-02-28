@@ -150,11 +150,13 @@ const LanguageManager = {
     }
 };
 
-// Initialize on page load
+// Initialize immediately (synchronous)
+// This ensures LanguageManager is ready before any inline scripts run
+LanguageManager.init();
+
+// Also initialize on DOMContentLoaded as backup
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
         LanguageManager.init();
     });
-} else {
-    LanguageManager.init();
 }
