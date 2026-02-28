@@ -57,7 +57,7 @@ html {
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
-  background: #f6f6eb;
+  background: #2048daff;
   color: #1a1a1a;
   overflow-x: hidden;
   line-height: 1.6;
