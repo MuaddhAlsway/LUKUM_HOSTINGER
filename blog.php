@@ -157,6 +157,7 @@ require_once 'lang/loader.php';
 
     <!-- Image Optimizer - Critical for performance -->
     <script src="assest/navbar-mobile-toggle.js?v=5.0.0" defer></script>
+    <script src="js/LanguageManager.js?v=1.0.0"></script>
 
     <!-- Scripts - Defer non-critical JavaScript -->
     <script>

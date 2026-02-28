@@ -181,6 +181,7 @@ require_once 'lang/loader.php';
     </div>
 
     <script src="assest/navbar-mobile-toggle.js?v=5.0.0" defer></script>
+    <script src="js/LanguageManager.js?v=1.0.0"></script>
     <script>
         // Set current language from PHP
         window.LAKUM_LANG = '<?php echo getCurrentLanguage(); ?>';

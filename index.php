@@ -398,6 +398,7 @@ margin: 0 auto;}
 
     <script src="assest/fun-interactions.js?v=5.0.0" defer></script>
     <script src="mobile-performance-optimizer.js?v=5.0.0" defer></script>
+    <script src="js/LanguageManager.js?v=1.0.0"></script>
     <script>
         // Set current language from PHP
         window.LAKUM_LANG = '<?php echo getCurrentLanguage(); ?>';

@@ -637,6 +637,7 @@ require_once 'lang/loader.php';
         })();
     </script>
 
+    <script src="js/LanguageManager.js?v=1.0.0"></script>
     <script>
         // Translation strings for JavaScript
         const translations = {
