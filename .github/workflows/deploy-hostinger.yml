@@ -30,8 +30,6 @@ jobs:
             **/.github*
             **/node_modules/**
             **/.env*
-            **/config.local.php
-            **/config.local.*.php
             **/database.local.php
             **/logs/**
             **/cache/**
