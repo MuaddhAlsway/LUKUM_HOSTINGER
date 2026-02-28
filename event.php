@@ -251,9 +251,7 @@ require_once 'lang/loader.php';
                     <li class="lakum-nav__item">
                         <a href="shop.php" class="lakum-nav__link "><?php echo t('shop', 'Shop'); ?></a>
                     </li>
-                    <li class="lakum-nav__item">
-                        <a href="test.php" class="lakum-nav__link">TEST</a>
-                    </li>
+
                 </ul>
             </nav>
 
