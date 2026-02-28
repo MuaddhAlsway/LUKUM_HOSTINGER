@@ -8,49 +8,19 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
 
-      - name: Validate Deployment Configuration
+      - name: Validate Secrets
         run: |
-          echo "🔍 Validating deployment configuration..."
-          
-          # Check if FTP credentials are set
+          echo "🔍 Checking FTP credentials..."
           if [ -z "${{ secrets.FTP_HOST }}" ] || [ -z "${{ secrets.FTP_USER }}" ] || [ -z "${{ secrets.FTP_PASSWORD }}" ]; then
-            echo "❌ ERROR: Missing FTP credentials in GitHub Secrets"
-            echo "Required secrets: FTP_HOST, FTP_USER, FTP_PASSWORD"
+            echo "❌ Missing FTP credentials!"
             exit 1
           fi
-          
-          echo "✅ FTP credentials are configured"
-          echo "✅ Deployment will proceed to: ${{ secrets.FTP_HOST }}"
-
-      - name: List Files to Deploy
-        run: |
-          echo "📦 Files that will be deployed:"
-          find . -type f \
-            ! -path './.git/*' \
-            ! -path './.github/*' \
-            ! -path './node_modules/*' \
-            ! -path './.env*' \
-            ! -path './logs/*' \
-            ! -path './cache/*' \
-            ! -path './tmp/*' \
-            ! -name '*.md' \
-            ! -name '.gitignore' \
-            ! -name '.DS_Store' \
-            ! -name 'Thumbs.db' \
-            -type f | head -50
-          echo "... (and more files)"
-
-      - name: Install FTP Deploy Action
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
+          echo "✅ Secrets OK"
 
       - name: Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
@@ -58,18 +28,24 @@ jobs:
           server: ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASSWORD }}
+
+          # ✅ IMPORTANT FIX HERE
+          server-dir: /public_html/
+
+          # ✅ Deploy everything from root
           local-dir: ./
-          server-dir: ./public_html/
+
+          # ✅ Faster & safer sync
           state-name: .ftp-deploy-sync-state.json
+
+          # ✅ Do NOT wipe server
           dangerous-clean-slate: false
+
           exclude: |
             **/.git*
             **/.github*
             **/node_modules/**
             **/.env*
-            **/config.local.php
-            **/config.local.*.php
-            **/database.local.php
             **/logs/**
             **/cache/**
             **/tmp/**
@@ -78,31 +54,11 @@ jobs:
             **/Thumbs.db
             **/.vscode/**
             **/.idea/**
-            **/test/**
             **/tests/**
             **/*.bak
             **/*.backup
             **/vendor/**
             **/composer.lock
-            **/.ftp-deploy-sync-state.json
 
-      - name: Verify Deployment
-        run: |
-          echo "✅ Deployment completed successfully!"
-          echo "📍 Files deployed to: ${{ secrets.FTP_HOST }}/public_html/"
-          echo "🔗 Your site should be live at: https://lakumartspace.com"
-          echo ""
-          echo "⚠️  Next steps:"
-          echo "1. Verify your site is accessible"
-          echo "2. Check error logs if issues occur"
-          echo "3. Test all functionality"
-
-      - name: Deployment Notification
-        if: always()
-        run: |
-          if [ "${{ job.status }}" == "success" ]; then
-            echo "✅ Deployment to Hostinger completed successfully!"
-          else
-            echo "❌ Deployment failed. Check logs above for details."
-            exit 1
-          fi
+      - name: Done
+        run: echo "🚀 Deployment complete!"
