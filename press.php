@@ -608,7 +608,7 @@ require_once 'lang/loader.php';
             try {
                 // Get current language from URL or localStorage
                 const urlParams = new URLSearchParams(window.location.search);
-                const lang = localStorage.getItem('language') || 'en';
+                const lang = LanguageManager.getLanguage();
                 
                 const response = await fetch(`api/get_press.php?lang=${lang}`);
                 const data = await response.json();

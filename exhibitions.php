@@ -290,7 +290,7 @@ require_once 'lang/loader.php';
         }
 
         function loadUpcomingEvents(excludeId = null) {
-            const lang = localStorage.getItem('language') || 'en';
+            const lang = LanguageManager.getLanguage();
             const timestamp = new Date().getTime();
             fetch(`api/get_events.php?type=upcoming&limit=7&lang=${lang}&t=${timestamp}`, {
                 cache: 'no-store'
@@ -318,7 +318,7 @@ require_once 'lang/loader.php';
         }
 
         function loadPreviousExhibitions() {
-            const lang = localStorage.getItem('language') || 'en';
+            const lang = LanguageManager.getLanguage();
             const timestamp = new Date().getTime();
             fetch(`api/get_events.php?type=past&limit=8&lang=${lang}&t=${timestamp}`, {
                 cache: 'no-store'
