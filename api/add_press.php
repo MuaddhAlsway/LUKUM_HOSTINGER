@@ -36,16 +36,24 @@ try {
     $slug_ar = $data['slug_ar'] ?? ($hasArabicTranslation ? generateSlug($title_ar) : generateSlug($title_en));
     
     // Validate required fields
-    if (!$title_en || !$content_en) {
+    if (!$title_en) {
         http_response_code(400);
-        echo json_encode(['success' => false, 'message' => 'Title and content (English) are required']);
+        echo json_encode(['success' => false, 'message' => 'Title (English) is required']);
         exit;
     }
     
-    if (!$title_ar || !$content_ar) {
+    if (!$title_ar) {
         http_response_code(400);
-        echo json_encode(['success' => false, 'message' => 'Title and content (Arabic) are required']);
+        echo json_encode(['success' => false, 'message' => 'Title (Arabic) is required']);
         exit;
+    }
+    
+    // Content is optional - use excerpt as fallback
+    if (empty($content_en)) {
+        $content_en = $excerpt_en ?? '';
+    }
+    if (empty($content_ar)) {
+        $content_ar = $excerpt_ar ?? '';
     }
     
     $db = Database::getInstance();
