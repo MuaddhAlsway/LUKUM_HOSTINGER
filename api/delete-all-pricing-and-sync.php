@@ -3,8 +3,12 @@
  * Delete all pricing and sync real Spaces Pricing data
  */
 
-header('Content-Type: application/json');
-require_once 'db.php';
+header('Content-Type: application/json; charset=utf-8');
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: POST, DELETE, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type, Accept');
+
+require_once 'config.php';
 
 try {
     $db = Database::getInstance();

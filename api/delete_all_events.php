@@ -3,9 +3,12 @@
  * LAKUM Artspace - Delete All Events API
  */
 
-header('Content-Type: application/json');
+header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST, DELETE, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type, Accept');
+
+require_once 'config.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
@@ -13,11 +16,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 
 try {
-    $conn = new mysqli('localhost', 'root', '', 'lakum_artspace');
+    $db = Database::getInstance();
     
-    if ($conn->connect_error) {
-        throw new Exception('Database connection failed: ' . $conn->connect_error);
+    if (!$db->isConnected()) {
+        throw new Exception('Database connection failed');
     }
+    
+    $conn = $db->getConnection();
+    $conn->set_charset('utf8mb4');
     
     // Delete all event gallery images first (due to foreign key)
     $query = "DELETE FROM event_gallery";
@@ -30,8 +36,6 @@ try {
     if (!$conn->query($query)) {
         throw new Exception('Delete events failed: ' . $conn->error);
     }
-    
-    $conn->close();
     
     http_response_code(200);
     echo json_encode([
