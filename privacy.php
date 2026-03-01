@@ -439,14 +439,14 @@ require_once 'lang/loader.php';
 
     <section class="lakum-legal-hero">
         <div class="lakum-container">
-            <h1 class="lakum-legal-hero__title">Privacy Policy</h1>
+            <h1 class="lakum-legal-hero__title" id="legal-page-title">Privacy Policy</h1>
         </div>
     </section>
 
     <section class="lakum-legal-content">
         <div class="lakum-container">
             <div class="lakum-legal-content__inner">
-                <p class="lakum-legal-content__date">Last Updated: <span data-translate="date">March 1, 2026</span></p>
+                <p class="lakum-legal-content__date">Last Updated: <span id="legal-page-date">March 1, 2026</span></p>
 
                 <div id="privacy-content" data-translate="content">
                     <h1>Privacy Policy & Data Protection Statement</h1>
@@ -697,10 +697,29 @@ require_once 'lang/loader.php';
                 
                 if (data.success && data.data) {
                     const contentDiv = document.getElementById('privacy-content');
+                    const titleDiv = document.getElementById('legal-page-title');
+                    const dateDiv = document.getElementById('legal-page-date');
+                    
                     if (contentDiv) {
                         // Update content with fetched data
                         contentDiv.innerHTML = `<h2>${data.data.title || 'Privacy Policy'}</h2>${data.data.content || ''}`;
                         console.log('Privacy content loaded successfully for language:', lang);
+                    }
+                    
+                    // Update title
+                    if (titleDiv) {
+                        titleDiv.textContent = data.data.title || 'Privacy Policy';
+                    }
+                    
+                    // Update date if available
+                    if (dateDiv && data.data.last_updated) {
+                        const updateDate = new Date(data.data.last_updated);
+                        const formattedDate = updateDate.toLocaleDateString('en-US', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric'
+                        });
+                        dateDiv.textContent = formattedDate;
                     }
                 } else {
                     console.log('No privacy content found in database, using default content');

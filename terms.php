@@ -449,14 +449,14 @@ require_once 'lang/loader.php';
 
     <section class="lakum-legal-hero">
         <div class="lakum-container">
-            <h1 class="lakum-legal-hero__title">Terms & Conditions</h1>
+            <h1 class="lakum-legal-hero__title" id="legal-page-title">Terms & Conditions</h1>
         </div>
     </section>
 
     <section class="lakum-legal-content">
         <div class="lakum-container">
             <div class="lakum-legal-content__inner">
-                <p class="lakum-legal-content__date">Last Updated: <span data-translate="date">March 1, 2026</span></p>
+                <p class="lakum-legal-content__date">Last Updated: <span id="legal-page-date">March 1, 2026</span></p>
 
                 <div id="terms-content" data-translate="content">Lakum Artspace Terms of Use
 By accessing and using the LAKUM Artspace website and services, you accept and agree to be bound by these Terms and Conditions.
@@ -683,10 +683,29 @@ Compliance with these terms ensures the preservation of Lakum Artspaceâ€™s 
                 
                 if (data.success && data.data) {
                     const contentDiv = document.getElementById('terms-content');
+                    const titleDiv = document.getElementById('legal-page-title');
+                    const dateDiv = document.getElementById('legal-page-date');
+                    
                     if (contentDiv) {
                         // Update content with fetched data
                         contentDiv.innerHTML = `<h2>${data.data.title || 'Terms & Conditions'}</h2>${data.data.content || ''}`;
                         console.log('Terms content loaded successfully for language:', lang);
+                    }
+                    
+                    // Update title
+                    if (titleDiv) {
+                        titleDiv.textContent = data.data.title || 'Terms & Conditions';
+                    }
+                    
+                    // Update date if available
+                    if (dateDiv && data.data.last_updated) {
+                        const updateDate = new Date(data.data.last_updated);
+                        const formattedDate = updateDate.toLocaleDateString('en-US', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric'
+                        });
+                        dateDiv.textContent = formattedDate;
                     }
                 } else {
                     console.log('No terms content found in database, using default content');
