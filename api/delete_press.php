@@ -45,10 +45,15 @@ try {
     $conn->set_charset('utf8mb4');
     
     // Delete press translations first (if they exist)
-    $query = "DELETE FROM press_translations WHERE press_id = $press_id";
-    if (!$conn->query($query)) {
-        // Don't fail if table doesn't exist
-        error_log('Press translations delete note: ' . $conn->error);
+    // Check if table exists first to avoid error messages
+    $tableCheckQuery = "SHOW TABLES LIKE 'press_translations'";
+    $tableExists = $conn->query($tableCheckQuery) && $conn->query($tableCheckQuery)->num_rows > 0;
+    
+    if ($tableExists) {
+        $query = "DELETE FROM press_translations WHERE press_id = $press_id";
+        if (!$conn->query($query)) {
+            error_log('Press translations delete note: ' . $conn->error);
+        }
     }
     
     // Delete press
