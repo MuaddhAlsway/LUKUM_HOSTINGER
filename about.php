@@ -331,7 +331,7 @@ html[lang="ar"] .lakum-upcoming-grid {
 }
 
 .lakum-event-card {
-  background: #f6f6eb !important;
+  background: #ffffff !important;
   border-radius: 8px !important;
   overflow: hidden !important;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
@@ -348,7 +348,7 @@ html[lang="ar"] .lakum-upcoming-grid {
 }
 
 .lakum-upcoming-card {
-  background: #f6f6eb !important;
+  background: #ffffff !important;
 }
 
 .lakum-event-card__image {
