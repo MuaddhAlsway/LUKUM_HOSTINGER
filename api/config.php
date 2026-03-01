@@ -13,16 +13,7 @@
  * ✅ Directory permissions improved (0775 for shared hosting)
  * ✅ Config validation comprehensive (all required keys checked)
  * ✅ Error handling standardized (consistent JSON responses)
- * ✅ GZIP compression enabled for API responses (70% reduction)
  */
-
-// ============================================================================
-// PERFORMANCE: ENABLE GZIP COMPRESSION FOR API RESPONSES
-// ============================================================================
-if (!headers_sent() && extension_loaded('zlib')) {
-    ob_start('ob_gzhandler');
-    header('Content-Encoding: gzip');
-}
 
 // ============================================================================
 // STEP 1: LOAD AND VALIDATE CONFIGURATION
