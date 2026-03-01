@@ -4,6 +4,7 @@
  * for both English and Arabic content
  * 
  * IMPORTANT: Excludes icon fonts (Remix Icon, Font Awesome, etc.)
+ * Uses complete font weight range (50-900)
  */
 
 /* ============================================
@@ -51,7 +52,7 @@ i::after,
 *:not(i):not([class*="ri-"]):not([class*="fa-"])::after:not([class*="ri-"]):not([class*="fa-"]),
 html,
 body {
-    font-family: 'Greta Arabic', 'Greta Text Arabic', -apple-system, BlinkMacSystemFont, sans-serif !important;
+    font-family: 'Greta Text Arabic', 'Greta Arabic', -apple-system, BlinkMacSystemFont, sans-serif !important;
 }
 
 /* All text elements - excluding icons */
@@ -99,7 +100,7 @@ del,
 ins,
 sub,
 sup {
-    font-family: 'Greta Arabic', 'Greta Text Arabic', -apple-system, BlinkMacSystemFont, sans-serif !important;
+    font-family: 'Greta Text Arabic', 'Greta Arabic', -apple-system, BlinkMacSystemFont, sans-serif !important;
 }
 
 /* Navigation */
@@ -107,7 +108,7 @@ sup {
 .lakum-nav,
 .lakum-nav__link,
 .lakum-nav__item {
-    font-family: 'Greta Arabic', 'Greta Text Arabic', -apple-system, BlinkMacSystemFont, sans-serif !important;
+    font-family: 'Greta Text Arabic', 'Greta Arabic', -apple-system, BlinkMacSystemFont, sans-serif !important;
 }
 
 /* Footer */
@@ -117,7 +118,7 @@ sup {
 .lakum-footer__nav-title,
 .lakum-footer__link,
 .lakum-footer__copyright {
-    font-family: 'Greta Arabic', 'Greta Text Arabic', -apple-system, BlinkMacSystemFont, sans-serif !important;
+    font-family: 'Greta Text Arabic', 'Greta Arabic', -apple-system, BlinkMacSystemFont, sans-serif !important;
 }
 
 /* Buttons - text only, not icons inside */
@@ -128,7 +129,7 @@ button:not(.lightbox__close):not(.lightbox__prev):not(.lightbox__next),
 [type="button"],
 [type="submit"],
 [type="reset"] {
-    font-family: 'Greta Arabic', 'Greta Text Arabic', -apple-system, BlinkMacSystemFont, sans-serif !important;
+    font-family: 'Greta Text Arabic', 'Greta Arabic', -apple-system, BlinkMacSystemFont, sans-serif !important;
 }
 
 /* Lightbox buttons - preserve icon font */
@@ -145,13 +146,13 @@ input,
 textarea,
 select,
 option {
-    font-family: 'Greta Arabic', 'Greta Text Arabic', -apple-system, BlinkMacSystemFont, sans-serif !important;
+    font-family: 'Greta Text Arabic', 'Greta Arabic', -apple-system, BlinkMacSystemFont, sans-serif !important;
 }
 
 /* Language switcher - text only */
 
 .lakum-lang-link {
-    font-family: 'Greta Arabic', 'Greta Text Arabic', -apple-system, BlinkMacSystemFont, sans-serif !important;
+    font-family: 'Greta Text Arabic', 'Greta Arabic', -apple-system, BlinkMacSystemFont, sans-serif !important;
 }
 
 /* Hero sections */
@@ -175,7 +176,7 @@ option {
 .lakum-event-card__title,
 .lakum-event-card__link,
 .lakum-blog-card {
-    font-family: 'Greta Arabic', 'Greta Text Arabic', -apple-system, BlinkMacSystemFont, sans-serif !important;
+    font-family: 'Greta Text Arabic', 'Greta Arabic', -apple-system, BlinkMacSystemFont, sans-serif !important;
 }
 
 /* Specific legacy classes from Home.css */
@@ -190,21 +191,21 @@ option {
 .COVERAboutUs,
 .driveyoursoul,
 .bannerleftside {
-    font-family: 'Greta Arabic', 'Greta Text Arabic', -apple-system, BlinkMacSystemFont, sans-serif !important;
+    font-family: 'Greta Text Arabic', 'Greta Arabic', -apple-system, BlinkMacSystemFont, sans-serif !important;
 }
 
 /* Spaces page specific */
 
 .lakum-pricing-card,
 .lakum-facility-card {
-    font-family: 'Greta Arabic', 'Greta Text Arabic', -apple-system, BlinkMacSystemFont, sans-serif !important;
+    font-family: 'Greta Text Arabic', 'Greta Arabic', -apple-system, BlinkMacSystemFont, sans-serif !important;
 }
 
 /* Admin panel - excluding icons */
 
 .admin-container,
 .admin-container *:not(i):not([class*="ri-"]):not([class*="fa-"]) {
-    font-family: 'Greta Arabic', 'Greta Text Arabic', -apple-system, BlinkMacSystemFont, sans-serif !important;
+    font-family: 'Greta Text Arabic', 'Greta Arabic', -apple-system, BlinkMacSystemFont, sans-serif !important;
 }
 
 /* RTL specific - excluding icons */
@@ -222,7 +223,7 @@ option {
 [dir="rtl"] div:not([class*="ri-"]):not([class*="fa-"]),
 [dir="rtl"] a:not([class*="ri-"]):not([class*="fa-"]),
 [dir="rtl"] button {
-    font-family: 'Greta Arabic', 'Greta Text Arabic', -apple-system, BlinkMacSystemFont, sans-serif !important;
+    font-family: 'Greta Text Arabic', 'Greta Arabic', -apple-system, BlinkMacSystemFont, sans-serif !important;
 }
 
 /* Ensure proper font rendering */
@@ -234,7 +235,9 @@ body {
     font-feature-settings: "kern" 1, "liga" 1;
 }
 
-/* Font weight mapping for Greta Arabic */
+/* ============================================
+   FONT WEIGHT UTILITIES
+   ============================================ */
 
 .font-hairline {
     font-weight: 50 !important;

@@ -4,13 +4,11 @@ require_once 'lang/loader.php';
 <html <?php echo getLanguageAttributes(); ?>>
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo t('press_page_title', 'Press & Media | LAKUM Artspace Coverage'); ?></title>
-    <link rel="icon" type="image/png" sizes="32x32" href="assest/logo/right_section.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="assest/logo/right_section.png">
-    <link rel="apple-touch-icon" href="assest/logo/right_section.png">
-    <meta name="msapplication-TileImage" content="assest/logo/right_section.png">
+    <title>Terms & Conditions - LAKUM Artspace</title>
+    <link rel="icon" href="assest/favicon.png" type="image/png">
 
     <!-- Inline Critical CSS for Instant LCP -->
     <style>
@@ -31,15 +29,11 @@ require_once 'lang/loader.php';
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background: #f6f6eb;
             color: #1a1a1a;
             overflow-x: hidden;
             line-height: 1.6
-        }
-        
-        * {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
         }
 
         .lakum-hero {
@@ -141,7 +135,6 @@ require_once 'lang/loader.php';
     <link rel="prefetch" href="assest/fonts/GretaArabicAR+LT-Regular.otf" as="font" type="font/otf" crossorigin>
     <link rel="prefetch" href="assest/fonts/GretaArabicAR+LT-Light.otf" as="font" type="font/otf" crossorigin>
 
-    <!-- Greta Arabic Font - Universal for both Arabic and English -->
     <!-- Core Styles - Critical CSS loaded synchronously -->
     <link rel="stylesheet" href="global-styles.css">
     <link rel="stylesheet" href="lakum-components.css">
@@ -158,10 +151,8 @@ require_once 'lang/loader.php';
     <noscript><link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet"></noscript>
 
     <!-- Image Optimizer - Critical for performance -->
-    <script src="assest/navbar-mobile-toggle.js?v=5.0.0" defer></script>
-    <script src="js/LanguageManager.js?v=1.0.0"></script>
-
     <!-- Scripts - Defer non-critical JavaScript -->
+    <script src="assest/navbar-mobile-toggle.js?v=5.0.0" defer></script>
     <script>
         // Set language for JavaScript - Read from URL parameter or localStorage
         const urlParams = new URLSearchParams(window.location.search);
@@ -201,75 +192,70 @@ require_once 'lang/loader.php';
             });
         }
     </script>
-
-    <!-- Primary Meta Tags -->
-    <meta name="title" content="Press &amp; Media | LAKUM Artspace Coverage">
-    <meta name="description" content="LAKUM Artspace press coverage, media mentions, and news. Download press kit and view our latest media appearances and cultural impact in Riyadh.">
-    <meta name="keywords" content="art gallery Riyadh, cultural events Riyadh, art exhibitions Saudi Arabia, event space rental Riyadh, contemporary art gallery, cultural hub Riyadh, art workshops Riyadh, creative space Riyadh">
-    <meta name="author" content="LAKUM Artspace">
-    <meta name="language" content="<?php echo isArabic() ? "Arabic" : "English"; ?>">
-    <meta name="robots" content="index, follow">
-    <meta name="googlebot" content="index, follow">
-
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://lakumartspace.infinityfree.me/press.php">
-
-    <!-- Alternate Language -->
-    <link rel="alternate" hreflang="en" href="https://lakumartspace.infinityfree.me/press.php?lang=en" />
-    <link rel="alternate" hreflang="ar" href="https://lakumartspace.infinityfree.me/press.php?lang=ar" />
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://lakumartspace.infinityfree.me/press">
-    <meta property="og:title" content="Press &amp; Media | LAKUM Artspace Coverage">
-    <meta property="og:description" content="LAKUM Artspace press coverage, media mentions, and news. Download press kit and view our latest media appearances and cultural impact in Riyadh.">
-    <meta property="og:image" content="https://lakumartspace.infinityfree.me/assest/img-4.png">
-    <meta property="og:site_name" content="LAKUM Artspace">
-    <meta property="og:locale" content="en_US">
-    <meta property="og:locale:alternate" content="ar_SA">
-
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="https://lakumartspace.infinityfree.me/press">
-    <meta name="twitter:title" content="Press &amp; Media | LAKUM Artspace Coverage">
-    <meta name="twitter:description" content="LAKUM Artspace press coverage, media mentions, and news. Download press kit and view our latest media appearances and cultural impact in Riyadh.">
-    <meta name="twitter:image" content="https://lakumartspace.infinityfree.me/assest/img-4.png">
-
-    <!-- Additional SEO -->
-    <meta name="theme-color" content="#1a1a1a">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="format-detection" content="telephone=no">
-
-    <!-- Structured Data - Organization -->
-    <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "ArtGallery",
-            "name": "LAKUM Artspace",
-            "alternateName": "Ù„ÙƒÙ… Ø¢Ø±Øª Ø³Ø¨ÙŠØ³",
-            "url": "https://lakumartspace.infinityfree.me",
-            "logo": "https://lakumartspace.infinityfree.me/assest/favicon.png",
-            "description": "A living space for art, connection, and cultural exchange in the heart of Riyadh",
-            "address": {
-                "@type": "PostalAddress",
-                "addressLocality": "Riyadh",
-                "addressCountry": "SA"
-            },
-            "geo": {
-                "@type": "GeoCoordinates",
-                "latitude": "24.7136",
-                "longitude": "46.6753"
-            },
-            "sameAs": [
-                "https://www.instagram.com/lakum.artspace/",
-                "https://twitter.com/lakumartspace"
-            ]
+    <style>
+        .lakum-legal-hero {
+            padding: clamp(120px, 15vw, 180px) 0 clamp(40px, 5vw, 60px) 0;
+            background: #f6f6eb;
+            text-align: center;
         }
-    </script>
 
-    <link rel="stylesheet" href="press.css">
+        .lakum-legal-hero__title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 300;
+            color: #1a1a1a;
+            margin: 0;
+        }
+
+        .lakum-legal-content {
+            padding: clamp(60px, 8vw, 100px) 0;
+            background: #ffffff;
+        }
+
+        .lakum-legal-content__inner {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .lakum-legal-content h2 {
+            font-size: clamp(1.25rem, 2vw, 1.5rem);
+            font-weight: 400;
+            color: #1a1a1a;
+            margin: clamp(32px, 4vw, 48px) 0 clamp(16px, 2vw, 20px) 0;
+        }
+
+        .lakum-legal-content h2:first-child {
+            margin-top: 0;
+        }
+
+        .lakum-legal-content p {
+            font-size: clamp(0.95rem, 1.3vw, 1.05rem);
+            font-weight: 300;
+            line-height: 1.8;
+            color: #525252;
+            margin: 0 0 16px 0;
+        }
+
+        .lakum-legal-content ul {
+            margin: 0 0 16px 0;
+            padding-left: 24px;
+        }
+
+        .lakum-legal-content li {
+            font-size: clamp(0.95rem, 1.3vw, 1.05rem);
+            font-weight: 300;
+            line-height: 1.8;
+            color: #525252;
+            margin-bottom: 8px;
+        }
+
+        .lakum-legal-content__date {
+            font-size: 0.9rem;
+            color: #8a8a8a;
+            margin-bottom: 32px;
+        }
+    </style>
+<link rel="alternate" hreflang="en" href="https://lakumartspace.infinityfree.me/terms.php?lang=en" />
+<link rel="alternate" hreflang="ar" href="https://lakumartspace.infinityfree.me/terms.php?lang=ar" />
 <script src="assest/static-json-translator.js?v=1.0.0" defer></script></head>
 
 <body class="<?php echo getLanguageClass(); ?>">
@@ -282,7 +268,6 @@ require_once 'lang/loader.php';
     </div>
 
     <header class="lakum-header">
-    <!-- CRITICAL: Apply saved language BEFORE page renders -->
 
         <div class="lakum-header__container">
             <div class="lakum-header__logo">
@@ -314,7 +299,7 @@ require_once 'lang/loader.php';
                         <a href="blog.php" class="lakum-nav__link "><?php echo t('blog', 'Blog'); ?></a>
                     </li>
                     <li class="lakum-nav__item">
-                        <a href="press.php" class="lakum-nav__link lakum-nav__link--active"><?php echo t('press', 'Press'); ?></a>
+                        <a href="press.php" class="lakum-nav__link "><?php echo t('press', 'Press'); ?></a>
                     </li>
                     <li class="lakum-nav__item">
                         <a href="contact.php" class="lakum-nav__link "><?php echo t('contact_us', 'Contact'); ?></a>
@@ -322,7 +307,6 @@ require_once 'lang/loader.php';
                     <li class="lakum-nav__item">
                         <a href="shop.php" class="lakum-nav__link "><?php echo t('shop', 'Shop'); ?></a>
                     </li>
-
                 </ul>
             </nav>
 
@@ -462,20 +446,52 @@ require_once 'lang/loader.php';
         })();
     </script>
 
-    <!-- Hero Section -->
-    <section class="lakum-press-hero">
+    <section class="lakum-legal-hero">
         <div class="lakum-container">
-            <h1 class="lakum-press-hero__title"><?php echo t('press_hero_title', 'Press & Media'); ?></h1>
-            <p class="lakum-press-hero__subtitle"><?php echo t('press_hero_subtitle', 'Read about LAKUM Artspace in the news'); ?></p>
+            <h1 class="lakum-legal-hero__title">Terms & Conditions</h1>
         </div>
     </section>
 
-    <!-- Press Releases Grid -->
-    <section class="lakum-press-content">
+    <section class="lakum-legal-content">
         <div class="lakum-container">
-            <div class="lakum-press-grid" id="pressGrid">
-                <!-- Press cards will be loaded dynamically from API -->
-                <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #999;">Loading press releases...</div>
+            <div class="lakum-legal-content__inner">
+                <p class="lakum-legal-content__date">Last Updated: <span data-translate="date">December 2025</span></p>
+
+                <div id="terms-content" data-translate="content">Lakum Artspace Terms of Use
+By accessing and using the LAKUM Artspace website and services, you accept and agree to be bound by these Terms and Conditions.
+
+1. Standard Operating Hours
+I acknowledge that Lakum Artspaceâ€™s operating hours are 10:00 AM â€“ 10:00 PM, and that additional hours will incur extra charges.
+
+2. Liability for Damages
+I am responsible for any damage to the venue, equipment, furniture, or accessories during the entire rental period, including setup and dismantling.
+
+3. Official Damage Reporting
+Any damage will be documented and reported by a Lakum Artspace representative during the event.
+
+4. Surface Material Restrictions
+I will not use or apply stickers, vinyl, or adhesive materials on any internal or external surfaces without prior approval from Lakum Artspace.
+
+5. Event Promotion Policy
+Lakum Artspace is not obligated to promote or advertise external events on its social media or marketing channels.
+
+6. Branding and Logo Usage
+Use of Lakum Artspaceâ€™s logo or branding elements is strictly prohibited unless formally approved.
+
+7. Private Area Access
+Access to private areasâ€”including offices, the directorâ€™s office, and storage roomsâ€”is not permitted.
+
+8. Public Access Areas
+The mezzanine floor, including the shop and cafÃ©, will remain open to the public during regular hours unless reserved as private for the event.
+
+9. On-Site Staff Presence
+Lakum Artspace staffâ€”male and femaleâ€”will be present throughout the event.
+
+10. Exhibition Approval Process
+Personal or group exhibitions by artists will not be considered unless formally submitted and approved by the Lakum Artspace jury.
+
+
+Compliance with these terms ensures the preservation of Lakum Artspaceâ€™s professional standards and physical integrity, establishing a clear framework for operational hours, property liability, and brand usage to which all parties are strictly bound throughout the duration of the engagement.</div>
             </div>
         </div>
     </section>
@@ -526,11 +542,11 @@ require_once 'lang/loader.php';
             </div>
 
             <div class="lakum-footer__bottom">
-                <p class="lakum-footer__copyright"><?php echo t('footer_copyright', '© 2025 - 2027 LAKUM Artspace. All rights reserved.'); ?></p>
+                <p class="lakum-footer__copyright">Â© 2025 - 2027 LAKUM Artspace. All rights reserved.</p>
                 <div class="lakum-footer__legal">
-                    <a href="terms.php" class="lakum-footer__legal-link"><?php echo t('footer_terms', 'Terms & Conditions'); ?></a>
+                    <a href="terms.php" class="lakum-footer__legal-link">Terms & Conditions</a>
                     <span class="lakum-footer__legal-divider">|</span>
-                    <a href="privacy.php" class="lakum-footer__legal-link"><?php echo t('footer_privacy', 'Privacy Policy'); ?></a>
+                    <a href="privacy.php" class="lakum-footer__legal-link">Privacy Policy</a>
                 </div>
             </div>
         </div>
@@ -605,259 +621,22 @@ require_once 'lang/loader.php';
             }
         })();
     </script>
-
-    <!-- Load Press Data from API -->
+    <script src="legal-content-loader.js"></script>
     <script>
-        async function loadPressReleases() {
-            try {
-                // Get current language from URL or localStorage
-                const urlParams = new URLSearchParams(window.location.search);
-                const lang = LanguageManager.getLanguage();
-                
-                const response = await fetch(`api/get_press.php?lang=${lang}`);
-                const data = await response.json();
-                
-                if (data.success && data.data && data.data.length > 0) {
-                    displayPressReleases(data.data);
-                } else {
-                    console.warn('No press data available');
-                    displayNoPressMessage();
-                }
-            } catch (error) {
-                console.error('Error loading press releases:', error);
-                displayNoPressMessage();
-            }
-        }
-
-        function displayPressReleases(pressItems) {
-            const pressGrid = document.getElementById('pressGrid');
-            pressGrid.innerHTML = '';
-
-            pressItems.forEach(item => {
-                const pressCard = document.createElement('a');
-                pressCard.href = item.url || '#';
-                pressCard.target = '_blank';
-                pressCard.rel = 'noopener';
-                pressCard.className = 'lakum-press-card';
-                pressCard.setAttribute('data-press-id', item.id);
-
-                const formattedDate = new Date(item.press_date).toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'short',
-                    day: 'numeric'
-                });
-
-                pressCard.innerHTML = `
-                    <div class="lakum-press-card__image">
-                        <img src="${item.cover_image || 'assest/img-4.png'}" alt="${item.source || 'Press Release'}" loading="lazy">
-                    </div>
-                    <div class="lakum-press-card__content">
-                        <span class="lakum-press-card__source">${item.source || 'LAKUM Press'}</span>
-                        <h3 class="lakum-press-card__title">${item.title}</h3>
-                        <p class="lakum-press-card__description">${item.excerpt || item.content || ''}</p>
-                        <div class="lakum-press-card__footer">
-                            <span class="lakum-press-card__date">${formattedDate}</span>
-                            <span class="lakum-press-card__link">
-                                Read Article <i class="ri-external-link-line"></i>
-                            </span>
-                        </div>
-                    </div>
-                `;
-
-                pressGrid.appendChild(pressCard);
-            });
-        }
-
-        function displayNoPressMessage() {
-            const pressGrid = document.getElementById('pressGrid');
-            pressGrid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #999;">No press releases available</div>';
-        }
-
-        // Load press releases when page loads
-        function initPressPage() {
-            if (typeof LanguageManager === 'undefined') {
-                console.warn('LanguageManager not ready, retrying...');
-                setTimeout(initPressPage, 100);
-                return;
-            }
-            loadPressReleases();
-        }
-        
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initPressPage);
-        } else {
-            initPressPage();
-        }
-    </script>
-
-    <script>
-        // Wait for translationHelper to be available
-        function initializeTranslation() {
-            if (typeof translationHelper === 'undefined') {
-                // translationHelper not loaded yet, try again
-                setTimeout(initializeTranslation, 100);
-                return;
-            }
-
-            // Translate press releases if needed
-            if (translationHelper.needsTranslation()) {
-                const pressReleases = [{
-                "id": "1",
-                "title": "Explore an interactive workshop By The Culture Mocktail at Lakum",
-                "publication": "Time Out Riyadh",
-                "excerpt": "Time Out Riyadh features an interactive workshop hosted by The Culture Mocktail at LAKUM Artspace.",
-                "url": "https:\/\/www.timeoutriyadh.com\/things-to-do\/things-to-do-in-riyadh",
-                "publish_date": "2025-12-16",
-                "logo_path": "uploads\/press\/press_1_1765953905.jpg",
-                "created_at": "2025-12-16 22:45:05",
-                "updated_at": "2025-12-16 22:45:05"
-            }, {
-                "id": "2",
-                "title": "TikTok Creator Hub Awards Women Entrepreneurs in Riyadh (#HerAmbitions)",
-                "publication": "Zawya",
-                "excerpt": "Zawya covers the TikTok MENA Creator Hub awards celebrating women entrepreneurs in Riyadh at LAKUM Artspace.",
-                "url": "https:\/\/www.zawya.com\/en\/press-release\/events-and-conferences\/tiktok-mena-creator-hub-awards-women-entrepreneurs-in-riyadh-ilt72tyv",
-                "publish_date": "2024-02-28",
-                "logo_path": "uploads\/press\/press_2_1765953905.jpg",
-                "created_at": "2025-12-16 22:45:05",
-                "updated_at": "2025-12-21 04:45:24"
-            }, {
-                "id": "3",
-                "title": "Pre-Ramadan pop-up show in Riyadh's Lakum Artspace",
-                "publication": "KSA Directory",
-                "excerpt": "KSA Directory highlights a special pre-Ramadan pop-up exhibition at LAKUM Artspace.",
-                "url": "https:\/\/www.ksa.directory\/pre-ramadan-pop-up-show-in-riyadh-s-lakum-artspace-consists-of-curated-pop-up-shops\/396\/n",
-                "publish_date": "2023-03-21",
-                "logo_path": "uploads\/press\/press_3_1765953905.svg",
-                "created_at": "2025-12-16 22:45:05",
-                "updated_at": "2025-12-21 04:45:53"
-            }, {
-                "id": "4",
-                "title": "Snap shows power of AR in transforming fashion, beauty in Saudi Arabia",
-                "publication": "Arab News",
-                "excerpt": "Arab News reports on Snap's augmented reality showcase at LAKUM Artspace, demonstrating AR's impact on fashion and beauty.",
-                "url": "https:\/\/www.arabnews.com\/node\/2177376\/saudi-arabia",
-                "publish_date": "2022-10-08",
-                "logo_path": "uploads\/press\/press_5_1765953905.png",
-                "created_at": "2025-12-16 22:45:05",
-                "updated_at": "2025-12-21 04:46:32"
-            }, {
-                "id": "5",
-                "title": "Photographer Faisal bin Zarah's exhibition is a love letter to the Kingdom",
-                "publication": "Arab News",
-                "excerpt": "Arab News features photographer Faisal bin Zarah's exhibition at LAKUM Artspace, celebrating Saudi Arabia through photography.",
-                "url": "https:\/\/www.arabnews.com\/node\/2174501\/saudi-arabia",
-                "publish_date": "2022-09-15",
-                "logo_path": "uploads\/press\/press_5_1765953905.png",
-                "created_at": "2025-12-16 22:45:05",
-                "updated_at": "2025-12-21 04:51:07"
-            }, {
-                "id": "6",
-                "title": "Artworks of 20 Saudi women on display to mark International Women's Day",
-                "publication": "Saudi Gazette",
-                "excerpt": "Saudi Gazette covers an exhibition at LAKUM Artspace featuring artworks by 20 Saudi women artists for International Women's Day.",
-                "url": "https:\/\/www.saudigazette.com.sa\/article\/617910\/SAUDI-ARABIA\/Artworks-of-20-Saudi-women-are-on-display-in-Riyadh-to-mark-International-Womens-Day",
-                "publish_date": "2022-03-08",
-                "logo_path": "uploads\/press\/press_6_1765953905.svg",
-                "created_at": "2025-12-16 22:45:05",
-                "updated_at": "2025-12-16 22:45:05"
-            }, {
-                "id": "7",
-                "title": "Ahmed Mater to inaugurate Lakum Artspace with Prognosis: 1979-2019",
-                "publication": "GDN Life",
-                "excerpt": "GDN Life announces the inauguration of LAKUM Artspace with renowned artist Ahmed Mater's exhibition \"Prognosis: 1979-2019\".",
-                "url": "https:\/\/www.gdnlife.com\/Home\/ArticleDetail?ArticleId=43966&category=6",
-                "publish_date": "2021-11-24",
-                "logo_path": "uploads\/press\/press_7_1765953905.png",
-                "created_at": "2025-12-16 22:45:05",
-                "updated_at": "2025-12-16 22:45:05"
-            }, {
-                "id": "8",
-                "title": "Lakum Artspace to open in December",
-                "publication": "Time Out Riyadh",
-                "excerpt": "Time Out Riyadh announces the upcoming opening of LAKUM Artspace in December 2021.",
-                "url": "https:\/\/www.timeoutriyadh.com\/art\/lakum-art-space-to-open-in-december",
-                "publish_date": "2021-10-28",
-                "logo_path": "uploads\/press\/press_8_1765953905.jpg",
-                "created_at": "2025-12-16 22:45:05",
-                "updated_at": "2025-12-16 22:45:05"
-            }];
-            const pressCards = document.querySelectorAll('.lakum-press-card');
-
-            translationHelper.translateArrayProgressive(
-                pressReleases, ['title', 'publication', 'excerpt'],
-                (translated, index) => {
-                    const card = pressCards[index];
-                    if (card) {
-                        const titleEl = card.querySelector('.lakum-press-card__title');
-                        const sourceEl = card.querySelector('.lakum-press-card__source');
-                        const descEl = card.querySelector('.lakum-press-card__description');
-
-                        if (titleEl) titleEl.textContent = translated.title;
-                        if (sourceEl && translated.publication) sourceEl.textContent = translated.publication;
-                        if (descEl && translated.excerpt) {
-                            const truncated = translated.excerpt.length > 150 ?
-                                translated.excerpt.substring(0, 150) + '...' :
-                                translated.excerpt;
-                            descEl.textContent = truncated;
-                        }
-                    }
-                },
-                'ar'
-            );
-            }
-        }
-        
-        // Initialize translation when DOM is ready
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initializeTranslation);
-        } else {
-            initializeTranslation();
-        }
-    </script>
-
-    <script>
-        // Listen for dynamic content loaded event and render press releases based on language
-        document.addEventListener('lakum-content-loaded', (e) => {
-            if (e.detail.contentType === 'press') {
-                const pressReleases = e.detail.content;
-                const pressGrid = document.getElementById('pressGrid');
-                
-                if (!pressGrid || !pressReleases || pressReleases.length === 0) return;
-                
-                // Clear existing content
-                pressGrid.innerHTML = '';
-                
-                // Render press releases
-                pressReleases.forEach((item) => {
-                    const pressCard = document.createElement('a');
-                    pressCard.href = item.url || '#';
-                    pressCard.target = '_blank';
-                    pressCard.rel = 'noopener';
-                    pressCard.className = 'lakum-press-card';
-                    pressCard.setAttribute('data-press-id', item.id);
-                    
-                    const formattedDate = new Date(item.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
-                    
-                    pressCard.innerHTML = `
-                        <div class="lakum-press-card__image">
-                            <img src="${item.cover_image || 'assest/img-4.png'}" alt="${item.source || 'Press Release'}" loading="lazy">
-                        </div>
-                        <div class="lakum-press-card__content">
-                            <span class="lakum-press-card__source">${item.source || 'LAKUM Press'}</span>
-                            <h3 class="lakum-press-card__title">${item.title}</h3>
-                            <p class="lakum-press-card__description">${item.content ? item.content.substring(0, 150) + '...' : ''}</p>
-                            <div class="lakum-press-card__footer">
-                                <span class="lakum-press-card__date">${formattedDate}</span>
-                                <span class="lakum-press-card__link">
-                                    Read Article <i class="ri-external-link-line"></i>
-                                </span>
-                            </div>
-                        </div>
-                    `;
-                    
-                    pressGrid.appendChild(pressCard);
-                });
+        // Content is loaded from database by legal-content-loader.js
+        // No additional translation needed as Arabic content is stored separately
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get current language
+            const urlParams = new URLSearchParams(window.location.search);
+            const lang = urlParams.get('lang') || localStorage.getItem('lakum_language') || 'en';
+            
+            // Set page direction based on language
+            if (lang === 'ar') {
+                document.documentElement.dir = 'rtl';
+                document.documentElement.lang = 'ar';
+            } else {
+                document.documentElement.dir = 'ltr';
+                document.documentElement.lang = 'en';
             }
         });
     </script>
@@ -977,17 +756,13 @@ require_once 'lang/loader.php';
             .catch(err => console.log('Language update skipped'));
     });
 
+
     // Call on page load
     updateNavbarFooterLanguage();
 </script>
 </body>
 
 </html>
-
-
-
-
-
 
 
 

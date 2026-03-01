@@ -58,22 +58,41 @@ html[dir="rtl"] {
 
 /* Header Container - Fix layout shift */
 [dir="rtl"] .lakum-header__container {
-    flex-direction: row-reverse;
-    padding-left: 20px;
-    padding-right: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 80px;
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 clamp(20px, 5vw, 60px);
 }
 
 /* Logo - Remove extra margin */
 [dir="rtl"] .lakum-header__logo {
-    margin-right: 0;
-    margin-left: 40px;
     flex-shrink: 0;
+    margin-right: 0;
+    margin-left: 0;
 }
 
 /* Navigation - Ensure no extra spacing */
 [dir="rtl"] .lakum-nav {
     margin: 0;
     padding: 0;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+[dir="rtl"] .lakum-nav__list {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(20px, 3vw, 48px);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
 }
 
 [dir="rtl"] .lakum-nav__item {
@@ -81,10 +100,24 @@ html[dir="rtl"] {
     padding: 0;
 }
 
+[dir="rtl"] .lakum-nav__link {
+    font-family: 'Greta Text Arabic', 'Greta Arabic', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    color: #1a1a1a;
+    text-decoration: none;
+    text-transform: capitalize;
+    padding: 8px 0;
+    position: relative;
+    transition: color 0.3s ease;
+    display: inline-block;
+}
+
 /* Language Switcher - Fix positioning */
 [dir="rtl"] .lakum-language-switcher {
-    margin-right: auto;
-    margin-left: 20px;
+    margin-left: auto;
+    margin-right: 0;
     flex-shrink: 0;
 }
 
@@ -957,36 +990,39 @@ html[dir="rtl"] {
 
 @media (max-width: 768px) {
     [dir="rtl"] .lakum-header__container {
-        grid-template-columns: auto auto 1fr auto;
-        padding: 0 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 20px;
+        position: relative;
     }
     [dir="rtl"] .lakum-header__mobile-toggle {
-        order: 4;
-        left: auto;
-        right: 16px;
+        position: absolute;
+        left: 20px;
+        right: auto;
+        flex-shrink: 0;
+        z-index: 1001;
     }
     [dir="rtl"] .lakum-header__logo {
-        order: 2;
-        margin-left: 20px;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        margin-left: 0;
     }
     [dir="rtl"] .lakum-language-switcher {
-        order: 1;
+        position: absolute;
+        right: 20px;
+        left: auto;
         margin: 0;
-        margin-left: 10px;
     }
     [dir="rtl"] .lakum-nav {
         left: 0;
         right: auto;
         transform: translateX(-100%);
-        width: 100%;
-        max-width: 100%;
+        z-index: 999;
     }
     [dir="rtl"] .lakum-nav--active {
         transform: translateX(0);
-    }
-    [dir="rtl"] .lakum-contact-fab {
-        left: 24px;
-        right: auto;
     }
 }
 

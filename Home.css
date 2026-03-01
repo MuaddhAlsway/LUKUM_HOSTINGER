@@ -2,18 +2,18 @@
 
 /* ===== UNIVERSAL FONT FAMILY ===== */
 * {
-    font-family: 'Greta Arabic', 'Greta Text Arabic', -apple-system, BlinkMacSystemFont, sans-serif !important;
+    font-family: 'Greta Text Arabic', 'Greta Arabic', -apple-system, BlinkMacSystemFont, sans-serif !important;
 }
 
 body {
-    font-family: 'Greta Arabic', 'Greta Text Arabic', -apple-system, BlinkMacSystemFont, sans-serif !important;
+    font-family: 'Greta Text Arabic', 'Greta Arabic', -apple-system, BlinkMacSystemFont, sans-serif !important;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     background: #f6f6eb;
 }
 
-/* Font is now managed globally via greta-arabic.css */
+/* Font is now managed globally via greta-arabic.css with complete weight range */
 
 .headerContainer {
     display: flex;

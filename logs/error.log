@@ -17126,3 +17126,276 @@ Stack trace:
 [28-Feb-2026 17:54:01 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 57
 [28-Feb-2026 17:54:01 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
 [28-Feb-2026 17:54:01 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 04:56:23 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 04:56:23 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 04:56:23 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 04:56:23 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 04:56:23 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 04:56:23 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 04:56:23 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 04:56:23 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 04:56:23 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 04:56:34 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 04:56:34 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 04:56:34 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 04:56:35 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 04:56:35 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 04:56:35 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 04:56:35 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 04:56:35 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 04:56:35 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 04:56:40 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 04:56:40 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 04:56:40 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 04:56:40 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 04:56:40 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 04:56:40 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 04:56:40 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 04:56:40 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 04:56:40 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 04:56:42 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 04:56:42 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 04:56:42 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 04:56:42 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 04:56:42 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 04:56:42 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 04:56:42 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 04:56:42 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 04:56:42 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 04:56:47 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 04:56:47 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 04:56:47 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 04:56:47 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 04:56:47 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 04:56:47 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 04:56:47 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 04:56:47 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 04:56:47 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 04:56:51 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 04:56:51 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 04:56:51 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 04:56:51 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 04:56:51 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 04:56:51 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 04:56:52 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 04:56:52 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 04:56:52 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 04:57:39 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 04:57:39 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 04:57:39 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 04:57:39 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 04:57:39 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 04:57:39 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 04:57:39 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 04:57:39 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 04:57:39 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 04:57:43 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 04:57:43 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 04:57:43 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 04:57:50 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 04:57:50 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 04:57:50 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 04:57:52 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 04:57:52 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 04:57:52 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 04:58:03 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 04:58:03 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 04:58:03 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 04:58:59 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 04:58:59 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 04:58:59 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 04:59:35 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 04:59:35 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 04:59:35 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 04:59:42 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 04:59:42 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 04:59:42 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 04:59:47 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 04:59:47 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 04:59:47 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 05:00:13 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:00:13 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:00:13 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 05:01:14 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:01:14 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:01:14 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 05:01:47 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:01:47 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:01:47 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 05:01:50 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:01:50 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:01:50 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 05:01:53 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:01:53 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:01:53 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 05:02:17 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:02:17 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:02:17 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 05:02:38 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:02:38 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:02:38 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 05:02:38 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:02:38 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:02:40 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:02:40 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:02:40 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 05:02:40 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:02:40 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:02:40 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 05:05:31 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:05:31 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:05:31 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 05:05:31 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:05:31 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:05:31 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 05:05:34 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:05:34 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:05:34 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 05:05:34 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:05:34 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:05:34 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 05:05:57 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:05:57 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:05:57 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 05:05:57 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:05:57 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:05:57 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 05:06:00 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:06:00 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:06:45 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:06:45 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:06:47 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:06:47 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:07:23 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:07:23 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:07:23 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 05:07:23 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:07:23 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:07:23 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 05:07:23 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:07:23 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:07:23 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 05:08:17 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:08:17 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:08:17 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 05:08:17 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:08:17 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:08:17 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 05:08:17 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:08:17 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:08:17 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 05:08:20 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:08:20 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:08:20 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 05:08:20 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:08:20 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:08:20 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 05:08:20 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:08:20 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:08:20 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 05:08:28 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:08:28 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:08:28 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 05:08:28 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:08:28 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:08:28 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 05:08:28 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:08:28 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:08:28 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 05:13:15 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:13:15 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:13:15 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 05:15:55 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:15:55 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:15:55 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 05:16:04 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:16:04 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:16:36 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:16:36 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:16:36 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 05:16:36 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:16:36 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:16:36 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 05:16:36 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:16:36 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:16:36 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 05:18:01 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:18:02 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:18:02 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 05:18:02 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:18:02 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:18:02 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 05:18:02 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:18:02 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:18:02 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 05:18:35 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:18:35 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:18:35 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 05:20:06 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:20:06 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:20:06 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 05:20:10 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:20:10 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:20:10 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 05:20:10 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:20:10 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:20:10 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 05:20:10 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:20:10 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:20:10 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 05:20:12 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:20:12 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:20:12 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 05:20:14 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:20:14 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:20:14 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 05:20:14 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:20:14 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:20:15 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:20:15 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:20:15 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 05:20:32 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:20:32 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:20:32 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 05:21:04 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:21:04 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:21:04 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 05:21:37 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:21:37 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:21:37 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 05:22:02 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:22:02 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:22:02 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 05:22:05 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:22:05 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:22:05 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 05:22:07 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:22:07 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:22:07 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 05:22:40 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:22:40 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:22:40 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 05:22:45 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:22:45 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:22:45 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 05:25:38 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:25:38 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:25:38 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 05:25:59 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:25:59 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:25:59 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 05:25:59 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:25:59 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:25:59 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 05:25:59 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:25:59 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:25:59 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 05:26:01 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:26:01 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:26:01 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 05:26:01 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:26:01 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:26:01 Asia/Riyadh] Events API Error: Database connection failed
+[01-Mar-2026 05:26:01 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'u812122863_neama'@'localhost' (using password: YES) in C:\xampp\htdocs\LUKUM_HOSTINGER\api\config.php on line 170
+[01-Mar-2026 05:26:01 Asia/Riyadh] Database Connection Error: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
+[01-Mar-2026 05:26:01 Asia/Riyadh] Events API Error: Database connection failed

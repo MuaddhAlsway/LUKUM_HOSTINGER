@@ -7,7 +7,10 @@ require_once 'lang/loader.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo t('spaces_page_title', 'Event Spaces for Rent in Riyadh | LAKUM Artspace Venues'); ?></title>
-    <link rel="icon" href="assest/favicon.png" type="image/png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assest/logo/right_section.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assest/logo/right_section.png">
+    <link rel="apple-touch-icon" href="assest/logo/right_section.png">
+    <meta name="msapplication-TileImage" content="assest/logo/right_section.png">
 
     <!-- Inline Critical CSS for Instant LCP -->
     <style>

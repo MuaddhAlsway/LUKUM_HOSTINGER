@@ -7,7 +7,10 @@ require_once 'lang/loader.php';
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title><?php echo t('page_title', 'About LAKUM Artspace'); ?></title>
-<link rel="icon" href="assest/favicon.png" type="image/png">
+<link rel="icon" type="image/png" sizes="32x32" href="assest/logo/right_section.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assest/logo/right_section.png">
+<link rel="apple-touch-icon" href="assest/logo/right_section.png">
+<meta name="msapplication-TileImage" content="assest/logo/right_section.png">
 <link rel="preload" as="image" href="assest/img-4.png" fetchpriority="high">
 <link rel="dns-prefetch" href="https://fonts.googleapis.com">
 <link rel="dns-prefetch" href="https://fonts.gstatic.com">
@@ -64,10 +67,13 @@ body {
 }
 
 .page-hero {
-  background: linear-gradient(135deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url('assest/img-4.png') !important;
+  width: 100%;
+  height: 65vh;
+  min-height: 450px;
+  max-height: 650px;
+  background: url('assest/img-4.png') !important;
   background-size: cover !important;
   background-position: center !important;
-  min-height: 400px !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
