@@ -211,7 +211,7 @@
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.95);
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.6) 60%);
     z-index: 1000;
     align-items: center;
     justify-content: center;
@@ -237,7 +237,7 @@
 }
 
 .lightbox__close {
-    position: absolute;
+    position: fixed;
     top: 20px;
     right: 20px;
     background: none;
@@ -245,8 +245,13 @@
     color: #fff;
     font-size: 2rem;
     cursor: pointer;
-    z-index: 1001;
+    z-index: 1002;
     padding: 10px;
+    transition: transform 0.3s ease;
+}
+
+.lightbox__close:hover {
+    transform: scale(1.1);
 }
 
 .lightbox__prev,
@@ -278,7 +283,7 @@
 }
 
 .lightbox__counter {
-    position: absolute;
+    position: fixed;
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
@@ -287,6 +292,7 @@
     padding: 10px 20px;
     border-radius: 4px;
     font-size: 0.9rem;
+    z-index: 1002;
 }
 
 /* CTA Section */
