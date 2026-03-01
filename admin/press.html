@@ -240,17 +240,31 @@
                 return;
             }
 
-            tbody.innerHTML = items.map(item => `
-                <tr>
-                    <td>${item.title}</td>
-                    <td>${new Date(item.created_at).toLocaleDateString()}</td>
-                    <td><span class="badge active">Published</span></td>
-                    <td>
-                        <a href="edit-press.html?id=${item.id}" class="btn-small" style="background-color: #28a745; color: white;">Edit</a>
-                        <button onclick="openConfirmationModal(${item.id})" class="btn-small btn-danger" style="background-color: #dc3545; color: white;">Delete</button>
-                    </td>
-                </tr>
-            `).join('');
+            tbody.innerHTML = items.map(item => {
+                let dateStr = 'N/A';
+                try {
+                    if (item.created_at) {
+                        const date = new Date(item.created_at);
+                        if (!isNaN(date.getTime())) {
+                            dateStr = date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+                        }
+                    }
+                } catch (e) {
+                    console.error('Date parsing error:', e);
+                }
+                
+                return `
+                    <tr>
+                        <td>${item.title}</td>
+                        <td>${dateStr}</td>
+                        <td><span class="badge active">Published</span></td>
+                        <td>
+                            <a href="edit-press.html?id=${item.id}" class="btn-small" style="background-color: #28a745; color: white;">Edit</a>
+                            <button onclick="openConfirmationModal(${item.id})" class="btn-small btn-danger" style="background-color: #dc3545; color: white;">Delete</button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
         }
 
         function openConfirmationModal(id) {

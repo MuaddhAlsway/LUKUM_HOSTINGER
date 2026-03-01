@@ -420,7 +420,7 @@ require_once 'lang/loader.php';
 
     <!-- Lightbox -->
     <div class="lightbox" id="lightbox" onclick="closeLightbox()">
-        <button class="lightbox__close" onclick="closeLightbox()">
+        <button class="lightbox__close" onclick="closeLightbox()" title="Close">
             <i class="ri-close-line"></i>
         </button>
         <button class="lightbox__prev" onclick="event.stopPropagation(); prevImage()">
@@ -856,6 +856,12 @@ require_once 'lang/loader.php';
         
         // Listen for URL changes (when user clicks different event links)
         window.addEventListener('popstate', loadEventData);
+        
+        // Listen for language changes - reload event data with new language
+        document.addEventListener('lakum-language-changed', (e) => {
+            console.log('Language changed to:', e.detail?.lang);
+            loadEventData();
+        });
         
         // Also check for URL changes periodically to reload when ID or language changes
         let lastEventId = null;
