@@ -12,7 +12,8 @@ header('Access-Control-Allow-Methods: POST, OPTIONS');
 // Configuration
 $uploadDir = '../assest/gallery/';
 $maxFileSize = 5 * 1024 * 1024; // 5MB
-$allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+$allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/heic', 'image/heif'];
+$allowedExtensions = ['jpg', 'jpeg', 'png', 'webp', 'heic', 'heif'];
 
 // Create upload directory if it doesn't exist
 if (!is_dir($uploadDir)) {
@@ -88,9 +89,16 @@ try {
             continue;
         }
         
-        if (!in_array($fileType, $allowedTypes)) {
-            error_log('Invalid file type: ' . $fileType);
+        // Check file extension (more reliable than MIME type)
+        $ext = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+        if (!in_array($ext, $allowedExtensions)) {
+            error_log('Invalid file extension: ' . $ext);
             continue;
+        }
+        
+        // Also check MIME type if available (but don't fail if it doesn't match)
+        if (!in_array($fileType, $allowedTypes) && !empty($fileType)) {
+            error_log('Warning: Unexpected MIME type for ' . $fileName . ': ' . $fileType);
         }
         
         // Generate unique filename

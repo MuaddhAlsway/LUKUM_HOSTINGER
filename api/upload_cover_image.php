@@ -26,10 +26,21 @@ try {
     
     $file = $_FILES['file'];
     
-    // Validate file type
-    $allowed_types = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-    if (!in_array($file['type'], $allowed_types)) {
-        throw new Exception('Invalid file type. Only JPEG, PNG, GIF, and WebP are allowed.');
+    // Validate file type - check both MIME type and extension
+    $allowed_types = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/heic', 'image/heif'];
+    $allowed_extensions = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'heic', 'heif'];
+    
+    $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+    
+    // Check extension first (more reliable than MIME type)
+    if (!in_array($ext, $allowed_extensions)) {
+        throw new Exception('Invalid file type. Allowed: JPEG, PNG, GIF, WebP, HEIC, HEIF');
+    }
+    
+    // Also check MIME type if available
+    if (!in_array($file['type'], $allowed_types) && !empty($file['type'])) {
+        // Log but don't fail - MIME type detection can be unreliable
+        error_log('Warning: Unexpected MIME type for ' . $file['name'] . ': ' . $file['type']);
     }
     
     // Validate file size (max 5MB)

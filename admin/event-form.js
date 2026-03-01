@@ -242,7 +242,7 @@ if (galleryUploadArea && galleryInput) {
         console.log('Files selected:', e.target.files.length);
         const files = Array.from(e.target.files);
         files.forEach(file => {
-            console.log('Processing file:', file.name, 'size:', file.size);
+            console.log('Processing file:', file.name, 'size:', file.size, 'type:', file.type);
             if (!window.galleryFiles.find(f => f.name === file.name && f.size === file.size)) {
                 console.log('Adding file to window.galleryFiles:', file.name);
                 window.galleryFiles.push(file);
