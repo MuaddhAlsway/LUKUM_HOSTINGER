@@ -259,9 +259,11 @@ html[lang="ar"] .lakum-workshops-section__description {
 }
 
 .lakum-stat-card__number {
-  font-size: 3rem !important;
-  font-weight: 300 !important;
-  color: #1a1a1a !important;
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-weight: 300;
+  color: #1a1a1a;
+  line-height: 1;
+  letter-spacing: -0.02em;
   margin-bottom: 10px !important;
 }
 
@@ -429,7 +431,7 @@ html[lang="ar"] .lakum-event-card__date {
   margin-top: 40px !important;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 820px) {
   .lakum-about-section__content,
   .lakum-workshops-section__content {
     grid-template-columns: 1fr !important;
