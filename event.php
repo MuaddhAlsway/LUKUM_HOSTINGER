@@ -746,26 +746,36 @@ require_once 'lang/loader.php';
             const options = { year: 'numeric', month: 'short', day: 'numeric' };
             const formattedDate = eventDate.toLocaleDateString('en-US', options);
             
+            // Convert 24h to 12h format
+            function convertTo12Hour(time24h) {
+                if (!time24h) return '10:00 AM';
+                const [hours, minutes] = time24h.substring(0, 5).split(':');
+                let hour = parseInt(hours);
+                const ampm = hour >= 12 ? 'PM' : 'AM';
+                hour = hour % 12 || 12;
+                return `${hour}:${minutes} ${ampm}`;
+            }
+            
             // Get start time
-            let startTime = '10:00';
+            let startTime = '10:00 AM';
             if (event.event_time) {
-                startTime = event.event_time.substring(0, 5);
+                startTime = convertTo12Hour(event.event_time);
             }
             
             // Get end time
-            let endTime = '18:00';
+            let endTime = '6:00 PM';
             if (event.event_end_time) {
-                endTime = event.event_end_time.substring(0, 5);
+                endTime = convertTo12Hour(event.event_end_time);
             }
             
             // Check if multi-day event
             if (event.end_date && event.end_date !== event.event_date) {
                 const endEventDate = new Date(event.end_date);
                 const formattedEndDate = endEventDate.toLocaleDateString('en-US', options);
-                return `${formattedDate} â€¢ ${startTime} - ${formattedEndDate} â€¢ ${endTime}`;
+                return `${formattedDate} • ${startTime} - ${formattedEndDate} • ${endTime}`;
             }
             
-            return `${formattedDate} â€¢ ${startTime} - ${endTime}`;
+            return `${formattedDate} • ${startTime} - ${endTime}`;
         }
 
         // Render gallery from database
