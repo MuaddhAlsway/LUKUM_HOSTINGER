@@ -260,25 +260,27 @@
     position: fixed;
     top: 20px;
     right: 20px;
-    background: rgba(255, 255, 255, 0.25);
-    border: 2px solid rgba(255, 255, 255, 0.5);
-    color: #fff;
-    font-size: 2rem;
+    background: rgba(0, 0, 0, 0.5) !important;
+    border: 3px solid rgba(255, 255, 255, 0.8) !important;
+    color: #fff !important;
+    font-size: 2.5rem !important;
     cursor: pointer;
-    z-index: 1002;
-    padding: 10px 16px;
+    z-index: 1003 !important;
+    padding: 8px 14px !important;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     border-radius: 50%;
-    width: 55px;
-    height: 55px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 60px !important;
+    height: 60px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
     backdrop-filter: blur(10px);
     opacity: 1 !important;
     visibility: visible !important;
-    box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 50px rgba(255, 255, 255, 0.6), inset 0 0 20px rgba(255, 255, 255, 0.2) !important;
     line-height: 1;
+    text-decoration: none;
+    font-weight: bold;
 }
 
 .lightbox.active .lightbox__close {

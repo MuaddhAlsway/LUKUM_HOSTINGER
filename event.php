@@ -152,9 +152,8 @@ require_once 'lang/loader.php';
     <!-- Fonts -->
     <link rel="stylesheet" href="fonts/greta-arabic.css">
 
-    <!-- Icons - Defer non-critical icon loading -->
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" media="print" onload="this.media='all'">
-    <noscript><link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet"></noscript>
+    <!-- Icons - Critical for UI elements like close button -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
 
     <!-- Image Optimizer - Critical for performance -->
     <script src="assest/navbar-mobile-toggle.js?v=5.0.0" defer></script>
@@ -421,7 +420,7 @@ require_once 'lang/loader.php';
     <!-- Lightbox -->
     <div class="lightbox" id="lightbox" onclick="closeLightbox()">
         <button class="lightbox__close" onclick="closeLightbox()" title="Close">
-            <i class="ri-close-line"></i>
+            <i class="ri-close-line">×</i>
         </button>
         <button class="lightbox__prev" onclick="event.stopPropagation(); prevImage()">
             <i class="ri-arrow-left-s-line"></i>
@@ -534,7 +533,17 @@ require_once 'lang/loader.php';
             // 2. /event.php?title=dior
             // 3. /event.php?id=18 (backward compatibility)
             let eventTitleParam = params.get('title') || params.get('id') || '1';
-            const lang = params.get('lang') || 'en';
+            let lang = params.get('lang');
+            
+            // If no lang in URL, get from localStorage or default to 'en'
+            if (!lang) {
+                lang = localStorage.getItem('lakum_language') || 'en';
+                // Update URL to include language parameter for consistency
+                const newUrl = new URL(window.location);
+                newUrl.searchParams.set('lang', lang);
+                window.history.replaceState({}, '', newUrl);
+            }
+            
             currentLanguage = lang;
 
             console.log('Loading event with title/ID:', eventTitleParam, 'Language:', lang);
@@ -604,11 +613,11 @@ require_once 'lang/loader.php';
             let description = event.description;
             let location = event.location;
 
-            // If Arabic is requested and Arabic fields exist, use them
+            // If Arabic is requested and Arabic fields exist and are not empty, use them
             if (lang === 'ar') {
-                if (event.title_ar) title = event.title_ar;
-                if (event.description_ar) description = event.description_ar;
-                if (event.location_ar) location = event.location_ar;
+                if (event.title_ar && event.title_ar.trim()) title = event.title_ar;
+                if (event.description_ar && event.description_ar.trim()) description = event.description_ar;
+                if (event.location_ar && event.location_ar.trim()) location = event.location_ar;
             }
 
             // Update page title and meta tags
