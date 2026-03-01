@@ -271,7 +271,7 @@ require_once 'lang/loader.php';
     <section class="event-section">
         <div class="event-container event-container--narrow">
             <div class="event-description">
-                <h2 class="event-section__title">Article</h2>
+                <h2 class="event-section__title" id="article-title"><?php echo t('article', 'Article'); ?></h2>
                 <div class="event-description__text" id="blog-content">
                     Loading...
                 </div>
@@ -282,7 +282,7 @@ require_once 'lang/loader.php';
     <!-- Related Blogs -->
     <section class="event-section">
         <div class="event-container">
-            <h2 class="event-section__title">Related Articles</h2>
+            <h2 class="event-section__title" id="related-articles-title"><?php echo t('related_articles', 'Related Articles'); ?></h2>
             <div class="event-related" id="related-blogs">
                 <!-- Related blogs will be loaded here -->
             </div>
@@ -488,6 +488,45 @@ require_once 'lang/loader.php';
         }
         
         document.addEventListener('DOMContentLoaded', initBlogDetailsPage);
+
+        // Update section titles when language changes
+        function updateBlogSectionTitles() {
+            const lang = new URLSearchParams(window.location.search).get('lang') || localStorage.getItem('lakum_language') || 'en';
+            
+            const translations = {
+                'article': lang === 'ar' ? 'مقال' : 'Article',
+                'related_articles': lang === 'ar' ? 'مقالات ذات صلة' : 'Related Articles'
+            };
+
+            const articleTitle = document.getElementById('article-title');
+            const relatedTitle = document.getElementById('related-articles-title');
+
+            if (articleTitle) {
+                articleTitle.textContent = translations['article'];
+            }
+            if (relatedTitle) {
+                relatedTitle.textContent = translations['related_articles'];
+            }
+        }
+
+        // Watch for language changes
+        let currentBlogLang = new URLSearchParams(window.location.search).get('lang') || localStorage.getItem('lakum_language') || 'en';
+        
+        const blogObserver = new MutationObserver(() => {
+            const newLang = new URLSearchParams(window.location.search).get('lang') || localStorage.getItem('lakum_language') || 'en';
+            if (newLang !== currentBlogLang) {
+                currentBlogLang = newLang;
+                updateBlogSectionTitles();
+            }
+        });
+
+        blogObserver.observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ['lang']
+        });
+
+        // Update titles on page load
+        updateBlogSectionTitles();
     </script>
 
     <script>

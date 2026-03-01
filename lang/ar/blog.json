@@ -33,5 +33,7 @@
   "search_articles": "البحث في المقالات",
   "no_articles": "لم يتم العثور على مقالات",
   "back_to_blog": "العودة إلى المدونة",
-  "share_article": "مشاركة المقالة"
+  "share_article": "مشاركة المقالة",
+  "article": "مقال",
+  "related_articles": "مقالات ذات صلة"
 }

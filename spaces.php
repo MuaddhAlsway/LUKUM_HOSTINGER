@@ -1627,9 +1627,13 @@ require_once 'lang/loader.php';
             (async function loadSpacesPricing() {
                 try {
                     console.log('Loading pricing from API...');
+                    // Get current language
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const lang = urlParams.get('lang') || localStorage.getItem('lakum_language') || 'en';
+                    
                     // Add cache-busting parameter to force fresh data
                     const timestamp = new Date().getTime();
-                    const apiUrl = `api/get_pricing.php?t=${timestamp}`;
+                    const apiUrl = `api/get_pricing.php?lang=${lang}&t=${timestamp}`;
                     console.log('API URL:', apiUrl);
                     
                     const response = await fetch(apiUrl);
@@ -1763,6 +1767,9 @@ require_once 'lang/loader.php';
             });
         }
 
+        // Track current language for change detection
+        let currentPricingLang = new URLSearchParams(window.location.search).get('lang') || localStorage.getItem('lakum_language') || 'en';
+
         // Listen for language changes and reload pricing
         document.addEventListener('languageChanged', function() {
             console.log('Language changed, reloading pricing...');
@@ -1775,6 +1782,22 @@ require_once 'lang/loader.php';
                 console.log('Language changed in another tab, reloading pricing...');
                 loadSpacesPricingFromAPI();
             }
+        });
+
+        // Watch for URL parameter changes (language switcher)
+        const pricingObserver = new MutationObserver(() => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const newLang = urlParams.get('lang') || localStorage.getItem('lakum_language') || 'en';
+            if (newLang !== currentPricingLang) {
+                console.log('Pricing language changed from', currentPricingLang, 'to', newLang);
+                currentPricingLang = newLang;
+                loadSpacesPricingFromAPI();
+            }
+        });
+
+        pricingObserver.observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ['lang']
         });
 
         function createPricingCard(item) {

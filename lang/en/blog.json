@@ -27,5 +27,7 @@
   "search_articles": "Search Articles",
   "no_articles": "No articles found",
   "back_to_blog": "Back to Blog",
-  "share_article": "Share Article"
+  "share_article": "Share Article",
+  "article": "Article",
+  "related_articles": "Related Articles"
 }
