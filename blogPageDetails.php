@@ -364,13 +364,13 @@ require_once 'lang/loader.php';
 
     <script>
         // Blog Details Page Script
-        const blogId = new URLSearchParams(window.location.search).get('id');
-        const urlLang = new URLSearchParams(window.location.search).get('lang');
+        let blogIdentifier = new URLSearchParams(window.location.search).get('title') || new URLSearchParams(window.location.search).get('id');
+        let urlLang = new URLSearchParams(window.location.search).get('lang');
 
         async function loadBlogDetails() {
             try {
-                if (!blogId) {
-                    console.error('No blog ID provided');
+                if (!blogIdentifier) {
+                    console.error('No blog ID or title provided');
                     document.getElementById('blog-title').textContent = 'Blog not found';
                     return;
                 }
@@ -378,11 +378,22 @@ require_once 'lang/loader.php';
                 // Fetch blog details from API with language parameter
                 // Priority: URL parameter > window.LAKUM_LANG > localStorage > 'en'
                 const lang = urlLang || window.LAKUM_LANG || localStorage.getItem('lakum_language') || 'en';
-                const response = await fetch(`api/get_blogs_working.php?id=${blogId}&lang=${lang}`);
+                const response = await fetch(`api/get_blogs_working.php?id=${blogIdentifier}&lang=${lang}`);
                 const result = await response.json();
 
                 if (result.success && result.data) {
                     const blog = result.data;
+
+                    // Update URL to use English title slug (only once)
+                    if (!new URLSearchParams(window.location.search).get('title')) {
+                        const englishTitle = blog.title_en || blog.title;
+                        const blogSlug = englishTitle.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+                        const newUrl = new URL(window.location);
+                        newUrl.searchParams.set('title', blogSlug);
+                        newUrl.searchParams.delete('id');
+                        window.history.replaceState({}, '', newUrl);
+                        blogIdentifier = blog.id; // Update for related blogs
+                    }
 
                     // Update page title
                     document.title = `${blog.title} - LAKUM Artspace`;

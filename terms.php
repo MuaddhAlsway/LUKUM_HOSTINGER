@@ -644,9 +644,29 @@ Compliance with these terms ensures the preservation of Lakum Artspaceâ€™s 
 
     <script>
         // Load legal page content dynamically based on current language
+        let currentLang = 'en';
+
         document.addEventListener('DOMContentLoaded', function() {
             loadLegalPageContent();
         });
+
+        // Watch for language changes via URL parameter
+        window.addEventListener('popstate', function() {
+            loadLegalPageContent();
+        });
+
+        // Also watch for manual URL changes (language switcher)
+        const observer = new MutationObserver(function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const newLang = urlParams.get('lang') || 'en';
+            if (newLang !== currentLang) {
+                currentLang = newLang;
+                loadLegalPageContent();
+            }
+        });
+
+        // Start observing for changes
+        observer.observe(document.documentElement, { attributes: true });
 
         async function loadLegalPageContent() {
             try {
