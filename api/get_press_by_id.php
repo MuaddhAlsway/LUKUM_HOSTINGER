@@ -117,10 +117,8 @@ try {
     $press['excerpt'] = ($lang === 'ar' && $press['excerpt_ar']) ? $press['excerpt_ar'] : $press['excerpt_en'];
     $press['slug'] = ($lang === 'ar' && $press['slug_ar']) ? $press['slug_ar'] : $press['slug_en'];
     
-    // Convert relative image paths to absolute URLs
-    if ($press['cover_image'] && !strpos($press['cover_image'], 'http')) {
-        $press['cover_image'] = 'http://localhost/LUKUM(main)/' . $press['cover_image'];
-    }
+    // Keep image paths as relative - let frontend handle URL construction
+    // This ensures compatibility across different environments (local, staging, production)
     
     echo json_encode(['success' => true, 'data' => $press, 'language' => $lang, 'source' => 'database']);
     

@@ -351,15 +351,24 @@
                     if (press.cover_image) {
                         const coverImg = document.getElementById('coverImg');
                         let imagePath = press.cover_image;
-                        if (!imagePath.startsWith('http')) {
-                            imagePath = '../' + imagePath;
+                        
+                        // Handle different path formats
+                        if (imagePath.startsWith('http')) {
+                            // Already an absolute URL
+                            coverImg.src = imagePath;
+                        } else if (imagePath.startsWith('/')) {
+                            // Absolute path from root
+                            coverImg.src = imagePath;
+                        } else {
+                            // Relative path - prepend ../
+                            coverImg.src = '../' + imagePath;
                         }
-                        coverImg.src = imagePath;
+                        
                         coverImg.style.display = 'block';
                         const placeholder = document.querySelector('.cover-placeholder');
                         if (placeholder) placeholder.style.display = 'none';
                         document.getElementById('removeCover').style.display = 'flex';
-                        console.log('Cover image set to:', imagePath);
+                        console.log('Cover image set to:', coverImg.src);
                     }
                 } catch (error) {
                     console.error('Error populating form:', error);
