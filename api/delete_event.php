@@ -14,13 +14,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 
 try {
-    $data = json_decode(file_get_contents('php://input'), true);
+    // Get raw input
+    $rawInput = file_get_contents('php://input');
+    error_log('Delete Event - Raw input: ' . $rawInput);
     
-    if (!$data || empty($data['id'])) {
+    $data = json_decode($rawInput, true);
+    error_log('Delete Event - Decoded data: ' . json_encode($data));
+    
+    if (!$data) {
+        throw new Exception('Invalid JSON received');
+    }
+    
+    if (!isset($data['id']) || empty($data['id'])) {
+        error_log('Delete Event - Missing ID. Data: ' . json_encode($data));
         throw new Exception('Missing event ID');
     }
     
     $event_id = (int)$data['id'];
+    error_log('Delete Event - Event ID: ' . $event_id);
+    
+    if ($event_id <= 0) {
+        throw new Exception('Invalid event ID');
+    }
     
     $db = Database::getInstance();
     
@@ -33,22 +48,28 @@ try {
     
     // Delete gallery images first (foreign key constraint)
     $query = "DELETE FROM event_gallery WHERE event_id = $event_id";
+    error_log('Delete Event - Gallery query: ' . $query);
     if (!$conn->query($query)) {
+        error_log('Delete Event - Gallery delete failed: ' . $conn->error);
         throw new Exception('Delete gallery failed: ' . $conn->error);
     }
     
     // Delete event
     $query = "DELETE FROM events WHERE id = $event_id";
+    error_log('Delete Event - Event query: ' . $query);
     if (!$conn->query($query)) {
+        error_log('Delete Event - Event delete failed: ' . $conn->error);
         throw new Exception('Delete event failed: ' . $conn->error);
     }
     
-    $conn->close();
+    $affectedRows = $conn->affected_rows;
+    error_log('Delete Event - Affected rows: ' . $affectedRows);
     
     http_response_code(200);
     echo json_encode([
         'success' => true,
-        'message' => 'Event deleted successfully'
+        'message' => 'Event deleted successfully',
+        'affected_rows' => $affectedRows
     ]);
     
 } catch (Exception $e) {

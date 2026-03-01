@@ -207,7 +207,9 @@
         // Delete Event Modal
         // -----------------------------
         function openConfirmationModal(id) {
-            eventToDelete = id;
+            console.log('Opening modal with event ID:', id);
+            eventToDelete = parseInt(id);
+            console.log('eventToDelete set to:', eventToDelete);
             document.getElementById('confirmationModal').classList.add('active');
         }
 
@@ -217,21 +219,30 @@
         }
 
         document.getElementById('confirmDeleteBtn').addEventListener('click', async () => {
-            if (!eventToDelete) return;
+            console.log('Delete button clicked, eventToDelete:', eventToDelete);
+            if (!eventToDelete) {
+                showPopup('Error: No event selected', 'error');
+                return;
+            }
             closeConfirmationModal();
             try {
+                console.log('Sending delete request with ID:', eventToDelete);
                 const response = await fetch('../api/delete_event.php', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ id: eventToDelete })
                 });
                 const data = await response.json();
-                if (data.success) showPopup('Event deleted successfully', 'success');
-                else showPopup('Error: ' + (data.message || 'Unknown'), 'error');
-                loadEvents();
+                console.log('Delete response:', data);
+                if (data.success) {
+                    showPopup('Event deleted successfully', 'success');
+                    loadEvents();
+                } else {
+                    showPopup('Error: ' + (data.message || 'Unknown'), 'error');
+                }
             } catch (err) {
-                console.error(err);
-                showPopup('Error deleting event', 'error');
+                console.error('Delete error:', err);
+                showPopup('Error deleting event: ' + err.message, 'error');
             }
         });
 
