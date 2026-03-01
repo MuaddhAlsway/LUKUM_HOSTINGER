@@ -1333,7 +1333,7 @@ html[dir="rtl"] {
 }
 
 [dir="rtl"] .event-cta__text {
-    text-align: right;
+    text-align: center;
     direction: rtl;
 }
 
