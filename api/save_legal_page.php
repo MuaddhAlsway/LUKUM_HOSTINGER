@@ -1,4 +1,17 @@
 <?php
+/**
+ * Save Legal Page Content API
+ * Saves Terms & Conditions or Privacy Policy content in English and Arabic
+ * 
+ * POST Parameters (JSON):
+ * - page_key: 'terms' or 'privacy'
+ * - title_en: English title
+ * - content_en: English content (required)
+ * - title_ar: Arabic title
+ * - content_ar: Arabic content
+ * 
+ * Returns JSON with success status
+ */
 header('Content-Type: application/json');
 
 // Get the request data

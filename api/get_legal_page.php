@@ -1,4 +1,14 @@
 <?php
+/**
+ * Get Legal Page Content API
+ * Fetches Terms & Conditions or Privacy Policy content by language
+ * 
+ * Parameters:
+ * - page_key: 'terms' or 'privacy'
+ * - lang: 'en' or 'ar'
+ * 
+ * Returns JSON with legal page content
+ */
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, OPTIONS');
