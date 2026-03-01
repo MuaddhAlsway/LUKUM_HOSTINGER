@@ -621,10 +621,9 @@ Compliance with these terms ensures the preservation of Lakum Artspaceâ€™s 
             }
         })();
     </script>
-    <script src="legal-content-loader.js"></script>
+
     <script>
-        // Content is loaded from database by legal-content-loader.js
-        // No additional translation needed as Arabic content is stored separately
+        // Load legal page content dynamically based on current language
         document.addEventListener('DOMContentLoaded', function() {
             // Get current language
             const urlParams = new URLSearchParams(window.location.search);
