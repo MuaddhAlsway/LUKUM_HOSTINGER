@@ -345,6 +345,12 @@
     text-align: center;
 }
 
+/* Arabic RTL Support */
+html[lang="ar"] .event-cta__content {
+    text-align: center;
+    direction: rtl;
+}
+
 .event-cta__title {
     font-size: clamp(1.75rem, 3vw, 2.5rem);
     font-weight: 300;
