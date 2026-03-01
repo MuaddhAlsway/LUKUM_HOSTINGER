@@ -29,6 +29,11 @@
   "shop_out_of_stock": "Out of Stock",
   "shop_in_stock": "In Stock",
   
+  "pricing_vat_note": "*(excluding VAT)",
+  "pricing_vat_note_ar": "*(غير شامل الضريبة)",
+  "pricing_currency": "SAR",
+  "pricing_currency_ar": "ر.س",
+  
   "shop_filter": "Filter",
   "shop_sort": "Sort By",
   "shop_sort_newest": "Newest",

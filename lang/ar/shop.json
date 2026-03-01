@@ -29,6 +29,11 @@
   "shop_out_of_stock": "غير متوفر",
   "shop_in_stock": "متوفر",
   
+  "pricing_vat_note": "*(غير شامل الضريبة)",
+  "pricing_vat_note_ar": "*(غير شامل الضريبة)",
+  "pricing_currency": "ريال",
+  "pricing_currency_ar": "ريال",
+  
   "shop_filter": "تصفية",
   "shop_sort": "ترتيب حسب",
   "shop_sort_newest": "الأحدث",

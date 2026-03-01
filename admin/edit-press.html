@@ -395,21 +395,48 @@
                 return;
             }
 
-            const formData = new FormData();
-            formData.append('id', document.getElementById('pressId').value);
-            formData.append('title_en', title_en);
-            formData.append('title_ar', title_ar);
-            formData.append('content_en', content_en);
-            formData.append('content_ar', content_ar);
-            formData.append('excerpt_en', document.getElementById('excerpt_en').value.trim());
-            formData.append('excerpt_ar', document.getElementById('excerpt_ar').value.trim());
-            formData.append('source', document.getElementById('source').value.trim());
-            formData.append('press_date', document.getElementById('press_date').value);
-            formData.append('url', document.getElementById('url').value.trim());
+            let coverImagePath = null;
 
             // Handle cover image upload if changed
             if (coverInput.files.length > 0) {
-                formData.append('cover_image', coverInput.files[0]);
+                const uploadFormData = new FormData();
+                uploadFormData.append('file', coverInput.files[0]);
+                
+                try {
+                    const uploadResponse = await fetch('../api/upload_cover_image.php', {
+                        method: 'POST',
+                        body: uploadFormData
+                    });
+                    
+                    const uploadResult = await uploadResponse.json();
+                    if (uploadResult.success) {
+                        coverImagePath = uploadResult.path;
+                    } else {
+                        throw new Error(uploadResult.message || 'Image upload failed');
+                    }
+                } catch (error) {
+                    alert('Error uploading image: ' + error.message);
+                    return;
+                }
+            }
+
+            // Build JSON data
+            const pressData = {
+                id: document.getElementById('pressId').value,
+                title_en: title_en,
+                title_ar: title_ar,
+                content_en: content_en,
+                content_ar: content_ar,
+                excerpt_en: document.getElementById('excerpt_en').value.trim(),
+                excerpt_ar: document.getElementById('excerpt_ar').value.trim(),
+                source: document.getElementById('source').value.trim(),
+                press_date: document.getElementById('press_date').value,
+                url: document.getElementById('url').value.trim()
+            };
+
+            // Only include cover_image if it was updated
+            if (coverImagePath) {
+                pressData.cover_image = coverImagePath;
             }
 
             try {
@@ -417,7 +444,10 @@
                 
                 const response = await fetch('../api/edit_press.php', {
                     method: 'POST',
-                    body: formData
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(pressData)
                 });
 
                 console.log('Response status:', response.status);

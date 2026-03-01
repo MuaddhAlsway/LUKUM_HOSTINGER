@@ -153,6 +153,7 @@ require_once 'lang/loader.php';
     <!-- Image Optimizer - Critical for performance -->
     <!-- Scripts - Defer non-critical JavaScript -->
     <script src="assest/navbar-mobile-toggle.js?v=5.0.0" defer></script>
+    <script src="assest/language-link-preserver.js?v=1.0.0" defer></script>
     <script>
         // Set language for JavaScript - Read from URL parameter or localStorage
         const urlParams = new URLSearchParams(window.location.search);

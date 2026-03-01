@@ -944,6 +944,7 @@ require_once 'lang/loader.php';
         const observer = new MutationObserver(() => {
             if (document.documentElement.lang) {
                 updateLanguageSwitcher();
+                updateSectionTitles(); // Update titles when language changes
             }
         });
 
@@ -951,6 +952,28 @@ require_once 'lang/loader.php';
             attributes: true,
             attributeFilter: ['lang']
         });
+
+        // Update section titles based on current language
+        function updateSectionTitles() {
+            const lang = document.documentElement.lang || 'en';
+            const titles = {
+                'about_this_event': lang === 'ar' ? 'حول هذا الحدث' : 'About This Event',
+                'gallery': lang === 'ar' ? 'المعرض' : 'Gallery',
+                'event_video': lang === 'ar' ? 'فيديو الحدث' : 'Event Video'
+            };
+
+            // Update all section titles
+            document.querySelectorAll('.event-section__title').forEach(el => {
+                const text = el.textContent.trim();
+                if (text === 'About This Event' || text === 'حول هذا الحدث') {
+                    el.textContent = titles['about_this_event'];
+                } else if (text === 'Gallery' || text === 'المعرض') {
+                    el.textContent = titles['gallery'];
+                } else if (text === 'Event Video' || text === 'فيديو الحدث') {
+                    el.textContent = titles['event_video'];
+                }
+            });
+        }
 
     </script>
 
