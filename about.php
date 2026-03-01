@@ -88,10 +88,10 @@ body {
 }
 
 .lakum-container {
- 
     max-width: 1600px;
     margin: 0 auto;
     padding: 0 clamp(20px, 5vw, 60px);
+    background: #ffffff !important;
 }
 
 .lakum-about-section {
