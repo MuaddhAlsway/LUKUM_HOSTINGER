@@ -19,9 +19,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 try {
     // Get raw input
     $rawInput = file_get_contents('php://input');
+    error_log('Raw input: ' . $rawInput);
     
     // Decode JSON
     $data = json_decode($rawInput, true);
+    error_log('Decoded data: ' . json_encode($data));
+    error_log('JSON error: ' . json_last_error_msg());
     
     // Validate data
     if ($data === null) {
@@ -37,11 +40,16 @@ try {
     
     if (isset($data['id'])) {
         $event_id = (int)$data['id'];
+        error_log('Found ID in JSON: ' . $event_id);
     } elseif (isset($_POST['id'])) {
         $event_id = (int)$_POST['id'];
+        error_log('Found ID in POST: ' . $event_id);
     } elseif (isset($_GET['id'])) {
         $event_id = (int)$_GET['id'];
+        error_log('Found ID in GET: ' . $event_id);
     }
+    
+    error_log('Final event_id: ' . $event_id);
     
     if (!$event_id || $event_id <= 0) {
         throw new Exception('Missing or invalid event ID');

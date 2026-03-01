@@ -171,7 +171,7 @@
 
             tbody.innerHTML = events.map(event => {
                 const isFeatured = event.is_featured == 1;
-                console.log('Rendering event:', event.id, event.title);
+                console.log('Rendering event:', event.id, event.title, 'Full event:', event);
                 return `
                 <tr>
                     <td style="text-align:center;">
@@ -230,6 +230,9 @@
                 const deletePayload = { id: eventToDelete };
                 const jsonBody = JSON.stringify(deletePayload);
                 console.log('Sending delete request with payload:', jsonBody);
+                console.log('Payload object:', deletePayload);
+                console.log('Event ID type:', typeof eventToDelete);
+                console.log('Event ID value:', eventToDelete);
                 
                 const response = await fetch('../api/delete_event.php', {
                     method: 'POST',
