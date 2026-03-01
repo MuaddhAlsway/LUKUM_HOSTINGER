@@ -419,9 +419,7 @@ require_once 'lang/loader.php';
 
     <!-- Lightbox -->
     <div class="lightbox" id="lightbox" onclick="closeLightbox()">
-       <button class="lightbox__close" onclick="closeLightbox()" title="Close">
-           X
-        </button>
+       <button class="lightbox__close" onclick="closeLightbox()" title="Close">×</button>
         <button class="lightbox__prev" onclick="event.stopPropagation(); prevImage()">
             <i class="ri-arrow-left-s-line"></i>
         </button>
