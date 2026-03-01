@@ -207,8 +207,8 @@ require_once 'lang/loader.php';
 
     <!-- Event Detail Styles -->
     <link rel="stylesheet" href="event-detail.css">
-<link rel="alternate" hreflang="en" href="https://lakumartspace.infinityfree.me/event.php?lang=en" />
-<link rel="alternate" hreflang="ar" href="https://lakumartspace.infinityfree.me/event.php?lang=ar" />
+    <link id="hreflang-en" rel="alternate" hreflang="en" href="" />
+    <link id="hreflang-ar" rel="alternate" hreflang="ar" href="" />
     <script src="assest/static-json-translator.js?v=1.0.0" defer></script></head>
 
 <body class="<?php echo getLanguageClass(); ?>">
@@ -629,6 +629,19 @@ require_once 'lang/loader.php';
             // Update meta description
             const metaDesc = document.querySelector('meta[name="description"]');
             if (metaDesc) metaDesc.setAttribute('content', description || title);
+
+            // Update URL to use event title instead of ID (clean URL)
+            const eventSlug = title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+            const newUrl = new URL(window.location);
+            newUrl.searchParams.set('title', eventSlug);
+            newUrl.searchParams.set('lang', lang);
+            window.history.replaceState({}, '', newUrl);
+
+            // Update hreflang tags with event title
+            const hreflangEn = document.getElementById('hreflang-en');
+            const hreflangAr = document.getElementById('hreflang-ar');
+            if (hreflangEn) hreflangEn.href = `${window.location.origin}/event.php?title=${eventSlug}&lang=en`;
+            if (hreflangAr) hreflangAr.href = `${window.location.origin}/event.php?title=${eventSlug}&lang=ar`;
 
             // Update hero section with real data
             document.getElementById('event-title').textContent = title;
