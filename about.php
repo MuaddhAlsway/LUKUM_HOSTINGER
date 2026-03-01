@@ -242,7 +242,7 @@ html[lang="ar"] .lakum-workshops-section__description {
 }
 
 .lakum-stats-section {
-  padding: 80px 0 !important;
+  padding: clamp(40px, 5vw, 64px) 0;
   background: #f6f6eb !important;
   margin: 60px 0 !important;
 }
