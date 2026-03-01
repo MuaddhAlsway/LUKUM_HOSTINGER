@@ -1078,7 +1078,7 @@ require_once 'lang/loader.php';
                         <h3 class="lakum-calendar-card__title">${event.title}</h3>
                         <p class="lakum-calendar-card__time">
                             <i class="ri-time-line"></i>
-                            ${convertTo12Hour(event.event_time || '17:00 - 22:00')}
+                            ${convertTo12Hour((event.event_time || '17:00') + ' - ' + (event.event_end_time || '22:00'))}
                         </p>
                     </div>
                 `;
@@ -1172,7 +1172,7 @@ require_once 'lang/loader.php';
                                     <h3 class="lakum-featured-card__title">${event.title}</h3>
                                     <p class="lakum-featured-card__time">
                                         <i class="ri-time-line"></i>
-                                        ${convertTo12Hour(event.event_time || '17:00 - 22:00')}
+                                        ${convertTo12Hour((event.event_time || '17:00') + ' - ' + (event.event_end_time || '22:00'))}
                                     </p>
                                     <button class="lakum-btn lakum-btn--outline-light">${translations.discoverMore}</button>
                                 </div>
