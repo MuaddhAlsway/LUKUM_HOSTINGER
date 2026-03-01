@@ -455,7 +455,7 @@ require_once 'lang/loader.php';
     <section class="lakum-legal-content">
         <div class="lakum-container">
             <div class="lakum-legal-content__inner">
-                <p class="lakum-legal-content__date">Last Updated: <span data-translate="date">December 2025</span></p>
+                <p class="lakum-legal-content__date">Last Updated: <span data-translate="date">March 1, 2026</span></p>
 
                 <div id="terms-content" data-translate="content">Lakum Artspace Terms of Use
 By accessing and using the LAKUM Artspace website and services, you accept and agree to be bound by these Terms and Conditions.

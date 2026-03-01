@@ -445,7 +445,7 @@ require_once 'lang/loader.php';
     <section class="lakum-legal-content">
         <div class="lakum-container">
             <div class="lakum-legal-content__inner">
-                <p class="lakum-legal-content__date">Last Updated: <span data-translate="date">December 2025</span></p>
+                <p class="lakum-legal-content__date">Last Updated: <span data-translate="date">March 1, 2026</span></p>
 
                 <div id="privacy-content" data-translate="content">
                     <h1>Privacy Policy & Data Protection Statement</h1>
