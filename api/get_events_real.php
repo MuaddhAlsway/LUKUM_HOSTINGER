@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/config.php';
+
 /**
  * LAKUM Artspace - Get Events API (Real Data Only)
  */
@@ -9,10 +10,11 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, OPTIONS');
 
 try {
-    $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+    // Get database connection using singleton
+    $db = Database::getInstance();
     
-    if ($conn->connect_error) {
-        throw new Exception('Database connection failed: ' . $conn->connect_error);
+    if (!$db->isConnected()) {
+        throw new Exception('Database connection failed: Access denied for user \'' . DB_USER . '\'@\'localhost\' (using password: YES)');
     }
     
     $type = $_GET['type'] ?? 'all';
@@ -29,18 +31,16 @@ try {
     
     $query .= " ORDER BY event_date DESC LIMIT $limit";
     
-    $result = $conn->query($query);
+    $result = $db->query($query);
     
     if (!$result) {
-        throw new Exception('Query failed: ' . $conn->error);
+        throw new Exception('Query failed: ' . $db->getConnection()->error);
     }
     
     $events = [];
     while ($row = $result->fetch_assoc()) {
         $events[] = $row;
     }
-    
-    $conn->close();
     
     http_response_code(200);
     echo json_encode([

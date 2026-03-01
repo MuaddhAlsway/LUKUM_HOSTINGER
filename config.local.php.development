@@ -1,0 +1,76 @@
+<?php
+/**
+ * LAKUM Artspace - Local Development Configuration
+ * 
+ * Use this file for local development with XAMPP/WAMP/MAMP
+ * Copy this to config.local.php when developing locally
+ * 
+ * SECURITY: This file contains sensitive credentials
+ * NEVER commit this file to Git
+ * This file is in .gitignore for security
+ */
+
+return [
+    // ========================================================================
+    // DATABASE CONFIGURATION - LOCAL DEVELOPMENT
+    // ========================================================================
+    'db' => [
+        'host'     => 'localhost',              // Local MySQL server
+        'user'     => 'root',                   // Default local user
+        'password' => '',                       // Default local password (empty)
+        'database' => 'lakum_artspace',         // Local database name
+        'port'     => 3306,                     // MySQL port
+        'charset'  => 'utf8mb4',                // Character set
+    ],
+
+    // ========================================================================
+    // SITE CONFIGURATION - LOCAL DEVELOPMENT
+    // ========================================================================
+    'site' => [
+        'url'      => 'http://localhost/LUKUM_HOSTINGER',  // Local development URL
+        'timezone' => 'Asia/Riyadh',                        // Timezone
+    ],
+
+    // ========================================================================
+    // SECURITY CONFIGURATION
+    // ========================================================================
+    'security' => [
+        // JWT Secret - Strong and unique
+        'jwt_secret'        => 'lakum_artspace_jwt_secret_2024_development_key',
+        
+        // Session timeout in seconds (3600 = 1 hour)
+        'session_timeout'   => 3600,
+        
+        // Maximum upload size in bytes (5242880 = 5MB)
+        'max_upload_size'   => 5242880,
+        
+        // Allowed file extensions for uploads
+        'allowed_extensions' => ['jpg', 'jpeg', 'png', 'gif', 'webp', 'pdf'],
+    ],
+
+    // ========================================================================
+    // LOGGING CONFIGURATION - LOCAL DEVELOPMENT
+    // ========================================================================
+    'logging' => [
+        // Path to error log file
+        'error_log_path' => __DIR__ . '/logs/error.log',
+        
+        // Display errors in browser (true for development)
+        'display_errors' => true,
+        
+        // Log errors to file (true for development)
+        'log_errors'     => true,
+    ],
+
+    // ========================================================================
+    // UPLOADS CONFIGURATION - LOCAL DEVELOPMENT
+    // ========================================================================
+    'uploads' => [
+        // Directory where uploaded files are stored
+        'directory' => __DIR__ . '/uploads/',
+        
+        // URL where uploaded files are accessible
+        'url'       => 'http://localhost/LUKUM_HOSTINGER/uploads/',
+    ],
+];
+?>

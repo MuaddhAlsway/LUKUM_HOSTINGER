@@ -1205,3 +1205,111 @@ small {
 [dir="rtl"] small {
     text-align: right;
 }
+
+
+/* ===== CONFIRMATION MODAL ===== */
+
+.confirmation-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+}
+
+.confirmation-modal.active {
+    display: flex;
+}
+
+.confirmation-modal-content {
+    background: white;
+    border-radius: 8px;
+    padding: 40px;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.confirmation-modal-title {
+    font-size: 24px;
+    font-weight: 500;
+    color: #1a1a1a;
+    margin-bottom: 16px;
+}
+
+.confirmation-modal-message {
+    font-size: 16px;
+    color: #525252;
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+.confirmation-modal-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+}
+
+.confirmation-modal-btn {
+    padding: 10px 24px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.confirmation-modal-btn-cancel {
+    background: #e5e5d8;
+    color: #1a1a1a;
+}
+
+.confirmation-modal-btn-cancel:hover {
+    background: #d5d5c8;
+    transform: translateY(-2px);
+}
+
+.confirmation-modal-btn-confirm {
+    background: #dc3545;
+    color: white;
+}
+
+.confirmation-modal-btn-confirm:hover {
+    background: #c82333;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+}
+
+@media (max-width: 768px) {
+    .confirmation-modal-content {
+        padding: 30px;
+        max-width: 90%;
+    }
+    
+    .confirmation-modal-title {
+        font-size: 20px;
+    }
+    
+    .confirmation-modal-message {
+        font-size: 14px;
+    }
+}
