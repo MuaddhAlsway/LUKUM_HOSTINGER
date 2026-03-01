@@ -24,6 +24,7 @@ try {
     // Decode JSON
     $data = json_decode($rawInput, true);
     error_log('Decoded data: ' . json_encode($data));
+    error_log('Data type: ' . gettype($data));
     
     // Validate data
     if ($data === null) {
@@ -31,15 +32,15 @@ try {
     }
     
     if (!is_array($data)) {
-        throw new Exception('Data is not an array');
+        throw new Exception('Data is not an array, got: ' . gettype($data));
     }
     
     // Check for ID in multiple ways
     $event_id = null;
     
-    if (isset($data['id'])) {
+    if (isset($data['id']) && $data['id'] !== null) {
         $event_id = (int)$data['id'];
-        error_log('Found ID in JSON: ' . $event_id);
+        error_log('Found ID in JSON: ' . $event_id . ' (raw: ' . var_export($data['id'], true) . ')');
     } elseif (isset($_POST['id'])) {
         $event_id = (int)$_POST['id'];
         error_log('Found ID in POST: ' . $event_id);
@@ -48,9 +49,10 @@ try {
         error_log('Found ID in GET: ' . $event_id);
     }
     
-    error_log('Final event_id: ' . $event_id);
+    error_log('Final event_id: ' . $event_id . ' (type: ' . gettype($event_id) . ')');
     
     if (!$event_id || $event_id <= 0) {
+        error_log('ID validation failed: event_id=' . var_export($event_id, true));
         throw new Exception('Missing or invalid event ID');
     }
     

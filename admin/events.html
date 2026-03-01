@@ -220,21 +220,28 @@
         }
 
         document.getElementById('confirmDeleteBtn').addEventListener('click', async () => {
-            console.log('Delete button clicked, eventToDelete:', eventToDelete);
-            if (!eventToDelete) {
-                showPopup('Error: No event selected', 'error');
+            // Get the ID directly from the global variable at the moment of click
+            const idToDelete = parseInt(eventToDelete);
+            
+            console.log('Delete button clicked');
+            console.log('eventToDelete value:', eventToDelete);
+            console.log('idToDelete value:', idToDelete);
+            console.log('idToDelete type:', typeof idToDelete);
+            
+            if (!idToDelete || idToDelete <= 0) {
+                showPopup('Error: No event selected or invalid ID', 'error');
                 return;
             }
-            // Save ID before closing modal (which resets eventToDelete to null)
-            const idToDelete = eventToDelete;
+            
+            // Close modal AFTER we have the ID
             closeConfirmationModal();
+            
             try {
                 const deletePayload = { id: idToDelete };
                 const jsonBody = JSON.stringify(deletePayload);
+                
                 console.log('Sending delete request with payload:', jsonBody);
-                console.log('Payload object:', deletePayload);
-                console.log('Event ID type:', typeof idToDelete);
-                console.log('Event ID value:', idToDelete);
+                console.log('Payload ID:', deletePayload.id);
                 
                 const response = await fetch('../api/delete_event.php', {
                     method: 'POST',
