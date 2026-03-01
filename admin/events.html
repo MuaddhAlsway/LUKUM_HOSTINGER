@@ -171,6 +171,7 @@
 
             tbody.innerHTML = events.map(event => {
                 const isFeatured = event.is_featured == 1;
+                console.log('Rendering event:', event.id, event.title);
                 return `
                 <tr>
                     <td style="text-align:center;">
@@ -184,7 +185,7 @@
                     <td><span class="badge ${new Date(event.event_date) > new Date() ? 'upcoming' : 'past'}">${new Date(event.event_date) > new Date() ? 'Upcoming' : 'Past'}</span></td>
                     <td>
                         <a href="edit-event.html?id=${event.id}" class="btn-small" style="background-color:#28a745;color:white;">Edit</a>
-                        <button onclick="openConfirmationModal(${event.id})" class="btn-small btn-danger" style="background-color:#dc3545;color:white;">Delete</button>
+                        <button type="button" onclick="openConfirmationModal(${event.id})" class="btn-small btn-danger" style="background-color:#dc3545;color:white;">Delete</button>
                     </td>
                 </tr>`;
             }).join('');
@@ -226,14 +227,26 @@
             }
             closeConfirmationModal();
             try {
-                console.log('Sending delete request with ID:', eventToDelete);
+                const deletePayload = { id: eventToDelete };
+                const jsonBody = JSON.stringify(deletePayload);
+                console.log('Sending delete request with payload:', jsonBody);
+                
                 const response = await fetch('../api/delete_event.php', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ id: eventToDelete })
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: jsonBody
                 });
-                const data = await response.json();
+                
+                console.log('Response status:', response.status);
+                const responseText = await response.text();
+                console.log('Response text:', responseText);
+                
+                const data = JSON.parse(responseText);
                 console.log('Delete response:', data);
+                
                 if (data.success) {
                     showPopup('Event deleted successfully', 'success');
                     loadEvents();
