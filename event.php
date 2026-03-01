@@ -630,14 +630,20 @@ require_once 'lang/loader.php';
             const metaDesc = document.querySelector('meta[name="description"]');
             if (metaDesc) metaDesc.setAttribute('content', description || title);
 
-            // Update URL to use event title instead of ID (clean URL)
-            const eventSlug = title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+            // Update URL to use ENGLISH title slug (always use English for URL, not Arabic)
+            // This ensures URLs are consistent regardless of language
+            const englishTitle = event.title || event.title_en || title;
+            const eventSlug = englishTitle.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+            
+            // Update browser URL with English slug and current language
             const newUrl = new URL(window.location);
             newUrl.searchParams.set('title', eventSlug);
             newUrl.searchParams.set('lang', lang);
+            // Remove 'id' parameter if it exists (for backward compatibility)
+            newUrl.searchParams.delete('id');
             window.history.replaceState({}, '', newUrl);
 
-            // Update hreflang tags with event title
+            // Update hreflang tags with event title (always use English slug)
             const hreflangEn = document.getElementById('hreflang-en');
             const hreflangAr = document.getElementById('hreflang-ar');
             if (hreflangEn) hreflangEn.href = `${window.location.origin}/event.php?title=${eventSlug}&lang=en`;
