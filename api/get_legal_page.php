@@ -10,6 +10,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 
 try {
+    // Load configuration
+    require_once __DIR__ . '/config.php';
+    
     $pageKey = $_GET['page_key'] ?? null;
     $lang = $_GET['lang'] ?? 'en';
     
@@ -22,10 +25,12 @@ try {
         $lang = 'en';
     }
     
-    $conn = new mysqli('localhost', 'root', '', 'lakum_artspace');
+    // Get database connection using singleton
+    $db = Database::getInstance();
+    $conn = $db->getConnection();
     
-    if ($conn->connect_error) {
-        throw new Exception('Connection failed: ' . $conn->connect_error);
+    if (!$db->isConnected()) {
+        throw new Exception('Database connection failed');
     }
     
     $conn->set_charset('utf8mb4');
@@ -46,7 +51,6 @@ try {
     $row = $result->fetch_assoc();
     
     $stmt->close();
-    $conn->close();
     
     if ($row) {
         http_response_code(200);

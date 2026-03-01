@@ -94,16 +94,6 @@
                                 <textarea id="description_en" name="description_en" rows="6" placeholder="Enter description in English..."></textarea>
                                 <div class="char-count"><span id="charCount_en">0</span> characters</div>
                             </div>
-
-                            <div class="form-group">
-                                <label for="duration_en">Duration (EN)</label>
-                                <input type="text" id="duration_en" name="duration_en" placeholder="e.g., Full day, Half day">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="features_en">Features (EN)</label>
-                                <textarea id="features_en" name="features_en" rows="4" placeholder="Feature 1, Feature 2, Feature 3..."></textarea>
-                            </div>
                         </div>
 
                         <!-- Arabic Section -->
@@ -119,16 +109,6 @@
                                 <label for="description_ar">Description (AR)</label>
                                 <textarea id="description_ar" name="description_ar" rows="6" placeholder="أدخل الوصف بالعربية..." dir="rtl"></textarea>
                                 <div class="char-count"><span id="charCount_ar">0</span> characters</div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="duration_ar">Duration (AR)</label>
-                                <input type="text" id="duration_ar" name="duration_ar" placeholder="مثال: يوم كامل، نصف يوم" dir="rtl">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="features_ar">Features (AR)</label>
-                                <textarea id="features_ar" name="features_ar" rows="4" placeholder="الميزة 1، الميزة 2، الميزة 3..." dir="rtl"></textarea>
                             </div>
                         </div>
 
@@ -245,10 +225,6 @@
                         name_ar: name_ar,
                         description_en: document.getElementById('description_en').value.trim(),
                         description_ar: document.getElementById('description_ar').value.trim(),
-                        duration_en: document.getElementById('duration_en').value.trim(),
-                        duration_ar: document.getElementById('duration_ar').value.trim(),
-                        features_en: document.getElementById('features_en').value.trim(),
-                        features_ar: document.getElementById('features_ar').value.trim(),
                         price: document.getElementById('price').value.replace(/,/g, ''),
                         price_unit: document.getElementById('price_unit').value,
                         price_sec: document.getElementById('price_sec').value.trim(),

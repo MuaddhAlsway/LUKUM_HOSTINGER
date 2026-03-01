@@ -643,6 +643,41 @@ Compliance with these terms ensures the preservation of Lakum Artspaceâ€™s 
 
     <script src="assest/popup-notification.js?v=5.0.0" defer></script>
 
+    <script>
+        // Load legal page content dynamically based on current language
+        document.addEventListener('DOMContentLoaded', function() {
+            loadLegalPageContent();
+        });
+
+        async function loadLegalPageContent() {
+            try {
+                // Get current language from URL parameter (set by PHP buildLanguageSwitcherUrl)
+                const urlParams = new URLSearchParams(window.location.search);
+                const lang = urlParams.get('lang') || 'en';
+                
+                console.log('Loading terms content for language:', lang);
+                
+                // Fetch content from API
+                const response = await fetch(`api/get_legal_page.php?page_key=terms&lang=${lang}`);
+                const data = await response.json();
+                
+                if (data.success && data.data) {
+                    const contentDiv = document.getElementById('terms-content');
+                    if (contentDiv) {
+                        // Update content with fetched data
+                        contentDiv.innerHTML = `<h2>${data.data.title || 'Terms & Conditions'}</h2>${data.data.content || ''}`;
+                        console.log('Terms content loaded successfully for language:', lang);
+                    }
+                } else {
+                    console.log('No terms content found in database, using default content');
+                }
+            } catch (error) {
+                console.error('Error loading terms content:', error);
+                // Keep default content if API fails
+            }
+        }
+    </script>
+
 <script>
     // Translation strings for JavaScript
     const translations = {

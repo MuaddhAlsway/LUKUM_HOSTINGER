@@ -657,6 +657,41 @@ require_once 'lang/loader.php';
 
     <script src="assest/popup-notification.js?v=5.0.0" defer></script>
 
+    <script>
+        // Load legal page content dynamically based on current language
+        document.addEventListener('DOMContentLoaded', function() {
+            loadLegalPageContent();
+        });
+
+        async function loadLegalPageContent() {
+            try {
+                // Get current language from URL parameter (set by PHP buildLanguageSwitcherUrl)
+                const urlParams = new URLSearchParams(window.location.search);
+                const lang = urlParams.get('lang') || 'en';
+                
+                console.log('Loading privacy content for language:', lang);
+                
+                // Fetch content from API
+                const response = await fetch(`api/get_legal_page.php?page_key=privacy&lang=${lang}`);
+                const data = await response.json();
+                
+                if (data.success && data.data) {
+                    const contentDiv = document.getElementById('privacy-content');
+                    if (contentDiv) {
+                        // Update content with fetched data
+                        contentDiv.innerHTML = `<h2>${data.data.title || 'Privacy Policy'}</h2>${data.data.content || ''}`;
+                        console.log('Privacy content loaded successfully for language:', lang);
+                    }
+                } else {
+                    console.log('No privacy content found in database, using default content');
+                }
+            } catch (error) {
+                console.error('Error loading privacy content:', error);
+                // Keep default content if API fails
+            }
+        }
+    </script>
+
 <script>
     // Translation strings for JavaScript
     const translations = {

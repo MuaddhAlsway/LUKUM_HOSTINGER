@@ -120,12 +120,6 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="content_en">Content (EN) *</label>
-                                <textarea id="content_en" name="content_en" rows="8" placeholder="Write your press content in English..." required></textarea>
-                                <div class="char-count"><span id="charCount_en">0</span> characters</div>
-                            </div>
-
-                            <div class="form-group">
                                 <label for="excerpt_en">Excerpt (EN)</label>
                                 <textarea id="excerpt_en" name="excerpt_en" rows="3" placeholder="Brief summary in English..."></textarea>
                             </div>
@@ -138,12 +132,6 @@
                             <div class="form-group">
                                 <label for="title_ar">Press Title (AR) *</label>
                                 <input type="text" id="title_ar" name="title_ar" placeholder="أدخل عنوان الخبر بالعربية" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="content_ar">Content (AR) *</label>
-                                <textarea id="content_ar" name="content_ar" rows="8" placeholder="اكتب محتوى الخبر بالعربية..." required dir="rtl"></textarea>
-                                <div class="char-count"><span id="charCount_ar">0</span> characters</div>
                             </div>
 
                             <div class="form-group">
@@ -165,18 +153,6 @@
                         <div class="form-group">
                             <label for="url">External Link</label>
                             <input type="url" id="url" name="url" placeholder="https://example.com/article">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="category">Category</label>
-                            <select id="category" name="category">
-                                <option value="">Select a category</option>
-                                <option value="News">News</option>
-                                <option value="Announcement">Announcement</option>
-                                <option value="Feature">Feature</option>
-                                <option value="Interview">Interview</option>
-                                <option value="Review">Review</option>
-                            </select>
                         </div>
                     </div>
 
@@ -247,8 +223,6 @@
             // Validate required fields
             const title_en = document.getElementById('title_en').value.trim();
             const title_ar = document.getElementById('title_ar').value.trim();
-            const content_en = document.getElementById('content_en').value.trim();
-            const content_ar = document.getElementById('content_ar').value.trim();
             
             if (!title_en) {
                 showPopup('Press title (English) is required', 'error');
@@ -256,14 +230,6 @@
             }
             if (!title_ar) {
                 showPopup('Press title (Arabic) is required', 'error');
-                return;
-            }
-            if (!content_en) {
-                showPopup('Press content (English) is required', 'error');
-                return;
-            }
-            if (!content_ar) {
-                showPopup('Press content (Arabic) is required', 'error');
                 return;
             }
 
@@ -293,14 +259,11 @@
                 const newPress = {
                     title_en: title_en,
                     title_ar: title_ar,
-                    content_en: content_en,
-                    content_ar: content_ar,
                     excerpt_en: document.getElementById('excerpt_en').value.trim(),
                     excerpt_ar: document.getElementById('excerpt_ar').value.trim(),
                     source: document.getElementById('source').value.trim(),
                     press_date: document.getElementById('press_date').value,
                     url: document.getElementById('url').value.trim(),
-                    category: document.getElementById('category').value,
                     cover_image: uploadResult.path
                 };
 
