@@ -7,6 +7,7 @@ require_once __DIR__ . '/config.php';
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST, DELETE, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type, Accept');
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
@@ -14,7 +15,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 
 try {
-    $data = json_decode(file_get_contents('php://input'), true);
+    $rawInput = file_get_contents('php://input');
+    $data = json_decode($rawInput, true);
     
     if (!$data || empty($data['id'])) {
         throw new Exception('Missing blog ID');
@@ -30,6 +32,7 @@ try {
     }
     
     $conn = $db->getConnection();
+    $conn->set_charset('utf8mb4');
     
     // Delete blog translations first (due to foreign key)
     $query = "DELETE FROM blog_translations WHERE blog_id = $blog_id";
@@ -42,8 +45,6 @@ try {
     if (!$conn->query($query)) {
         throw new Exception('Delete blog failed: ' . $conn->error);
     }
-    
-    $conn->close();
     
     http_response_code(200);
     echo json_encode([

@@ -7,6 +7,7 @@
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST, DELETE, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type, Accept');
 
 require_once 'config.php';
 
@@ -16,7 +17,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 
 try {
-    $data = json_decode(file_get_contents('php://input'), true);
+    $rawInput = file_get_contents('php://input');
+    $data = json_decode($rawInput, true);
     
     if (!$data || empty($data['id'])) {
         throw new Exception('Missing pricing ID');
@@ -28,19 +30,17 @@ try {
         throw new Exception('Database connection failed');
     }
     
-    $id = $data['id'];
+    $conn = $db->getConnection();
+    $conn->set_charset('utf8mb4');
     
-    $stmt = $db->prepare('DELETE FROM pricing WHERE id = ?');
-    if (!$stmt) {
-        throw new Exception('Prepare failed: ' . $db->getConnection()->error);
+    $id = (int)$data['id'];
+    
+    $query = "DELETE FROM pricing WHERE id = $id";
+    if (!$conn->query($query)) {
+        throw new Exception('Delete failed: ' . $conn->error);
     }
     
-    $stmt->bind_param('i', $id);
-    
-    if (!$stmt->execute()) {
-        throw new Exception('Execute failed: ' . $stmt->error);
-    }
-    
+    http_response_code(200);
     echo json_encode([
         'success' => true,
         'message' => 'Pricing deleted successfully'

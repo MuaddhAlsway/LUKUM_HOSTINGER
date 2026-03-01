@@ -24,7 +24,6 @@ try {
     // Decode JSON
     $data = json_decode($rawInput, true);
     error_log('Decoded data: ' . json_encode($data));
-    error_log('JSON error: ' . json_last_error_msg());
     
     // Validate data
     if ($data === null) {
@@ -63,6 +62,7 @@ try {
     }
     
     $conn = $db->getConnection();
+    $conn->set_charset('utf8mb4');
     
     // Delete gallery images first
     $query = "DELETE FROM event_gallery WHERE event_id = $event_id";
