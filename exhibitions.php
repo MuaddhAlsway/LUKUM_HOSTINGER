@@ -221,8 +221,8 @@ require_once 'lang/loader.php';
         };
 
         const getEventUrl = (event) => {
-            const slug = slugify(event.title);
-            return `event/${slug}`;
+            const lang = window.LAKUM_LANG || localStorage.getItem('lakum_language') || 'en';
+            return `event.php?id=${event.id}&lang=${lang}`;
         };
 
         function displayFeaturedEvent(event) {
