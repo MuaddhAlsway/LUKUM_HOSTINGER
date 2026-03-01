@@ -17,15 +17,28 @@ require_once 'lang/loader.php';
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
     <link rel="preload" href="global-styles.css" as="style">
     <link rel="preload" href="lakum-components.css" as="style">
+    <!-- Critical CSS - Load synchronously -->
     <link rel="stylesheet" href="global-styles.css">
     <link rel="stylesheet" href="lakum-components.css">
-    <link rel="stylesheet" href="Home.css">
-    <link rel="stylesheet" href="rtl.css">
-    <link rel="stylesheet" href="fonts/greta-arabic.css">
-    <link rel="stylesheet" href="assest/language-switcher.css">
-    <link rel="stylesheet" href="assest/popup-notification.css">
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" media="print" onload="this.media='all'">
-    <noscript><link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet"></noscript>
+    
+    <!-- Non-critical CSS - Defer loading -->
+    <link rel="preload" href="Home.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="rtl.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="fonts/greta-arabic.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="assest/language-switcher.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="assest/popup-notification.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    
+    <!-- Fallback for no-JS -->
+    <noscript>
+        <link rel="stylesheet" href="Home.css">
+        <link rel="stylesheet" href="rtl.css">
+        <link rel="stylesheet" href="fonts/greta-arabic.css">
+        <link rel="stylesheet" href="assest/language-switcher.css">
+        <link rel="stylesheet" href="assest/popup-notification.css">
+    </noscript>
+    
+    <!-- Icons - Load synchronously (needed for UI) -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
     <script src="assest/popup-notification.js?v=5.0.0" defer></script>
     <script src="assest/navbar-mobile-toggle.js?v=5.0.0" defer></script>
     <meta name="title" content="LAKUM Artspace - Cultural Hub in Riyadh | Art Exhibitions & Events">

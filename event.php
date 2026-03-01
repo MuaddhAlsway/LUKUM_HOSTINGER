@@ -144,13 +144,18 @@ require_once 'lang/loader.php';
     <!-- Core Styles - Critical CSS loaded synchronously -->
     <link rel="stylesheet" href="global-styles.css">
     <link rel="stylesheet" href="lakum-components.css">
-    <link rel="stylesheet" href="Home.css">
-
-    <!-- RTL Styles -->
-    <link rel="stylesheet" href="rtl.css">
-
-    <!-- Fonts -->
-    <link rel="stylesheet" href="fonts/greta-arabic.css">
+    
+    <!-- Non-critical CSS - Defer loading -->
+    <link rel="preload" href="Home.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="rtl.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="fonts/greta-arabic.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    
+    <!-- Fallback for no-JS -->
+    <noscript>
+        <link rel="stylesheet" href="Home.css">
+        <link rel="stylesheet" href="rtl.css">
+        <link rel="stylesheet" href="fonts/greta-arabic.css">
+    </noscript>
 
     <!-- Icons - Critical for UI elements like close button -->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
