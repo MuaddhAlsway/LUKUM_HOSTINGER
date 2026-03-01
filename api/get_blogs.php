@@ -44,10 +44,10 @@ try {
                 b.views,
                 b.is_published,
                 b.created_at,
-                t.title,
-                t.excerpt,
-                t.content,
-                t.slug
+                COALESCE(t.title, b.title) as title,
+                COALESCE(t.excerpt, b.excerpt) as excerpt,
+                COALESCE(t.content, b.content) as content,
+                COALESCE(t.slug, b.slug) as slug
             FROM blogs b
             LEFT JOIN blog_translations t ON b.id = t.blog_id AND t.language = ?
             WHERE b.id = ?
@@ -102,10 +102,10 @@ try {
             b.views,
             b.is_published,
             b.created_at,
-            t.title,
-            t.excerpt,
-            t.content,
-            t.slug
+            COALESCE(t.title, b.title) as title,
+            COALESCE(t.excerpt, b.excerpt) as excerpt,
+            COALESCE(t.content, b.content) as content,
+            COALESCE(t.slug, b.slug) as slug
         FROM blogs b
         LEFT JOIN blog_translations t ON b.id = t.blog_id AND t.language = ?
         ORDER BY b.created_at DESC

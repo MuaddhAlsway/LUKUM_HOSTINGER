@@ -260,8 +260,8 @@
     position: fixed;
     top: 20px;
     right: 20px;
-    background: rgba(255, 255, 255, 0.15);
-    border: 2px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.4);
     color: #fff;
     font-size: 1.8rem;
     cursor: pointer;
@@ -275,6 +275,9 @@
     align-items: center;
     justify-content: center;
     backdrop-filter: blur(10px);
+    opacity: 1;
+    visibility: visible;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
 }
 
 .lightbox.active .lightbox__close {
