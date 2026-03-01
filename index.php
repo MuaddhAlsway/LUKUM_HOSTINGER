@@ -37,8 +37,9 @@ require_once 'lang/loader.php';
         <link rel="stylesheet" href="assest/popup-notification.css">
     </noscript>
     
-    <!-- Icons - Load synchronously (needed for UI) -->
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+    <!-- Icons - Defer loading (not critical for initial render) -->
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet"></noscript>
     <script src="assest/popup-notification.js?v=5.0.0" defer></script>
     <script src="assest/navbar-mobile-toggle.js?v=5.0.0" defer></script>
     <meta name="title" content="LAKUM Artspace - Cultural Hub in Riyadh | Art Exhibitions & Events">
@@ -123,7 +124,7 @@ require_once 'lang/loader.php';
         .lakum-cta--primary .lakum-cta__title { color: #1a1a1a; }
         .lakum-cta--primary .lakum-cta__text { color: #555; }
         .lakum-cta--dark { position: relative; color: white; overflow: hidden; }
-        .lakum-cta__background { position: absolute; inset: 0; z-index: 0; background-image: url('assest/img-4.png'); background-size: cover; background-position: center; background-attachment: fixed; }
+        .lakum-cta__background { position: absolute; inset: 0; z-index: 0; background-image: url('assest/img-4.png'); background-size: cover; background-position: center; background-attachment: scroll; }
         .lakum-cta__background::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.4) 100%); z-index: 1; }
         .lakum-cta__content { position: relative; z-index: 2; text-align: center; color: white; }
         .lakum-cta__title { font-size: 2.5rem; font-weight: 300; margin-bottom: 20px; color: white; }
@@ -334,7 +335,7 @@ margin: 0 auto;}
     </section>
 
     <section class="lakum-cta lakum-cta--dark">
-        <div class="lakum-cta__background" style="background-image: url('assest/img-4.png');"></div>
+        <div class="lakum-cta__background" style="background-image: url('assest/img-4.png'); will-change: background-image; contain: layout style paint;"></div>
         <div class="lakum-container">
             <div class="lakum-cta__content">
                 <h2 class="lakum-cta__title"><?php echo t('create_event', 'Create Your Own Event'); ?></h2>
