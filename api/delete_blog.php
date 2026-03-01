@@ -4,7 +4,7 @@ require_once __DIR__ . '/config.php';
  * LAKUM Artspace - Delete Blog API
  */
 
-header('Content-Type: application/json');
+header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST, DELETE, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, Accept');
@@ -18,11 +18,20 @@ try {
     $rawInput = file_get_contents('php://input');
     $data = json_decode($rawInput, true);
     
-    if (!$data || empty($data['id'])) {
-        throw new Exception('Missing blog ID');
+    // Flexible ID extraction (like delete_event.php)
+    $blog_id = null;
+    if (isset($data['id'])) {
+        $blog_id = (int)$data['id'];
+    } elseif (isset($_POST['id'])) {
+        $blog_id = (int)$_POST['id'];
+    } elseif (isset($_GET['id'])) {
+        $blog_id = (int)$_GET['id'];
     }
     
-    $blog_id = (int)$data['id'];
+    // Validate ID
+    if (!$blog_id || $blog_id <= 0) {
+        throw new Exception('Missing or invalid blog ID');
+    }
     
     $db = Database::getInstance();
     

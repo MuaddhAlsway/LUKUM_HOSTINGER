@@ -4,7 +4,7 @@
  * Deletes a pricing option from the database
  */
 
-header('Content-Type: application/json');
+header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST, DELETE, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, Accept');
@@ -20,8 +20,19 @@ try {
     $rawInput = file_get_contents('php://input');
     $data = json_decode($rawInput, true);
     
-    if (!$data || empty($data['id'])) {
-        throw new Exception('Missing pricing ID');
+    // Flexible ID extraction
+    $pricing_id = null;
+    if (isset($data['id'])) {
+        $pricing_id = (int)$data['id'];
+    } elseif (isset($_POST['id'])) {
+        $pricing_id = (int)$_POST['id'];
+    } elseif (isset($_GET['id'])) {
+        $pricing_id = (int)$_GET['id'];
+    }
+    
+    // Validate ID
+    if (!$pricing_id || $pricing_id <= 0) {
+        throw new Exception('Missing or invalid pricing ID');
     }
     
     $db = Database::getInstance();
@@ -33,9 +44,15 @@ try {
     $conn = $db->getConnection();
     $conn->set_charset('utf8mb4');
     
-    $id = (int)$data['id'];
+    // Delete pricing translations first (if they exist)
+    $query = "DELETE FROM pricing_translations WHERE pricing_id = $pricing_id";
+    if (!$conn->query($query)) {
+        // Don't fail if table doesn't exist
+        error_log('Pricing translations delete note: ' . $conn->error);
+    }
     
-    $query = "DELETE FROM pricing WHERE id = $id";
+    // Delete pricing
+    $query = "DELETE FROM pricing WHERE id = $pricing_id";
     if (!$conn->query($query)) {
         throw new Exception('Delete failed: ' . $conn->error);
     }

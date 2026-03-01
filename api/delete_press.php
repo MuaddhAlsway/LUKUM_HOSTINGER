@@ -4,7 +4,7 @@
  * Deletes a press release from the database
  */
 
-header('Content-Type: application/json');
+header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST, DELETE, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, Accept');
@@ -20,8 +20,19 @@ try {
     $rawInput = file_get_contents('php://input');
     $data = json_decode($rawInput, true);
     
-    if (!$data || empty($data['id'])) {
-        throw new Exception('Missing press ID');
+    // Flexible ID extraction
+    $press_id = null;
+    if (isset($data['id'])) {
+        $press_id = (int)$data['id'];
+    } elseif (isset($_POST['id'])) {
+        $press_id = (int)$_POST['id'];
+    } elseif (isset($_GET['id'])) {
+        $press_id = (int)$_GET['id'];
+    }
+    
+    // Validate ID
+    if (!$press_id || $press_id <= 0) {
+        throw new Exception('Missing or invalid press ID');
     }
     
     $db = Database::getInstance();
@@ -33,9 +44,15 @@ try {
     $conn = $db->getConnection();
     $conn->set_charset('utf8mb4');
     
-    $id = (int)$data['id'];
+    // Delete press translations first (if they exist)
+    $query = "DELETE FROM press_translations WHERE press_id = $press_id";
+    if (!$conn->query($query)) {
+        // Don't fail if table doesn't exist
+        error_log('Press translations delete note: ' . $conn->error);
+    }
     
-    $query = "DELETE FROM press WHERE id = $id";
+    // Delete press
+    $query = "DELETE FROM press WHERE id = $press_id";
     if (!$conn->query($query)) {
         throw new Exception('Delete failed: ' . $conn->error);
     }
