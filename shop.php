@@ -31,6 +31,7 @@ body{font-family:'Greta Arabic','Greta Text Arabic',-apple-system,BlinkMacSystem
 </style>
 
 <!-- Preload Hero Image (Critical for LCP) -->
+<link rel="preload" as="image" href="assest/img-3-1200w.webp" fetchpriority="high">
 <link rel="preload" as="image" href="assest/img-3.webp" fetchpriority="high">
 
 <!-- DNS Prefetch for external resources -->

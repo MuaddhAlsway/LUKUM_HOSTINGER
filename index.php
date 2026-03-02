@@ -14,7 +14,8 @@ require_once 'config.css-loader.php';
     <link rel="icon" type="image/png" sizes="16x16" href="assest/logo/right_section.png">
     <link rel="apple-touch-icon" href="assest/logo/right_section.png">
     <meta name="msapplication-TileImage" content="assest/logo/right_section.png">
-    <!-- Preload LCP image (hero) -->
+    <!-- Preload LCP image (hero) with responsive sizes -->
+    <link rel="preload" as="image" href="assest/img-4-1200w.webp" fetchpriority="high">
     <link rel="preload" as="image" href="assest/img-4.webp" fetchpriority="high">
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
     <link rel="preconnect" href="https://cdn.jsdelivr.net">

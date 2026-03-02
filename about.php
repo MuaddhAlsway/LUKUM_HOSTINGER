@@ -12,7 +12,8 @@ require_once 'api/image-helper.php';
 <link rel="icon" type="image/png" sizes="16x16" href="assest/logo/right_section.png">
 <link rel="apple-touch-icon" href="assest/logo/right_section.png">
 <meta name="msapplication-TileImage" content="assest/logo/right_section.png">
-<link rel="preload" as="image" href="assest/img-4.png" fetchpriority="high">
+<link rel="preload" as="image" href="assest/img-4-1200w.webp" fetchpriority="high">
+<link rel="preload" as="image" href="assest/img-4.webp" fetchpriority="high">
 <link rel="dns-prefetch" href="https://fonts.googleapis.com">
 <link rel="dns-prefetch" href="https://fonts.gstatic.com">
 <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">

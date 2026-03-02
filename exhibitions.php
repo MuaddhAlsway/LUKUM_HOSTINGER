@@ -12,6 +12,9 @@ require_once 'api/image-helper.php';
     <link rel="icon" type="image/png" sizes="16x16" href="assest/logo/right_section.png">
     <link rel="apple-touch-icon" href="assest/logo/right_section.png">
     <meta name="msapplication-TileImage" content="assest/logo/right_section.png">
+    <!-- Preload LCP image (hero) with high priority -->
+    <link rel="preload" as="image" href="assest/img-4-1200w.webp" fetchpriority="high">
+    <link rel="preload" as="image" href="assest/img-4.webp" fetchpriority="high">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
     <link rel="stylesheet" href="global-styles.css">
     <link rel="stylesheet" href="lakum-components.css">
