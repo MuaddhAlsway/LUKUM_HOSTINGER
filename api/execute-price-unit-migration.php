@@ -22,11 +22,11 @@ try {
     
     // Add columns
     $queries = [
-        "ALTER TABLE pricing ADD COLUMN price_unit_ar VARCHAR(50) DEFAULT 'ر.س' AFTER price_unit",
+        "ALTER TABLE pricing ADD COLUMN price_unit_ar VARCHAR(50) DEFAULT 'ريال سعودي' AFTER price_unit",
         "ALTER TABLE pricing ADD COLUMN vat_note_ar VARCHAR(255) DEFAULT '*(غير شامل الضريبة)' AFTER vat_note",
-        "UPDATE pricing SET price_unit_ar = 'ر.س/يوم' WHERE price_unit = 'SAR/day'",
-        "UPDATE pricing SET price_unit_ar = 'ر.س/ساعة' WHERE price_unit = 'SAR/hour'",
-        "UPDATE pricing SET price_unit_ar = 'ر.س' WHERE price_unit = 'SAR'",
+        "UPDATE pricing SET price_unit_ar = 'ريال سعودي / يوم' WHERE price_unit = 'SAR/day'",
+        "UPDATE pricing SET price_unit_ar = 'ريال سعودي / ساعة' WHERE price_unit = 'SAR/hour'",
+        "UPDATE pricing SET price_unit_ar = 'ريال سعودي' WHERE price_unit = 'SAR'",
         "UPDATE pricing SET vat_note_ar = '*(غير شامل الضريبة)' WHERE vat_note = '*(excluding VAT)'"
     ];
     

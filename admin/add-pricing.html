@@ -130,9 +130,9 @@
                             <div class="form-group">
                                 <label for="price_unit_ar">Price Unit (AR)</label>
                                 <select id="price_unit_ar" name="price_unit_ar" dir="rtl">
-                                    <option value="ร.ส/يوم">ร.ส/يوم</option>
-                                    <option value="ร.ส/ساعة">ร.ส/ساعة</option>
-                                    <option value="ร.ס">ร.ס</option>
+                                    <option value="ريال سعودي / يوم">ريال سعودي / يوم</option>
+                                    <option value="ريال سعودي / ساعة">ريال سعودي / ساعة</option>
+                                    <option value="ريال سعودي">ريال سعودي</option>
                                 </select>
                             </div>
                         </div>
@@ -195,11 +195,11 @@
             if (priceUnitSelect && priceUnitArSelect) {
                 priceUnitSelect.addEventListener('change', function() {
                     const mapping = {
-                        'SAR/day': 'ร.ส/يوم',
-                        'SAR/hour': 'ร.ส/ساعة',
-                        'SAR': 'ร.ס'
+                        'SAR/day': 'ر.س/يوم',
+                        'SAR/hour': 'ر.س/ساعة',
+                        'SAR': 'ر.س'
                     };
-                    priceUnitArSelect.value = mapping[this.value] || 'ร.ס';
+                    priceUnitArSelect.value = mapping[this.value] || 'ر.س';
                 });
             }
 
