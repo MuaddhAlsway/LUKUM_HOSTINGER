@@ -121,7 +121,7 @@ require_once 'api/image-helper.php';
     </style>
 
     <!-- Preload Hero Image (Critical for LCP) -->
-    <link rel="preload" as="image" href="assest/img-3.wepb" fetchpriority="high">
+    <link rel="preload" as="image" href="assest/img-3.webp" fetchpriority="high">
 
     <!-- DNS Prefetch for external resources -->
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">

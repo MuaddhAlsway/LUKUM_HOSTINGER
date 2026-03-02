@@ -686,3 +686,52 @@ body {
     color: #d1d1d1;
     font-size: 0.85rem;
 }
+
+
+/* ===== GALLERY CAROUSEL ===== */
+
+.lakum-gallery-carousel {
+    width: 100%;
+    overflow: hidden;
+    background: #f6f6eb;
+    padding: 40px 0;
+}
+
+.lakum-gallery-track {
+    display: flex;
+    gap: 20px;
+    transition: transform 0.3s ease;
+    will-change: transform;
+}
+
+.lakum-gallery-item {
+    flex: 0 0 auto;
+    min-width: 300px;
+    width: 300px;
+    aspect-ratio: 3/2;
+    overflow: hidden;
+    border-radius: 8px;
+    background: #e8e8e8;
+}
+
+.lakum-gallery-item picture,
+.lakum-gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .lakum-gallery-item {
+        min-width: 250px;
+        width: 250px;
+    }
+}
+
+@media (max-width: 480px) {
+    .lakum-gallery-item {
+        min-width: 200px;
+        width: 200px;
+    }
+}
