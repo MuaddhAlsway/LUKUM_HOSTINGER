@@ -13,12 +13,10 @@ require_once 'api/image-helper.php';
     <link rel="apple-touch-icon" href="assest/logo/right_section.png">
     <meta name="msapplication-TileImage" content="assest/logo/right_section.png">
     <!-- Preload LCP image (hero) - Mobile-first (400w) -->
-    <!-- Preload LCP image (hero) - Mobile-first (400w) with responsive variants -->
+    <!-- Preload LCP image (hero) - Mobile-first with responsive variants -->
     <link rel="preload" as="image" 
-          href="optimized-images/assest/img-4-400w.webp"
-          imagesrcset="optimized-images/assest/img-4-400w.webp 400w,
-                       optimized-images/assest/img-4-800w.webp 800w,
-                       optimized-images/assest/img-4-1200w.webp 1200w"
+          href="heroImage/img-4.webp"
+          imagesrcset="heroImage/img-4.webp 1200w"
           imagesizes="(max-width: 768px) 100vw, 650px"
           fetchpriority="high">
     <!-- Preload critical fonts -->
