@@ -338,7 +338,7 @@ require_once 'lang/loader.php';
             <div class="event-cta__content">
                 <h2 class="event-cta__title"><?php echo t('create_exhibition', 'Create Your Own Exhibition'); ?></h2>
                 <p class="event-cta__text"><?php echo t('create_exhibition_desc', "Transform your vision into reality with LAKUM's versatile spaces and comprehensive support services"); ?></p>
-                <a href="spaces.php" class="event-cta__button">
+                <a href="spaces.php" id="bookingCtaButton" class="event-cta__button">
                     <?php echo t('book_space', 'Book LAKUM Space'); ?>
                     <i class="ri-arrow-right-line"></i>
                 </a>
@@ -1148,6 +1148,29 @@ require_once 'lang/loader.php';
 
         // Call on page load
         updateNavbarFooterLanguage();
+
+        // Load booking link from settings
+        async function loadBookingLink() {
+            try {
+                const response = await fetch('api/get_settings.php');
+                const data = await response.json();
+                
+                if (data.success && data.data && data.data.booking_link) {
+                    const bookingButton = document.getElementById('bookingCtaButton');
+                    if (bookingButton) {
+                        bookingButton.href = data.data.booking_link;
+                        bookingButton.target = '_blank';
+                        console.log('Booking link updated:', data.data.booking_link);
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading booking link:', error);
+                // Fallback to spaces.php if API fails
+            }
+        }
+
+        // Load booking link when page loads
+        document.addEventListener('DOMContentLoaded', loadBookingLink);
     </script>
 
     </body>
