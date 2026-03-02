@@ -1,5 +1,6 @@
 ﻿<?php
 require_once 'lang/loader.php';
+require_once 'api/image-helper.php';
 ?><!DOCTYPE html>
 <html <?php echo getLanguageAttributes(); ?>>
 
@@ -280,7 +281,7 @@ require_once 'lang/loader.php';
     <!-- Hero Section -->
     <section class="event-hero">
         <div class="event-hero__image-wrapper">
-            <img id="hero-image" src="assest/img-4.webp" alt="Event" class="event-hero__image">
+            <img id="hero-image" src="assest/img-4.webp" alt="Event" class="event-hero__image" loading="eager" fetchpriority="high">
             <div class="event-hero__overlay"></div>
         </div>
         <div class="event-hero__content">

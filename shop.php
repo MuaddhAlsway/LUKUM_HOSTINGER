@@ -1,5 +1,6 @@
 ﻿<?php
 require_once 'lang/loader.php';
+require_once 'api/image-helper.php';
 ?><!DOCTYPE html>
 <html <?php echo getLanguageAttributes(); ?>>
 <head>
@@ -103,14 +104,25 @@ body{font-family:'Greta Arabic','Greta Text Arabic',-apple-system,BlinkMacSystem
             width: 100%;
             height: 100vh;
             min-height: 600px;
-            background-image: url('assest/img-3.JPG');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
+        }
+        
+        .lakum-shop-hero__image-wrapper {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+        }
+        
+        .lakum-shop-hero__image-wrapper picture,
+        .lakum-shop-hero__image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
         }
         
         .lakum-shop-hero::before {
@@ -369,6 +381,9 @@ body{font-family:'Greta Arabic','Greta Text Arabic',-apple-system,BlinkMacSystem
 
     <!-- Shop Hero Section -->
     <section class="lakum-shop-hero">
+        <div class="lakum-shop-hero__image-wrapper">
+            <?php echo ImageHelper::render('assest/img-3.JPG', 'LAKUM Shop', 'hero'); ?>
+        </div>
         <div class="lakum-shop-hero__content">
             <h1 class="lakum-shop-hero__title"><?php echo t('hero_title', 'Discover Lakum Concept Shop'); ?></h1>
             <a href="https://souvenirs.sa/ar/category/oyajz" class="lakum-shop-hero__btn" target="_blank" rel="noopener noreferrer" data-link-type="shop">

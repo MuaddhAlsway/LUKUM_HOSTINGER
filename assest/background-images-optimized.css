@@ -1,0 +1,192 @@
+/**
+ * Optimized Background Images
+ * Uses WebP format with fallback to original
+ * Includes media queries for responsive backgrounds
+ */
+
+/* Hero Background - Home Page */
+.lakum-hero-bg {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080"><rect fill="%231a1a1a" width="1920" height="1080"/></svg>');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+/* WebP Support */
+@supports (background-image: url('data:image/webp;base64,')) {
+    .lakum-hero-bg {
+        background-image: url('../assest/img-4.webp');
+    }
+}
+
+/* Fallback for older browsers */
+@supports not (background-image: url('data:image/webp;base64,')) {
+    .lakum-hero-bg {
+        background-image: url('../assest/img-4.png');
+    }
+}
+
+/* Responsive background images */
+@media (max-width: 768px) {
+    .lakum-hero-bg {
+        background-attachment: scroll;
+        background-size: cover;
+    }
+}
+
+/* Gallery Background */
+.lakum-gallery-bg {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Spaces/Facilities Background */
+.lakum-spaces-bg {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Exhibitions Background */
+.lakum-exhibitions-bg {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Blog Background */
+.lakum-blog-bg {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Press Background */
+.lakum-press-bg {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Contact Background */
+.lakum-contact-bg {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Shop Background */
+.lakum-shop-bg {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Calendar Background */
+.lakum-calendar-bg {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Privacy Background */
+.lakum-privacy-bg {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Terms Background */
+.lakum-terms-bg {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Optimize background image rendering */
+.lakum-hero-bg,
+.lakum-gallery-bg,
+.lakum-spaces-bg,
+.lakum-exhibitions-bg,
+.lakum-blog-bg,
+.lakum-press-bg,
+.lakum-contact-bg,
+.lakum-shop-bg,
+.lakum-calendar-bg,
+.lakum-privacy-bg,
+.lakum-terms-bg {
+    will-change: background-image;
+    contain: layout style paint;
+}
+
+/* Prevent layout shift */
+.lakum-hero-bg,
+.lakum-gallery-bg,
+.lakum-spaces-bg,
+.lakum-exhibitions-bg,
+.lakum-blog-bg,
+.lakum-press-bg,
+.lakum-contact-bg,
+.lakum-shop-bg,
+.lakum-calendar-bg,
+.lakum-privacy-bg,
+.lakum-terms-bg {
+    min-height: 300px;
+    aspect-ratio: 16/9;
+}
+
+/* Mobile optimization */
+@media (max-width: 640px) {
+    .lakum-hero-bg,
+    .lakum-gallery-bg,
+    .lakum-spaces-bg,
+    .lakum-exhibitions-bg,
+    .lakum-blog-bg,
+    .lakum-press-bg,
+    .lakum-contact-bg,
+    .lakum-shop-bg,
+    .lakum-calendar-bg,
+    .lakum-privacy-bg,
+    .lakum-terms-bg {
+        background-attachment: scroll;
+        min-height: 200px;
+    }
+}
+
+/* Tablet optimization */
+@media (min-width: 641px) and (max-width: 1024px) {
+    .lakum-hero-bg,
+    .lakum-gallery-bg,
+    .lakum-spaces-bg,
+    .lakum-exhibitions-bg,
+    .lakum-blog-bg,
+    .lakum-press-bg,
+    .lakum-contact-bg,
+    .lakum-shop-bg,
+    .lakum-calendar-bg,
+    .lakum-privacy-bg,
+    .lakum-terms-bg {
+        background-attachment: scroll;
+        min-height: 250px;
+    }
+}
+
+/* Desktop optimization */
+@media (min-width: 1025px) {
+    .lakum-hero-bg,
+    .lakum-gallery-bg,
+    .lakum-spaces-bg,
+    .lakum-exhibitions-bg,
+    .lakum-blog-bg,
+    .lakum-press-bg,
+    .lakum-contact-bg,
+    .lakum-shop-bg,
+    .lakum-calendar-bg,
+    .lakum-privacy-bg,
+    .lakum-terms-bg {
+        background-attachment: fixed;
+        min-height: 400px;
+    }
+}

@@ -1,5 +1,6 @@
 ﻿<?php
 require_once 'lang/loader.php';
+require_once 'api/image-helper.php';
 ?><!DOCTYPE html>
 <html <?php echo getLanguageAttributes(); ?>>
 
@@ -498,25 +499,25 @@ require_once 'lang/loader.php';
             <div class="lakum-spaces-facilities__grid">
                 <div class="lakum-facility-card" onclick="openFacilityPopup('hall1')">
                     <div class="lakum-facility-card__image">
-                        <img src="HADAF Company/IMG_3941.png" alt="Hall 1">
+                        <?php echo ImageHelper::render('HadafCompany/hall1.png', 'Hall 1', 'gallery'); ?>
                     </div>
                     <h3 class="lakum-facility-card__name"><?php echo t('spaces_hall1', 'Hall 1'); ?></h3>
                 </div>
                 <div class="lakum-facility-card" onclick="openFacilityPopup('hall2')">
                     <div class="lakum-facility-card__image">
-                        <img src="HADAF Company/IMG_3942.png" alt="Hall 2">
+                        <?php echo ImageHelper::render('HadafCompany/hall2.png', 'Hall 2', 'gallery'); ?>
                     </div>
                     <h3 class="lakum-facility-card__name"><?php echo t('spaces_hall2', 'Hall 2'); ?></h3>
                 </div>
                 <div class="lakum-facility-card" onclick="openFacilityPopup('cafe')">
                     <div class="lakum-facility-card__image">
-                        <img src="HADAF Company/IMG_3943.png" alt="Café">
+                        <?php echo ImageHelper::render('HadafCompany/hall3.png', 'Café', 'gallery'); ?>
                     </div>
                     <h3 class="lakum-facility-card__name"><?php echo t('spaces_cafe', 'Café'); ?></h3>
                 </div>
                 <div class="lakum-facility-card" onclick="openFacilityPopup('meeting')">
                     <div class="lakum-facility-card__image">
-                        <img src="HADAF Company/IMG_3944 2.png" alt="Meeting Room">
+                        <?php echo ImageHelper::render('HadafCompany/hall4.png', 'Meeting Room', 'gallery'); ?>
                     </div>
                     <h3 class="lakum-facility-card__name"><?php echo t('spaces_meeting_room', 'Meeting Room'); ?></h3>
                 </div>
@@ -531,108 +532,22 @@ require_once 'lang/loader.php';
         </div>
         <div class="lakum-gallery-carousel" id="galleryCarousel">
             <div class="lakum-gallery-track" id="galleryTrack">
-                <div class="lakum-gallery-item">
-                    <img src="gallery/img28.jpg" alt="LAKUM Gallery" draggable="false">
-                </div>
-                <div class="lakum-gallery-item">
-                    <img src="gallery/img30.jpg" alt="LAKUM Gallery" draggable="false">
-                </div>
-                <div class="lakum-gallery-item">
-                    <img src="gallery/img34.jpg" alt="LAKUM Gallery" draggable="false">
-                </div>
-                <div class="lakum-gallery-item">
-                    <img src="gallery/img38.jpg" alt="LAKUM Gallery" draggable="false">
-                </div>
-                <div class="lakum-gallery-item">
-                    <img src="gallery/img40.jpg" alt="LAKUM Gallery" draggable="false">
-                </div>
-                <div class="lakum-gallery-item">
-                    <img src="gallery/img44.jpg" alt="LAKUM Gallery" draggable="false">
-                </div>
-                <div class="lakum-gallery-item">
-                    <img src="gallery/img46.jpg" alt="LAKUM Gallery" draggable="false">
-                </div>
-                <div class="lakum-gallery-item">
-                    <img src="gallery/img50.jpg" alt="LAKUM Gallery" draggable="false">
-                </div>
-                <div class="lakum-gallery-item">
-                    <img src="gallery/img52.jpg" alt="LAKUM Gallery" draggable="false">
-                </div>
-                <div class="lakum-gallery-item">
-                    <img src="gallery/img56.jpg" alt="LAKUM Gallery" draggable="false">
-                </div>
-                <div class="lakum-gallery-item">
-                    <img src="gallery/img58.jpg" alt="LAKUM Gallery" draggable="false">
-                </div>
-                <div class="lakum-gallery-item">
-                    <img src="gallery/img6.jpg" alt="LAKUM Gallery" draggable="false">
-                </div>
-                <div class="lakum-gallery-item">
-                    <img src="gallery/img62.jpg" alt="LAKUM Gallery" draggable="false">
-                </div>
-                <div class="lakum-gallery-item">
-                    <img src="gallery/img64.jpg" alt="LAKUM Gallery" draggable="false">
-                </div>
-                <div class="lakum-gallery-item">
-                    <img src="gallery/img68.jpg" alt="LAKUM Gallery" draggable="false">
-                </div>
-                <div class="lakum-gallery-item">
-                    <img src="gallery/img70.jpg" alt="LAKUM Gallery" draggable="false">
-                </div>
-                <div class="lakum-gallery-item">
-                    <img src="gallery/img8.jpg" alt="LAKUM Gallery" draggable="false">
-                </div>
-                <div class="lakum-gallery-item">
-                    <img src="gallery/img28.jpg" alt="LAKUM Gallery" draggable="false">
-                </div>
-                <div class="lakum-gallery-item">
-                    <img src="gallery/img30.jpg" alt="LAKUM Gallery" draggable="false">
-                </div>
-                <div class="lakum-gallery-item">
-                    <img src="gallery/img34.jpg" alt="LAKUM Gallery" draggable="false">
-                </div>
-                <div class="lakum-gallery-item">
-                    <img src="gallery/img38.jpg" alt="LAKUM Gallery" draggable="false">
-                </div>
-                <div class="lakum-gallery-item">
-                    <img src="gallery/img40.jpg" alt="LAKUM Gallery" draggable="false">
-                </div>
-                <div class="lakum-gallery-item">
-                    <img src="gallery/img44.jpg" alt="LAKUM Gallery" draggable="false">
-                </div>
-                <div class="lakum-gallery-item">
-                    <img src="gallery/img46.jpg" alt="LAKUM Gallery" draggable="false">
-                </div>
-                <div class="lakum-gallery-item">
-                    <img src="gallery/img50.jpg" alt="LAKUM Gallery" draggable="false">
-                </div>
-                <div class="lakum-gallery-item">
-                    <img src="gallery/img52.jpg" alt="LAKUM Gallery" draggable="false">
-                </div>
-                <div class="lakum-gallery-item">
-                    <img src="gallery/img56.jpg" alt="LAKUM Gallery" draggable="false">
-                </div>
-                <div class="lakum-gallery-item">
-                    <img src="gallery/img58.jpg" alt="LAKUM Gallery" draggable="false">
-                </div>
-                <div class="lakum-gallery-item">
-                    <img src="gallery/img6.jpg" alt="LAKUM Gallery" draggable="false">
-                </div>
-                <div class="lakum-gallery-item">
-                    <img src="gallery/img62.jpg" alt="LAKUM Gallery" draggable="false">
-                </div>
-                <div class="lakum-gallery-item">
-                    <img src="gallery/img64.jpg" alt="LAKUM Gallery" draggable="false">
-                </div>
-                <div class="lakum-gallery-item">
-                    <img src="gallery/img68.jpg" alt="LAKUM Gallery" draggable="false">
-                </div>
-                <div class="lakum-gallery-item">
-                    <img src="gallery/img70.jpg" alt="LAKUM Gallery" draggable="false">
-                </div>
-                <div class="lakum-gallery-item">
-                    <img src="gallery/img8.jpg" alt="LAKUM Gallery" draggable="false">
-                </div>
+                <?php
+                $galleryImages = [
+                    'gallery/img28.jpg', 'gallery/img30.jpg', 'gallery/img34.jpg', 'gallery/img38.jpg',
+                    'gallery/img40.jpg', 'gallery/img44.jpg', 'gallery/img46.jpg', 'gallery/img50.jpg',
+                    'gallery/img52.jpg', 'gallery/img56.jpg', 'gallery/img58.jpg', 'gallery/img6.jpg',
+                    'gallery/img62.jpg', 'gallery/img64.jpg', 'gallery/img68.jpg', 'gallery/img70.jpg',
+                    'gallery/img8.jpg'
+                ];
+                
+                // Display images twice for infinite carousel effect
+                foreach (array_merge($galleryImages, $galleryImages) as $image) {
+                    echo '<div class="lakum-gallery-item">';
+                    echo ImageHelper::render($image, 'LAKUM Gallery', 'gallery');
+                    echo '</div>';
+                }
+                ?>
             </div>
         </div>
     </section>
@@ -1040,25 +955,25 @@ require_once 'lang/loader.php';
             hall1: {
                 name: 'Hall 1',
                 images: [
-                    'HADAF Company/IMG_3941.png'
+                    'HadafCompany/hall1.png'
                 ]
             },
             hall2: {
                 name: 'Hall 2',
                 images: [
-                    'HADAF Company/IMG_3942.png'
+                    'HadafCompany/hall2.png'
                 ]
             },
             cafe: {
-                name: 'CafÃ©',
+                name: 'Café',
                 images: [
-                    'HADAF Company/IMG_3943.png'
+                    'HadafCompany/hall3.png'
                 ]
             },
             meeting: {
                 name: 'Meeting Room',
                 images: [
-                    'HADAF Company/IMG_3944 2.png'
+                    'HadafCompany/hall4.png'
                 ]
             }
         };

@@ -1,5 +1,6 @@
 ﻿<?php
 require_once 'lang/loader.php';
+require_once 'api/image-helper.php';
 ?><!DOCTYPE html>
 <html <?php echo getLanguageAttributes(); ?>>
 
