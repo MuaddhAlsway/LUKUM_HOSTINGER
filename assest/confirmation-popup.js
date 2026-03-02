@@ -189,3 +189,47 @@ function showDeleteAllPressConfirmation(callback) {
         onConfirm: callback
     });
 }
+
+// Individual item deletion confirmations
+
+function showDeleteEventConfirmation(callback) {
+    const isArabic = document.documentElement.lang === 'ar' || document.documentElement.dir === 'rtl';
+    
+    showConfirmation({
+        title: isArabic ? 'حذف الحدث' : 'Delete Event',
+        message: isArabic ? 'هل أنت متأكد من رغبتك في حذف هذا الحدث؟' : 'Are you sure you want to delete this event?',
+        submessage: isArabic ? 'لا يمكن التراجع عن هذا الإجراء!' : 'This action cannot be undone.',
+        confirmText: isArabic ? 'حذف' : 'Delete',
+        cancelText: isArabic ? 'إلغاء' : 'Cancel',
+        type: 'danger',
+        onConfirm: callback
+    });
+}
+
+function showDeleteBlogConfirmation(callback) {
+    const isArabic = document.documentElement.lang === 'ar' || document.documentElement.dir === 'rtl';
+    
+    showConfirmation({
+        title: isArabic ? 'حذف المقالة' : 'Delete Blog',
+        message: isArabic ? 'هل أنت متأكد من رغبتك في حذف هذه المقالة؟' : 'Are you sure you want to delete this blog?',
+        submessage: isArabic ? 'لا يمكن التراجع عن هذا الإجراء!' : 'This action cannot be undone.',
+        confirmText: isArabic ? 'حذف' : 'Delete',
+        cancelText: isArabic ? 'إلغاء' : 'Cancel',
+        type: 'danger',
+        onConfirm: callback
+    });
+}
+
+function showDeletePressConfirmation(callback) {
+    const isArabic = document.documentElement.lang === 'ar' || document.documentElement.dir === 'rtl';
+    
+    showConfirmation({
+        title: isArabic ? 'حذف الخبر' : 'Delete Press',
+        message: isArabic ? 'هل أنت متأكد من رغبتك في حذف هذا الخبر؟' : 'Are you sure you want to delete this press?',
+        submessage: isArabic ? 'لا يمكن التراجع عن هذا الإجراء!' : 'This action cannot be undone.',
+        confirmText: isArabic ? 'حذف' : 'Delete',
+        cancelText: isArabic ? 'إلغاء' : 'Cancel',
+        type: 'danger',
+        onConfirm: callback
+    });
+}

@@ -84,7 +84,7 @@
     </div>
 
     <!-- Confirmation Modal -->
-    <div id="confirmationModal" class="confirmation-modal">
+    <div id="confirmationModal" class="confirmation-modal" style="display: none;">
         <div class="confirmation-modal-content">
             <h2 class="confirmation-modal-title">Delete Event</h2>
             <p class="confirmation-modal-message">Are you sure you want to delete this event? This action cannot be undone.</p>
@@ -210,64 +210,58 @@
         // Delete Event Modal
         // -----------------------------
         function openConfirmationModal(id) {
-            console.log('Opening modal with event ID:', id);
+            console.log('Opening delete confirmation for event ID:', id);
             eventToDelete = parseInt(id);
-            console.log('eventToDelete set to:', eventToDelete);
-            document.getElementById('confirmationModal').classList.add('active');
+            
+            showDeleteEventConfirmation(async () => {
+                const idToDelete = parseInt(eventToDelete);
+                
+                if (!idToDelete || idToDelete <= 0) {
+                    showPopup('Error: No event selected or invalid ID', 'error');
+                    return;
+                }
+                
+                try {
+                    const deletePayload = { id: idToDelete };
+                    const jsonBody = JSON.stringify(deletePayload);
+                    
+                    console.log('Sending delete request with payload:', jsonBody);
+                    
+                    const response = await fetch('../api/delete_event.php', {
+                        method: 'POST',
+                        headers: { 
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
+                        body: jsonBody
+                    });
+                    
+                    console.log('Response status:', response.status);
+                    const responseText = await response.text();
+                    console.log('Response text:', responseText);
+                    
+                    const data = JSON.parse(responseText);
+                    console.log('Delete response:', data);
+                    
+                    if (data.success) {
+                        showPopup('Event deleted successfully', 'success');
+                        loadEvents();
+                    } else {
+                        showPopup('Error: ' + (data.message || 'Unknown'), 'error');
+                    }
+                } catch (err) {
+                    console.error('Delete error:', err);
+                    showPopup('Error deleting event', 'error');
+                }
+                
+                eventToDelete = null;
+            });
         }
 
         function closeConfirmationModal() {
             eventToDelete = null;
             document.getElementById('confirmationModal').classList.remove('active');
         }
-
-        document.getElementById('confirmDeleteBtn').addEventListener('click', async () => {
-            // Get the ID directly from the global variable at the moment of click
-            const idToDelete = parseInt(eventToDelete);
-            
-            console.log('Delete button clicked');
-            console.log('eventToDelete value:', eventToDelete);
-            console.log('idToDelete value:', idToDelete);
-            console.log('idToDelete type:', typeof idToDelete);
-            
-            if (!idToDelete || idToDelete <= 0) {
-                showPopup('Error: No event selected or invalid ID', 'error');
-                return;
-            }
-            
-            // Close modal AFTER we have the ID
-            closeConfirmationModal();
-            
-            try {
-                const deletePayload = { id: idToDelete };
-                const jsonBody = JSON.stringify(deletePayload);
-                
-                console.log('Sending delete request with payload:', jsonBody);
-                console.log('Payload ID:', deletePayload.id);
-                
-                const response = await fetch('../api/delete_event.php', {
-                    method: 'POST',
-                    headers: { 
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
-                    },
-                    body: jsonBody
-                });
-                
-                console.log('Response status:', response.status);
-                const responseText = await response.text();
-                console.log('Response text:', responseText);
-                
-                const data = JSON.parse(responseText);
-                console.log('Delete response:', data);
-                
-                if (data.success) {
-                    showPopup('Event deleted successfully', 'success');
-                    loadEvents();
-                } else {
-                    showPopup('Error: ' + (data.message || 'Unknown'), 'error');
-                }
-            } catch (err) {
                 console.error('Delete error:', err);
                 showPopup('Error deleting event: ' + err.message, 'error');
             }

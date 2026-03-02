@@ -260,7 +260,35 @@
 
         function openConfirmationModal(id) {
             blogToDelete = id;
-            document.getElementById('confirmationModal').classList.add('active');
+            
+            showDeleteBlogConfirmation(() => {
+                if (!blogToDelete) return;
+
+                const idToDelete = blogToDelete;
+
+                fetch(`../api/delete_blog_simple.php`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ id: idToDelete })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        showPopup('Blog deleted successfully', 'success');
+                        loadBlogs();
+                    } else {
+                        showPopup('Error deleting blog: ' + (data.message || 'Unknown error'), 'error');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    showPopup('Error deleting blog', 'error');
+                });
+                
+                blogToDelete = null;
+            });
         }
 
         function closeConfirmationModal() {
@@ -269,31 +297,7 @@
         }
 
         function confirmDeleteBlog() {
-            if (!blogToDelete) return;
-
-            const id = blogToDelete;
-            closeConfirmationModal();
-
-            fetch(`../api/delete_blog_simple.php`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ id: id })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    showPopup('Blog deleted successfully', 'success');
-                    loadBlogs();
-                } else {
-                    showPopup('Error deleting blog: ' + (data.message || 'Unknown error'), 'error');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                showPopup('Error deleting blog', 'error');
-            });
+            // This function is no longer used - delete confirmation is now handled in openConfirmationModal
         }
 
         function deleteAllBlogs() {
