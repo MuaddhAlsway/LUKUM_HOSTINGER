@@ -243,8 +243,10 @@
             tbody.innerHTML = items.map(item => {
                 let dateStr = 'N/A';
                 try {
-                    if (item.created_at) {
-                        const date = new Date(item.created_at);
+                    // Try press_date first (from database), then created_at as fallback
+                    const dateValue = item.press_date || item.created_at;
+                    if (dateValue) {
+                        const date = new Date(dateValue);
                         if (!isNaN(date.getTime())) {
                             dateStr = date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
                         }
