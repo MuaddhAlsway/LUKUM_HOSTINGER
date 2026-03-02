@@ -1374,3 +1374,54 @@ body {
 .lakum-upcoming-card {
     contain: layout style paint;
 }
+
+
+/* ===== SCROLLBAR STYLING - LAKUM DESIGN GUIDE ===== */
+/* Global scrollbar styling to match LAKUM's minimalistic aesthetic */
+
+/* Firefox scrollbar */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #1a1a1a #f6f6eb;
+}
+
+/* Chrome, Edge, Safari scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f6f6eb;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #1a1a1a;
+    border-radius: 4px;
+    border: 2px solid #f6f6eb;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #2d2d2d;
+}
+
+/* Dark backgrounds - light scrollbar */
+[dir="rtl"] ::-webkit-scrollbar-track,
+.lakum-header ::-webkit-scrollbar-track,
+.lakum-footer ::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+[dir="rtl"] ::-webkit-scrollbar-thumb,
+.lakum-header ::-webkit-scrollbar-thumb,
+.lakum-footer ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border: none;
+}
+
+[dir="rtl"] ::-webkit-scrollbar-thumb:hover,
+.lakum-header ::-webkit-scrollbar-thumb:hover,
+.lakum-footer ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+}

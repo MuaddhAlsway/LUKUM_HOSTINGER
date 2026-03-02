@@ -807,14 +807,17 @@ html[dir="rtl"] {
 [dir="rtl"] .lakum-footer__bottom {
     flex-direction: row-reverse;
     text-align: right;
+    justify-content: space-between;
 }
 
 [dir="rtl"] .lakum-footer__copyright {
     text-align: right;
+    flex: 1;
 }
 
 [dir="rtl"] .lakum-footer__legal {
-    text-align: left;
+    text-align: right;
+    flex: 1;
 }
 
 /* ============================================

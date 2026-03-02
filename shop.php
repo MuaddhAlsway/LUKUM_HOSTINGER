@@ -423,11 +423,11 @@ body{font-family:'Greta Arabic','Greta Text Arabic',-apple-system,BlinkMacSystem
         </div>
         
         <div class="lakum-footer__bottom">
-            <p class="lakum-footer__copyright">Â© 2025 - 2027 LAKUM Artspace. All rights reserved.</p>
+            <p class="lakum-footer__copyright"><?php echo t('footer_copyright', '© 2025 - 2027 LAKUM Artspace. All rights reserved.'); ?></p>
             <div class="lakum-footer__legal">
-                <a href="terms.php" class="lakum-footer__legal-link">Terms & Conditions</a>
+                <a href="terms.php" class="lakum-footer__legal-link"><?php echo t('footer_terms', 'Terms & Conditions'); ?></a>
                 <span class="lakum-footer__legal-divider">|</span>
-                <a href="privacy.php" class="lakum-footer__legal-link">Privacy Policy</a>
+                <a href="privacy.php" class="lakum-footer__legal-link"><?php echo t('footer_privacy', 'Privacy Policy'); ?></a>
             </div>
         </div>
     </div>
