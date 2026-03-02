@@ -120,7 +120,7 @@ require_once 'lang/loader.php';
     </style>
 
     <!-- Preload Hero Image (Critical for LCP) -->
-    <link rel="preload" as="image" href="assest/img-4.png" fetchpriority="high">
+    <link rel="preload" as="image" href="assest/img-4.webp" fetchpriority="high">
 
     <!-- DNS Prefetch for external resources -->
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
@@ -223,7 +223,7 @@ require_once 'lang/loader.php';
     <meta property="og:url" content="https://lakumartspace.infinityfree.me/press">
     <meta property="og:title" content="Press &amp; Media | LAKUM Artspace Coverage">
     <meta property="og:description" content="LAKUM Artspace press coverage, media mentions, and news. Download press kit and view our latest media appearances and cultural impact in Riyadh.">
-    <meta property="og:image" content="https://lakumartspace.infinityfree.me/assest/img-4.png">
+    <meta property="og:image" content="https://lakumartspace.infinityfree.me/assest/img-4.webp">
     <meta property="og:site_name" content="LAKUM Artspace">
     <meta property="og:locale" content="en_US">
     <meta property="og:locale:alternate" content="ar_SA">
@@ -233,7 +233,7 @@ require_once 'lang/loader.php';
     <meta name="twitter:url" content="https://lakumartspace.infinityfree.me/press">
     <meta name="twitter:title" content="Press &amp; Media | LAKUM Artspace Coverage">
     <meta name="twitter:description" content="LAKUM Artspace press coverage, media mentions, and news. Download press kit and view our latest media appearances and cultural impact in Riyadh.">
-    <meta name="twitter:image" content="https://lakumartspace.infinityfree.me/assest/img-4.png">
+    <meta name="twitter:image" content="https://lakumartspace.infinityfree.me/assest/img-4.webp">
 
     <!-- Additional SEO -->
     <meta name="theme-color" content="#1a1a1a">

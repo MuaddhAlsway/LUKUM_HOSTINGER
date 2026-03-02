@@ -247,7 +247,7 @@ require_once 'lang/loader.php';
     <!-- Hero Section -->
     <section class="event-hero">
         <div class="event-hero__image-wrapper">
-            <img id="hero-image" src="assest/img-4.png" alt="Blog" class="event-hero__image">
+            <img id="hero-image" src="assest/img-4.webp" alt="Blog" class="event-hero__image">
             <div class="event-hero__overlay"></div>
         </div>
         <div class="event-hero__content">

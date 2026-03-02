@@ -120,7 +120,7 @@ require_once 'lang/loader.php';
     </style>
 
     <!-- Preload Hero Image (Critical for LCP) -->
-    <link rel="preload" as="image" href="assest/img-4.png" fetchpriority="high">
+    <link rel="preload" as="image" href="assest/img-3.wepb" fetchpriority="high">
 
     <!-- DNS Prefetch for external resources -->
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
@@ -222,7 +222,7 @@ require_once 'lang/loader.php';
     <meta property="og:url" content="https://lakumartspace.infinityfree.me/spaces">
     <meta property="og:title" content="Event Spaces for Rent in Riyadh | LAKUM Artspace Venues">
     <meta property="og:description" content="Rent versatile event spaces in Riyadh for exhibitions, workshops, meetings, and cultural events. LAKUM offers Hall 1, Hall 2, CafÃ©, and Meeting Rooms with full support services.">
-    <meta property="og:image" content="https://lakumartspace.infinityfree.me/assest/img-4.png">
+    <meta property="og:image" content="https://lakumartspace.infinityfree.me/assest/img-4.webp">
     <meta property="og:site_name" content="LAKUM Artspace">
     <meta property="og:locale" content="en_US">
     <meta property="og:locale:alternate" content="ar_SA">
@@ -232,7 +232,7 @@ require_once 'lang/loader.php';
     <meta name="twitter:url" content="https://lakumartspace.infinityfree.me/spaces">
     <meta name="twitter:title" content="Event Spaces for Rent in Riyadh | LAKUM Artspace Venues">
     <meta name="twitter:description" content="Rent versatile event spaces in Riyadh for exhibitions, workshops, meetings, and cultural events. LAKUM offers Hall 1, Hall 2, CafÃ©, and Meeting Rooms with full support services.">
-    <meta name="twitter:image" content="https://lakumartspace.infinityfree.me/assest/img-4.png">
+    <meta name="twitter:image" content="https://lakumartspace.infinityfree.me/assest/img-4.webp">
 
     <!-- Additional SEO -->
     <meta name="theme-color" content="#1a1a1a">

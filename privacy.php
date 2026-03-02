@@ -114,7 +114,7 @@ require_once 'lang/loader.php';
     </style>
 
     <!-- Preload Hero Image (Critical for LCP) -->
-    <link rel="preload" as="image" href="assest/img-4.png" fetchpriority="high">
+    <link rel="preload" as="image" href="assest/img-4.webp" fetchpriority="high">
 
     <!-- DNS Prefetch for external resources -->
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">

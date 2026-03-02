@@ -265,7 +265,7 @@ margin: 0 auto;}
 
     <section class="lakum-hero" style="aspect-ratio: 16/9">
         <div class="lakum-hero__image-wrapper">
-            <img src="assest/img-4.png" alt="LAKUM Artspace" class="lakum-hero__image" width="1920" height="1080" fetchpriority="high" decoding="async" style="aspect-ratio: 16/9">
+            <img src="assest/img-4.webp" alt="LAKUM Artspace" class="lakum-hero__image" width="1920" height="1080" fetchpriority="high" decoding="async" style="aspect-ratio: 16/9">
             <div class="lakum-hero__overlay"></div>
         </div>
         <div class="lakum-hero__content">

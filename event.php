@@ -120,7 +120,7 @@ require_once 'lang/loader.php';
     </style>
 
     <!-- Preload Hero Image (Critical for LCP) -->
-    <link rel="preload" as="image" href="assest/img-4.png" fetchpriority="high">
+    <link rel="preload" as="image" href="assest/img-4.webp" fetchpriority="high">
 
     <!-- DNS Prefetch for external resources -->
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
@@ -280,7 +280,7 @@ require_once 'lang/loader.php';
     <!-- Hero Section -->
     <section class="event-hero">
         <div class="event-hero__image-wrapper">
-            <img id="hero-image" src="assest/img-4.png" alt="Event" class="event-hero__image">
+            <img id="hero-image" src="assest/img-4.webp" alt="Event" class="event-hero__image">
             <div class="event-hero__overlay"></div>
         </div>
         <div class="event-hero__content">
@@ -680,7 +680,7 @@ require_once 'lang/loader.php';
             
             // Use cover image from database, fallback to default
             const heroImage = document.getElementById('hero-image');
-            heroImage.src = event.cover_image || 'assest/img-4.png';
+            heroImage.src = event.cover_image || 'assest/img-4.webp';
             heroImage.alt = title;
 
             // Format and display date/time
@@ -886,7 +886,7 @@ require_once 'lang/loader.php';
                     "name": "LAKUM Artspace",
                     "url": "/"
                 },
-                "image": event.cover_image || "/assest/img-4.png"
+                "image": event.cover_image || "/assest/img-4.webp"
             };
 
             // Update or create schema script
