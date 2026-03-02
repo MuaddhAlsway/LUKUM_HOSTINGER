@@ -28,6 +28,19 @@
     display: block;
 }
 
+.lakum-exhibitions-hero picture {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.lakum-exhibitions-hero picture img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
 /* ===== UPCOMING SECTION ===== */
 
 .lakum-exhibitions-upcoming {
