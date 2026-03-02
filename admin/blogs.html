@@ -9,6 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
     <link rel="stylesheet" href="admin-style.css">
     <link rel="stylesheet" href="../assest/popup-notification.css">
+    <link rel="stylesheet" href="../assest/confirmation-popup.css">
 </head>
 
 <body>
@@ -296,28 +297,26 @@
         }
 
         function deleteAllBlogs() {
-            if (!confirm('Are you sure you want to delete ALL blogs? This cannot be undone!')) {
-                return;
-            }
-
-            fetch(`../api/delete_all_blogs.php`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    showPopup('All blogs deleted successfully', 'success');
-                    loadBlogs();
-                } else {
-                    showPopup('Error deleting blogs: ' + (data.message || 'Unknown error'), 'error');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                showPopup('Error deleting blogs', 'error');
+            showDeleteAllBlogsConfirmation(() => {
+                fetch(`../api/delete_all_blogs.php`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        showPopup('All blogs deleted successfully', 'success');
+                        loadBlogs();
+                    } else {
+                        showPopup('Error deleting blogs: ' + (data.message || 'Unknown error'), 'error');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    showPopup('Error deleting blogs', 'error');
+                });
             });
         }
 
@@ -337,3 +336,4 @@
 
 
     <script src="../assest/popup-notification.js?v=5.0.0" defer></script>
+    <script src="../assest/confirmation-popup.js?v=1.0.0" defer></script>

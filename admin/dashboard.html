@@ -9,6 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
     <link rel="stylesheet" href="admin-style.css">
     <link rel="stylesheet" href="../assest/popup-notification.css">
+    <link rel="stylesheet" href="../assest/logout-confirmation-popup.css">
 </head>
 
 <body>
@@ -275,18 +276,7 @@
             }
         })();
 
-        // Logout function
-        function logout() {
-            if (confirm('Are you sure you want to logout?')) {
-                // Clear session storage
-                sessionStorage.removeItem('admin_logged_in');
-                sessionStorage.removeItem('admin_email');
-                sessionStorage.removeItem('admin_name');
-                sessionStorage.removeItem('admin_login_time');
-                // Redirect to login
-                window.location.href = 'login.html';
-            }
-        }
+        // Logout function is now in logout-confirmation-popup.js
 
         class Dashboard {
             constructor() {
@@ -755,3 +745,4 @@
 
 
     <script src="../assest/popup-notification.js?v=5.0.0" defer></script>
+    <script src="../assest/logout-confirmation-popup.js?v=1.0.0" defer></script>
