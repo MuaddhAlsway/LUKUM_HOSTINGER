@@ -1,6 +1,7 @@
 <?php
 require_once 'lang/loader.php';
 require_once 'api/image-helper.php';
+require_once 'config.css-loader.php';
 ?><!DOCTYPE html>
 <html <?php echo getLanguageAttributes(); ?>>
 <head>
@@ -23,7 +24,7 @@ require_once 'api/image-helper.php';
     <link rel="stylesheet" href="lakum-components.css">
     
     <!-- Non-critical CSS - Defer loading -->
-    <link rel="preload" href="Home.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="<?php echo getCSSFile('Home'); ?>" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preload" href="rtl.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preload" href="fonts/greta-arabic.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preload" href="assest/language-switcher.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -31,7 +32,7 @@ require_once 'api/image-helper.php';
     
     <!-- Fallback for no-JS -->
     <noscript>
-        <link rel="stylesheet" href="Home.css">
+        <link rel="stylesheet" href="<?php echo getCSSFile('Home'); ?>">
         <link rel="stylesheet" href="rtl.css">
         <link rel="stylesheet" href="fonts/greta-arabic.css">
         <link rel="stylesheet" href="assest/language-switcher.css">
