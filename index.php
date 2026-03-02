@@ -291,10 +291,8 @@ margin: 0 auto;}
 
     <section class="lakum-hero" style="aspect-ratio: 16/9">
         <div class="lakum-hero__image-wrapper">
-            <img src="optimized-images/assest/img-4-400w.webp"
-                 srcset="optimized-images/assest/img-4-400w.webp 400w,
-                         optimized-images/assest/img-4-800w.webp 800w,
-                         optimized-images/assest/img-4-1200w.webp 1200w"
+            <img src="heroImage/img-4.webp"
+                 srcset="heroImage/img-4.webp 1200w"
                  sizes="(max-width: 768px) 100vw, 650px"
                  alt="LAKUM Artspace"
                  fetchpriority="high"
@@ -322,10 +320,8 @@ margin: 0 auto;}
     <section class="lakum-featured-banner" id="featuredBanner">
         <div class="lakum-featured-banner__content">
                 <div class="lakum-featured-banner__image">
-                    <img src="optimized-images/assest/img-4-400w.webp"
-                         srcset="optimized-images/assest/img-4-400w.webp 400w,
-                                 optimized-images/assest/img-4-800w.webp 800w,
-                                 optimized-images/assest/img-4-1200w.webp 1200w"
+                    <img src="heroImage/img-4.webp"
+                         srcset="heroImage/img-4.webp 1200w"
                          sizes="(max-width: 768px) 100vw, 450px"
                          alt="Featured Event"
                          loading="lazy"

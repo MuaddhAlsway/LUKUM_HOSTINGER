@@ -580,10 +580,8 @@ html[lang="ar"] .lakum-event-card__date {
 </div><button class="lakum-header__mobile-toggle" aria-label="Toggle navigation menu"><span class="lakum-header__mobile-icon" aria-hidden="true"></span></button></div></header>
 <section class="page-hero">
     <div class="page-hero__image-wrapper">
-        <img src="optimized-images/assest/img-4-400w.webp"
-             srcset="optimized-images/assest/img-4-400w.webp 400w,
-                     optimized-images/assest/img-4-800w.webp 800w,
-                     optimized-images/assest/img-4-1200w.webp 1200w"
+        <img src="heroImage/img-4.webp"
+             srcset="heroImage/img-4.webp 1200w"
              sizes="(max-width: 768px) 100vw, 650px"
              alt="About LAKUM Artspace"
              fetchpriority="high"

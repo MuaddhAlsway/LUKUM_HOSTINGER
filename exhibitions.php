@@ -82,10 +82,8 @@ require_once 'api/image-helper.php';
 
     <!-- Hero Section -->
     <section class="lakum-exhibitions-hero">
-        <img src="optimized-images/assest/img-4-400w.webp"
-             srcset="optimized-images/assest/img-4-400w.webp 400w,
-                     optimized-images/assest/img-4-800w.webp 800w,
-                     optimized-images/assest/img-4-1200w.webp 1200w"
+        <img src="heroImage/img-4.webp"
+             srcset="heroImage/img-4.webp 1200w"
              sizes="(max-width: 768px) 100vw, 650px"
              alt="LAKUM Exhibitions"
              fetchpriority="high"
