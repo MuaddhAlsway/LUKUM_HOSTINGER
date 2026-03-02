@@ -90,23 +90,23 @@
                             <h4 style="margin: 0 0 16px 0; font-size: 1rem; font-weight: 600;">English</h4>
                             
                             <div class="form-group">
-                                <label for="name_en">Price Name (EN) *</label>
+                                <label for="name_en" data-i18n="pricing_name_en">Price Name (EN) *</label>
                                 <input type="text" id="name_en" name="name_en" placeholder="e.g., Hall 1, Meeting Room" required>
                             </div>
 
                             <div class="form-group">
-                                <label for="description_en">Description (EN)</label>
+                                <label for="description_en" data-i18n="pricing_description_en">Description (EN)</label>
                                 <textarea id="description_en" name="description_en" rows="6" placeholder="Enter description in English..."></textarea>
                                 <div class="char-count"><span id="charCount_en">0</span> characters</div>
                             </div>
 
                             <div class="form-group">
-                                <label for="duration_en">Duration (EN)</label>
+                                <label for="duration_en" data-i18n="pricing_duration_en">Duration (EN)</label>
                                 <input type="text" id="duration_en" name="duration_en" placeholder="e.g., Full day, Half day">
                             </div>
 
                             <div class="form-group">
-                                <label for="features_en">Features (EN)</label>
+                                <label for="features_en" data-i18n="pricing_features_en">Features (EN)</label>
                                 <textarea id="features_en" name="features_en" rows="4" placeholder="Feature 1, Feature 2, Feature 3..."></textarea>
                             </div>
                         </div>
@@ -116,50 +116,50 @@
                             <h4 style="margin: 0 0 16px 0; font-size: 1rem; font-weight: 600;">العربية</h4>
                             
                             <div class="form-group">
-                                <label for="name_ar">Price Name (AR) *</label>
+                                <label for="name_ar" data-i18n="pricing_name_ar">Price Name (AR) *</label>
                                 <input type="text" id="name_ar" name="name_ar" placeholder="مثال: القاعة 1، غرفة الاجتماعات" required>
                             </div>
 
                             <div class="form-group">
-                                <label for="description_ar">Description (AR)</label>
+                                <label for="description_ar" data-i18n="pricing_description_ar">Description (AR)</label>
                                 <textarea id="description_ar" name="description_ar" rows="6" placeholder="أدخل الوصف بالعربية..." dir="rtl"></textarea>
                                 <div class="char-count"><span id="charCount_ar">0</span> characters</div>
                             </div>
 
                             <div class="form-group">
-                                <label for="duration_ar">Duration (AR)</label>
+                                <label for="duration_ar" data-i18n="pricing_duration_ar">Duration (AR)</label>
                                 <input type="text" id="duration_ar" name="duration_ar" placeholder="مثال: يوم كامل، نصف يوم" dir="rtl">
                             </div>
 
                             <div class="form-group">
-                                <label for="features_ar">Features (AR)</label>
+                                <label for="features_ar" data-i18n="pricing_features_ar">Features (AR)</label>
                                 <textarea id="features_ar" name="features_ar" rows="4" placeholder="الميزة 1، الميزة 2، الميزة 3..." dir="rtl"></textarea>
                             </div>
                         </div>
 
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="price">Amount</label>
+                                <label for="price" data-i18n="pricing_amount">Amount</label>
                                 <input type="text" id="price" name="price" placeholder="e.g., 12000">
                             </div>
 
                             <div class="form-group">
-                                <label for="price_unit">Price Unit</label>
+                                <label for="price_unit" data-i18n="pricing_price_unit">Price Unit</label>
                                 <select id="price_unit" name="price_unit">
-                                    <option value="SAR/day">SAR/day</option>
-                                    <option value="SAR/hour">SAR/hour</option>
-                                    <option value="SAR">SAR</option>
+                                    <option value="SAR/day" data-i18n="pricing_price_unit_day_en">SAR/day</option>
+                                    <option value="SAR/hour" data-i18n="pricing_price_unit_hour_en">SAR/hour</option>
+                                    <option value="SAR" data-i18n="pricing_price_unit_fixed_en">SAR</option>
                                 </select>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="price_sec">Secondary Price</label>
+                            <label for="price_sec" data-i18n="pricing_secondary_price">Secondary Price</label>
                             <input type="text" id="price_sec" name="price_sec" placeholder="e.g., Hall 1: 1,000 SAR/hour">
                         </div>
 
                         <div class="form-group">
-                            <label for="vat_note">VAT Note</label>
+                            <label for="vat_note" data-i18n="pricing_vat_note_en">VAT Note</label>
                             <input type="text" id="vat_note" name="vat_note" value="*(excluding VAT)">
                         </div>
 
@@ -195,9 +195,54 @@
     <script src="config.js?v=2"></script>
     <script src="form-reset.js?v=2"></script>
     <script>
-        console.log('Edit Pricing Form Loaded');
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('DOM Content Loaded');
+        // Translation system for pricing form
+        let translations = {};
+        let currentLang = 'en';
+
+        async function loadTranslations(lang) {
+            try {
+                const response = await fetch(`../../lang/${lang}/shop.json`);
+                if (!response.ok) throw new Error('Failed to load translations');
+                translations = await response.json();
+                currentLang = lang;
+                updateFormTranslations();
+            } catch (error) {
+                console.error('Error loading translations:', error);
+            }
+        }
+
+        function updateFormTranslations() {
+            // Update all elements with data-i18n attribute
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[key]) {
+                    if (element.tagName === 'OPTION') {
+                        element.textContent = translations[key];
+                    } else {
+                        element.textContent = translations[key];
+                    }
+                }
+            });
+
+            // Update VAT note default value
+            const vatNoteInput = document.getElementById('vat_note');
+            if (vatNoteInput && currentLang === 'ar') {
+                vatNoteInput.value = translations['pricing_vat_note_ar'] || '*(غير شامل الضريبة)';
+            } else if (vatNoteInput) {
+                vatNoteInput.value = translations['pricing_vat_note_en'] || '*(excluding VAT)';
+            }
+        }
+
+        // Initialize translations on page load
+        document.addEventListener('DOMContentLoaded', async function() {
+            // Check URL for language parameter
+            const params = new URLSearchParams(window.location.search);
+            const lang = params.get('lang') || 'en';
+            
+            // Load translations
+            await loadTranslations(lang);
+
+            console.log('Edit Pricing Form Loaded');
             const pricingForm = document.getElementById('pricingForm');
             const priceInput = document.getElementById('price');
             const nameArField = document.getElementById('name_ar');
