@@ -327,7 +327,7 @@ body {
 }
 
 .lakum-footer__copyright {
-    font-family: 'Atyp Kido TRIAL', sans-serif;
+    font-family: 'Greta Arabic', 'Greta Text Arabic', 'Atyp Kido TRIAL', sans-serif;
     font-size: 14px;
     font-weight: 300;
     color: #8a8a8a;
@@ -670,6 +670,7 @@ body {
 }
 
 .lakum-footer__legal-link {
+    font-family: 'Greta Arabic', 'Greta Text Arabic', -apple-system, BlinkMacSystemFont, sans-serif;
     font-size: 0.85rem;
     font-weight: 300;
     color: #8a8a8a;

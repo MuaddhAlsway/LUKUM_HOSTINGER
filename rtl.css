@@ -813,11 +813,13 @@ html[dir="rtl"] {
 [dir="rtl"] .lakum-footer__copyright {
     text-align: right;
     flex: 1;
+    direction: rtl;
 }
 
 [dir="rtl"] .lakum-footer__legal {
     text-align: right;
     flex: 1;
+    direction: rtl;
 }
 
 /* ============================================
