@@ -12,7 +12,13 @@ require_once 'api/image-helper.php';
 <link rel="icon" type="image/png" sizes="16x16" href="assest/logo/right_section.png">
 <link rel="apple-touch-icon" href="assest/logo/right_section.png">
 <meta name="msapplication-TileImage" content="assest/logo/right_section.png">
-<link rel="preload" as="image" href="optimized-images/assest/img-4-400w.webp" fetchpriority="high">
+<link rel="preload" as="image" 
+      href="optimized-images/assest/img-4-400w.webp"
+      imagesrcset="optimized-images/assest/img-4-400w.webp 400w,
+                   optimized-images/assest/img-4-800w.webp 800w,
+                   optimized-images/assest/img-4-1200w.webp 1200w"
+      imagesizes="(max-width: 768px) 100vw, 650px"
+      fetchpriority="high">
 <!-- Preload critical fonts -->
 <link rel="preload" href="assest/fonts/GretaArabicAR+LT-Regular.otf" as="font" type="font/otf" crossorigin>
 <link rel="preload" href="assest/fonts/GretaArabicAR+LT-Light.otf" as="font" type="font/otf" crossorigin>

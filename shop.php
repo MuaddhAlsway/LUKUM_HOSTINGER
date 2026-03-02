@@ -30,8 +30,14 @@ body{font-family:'Greta Arabic','Greta Text Arabic',-apple-system,BlinkMacSystem
 @media(max-width:480px){.lakum-hero{height:50vh;min-height:400px}}
 </style>
 
-<!-- Preload Hero Image (Critical for LCP) -->
-<link rel="preload" as="image" href="optimized-images/assest/img-3-400w.webp" fetchpriority="high">
+<!-- Preload Hero Image (Critical for LCP) - Mobile-first (400w) with responsive variants -->
+<link rel="preload" as="image" 
+      href="optimized-images/assest/img-3-400w.webp"
+      imagesrcset="optimized-images/assest/img-3-400w.webp 400w,
+                   optimized-images/assest/img-3-800w.webp 800w,
+                   optimized-images/assest/img-3-1200w.webp 1200w"
+      imagesizes="(max-width: 768px) 100vw, 650px"
+      fetchpriority="high">
 <!-- Preload critical fonts -->
 <link rel="preload" href="assest/fonts/GretaArabicAR+LT-Regular.otf" as="font" type="font/otf" crossorigin>
 <link rel="preload" href="assest/fonts/GretaArabicAR+LT-Light.otf" as="font" type="font/otf" crossorigin>
