@@ -12,9 +12,8 @@ require_once 'api/image-helper.php';
     <link rel="icon" type="image/png" sizes="16x16" href="assest/logo/right_section.png">
     <link rel="apple-touch-icon" href="assest/logo/right_section.png">
     <meta name="msapplication-TileImage" content="assest/logo/right_section.png">
-    <!-- Preload LCP image (hero) with high priority -->
-    <link rel="preload" as="image" href="assest/img-4-1200w.webp" fetchpriority="high">
-    <link rel="preload" as="image" href="assest/img-4.webp" fetchpriority="high">
+    <!-- Preload LCP image (hero) - Mobile-first (400w) -->
+    <link rel="preload" as="image" href="optimized-images/assest/img-4-400w.webp" fetchpriority="high">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
     <link rel="stylesheet" href="global-styles.css">
     <link rel="stylesheet" href="lakum-components.css">
@@ -39,8 +38,8 @@ require_once 'api/image-helper.php';
         <div class="lakum-header__container">
             <div class="lakum-header__logo">
                 <a href="index.php" class="lakum-logo">
-                    <img src="assest/logo/right_section.png" alt="LAKUM" class="lakum-logo__left">
-                    <img src="assest/logo/left_section.png" alt="Artspace" class="lakum-logo__right">
+                    <img src="optimized-images/assest/logo/right_section.webp" alt="LAKUM" class="lakum-logo__left" width="105" height="80" decoding="async">
+                    <img src="optimized-images/assest/logo/left_section.webp" alt="Artspace" class="lakum-logo__right" width="105" height="80" decoding="async">
                 </a>
             </div>
 
@@ -73,7 +72,16 @@ require_once 'api/image-helper.php';
 
     <!-- Hero Section -->
     <section class="lakum-exhibitions-hero">
-        <?php echo ImageHelper::render('assest/img-4.webp', 'LAKUM Exhibitions', 'hero'); ?>
+        <img src="optimized-images/assest/img-4-400w.webp"
+             srcset="optimized-images/assest/img-4-400w.webp 400w,
+                     optimized-images/assest/img-4-800w.webp 800w,
+                     optimized-images/assest/img-4-1200w.webp 1200w"
+             sizes="(max-width: 768px) 100vw, 650px"
+             alt="LAKUM Exhibitions"
+             fetchpriority="high"
+             decoding="async"
+             width="1200"
+             height="800">
     </section>
 
     <!-- Upcoming Section -->
@@ -118,8 +126,8 @@ require_once 'api/image-helper.php';
             <div class="lakum-footer__content">
                 <div class="lakum-footer__brand">
                     <div class="lakum-footer__logo">
-                        <img src="assest/logo/right_section.png" alt="LAKUM" class="lakum-footer__logo-left">
-                        <img src="assest/logo/left_section.png" alt="Artspace" class="lakum-footer__logo-right">
+                        <img src="optimized-images/assest/logo/right_section.webp" alt="LAKUM" class="lakum-footer__logo-left" width="105" height="80" decoding="async">
+                        <img src="optimized-images/assest/logo/left_section.webp" alt="Artspace" class="lakum-footer__logo-right" width="105" height="80" decoding="async">
                     </div>
                     <p class="lakum-footer__tagline"><?php echo t('footer_tagline', 'Where Encounters Shape Culture'); ?></p>
                 </div>

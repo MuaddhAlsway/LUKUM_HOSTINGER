@@ -13,9 +13,8 @@ require_once 'api/image-helper.php';
     <link rel="apple-touch-icon" href="assest/logo/right_section.png">
     <meta name="msapplication-TileImage" content="assest/logo/right_section.png">
 
-    <!-- Preload LCP image (event cover) with high priority -->
-    <link rel="preload" as="image" href="assest/img-4-1200w.webp" fetchpriority="high">
-    <link rel="preload" as="image" href="assest/img-4.webp" fetchpriority="high">
+    <!-- Preload LCP image (event cover) - Mobile-first (400w) -->
+    <link rel="preload" as="image" href="optimized-images/assest/img-4-400w.webp" fetchpriority="high">
 
     <!-- Inline Critical CSS for Instant LCP -->
     <style>
@@ -125,7 +124,7 @@ require_once 'api/image-helper.php';
     </style>
 
     <!-- Preload Hero Image (Critical for LCP) -->
-    <link rel="preload" as="image" href="assest/img-4.webp" fetchpriority="high">
+    <link rel="preload" as="image" href="optimized-images/assest/img-4-400w.webp" fetchpriority="high">
 
     <!-- DNS Prefetch for external resources -->
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
@@ -230,8 +229,8 @@ require_once 'api/image-helper.php';
             <div class="lakum-header__logo">
                 <a href="index.php" class="lakum-logo">
                     <!-- English: Swapped -->
-                    <img src="assest/logo/right_section.png" alt="LAKUM" class="lakum-logo__left">
-                    <img src="assest/logo/left_section.png" alt="Artspace" class="lakum-logo__right">
+                    <img src="optimized-images/assest/logo/right_section.webp" alt="LAKUM" class="lakum-logo__left" width="105" height="80" decoding="async">
+                    <img src="optimized-images/assest/logo/left_section.webp" alt="Artspace" class="lakum-logo__right" width="105" height="80" decoding="async">
                 </a>
             </div>
 
@@ -383,8 +382,8 @@ require_once 'api/image-helper.php';
                 <div class="lakum-footer__brand">
                     <div class="lakum-footer__logo">
                         <!-- English: Swapped -->
-                        <img src="assest/logo/right_section.png" alt="LAKUM" class="lakum-footer__logo-left">
-                        <img src="assest/logo/left_section.png" alt="Artspace" class="lakum-footer__logo-right">
+                        <img src="optimized-images/assest/logo/right_section.webp" alt="LAKUM" class="lakum-footer__logo-left" width="105" height="80" decoding="async">
+                        <img src="optimized-images/assest/logo/left_section.webp" alt="Artspace" class="lakum-footer__logo-right" width="105" height="80" decoding="async">
                     </div>
                     <p class="lakum-footer__tagline">Where Encounters Shape Culture</p>
                 </div>

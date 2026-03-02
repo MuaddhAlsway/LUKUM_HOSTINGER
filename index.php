@@ -14,9 +14,8 @@ require_once 'config.css-loader.php';
     <link rel="icon" type="image/png" sizes="16x16" href="assest/logo/right_section.png">
     <link rel="apple-touch-icon" href="assest/logo/right_section.png">
     <meta name="msapplication-TileImage" content="assest/logo/right_section.png">
-    <!-- Preload LCP image (hero) with responsive sizes -->
-    <link rel="preload" as="image" href="assest/img-4-1200w.webp" fetchpriority="high">
-    <link rel="preload" as="image" href="assest/img-4.webp" fetchpriority="high">
+    <!-- Preload LCP image (hero) - Mobile-first (400w) -->
+    <link rel="preload" as="image" href="optimized-images/assest/img-4-400w.webp" fetchpriority="high">
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
     <link rel="preload" href="global-styles.css" as="style">
@@ -252,8 +251,8 @@ margin: 0 auto;}
         <div class="lakum-header__container">
             <div class="lakum-header__logo">
                 <a href="./" class="lakum-logo">
-                    <img src="assest/logo/right_section.png" alt="LAKUM" class="lakum-logo__left">
-                    <img src="assest/logo/left_section.png" alt="Artspace" class="lakum-logo__right">
+                    <img src="optimized-images/assest/logo/right_section.webp" alt="LAKUM" class="lakum-logo__left" width="105" height="80" decoding="async">
+                    <img src="optimized-images/assest/logo/left_section.webp" alt="Artspace" class="lakum-logo__right" width="105" height="80" decoding="async">
                 </a>
             </div>
             <nav class="lakum-nav">
@@ -283,7 +282,17 @@ margin: 0 auto;}
 
     <section class="lakum-hero" style="aspect-ratio: 16/9">
         <div class="lakum-hero__image-wrapper">
-            <?php echo ImageHelper::render('assest/img-4.webp', 'LAKUM Artspace', 'hero', ['fetchpriority' => true]); ?>
+            <img src="optimized-images/assest/img-4-400w.webp"
+                 srcset="optimized-images/assest/img-4-400w.webp 400w,
+                         optimized-images/assest/img-4-800w.webp 800w,
+                         optimized-images/assest/img-4-1200w.webp 1200w"
+                 sizes="(max-width: 768px) 100vw, 650px"
+                 alt="LAKUM Artspace"
+                 fetchpriority="high"
+                 decoding="async"
+                 width="1200"
+                 height="800"
+                 class="lakum-hero__image">
             <div class="lakum-hero__overlay"></div>
         </div>
         <div class="lakum-hero__content">
@@ -304,7 +313,16 @@ margin: 0 auto;}
     <section class="lakum-featured-banner" id="featuredBanner">
         <div class="lakum-featured-banner__content">
                 <div class="lakum-featured-banner__image">
-                    <img src="assest/img-4.png" alt="Featured Event" loading="lazy">
+                    <img src="optimized-images/assest/img-4-400w.webp"
+                         srcset="optimized-images/assest/img-4-400w.webp 400w,
+                                 optimized-images/assest/img-4-800w.webp 800w,
+                                 optimized-images/assest/img-4-1200w.webp 1200w"
+                         sizes="(max-width: 768px) 100vw, 450px"
+                         alt="Featured Event"
+                         loading="lazy"
+                         decoding="async"
+                         width="800"
+                         height="450">
                 </div>
                 <div class="lakum-featured-banner__text">
                     <span class="lakum-featured-banner__date"><?php echo t('closest_event', 'Closest Event'); ?></span>
@@ -369,8 +387,8 @@ margin: 0 auto;}
             <div class="lakum-footer__content">
                 <div class="lakum-footer__brand">
                     <div class="lakum-footer__logo">
-                        <img src="assest/logo/right_section.png" alt="LAKUM" class="lakum-footer__logo-left">
-                        <img src="assest/logo/left_section.png" alt="Artspace" class="lakum-footer__logo-right">
+                        <img src="optimized-images/assest/logo/right_section.webp" alt="LAKUM" class="lakum-footer__logo-left" width="105" height="80" decoding="async">
+                        <img src="optimized-images/assest/logo/left_section.webp" alt="Artspace" class="lakum-footer__logo-right" width="105" height="80" decoding="async">
                     </div>
                     <p class="lakum-footer__tagline"><?php echo t('tagline', 'Where Encounters Shape Culture'); ?></p>
                 </div>

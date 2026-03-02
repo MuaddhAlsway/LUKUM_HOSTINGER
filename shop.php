@@ -31,8 +31,7 @@ body{font-family:'Greta Arabic','Greta Text Arabic',-apple-system,BlinkMacSystem
 </style>
 
 <!-- Preload Hero Image (Critical for LCP) -->
-<link rel="preload" as="image" href="assest/img-3-1200w.webp" fetchpriority="high">
-<link rel="preload" as="image" href="assest/img-3.webp" fetchpriority="high">
+<link rel="preload" as="image" href="optimized-images/assest/img-3-400w.webp" fetchpriority="high">
 
 <!-- DNS Prefetch for external resources -->
 <link rel="dns-prefetch" href="https://fonts.googleapis.com">
@@ -207,8 +206,8 @@ body{font-family:'Greta Arabic','Greta Text Arabic',-apple-system,BlinkMacSystem
         <div class="lakum-header__logo">
             <a href="index.php" class="lakum-logo">
                                     <!-- English: Swapped -->
-                    <img src="assest/logo/right_section.png" alt="LAKUM" class="lakum-logo__left">
-                    <img src="assest/logo/left_section.png" alt="Artspace" class="lakum-logo__right">
+                    <img src="optimized-images/assest/logo/right_section.webp" alt="LAKUM" class="lakum-logo__left" width="105" height="80" decoding="async">
+                    <img src="optimized-images/assest/logo/left_section.webp" alt="Artspace" class="lakum-logo__right" width="105" height="80" decoding="async">
                             </a>
         </div>
         
@@ -399,8 +398,8 @@ body{font-family:'Greta Arabic','Greta Text Arabic',-apple-system,BlinkMacSystem
             <div class="lakum-footer__brand">
                 <div class="lakum-footer__logo">
                                             <!-- English: Swapped -->
-                        <img src="assest/logo/right_section.png" alt="LAKUM" class="lakum-footer__logo-left">
-                        <img src="assest/logo/left_section.png" alt="Artspace" class="lakum-footer__logo-right">
+                        <img src="optimized-images/assest/logo/right_section.webp" alt="LAKUM" class="lakum-footer__logo-left" width="105" height="80" decoding="async">
+                        <img src="optimized-images/assest/logo/left_section.webp" alt="Artspace" class="lakum-footer__logo-right" width="105" height="80" decoding="async">
                                     </div>
                 <p class="lakum-footer__tagline"><?php echo t('footer_tagline', 'Where Encounters Shape Culture'); ?></p>
             </div>
