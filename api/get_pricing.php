@@ -23,7 +23,7 @@ try {
     $limit = (int)($_GET['limit'] ?? 100);
     $offset = (int)($_GET['offset'] ?? 0);
     
-    $query = 'SELECT id, title, name_en, name_ar, price, price_unit, price_sec, vat_note, content, description_en, description_ar, display_order, is_active FROM pricing WHERE is_active = 1 ORDER BY display_order ASC LIMIT ? OFFSET ?';
+    $query = 'SELECT id, title, name_en, name_ar, price, price_unit, price_unit_ar, price_sec, vat_note, vat_note_ar, content, description_en, description_ar, display_order, is_active FROM pricing WHERE is_active = 1 ORDER BY display_order ASC LIMIT ? OFFSET ?';
     
     $stmt = $db->prepare($query);
     if (!$stmt) {
@@ -46,8 +46,10 @@ try {
             'name_ar' => $row['name_ar'] ?? '',
             'price' => (int)$row['price'] ?? 0,
             'price_unit' => $row['price_unit'] ?? 'SAR',
+            'price_unit_ar' => $row['price_unit_ar'] ?? 'ر.س',
             'price_sec' => $row['price_sec'] ?? '',
             'vat_note' => $row['vat_note'] ?? '',
+            'vat_note_ar' => $row['vat_note_ar'] ?? '',
             'content' => $row['content'] ?? '',
             'description_en' => $row['description_en'] ?? '',
             'description_ar' => $row['description_ar'] ?? '',

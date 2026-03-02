@@ -35,8 +35,10 @@ try {
     $description_ar = $input['description_ar'] ?? '';
     $price = (int)($input['price'] ?? 0);
     $price_unit = $input['price_unit'] ?? 'SAR';
+    $price_unit_ar = $input['price_unit_ar'] ?? 'ر.س';
     $price_sec = $input['price_sec'] ?? '';
     $vat_note = $input['vat_note'] ?? '';
+    $vat_note_ar = $input['vat_note_ar'] ?? '';
     $display_order = (int)($input['display_order'] ?? 0);
     $is_active = ($input['is_active'] === '1' || $input['is_active'] === true) ? 1 : 0;
     
@@ -47,8 +49,10 @@ try {
         description_ar = ?, 
         price = ?, 
         price_unit = ?, 
+        price_unit_ar = ?, 
         price_sec = ?, 
         vat_note = ?, 
+        vat_note_ar = ?, 
         display_order = ?, 
         is_active = ? 
     WHERE id = ?';
@@ -58,15 +62,17 @@ try {
         throw new Exception('Prepare failed: ' . $conn->error);
     }
     
-    $stmt->bind_param('sssssisssii', 
+    $stmt->bind_param('sssssssssssii', 
         $name_en, 
         $name_ar, 
         $description_en, 
         $description_ar, 
         $price, 
         $price_unit, 
+        $price_unit_ar, 
         $price_sec, 
         $vat_note, 
+        $vat_note_ar, 
         $display_order, 
         $is_active, 
         $id

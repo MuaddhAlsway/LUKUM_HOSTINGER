@@ -1814,6 +1814,10 @@ require_once 'lang/loader.php';
             const content = lang === 'ar' ? item.description_ar : item.description_en;
             const displayContent = content || item.content || '';
             
+            // Get bilingual price unit and VAT note
+            const priceUnit = lang === 'ar' ? (item.price_unit_ar || 'ر.س') : (item.price_unit || 'SAR');
+            const vatNote = lang === 'ar' ? (item.vat_note_ar || '*(غير شامل الضريبة)') : (item.vat_note || '*(excluding VAT)');
+            
             // Get "Book Now" button text based on language
             const bookNowText = lang === 'ar' ? 'احجز الآن' : 'Book Now';
             
@@ -1824,12 +1828,12 @@ require_once 'lang/loader.php';
                 priceHTML = `<div class="pricing-accordion__price pricing-accordion__price--multi">
                     <div>${item.price_sec}</div>
                 </div>`;
-            } else if (item.price && item.price_unit) {
+            } else if (item.price && priceUnit) {
                 // Standard price
                 const formattedPrice = parseInt(item.price).toLocaleString('en-US');
                 priceHTML = `<div class="pricing-accordion__price">
                     <span class="pricing-accordion__amount">${formattedPrice}</span>
-                    <span class="pricing-accordion__currency">${item.price_unit}</span>
+                    <span class="pricing-accordion__currency">${priceUnit}</span>
                 </div>`;
             }
             
@@ -1842,7 +1846,7 @@ require_once 'lang/loader.php';
                         <div class="pricing-accordion__info">
                             <h3 class="pricing-accordion__name" ${contentDir}>${name}</h3>
                             ${priceHTML}
-                            <span class="pricing-accordion__vat">${item.vat_note}</span>
+                            <span class="pricing-accordion__vat">${vatNote}</span>
                         </div>
                         <span class="pricing-accordion__icon"></span>
                     </summary>

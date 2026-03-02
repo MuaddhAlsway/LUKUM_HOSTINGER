@@ -135,6 +135,15 @@
                                     <option value="SAR" data-i18n="pricing_price_unit_fixed_en">SAR</option>
                                 </select>
                             </div>
+
+                            <div class="form-group">
+                                <label for="price_unit_ar" data-i18n="pricing_price_unit_ar">Price Unit (AR)</label>
+                                <select id="price_unit_ar" name="price_unit_ar" dir="rtl">
+                                    <option value="ر.س/يوم">ر.س/يوم</option>
+                                    <option value="ر.س/ساعة">ر.س/ساعة</option>
+                                    <option value="ر.س">ر.س</option>
+                                </select>
+                            </div>
                         </div>
 
                         <div class="form-group">
@@ -145,6 +154,11 @@
                         <div class="form-group">
                             <label for="vat_note" data-i18n="pricing_vat_note_en">VAT Note</label>
                             <input type="text" id="vat_note" name="vat_note" value="*(excluding VAT)">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="vat_note_ar" data-i18n="pricing_vat_note_ar">VAT Note (AR)</label>
+                            <input type="text" id="vat_note_ar" name="vat_note_ar" value="*(غير شامل الضريبة)" dir="rtl">
                         </div>
 
                         <div class="form-row">
@@ -289,8 +303,10 @@
                         description_ar: document.getElementById('description_ar').value.trim(),
                         price: document.getElementById('price').value.replace(/,/g, ''),
                         price_unit: document.getElementById('price_unit').value,
+                        price_unit_ar: document.getElementById('price_unit_ar').value,
                         price_sec: document.getElementById('price_sec').value.trim(),
                         vat_note: document.getElementById('vat_note').value.trim(),
+                        vat_note_ar: document.getElementById('vat_note_ar').value.trim(),
                         display_order: document.getElementById('display_order').value,
                         is_active: document.getElementById('is_active').checked ? '1' : '0'
                     };
@@ -369,8 +385,10 @@
             
             document.getElementById('price').value = pricing.price || '';
             document.getElementById('price_unit').value = pricing.price_unit || 'SAR/day';
+            document.getElementById('price_unit_ar').value = pricing.price_unit_ar || 'ر.س/يوم';
             document.getElementById('price_sec').value = pricing.price_secondary || '';
             document.getElementById('vat_note').value = pricing.vat_note || '*(excluding VAT)';
+            document.getElementById('vat_note_ar').value = pricing.vat_note_ar || '*(غير شامل الضريبة)';
             document.getElementById('display_order').value = pricing.display_order || 0;
             document.getElementById('is_active').checked = pricing.is_active;
             
