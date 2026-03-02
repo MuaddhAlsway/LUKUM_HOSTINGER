@@ -14,7 +14,8 @@ require_once 'config.css-loader.php';
     <link rel="icon" type="image/png" sizes="16x16" href="assest/logo/right_section.png">
     <link rel="apple-touch-icon" href="assest/logo/right_section.png">
     <meta name="msapplication-TileImage" content="assest/logo/right_section.png">
-    <link rel="preload" as="image" href="assest/img-4.png" fetchpriority="high">
+    <!-- Preload LCP image (hero) -->
+    <link rel="preload" as="image" href="assest/img-4.webp" fetchpriority="high">
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
     <link rel="preload" href="global-styles.css" as="style">
@@ -42,9 +43,23 @@ require_once 'config.css-loader.php';
     <!-- Icons - Defer loading (not critical for initial render) -->
     <link rel="preload" href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet"></noscript>
-    <script src="assest/popup-notification.js?v=5.0.0" defer></script>
-    <script src="assest/navbar-mobile-toggle.js?v=5.0.0" defer></script>
+    <!-- API Cache Manager - Load FIRST before other API scripts -->
+    <script src="js/api-cache-manager.js?v=1.0.0"></script>
+    
+    <!-- API Helper with caching support -->
+    <script src="js/api-helper.js?v=1.0.0"></script>
+    
+    <!-- Settings Loader with caching -->
+    <script src="assest/settings-loader.js?v=1.0.0" defer></script>
+    
+    <!-- Dynamic Content Loader with caching -->
+    <script src="assest/dynamic-content-loader.js?v=1.0.0" defer></script>
+    
+    <!-- UI Scripts - Minified & Deferred -->
+    <script src="assest/popup-notification.min.js?v=5.0.0" defer></script>
+    <script src="assest/navbar-mobile-toggle.min.js?v=5.0.0" defer></script>
     <script src="assest/language-link-preserver.js?v=1.0.0" defer></script>
+    <script src="assest/language-switcher.min.js?v=1.0.0" defer></script>
     <meta name="title" content="LAKUM Artspace - Cultural Hub in Riyadh | Art Exhibitions & Events">
     <meta name="description" content="LAKUM Artspace is Riyadh's premier cultural destination for contemporary art exhibitions, creative workshops, and cultural events.">
     <meta name="keywords" content="art gallery Riyadh, cultural events Riyadh, art exhibitions Saudi Arabia">
@@ -254,7 +269,7 @@ margin: 0 auto;}
                 </ul>
             </nav>
             <div class="lakum-language-switcher">
-                <a href="<?php echo buildLanguageSwitcherUrl(); ?>" class="lakum-lang-link" title="<?php echo isArabic() ? 'Language: English' : 'Language: ???????'; ?>">
+                <a href="<?php echo buildLanguageSwitcherUrl(); ?>" class="lakum-lang-link" data-lang-switch="<?php echo isArabic() ? 'en' : 'ar'; ?>" title="<?php echo isArabic() ? 'Switch to English' : 'التبديل إلى العربية'; ?>">
                     <i class="ri-global-line"></i>
                     <span class="lakum-lang-text"><?php echo isArabic() ? 'EN' : 'AR'; ?></span>
                 </a>
@@ -267,7 +282,7 @@ margin: 0 auto;}
 
     <section class="lakum-hero" style="aspect-ratio: 16/9">
         <div class="lakum-hero__image-wrapper">
-            <?php echo ImageHelper::render('assest/img-4.webp', 'LAKUM Artspace', 'hero'); ?>
+            <?php echo ImageHelper::render('assest/img-4.webp', 'LAKUM Artspace', 'hero', ['fetchpriority' => true]); ?>
             <div class="lakum-hero__overlay"></div>
         </div>
         <div class="lakum-hero__content">

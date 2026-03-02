@@ -1,54 +1,52 @@
 <?php
 /**
- * CSS Minifier
- * Minifies CSS files by removing whitespace, comments, and unnecessary characters
- * 
- * Usage:
- * 1. Place CSS file in same directory
- * 2. Call: php minify-css.php input.css output.min.css
- * 3. Or use web interface: minify-css.php?file=Home.css
+ * JavaScript Minifier
+ * Minifies JS files by removing whitespace, comments, and unnecessary characters
  */
 
-class CSSMinifier {
+class JSMinifier {
     /**
-     * Minify CSS content
+     * Minify JavaScript content
      */
-    public static function minify($css) {
-        // Remove comments
-        $css = preg_replace('!/\*[^*]*\*+(?:[^/*][^*]*\*+)*/!', '', $css);
+    public static function minify($js) {
+        // Remove single-line comments
+        $js = preg_replace('~//.*?$~m', '', $js);
+        
+        // Remove multi-line comments
+        $js = preg_replace('~/\*.*?\*/~s', '', $js);
         
         // Remove whitespace
-        $css = preg_replace('/\s+/', ' ', $css);
+        $js = preg_replace('/\s+/', ' ', $js);
         
         // Remove spaces around special characters
-        $css = preg_replace('/\s*([{}:;,>+~])\s*/', '$1', $css);
+        $js = preg_replace('/\s*([{}:;,=()[\]<>+\-*/%&|^!?])\s*/', '$1', $js);
         
         // Remove trailing semicolons before closing braces
-        $css = preg_replace('/;(?=\})/', '', $css);
+        $js = preg_replace('/;(?=\})/', '', $js);
         
         // Remove leading/trailing whitespace
-        $css = trim($css);
+        $js = trim($js);
         
-        return $css;
+        return $js;
     }
 
     /**
-     * Minify CSS file
+     * Minify JS file
      */
     public static function minifyFile($inputFile, $outputFile = null) {
         if (!file_exists($inputFile)) {
             return ['success' => false, 'error' => 'Input file not found'];
         }
 
-        $css = file_get_contents($inputFile);
-        $minified = self::minify($css);
+        $js = file_get_contents($inputFile);
+        $minified = self::minify($js);
 
         if ($outputFile === null) {
-            $outputFile = str_replace('.css', '.min.css', $inputFile);
+            $outputFile = str_replace('.js', '.min.js', $inputFile);
         }
 
         if (file_put_contents($outputFile, $minified)) {
-            $originalSize = strlen($css);
+            $originalSize = strlen($js);
             $minifiedSize = strlen($minified);
             $reduction = round((1 - $minifiedSize / $originalSize) * 100, 2);
 
@@ -69,17 +67,17 @@ class CSSMinifier {
 // CLI Usage
 if (php_sapi_name() === 'cli') {
     if ($argc < 2) {
-        echo "Usage: php minify-css.php <input.css> [output.min.css]\n";
+        echo "Usage: php minify-js.php <input.js> [output.min.js]\n";
         exit(1);
     }
 
     $inputFile = $argv[1];
     $outputFile = $argv[2] ?? null;
 
-    $result = CSSMinifier::minifyFile($inputFile, $outputFile);
+    $result = JSMinifier::minifyFile($inputFile, $outputFile);
 
     if ($result['success']) {
-        echo "✓ CSS Minified Successfully\n";
+        echo "✓ JS Minified Successfully\n";
         echo "Input: {$result['input']}\n";
         echo "Output: {$result['output']}\n";
         echo "Original Size: " . number_format($result['originalSize']) . " bytes\n";
@@ -103,39 +101,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    // Security: Only allow CSS files in current directory
     $file = basename($file);
-    if (!preg_match('/\.css$/', $file)) {
-        echo json_encode(['success' => false, 'error' => 'Only CSS files allowed']);
+    if (!preg_match('/\.js$/', $file)) {
+        echo json_encode(['success' => false, 'error' => 'Only JS files allowed']);
         exit;
     }
 
     $inputPath = __DIR__ . '/../' . $file;
-    $outputPath = __DIR__ . '/../' . str_replace('.css', '.min.css', $file);
+    $outputPath = __DIR__ . '/../' . str_replace('.js', '.min.js', $file);
 
-    $result = CSSMinifier::minifyFile($inputPath, $outputPath);
+    $result = JSMinifier::minifyFile($inputPath, $outputPath);
     echo json_encode($result);
     exit;
 }
 
-// GET request - show available CSS files
-$cssFiles = glob(__DIR__ . '/../*.css');
+// GET request - show available JS files
+$jsFiles = glob(__DIR__ . '/../**/*.js', GLOB_RECURSIVE);
 $files = [];
 
-foreach ($cssFiles as $file) {
+foreach ($jsFiles as $file) {
     $basename = basename($file);
-    if (!preg_match('/\.min\.css$/', $basename)) {
+    if (!preg_match('/\.min\.js$/', $basename) && !preg_match('/node_modules/', $file)) {
         $files[] = [
             'name' => $basename,
             'size' => filesize($file),
-            'path' => $file
+            'path' => str_replace(__DIR__ . '/../', '', $file)
         ];
     }
 }
 
 echo json_encode([
     'success' => true,
-    'message' => 'CSS Minifier - POST a file to minify',
-    'cssFiles' => $files
+    'message' => 'JS Minifier - POST a file to minify',
+    'jsFiles' => $files
 ]);
 ?>

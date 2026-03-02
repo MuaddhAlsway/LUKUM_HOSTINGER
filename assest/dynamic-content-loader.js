@@ -34,7 +34,7 @@ class DynamicContentLoader {
     }
 
     /**
-     * Load dynamic content from API
+     * Load dynamic content from API with caching
      */
     async loadContent(contentType, contentId) {
         // Check cache first
@@ -44,13 +44,21 @@ class DynamicContentLoader {
         }
 
         try {
-            const response = await fetch(`api/get-dynamic-content.php?type=${contentType}&id=${contentId}&lang=${this.currentLang}`);
+            const url = `api/get-dynamic-content.php?type=${contentType}&id=${contentId}&lang=${this.currentLang}`;
+            let data;
             
-            if (!response.ok) {
-                throw new Error(`HTTP ${response.status}`);
-            }
+            // Use cache manager if available
+            if (window.apiCacheManager) {
+                data = await window.apiCacheManager.fetch(url, {}, 5 * 60 * 1000); // 5 min TTL
+            } else {
+                const response = await fetch(url);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
 
-            const data = await response.json();
+                data = await response.json();
+            }
 
             if (!data.success) {
                 throw new Error(data.error || 'Failed to load content');
@@ -66,17 +74,25 @@ class DynamicContentLoader {
     }
 
     /**
-     * Load all content for a page
+     * Load all content for a page with caching
      */
     async loadPageContent(contentType) {
         try {
-            const response = await fetch(`api/get-dynamic-content.php?type=${contentType}&lang=${this.currentLang}`);
+            const url = `api/get-dynamic-content.php?type=${contentType}&lang=${this.currentLang}`;
+            let data;
             
-            if (!response.ok) {
-                throw new Error(`HTTP ${response.status}`);
-            }
+            // Use cache manager if available
+            if (window.apiCacheManager) {
+                data = await window.apiCacheManager.fetch(url, {}, 5 * 60 * 1000); // 5 min TTL
+            } else {
+                const response = await fetch(url);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
 
-            const data = await response.json();
+                data = await response.json();
+            }
 
             if (!data.success) {
                 throw new Error(data.error || 'Failed to load page content');
