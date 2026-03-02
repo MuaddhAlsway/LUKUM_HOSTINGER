@@ -152,6 +152,11 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="price_sec">Secondary Price (for multiple rates)</label>
+                            <input type="text" id="price_sec" name="price_sec" placeholder="e.g., Hall 1: 1,000 SAR/hour">
+                        </div>
+
+                        <div class="form-group">
                             <label for="vat_note_ar" data-i18n="pricing_vat_note_ar">VAT Note (AR)</label>
                             <input type="text" id="vat_note_ar" name="vat_note_ar" value="*(غير شامل الضريبة)" dir="rtl">
                         </div>
@@ -313,6 +318,7 @@
                         price: document.getElementById('price').value.replace(/,/g, ''),
                         price_unit: document.getElementById('price_unit').value,
                         price_unit_ar: document.getElementById('price_unit_ar').value,
+                        price_sec: document.getElementById('price_sec').value.trim(),
                         vat_note: document.getElementById('vat_note').value.trim(),
                         vat_note_ar: document.getElementById('vat_note_ar').value.trim(),
                         display_order: document.getElementById('display_order').value,
@@ -393,7 +399,8 @@
             
             document.getElementById('price').value = pricing.price || '';
             document.getElementById('price_unit').value = pricing.price_unit || 'SAR/day';
-            document.getElementById('price_unit_ar').value = pricing.price_unit_ar || 'ر.س/يوم';
+            document.getElementById('price_unit_ar').value = pricing.price_unit_ar || 'ريال سعودي / يوم';
+            document.getElementById('price_sec').value = pricing.price_sec || '';
             document.getElementById('vat_note').value = pricing.vat_note || '*(excluding VAT)';
             document.getElementById('vat_note_ar').value = pricing.vat_note_ar || '*(غير شامل الضريبة)';
             document.getElementById('display_order').value = pricing.display_order || 0;
