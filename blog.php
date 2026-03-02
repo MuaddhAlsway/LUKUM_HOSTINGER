@@ -123,6 +123,11 @@ require_once 'api/image-helper.php';
 
     <!-- Preload Hero Image (Critical for LCP) -->
     <link rel="preload" as="image" href="optimized-images/assest/img-4-400w.webp" fetchpriority="high">
+    <!-- Preload critical fonts -->
+    <link rel="preload" href="assest/fonts/GretaArabicAR+LT-Regular.otf" as="font" type="font/otf" crossorigin>
+    <link rel="preload" href="assest/fonts/GretaArabicAR+LT-Light.otf" as="font" type="font/otf" crossorigin>
+    <link rel="preload" href="assest/fonts/GretaTextArabicAR+LT-Regular.otf" as="font" type="font/otf" crossorigin>
+    <link rel="preload" href="assest/fonts/GretaTextArabicAR+LT-Light.otf" as="font" type="font/otf" crossorigin>
 
     <!-- DNS Prefetch for external resources -->
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
@@ -161,7 +166,7 @@ require_once 'api/image-helper.php';
 
     <!-- Image Optimizer - Critical for performance -->
     <script src="assest/navbar-mobile-toggle.js?v=5.0.0" defer></script>
-    <script src="js/LanguageManager.js?v=1.0.0"></script>
+    <script src="js/LanguageManager.js?v=1.0.0" defer></script>
 
     <!-- Scripts - Defer non-critical JavaScript -->
     <script>

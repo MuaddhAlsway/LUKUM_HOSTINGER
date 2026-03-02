@@ -13,6 +13,11 @@ require_once 'api/image-helper.php';
 <link rel="apple-touch-icon" href="assest/logo/right_section.png">
 <meta name="msapplication-TileImage" content="assest/logo/right_section.png">
 <link rel="preload" as="image" href="optimized-images/assest/img-4-400w.webp" fetchpriority="high">
+<!-- Preload critical fonts -->
+<link rel="preload" href="assest/fonts/GretaArabicAR+LT-Regular.otf" as="font" type="font/otf" crossorigin>
+<link rel="preload" href="assest/fonts/GretaArabicAR+LT-Light.otf" as="font" type="font/otf" crossorigin>
+<link rel="preload" href="assest/fonts/GretaTextArabicAR+LT-Regular.otf" as="font" type="font/otf" crossorigin>
+<link rel="preload" href="assest/fonts/GretaTextArabicAR+LT-Light.otf" as="font" type="font/otf" crossorigin>
 <link rel="dns-prefetch" href="https://fonts.googleapis.com">
 <link rel="dns-prefetch" href="https://fonts.gstatic.com">
 <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
@@ -595,7 +600,7 @@ html[lang="ar"] .lakum-event-card__date {
 <div class="lakum-contact-fab" id="lakumContactFab"><button class="lakum-contact-fab__trigger" id="fabTrigger" aria-label="Contact options"><i class="ri-mail-line lakum-contact-fab__icon"></i><i class="ri-close-line lakum-contact-fab__close"></i></button><div class="lakum-contact-fab__menu" id="fabMenu"><a href="tel:+966920012083" class="lakum-contact-fab__item" data-tooltip="Call us"><i class="ri-phone-line"></i></a><a href="https://wa.me/966920012083" target="_blank" class="lakum-contact-fab__item" data-tooltip="WhatsApp"><i class="ri-whatsapp-line"></i></a><a href="mailto:info@lakumartspace.com" class="lakum-contact-fab__item" data-tooltip="Email"><i class="ri-mail-line"></i></a></div></div>
 <script src="assest/fun-interactions.js" defer></script>
 <script src="mobile-performance-optimizer.js" defer></script>
-<script src="js/LanguageManager.js?v=1.0.0"></script>
+<script src="js/LanguageManager.js?v=1.0.0" defer></script>
 <script>
     // Set current language from PHP
     window.LAKUM_LANG = '<?php echo getCurrentLanguage(); ?>';

@@ -15,6 +15,11 @@ require_once 'api/image-helper.php';
 
     <!-- Preload LCP image (hero) - Mobile-first (400w) -->
     <link rel="preload" as="image" href="optimized-images/assest/img-4-400w.webp" fetchpriority="high">
+    <!-- Preload critical fonts -->
+    <link rel="preload" href="assest/fonts/GretaArabicAR+LT-Regular.otf" as="font" type="font/otf" crossorigin>
+    <link rel="preload" href="assest/fonts/GretaArabicAR+LT-Light.otf" as="font" type="font/otf" crossorigin>
+    <link rel="preload" href="assest/fonts/GretaTextArabicAR+LT-Regular.otf" as="font" type="font/otf" crossorigin>
+    <link rel="preload" href="assest/fonts/GretaTextArabicAR+LT-Light.otf" as="font" type="font/otf" crossorigin>
 
     <!-- Inline Critical CSS for Instant LCP -->
     <style>
@@ -164,7 +169,7 @@ require_once 'api/image-helper.php';
     <!-- Scripts - Defer non-critical JavaScript -->
     <script src="assest/navbar-mobile-toggle.js?v=5.0.0" defer></script>
     <script src="assest/settings-links-loader.js?v=5.0.0" defer></script>
-    <script src="js/LanguageManager.js?v=1.0.0"></script>
+    <script src="js/LanguageManager.js?v=1.0.0" defer></script>
     <script>
         // Set language for JavaScript - Read from URL parameter or localStorage
         const urlParams = new URLSearchParams(window.location.search);

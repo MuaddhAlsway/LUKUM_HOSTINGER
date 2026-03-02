@@ -16,6 +16,11 @@ require_once 'config.css-loader.php';
     <meta name="msapplication-TileImage" content="assest/logo/right_section.png">
     <!-- Preload LCP image (hero) - Mobile-first (400w) -->
     <link rel="preload" as="image" href="optimized-images/assest/img-4-400w.webp" fetchpriority="high">
+    <!-- Preload critical fonts -->
+    <link rel="preload" href="assest/fonts/GretaArabicAR+LT-Regular.otf" as="font" type="font/otf" crossorigin>
+    <link rel="preload" href="assest/fonts/GretaArabicAR+LT-Light.otf" as="font" type="font/otf" crossorigin>
+    <link rel="preload" href="assest/fonts/GretaTextArabicAR+LT-Regular.otf" as="font" type="font/otf" crossorigin>
+    <link rel="preload" href="assest/fonts/GretaTextArabicAR+LT-Light.otf" as="font" type="font/otf" crossorigin>
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
     <link rel="preload" href="global-styles.css" as="style">
@@ -43,11 +48,11 @@ require_once 'config.css-loader.php';
     <!-- Icons - Defer loading (not critical for initial render) -->
     <link rel="preload" href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet"></noscript>
-    <!-- API Cache Manager - Load FIRST before other API scripts -->
-    <script src="js/api-cache-manager.js?v=1.0.0"></script>
+    <!-- API Cache Manager - Deferred to avoid blocking render -->
+    <script src="js/api-cache-manager.js?v=1.0.0" defer></script>
     
-    <!-- API Helper with caching support -->
-    <script src="js/api-helper.js?v=1.0.0"></script>
+    <!-- API Helper with caching support - Deferred -->
+    <script src="js/api-helper.js?v=1.0.0" defer></script>
     
     <!-- Settings Loader with caching -->
     <script src="assest/settings-loader.js?v=1.0.0" defer></script>
@@ -453,7 +458,7 @@ margin: 0 auto;}
 
     <script src="assest/fun-interactions.js?v=5.0.0" defer></script>
     <script src="mobile-performance-optimizer.js?v=5.0.0" defer></script>
-    <script src="js/LanguageManager.js?v=1.0.0"></script>
+    <script src="js/LanguageManager.js?v=1.0.0" defer></script>
     <script>
         // Set current language from PHP
         window.LAKUM_LANG = '<?php echo getCurrentLanguage(); ?>';

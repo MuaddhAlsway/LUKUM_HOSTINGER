@@ -32,6 +32,11 @@ body{font-family:'Greta Arabic','Greta Text Arabic',-apple-system,BlinkMacSystem
 
 <!-- Preload Hero Image (Critical for LCP) -->
 <link rel="preload" as="image" href="optimized-images/assest/img-3-400w.webp" fetchpriority="high">
+<!-- Preload critical fonts -->
+<link rel="preload" href="assest/fonts/GretaArabicAR+LT-Regular.otf" as="font" type="font/otf" crossorigin>
+<link rel="preload" href="assest/fonts/GretaArabicAR+LT-Light.otf" as="font" type="font/otf" crossorigin>
+<link rel="preload" href="assest/fonts/GretaTextArabicAR+LT-Regular.otf" as="font" type="font/otf" crossorigin>
+<link rel="preload" href="assest/fonts/GretaTextArabicAR+LT-Light.otf" as="font" type="font/otf" crossorigin>
 
 <!-- DNS Prefetch for external resources -->
 <link rel="dns-prefetch" href="https://fonts.googleapis.com">

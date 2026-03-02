@@ -14,6 +14,11 @@ require_once 'api/image-helper.php';
     <meta name="msapplication-TileImage" content="assest/logo/right_section.png">
     <!-- Preload LCP image (hero) - Mobile-first (400w) -->
     <link rel="preload" as="image" href="optimized-images/assest/img-4-400w.webp" fetchpriority="high">
+    <!-- Preload critical fonts -->
+    <link rel="preload" href="assest/fonts/GretaArabicAR+LT-Regular.otf" as="font" type="font/otf" crossorigin>
+    <link rel="preload" href="assest/fonts/GretaArabicAR+LT-Light.otf" as="font" type="font/otf" crossorigin>
+    <link rel="preload" href="assest/fonts/GretaTextArabicAR+LT-Regular.otf" as="font" type="font/otf" crossorigin>
+    <link rel="preload" href="assest/fonts/GretaTextArabicAR+LT-Light.otf" as="font" type="font/otf" crossorigin>
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
     <link rel="stylesheet" href="global-styles.css">
     <link rel="stylesheet" href="lakum-components.css">
@@ -196,7 +201,7 @@ require_once 'api/image-helper.php';
     </div>
 
     <script src="assest/navbar-mobile-toggle.js?v=5.0.0" defer></script>
-    <script src="js/LanguageManager.js?v=1.0.0"></script>
+    <script src="js/LanguageManager.js?v=1.0.0" defer></script>
     <script>
         // Wait for LanguageManager to be ready before calling functions
         function initPage() {
