@@ -33,6 +33,8 @@
   "pricing_vat_note_ar": "*(غير شامل الضريبة)",
   "pricing_currency": "SAR",
   "pricing_currency_ar": "ر.س",
+  "pricing_accordion__currency": "SAR",
+  "pricing_accordion__currency_ar": "ريال/ اليوم",
   
   "shop_filter": "Filter",
   "shop_sort": "Sort By",

@@ -33,6 +33,8 @@
   "pricing_vat_note_ar": "*(غير شامل الضريبة)",
   "pricing_currency": "ريال",
   "pricing_currency_ar": "ريال",
+  "pricing_accordion__currency": "ر.س",
+  "pricing_accordion__currency_ar": "ر.س",
   
   "shop_filter": "تصفية",
   "shop_sort": "ترتيب حسب",
