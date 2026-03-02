@@ -70,7 +70,7 @@ require_once 'api/image-helper.php';
 
     <!-- Hero Section -->
     <section class="lakum-exhibitions-hero">
-        <img src="assest/img-4.png" alt="LAKUM Exhibitions" class="lakum-exhibitions-hero__image" fetchpriority="high">
+        <?php echo ImageHelper::render('assest/img-4.webp', 'LAKUM Exhibitions', 'hero'); ?>
     </section>
 
     <!-- Upcoming Section -->
@@ -231,7 +231,7 @@ require_once 'api/image-helper.php';
             if (!container) return;
             const eventDate = new Date(event.event_date);
             const dateStr = `${eventDate.getDate()} ${eventDate.toLocaleString('en-US', {month: 'short'}).toUpperCase()} ${eventDate.getFullYear()}`;
-            const coverImage = event.cover_image || 'assest/img-4.png';
+            const coverImage = event.cover_image || 'assest/img-4.webp';
             container.innerHTML = `
                 <div class="lakum-exhibitions-featured__image">
                     <img src="${coverImage}" alt="${event.title}" style="width: 100%; height: 100%; object-fit: cover;">
@@ -263,7 +263,7 @@ require_once 'api/image-helper.php';
                 card.className = 'lakum-upcoming-card';
                 card.style.cursor = 'pointer';
                 card.onclick = () => window.location.href = getEventUrl(event);
-                const coverImage = event.cover_image || 'assest/img-4.png';
+                const coverImage = event.cover_image || 'assest/img-4.webp';
                 card.innerHTML = `
                     <div class="lakum-upcoming-card__image-wrapper">
                         <img src="${coverImage}" alt="${event.title}" class="lakum-upcoming-card__image" loading="lazy">
@@ -293,7 +293,7 @@ require_once 'api/image-helper.php';
                 card.className = 'lakum-upcoming-card';
                 card.style.cursor = 'pointer';
                 card.onclick = () => window.location.href = getEventUrl(event);
-                const coverImage = event.cover_image || 'assest/img-4.png';
+                const coverImage = event.cover_image || 'assest/img-4.webp';
                 card.innerHTML = `
                     <div class="lakum-upcoming-card__image-wrapper">
                         <img src="${coverImage}" alt="${event.title}" class="lakum-upcoming-card__image" loading="lazy">

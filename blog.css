@@ -25,7 +25,7 @@
 .lakum-blog-hero__overlay {
     position: absolute;
     inset: 0;
-    background-image: url('assest/img-4.png');
+    background-image: url('assest/img-4.webp');
     background-size: cover;
     background-position: center;
     opacity: 0.1;

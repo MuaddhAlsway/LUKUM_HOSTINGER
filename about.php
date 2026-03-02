@@ -68,19 +68,46 @@ body {
 }
 
 .page-hero {
+  position: relative;
   width: 100%;
   height: 65vh;
   min-height: 450px;
   max-height: 650px;
-  background: url('assest/img-4.png') !important;
-  background-size: cover !important;
-  background-position: center !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
   color: white !important;
   text-align: center !important;
   padding: 60px 20px !important;
+  overflow: hidden;
+}
+
+.page-hero__image-wrapper {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.page-hero__image-wrapper picture,
+.page-hero__image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.page-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 1;
+}
+
+.page-hero > * {
+  position: relative;
+  z-index: 2;
 }
 
 .page-content {

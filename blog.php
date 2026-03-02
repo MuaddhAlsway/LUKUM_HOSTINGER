@@ -748,7 +748,7 @@ require_once 'api/image-helper.php';
                 card.style.cursor = 'pointer';
                 card.onclick = () => window.location.href = getBlogUrl(blog);
 
-                const coverImage = blog.cover_image || 'assest/img-3.JPG';
+                const coverImage = blog.cover_image || 'assest/img-4.webp';
                 const categoryLabel = getTranslatedCategory(blog.category || 'News');
                 const formattedDate = blog.created_at ? new Date(blog.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : 'Unknown Date';
                 const readTime = blog.read_time || '2';
@@ -947,7 +947,7 @@ require_once 'api/image-helper.php';
                     card.dataset.category = blog.category || 'news';
                     card.style.cursor = 'pointer';
                     
-                    const coverImage = blog.cover_image || 'assest/img-4.png';
+                    const coverImage = blog.cover_image || 'assest/img-4.webp';
                     const formattedDate = new Date(blog.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
                     const authorInitials = blog.author ? blog.author.split(' ').map(n => n[0]).join('').toUpperCase() : 'LT';
                     
