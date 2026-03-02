@@ -1378,6 +1378,7 @@ body {
 
 /* ===== SCROLLBAR STYLING - LAKUM DESIGN GUIDE ===== */
 /* Global scrollbar styling to match LAKUM's minimalistic aesthetic */
+/* Arrows are hidden for a cleaner, modern look */
 
 /* Firefox scrollbar */
 * {
@@ -1387,23 +1388,34 @@ body {
 
 /* Chrome, Edge, Safari scrollbar */
 ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 10px;
+    height: 10px;
 }
 
 ::-webkit-scrollbar-track {
     background: #f6f6eb;
-    border-radius: 4px;
+    border-radius: 6px;
 }
 
 ::-webkit-scrollbar-thumb {
     background: #1a1a1a;
-    border-radius: 4px;
+    border-radius: 6px;
     border: 2px solid #f6f6eb;
+    min-height: 40px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
     background: #2d2d2d;
+}
+
+/* Hide scrollbar arrows (top and bottom buttons) */
+::-webkit-scrollbar-button {
+    display: none;
+}
+
+::-webkit-scrollbar-button:start:decrement,
+::-webkit-scrollbar-button:end:increment {
+    display: none;
 }
 
 /* Dark backgrounds - light scrollbar */
@@ -1425,3 +1437,11 @@ body {
 .lakum-footer ::-webkit-scrollbar-thumb:hover {
     background: rgba(255, 255, 255, 0.5);
 }
+
+/* Hide arrows on dark backgrounds */
+[dir="rtl"] ::-webkit-scrollbar-button,
+.lakum-header ::-webkit-scrollbar-button,
+.lakum-footer ::-webkit-scrollbar-button {
+    display: none;
+}
+

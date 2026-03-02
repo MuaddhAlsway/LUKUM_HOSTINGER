@@ -265,6 +265,11 @@ html[lang="ar"] .lakum-workshops-section__description {
   line-height: 1;
   letter-spacing: -0.02em;
   margin-bottom: 10px !important;
+  min-height: 1.2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-variant-numeric: tabular-nums;
 }
 
 .lakum-stat-card__label {
@@ -772,6 +777,65 @@ html[lang="ar"] .lakum-event-card__date {
 
     // Call on page load
     updateNavbarFooterLanguage();
+
+    // Counter Animation for Stats
+    function animateCounters() {
+        const statNumbers = document.querySelectorAll('.lakum-stat-card__number');
+        
+        statNumbers.forEach(element => {
+            const finalValue = element.textContent.trim();
+            const numericValue = parseInt(finalValue.replace(/\D/g, ''));
+            const prefix = finalValue.match(/^\D+/) ? finalValue.match(/^\D+/)[0] : '';
+            const suffix = finalValue.match(/\D+$/) ? finalValue.match(/\D+$/)[0] : '';
+            
+            if (isNaN(numericValue)) return;
+            
+            let currentValue = 0;
+            const duration = 2000; // 2 seconds
+            const startTime = Date.now();
+            
+            function updateCounter() {
+                const elapsed = Date.now() - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                
+                // Easing function for smooth animation
+                const easeOutQuad = 1 - Math.pow(1 - progress, 2);
+                currentValue = Math.floor(numericValue * easeOutQuad);
+                
+                element.textContent = prefix + currentValue + suffix;
+                
+                if (progress < 1) {
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    element.textContent = finalValue;
+                }
+            }
+            
+            updateCounter();
+        });
+    }
+
+    // Trigger counter animation when stats section comes into view
+    const observerOptions = {
+        threshold: 0.5,
+        rootMargin: '0px'
+    };
+
+    const statsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !entry.target.dataset.animated) {
+                entry.target.dataset.animated = 'true';
+                animateCounters();
+                statsObserver.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    // Start observing stats section
+    const statsSection = document.querySelector('.lakum-stats-section');
+    if (statsSection) {
+        statsObserver.observe(statsSection);
+    }
 </script>
 </body>
 </html>
