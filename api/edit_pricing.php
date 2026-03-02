@@ -33,10 +33,6 @@ try {
     $name_ar = $input['name_ar'] ?? '';
     $description_en = $input['description_en'] ?? '';
     $description_ar = $input['description_ar'] ?? '';
-    $duration_en = $input['duration_en'] ?? '';
-    $duration_ar = $input['duration_ar'] ?? '';
-    $features_en = $input['features_en'] ?? '';
-    $features_ar = $input['features_ar'] ?? '';
     $price = (int)($input['price'] ?? 0);
     $price_unit = $input['price_unit'] ?? 'SAR';
     $price_sec = $input['price_sec'] ?? '';
@@ -49,10 +45,6 @@ try {
         name_ar = ?, 
         description_en = ?, 
         description_ar = ?, 
-        duration_en = ?, 
-        duration_ar = ?, 
-        features_en = ?, 
-        features_ar = ?, 
         price = ?, 
         price_unit = ?, 
         price_sec = ?, 
@@ -66,15 +58,11 @@ try {
         throw new Exception('Prepare failed: ' . $conn->error);
     }
     
-    $stmt->bind_param('ssssssssisssiii', 
+    $stmt->bind_param('sssssisssii', 
         $name_en, 
         $name_ar, 
         $description_en, 
         $description_ar, 
-        $duration_en, 
-        $duration_ar, 
-        $features_en, 
-        $features_ar, 
         $price, 
         $price_unit, 
         $price_sec, 
