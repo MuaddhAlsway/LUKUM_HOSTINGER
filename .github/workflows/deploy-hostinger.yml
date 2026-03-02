@@ -49,3 +49,10 @@ jobs:
             **/uploads/**
             **/assest/blog-uploads/**
             **/assest/press-uploads/**
+
+      - name: Run Database Migrations
+        run: |
+          curl -X GET "https://lakumartspace.com/api/init-deployment.php?key=${{ secrets.DEPLOYMENT_KEY }}" \
+            -H "Content-Type: application/json" \
+            -w "\nHTTP Status: %{http_code}\n"
+        continue-on-error: true
