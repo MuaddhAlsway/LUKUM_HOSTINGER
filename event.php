@@ -346,6 +346,32 @@ require_once 'lang/loader.php';
         </div>
     </section>
 
+    <script>
+        // Load booking link immediately after button is rendered
+        (function() {
+            async function updateBookingLink() {
+                try {
+                    console.log('Fetching booking link from settings...');
+                    const response = await fetch('api/get_settings.php');
+                    const data = await response.json();
+                    
+                    if (data.success && data.data && data.data.booking_link) {
+                        const btn = document.getElementById('bookingCtaButton');
+                        if (btn) {
+                            btn.href = data.data.booking_link;
+                            btn.target = '_blank';
+                            btn.rel = 'noopener noreferrer';
+                            console.log('✓ Booking link updated to:', data.data.booking_link);
+                        }
+                    }
+                } catch (e) {
+                    console.error('Error updating booking link:', e);
+                }
+            }
+            updateBookingLink();
+        })();
+    </script>
+
     <footer class="lakum-footer">
         <div class="lakum-footer__container">
             <div class="lakum-footer__content">
@@ -1148,29 +1174,6 @@ require_once 'lang/loader.php';
 
         // Call on page load
         updateNavbarFooterLanguage();
-
-        // Load booking link from settings
-        async function loadBookingLink() {
-            try {
-                const response = await fetch('api/get_settings.php');
-                const data = await response.json();
-                
-                if (data.success && data.data && data.data.booking_link) {
-                    const bookingButton = document.getElementById('bookingCtaButton');
-                    if (bookingButton) {
-                        bookingButton.href = data.data.booking_link;
-                        bookingButton.target = '_blank';
-                        console.log('Booking link updated:', data.data.booking_link);
-                    }
-                }
-            } catch (error) {
-                console.error('Error loading booking link:', error);
-                // Fallback to spaces.php if API fails
-            }
-        }
-
-        // Load booking link when page loads
-        document.addEventListener('DOMContentLoaded', loadBookingLink);
     </script>
 
     </body>
