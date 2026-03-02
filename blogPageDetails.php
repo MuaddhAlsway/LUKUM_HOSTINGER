@@ -331,11 +331,11 @@ require_once 'lang/loader.php';
                 </div>
             </div>
             <div class="lakum-footer__bottom">
-                <p class="lakum-footer__copyright">© 2025 - 2027 LAKUM Artspace. <?php echo t('all_rights_reserved', 'All rights reserved.'); ?></p>
+                <p class="lakum-footer__copyright"><?php echo t('footer_copyright', '© 2025 - 2027 LAKUM Artspace. All rights reserved.'); ?></p>
                 <div class="lakum-footer__legal">
-                    <a href="terms.php" class="lakum-footer__legal-link"><?php echo t('terms', 'Terms & Conditions'); ?></a>
+                    <a href="terms.php" class="lakum-footer__legal-link"><?php echo t('footer_terms', 'Terms & Conditions'); ?></a>
                     <span class="lakum-footer__legal-divider">|</span>
-                    <a href="privacy.php" class="lakum-footer__legal-link"><?php echo t('privacy', 'Privacy Policy'); ?></a>
+                    <a href="privacy.php" class="lakum-footer__legal-link"><?php echo t('footer_privacy', 'Privacy Policy'); ?></a>
                 </div>
             </div>
         </div>

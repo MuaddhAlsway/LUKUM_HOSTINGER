@@ -818,6 +818,8 @@ html[dir="rtl"] {
 [dir="rtl"] .lakum-footer__legal {
     text-align: right;
     flex: 1;
+    justify-content: flex-end;
+    flex-direction: row-reverse;
 }
 
 /* ============================================
