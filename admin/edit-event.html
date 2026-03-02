@@ -123,7 +123,7 @@
 
                             <div class="form-group">
                                 <label for="location_en">Location (EN)</label>
-                                <select id="location_select_en" name="location_select_en" onchange="handleLocationChange(this, 'en')">
+                                <select id="location_select_en" name="location_select_en" onchange="handleLocationChange(this, 'en'); syncLocationAr()">
                                     <option value="">Select location...</option>
                                     <option value="Hall 1">Hall 1</option>
                                     <option value="Hall 2">Hall 2</option>
@@ -154,10 +154,10 @@
                                 <label for="location_ar">Location (AR)</label>
                                 <select id="location_select_ar" name="location_select_ar" onchange="handleLocationChange(this, 'ar')">
                                     <option value="">اختر الموقع...</option>
-                                    <option value="Hall 1">Hall 1</option>
-                                    <option value="Hall 2">Hall 2</option>
-                                    <option value="Café">Café</option>
-                                    <option value="Meeting Room">Meeting Room</option>
+                                    <option value="Hall 1" data-en="Hall 1">القاعة 1</option>
+                                    <option value="Hall 2" data-en="Hall 2">القاعة 2</option>
+                                    <option value="Café" data-en="Café">الكافيه</option>
+                                    <option value="Meeting Room" data-en="Meeting Room">غرفة الاجتماعات</option>
                                     <option value="other">أخرى (مخصص)</option>
                                 </select>
                                 <input type="text" id="location_ar" name="location_ar" placeholder="أدخل موقع مخصص" style="display: none; margin-top: 10px;" dir="rtl">
@@ -650,6 +650,32 @@
                 customInput.required = false;
                 customInput.value = select.value;
             }
+        }
+
+        // Auto-sync Location (AR) when Location (EN) changes
+        function syncLocationAr() {
+            const locationSelectEn = document.getElementById('location_select_en');
+            const locationSelectAr = document.getElementById('location_select_ar');
+            
+            if (!locationSelectEn || !locationSelectAr) return;
+            
+            const enValue = locationSelectEn.value;
+            
+            // Mapping from English to Arabic option values
+            const mapping = {
+                'Hall 1': 'Hall 1',
+                'Hall 2': 'Hall 2',
+                'Café': 'Café',
+                'Meeting Room': 'Meeting Room',
+                'other': 'other',
+                '': ''
+            };
+            
+            const arValue = mapping[enValue] || enValue;
+            locationSelectAr.value = arValue;
+            
+            // Trigger handleLocationChange for Arabic to show/hide custom input
+            handleLocationChange(locationSelectAr, 'ar');
         }
 
         // Handle form submission - save to database

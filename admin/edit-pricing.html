@@ -147,11 +147,6 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="price_sec" data-i18n="pricing_secondary_price">Secondary Price</label>
-                            <input type="text" id="price_sec" name="price_sec" placeholder="e.g., Hall 1: 1,000 SAR/hour">
-                        </div>
-
-                        <div class="form-group">
                             <label for="vat_note" data-i18n="pricing_vat_note_en">VAT Note</label>
                             <input type="text" id="vat_note" name="vat_note" value="*(excluding VAT)">
                         </div>
@@ -255,6 +250,20 @@
                 });
             }
 
+            // Auto-sync Price Unit (AR) when Price Unit (EN) changes
+            const priceUnitSelect = document.getElementById('price_unit');
+            const priceUnitArSelect = document.getElementById('price_unit_ar');
+            if (priceUnitSelect && priceUnitArSelect) {
+                priceUnitSelect.addEventListener('change', function() {
+                    const mapping = {
+                        'SAR/day': 'ร.ส/يوم',
+                        'SAR/hour': 'ร.ส/ساعة',
+                        'SAR': 'ร.ס'
+                    };
+                    priceUnitArSelect.value = mapping[this.value] || 'ร.ס';
+                });
+            }
+
             // Character count for English
             const descEn = document.getElementById('description_en');
             const charCountEn = document.getElementById('charCount_en');
@@ -304,7 +313,6 @@
                         price: document.getElementById('price').value.replace(/,/g, ''),
                         price_unit: document.getElementById('price_unit').value,
                         price_unit_ar: document.getElementById('price_unit_ar').value,
-                        price_sec: document.getElementById('price_sec').value.trim(),
                         vat_note: document.getElementById('vat_note').value.trim(),
                         vat_note_ar: document.getElementById('vat_note_ar').value.trim(),
                         display_order: document.getElementById('display_order').value,
@@ -386,7 +394,6 @@
             document.getElementById('price').value = pricing.price || '';
             document.getElementById('price_unit').value = pricing.price_unit || 'SAR/day';
             document.getElementById('price_unit_ar').value = pricing.price_unit_ar || 'ر.س/يوم';
-            document.getElementById('price_sec').value = pricing.price_secondary || '';
             document.getElementById('vat_note').value = pricing.vat_note || '*(excluding VAT)';
             document.getElementById('vat_note_ar').value = pricing.vat_note_ar || '*(غير شامل الضريبة)';
             document.getElementById('display_order').value = pricing.display_order || 0;

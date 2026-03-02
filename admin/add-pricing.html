@@ -126,16 +126,25 @@
                                     <option value="SAR">SAR</option>
                                 </select>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <label for="price_sec">Secondary Price</label>
-                            <input type="text" id="price_sec" name="price_sec" placeholder="e.g., Hall 1: 1,000 SAR/hour">
+                            <div class="form-group">
+                                <label for="price_unit_ar">Price Unit (AR)</label>
+                                <select id="price_unit_ar" name="price_unit_ar" dir="rtl">
+                                    <option value="ร.ส/يوم">ร.ส/يوم</option>
+                                    <option value="ร.ส/ساعة">ร.ส/ساعة</option>
+                                    <option value="ร.ס">ร.ס</option>
+                                </select>
+                            </div>
                         </div>
 
                         <div class="form-group">
                             <label for="vat_note">VAT Note</label>
                             <input type="text" id="vat_note" name="vat_note" value="*(excluding VAT)">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="vat_note_ar">VAT Note (AR)</label>
+                            <input type="text" id="vat_note_ar" name="vat_note_ar" value="*(غير شامل الضريبة)" dir="rtl">
                         </div>
 
                         <div class="form-row">
@@ -177,6 +186,20 @@
             if (priceInput) {
                 priceInput.addEventListener('input', function() {
                     this.value = this.value.replace(/[^\d]/g, '');
+                });
+            }
+
+            // Auto-sync Price Unit (AR) when Price Unit (EN) changes
+            const priceUnitSelect = document.getElementById('price_unit');
+            const priceUnitArSelect = document.getElementById('price_unit_ar');
+            if (priceUnitSelect && priceUnitArSelect) {
+                priceUnitSelect.addEventListener('change', function() {
+                    const mapping = {
+                        'SAR/day': 'ร.ส/يوم',
+                        'SAR/hour': 'ร.ส/ساعة',
+                        'SAR': 'ร.ס'
+                    };
+                    priceUnitArSelect.value = mapping[this.value] || 'ร.ס';
                 });
             }
 
@@ -227,8 +250,9 @@
                         description_ar: document.getElementById('description_ar').value.trim(),
                         price: document.getElementById('price').value.replace(/,/g, ''),
                         price_unit: document.getElementById('price_unit').value,
-                        price_sec: document.getElementById('price_sec').value.trim(),
+                        price_unit_ar: document.getElementById('price_unit_ar').value,
                         vat_note: document.getElementById('vat_note').value.trim(),
+                        vat_note_ar: document.getElementById('vat_note_ar').value.trim(),
                         display_order: document.getElementById('display_order').value,
                         is_active: document.querySelector('input[name="is_active"]').checked ? '1' : '0'
                     };
