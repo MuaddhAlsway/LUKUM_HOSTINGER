@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 require_once 'lang/loader.php';
 require_once 'api/image-helper.php';
 ?><!DOCTYPE html>
@@ -216,7 +216,7 @@ require_once 'api/image-helper.php';
 
     <!-- Primary Meta Tags -->
     <meta name="title" content="Event Spaces for Rent in Riyadh | LAKUM Artspace Venues">
-    <meta name="description" content="Rent versatile event spaces in Riyadh for exhibitions, workshops, meetings, and cultural events. LAKUM offers Hall 1, Hall 2, CafÃ©, and Meeting Rooms with full support services.">
+    <meta name="description" content="Rent versatile event spaces in Riyadh for exhibitions, workshops, meetings, and cultural events. LAKUM offers Hall 1, Hall 2, Café, and Meeting Rooms with full support services.">
     <meta name="keywords" content="art gallery Riyadh, cultural events Riyadh, art exhibitions Saudi Arabia, event space rental Riyadh, contemporary art gallery, cultural hub Riyadh, art workshops Riyadh, creative space Riyadh">
     <meta name="author" content="LAKUM Artspace">
     <meta name="language" content="<?php echo isArabic() ? "Arabic" : "English"; ?>">
@@ -234,7 +234,7 @@ require_once 'api/image-helper.php';
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://lakumartspace.infinityfree.me/spaces">
     <meta property="og:title" content="Event Spaces for Rent in Riyadh | LAKUM Artspace Venues">
-    <meta property="og:description" content="Rent versatile event spaces in Riyadh for exhibitions, workshops, meetings, and cultural events. LAKUM offers Hall 1, Hall 2, CafÃ©, and Meeting Rooms with full support services.">
+    <meta property="og:description" content="Rent versatile event spaces in Riyadh for exhibitions, workshops, meetings, and cultural events. LAKUM offers Hall 1, Hall 2, Café, and Meeting Rooms with full support services.">
     <meta property="og:image" content="https://lakumartspace.infinityfree.me/assest/img-4.webp">
     <meta property="og:site_name" content="LAKUM Artspace">
     <meta property="og:locale" content="en_US">
@@ -244,7 +244,7 @@ require_once 'api/image-helper.php';
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://lakumartspace.infinityfree.me/spaces">
     <meta name="twitter:title" content="Event Spaces for Rent in Riyadh | LAKUM Artspace Venues">
-    <meta name="twitter:description" content="Rent versatile event spaces in Riyadh for exhibitions, workshops, meetings, and cultural events. LAKUM offers Hall 1, Hall 2, CafÃ©, and Meeting Rooms with full support services.">
+    <meta name="twitter:description" content="Rent versatile event spaces in Riyadh for exhibitions, workshops, meetings, and cultural events. LAKUM offers Hall 1, Hall 2, Café, and Meeting Rooms with full support services.">
     <meta name="twitter:image" content="https://lakumartspace.infinityfree.me/assest/img-4.webp">
 
     <!-- Additional SEO -->
@@ -260,7 +260,7 @@ require_once 'api/image-helper.php';
             "@context": "https://schema.org",
             "@type": "ArtGallery",
             "name": "LAKUM Artspace",
-            "alternateName": "Ù„ÙƒÙ… Ø¢Ø±Øª Ø³Ø¨ÙŠØ³",
+            "alternateName": "لكم آرت سبيس",
             "url": "https://lakumartspace.infinityfree.me",
             "logo": "https://lakumartspace.infinityfree.me/assest/favicon.png",
             "description": "A living space for art, connection, and cultural exchange in the heart of Riyadh",
@@ -302,8 +302,8 @@ require_once 'api/image-helper.php';
             <div class="lakum-header__logo">
                 <a href="" class="lakum-logo">
                     <!-- English: Swapped -->
-                    <img src="optimized-images/assest/logo/right_section.webp" alt="LAKUM" class="lakum-logo__left" width="105" height="80" decoding="async">
-                    <img src="optimized-images/assest/logo/left_section.webp" alt="Artspace" class="lakum-logo__right" width="105" height="80" decoding="async">
+                    <img src="assest/logo/right_section.webp" alt="LAKUM" class="lakum-logo__left" width="105" height="80" decoding="async">
+                    <img src="assest/logo/left_section.webp" alt="Artspace" class="lakum-logo__right" width="105" height="80" decoding="async">
                 </a>
             </div>
 
@@ -342,7 +342,7 @@ require_once 'api/image-helper.php';
 
             <!-- Language Switcher -->
             <div class="lakum-language-switcher">
-                <a href="<?php echo buildLanguageSwitcherUrl(); ?>" class="lakum-lang-link" title="<?php echo isArabic() ? 'Language: English' : 'Language: العربية'; ?>">
+                <a href="<?php echo buildLanguageSwitcherUrl(); ?>" class="lakum-lang-link" title="<?php echo isArabic() ? 'Language: English' : 'Language: ???????'; ?>">
                 <i class="ri-global-line"></i>
                 <span class="lakum-lang-text"><?php echo isArabic() ? 'EN' : 'AR'; ?></span>
             </a>
@@ -487,7 +487,7 @@ require_once 'api/image-helper.php';
                 <li class="lakum-spaces-hero__tag"><?php echo t('spaces_tag_hub', 'Hub'); ?></li>
                 <li class="lakum-spaces-hero__tag"><?php echo t('spaces_tag_library', 'Library'); ?></li>
                 <li class="lakum-spaces-hero__tag"><?php echo t('spaces_tag_shop', 'Shop'); ?></li>
-                <li class="lakum-spaces-hero__tag"><?php echo t('spaces_tag_cafe', 'Café'); ?></li>
+                <li class="lakum-spaces-hero__tag"><?php echo t('spaces_tag_cafe', 'Caf�'); ?></li>
             </ul>
         </div>
     </section>
@@ -497,7 +497,7 @@ require_once 'api/image-helper.php';
         <div class="lakum-container">
             <h2 class="lakum-spaces-intro__title"><?php echo t('spaces_venue_title', 'LAKUM VENUE'); ?></h2>
             <div class="lakum-spaces-intro__content">
-                <p><?php echo t('spaces_intro_p1', 'Lakum Artspace offers a versatile and elegantly designed venue, thoughtfully created to accommodate a wide range of events, from art exhibitions and product launches to private celebrations, talks, and cultural programs. The space unfolds across several distinctive areas, each with its own atmosphere and flexibility: Hall 1, a spacious gallery ideal for large-scale installations or receptions; Hall 2, perfectly suited for intimate showcases, creative workshops, and panel discussions; and the Mezzanine Floor, home to a welcoming Café, a curated Library, and the Lakum Shop, a retail corner that encourages relaxed breaks, quiet exploration, and moments of discovery.'); ?></p>
+                <p><?php echo t('spaces_intro_p1', 'Lakum Artspace offers a versatile and elegantly designed venue, thoughtfully created to accommodate a wide range of events, from art exhibitions and product launches to private celebrations, talks, and cultural programs. The space unfolds across several distinctive areas, each with its own atmosphere and flexibility: Hall 1, a spacious gallery ideal for large-scale installations or receptions; Hall 2, perfectly suited for intimate showcases, creative workshops, and panel discussions; and the Mezzanine Floor, home to a welcoming Caf�, a curated Library, and the Lakum Shop, a retail corner that encourages relaxed breaks, quiet exploration, and moments of discovery.'); ?></p>
 
                 <p><?php echo t('spaces_intro_p2', 'To complement every occasion, Lakum offers a suite of additional services designed to ensure a seamless and memorable experience. These include valet parking, assisted catering, professional security, and access to trusted photographers and videographers to capture each moment. The venue can also accommodate live music performances, adding an artistic and atmospheric touch to any gathering. Fully equipped with an in-house sound system, projectors, and a curated catalogue of furniture available for rental, Lakum allows every event to be tailored to its unique atmosphere and design vision.'); ?></p>
             </div>
@@ -523,9 +523,9 @@ require_once 'api/image-helper.php';
                 </div>
                 <div class="lakum-facility-card" onclick="openFacilityPopup('cafe')">
                     <div class="lakum-facility-card__image">
-                        <?php echo ImageHelper::render('HadafCompany/hall3.png', 'Café', 'gallery'); ?>
+                        <?php echo ImageHelper::render('HadafCompany/hall3.png', 'Caf�', 'gallery'); ?>
                     </div>
-                    <h3 class="lakum-facility-card__name"><?php echo t('spaces_cafe', 'Café'); ?></h3>
+                    <h3 class="lakum-facility-card__name"><?php echo t('spaces_cafe', 'Caf�'); ?></h3>
                 </div>
                 <div class="lakum-facility-card" onclick="openFacilityPopup('meeting')">
                     <div class="lakum-facility-card__image">
@@ -770,7 +770,7 @@ require_once 'api/image-helper.php';
                     <details class="pricing-accordion">
                         <summary class="pricing-accordion__header">
                             <div class="pricing-accordion__info">
-                                <h3 class="pricing-accordion__name">CafÃ©</h3>
+                                <h3 class="pricing-accordion__name">Café</h3>
                                 <div class="pricing-accordion__price">
                                     <span class="pricing-accordion__amount">3,400</span>
                                     <span class="pricing-accordion__currency">SAR/day</span>
@@ -780,9 +780,9 @@ require_once 'api/image-helper.php';
                             <span class="pricing-accordion__icon"></span>
                         </summary>
                         <div class="pricing-accordion__content">
-                            <h4>CafÃ© Rental</h4>
+                            <h4>Café Rental</h4>
                             <p>This exclusive service is offered when a client chooses to rent the entire space, ensuring a fully private and uninterrupted experience.</p>
-                            <p>The cafÃ© can be booked in full, and the rental fee is fully redeemable, allowing the client to benefit from ordering beverages up to the same amount.</p>
+                            <p>The café can be booked in full, and the rental fee is fully redeemable, allowing the client to benefit from ordering beverages up to the same amount.</p>
                         </div>
                     </details>
                     <div class="pricing-button-fixed">
@@ -838,8 +838,8 @@ require_once 'api/image-helper.php';
                 <div class="lakum-footer__brand">
                     <div class="lakum-footer__logo">
                         <!-- English: Swapped -->
-                        <img src="optimized-images/assest/logo/right_section.webp" alt="LAKUM" class="lakum-footer__logo-left" width="105" height="80" decoding="async">
-                        <img src="optimized-images/assest/logo/left_section.webp" alt="Artspace" class="lakum-footer__logo-right" width="105" height="80" decoding="async">
+                        <img src="assest/logo/right_section.webp" alt="LAKUM" class="lakum-footer__logo-left" width="105" height="80" decoding="async">
+                        <img src="assest/logo/left_section.webp" alt="Artspace" class="lakum-footer__logo-right" width="105" height="80" decoding="async">
                     </div>
                     <p class="lakum-footer__tagline"><?php echo t('footer_tagline', 'Where Encounters Shape Culture'); ?></p>
                 </div>
@@ -878,7 +878,7 @@ require_once 'api/image-helper.php';
             </div>
 
             <div class="lakum-footer__bottom">
-                <p class="lakum-footer__copyright"><?php echo t('footer_copyright', '© 2025 - 2027 LAKUM Artspace. All rights reserved.'); ?></p>
+                <p class="lakum-footer__copyright"><?php echo t('footer_copyright', '� 2025 - 2027 LAKUM Artspace. All rights reserved.'); ?></p>
                 <div class="lakum-footer__legal">
                     <a href="terms" class="lakum-footer__legal-link"><?php echo t('footer_terms', 'Terms & Conditions'); ?></a>
                     <span class="lakum-footer__legal-divider">|</span>
@@ -977,7 +977,7 @@ require_once 'api/image-helper.php';
                 ]
             },
             cafe: {
-                name: 'Café',
+                name: 'Caf�',
                 images: [
                     'HadafCompany/hall3.png'
                 ]
@@ -1742,11 +1742,11 @@ require_once 'api/image-helper.php';
             const displayContent = content || item.content || '';
             
             // Get bilingual price unit and VAT note
-            const priceUnit = lang === 'ar' ? (item.price_unit_ar || 'ر.س') : (item.price_unit || 'SAR');
-            const vatNote = lang === 'ar' ? (item.vat_note_ar || '*(غير شامل الضريبة)') : (item.vat_note || '*(excluding VAT)');
+            const priceUnit = lang === 'ar' ? (item.price_unit_ar || '?.?') : (item.price_unit || 'SAR');
+            const vatNote = lang === 'ar' ? (item.vat_note_ar || '*(??? ???? ???????)') : (item.vat_note || '*(excluding VAT)');
             
             // Get "Book Now" button text based on language
-            const bookNowText = lang === 'ar' ? 'احجز الآن' : 'Book Now';
+            const bookNowText = lang === 'ar' ? '???? ????' : 'Book Now';
             
             // Format price
             let priceHTML = '';
@@ -1851,7 +1851,7 @@ require_once 'api/image-helper.php';
         footer_navigate: "<?php echo t('footer_navigate', 'Navigate'); ?>",
         footer_explore: "<?php echo t('footer_explore', 'Explore'); ?>",
         footer_connect: "<?php echo t('footer_connect', 'Connect'); ?>",
-        footer_copyright: "<?php echo t('footer_copyright', '© 2026 LAKUM Artspace. All rights reserved.'); ?>",
+        footer_copyright: "<?php echo t('footer_copyright', '� 2026 LAKUM Artspace. All rights reserved.'); ?>",
         footer_terms: "<?php echo t('footer_terms', 'Terms & Conditions'); ?>",
         footer_privacy: "<?php echo t('footer_privacy', 'Privacy Policy'); ?>"
     };
@@ -1917,7 +1917,7 @@ require_once 'api/image-helper.php';
         // Update footer bottom
         const footerCopyright = document.querySelector('.lakum-footer__copyright');
         if (footerCopyright) {
-            footerCopyright.textContent = translations.footer_copyright || '© 2026 LAKUM Artspace. All rights reserved.';
+            footerCopyright.textContent = translations.footer_copyright || '� 2026 LAKUM Artspace. All rights reserved.';
         }
 
         const footerTermsLink = document.querySelector('.lakum-footer__legal-link:first-child');

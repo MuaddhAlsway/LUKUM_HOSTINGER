@@ -90,8 +90,8 @@ require_once 'config.css-loader.php';
         html { font-size: 16px; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
         body {  sans-serif; background: #f6f6eb; color: #1a1a1a; overflow-x: hidden; line-height: 1.6; }
         
-        .lakum-hero { position: relative; width: 100%; height: 85vh; min-height: 600px; display: flex; align-items: center; justify-content: center; background: #1a1a1a; }
-        .lakum-hero__image-wrapper { position: absolute; inset: 0; z-index: 1; overflow: hidden; }
+        .lakum-hero { position: relative; width: 100vw; margin-left: calc(-50vw + 50%); height: 85vh; min-height: 600px; display: flex; align-items: center; justify-content: center; background: #1a1a1a; }
+        .lakum-hero__image-wrapper { position: absolute; inset: 0; z-index: 1; overflow: hidden; width: 100%; height: 100%; }
         .lakum-hero__image { width: 100%; height: 100%; object-fit: cover; display: block; }
         .lakum-hero__overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.65) 100%); z-index: 2; }
         .lakum-hero__content { position: relative; z-index: 3; text-align: center; color: #fff; max-width: 1400px; width: 90%; padding: 0 20px; }
@@ -260,8 +260,8 @@ margin: 0 auto;}
         <div class="lakum-header__container">
             <div class="lakum-header__logo">
                 <a href="./" class="lakum-logo">
-                    <img src="optimized-images/assest/logo/right_section.webp" alt="LAKUM" class="lakum-logo__left" width="105" height="80" decoding="async">
-                    <img src="optimized-images/assest/logo/left_section.webp" alt="Artspace" class="lakum-logo__right" width="105" height="80" decoding="async">
+                    <img src="assest/logo/right_section.webp" alt="LAKUM" class="lakum-logo__left" width="105" height="80" decoding="async">
+                    <img src="assest/logo/left_section.webp" alt="Artspace" class="lakum-logo__right" width="105" height="80" decoding="async">
                 </a>
             </div>
             <nav class="lakum-nav">
@@ -278,7 +278,7 @@ margin: 0 auto;}
                 </ul>
             </nav>
             <div class="lakum-language-switcher">
-                <a href="<?php echo buildLanguageSwitcherUrl(); ?>" class="lakum-lang-link" data-lang-switch="<?php echo isArabic() ? 'en' : 'ar'; ?>" title="<?php echo isArabic() ? 'Switch to English' : 'التبديل إلى العربية'; ?>">
+                <a href="<?php echo buildLanguageSwitcherUrl(); ?>" class="lakum-lang-link" title="<?php echo isArabic() ? 'Language: English' : 'Language: العربية'; ?>">
                     <i class="ri-global-line"></i>
                     <span class="lakum-lang-text"><?php echo isArabic() ? 'EN' : 'AR'; ?></span>
                 </a>
@@ -293,7 +293,7 @@ margin: 0 auto;}
         <div class="lakum-hero__image-wrapper">
             <img src="heroImage/img-4.webp"
                  srcset="heroImage/img-4.webp 1200w"
-                 sizes="(max-width: 768px) 100vw, 650px"
+                 sizes="100vw"
                  alt="LAKUM Artspace"
                  fetchpriority="high"
                  decoding="async"
@@ -392,8 +392,8 @@ margin: 0 auto;}
             <div class="lakum-footer__content">
                 <div class="lakum-footer__brand">
                     <div class="lakum-footer__logo">
-                        <img src="optimized-images/assest/logo/right_section.webp" alt="LAKUM" class="lakum-footer__logo-left" width="105" height="80" decoding="async">
-                        <img src="optimized-images/assest/logo/left_section.webp" alt="Artspace" class="lakum-footer__logo-right" width="105" height="80" decoding="async">
+                        <img src="assest/logo/right_section.webp" alt="LAKUM" class="lakum-footer__logo-left" width="105" height="80" decoding="async">
+                        <img src="assest/logo/left_section.webp" alt="Artspace" class="lakum-footer__logo-right" width="105" height="80" decoding="async">
                     </div>
                     <p class="lakum-footer__tagline"><?php echo t('tagline', 'Where Encounters Shape Culture'); ?></p>
                 </div>

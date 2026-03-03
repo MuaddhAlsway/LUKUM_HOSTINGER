@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 require_once 'lang/loader.php';
 ?><!DOCTYPE html>
 <html <?php echo getLanguageAttributes(); ?>>
@@ -313,7 +313,7 @@ require_once 'lang/loader.php';
 
             <!-- Language Switcher -->
             <div class="lakum-language-switcher">
-                <a href="<?php echo buildLanguageSwitcherUrl(); ?>" class="lakum-lang-link" title="<?php echo isArabic() ? 'Language: English' : 'Language: العربية'; ?>">
+                <a href="<?php echo buildLanguageSwitcherUrl(); ?>" class="lakum-lang-link" title="<?php echo isArabic() ? 'Language: English' : 'Language: ???????'; ?>">
                 <i class="ri-global-line"></i>
                 <span class="lakum-lang-text"><?php echo isArabic() ? 'EN' : 'AR'; ?></span>
             </a>
@@ -462,7 +462,7 @@ require_once 'lang/loader.php';
 By accessing and using the LAKUM Artspace website and services, you accept and agree to be bound by these Terms and Conditions.
 
 1. Standard Operating Hours
-I acknowledge that Lakum Artspaceâ€™s operating hours are 10:00 AM â€“ 10:00 PM, and that additional hours will incur extra charges.
+I acknowledge that Lakum Artspace’s operating hours are 10:00 AM – 10:00 PM, and that additional hours will incur extra charges.
 
 2. Liability for Damages
 I am responsible for any damage to the venue, equipment, furniture, or accessories during the entire rental period, including setup and dismantling.
@@ -477,22 +477,22 @@ I will not use or apply stickers, vinyl, or adhesive materials on any internal o
 Lakum Artspace is not obligated to promote or advertise external events on its social media or marketing channels.
 
 6. Branding and Logo Usage
-Use of Lakum Artspaceâ€™s logo or branding elements is strictly prohibited unless formally approved.
+Use of Lakum Artspace’s logo or branding elements is strictly prohibited unless formally approved.
 
 7. Private Area Access
-Access to private areasâ€”including offices, the directorâ€™s office, and storage roomsâ€”is not permitted.
+Access to private areas—including offices, the director’s office, and storage rooms—is not permitted.
 
 8. Public Access Areas
-The mezzanine floor, including the shop and cafÃ©, will remain open to the public during regular hours unless reserved as private for the event.
+The mezzanine floor, including the shop and café, will remain open to the public during regular hours unless reserved as private for the event.
 
 9. On-Site Staff Presence
-Lakum Artspace staffâ€”male and femaleâ€”will be present throughout the event.
+Lakum Artspace staff—male and female—will be present throughout the event.
 
 10. Exhibition Approval Process
 Personal or group exhibitions by artists will not be considered unless formally submitted and approved by the Lakum Artspace jury.
 
 
-Compliance with these terms ensures the preservation of Lakum Artspaceâ€™s professional standards and physical integrity, establishing a clear framework for operational hours, property liability, and brand usage to which all parties are strictly bound throughout the duration of the engagement.</div>
+Compliance with these terms ensures the preservation of Lakum Artspace’s professional standards and physical integrity, establishing a clear framework for operational hours, property liability, and brand usage to which all parties are strictly bound throughout the duration of the engagement.</div>
             </div>
         </div>
     </section>
@@ -543,7 +543,7 @@ Compliance with these terms ensures the preservation of Lakum Artspaceâ€™s 
             </div>
 
             <div class="lakum-footer__bottom">
-                <p class="lakum-footer__copyright"><?php echo t('footer_copyright', '© 2025 - 2027 LAKUM Artspace. All rights reserved.'); ?></p>
+                <p class="lakum-footer__copyright"><?php echo t('footer_copyright', '� 2025 - 2027 LAKUM Artspace. All rights reserved.'); ?></p>
                 <div class="lakum-footer__legal">
                     <a href="terms.php" class="lakum-footer__legal-link"><?php echo t('footer_terms', 'Terms & Conditions'); ?></a>
                     <span class="lakum-footer__legal-divider">|</span>
@@ -733,7 +733,7 @@ Compliance with these terms ensures the preservation of Lakum Artspaceâ€™s 
         footer_navigate: "<?php echo t('footer_navigate', 'Navigate'); ?>",
         footer_explore: "<?php echo t('footer_explore', 'Explore'); ?>",
         footer_connect: "<?php echo t('footer_connect', 'Connect'); ?>",
-        footer_copyright: "<?php echo t('footer_copyright', '© 2026 LAKUM Artspace. All rights reserved.'); ?>",
+        footer_copyright: "<?php echo t('footer_copyright', '� 2026 LAKUM Artspace. All rights reserved.'); ?>",
         footer_terms: "<?php echo t('footer_terms', 'Terms & Conditions'); ?>",
         footer_privacy: "<?php echo t('footer_privacy', 'Privacy Policy'); ?>"
     };
@@ -799,7 +799,7 @@ Compliance with these terms ensures the preservation of Lakum Artspaceâ€™s 
         // Update footer bottom
         const footerCopyright = document.querySelector('.lakum-footer__copyright');
         if (footerCopyright) {
-            footerCopyright.textContent = translations.footer_copyright || '© 2026 LAKUM Artspace. All rights reserved.';
+            footerCopyright.textContent = translations.footer_copyright || '� 2026 LAKUM Artspace. All rights reserved.';
         }
 
         const footerTermsLink = document.querySelector('.lakum-footer__legal-link:first-child');

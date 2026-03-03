@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 require_once 'lang/loader.php';
 require_once 'api/image-helper.php';
 ?><!DOCTYPE html>
@@ -238,8 +238,8 @@ require_once 'api/image-helper.php';
             <div class="lakum-header__logo">
                 <a href="index.php" class="lakum-logo">
                     <!-- English: Swapped -->
-                    <img src="optimized-images/assest/logo/right_section.webp" alt="LAKUM" class="lakum-logo__left" width="105" height="80" decoding="async">
-                    <img src="optimized-images/assest/logo/left_section.webp" alt="Artspace" class="lakum-logo__right" width="105" height="80" decoding="async">
+                    <img src="assest/logo/right_section.webp" alt="LAKUM" class="lakum-logo__left" width="105" height="80" decoding="async">
+                    <img src="assest/logo/left_section.webp" alt="Artspace" class="lakum-logo__right" width="105" height="80" decoding="async">
                 </a>
             </div>
 
@@ -278,7 +278,7 @@ require_once 'api/image-helper.php';
 
             <!-- Language Switcher -->
             <div class="lakum-language-switcher">
-                <a href="<?php echo buildLanguageSwitcherUrl(); ?>" class="lakum-lang-link" title="<?php echo isArabic() ? 'Language: English' : 'Language: العربية'; ?>">
+                <a href="<?php echo buildLanguageSwitcherUrl(); ?>" class="lakum-lang-link" title="<?php echo isArabic() ? 'Language: English' : 'Language: ???????'; ?>">
                 <i class="ri-global-line"></i>
                 <span class="lakum-lang-text"><?php echo isArabic() ? 'EN' : 'AR'; ?></span>
             </a>
@@ -374,7 +374,7 @@ require_once 'api/image-helper.php';
                             btn.href = data.data.booking_link;
                             btn.target = '_blank';
                             btn.rel = 'noopener noreferrer';
-                            console.log('✓ Booking link updated to:', data.data.booking_link);
+                            console.log('? Booking link updated to:', data.data.booking_link);
                         }
                     }
                 } catch (e) {
@@ -391,8 +391,8 @@ require_once 'api/image-helper.php';
                 <div class="lakum-footer__brand">
                     <div class="lakum-footer__logo">
                         <!-- English: Swapped -->
-                        <img src="optimized-images/assest/logo/right_section.webp" alt="LAKUM" class="lakum-footer__logo-left" width="105" height="80" decoding="async">
-                        <img src="optimized-images/assest/logo/left_section.webp" alt="Artspace" class="lakum-footer__logo-right" width="105" height="80" decoding="async">
+                        <img src="assest/logo/right_section.webp" alt="LAKUM" class="lakum-footer__logo-left" width="105" height="80" decoding="async">
+                        <img src="assest/logo/left_section.webp" alt="Artspace" class="lakum-footer__logo-right" width="105" height="80" decoding="async">
                     </div>
                     <p class="lakum-footer__tagline">Where Encounters Shape Culture</p>
                 </div>
@@ -431,7 +431,7 @@ require_once 'api/image-helper.php';
             </div>
 
             <div class="lakum-footer__bottom">
-                <p class="lakum-footer__copyright"><?php echo t('footer_copyright', '© 2025 - 2027 LAKUM Artspace. All rights reserved.'); ?></p>
+                <p class="lakum-footer__copyright"><?php echo t('footer_copyright', '� 2025 - 2027 LAKUM Artspace. All rights reserved.'); ?></p>
                 <div class="lakum-footer__legal">
                     <a href="terms.php" class="lakum-footer__legal-link"><?php echo t('footer_terms', 'Terms & Conditions'); ?></a>
                     <span class="lakum-footer__legal-divider">|</span>
@@ -463,7 +463,7 @@ require_once 'api/image-helper.php';
 
     <!-- Lightbox -->
     <div class="lightbox" id="lightbox" onclick="closeLightbox()">
-       <button class="lightbox__close" onclick="closeLightbox()" title="Close">×</button>
+       <button class="lightbox__close" onclick="closeLightbox()" title="Close">�</button>
         <button class="lightbox__prev" onclick="event.stopPropagation(); prevImage()">
             <i class="ri-arrow-left-s-line"></i>
         </button>
@@ -842,10 +842,10 @@ require_once 'api/image-helper.php';
             if (event.end_date && event.end_date !== event.event_date) {
                 const endEventDate = new Date(event.end_date);
                 const formattedEndDate = endEventDate.toLocaleDateString('en-US', options);
-                return `${formattedDate} • ${startTime} - ${formattedEndDate} • ${endTime}`;
+                return `${formattedDate} � ${startTime} - ${formattedEndDate} � ${endTime}`;
             }
             
-            return `${formattedDate} • ${startTime} - ${endTime}`;
+            return `${formattedDate} � ${startTime} - ${endTime}`;
         }
 
         // Render gallery from database
@@ -972,7 +972,7 @@ require_once 'api/image-helper.php';
                 // Currently in English, show AR to switch to Arabic
                 langSwitcher.setAttribute('data-lang-switch', 'ar');
                 langSwitcher.querySelector('.lakum-lang-text').textContent = 'AR';
-                langSwitcher.setAttribute('title', 'Language: Ø§Ù„Ø¹Ø±Ø¨ÙŠØ©');
+                langSwitcher.setAttribute('title', 'Language: العربية');
             }
         }
 
@@ -996,19 +996,19 @@ require_once 'api/image-helper.php';
         function updateSectionTitles() {
             const lang = document.documentElement.lang || 'en';
             const titles = {
-                'about_this_event': lang === 'ar' ? 'حول هذا الحدث' : 'About This Event',
-                'gallery': lang === 'ar' ? 'المعرض' : 'Gallery',
-                'event_video': lang === 'ar' ? 'فيديو الحدث' : 'Event Video'
+                'about_this_event': lang === 'ar' ? '??? ??? ?????' : 'About This Event',
+                'gallery': lang === 'ar' ? '??????' : 'Gallery',
+                'event_video': lang === 'ar' ? '????? ?????' : 'Event Video'
             };
 
             // Update all section titles
             document.querySelectorAll('.event-section__title').forEach(el => {
                 const text = el.textContent.trim();
-                if (text === 'About This Event' || text === 'حول هذا الحدث') {
+                if (text === 'About This Event' || text === '??? ??? ?????') {
                     el.textContent = titles['about_this_event'];
-                } else if (text === 'Gallery' || text === 'المعرض') {
+                } else if (text === 'Gallery' || text === '??????') {
                     el.textContent = titles['gallery'];
-                } else if (text === 'Event Video' || text === 'فيديو الحدث') {
+                } else if (text === 'Event Video' || text === '????? ?????') {
                     el.textContent = titles['event_video'];
                 }
             });
@@ -1065,7 +1065,7 @@ require_once 'api/image-helper.php';
             footer_navigate: "<?php echo t('footer_navigate', 'Navigate'); ?>",
             footer_explore: "<?php echo t('footer_explore', 'Explore'); ?>",
             footer_connect: "<?php echo t('footer_connect', 'Connect'); ?>",
-            footer_copyright: "<?php echo t('footer_copyright', '© 2026 LAKUM Artspace. All rights reserved.'); ?>",
+            footer_copyright: "<?php echo t('footer_copyright', '� 2026 LAKUM Artspace. All rights reserved.'); ?>",
             footer_terms: "<?php echo t('footer_terms', 'Terms & Conditions'); ?>",
             footer_privacy: "<?php echo t('footer_privacy', 'Privacy Policy'); ?>",
             about_this_event: "<?php echo t('about_this_event', 'About This Event'); ?>",
@@ -1138,7 +1138,7 @@ require_once 'api/image-helper.php';
             // Update footer bottom
             const footerCopyright = document.querySelector('.lakum-footer__copyright');
             if (footerCopyright) {
-                footerCopyright.textContent = translations.footer_copyright || '© 2026 LAKUM Artspace. All rights reserved.';
+                footerCopyright.textContent = translations.footer_copyright || '� 2026 LAKUM Artspace. All rights reserved.';
             }
 
             const footerTermsLink = document.querySelector('.lakum-footer__legal-link:first-child');
