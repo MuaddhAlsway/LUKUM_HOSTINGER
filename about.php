@@ -97,6 +97,8 @@ body {
   inset: 0;
   z-index: 0;
   overflow: hidden;
+  width: 100%;
+  height: 100%;
 }
 
 .page-hero__image-wrapper picture,
@@ -107,6 +109,8 @@ body {
   display: block;
   position: absolute;
   inset: 0;
+  margin: 0;
+  padding: 0;
 }
 
 .page-hero::before {
@@ -585,12 +589,13 @@ html[lang="ar"] .lakum-event-card__date {
     <div class="page-hero__image-wrapper">
         <img src="heroImage/img-4.webp"
              srcset="heroImage/img-4.webp 1200w"
-             sizes="(max-width: 768px) 100vw, 650px"
+             sizes="100vw"
              alt="About LAKUM Artspace"
              fetchpriority="high"
              decoding="async"
              width="1200"
-             height="800">
+             height="800"
+             style="width: 100%; height: 100%; object-fit: cover; display: block;">
     </div>
     <div class="page-hero__overlay"></div>
 </section>

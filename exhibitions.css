@@ -20,6 +20,15 @@
     min-height: 450px;
     max-height: 650px;
     overflow: hidden;
+    position: relative;
+}
+
+.lakum-exhibitions-hero__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35);
+    z-index: 1;
+    pointer-events: none;
 }
 
 .lakum-exhibitions-hero__image {

@@ -84,12 +84,14 @@ require_once 'api/image-helper.php';
     <section class="lakum-exhibitions-hero">
         <img src="heroImage/img-4.webp"
              srcset="heroImage/img-4.webp 1200w"
-             sizes="(max-width: 768px) 100vw, 650px"
+             sizes="100vw"
              alt="LAKUM Exhibitions"
              fetchpriority="high"
              decoding="async"
              width="1200"
-             height="800">
+             height="800"
+             style="width: 100%; height: 100%; object-fit: cover; display: block;">
+        <div class="lakum-exhibitions-hero__overlay"></div>
     </section>
 
     <!-- Upcoming Section -->
