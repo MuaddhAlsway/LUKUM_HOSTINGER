@@ -634,6 +634,27 @@ html[lang="ar"] .lakum-event-card__date {
 <script src="assest/fun-interactions.js" defer></script>
 <script src="js/LanguageManager.js?v=1.0.0" defer></script>
 <script>
+    // Expandable FAB functionality
+    (function() {
+        const fab = document.getElementById('lakumContactFab');
+        const trigger = document.getElementById('fabTrigger');
+        const menu = document.getElementById('fabMenu');
+
+        if (trigger && fab) {
+            trigger.addEventListener('click', function(e) {
+                e.preventDefault();
+                fab.classList.toggle('lakum-contact-fab--active');
+            });
+
+            // Close when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!fab.contains(e.target)) {
+                    fab.classList.remove('lakum-contact-fab--active');
+                }
+            });
+        }
+    })();
+
     // Set current language from PHP
     window.LAKUM_LANG = '<?php echo getCurrentLanguage(); ?>';
     

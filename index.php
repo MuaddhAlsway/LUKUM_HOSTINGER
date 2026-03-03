@@ -50,14 +50,9 @@ require_once 'config.css-loader.php';
 <div class="lakum-header__container">
 <div class="lakum-header__logo">
 <a href="./" class="lakum-logo">
-<picture>
-<source type="image/webp" srcset="assest/optimized/logo-right-200.webp">
+<!-- English: Swapped -->
 <img src="assest/logo/right_section.png" alt="LAKUM" class="lakum-logo__left" width="105" height="80" decoding="async">
-</picture>
-<picture>
-<source type="image/webp" srcset="assest/optimized/logo-left-200.webp">
 <img src="assest/logo/left_section.png" alt="Artspace" class="lakum-logo__right" width="105" height="80" decoding="async">
-</picture>
 </a>
 </div>
 <nav class="lakum-nav">
@@ -178,16 +173,10 @@ require_once 'config.css-loader.php';
 <div class="lakum-footer__container">
 <div class="lakum-footer__brand">
 <div class="lakum-footer__logo">
-<picture>
-<source type="image/webp" srcset="assest/optimized/logo-right-200.webp">
 <img src="assest/logo/right_section.png" alt="LAKUM" class="lakum-footer__logo-left" width="105" height="80" decoding="async">
-</picture>
-<picture>
-<source type="image/webp" srcset="assest/optimized/logo-left-200.webp">
 <img src="assest/logo/left_section.png" alt="Artspace" class="lakum-footer__logo-right" width="105" height="80" decoding="async">
-</picture>
 </div>
-<p class="lakum-footer__tagline"><?php echo t('tagline','Where Encounters Shape Culture');?></p>
+<p class="lakum-footer__tagline"><?php echo t('footer_tagline', 'Where Encounters Shape Culture'); ?></p>
 </div>
 <nav class="lakum-footer__nav">
 <h2 class="lakum-footer__nav-title"><?php echo t('navigate','Navigate');?></h2>
@@ -207,7 +196,7 @@ require_once 'config.css-loader.php';
 <li><a href="contact.php" class="lakum-footer__link"><?php echo t('contact_us','Contact');?></a></li>
 </ul>
 </nav>
-<div class="lakum-footer__social"><h2 class="lakum-footer__nav-title"><?php echo t('connect','Connect');?></h2><div class="lakum-footer__social-links"><a href="https://www.instagram.com/lakumartspace/" target="_blank" class="lakum-footer__social-link" aria-label="Instagram"><i class="ri-instagram-fill"></i></a><a href="https://x.com/Lakumartspace" target="_blank" class="lakum-footer__social-link" aria-label="Twitter"><i class="ri-twitter-x-fill"></i></a></div></div>
+<div class="lakum-footer__social"><h4 class="lakum-footer__nav-title"><?php echo t('footer_connect', 'Connect'); ?></h4><div class="lakum-footer__social-links"><a href="https://www.instagram.com/lakumartspace/" target="_blank" class="lakum-footer__social-link" aria-label="Instagram"><i class="ri-instagram-fill"></i></a><a href="https://x.com/Lakumartspace" target="_blank" class="lakum-footer__social-link" aria-label="Twitter"><i class="ri-twitter-x-fill"></i></a></div></div>
 </div>
 <div class="lakum-footer__bottom">
 <p class="lakum-footer__copyright"><?php echo t('footer_copyright','© 2025 - 2027 LAKUM Artspace. All rights reserved.');?></p>
@@ -220,7 +209,47 @@ require_once 'config.css-loader.php';
 </div>
 </footer>
 
-<div class="lakum-contact-fab" id="lakumContactFab"><button class="lakum-contact-fab__trigger" id="fabTrigger" aria-label="Contact options"><i class="ri-mail-line lakum-contact-fab__icon"></i><i class="ri-close-line lakum-contact-fab__close"></i></button><div class="lakum-contact-fab__menu" id="fabMenu"><a href="tel:+966920012083" class="lakum-contact-fab__item" aria-label="Call us"><i class="ri-phone-line"></i></a><a href="https://wa.me/966920012083" target="_blank" class="lakum-contact-fab__item" aria-label="Chat on WhatsApp"><i class="ri-whatsapp-line"></i></a><a href="mailto:info@lakumartspace.com" class="lakum-contact-fab__item" aria-label="Send email"><i class="ri-mail-line"></i></a></div></div>
+<!-- Expandable Floating Contact Button -->
+<div class="lakum-contact-fab" id="lakumContactFab">
+    <button class="lakum-contact-fab__trigger" id="fabTrigger" aria-label="Contact options">
+        <i class="ri-mail-line lakum-contact-fab__icon"></i>
+        <i class="ri-close-line lakum-contact-fab__close"></i>
+    </button>
+    <div class="lakum-contact-fab__menu" id="fabMenu">
+        <a href="tel:+966920012083" class="lakum-contact-fab__item" data-tooltip="Call us">
+            <i class="ri-phone-line"></i>
+        </a>
+        <a href="https://wa.me/966920012083" target="_blank" class="lakum-contact-fab__item" data-tooltip="WhatsApp">
+            <i class="ri-whatsapp-line"></i>
+        </a>
+        <a href="mailto:info@lakumartspace.com" class="lakum-contact-fab__item" data-tooltip="Email">
+            <i class="ri-mail-line"></i>
+        </a>
+    </div>
+</div>
+
+<script>
+    // Expandable FAB functionality
+    (function() {
+        const fab = document.getElementById('lakumContactFab');
+        const trigger = document.getElementById('fabTrigger');
+        const menu = document.getElementById('fabMenu');
+
+        if (trigger && fab) {
+            trigger.addEventListener('click', function(e) {
+                e.preventDefault();
+                fab.classList.toggle('lakum-contact-fab--active');
+            });
+
+            // Close when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!fab.contains(e.target)) {
+                    fab.classList.remove('lakum-contact-fab--active');
+                }
+            });
+        }
+    })();
+</script>
 
 </main>
 
