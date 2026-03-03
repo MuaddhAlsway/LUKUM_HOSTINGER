@@ -157,6 +157,7 @@ require_once 'api/image-helper.php';
     <!-- Core Styles - Critical CSS loaded synchronously -->
     <link rel="stylesheet" href="global-styles.css">
     <link rel="stylesheet" href="lakum-components.css">
+    <link rel="stylesheet" href="assest/mobile-menu.css">
     
     <!-- Non-critical CSS - Defer loading -->
     <link rel="preload" href="Home.css" as="style" onload="this.onload=null;this.rel='stylesheet'">

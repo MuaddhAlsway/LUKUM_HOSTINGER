@@ -27,6 +27,7 @@ require_once 'api/image-helper.php';
     <link rel="stylesheet" href="global-styles.css">
     <link rel="stylesheet" href="lakum-components.css">
     <link rel="stylesheet" href="assest/remixicon-minimal.css">
+    <link rel="stylesheet" href="assest/mobile-menu.css">
     <link rel="stylesheet" href="Home.css" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="rtl.css" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="fonts/greta-arabic.css" media="print" onload="this.media='all'">

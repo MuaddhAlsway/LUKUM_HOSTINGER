@@ -1,6 +1,7 @@
 <?php
 require_once 'lang/loader.php';
 require_once 'api/image-helper.php';
+require_once 'api/image-responsive-generator.php';
 require_once 'config.css-loader.php';
 ?><!DOCTYPE html>
 <html <?php echo getLanguageAttributes(); ?>>
@@ -9,8 +10,9 @@ require_once 'config.css-loader.php';
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title><?php echo t('page_title','LAKUM Artspace - Cultural Hub in Riyadh | Art Exhibitions & Events');?></title>
 <link rel="icon" type="image/png" sizes="32x32" href="assest/logo/right_section.png">
-<link rel="preload" as="image" href="heroImage/img-4.webp" fetchpriority="high">
+<link rel="preload" as="image" href="assest/optimized/img-4-768.webp" fetchpriority="high">
 <link rel="preload" href="assest/fonts/GretaArabicAR+LT-Regular.otf" as="font" type="font/otf" crossorigin>
+<link rel="preload" href="accessibility-fixes.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <style><?php readfile('critical-inline-optimized.css');?></style>
@@ -19,12 +21,17 @@ require_once 'config.css-loader.php';
 <link rel="preload" href="rtl.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <link rel="preload" href="fonts/greta-arabic.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <link rel="preload" href="assest/remixicon-minimal.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<link rel="preload" href="assest/language-switcher.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<link rel="preload" href="assest/popup-notification.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <noscript>
 <link rel="stylesheet" href="deferred-styles-optimized.css">
 <link rel="stylesheet" href="<?php echo getCSSFile('Home');?>">
 <link rel="stylesheet" href="rtl.css">
 <link rel="stylesheet" href="fonts/greta-arabic.css">
 <link rel="stylesheet" href="assest/remixicon-minimal.css">
+<link rel="stylesheet" href="assest/language-switcher.css">
+<link rel="stylesheet" href="assest/popup-notification.css">
+<link rel="stylesheet" href="accessibility-fixes.css">
 </noscript>
 <meta name="description" content="LAKUM Artspace is Riyadh's premier cultural destination for contemporary art exhibitions, creative workshops, and cultural events.">
 <meta name="theme-color" content="#1a1a1a">
@@ -33,15 +40,24 @@ require_once 'config.css-loader.php';
 <script src="js/api-cache-manager.js?v=1.0.0" defer></script>
 <script src="assest/fun-interactions.js?v=5.0.0" defer></script>
 <script src="js/LanguageManager.js?v=1.0.0" defer></script>
+<script src="assest/navbar-mobile-toggle.min.js?v=1.0.0" defer></script>
+<script src="js/dom-batch-optimizer.js?v=1.0.0" defer></script>
 </head>
 <body class="<?php echo getLanguageClass();?>">
-<main>
+<a href="#main-content" class="lakum-skip-link">Skip to main content</a>
+<main id="main-content">
 <header class="lakum-header">
 <div class="lakum-header__container">
 <div class="lakum-header__logo">
 <a href="./" class="lakum-logo">
+<picture>
+<source type="image/webp" srcset="assest/optimized/logo-right-200.webp">
 <img src="assest/logo/right_section.png" alt="LAKUM" class="lakum-logo__left" width="105" height="80" decoding="async">
+</picture>
+<picture>
+<source type="image/webp" srcset="assest/optimized/logo-left-200.webp">
 <img src="assest/logo/left_section.png" alt="Artspace" class="lakum-logo__right" width="105" height="80" decoding="async">
+</picture>
 </a>
 </div>
 <nav class="lakum-nav">
@@ -71,7 +87,10 @@ require_once 'config.css-loader.php';
 
 <section class="lakum-hero" style="aspect-ratio:16/9">
 <div class="lakum-hero__image-wrapper">
-<img src="heroImage/img-4.webp" alt="LAKUM Artspace - Where Encounters Shape Culture" fetchpriority="high" loading="eager" decoding="async" width="1200" height="800" class="lakum-hero__image" style="aspect-ratio:1200/800;width:100%;height:100%;object-fit:cover;display:block;">
+<picture>
+<source type="image/webp" srcset="assest/optimized/img-4-320.webp 320w, assest/optimized/img-4-480.webp 480w, assest/optimized/img-4-768.webp 768w, assest/optimized/img-4-1024.webp 1024w, assest/optimized/img-4-1600.webp 1600w" sizes="100vw">
+<img src="assest/optimized/img-4-768.webp" alt="LAKUM Artspace - Where Encounters Shape Culture" fetchpriority="high" loading="eager" decoding="async" width="768" height="432" class="lakum-hero__image" style="width:100%;height:100%;object-fit:cover;display:block;aspect-ratio:16/9;">
+</picture>
 <div class="lakum-hero__overlay"></div>
 </div>
 <div class="lakum-hero__content">
@@ -92,7 +111,10 @@ require_once 'config.css-loader.php';
 <section class="lakum-featured-banner" id="featuredBanner">
 <div class="lakum-featured-banner__content">
 <div class="lakum-featured-banner__image">
-<img src="heroImage/img-4.webp" alt="Featured Event" loading="lazy" decoding="async" width="800" height="450" id="featuredEventImage">
+<picture>
+<source type="image/webp" srcset="assest/optimized/featured-320.webp 320w, assest/optimized/featured-480.webp 480w, assest/optimized/featured-768.webp 768w, assest/optimized/featured-1024.webp 1024w" sizes="(max-width: 768px) 100vw, 50vw">
+<img src="assest/optimized/featured-768.webp" alt="Featured Event" loading="lazy" decoding="async" width="768" height="432" id="featuredEventImage" style="width:100%;height:100%;object-fit:cover;display:block;aspect-ratio:16/9;">
+</picture>
 </div>
 <div class="lakum-featured-banner__text">
 <span class="lakum-featured-banner__date" id="featuredEventDate"><?php echo t('closest_event','Closest Event');?></span>
@@ -142,7 +164,7 @@ require_once 'config.css-loader.php';
 </section>
 
 <section class="lakum-cta lakum-cta--dark">
-<div class="lakum-cta__background" style="background-image:url('heroImage/img-4.webp');will-change:background-image;contain:layout style paint;"></div>
+<div class="lakum-cta__background" style="background-image:url('assest/optimized/img-4-1024.webp');will-change:background-image;contain:layout style paint;"></div>
 <div class="lakum-container">
 <div class="lakum-cta__content">
 <h2 class="lakum-cta__title"><?php echo t('create_event','Create Your Own Event');?></h2>
@@ -156,13 +178,19 @@ require_once 'config.css-loader.php';
 <div class="lakum-footer__container">
 <div class="lakum-footer__brand">
 <div class="lakum-footer__logo">
+<picture>
+<source type="image/webp" srcset="assest/optimized/logo-right-200.webp">
 <img src="assest/logo/right_section.png" alt="LAKUM" class="lakum-footer__logo-left" width="105" height="80" decoding="async">
+</picture>
+<picture>
+<source type="image/webp" srcset="assest/optimized/logo-left-200.webp">
 <img src="assest/logo/left_section.png" alt="Artspace" class="lakum-footer__logo-right" width="105" height="80" decoding="async">
+</picture>
 </div>
 <p class="lakum-footer__tagline"><?php echo t('tagline','Where Encounters Shape Culture');?></p>
 </div>
 <nav class="lakum-footer__nav">
-<h4 class="lakum-footer__nav-title"><?php echo t('navigate','Navigate');?></h4>
+<h2 class="lakum-footer__nav-title"><?php echo t('navigate','Navigate');?></h2>
 <ul class="lakum-footer__nav-list">
 <li><a href="index.php" class="lakum-footer__link"><?php echo t('home','Home');?></a></li>
 <li><a href="about.php" class="lakum-footer__link"><?php echo t('about','About');?></a></li>
@@ -171,7 +199,7 @@ require_once 'config.css-loader.php';
 </ul>
 </nav>
 <nav class="lakum-footer__nav">
-<h4 class="lakum-footer__nav-title"><?php echo t('explore','Explore');?></h4>
+<h2 class="lakum-footer__nav-title"><?php echo t('explore','Explore');?></h2>
 <ul class="lakum-footer__nav-list">
 <li><a href="calendar.php" class="lakum-footer__link"><?php echo t('calendar','Calendar');?></a></li>
 <li><a href="blog.php" class="lakum-footer__link"><?php echo t('blog','Blog');?></a></li>
@@ -179,7 +207,7 @@ require_once 'config.css-loader.php';
 <li><a href="contact.php" class="lakum-footer__link"><?php echo t('contact_us','Contact');?></a></li>
 </ul>
 </nav>
-<div class="lakum-footer__social"><h4 class="lakum-footer__nav-title"><?php echo t('connect','Connect');?></h4><div class="lakum-footer__social-links"><a href="https://www.instagram.com/lakumartspace/" target="_blank" class="lakum-footer__social-link" aria-label="Instagram"><i class="ri-instagram-fill"></i></a><a href="https://x.com/Lakumartspace" target="_blank" class="lakum-footer__social-link" aria-label="Twitter"><i class="ri-twitter-x-fill"></i></a></div></div>
+<div class="lakum-footer__social"><h2 class="lakum-footer__nav-title"><?php echo t('connect','Connect');?></h2><div class="lakum-footer__social-links"><a href="https://www.instagram.com/lakumartspace/" target="_blank" class="lakum-footer__social-link" aria-label="Instagram"><i class="ri-instagram-fill"></i></a><a href="https://x.com/Lakumartspace" target="_blank" class="lakum-footer__social-link" aria-label="Twitter"><i class="ri-twitter-x-fill"></i></a></div></div>
 </div>
 <div class="lakum-footer__bottom">
 <p class="lakum-footer__copyright"><?php echo t('footer_copyright','© 2025 - 2027 LAKUM Artspace. All rights reserved.');?></p>
@@ -192,7 +220,7 @@ require_once 'config.css-loader.php';
 </div>
 </footer>
 
-<div class="lakum-contact-fab" id="lakumContactFab"><button class="lakum-contact-fab__trigger" id="fabTrigger" aria-label="Contact options"><i class="ri-mail-line lakum-contact-fab__icon"></i><i class="ri-close-line lakum-contact-fab__close"></i></button><div class="lakum-contact-fab__menu" id="fabMenu"><a href="tel:+966920012083" class="lakum-contact-fab__item" data-tooltip="Call us"><i class="ri-phone-line"></i></a><a href="https://wa.me/966920012083" target="_blank" class="lakum-contact-fab__item" data-tooltip="WhatsApp"><i class="ri-whatsapp-line"></i></a><a href="mailto:info@lakumartspace.com" class="lakum-contact-fab__item" data-tooltip="Email"><i class="ri-mail-line"></i></a></div></div>
+<div class="lakum-contact-fab" id="lakumContactFab"><button class="lakum-contact-fab__trigger" id="fabTrigger" aria-label="Contact options"><i class="ri-mail-line lakum-contact-fab__icon"></i><i class="ri-close-line lakum-contact-fab__close"></i></button><div class="lakum-contact-fab__menu" id="fabMenu"><a href="tel:+966920012083" class="lakum-contact-fab__item" aria-label="Call us"><i class="ri-phone-line"></i></a><a href="https://wa.me/966920012083" target="_blank" class="lakum-contact-fab__item" aria-label="Chat on WhatsApp"><i class="ri-whatsapp-line"></i></a><a href="mailto:info@lakumartspace.com" class="lakum-contact-fab__item" aria-label="Send email"><i class="ri-mail-line"></i></a></div></div>
 
 </main>
 

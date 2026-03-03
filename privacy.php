@@ -138,6 +138,7 @@ require_once 'lang/loader.php';
     <!-- Core Styles - Critical CSS loaded synchronously -->
     <link rel="stylesheet" href="global-styles.css">
     <link rel="stylesheet" href="lakum-components.css">
+    <link rel="stylesheet" href="assest/mobile-menu.css">
     <link rel="stylesheet" href="Home.css">
 
     <!-- RTL Styles -->
