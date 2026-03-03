@@ -385,7 +385,7 @@ margin: 0 auto;}
                     </ul>
                 </nav>
                 <div class="lakum-footer__social">
-                    <h4 class="lakum-footer__nav-title"><?php echo t('connect', 'Connect'); ?></h4>
+                    <h4 class="lakum-footer__nav-title"><?php echo t('footer_connect', 'Connect'); ?></h4>
                     <div class="lakum-footer__social-links">
                         <a href="https://www.instagram.com/lakumartspace/" target="_blank" class="lakum-footer__social-link" aria-label="Instagram">
                             <i class="ri-instagram-fill"></i>
@@ -614,6 +614,54 @@ margin: 0 auto;}
                 initPage();
             }
         });
+
+        // Expandable FAB functionality
+        (function() {
+            const fab = document.getElementById('lakumContactFab');
+            const trigger = document.getElementById('fabTrigger');
+            const menu = document.getElementById('fabMenu');
+
+            if (trigger && fab) {
+                trigger.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    fab.classList.toggle('lakum-contact-fab--active');
+                });
+
+                // Close when clicking outside
+                document.addEventListener('click', function(e) {
+                    if (!fab.contains(e.target)) {
+                        fab.classList.remove('lakum-contact-fab--active');
+                    }
+                });
+            }
+        })();
+
+        // Mobile menu toggle
+        (function() {
+            const toggle = document.querySelector('.lakum-header__mobile-toggle');
+            const nav = document.querySelector('.lakum-nav');
+            const header = document.querySelector('.lakum-header');
+
+            if (toggle && nav) {
+                toggle.addEventListener('click', function() {
+                    toggle.classList.toggle('lakum-header__mobile-toggle--active');
+                    nav.classList.toggle('lakum-nav--active');
+                    header.classList.toggle('lakum-header--menu-open');
+                    document.body.style.overflow = nav.classList.contains('lakum-nav--active') ? 'hidden' : '';
+                });
+
+                // Close menu when clicking nav link
+                const navLinks = document.querySelectorAll('.lakum-nav__link');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        toggle.classList.remove('lakum-header__mobile-toggle--active');
+                        nav.classList.remove('lakum-nav--active');
+                        header.classList.remove('lakum-header--menu-open');
+                        document.body.style.overflow = '';
+                    });
+                });
+            }
+        })();
     </script>
 
     <script src="assest/popup-notification.js?v=5.0.0" defer></script>
