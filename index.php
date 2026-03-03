@@ -15,7 +15,7 @@ require_once 'config.css-loader.php';
     <link rel="apple-touch-icon" href="assest/logo/right_section.png">
     <meta name="msapplication-TileImage" content="assest/logo/right_section.png">
     <!-- CRITICAL: Preload hero image for LCP with responsive sizes -->
-    <link rel="preload" as="image" href="heroImage/img-4.webp" fetchpriority="high" imagesrcset="heroImage/img-4.webp 1200w" imagesizes="(max-width: 768px) 100vw, 1200px">
+    <link rel="preload" as="image" href="heroImage/img-4.webp" fetchpriority="high" imagesrcset="heroImage/img-4.webp 1200w, heroImage/img-4.webp 768w, heroImage/img-4.webp 480w" imagesizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, 1200px">
     
     <!-- Preload critical font only -->
     <link rel="preload" href="assest/fonts/GretaArabicAR+LT-Regular.otf" as="font" type="font/otf" crossorigin>
@@ -27,13 +27,14 @@ require_once 'config.css-loader.php';
     <!-- Critical CSS - inline for instant render -->
     <link rel="stylesheet" href="global-styles.css">
     <link rel="stylesheet" href="lakum-components.css">
+    <link rel="stylesheet" href="assest/remixicon-minimal.css">
     
-    <!-- Non-critical CSS - defer loading -->
-    <link rel="preload" href="<?php echo getCSSFile('Home'); ?>" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="rtl.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="fonts/greta-arabic.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="assest/language-switcher.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="assest/popup-notification.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <!-- Non-critical CSS - defer loading with media trick -->
+    <link rel="stylesheet" href="<?php echo getCSSFile('Home'); ?>" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="rtl.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="fonts/greta-arabic.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="assest/language-switcher.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="assest/popup-notification.css" media="print" onload="this.media='all'">
     
     <!-- Fallback for no-JS -->
     <noscript>
@@ -43,10 +44,6 @@ require_once 'config.css-loader.php';
         <link rel="stylesheet" href="assest/language-switcher.css">
         <link rel="stylesheet" href="assest/popup-notification.css">
     </noscript>
-    
-    <!-- Remixicon - deferred -->
-    <link rel="preload" href="assest/remixicon-minimal.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="assest/remixicon-minimal.css"></noscript>
     <!-- Deferred Scripts - Load after page render -->
     <script src="js/deferred-events-loader.js?v=1.0.0" defer></script>
     <script src="js/api-cache-manager.js?v=1.0.0" defer></script>
@@ -80,7 +77,9 @@ require_once 'config.css-loader.php';
         html { font-size: 16px; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
         body {  sans-serif; background: #f6f6eb; color: #1a1a1a; overflow-x: hidden; line-height: 1.6; }
         
-        .lakum-hero { position: relative; width: 100vw; margin-left: calc(-50vw + 50%); height: 85vh; min-height: 600px; display: flex; align-items: center; justify-content: center; background: #1a1a1a; }
+        .lakum-hero { position: relative; width: 100vw; margin-left: calc(-50vw + 50%); height: 85vh; min-height: 600px; display: flex; align-items: center; justify-content: center; background: #1a1a1a; contain: layout style paint; }
+        @media (max-width: 768px) { .lakum-hero { height: 70vh; min-height: 500px; } }
+        @media (max-width: 480px) { .lakum-hero { height: 60vh; min-height: 400px; } }
         .lakum-hero__image-wrapper { position: absolute; inset: 0; z-index: 1; overflow: hidden; width: 100%; height: 100%; }
         .lakum-hero__image { width: 100%; height: 100%; object-fit: cover; display: block; }
         .lakum-hero__overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.65) 100%); z-index: 2; }

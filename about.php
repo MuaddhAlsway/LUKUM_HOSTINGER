@@ -28,20 +28,19 @@ require_once 'api/image-helper.php';
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
-<link rel="preload" href="global-styles.css" as="style">
-<link rel="preload" href="lakum-components.css" as="style">
-<link rel="prefetch" href="assest/fonts/GretaArabicAR+LT-Regular.otf" as="font" type="font/otf" crossorigin>
-<link rel="prefetch" href="assest/fonts/GretaArabicAR+LT-Light.otf" as="font" type="font/otf" crossorigin>
 <link rel="stylesheet" href="global-styles.css">
 <link rel="stylesheet" href="lakum-components.css">
+<link rel="stylesheet" href="assest/remixicon-minimal.css">
+<link rel="stylesheet" href="Home.css" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="rtl.css" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="fonts/greta-arabic.css" media="print" onload="this.media='all'">
+<noscript>
 <link rel="stylesheet" href="Home.css">
 <link rel="stylesheet" href="rtl.css">
 <link rel="stylesheet" href="fonts/greta-arabic.css">
-<link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" media="print" onload="this.media='all'">
-<noscript><link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet"></noscript>
+</noscript>
 <script src="assest/navbar-mobile-toggle.js?v=5.0.0" defer></script>
 <script src="assest/fun-interactions.js" defer></script>
-<script src="mobile-performance-optimizer.js" defer></script>
 <meta name="title" content="About LAKUM Artspace - Our Story & Mission">
 <meta name="description" content="Learn about LAKUM Artspace, a premier cultural destination in Riyadh dedicated to fostering artistic expression, cultural exchange, and creative innovation.">
 <meta name="keywords" content="about LAKUM, art gallery Riyadh, cultural hub, art exhibitions, creative workshops">
@@ -92,6 +91,25 @@ body {
   text-align: center !important;
   padding: 60px 20px !important;
   overflow: hidden;
+  contain: layout style paint;
+}
+
+@media (max-width: 768px) {
+  .page-hero {
+    height: 60vh;
+    min-height: 400px;
+    max-height: 500px;
+    padding: 40px 15px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-hero {
+    height: 50vh;
+    min-height: 300px;
+    max-height: 400px;
+    padding: 30px 10px !important;
+  }
 }
 
 .page-hero__image-wrapper {
@@ -611,7 +629,6 @@ html[lang="ar"] .lakum-event-card__date {
 <footer class="lakum-footer"><div class="lakum-footer__container"><div class="lakum-footer__content"><div class="lakum-footer__brand"><div class="lakum-footer__logo"><img src="assest/logo/right_section.png" alt="LAKUM" class="lakum-footer__logo-left" width="105" height="80" decoding="async"><img src="assest/logo/left_section.png" alt="Artspace" class="lakum-footer__logo-right" width="105" height="80" decoding="async"></div><p class="lakum-footer__tagline"><?php echo t('footer_tagline', 'Where Encounters Shape Culture'); ?></p></div><nav class="lakum-footer__nav"><h4 class="lakum-footer__nav-title"><?php echo t('footer_navigate', 'Navigate'); ?></h4><ul class="lakum-footer__nav-list"><li><a href="index.php" class="lakum-footer__link"><?php echo t('home', 'Home'); ?></a></li><li><a href="about.php" class="lakum-footer__link"><?php echo t('about', 'About'); ?></a></li><li><a href="spaces.php" class="lakum-footer__link"><?php echo t('spaces', 'Spaces'); ?></a></li><li><a href="exhibitions.php" class="lakum-footer__link"><?php echo t('exhibitions', 'Exhibitions'); ?></a></li></ul></nav><nav class="lakum-footer__nav"><h4 class="lakum-footer__nav-title"><?php echo t('footer_explore', 'Explore'); ?></h4><ul class="lakum-footer__nav-list"><li><a href="calendar.php" class="lakum-footer__link"><?php echo t('calendar', 'Calendar'); ?></a></li><li><a href="blog.php" class="lakum-footer__link"><?php echo t('blog', 'Blog'); ?></a></li><li><a href="press.php" class="lakum-footer__link"><?php echo t('press', 'Press'); ?></a></li><li><a href="contact.php" class="lakum-footer__link"><?php echo t('contact_us', 'Contact'); ?></a></li></ul></nav><div class="lakum-footer__social"><h4 class="lakum-footer__nav-title"><?php echo t('footer_connect', 'Connect'); ?></h4><div class="lakum-footer__social-links"><a href="https://www.instagram.com/lakumartspace/" target="_blank" class="lakum-footer__social-link" aria-label="Instagram"><i class="ri-instagram-fill"></i></a><a href="https://x.com/Lakumartspace" target="_blank" class="lakum-footer__social-link" aria-label="Twitter"><i class="ri-twitter-x-fill"></i></a></div></div></div><div class="lakum-footer__bottom"><p class="lakum-footer__copyright"><?php echo t('footer_copyright', '� 2025 - 2027 LAKUM Artspace. All rights reserved.'); ?></p><div class="lakum-footer__legal"><a href="terms.php" class="lakum-footer__legal-link"><?php echo t('footer_terms', 'Terms & Conditions'); ?></a><span class="lakum-footer__legal-divider">|</span><a href="privacy.php" class="lakum-footer__legal-link"><?php echo t('footer_privacy', 'Privacy Policy'); ?></a></div></div></div></footer>
 <div class="lakum-contact-fab" id="lakumContactFab"><button class="lakum-contact-fab__trigger" id="fabTrigger" aria-label="Contact options"><i class="ri-mail-line lakum-contact-fab__icon"></i><i class="ri-close-line lakum-contact-fab__close"></i></button><div class="lakum-contact-fab__menu" id="fabMenu"><a href="tel:+966920012083" class="lakum-contact-fab__item" data-tooltip="Call us"><i class="ri-phone-line"></i></a><a href="https://wa.me/966920012083" target="_blank" class="lakum-contact-fab__item" data-tooltip="WhatsApp"><i class="ri-whatsapp-line"></i></a><a href="mailto:info@lakumartspace.com" class="lakum-contact-fab__item" data-tooltip="Email"><i class="ri-mail-line"></i></a></div></div>
 <script src="assest/fun-interactions.js" defer></script>
-<script src="mobile-performance-optimizer.js" defer></script>
 <script src="js/LanguageManager.js?v=1.0.0" defer></script>
 <script>
     // Set current language from PHP

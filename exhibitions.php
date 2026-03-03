@@ -24,18 +24,23 @@ require_once 'api/image-helper.php';
     <link rel="preload" href="assest/fonts/GretaArabicAR+LT-Light.otf" as="font" type="font/otf" crossorigin>
     <link rel="preload" href="assest/fonts/GretaTextArabicAR+LT-Regular.otf" as="font" type="font/otf" crossorigin>
     <link rel="preload" href="assest/fonts/GretaTextArabicAR+LT-Light.otf" as="font" type="font/otf" crossorigin>
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
     <link rel="stylesheet" href="global-styles.css">
     <link rel="stylesheet" href="lakum-components.css">
-    <link rel="stylesheet" href="Home.css">
-    <link rel="stylesheet" href="rtl.css">
-    <link rel="stylesheet" href="fonts/greta-arabic.css">
-    <link rel="stylesheet" href="exhibitions.css">
+    <link rel="stylesheet" href="assest/remixicon-minimal.css">
+    <link rel="stylesheet" href="Home.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="rtl.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="fonts/greta-arabic.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="exhibitions.css" media="print" onload="this.media='all'">
+    <noscript>
+        <link rel="stylesheet" href="Home.css">
+        <link rel="stylesheet" href="rtl.css">
+        <link rel="stylesheet" href="fonts/greta-arabic.css">
+        <link rel="stylesheet" href="exhibitions.css">
+    </noscript>
 <link rel="alternate" hreflang="en" href="https://lakumartspace.infinityfree.me/exhibitions.php?lang=en" />
 <link rel="alternate" hreflang="ar" href="https://lakumartspace.infinityfree.me/exhibitions.php?lang=ar" />
 <script src="assest/static-json-translator.js?v=1.0.0" defer></script>
-<script src="assest/fun-interactions.js" defer></script>
-<script src="mobile-performance-optimizer.js" defer></script></head>
+<script src="assest/fun-interactions.js" defer></script></head>
 <body class="<?php echo getLanguageClass(); ?>">
 
     <!-- Page Loader -->

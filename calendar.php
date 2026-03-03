@@ -170,7 +170,6 @@ require_once 'lang/loader.php';
 
     <!-- Scripts - Defer non-critical JavaScript -->
     <script src="assest/fun-interactions.js" defer></script>
-    <script src="mobile-performance-optimizer.js" defer></script>
 
     <!-- Scripts - Defer non-critical JavaScript -->
     <script>
@@ -1253,8 +1252,6 @@ require_once 'lang/loader.php';
     </script>
 
     <!-- Mobile Performance Optimizer -->
-    <script src="mobile-performance-optimizer.js?v=5.0.0" defer></script>
-
     <!-- Fun Interactions & Animations -->
     <script src="assest/fun-interactions.js?v=5.0.0" defer></script>
 

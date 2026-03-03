@@ -178,7 +178,6 @@ require_once 'lang/loader.php';
     <!-- Scripts - Defer non-critical JavaScript -->
     <script src="assest/popup-notification.js?v=5.0.0" defer></script>
     <script src="assest/fun-interactions.js" defer></script>
-    <script src="mobile-performance-optimizer.js" defer></script>
     <script>
         // Set language for JavaScript - Read from URL parameter or localStorage
         const urlParams = new URLSearchParams(window.location.search);

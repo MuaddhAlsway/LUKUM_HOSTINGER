@@ -566,3 +566,29 @@
         height: 260px;
     }
 }
+
+/* Ultra-aggressive mobile (< 360px) */
+@media (max-width: 360px) {
+    .lakum-exhibitions-hero {
+        height: 40vh;
+        min-height: 280px;
+    }
+    .lakum-exhibitions-upcoming__title {
+        font-size: 1.25rem;
+    }
+    .lakum-upcoming-card {
+        height: auto;
+    }
+    .lakum-upcoming-card__image-wrapper {
+        height: 250px;
+    }
+    .lakum-exhibitions-featured__image {
+        height: 200px;
+    }
+    .lakum-exhibitions-featured__title {
+        font-size: 1.5rem;
+    }
+    .lakum-previous-card__image-wrapper {
+        height: 220px;
+    }
+}
