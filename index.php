@@ -9,6 +9,8 @@ require_once 'lang/loader.php';
     
     <link rel="icon" href="assest/favicon.png" type="image/png">
     <link rel="preload" as="image" href="heroImage/img-4.webp" fetchpriority="high">
+    <link rel="preload" href="fonts/GretaArabicAR+LT-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="fonts/GretaTextArabicAR+LT-Regular.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     
@@ -18,14 +20,14 @@ require_once 'lang/loader.php';
     <link rel="stylesheet" href="assest/remixicon-minimal.css">
     
     <!-- Async CSS - Non-blocking -->
-    <link rel="preload" href="Home.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="Home.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preload" href="rtl.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preload" href="fonts/greta-arabic.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preload" href="assest/language-switcher.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preload" href="assest/popup-notification.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     
     <noscript>
-        <link rel="stylesheet" href="Home.css">
+        <link rel="stylesheet" href="Home.min.css">
         <link rel="stylesheet" href="rtl.css">
         <link rel="stylesheet" href="fonts/greta-arabic.css">
         <link rel="stylesheet" href="assest/language-switcher.css">

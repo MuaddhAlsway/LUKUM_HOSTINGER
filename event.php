@@ -160,13 +160,13 @@ require_once 'api/image-helper.php';
     <link rel="stylesheet" href="assest/mobile-menu.css">
     
     <!-- Non-critical CSS - Defer loading -->
-    <link rel="preload" href="Home.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="Home.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preload" href="rtl.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preload" href="fonts/greta-arabic.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     
     <!-- Fallback for no-JS -->
     <noscript>
-        <link rel="stylesheet" href="Home.css">
+        <link rel="stylesheet" href="Home.min.css">
         <link rel="stylesheet" href="rtl.css">
         <link rel="stylesheet" href="fonts/greta-arabic.css">
     </noscript>
