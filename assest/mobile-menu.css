@@ -59,15 +59,9 @@
 /* Show hamburger menu on mobile */
 @media (max-width: 820px) {
     .lakum-header__mobile-toggle {
-        display: flex;
-    }
-
-    .lakum-nav {
-        display: none;
+        display: flex !important;
     }
 }
-
-/* RTL Support */
 [dir="rtl"] .lakum-header__mobile-toggle {
     flex-direction: row-reverse;
 }
