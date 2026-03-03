@@ -34,6 +34,7 @@ require_once 'lang/loader.php';
     <script src="assest/popup-notification.js?v=5.0.0" defer></script>
     <script src="assest/navbar-mobile-toggle.js?v=5.0.0" defer></script>
     <script src="assest/responsive-images.js?v=5.0.0" defer></script>
+    <script src="assest/aggressive-optimization.js?v=5.0.0" defer></script>
     <meta name="title" content="LAKUM Artspace - Cultural Hub in Riyadh | Art Exhibitions & Events">
     <meta name="description" content="LAKUM Artspace is Riyadh's premier cultural destination for contemporary art exhibitions, creative workshops, and cultural events.">
     <meta name="keywords" content="art gallery Riyadh, cultural events Riyadh, art exhibitions Saudi Arabia">
