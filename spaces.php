@@ -342,9 +342,9 @@ require_once 'api/image-helper.php';
 
             <!-- Language Switcher -->
             <div class="lakum-language-switcher">
-                <a href="<?php echo buildLanguageSwitcherUrl(); ?>" class="lakum-lang-link" title="<?php echo isArabic() ? 'Language: English' : 'Language: ???????'; ?>">
+                <a href="<?php echo buildLanguageSwitcherUrl(); ?>" class="lakum-lang-link" title="<?php echo isArabic() ? 'Language: English' : 'Language: العربية'; ?>">
                 <i class="ri-global-line"></i>
-                <span class="lakum-lang-text"><?php echo isArabic() ? 'EN' : 'AR'; ?></span>
+                <span class="lakum-lang-text"><?php echo isArabic() ? 'En' : 'Ar'; ?></span>
             </a>
             </div>
 

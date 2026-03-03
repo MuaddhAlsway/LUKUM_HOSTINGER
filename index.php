@@ -276,7 +276,7 @@ margin: 0 auto;}
             <div class="lakum-language-switcher">
                 <a href="<?php echo buildLanguageSwitcherUrl(); ?>" class="lakum-lang-link" title="<?php echo isArabic() ? 'Language: English' : 'Language: العربية'; ?>">
                     <i class="ri-global-line"></i>
-                    <span class="lakum-lang-text"><?php echo isArabic() ? 'EN' : 'AR'; ?></span>
+                    <span class="lakum-lang-text"><?php echo isArabic() ? 'En' : 'Ar'; ?></span>
                 </a>
             </div>
             <button class="lakum-header__mobile-toggle" aria-label="Toggle navigation menu">
@@ -323,13 +323,14 @@ margin: 0 auto;}
                          loading="lazy"
                          decoding="async"
                          width="800"
-                         height="450">
+                         height="450"
+                         id="featuredEventImage">
                 </div>
                 <div class="lakum-featured-banner__text">
-                    <span class="lakum-featured-banner__date"><?php echo t('closest_event', 'Closest Event'); ?></span>
-                    <h3 class="lakum-featured-banner__title"><?php echo t('featured_exhibition', 'Featured Exhibition'); ?></h3>
-                    <p class="lakum-featured-banner__description"><?php echo t('featured_description', 'Discover this amazing exhibition showcasing contemporary art and culture.'); ?></p>
-                    <a href="exhibitions.php" class="lakum-btn lakum-btn--primary"><?php echo t('view_details', 'View Details'); ?></a>
+                    <span class="lakum-featured-banner__date" id="featuredEventDate"><?php echo t('closest_event', 'Closest Event'); ?></span>
+                    <h3 class="lakum-featured-banner__title" id="featuredEventTitle"><?php echo t('featured_exhibition', 'Featured Exhibition'); ?></h3>
+                    <p class="lakum-featured-banner__description" id="featuredEventDesc"><?php echo t('featured_description', 'Discover this amazing exhibition showcasing contemporary art and culture.'); ?></p>
+                    <a href="exhibitions.php" class="lakum-btn lakum-btn--primary" id="featuredEventLink"><?php echo t('view_details', 'View Details'); ?></a>
                 </div>
             </div>
     </section>
@@ -431,6 +432,59 @@ margin: 0 auto;}
     <script>
         // Set current language from PHP
         window.LAKUM_LANG = '<?php echo getCurrentLanguage(); ?>';
+        
+        // Load featured event (next/closest event)
+        async function loadFeaturedEvent() {
+            try {
+                const lang = window.LAKUM_LANG || 'en';
+                const response = await fetch(`api/get_events.php?type=all&limit=1000&lang=${lang}&t=${Date.now()}`, {
+                    headers: {
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                });
+
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+                const data = await response.json();
+
+                if (data.success && data.data && Array.isArray(data.data)) {
+                    // Get next upcoming event
+                    const now = new Date();
+                    now.setHours(0, 0, 0, 0);
+                    
+                    const upcomingEvents = data.data.filter(e => {
+                        const eventDate = new Date(e.event_date);
+                        eventDate.setHours(0, 0, 0, 0);
+                        return eventDate >= now;
+                    }).sort((a, b) => new Date(a.event_date) - new Date(b.event_date));
+
+                    if (upcomingEvents.length > 0) {
+                        const event = upcomingEvents[0];
+                        const eventDate = new Date(event.event_date);
+                        const month = eventDate.toLocaleString('en-US', { month: 'short' }).toUpperCase();
+                        const day = eventDate.getDate();
+                        
+                        // Update featured banner
+                        document.getElementById('featuredEventImage').src = event.cover_image || 'heroImage/img-4.webp';
+                        document.getElementById('featuredEventImage').alt = event.title;
+                        document.getElementById('featuredEventDate').textContent = `${month} ${day}`;
+                        document.getElementById('featuredEventTitle').textContent = event.title;
+                        document.getElementById('featuredEventDesc').textContent = event.description || event.title;
+                        document.getElementById('featuredEventLink').href = `event.php?id=${event.id}`;
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading featured event:', error);
+            }
+        }
+
+        // Load featured event when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', loadFeaturedEvent);
+        } else {
+            loadFeaturedEvent();
+        }
     </script>
 
     <script src="assest/popup-notification.js?v=5.0.0" defer></script>
