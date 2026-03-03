@@ -14,24 +14,14 @@ require_once 'api/image-helper.php';
 <meta name="msapplication-TileImage" content="assest/logo/right_section.png">
 <link rel="preload" as="image" 
       href="heroImage/img-4.webp"
-      imagesrcset="heroImage/img-4.webp 1200w"
-      imagesizes="(max-width: 768px) 100vw, 650px"
       fetchpriority="high">
 <!-- Preload critical fonts -->
 <link rel="preload" href="assest/fonts/GretaArabicAR+LT-Regular.otf" as="font" type="font/otf" crossorigin>
-<link rel="preload" href="assest/fonts/GretaArabicAR+LT-Light.otf" as="font" type="font/otf" crossorigin>
-<link rel="preload" href="assest/fonts/GretaTextArabicAR+LT-Regular.otf" as="font" type="font/otf" crossorigin>
-<link rel="preload" href="assest/fonts/GretaTextArabicAR+LT-Light.otf" as="font" type="font/otf" crossorigin>
-<link rel="dns-prefetch" href="https://fonts.googleapis.com">
-<link rel="dns-prefetch" href="https://fonts.gstatic.com">
 <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="global-styles.css">
 <link rel="stylesheet" href="lakum-components.css">
 <link rel="stylesheet" href="assest/remixicon-minimal.css">
-<link rel="stylesheet" href="assest/mobile-menu.css">
 <link rel="stylesheet" href="Home.css" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="rtl.css" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="fonts/greta-arabic.css" media="print" onload="this.media='all'">
@@ -601,7 +591,7 @@ html[lang="ar"] .lakum-event-card__date {
 <script src="assest/static-json-translator.js?v=1.0.0" defer></script></head>
 <body class="<?php echo getLanguageClass(); ?>">
 <div class="lakum-page-loader" id="pageLoader"><div class="lakum-page-loader__content"><div class="lakum-page-loader__spinner"></div></div></div>
-<header class="lakum-header">
+<header class="lakum-header" role="banner">
 <div class="lakum-header__container"><div class="lakum-header__logo"><a href="index.php" class="lakum-logo"><img src="assest/logo/right_section.png" alt="LAKUM" class="lakum-logo__left" width="105" height="80" decoding="async"><img src="assest/logo/left_section.png" alt="Artspace" class="lakum-logo__right" width="105" height="80" decoding="async"></a></div><nav class="lakum-nav"><ul class="lakum-nav__list"><li class="lakum-nav__item"><a href="index.php" class="lakum-nav__link"><?php echo t('home', 'Home'); ?></a></li><li class="lakum-nav__item"><a href="about.php" class="lakum-nav__link lakum-nav__link--active"><?php echo t('about', 'About'); ?></a></li><li class="lakum-nav__item"><a href="spaces.php" class="lakum-nav__link"><?php echo t('spaces', 'Spaces'); ?></a></li><li class="lakum-nav__item"><a href="exhibitions.php" class="lakum-nav__link"><?php echo t('exhibitions', 'Exhibitions'); ?></a></li><li class="lakum-nav__item"><a href="calendar.php" class="lakum-nav__link"><?php echo t('calendar', 'Calendar'); ?></a></li><li class="lakum-nav__item"><a href="blog.php" class="lakum-nav__link"><?php echo t('blog', 'Blog'); ?></a></li><li class="lakum-nav__item"><a href="press.php" class="lakum-nav__link"><?php echo t('press', 'Press'); ?></a></li><li class="lakum-nav__item"><a href="contact.php" class="lakum-nav__link"><?php echo t('contact_us', 'Contact'); ?></a></li><li class="lakum-nav__item"><a href="shop.php" class="lakum-nav__link"><?php echo t('shop', 'Shop'); ?></a></li></ul></nav><div class="lakum-language-switcher">
 <a href="<?php echo buildLanguageSwitcherUrl(); ?>" class="lakum-lang-link" title="<?php echo isArabic() ? 'Language: English' : 'Language: العربية'; ?>">
 <i class="ri-global-line"></i>
@@ -611,10 +601,9 @@ html[lang="ar"] .lakum-event-card__date {
 <section class="page-hero">
     <div class="page-hero__image-wrapper">
         <img src="heroImage/img-4.webp"
-             srcset="heroImage/img-4.webp 1200w"
-             sizes="100vw"
              alt="About LAKUM Artspace"
              fetchpriority="high"
+             loading="eager"
              decoding="async"
              width="1200"
              height="800"

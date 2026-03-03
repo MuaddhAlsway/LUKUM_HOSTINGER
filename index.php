@@ -8,20 +8,24 @@ require_once 'lang/loader.php';
     <title><?php echo t('page_title', 'LAKUM Artspace - Cultural Hub in Riyadh | Art Exhibitions & Events'); ?></title>
     
     <link rel="icon" href="assest/favicon.png" type="image/png">
-    <link rel="preload" as="image" href="assest/img-4.png" fetchpriority="high">
+    <link rel="preload" as="image" href="heroImage/img-4.webp" fetchpriority="high">
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
-    <link rel="preconnect" href="https://cdn.jsdelivr.net">
-    <link rel="preload" href="global-styles.css" as="style">
-    <link rel="preload" href="lakum-components.css" as="style">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     <link rel="stylesheet" href="global-styles.css">
     <link rel="stylesheet" href="lakum-components.css">
-    <link rel="stylesheet" href="Home.css">
-    <link rel="stylesheet" href="rtl.css">
-    <link rel="stylesheet" href="fonts/greta-arabic.css">
-    <link rel="stylesheet" href="assest/language-switcher.css">
-    <link rel="stylesheet" href="assest/popup-notification.css">
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" media="print" onload="this.media='all'">
-    <noscript><link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet"></noscript>
+    <link rel="stylesheet" href="assest/remixicon-minimal.css">
+    <link rel="stylesheet" href="Home.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="rtl.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="fonts/greta-arabic.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="assest/language-switcher.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="assest/popup-notification.css" media="print" onload="this.media='all'">
+    <noscript>
+        <link rel="stylesheet" href="Home.css">
+        <link rel="stylesheet" href="rtl.css">
+        <link rel="stylesheet" href="fonts/greta-arabic.css">
+        <link rel="stylesheet" href="assest/language-switcher.css">
+        <link rel="stylesheet" href="assest/popup-notification.css">
+    </noscript>
     <script src="assest/popup-notification.js?v=5.0.0" defer></script>
     <script src="assest/navbar-mobile-toggle.js?v=5.0.0" defer></script>
     <meta name="title" content="LAKUM Artspace - Cultural Hub in Riyadh | Art Exhibitions & Events">
@@ -211,7 +215,7 @@ margin: 0 auto;}
         </div>
     </div>
 
-    <header class="lakum-header">
+    <header class="lakum-header" role="banner">
         <div class="lakum-header__container">
             <div class="lakum-header__logo">
                 <a href="./" class="lakum-logo">
@@ -246,7 +250,7 @@ margin: 0 auto;}
 
     <section class="lakum-hero" style="aspect-ratio: 16/9">
         <div class="lakum-hero__image-wrapper">
-            <img src="heroImage/img-4.webp" alt="LAKUM Artspace" class="lakum-hero__image" width="1920" height="1080" fetchpriority="high" decoding="async" style="aspect-ratio: 16/9">
+            <img src="heroImage/img-4.webp" alt="LAKUM Artspace" class="lakum-hero__image" width="1200" height="800" fetchpriority="high" loading="eager" decoding="async" style="aspect-ratio: 16/9">
             <div class="lakum-hero__overlay"></div>
         </div>
         <div class="lakum-hero__content">
@@ -267,7 +271,7 @@ margin: 0 auto;}
     <section class="lakum-featured-banner" id="featuredBanner">
         <div class="lakum-featured-banner__content">
                 <div class="lakum-featured-banner__image">
-                    <img src="assest/img-4.png" alt="Featured Event" loading="lazy">
+                    <img src="heroImage/img-4.webp" alt="Featured Event" loading="lazy" decoding="async" width="800" height="450">
                 </div>
                 <div class="lakum-featured-banner__text">
                     <span class="lakum-featured-banner__date"><?php echo t('closest_event', 'Closest Event'); ?></span>
@@ -397,7 +401,6 @@ margin: 0 auto;}
     </div>
 
     <script src="assest/fun-interactions.js?v=5.0.0" defer></script>
-    <script src="mobile-performance-optimizer.js?v=5.0.0" defer></script>
     <script>
         // Set current language from PHP
         window.LAKUM_LANG = '<?php echo getCurrentLanguage(); ?>';
