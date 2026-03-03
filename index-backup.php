@@ -28,7 +28,8 @@ require_once 'config.css-loader.php';
     <link rel="stylesheet" href="global-styles.css">
     <link rel="stylesheet" href="lakum-components.css">
     <link rel="stylesheet" href="assest/mobile-menu.css">
-    <link rel="stylesheet" href="assest/remixicon-minimal.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet"></noscript>
     
     <!-- Non-critical CSS - defer loading with media trick -->
     <link rel="stylesheet" href="<?php echo getCSSFile('Home'); ?>" media="print" onload="this.media='all'">

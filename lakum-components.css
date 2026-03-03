@@ -564,9 +564,14 @@ body {
         transform: translateX(0);
     }
     .lakum-nav__list {
+        display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 0;
+        gap: clamp(20px, 3vw, 48px);
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        width: 100%;
     }
     .lakum-nav__item {
         width: 100%;

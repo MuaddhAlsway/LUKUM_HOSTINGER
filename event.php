@@ -827,10 +827,10 @@ require_once 'api/image-helper.php';
             if (event.end_date && event.end_date !== event.event_date) {
                 const endEventDate = new Date(event.end_date);
                 const formattedEndDate = endEventDate.toLocaleDateString('en-US', options);
-                return `${formattedDate} � ${startTime} - ${formattedEndDate} � ${endTime}`;
+                return `${formattedDate} | ${startTime} - ${formattedEndDate} | ${endTime}`;
             }
             
-            return `${formattedDate} � ${startTime} - ${endTime}`;
+            return `${formattedDate} | ${startTime} - ${endTime}`;
         }
 
         // Render gallery from database

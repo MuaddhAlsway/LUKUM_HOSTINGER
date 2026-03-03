@@ -18,13 +18,13 @@ require_once 'config.css-loader.php';
 <link rel="preload" href="<?php echo getCSSFile('Home');?>" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <link rel="preload" href="rtl.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <link rel="preload" href="fonts/greta-arabic.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<link rel="preload" href="assest/remixicon-minimal.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" media="print" onload="this.media='all'">
 <noscript>
 <link rel="stylesheet" href="deferred-styles-optimized.css">
 <link rel="stylesheet" href="<?php echo getCSSFile('Home');?>">
 <link rel="stylesheet" href="rtl.css">
 <link rel="stylesheet" href="fonts/greta-arabic.css">
-<link rel="stylesheet" href="assest/remixicon-minimal.css">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
 </noscript>
 <meta name="description" content="LAKUM Artspace is Riyadh's premier cultural destination for contemporary art exhibitions, creative workshops, and cultural events.">
 <meta name="theme-color" content="#1a1a1a">

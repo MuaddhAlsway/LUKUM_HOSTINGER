@@ -26,8 +26,9 @@ require_once 'api/image-helper.php';
     <link rel="preload" href="assest/fonts/GretaTextArabicAR+LT-Light.otf" as="font" type="font/otf" crossorigin>
     <link rel="stylesheet" href="global-styles.css">
     <link rel="stylesheet" href="lakum-components.css">
-    <link rel="stylesheet" href="assest/remixicon-minimal.css">
     <link rel="stylesheet" href="assest/mobile-menu.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet"></noscript>
     <link rel="stylesheet" href="Home.min.css" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="rtl.css" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="fonts/greta-arabic.css" media="print" onload="this.media='all'">
@@ -379,15 +380,22 @@ require_once 'api/image-helper.php';
 
         // Mobile menu toggle
         (function() {
-            const toggle = document.querySelector('.lakum-header__mobile-toggle');
-            const nav = document.querySelector('.lakum-nav');
-            const header = document.querySelector('.lakum-header');
+            function initMobileMenu() {
+                const toggle = document.querySelector('.lakum-header__mobile-toggle');
+                const nav = document.querySelector('.lakum-nav');
+                const header = document.querySelector('.lakum-header');
 
-            if (toggle && nav) {
-                toggle.addEventListener('click', function() {
+                if (!toggle || !nav) {
+                    console.warn('Mobile menu elements not found');
+                    return;
+                }
+
+                toggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
                     toggle.classList.toggle('lakum-header__mobile-toggle--active');
                     nav.classList.toggle('lakum-nav--active');
-                    header.classList.toggle('lakum-header--menu-open');
+                    if (header) header.classList.toggle('lakum-header--menu-open');
                     document.body.style.overflow = nav.classList.contains('lakum-nav--active') ? 'hidden' : '';
                 });
 
@@ -397,10 +405,17 @@ require_once 'api/image-helper.php';
                     link.addEventListener('click', function() {
                         toggle.classList.remove('lakum-header__mobile-toggle--active');
                         nav.classList.remove('lakum-nav--active');
-                        header.classList.remove('lakum-header--menu-open');
+                        if (header) header.classList.remove('lakum-header--menu-open');
                         document.body.style.overflow = '';
                     });
                 });
+            }
+
+            // Run when DOM is ready
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initMobileMenu);
+            } else {
+                initMobileMenu();
             }
         })();
     </script>
