@@ -1,4 +1,4 @@
-name: Deploy to Hostinger
+name: Deploy to Hostinger (Simple)
 
 on:
   push:
@@ -10,17 +10,12 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
+    
     steps:
-      - name: Checkout Repository
+      - name: Checkout code
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
-
-      - name: Validate PHP Syntax
-        run: |
-          find . -name "*.php" -type f ! -path "./vendor/*" ! -path "./.git/*" ! -path "./assest/*" -exec php -l {} \;
-        continue-on-error: true
 
       - name: Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
@@ -57,15 +52,10 @@ jobs:
             **/assest/blog-uploads/**
             **/assest/press-uploads/**
 
-      - name: Run Database Migrations
-        run: |
-          curl -X GET "https://lakumartspace.infinityfree.me/api/init-deployment.php?key=${{ secrets.DEPLOYMENT_KEY }}" \
-            -H "Content-Type: application/json" \
-            -w "\nHTTP Status: %{http_code}\n"
-        continue-on-error: true
+      - name: Notify Deployment Complete
+        if: success()
+        run: echo "✓ Deployment successful to Hostinger"
 
-      - name: Deployment Status
-        if: always()
-        run: |
-          echo "Deployment workflow completed"
-          echo "Check FTP logs for detailed information"
+      - name: Notify Deployment Failed
+        if: failure()
+        run: echo "✗ Deployment failed - check FTP credentials"
