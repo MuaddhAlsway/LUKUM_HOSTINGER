@@ -89,7 +89,7 @@ body {
   justify-content: center !important;
   color: white !important;
   text-align: center !important;
-  padding: 60px 20px !important;
+  
   overflow: hidden;
   contain: layout style paint;
   margin: 0;
