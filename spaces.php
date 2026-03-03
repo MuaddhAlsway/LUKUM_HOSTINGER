@@ -516,7 +516,7 @@ require_once 'api/image-helper.php';
                 </div>
                 <div class="lakum-facility-card" onclick="openFacilityPopup('hall2')">
                     <div class="lakum-facility-card__image">
-                        <?php echo ImageHelper::render('HadafCompany/Hall2.png', 'Hall 2', 'gallery'); ?>
+                        <?php echo ImageHelper::render('HADAFCompany/Hall2.png', 'Hall 2', 'gallery'); ?>
                     </div>
                     <h3 class="lakum-facility-card__name"><?php echo t('spaces_hall2', 'Hall 2'); ?></h3>
                 </div>

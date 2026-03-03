@@ -121,7 +121,7 @@ require_once 'lang/loader.php';
         .lakum-cta--primary .lakum-cta__title { color: #1a1a1a; }
         .lakum-cta--primary .lakum-cta__text { color: #555; }
         .lakum-cta--dark { position: relative; color: white; overflow: hidden; }
-        .lakum-cta__background { position: absolute; inset: 0; z-index: 0; background-image: url('assest/img-4.png'); background-size: cover; background-position: center; background-attachment: fixed; }
+        .lakum-cta__background { position: absolute; inset: 0; z-index: 0; background-image: url('heroImage/img-4.webp'); background-size: cover; background-position: center; background-attachment: fixed; }
         .lakum-cta__background::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.4) 100%); z-index: 1; }
         .lakum-cta__content { position: relative; z-index: 2; text-align: center; color: white; }
         .lakum-cta__title { font-size: 2.5rem; font-weight: 300; margin-bottom: 20px; color: white; }
@@ -348,7 +348,7 @@ margin: 0 auto;}
     </section>
 
     <section class="lakum-cta lakum-cta--dark">
-        <div class="lakum-cta__background" style="background-image: url('assest/img-4.png');"></div>
+        <div class="lakum-cta__background" style="background-image: url('heroImage/img-4.webp');"></div>
         <div class="lakum-container">
             <div class="lakum-cta__content">
                 <h2 class="lakum-cta__title"><?php echo t('create_event', 'Create Your Own Event'); ?></h2>
@@ -464,7 +464,7 @@ margin: 0 auto;}
                 container.innerHTML = `
                     <div class="lakum-featured-banner__content" style="opacity: 0.5;">
                         <div class="lakum-featured-banner__image">
-                            <img src="assest/img-4.png" alt="No Featured Event" loading="lazy" style="filter: grayscale(100%);">
+                            <img src="heroImage/img-4.webp" alt="No Featured Event" loading="lazy" style="filter: grayscale(100%);">
                         </div>
                         <div class="lakum-featured-banner__text">
                             <span class="lakum-featured-banner__date">No Featured Event</span>
@@ -484,7 +484,7 @@ margin: 0 auto;}
             container.innerHTML = `
                 <div class="lakum-featured-banner__content">
                     <div class="lakum-featured-banner__image">
-                        <img src="${featuredEvent.cover_image || 'assest/img-4.png'}" alt="${featuredEvent.title}" loading="lazy" decoding="async" style="content-visibility: auto;">
+                        <img src="${featuredEvent.cover_image || 'heroImage/img-4.webp'}" alt="${featuredEvent.title}" loading="lazy" decoding="async" style="content-visibility: auto;">
                     </div>
                     <div class="lakum-featured-banner__text">
                         <span class="lakum-featured-banner__date">${dateStr} • ${timeStr}</span>
@@ -530,7 +530,7 @@ margin: 0 auto;}
                 card.className = 'lakum-event-card';
                 card.innerHTML = `
                     <div class="lakum-event-card__image">
-                        <img src="${event.cover_image || 'assest/img-4.png'}" alt="${event.title}" loading="lazy" decoding="async" style="content-visibility: auto;">
+                        <img src="${event.cover_image || 'heroImage/img-4.webp'}" alt="${event.title}" loading="lazy" decoding="async" style="content-visibility: auto;">
                         <div class="lakum-event-card__date">
                             <span class="lakum-event-card__date-month">${month}</span>
                             <span class="lakum-event-card__date-day">${day}</span>
@@ -576,7 +576,7 @@ margin: 0 auto;}
                 card.className = 'lakum-event-card';
                 card.innerHTML = `
                     <div class="lakum-event-card__image">
-                        <img src="${event.cover_image || 'assest/img-4.png'}" alt="${event.title}" loading="lazy" decoding="async" style="content-visibility: auto;">
+                        <img src="${event.cover_image || 'heroImage/img-4.webp'}" alt="${event.title}" loading="lazy" decoding="async" style="content-visibility: auto;">
                         <div class="lakum-event-card__date">
                             <span class="lakum-event-card__date-month">${month}</span>
                             <span class="lakum-event-card__date-day">${day}</span>
