@@ -302,8 +302,8 @@ require_once 'api/image-helper.php';
             <div class="lakum-header__logo">
                 <a href="" class="lakum-logo">
                     <!-- English: Swapped -->
-                    <img src="assest/logo/right_section.webp" alt="LAKUM" class="lakum-logo__left" width="105" height="80" decoding="async">
-                    <img src="assest/logo/left_section.webp" alt="Artspace" class="lakum-logo__right" width="105" height="80" decoding="async">
+                    <img src="assest/logo/right_section.png" alt="LAKUM" class="lakum-logo__left" width="105" height="80" decoding="async">
+                    <img src="assest/logo/left_section.png" alt="Artspace" class="lakum-logo__right" width="105" height="80" decoding="async">
                 </a>
             </div>
 
@@ -487,7 +487,7 @@ require_once 'api/image-helper.php';
                 <li class="lakum-spaces-hero__tag"><?php echo t('spaces_tag_hub', 'Hub'); ?></li>
                 <li class="lakum-spaces-hero__tag"><?php echo t('spaces_tag_library', 'Library'); ?></li>
                 <li class="lakum-spaces-hero__tag"><?php echo t('spaces_tag_shop', 'Shop'); ?></li>
-                <li class="lakum-spaces-hero__tag"><?php echo t('spaces_tag_cafe', 'Café'); ?></li>
+                <li class="lakum-spaces-hero__tag"><?php echo t('spaces_tag_cafe', 'Cafï¿½'); ?></li>
             </ul>
         </div>
     </section>
@@ -497,7 +497,7 @@ require_once 'api/image-helper.php';
         <div class="lakum-container">
             <h2 class="lakum-spaces-intro__title"><?php echo t('spaces_venue_title', 'LAKUM VENUE'); ?></h2>
             <div class="lakum-spaces-intro__content">
-                <p><?php echo t('spaces_intro_p1', 'Lakum Artspace offers a versatile and elegantly designed venue, thoughtfully created to accommodate a wide range of events, from art exhibitions and product launches to private celebrations, talks, and cultural programs. The space unfolds across several distinctive areas, each with its own atmosphere and flexibility: Hall 1, a spacious gallery ideal for large-scale installations or receptions; Hall 2, perfectly suited for intimate showcases, creative workshops, and panel discussions; and the Mezzanine Floor, home to a welcoming Café, a curated Library, and the Lakum Shop, a retail corner that encourages relaxed breaks, quiet exploration, and moments of discovery.'); ?></p>
+                <p><?php echo t('spaces_intro_p1', 'Lakum Artspace offers a versatile and elegantly designed venue, thoughtfully created to accommodate a wide range of events, from art exhibitions and product launches to private celebrations, talks, and cultural programs. The space unfolds across several distinctive areas, each with its own atmosphere and flexibility: Hall 1, a spacious gallery ideal for large-scale installations or receptions; Hall 2, perfectly suited for intimate showcases, creative workshops, and panel discussions; and the Mezzanine Floor, home to a welcoming Cafï¿½, a curated Library, and the Lakum Shop, a retail corner that encourages relaxed breaks, quiet exploration, and moments of discovery.'); ?></p>
 
                 <p><?php echo t('spaces_intro_p2', 'To complement every occasion, Lakum offers a suite of additional services designed to ensure a seamless and memorable experience. These include valet parking, assisted catering, professional security, and access to trusted photographers and videographers to capture each moment. The venue can also accommodate live music performances, adding an artistic and atmospheric touch to any gathering. Fully equipped with an in-house sound system, projectors, and a curated catalogue of furniture available for rental, Lakum allows every event to be tailored to its unique atmosphere and design vision.'); ?></p>
             </div>
@@ -511,25 +511,25 @@ require_once 'api/image-helper.php';
             <div class="lakum-spaces-facilities__grid">
                 <div class="lakum-facility-card" onclick="openFacilityPopup('hall1')">
                     <div class="lakum-facility-card__image">
-                        <?php echo ImageHelper::render('HadafCompany/hall1.png', 'Hall 1', 'gallery'); ?>
+                        <?php echo ImageHelper::render('HadafCompany/Hall1.png', 'Hall 1', 'gallery'); ?>
                     </div>
                     <h3 class="lakum-facility-card__name"><?php echo t('spaces_hall1', 'Hall 1'); ?></h3>
                 </div>
                 <div class="lakum-facility-card" onclick="openFacilityPopup('hall2')">
                     <div class="lakum-facility-card__image">
-                        <?php echo ImageHelper::render('HadafCompany/hall2.png', 'Hall 2', 'gallery'); ?>
+                        <?php echo ImageHelper::render('HadafCompany/Hall2.png', 'Hall 2', 'gallery'); ?>
                     </div>
                     <h3 class="lakum-facility-card__name"><?php echo t('spaces_hall2', 'Hall 2'); ?></h3>
                 </div>
                 <div class="lakum-facility-card" onclick="openFacilityPopup('cafe')">
                     <div class="lakum-facility-card__image">
-                        <?php echo ImageHelper::render('HadafCompany/hall3.png', 'Café', 'gallery'); ?>
+                        <?php echo ImageHelper::render('HadafCompany/Hall3.png', 'CafÃ©', 'gallery'); ?>
                     </div>
-                    <h3 class="lakum-facility-card__name"><?php echo t('spaces_cafe', 'Café'); ?></h3>
+                    <h3 class="lakum-facility-card__name"><?php echo t('spaces_cafe', 'CafÃ©'); ?></h3>
                 </div>
                 <div class="lakum-facility-card" onclick="openFacilityPopup('meeting')">
                     <div class="lakum-facility-card__image">
-                        <?php echo ImageHelper::render('HadafCompany/hall4.png', 'Meeting Room', 'gallery'); ?>
+                        <?php echo ImageHelper::render('HadafCompany/Hall4.png', 'Meeting Room', 'gallery'); ?>
                     </div>
                     <h3 class="lakum-facility-card__name"><?php echo t('spaces_meeting_room', 'Meeting Room'); ?></h3>
                 </div>
@@ -838,8 +838,8 @@ require_once 'api/image-helper.php';
                 <div class="lakum-footer__brand">
                     <div class="lakum-footer__logo">
                         <!-- English: Swapped -->
-                        <img src="assest/logo/right_section.webp" alt="LAKUM" class="lakum-footer__logo-left" width="105" height="80" decoding="async">
-                        <img src="assest/logo/left_section.webp" alt="Artspace" class="lakum-footer__logo-right" width="105" height="80" decoding="async">
+                        <img src="assest/logo/right_section.png" alt="LAKUM" class="lakum-footer__logo-left" width="105" height="80" decoding="async">
+                        <img src="assest/logo/left_section.png" alt="Artspace" class="lakum-footer__logo-right" width="105" height="80" decoding="async">
                     </div>
                     <p class="lakum-footer__tagline"><?php echo t('footer_tagline', 'Where Encounters Shape Culture'); ?></p>
                 </div>
@@ -864,21 +864,11 @@ require_once 'api/image-helper.php';
                     </ul>
                 </nav>
 
-                <div class="lakum-footer__social">
-                    <h4 class="lakum-footer__nav-title"><?php echo t('footer_connect', 'Connect'); ?></h4>
-                    <div class="lakum-footer__social-links">
-                        <a href="https://www.instagram.com/lakumartspace/" target="_blank" class="lakum-footer__social-link" aria-label="Instagram">
-                        <i class="ri-instagram-fill"></i>
-                    </a>
-                        <a href="https://x.com/Lakumartspace" target="_blank" class="lakum-footer__social-link" aria-label="Twitter">
-                        <i class="ri-twitter-x-fill"></i>
-                    </a>
-                    </div>
-                </div>
+                <div class="lakum-footer__social"><h4 class="lakum-footer__nav-title"><?php echo t('footer_connect', 'Connect'); ?></h4><div class="lakum-footer__social-links"><a href="https://www.instagram.com/lakumartspace/" target="_blank" class="lakum-footer__social-link" aria-label="Instagram"><i class="ri-instagram-fill"></i></a><a href="https://x.com/Lakumartspace" target="_blank" class="lakum-footer__social-link" aria-label="Twitter"><i class="ri-twitter-x-fill"></i></a></div></div>
             </div>
 
             <div class="lakum-footer__bottom">
-                <p class="lakum-footer__copyright"><?php echo t('footer_copyright', '© 2025 - 2027 LAKUM Artspace. All rights reserved.'); ?></p>
+                <p class="lakum-footer__copyright"><?php echo t('footer_copyright', 'ï¿½ 2025 - 2027 LAKUM Artspace. All rights reserved.'); ?></p>
                 <div class="lakum-footer__legal">
                     <a href="terms" class="lakum-footer__legal-link"><?php echo t('footer_terms', 'Terms & Conditions'); ?></a>
                     <span class="lakum-footer__legal-divider">|</span>
@@ -977,7 +967,7 @@ require_once 'api/image-helper.php';
                 ]
             },
             cafe: {
-                name: 'Café',
+                name: 'Cafï¿½',
                 images: [
                     'HadafCompany/hall3.png'
                 ]
@@ -1851,7 +1841,7 @@ require_once 'api/image-helper.php';
         footer_navigate: "<?php echo t('footer_navigate', 'Navigate'); ?>",
         footer_explore: "<?php echo t('footer_explore', 'Explore'); ?>",
         footer_connect: "<?php echo t('footer_connect', 'Connect'); ?>",
-        footer_copyright: "<?php echo t('footer_copyright', '© 2026 LAKUM Artspace. All rights reserved.'); ?>",
+        footer_copyright: "<?php echo t('footer_copyright', 'ï¿½ 2026 LAKUM Artspace. All rights reserved.'); ?>",
         footer_terms: "<?php echo t('footer_terms', 'Terms & Conditions'); ?>",
         footer_privacy: "<?php echo t('footer_privacy', 'Privacy Policy'); ?>"
     };
@@ -1917,7 +1907,7 @@ require_once 'api/image-helper.php';
         // Update footer bottom
         const footerCopyright = document.querySelector('.lakum-footer__copyright');
         if (footerCopyright) {
-            footerCopyright.textContent = translations.footer_copyright || '© 2026 LAKUM Artspace. All rights reserved.';
+            footerCopyright.textContent = translations.footer_copyright || 'ï¿½ 2026 LAKUM Artspace. All rights reserved.';
         }
 
         const footerTermsLink = document.querySelector('.lakum-footer__legal-link:first-child');

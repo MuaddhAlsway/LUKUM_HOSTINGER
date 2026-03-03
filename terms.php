@@ -503,8 +503,8 @@ Compliance with these terms ensures the preservation of Lakum Artspaceâ€™s profe
                 <div class="lakum-footer__brand">
                     <div class="lakum-footer__logo">
                         <!-- English: Swapped -->
-                        <img src="assest/logo/right_section.png" alt="LAKUM" class="lakum-footer__logo-left">
-                        <img src="assest/logo/left_section.png" alt="Artspace" class="lakum-footer__logo-right">
+                        <img src="assest/logo/right_section.png" alt="LAKUM" class="lakum-footer__logo-left" width="105" height="80" decoding="async">
+                        <img src="assest/logo/left_section.png" alt="Artspace" class="lakum-footer__logo-right" width="105" height="80" decoding="async">
                     </div>
                     <p class="lakum-footer__tagline"><?php echo t('footer_tagline', 'Where Encounters Shape Culture'); ?></p>
                 </div>
@@ -543,7 +543,7 @@ Compliance with these terms ensures the preservation of Lakum Artspaceâ€™s profe
             </div>
 
             <div class="lakum-footer__bottom">
-                <p class="lakum-footer__copyright"><?php echo t('footer_copyright', '© 2025 - 2027 LAKUM Artspace. All rights reserved.'); ?></p>
+                <p class="lakum-footer__copyright"><?php echo t('footer_copyright', 'ï¿½ 2025 - 2027 LAKUM Artspace. All rights reserved.'); ?></p>
                 <div class="lakum-footer__legal">
                     <a href="terms.php" class="lakum-footer__legal-link"><?php echo t('footer_terms', 'Terms & Conditions'); ?></a>
                     <span class="lakum-footer__legal-divider">|</span>
@@ -733,7 +733,7 @@ Compliance with these terms ensures the preservation of Lakum Artspaceâ€™s profe
         footer_navigate: "<?php echo t('footer_navigate', 'Navigate'); ?>",
         footer_explore: "<?php echo t('footer_explore', 'Explore'); ?>",
         footer_connect: "<?php echo t('footer_connect', 'Connect'); ?>",
-        footer_copyright: "<?php echo t('footer_copyright', '© 2026 LAKUM Artspace. All rights reserved.'); ?>",
+        footer_copyright: "<?php echo t('footer_copyright', 'ï¿½ 2026 LAKUM Artspace. All rights reserved.'); ?>",
         footer_terms: "<?php echo t('footer_terms', 'Terms & Conditions'); ?>",
         footer_privacy: "<?php echo t('footer_privacy', 'Privacy Policy'); ?>"
     };
@@ -799,7 +799,7 @@ Compliance with these terms ensures the preservation of Lakum Artspaceâ€™s profe
         // Update footer bottom
         const footerCopyright = document.querySelector('.lakum-footer__copyright');
         if (footerCopyright) {
-            footerCopyright.textContent = translations.footer_copyright || '© 2026 LAKUM Artspace. All rights reserved.';
+            footerCopyright.textContent = translations.footer_copyright || 'ï¿½ 2026 LAKUM Artspace. All rights reserved.';
         }
 
         const footerTermsLink = document.querySelector('.lakum-footer__legal-link:first-child');

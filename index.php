@@ -14,16 +14,11 @@ require_once 'config.css-loader.php';
     <link rel="icon" type="image/png" sizes="16x16" href="assest/logo/right_section.png">
     <link rel="apple-touch-icon" href="assest/logo/right_section.png">
     <meta name="msapplication-TileImage" content="assest/logo/right_section.png">
-    <!-- CRITICAL: Preload ONLY smallest hero variant (480w) for LCP -->
-    <link rel="preload" as="image" 
-          href="heroImage/img-4-480w.webp"
-          imagesrcset="heroImage/img-4-320w.webp 320w, heroImage/img-4-480w.webp 480w"
-          imagesizes="(max-width: 640px) 100vw, 480px"
-          fetchpriority="high">
+    <!-- CRITICAL: Preload hero image for LCP -->
+    <link rel="preload" as="image" href="heroImage/img-4.webp" fetchpriority="high">
     
-    <!-- Preload critical fonts WOFF2 only -->
-    <link rel="preload" href="assest/fonts/GretaArabicAR+LT-Regular.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="assest/fonts/GretaTextArabicAR+LT-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <!-- Preload critical fonts -->
+    <link rel="preload" href="assest/fonts/GretaArabicAR+LT-Regular.otf" as="font" type="font/otf" crossorigin>
     
     <!-- DNS prefetch -->
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
@@ -261,8 +256,8 @@ margin: 0 auto;}
         <div class="lakum-header__container">
             <div class="lakum-header__logo">
                 <a href="./" class="lakum-logo">
-                    <img src="assest/logo/right_section.webp" alt="LAKUM" class="lakum-logo__left" width="105" height="80" decoding="async">
-                    <img src="assest/logo/left_section.webp" alt="Artspace" class="lakum-logo__right" width="105" height="80" decoding="async">
+                    <img src="assest/logo/right_section.png" alt="LAKUM" class="lakum-logo__left" width="105" height="80" decoding="async">
+                    <img src="assest/logo/left_section.png" alt="Artspace" class="lakum-logo__right" width="105" height="80" decoding="async">
                 </a>
             </div>
             <nav class="lakum-nav">
@@ -292,30 +287,16 @@ margin: 0 auto;}
 
     <section class="lakum-hero" style="aspect-ratio: 16/9">
         <div class="lakum-hero__image-wrapper">
-            <!-- OPTIMIZATION: Fully responsive hero image with AVIF/WebP + eager loading for LCP -->
-            <picture>
-                <source type="image/avif" 
-                        srcset="heroImage/img-4-320w.avif 320w,
-                                heroImage/img-4-480w.avif 480w,
-                                heroImage/img-4-768w.avif 768w,
-                                heroImage/img-4-1200w.avif 1200w"
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 1200px">
-                <source type="image/webp" 
-                        srcset="heroImage/img-4-320w.webp 320w,
-                                heroImage/img-4-480w.webp 480w,
-                                heroImage/img-4-768w.webp 768w,
-                                heroImage/img-4-1200w.webp 1200w"
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 1200px">
-                <img src="heroImage/img-4-480w.webp"
-                     alt="LAKUM Artspace - Where Encounters Shape Culture"
-                     fetchpriority="high"
-                     loading="eager"
-                     decoding="async"
-                     width="1200"
-                     height="800"
-                     class="lakum-hero__image"
-                     style="aspect-ratio: 1200/800">
-            </picture>
+            <!-- OPTIMIZATION: Hero image with eager loading for LCP -->
+            <img src="heroImage/img-4.webp"
+                 alt="LAKUM Artspace - Where Encounters Shape Culture"
+                 fetchpriority="high"
+                 loading="eager"
+                 decoding="async"
+                 width="1200"
+                 height="800"
+                 class="lakum-hero__image"
+                 style="aspect-ratio: 1200/800">
             <div class="lakum-hero__overlay"></div>
         </div>
         <div class="lakum-hero__content">
@@ -336,25 +317,13 @@ margin: 0 auto;}
     <section class="lakum-featured-banner" id="featuredBanner">
         <div class="lakum-featured-banner__content">
                 <div class="lakum-featured-banner__image">
-                    <!-- OPTIMIZATION: Responsive featured banner image -->
-                    <picture>
-                        <source type="image/avif" 
-                                srcset="heroImage/img-4-320w.avif 320w,
-                                        heroImage/img-4-480w.avif 480w,
-                                        heroImage/img-4-768w.avif 768w"
-                                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 450px">
-                        <source type="image/webp" 
-                                srcset="heroImage/img-4-320w.webp 320w,
-                                        heroImage/img-4-480w.webp 480w,
-                                        heroImage/img-4-768w.webp 768w"
-                                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 450px">
-                        <img src="heroImage/img-4-768w.webp"
-                             alt="Featured Event"
-                             loading="lazy"
-                             decoding="async"
-                             width="800"
-                             height="450">
-                    </picture>
+                    <!-- OPTIMIZATION: Featured banner image -->
+                    <img src="heroImage/img-4.webp"
+                         alt="Featured Event"
+                         loading="lazy"
+                         decoding="async"
+                         width="800"
+                         height="450">
                 </div>
                 <div class="lakum-featured-banner__text">
                     <span class="lakum-featured-banner__date"><?php echo t('closest_event', 'Closest Event'); ?></span>
@@ -419,8 +388,8 @@ margin: 0 auto;}
             <div class="lakum-footer__content">
                 <div class="lakum-footer__brand">
                     <div class="lakum-footer__logo">
-                        <img src="assest/logo/right_section.webp" alt="LAKUM" class="lakum-footer__logo-left" width="105" height="80" decoding="async">
-                        <img src="assest/logo/left_section.webp" alt="Artspace" class="lakum-footer__logo-right" width="105" height="80" decoding="async">
+                        <img src="assest/logo/right_section.png" alt="LAKUM" class="lakum-footer__logo-left" width="105" height="80" decoding="async">
+                        <img src="assest/logo/left_section.png" alt="Artspace" class="lakum-footer__logo-right" width="105" height="80" decoding="async">
                     </div>
                     <p class="lakum-footer__tagline"><?php echo t('tagline', 'Where Encounters Shape Culture'); ?></p>
                 </div>
@@ -442,17 +411,7 @@ margin: 0 auto;}
                         <li><a href="contact.php" class="lakum-footer__link"><?php echo t('contact_us', 'Contact'); ?></a></li>
                     </ul>
                 </nav>
-                <div class="lakum-footer__social">
-                    <h4 class="lakum-footer__nav-title"><?php echo t('connect', 'Connect'); ?></h4>
-                    <div class="lakum-footer__social-links">
-                        <a href="https://www.instagram.com/lakumartspace/" target="_blank" class="lakum-footer__social-link" aria-label="Instagram">
-                            <i class="ri-instagram-fill"></i>
-                        </a>
-                        <a href="https://x.com/Lakumartspace" target="_blank" class="lakum-footer__social-link" aria-label="Twitter">
-                            <i class="ri-twitter-x-fill"></i>
-                        </a>
-                    </div>
-                </div>
+                <div class="lakum-footer__social"><h4 class="lakum-footer__nav-title"><?php echo t('connect', 'Connect'); ?></h4><div class="lakum-footer__social-links"><a href="https://www.instagram.com/lakumartspace/" target="_blank" class="lakum-footer__social-link" aria-label="Instagram"><i class="ri-instagram-fill"></i></a><a href="https://x.com/Lakumartspace" target="_blank" class="lakum-footer__social-link" aria-label="Twitter"><i class="ri-twitter-x-fill"></i></a></div></div>
             </div>
             <div class="lakum-footer__bottom">
                 <p class="lakum-footer__copyright"><?php echo t('footer_copyright', '© 2025 - 2027 LAKUM Artspace. All rights reserved.'); ?></p>
@@ -465,239 +424,13 @@ margin: 0 auto;}
         </div>
     </footer>
 
-    <div class="lakum-contact-fab" id="lakumContactFab">
-        <button class="lakum-contact-fab__trigger" id="fabTrigger" aria-label="Contact options">
-            <i class="ri-mail-line lakum-contact-fab__icon"></i>
-            <i class="ri-close-line lakum-contact-fab__close"></i>
-        </button>
-        <div class="lakum-contact-fab__menu" id="fabMenu">
-            <a href="tel:+966920012083" class="lakum-contact-fab__item" data-tooltip="<?php echo t('call_us', 'Call us'); ?>">
-                <i class="ri-phone-line"></i>
-            </a>
-            <a href="https://wa.me/966920012083" target="_blank" class="lakum-contact-fab__item" data-tooltip="WhatsApp">
-                <i class="ri-whatsapp-line"></i>
-            </a>
-            <a href="mailto:info@lakumartspace.com" class="lakum-contact-fab__item" data-tooltip="<?php echo t('email', 'Email'); ?>">
-                <i class="ri-mail-line"></i>
-            </a>
-        </div>
-    </div>
+    <div class="lakum-contact-fab" id="lakumContactFab"><button class="lakum-contact-fab__trigger" id="fabTrigger" aria-label="Contact options"><i class="ri-mail-line lakum-contact-fab__icon"></i><i class="ri-close-line lakum-contact-fab__close"></i></button><div class="lakum-contact-fab__menu" id="fabMenu"><a href="tel:+966920012083" class="lakum-contact-fab__item" data-tooltip="Call us"><i class="ri-phone-line"></i></a><a href="https://wa.me/966920012083" target="_blank" class="lakum-contact-fab__item" data-tooltip="WhatsApp"><i class="ri-whatsapp-line"></i></a><a href="mailto:info@lakumartspace.com" class="lakum-contact-fab__item" data-tooltip="Email"><i class="ri-mail-line"></i></a></div></div>
 
     <script src="assest/fun-interactions.js?v=5.0.0" defer></script>
-    <script src="mobile-performance-optimizer.js?v=5.0.0" defer></script>
     <script src="js/LanguageManager.js?v=1.0.0" defer></script>
     <script>
         // Set current language from PHP
         window.LAKUM_LANG = '<?php echo getCurrentLanguage(); ?>';
-        
-        // Translation strings for JavaScript
-        const viewDetailsText = '<?php echo t("view_details", "View Details"); ?>';
-        const pastEventText = 'Past Event';
-
-        // Load all events from API (deferred - doesn't block LCP)
-        function loadAllEvents() {
-            return new Promise((resolve) => {
-                window.deferredEventsLoader.load((events) => {
-                    resolve(events || []);
-                });
-            });
-        }
-
-        // Convert 24h time to 12h format with AM/PM
-        function convertTo12HourFormat(time24h) {
-            if (!time24h) return '10:00 AM';
-            const [hours, minutes] = time24h.substring(0, 5).split(':');
-            let hour = parseInt(hours);
-            const ampm = hour >= 12 ? 'PM' : 'AM';
-            hour = hour % 12 || 12;
-            return `${hour}:${minutes} ${ampm}`;
-        }
-
-        // Load featured event
-        async function loadFeaturedEvent() {
-            const events = await loadAllEvents();
-            const container = document.getElementById('featuredBanner');
-            
-            // Look for event marked as featured
-            const featuredEvent = events.find(e => e.is_featured === 1 || e.is_featured === '1');
-            
-            if (!featuredEvent) {
-                // No featured event selected - show empty state
-                container.innerHTML = `
-                    <div class="lakum-featured-banner__content" style="opacity: 0.5;">
-                        <div class="lakum-featured-banner__image">
-                            <img src="assest/img-4.png" alt="No Featured Event" loading="lazy" style="filter: grayscale(100%);">
-                        </div>
-                        <div class="lakum-featured-banner__text">
-                            <span class="lakum-featured-banner__date">No Featured Event</span>
-                            <h3 class="lakum-featured-banner__title">Coming Soon</h3>
-                            <p class="lakum-featured-banner__description">Check back soon for our featured event selection.</p>
-                            <a href="exhibitions.php" class="lakum-btn lakum-btn--primary">` + viewDetailsText + `</a>
-                        </div>
-                    </div>
-                `;
-                return null;
-            }
-            
-            const eventDate = new Date(featuredEvent.event_date);
-            const dateStr = eventDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-            const timeStr = convertTo12HourFormat(featuredEvent.event_time);
-
-            container.innerHTML = `
-                <div class="lakum-featured-banner__content">
-                    <div class="lakum-featured-banner__image">
-                        <img src="${featuredEvent.cover_image || 'assest/img-4.png'}" alt="${featuredEvent.title}" loading="lazy">
-                    </div>
-                    <div class="lakum-featured-banner__text">
-                        <span class="lakum-featured-banner__date">${dateStr} • ${timeStr}</span>
-                        <h3 class="lakum-featured-banner__title">${featuredEvent.title}</h3>
-                        <p class="lakum-featured-banner__description">${featuredEvent.description}</p>
-                        <a href="event.php?id=${featuredEvent.id}" class="lakum-btn lakum-btn--primary">` + viewDetailsText + `</a>
-                    </div>
-                </div>
-            `;
-            
-            return featuredEvent.id;
-        }
-
-        // Load upcoming events
-        async function loadUpcomingEvents(excludeId = null) {
-            const events = await loadAllEvents();
-            const now = new Date();
-            now.setHours(0, 0, 0, 0);
-            
-            const upcomingEvents = events.filter(e => {
-                const eventDate = new Date(e.event_date);
-                eventDate.setHours(0, 0, 0, 0);
-                return eventDate >= now;
-            }).sort((a, b) => new Date(a.event_date) - new Date(b.event_date));
-            
-            const container = document.getElementById('nextTwoEvents');
-            container.innerHTML = '';
-
-            const filteredEvents = excludeId ? upcomingEvents.filter(e => e.id != excludeId).slice(0, 3) : upcomingEvents.slice(0, 3);
-
-            if (filteredEvents.length === 0) {
-                container.innerHTML = '<p style="text-align: center; padding: 40px; color: #999;">No upcoming events</p>';
-                return;
-            }
-
-            filteredEvents.forEach(event => {
-                const eventDate = new Date(event.event_date);
-                const month = eventDate.toLocaleDateString('en-US', { month: 'short' }).toUpperCase();
-                const day = eventDate.getDate();
-                const timeStr = convertTo12HourFormat(event.event_time);
-
-                const card = document.createElement('div');
-                card.className = 'lakum-event-card';
-                card.innerHTML = `
-                    <div class="lakum-event-card__image">
-                        <img src="${event.cover_image || 'assest/img-4.png'}" alt="${event.title}" loading="lazy">
-                        <div class="lakum-event-card__date">
-                            <span class="lakum-event-card__date-month">${month}</span>
-                            <span class="lakum-event-card__date-day">${day}</span>
-                        </div>
-                    </div>
-                    <div class="lakum-event-card__content">
-                        <h3 class="lakum-event-card__title">${event.title}</h3>
-                        <p class="lakum-event-card__time">${timeStr}</p>
-                        <a href="event.php?id=${event.id}" class="lakum-event-card__link">View Details</a>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
-        }
-
-        // Load previous events
-        async function loadPreviousEvents() {
-            const events = await loadAllEvents();
-            const now = new Date();
-            now.setHours(0, 0, 0, 0);
-            
-            const previousEvents = events.filter(e => {
-                const eventDate = new Date(e.event_date);
-                eventDate.setHours(0, 0, 0, 0);
-                return eventDate < now;
-            }).sort((a, b) => new Date(b.event_date) - new Date(a.event_date));
-            
-            const container = document.getElementById('recentEvents');
-            container.innerHTML = '';
-
-            if (previousEvents.length === 0) {
-                container.innerHTML = '<p style="text-align: center; padding: 40px; color: #999;">No previous events</p>';
-                return;
-            }
-
-            previousEvents.slice(0, 3).forEach(event => {
-                const eventDate = new Date(event.event_date);
-                const month = eventDate.toLocaleDateString('en-US', { month: 'short' }).toUpperCase();
-                const day = eventDate.getDate();
-                const timeStr = convertTo12HourFormat(event.event_time);
-
-                const card = document.createElement('div');
-                card.className = 'lakum-event-card';
-                card.innerHTML = `
-                    <div class="lakum-event-card__image">
-                        <img src="${event.cover_image || 'assest/img-4.png'}" alt="${event.title}" loading="lazy">
-                        <div class="lakum-event-card__date">
-                            <span class="lakum-event-card__date-month">${month}</span>
-                            <span class="lakum-event-card__date-day">${day}</span>
-                        </div>
-                    </div>
-                    <div class="lakum-event-card__content">
-                        <h3 class="lakum-event-card__title">${event.title}</h3>
-                        <p class="lakum-event-card__time">${timeStr}</p>
-                        <a href="event.php?id=${event.id}" class="lakum-event-card__link">View Details</a>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
-        }
-
-        // Initialize - DEFERRED to avoid blocking LCP
-        async function initPage() {
-            // Ensure LanguageManager is initialized
-            if (typeof LanguageManager === 'undefined') {
-                console.warn('LanguageManager not ready, retrying...');
-                setTimeout(initPage, 100);
-                return;
-            }
-            
-            const featuredId = await loadFeaturedEvent();
-            await loadUpcomingEvents(featuredId);
-            await loadPreviousEvents();
-        }
-
-        // OPTIMIZATION: Defer event loading to after first paint
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', () => {
-                // Use requestIdleCallback to defer loading
-                if ('requestIdleCallback' in window) {
-                    requestIdleCallback(() => {
-                        initPage();
-                    }, { timeout: 2000 });
-                } else {
-                    // Fallback: defer with setTimeout
-                    setTimeout(initPage, 100);
-                }
-            });
-        } else {
-            // Page already loaded
-            if ('requestIdleCallback' in window) {
-                requestIdleCallback(() => {
-                    initPage();
-                }, { timeout: 2000 });
-            } else {
-                setTimeout(initPage, 100);
-            }
-        }
-
-        // Reload when page becomes visible
-        document.addEventListener('visibilitychange', () => {
-            if (!document.hidden) {
-                initPage();
-            }
-        });
     </script>
 
     <script src="assest/popup-notification.js?v=5.0.0" defer></script>
