@@ -1,0 +1,177 @@
+# AGGRESSIVE PERFORMANCE OPTIMIZATION
+# Last Updated: March 3, 2026
+
+# ============================================================================
+# 1. ENABLE BROTLI COMPRESSION (20% better than gzip)
+# ============================================================================
+<IfModule mod_brotli.c>
+    AddOutputFilterByType BROTLI_COMPRESS text/html
+    AddOutputFilterByType BROTLI_COMPRESS text/plain
+    AddOutputFilterByType BROTLI_COMPRESS text/xml
+    AddOutputFilterByType BROTLI_COMPRESS text/css
+    AddOutputFilterByType BROTLI_COMPRESS text/javascript
+    AddOutputFilterByType BROTLI_COMPRESS application/javascript
+    AddOutputFilterByType BROTLI_COMPRESS application/json
+    AddOutputFilterByType BROTLI_COMPRESS application/xml
+    AddOutputFilterByType BROTLI_COMPRESS application/rss+xml
+    AddOutputFilterByType BROTLI_COMPRESS image/svg+xml
+    AddOutputFilterByType BROTLI_COMPRESS font/woff2
+    AddOutputFilterByType BROTLI_COMPRESS font/woff
+</IfModule>
+
+# ============================================================================
+# 2. FALLBACK TO GZIP IF BROTLI NOT AVAILABLE
+# ============================================================================
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/plain
+    AddOutputFilterByType DEFLATE text/xml
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE text/javascript
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/json
+    AddOutputFilterByType DEFLATE application/xml
+    AddOutputFilterByType DEFLATE font/woff2
+    AddOutputFilterByType DEFLATE font/woff
+    
+    # Exclude already compressed
+    SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png|webp|avif|zip|gz)$ no-gzip dont-vary
+</IfModule>
+
+# ============================================================================
+# 3. AGGRESSIVE CACHING HEADERS (1 year for immutable assets)
+# ============================================================================
+<IfModule mod_expires.c>
+    ExpiresActive On
+    
+    # Images: 1 year (immutable)
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
+    ExpiresByType image/avif "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType image/x-icon "access plus 1 year"
+    
+    # Fonts: 1 year (immutable)
+    ExpiresByType font/woff2 "access plus 1 year"
+    ExpiresByType font/woff "access plus 1 year"
+    ExpiresByType font/ttf "access plus 1 year"
+    ExpiresByType font/otf "access plus 1 year"
+    ExpiresByType application/font-woff "access plus 1 year"
+    ExpiresByType application/font-woff2 "access plus 1 year"
+    
+    # CSS/JS: 1 month (versioned)
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType text/javascript "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    
+    # HTML: 1 day (dynamic)
+    ExpiresByType text/html "access plus 1 day"
+    
+    # Default
+    ExpiresDefault "access plus 1 day"
+</IfModule>
+
+# ============================================================================
+# 4. CACHE-CONTROL HEADERS (Browser caching)
+# ============================================================================
+<IfModule mod_headers.c>
+    # Images: 1 year immutable
+    <FilesMatch "\.(jpg|jpeg|png|gif|webp|avif|ico|svg)$">
+        Header set Cache-Control "max-age=31536000, public, immutable"
+        Header set Vary "Accept-Encoding"
+    </FilesMatch>
+    
+    # Fonts: 1 year immutable
+    <FilesMatch "\.(woff|woff2|ttf|otf|eot)$">
+        Header set Cache-Control "max-age=31536000, public, immutable"
+        Header set Vary "Accept-Encoding"
+    </FilesMatch>
+    
+    # CSS/JS: 1 month (versioned)
+    <FilesMatch "\.(css|js)$">
+        Header set Cache-Control "max-age=2592000, public"
+        Header set Vary "Accept-Encoding"
+    </FilesMatch>
+    
+    # HTML: 1 day (dynamic)
+    <FilesMatch "\.html?$">
+        Header set Cache-Control "max-age=86400, public, must-revalidate"
+        Header set Vary "Accept-Encoding"
+    </FilesMatch>
+    
+    # PHP: No cache (dynamic)
+    <FilesMatch "\.php$">
+        Header set Cache-Control "no-cache, no-store, must-revalidate, max-age=0"
+        Header set Pragma "no-cache"
+        Header set Expires "0"
+    </FilesMatch>
+    
+    # API: 5 minute cache
+    <FilesMatch "^api/get_.*\.php$">
+        Header set Cache-Control "max-age=300, public"
+    </FilesMatch>
+</IfModule>
+
+# ============================================================================
+# 5. SECURITY HEADERS
+# ============================================================================
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-XSS-Protection "1; mode=block"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+    Header set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+</IfModule>
+
+# ============================================================================
+# 6. ENABLE MOD_REWRITE FOR CLEAN URLS
+# ============================================================================
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+    
+    # Remove .php extension
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^([^\.]+)$ $1.php [NC, L]
+    
+    # Redirect www to non-www
+    RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+    RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
+    
+    # Redirect HTTP to HTTPS
+    RewriteCond %{HTTPS} off
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</IfModule>
+
+# ============================================================================
+# 7. DISABLE DIRECTORY LISTING
+# ============================================================================
+Options -Indexes
+
+# ============================================================================
+# 8. CUSTOM ERROR PAGES
+# ============================================================================
+ErrorDocument 404 /404.html
+ErrorDocument 500 /500.html
+
+# ============================================================================
+# 9. MIME TYPES FOR MODERN FORMATS
+# ============================================================================
+<IfModule mod_mime.c>
+    AddType image/webp .webp
+    AddType image/avif .avif
+    AddType font/woff2 .woff2
+    AddType font/woff .woff
+    AddType application/json .json
+    AddType text/javascript .js
+</IfModule>
+
+# ============================================================================
+# 10. KEEP-ALIVE (Persistent connections)
+# ============================================================================
+<IfModule mod_headers.c>
+    Header set Connection "keep-alive"
+</IfModule>

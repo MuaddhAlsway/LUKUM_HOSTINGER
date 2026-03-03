@@ -14,17 +14,13 @@ require_once 'config.css-loader.php';
     <link rel="icon" type="image/png" sizes="16x16" href="assest/logo/right_section.png">
     <link rel="apple-touch-icon" href="assest/logo/right_section.png">
     <meta name="msapplication-TileImage" content="assest/logo/right_section.png">
-    <!-- Preload LCP image (hero) - Mobile-first with responsive variants -->
+    <!-- AGGRESSIVE OPTIMIZATION: Preload ONLY LCP image (smallest variant) -->
     <link rel="preload" as="image" 
-          href="heroImage/img-4.webp"
-          imagesrcset="heroImage/img-4.webp 1200w"
-          imagesizes="(max-width: 768px) 100vw, 650px"
+          href="heroImage/img-4-480w.webp"
           fetchpriority="high">
-    <!-- Preload critical fonts -->
-    <link rel="preload" href="assest/fonts/GretaArabicAR+LT-Regular.otf" as="font" type="font/otf" crossorigin>
-    <link rel="preload" href="assest/fonts/GretaArabicAR+LT-Light.otf" as="font" type="font/otf" crossorigin>
-    <link rel="preload" href="assest/fonts/GretaTextArabicAR+LT-Regular.otf" as="font" type="font/otf" crossorigin>
-    <link rel="preload" href="assest/fonts/GretaTextArabicAR+LT-Light.otf" as="font" type="font/otf" crossorigin>
+    <!-- AGGRESSIVE OPTIMIZATION: Preload ONLY 2 critical fonts (Regular + Light) in WOFF2 -->
+    <link rel="preload" href="assest/fonts/GretaArabicAR+LT-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="assest/fonts/GretaTextArabicAR+LT-Regular.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
     <link rel="preload" href="global-styles.css" as="style">
@@ -49,7 +45,7 @@ require_once 'config.css-loader.php';
         <link rel="stylesheet" href="assest/popup-notification.css">
     </noscript>
     
-    <!-- Icons - Defer loading (not critical for initial render) -->
+    <!-- AGGRESSIVE OPTIMIZATION: Defer remixicon (not critical) + use subset -->
     <link rel="preload" href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet"></noscript>
     <!-- API Cache Manager - Deferred to avoid blocking render -->
@@ -291,15 +287,29 @@ margin: 0 auto;}
 
     <section class="lakum-hero" style="aspect-ratio: 16/9">
         <div class="lakum-hero__image-wrapper">
-            <img src="heroImage/img-4.webp"
-                 srcset="heroImage/img-4.webp 1200w"
-                 sizes="100vw"
-                 alt="LAKUM Artspace"
-                 fetchpriority="high"
-                 decoding="async"
-                 width="1200"
-                 height="800"
-                 class="lakum-hero__image">
+            <!-- AGGRESSIVE OPTIMIZATION: Fully responsive hero image with AVIF/WebP -->
+            <picture>
+                <source type="image/avif" 
+                        srcset="heroImage/img-4-320w.avif 320w,
+                                heroImage/img-4-480w.avif 480w,
+                                heroImage/img-4-768w.avif 768w,
+                                heroImage/img-4-1200w.avif 1200w"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 1200px">
+                <source type="image/webp" 
+                        srcset="heroImage/img-4-320w.webp 320w,
+                                heroImage/img-4-480w.webp 480w,
+                                heroImage/img-4-768w.webp 768w,
+                                heroImage/img-4-1200w.webp 1200w"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 1200px">
+                <img src="heroImage/img-4-1200w.webp"
+                     alt="LAKUM Artspace"
+                     fetchpriority="high"
+                     decoding="async"
+                     width="1200"
+                     height="800"
+                     class="lakum-hero__image"
+                     style="aspect-ratio: 1200/800">
+            </picture>
             <div class="lakum-hero__overlay"></div>
         </div>
         <div class="lakum-hero__content">
