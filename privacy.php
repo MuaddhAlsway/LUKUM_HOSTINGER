@@ -522,7 +522,7 @@ require_once 'lang/loader.php';
                         <img src="assest/logo/right_section.png" alt="LAKUM" class="lakum-footer__logo-left" width="105" height="80" decoding="async">
                         <img src="assest/logo/left_section.png" alt="Artspace" class="lakum-footer__logo-right" width="105" height="80" decoding="async">
                     </div>
-                    <p class="lakum-footer__tagline">Where Encounters Shape Culture</p>
+                    <p class="lakum-footer__tagline"><?php echo t('footer_tagline', 'Where Encounters Shape Culture'); ?></p>
                 </div>
 
                 <nav class="lakum-footer__nav">

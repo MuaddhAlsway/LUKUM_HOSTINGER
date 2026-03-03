@@ -27,6 +27,7 @@ require_once 'config.css-loader.php';
     <!-- Critical CSS - inline for instant render -->
     <link rel="stylesheet" href="global-styles.css">
     <link rel="stylesheet" href="lakum-components.css">
+    <link rel="stylesheet" href="assest/mobile-menu.css">
     <link rel="stylesheet" href="assest/remixicon-minimal.css">
     
     <!-- Non-critical CSS - defer loading with media trick -->

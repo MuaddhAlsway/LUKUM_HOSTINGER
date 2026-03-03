@@ -63,7 +63,7 @@ require_once 'config.css-loader.php';
 <span class="lakum-lang-text"><?php echo isArabic()?'En':'Ar';?></span>
 </a>
 </div>
-<button class="lakum-header__mobile-toggle" aria-label="Toggle navigation menu">
+<button class="lakum-header__mobile-toggle" aria-label="Toggle menu">
 <span class="lakum-header__mobile-icon" aria-hidden="true"></span>
 </button>
 </div>

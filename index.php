@@ -17,6 +17,7 @@ require_once 'lang/loader.php';
     <!-- Critical CSS - Inline for fast render -->
     <link rel="stylesheet" href="global-styles.css">
     <link rel="stylesheet" href="lakum-components.css">
+    <link rel="stylesheet" href="assest/mobile-menu.css">
     <link rel="stylesheet" href="assest/remixicon-minimal.css">
     
     <!-- Async CSS - Non-blocking -->
@@ -251,7 +252,7 @@ margin: 0 auto;}
                     <span class="lakum-lang-text"><?php echo isArabic() ? 'EN' : 'AR'; ?></span>
                 </a>
             </div>
-            <button class="lakum-header__mobile-toggle" aria-label="Toggle navigation menu">
+            <button class="lakum-header__mobile-toggle" aria-label="Toggle menu">
                 <span class="lakum-header__mobile-icon" aria-hidden="true"></span>
             </button>
         </div>
@@ -364,7 +365,7 @@ margin: 0 auto;}
                         <img src="assest/logo/right_section.png" alt="LAKUM" class="lakum-footer__logo-left">
                         <img src="assest/logo/left_section.png" alt="Artspace" class="lakum-footer__logo-right">
                     </div>
-                    <p class="lakum-footer__tagline"><?php echo t('tagline', 'Where Encounters Shape Culture'); ?></p>
+                    <p class="lakum-footer__tagline"><?php echo t('footer_tagline', 'Where Encounters Shape Culture'); ?></p>
                 </div>
                 <nav class="lakum-footer__nav">
                     <h4 class="lakum-footer__nav-title"><?php echo t('navigate', 'Navigate'); ?></h4>

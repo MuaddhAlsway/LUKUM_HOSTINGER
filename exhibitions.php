@@ -377,10 +377,32 @@ require_once 'api/image-helper.php';
             document.getElementById('lakumContactFab').classList.toggle('lakum-contact-fab--active');
         });
 
-        document.querySelector('.lakum-header__mobile-toggle')?.addEventListener('click', function() {
-            this.classList.toggle('lakum-header__mobile-toggle--active');
-            document.querySelector('.lakum-nav').classList.toggle('lakum-nav--active');
-        });
+        // Mobile menu toggle
+        (function() {
+            const toggle = document.querySelector('.lakum-header__mobile-toggle');
+            const nav = document.querySelector('.lakum-nav');
+            const header = document.querySelector('.lakum-header');
+
+            if (toggle && nav) {
+                toggle.addEventListener('click', function() {
+                    toggle.classList.toggle('lakum-header__mobile-toggle--active');
+                    nav.classList.toggle('lakum-nav--active');
+                    header.classList.toggle('lakum-header--menu-open');
+                    document.body.style.overflow = nav.classList.contains('lakum-nav--active') ? 'hidden' : '';
+                });
+
+                // Close menu when clicking nav link
+                const navLinks = document.querySelectorAll('.lakum-nav__link');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        toggle.classList.remove('lakum-header__mobile-toggle--active');
+                        nav.classList.remove('lakum-nav--active');
+                        header.classList.remove('lakum-header--menu-open');
+                        document.body.style.overflow = '';
+                    });
+                });
+            }
+        })();
     </script>
 
     <script src="assest/popup-notification.js?v=5.0.0" defer></script>

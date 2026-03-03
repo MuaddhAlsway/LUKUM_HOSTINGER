@@ -21,6 +21,7 @@ require_once 'api/image-helper.php';
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="global-styles.css">
 <link rel="stylesheet" href="lakum-components.css">
+<link rel="stylesheet" href="assest/mobile-menu.css">
 <link rel="stylesheet" href="assest/remixicon-minimal.css">
 <link rel="stylesheet" href="Home.min.css" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="rtl.css" media="print" onload="this.media='all'">
@@ -597,7 +598,7 @@ html[lang="ar"] .lakum-event-card__date {
 <i class="ri-global-line"></i>
 <span class="lakum-lang-text"><?php echo isArabic() ? 'En' : 'Ar'; ?></span>
 </a>
-</div><button class="lakum-header__mobile-toggle" aria-label="Toggle navigation menu"><span class="lakum-header__mobile-icon" aria-hidden="true"></span></button></div></header>
+</div><button class="lakum-header__mobile-toggle" aria-label="Toggle menu"><span class="lakum-header__mobile-icon" aria-hidden="true"></span></button></div></header>
 <section class="page-hero">
     <div class="page-hero__image-wrapper">
         <img src="heroImage/img-4.webp"
