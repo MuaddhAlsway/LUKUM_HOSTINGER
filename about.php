@@ -79,8 +79,7 @@ body {
 
 .page-hero {
   position: relative;
-  width: 100vw;
-  margin-left: calc(-50vw + 50%);
+  width: 100%;
   height: 65vh;
   min-height: 450px;
   max-height: 650px;
@@ -92,6 +91,9 @@ body {
   padding: 60px 20px !important;
   overflow: hidden;
   contain: layout style paint;
+  margin: 0;
+  left: 0;
+  right: 0;
 }
 
 @media (max-width: 768px) {

@@ -74,10 +74,10 @@ require_once 'config.css-loader.php';
     
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0;  }
-        html { font-size: 16px; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-        body {  sans-serif; background: #f6f6eb; color: #1a1a1a; overflow-x: hidden; line-height: 1.6; }
+        html { font-size: 16px; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; scrollbar-gutter: stable; }
+        body {  sans-serif; background: #f6f6eb; color: #1a1a1a; overflow-x: hidden; line-height: 1.6; margin: 0; padding: 0; }
         
-        .lakum-hero { position: relative; width: 100vw; margin-left: calc(-50vw + 50%); height: 85vh; min-height: 600px; display: flex; align-items: center; justify-content: center; background: #1a1a1a; contain: layout style paint; }
+        .lakum-hero { position: relative; width: 100%; margin: 0; height: 85vh; min-height: 600px; display: flex; align-items: center; justify-content: center; background: #1a1a1a; contain: layout style paint; }
         @media (max-width: 768px) { .lakum-hero { height: 70vh; min-height: 500px; } }
         @media (max-width: 480px) { .lakum-hero { height: 60vh; min-height: 400px; } }
         .lakum-hero__image-wrapper { position: absolute; inset: 0; z-index: 1; overflow: hidden; width: 100%; height: 100%; }
@@ -109,14 +109,68 @@ require_once 'config.css-loader.php';
         .lakum-section-header__title { font-size: 2.5rem; font-weight: 300; color: #1a1a1a; margin-bottom: 15px; }
         .lakum-section-header__subtitle { font-size: 1.1rem; color: #666; text-align: center; }
         
-        .lakum-featured-banner { padding: 0; background: #edecdf; }
-        .lakum-featured-banner__content { display: grid; grid-template-columns: 1fr 1fr; gap: 0; align-items: stretch; width: 100vw; margin-left: calc(-50vw + 50%); }
+        @media (max-width: 1024px) {
+            .lakum-section { padding: 60px 0; }
+            .lakum-section--upcoming { padding: 50px 0; }
+            .lakum-section--exhibitions { padding: 60px 0; }
+            .lakum-section-header { margin-bottom: 50px; }
+            .lakum-section-header__title { font-size: 2rem; }
+            .lakum-section-header__subtitle { font-size: 1rem; }
+        }
+        
+        @media (max-width: 768px) {
+            .lakum-section { padding: 40px 0; }
+            .lakum-section--upcoming { padding: 30px 0; }
+            .lakum-section--exhibitions { padding: 40px 0; }
+            .lakum-container { padding: 0 clamp(15px, 4vw, 30px); }
+            .lakum-section-header { margin-bottom: 30px; }
+            .lakum-section-header__title { font-size: 1.75rem; margin-bottom: 12px; }
+            .lakum-section-header__subtitle { font-size: 0.95rem; }
+        }
+        
+        @media (max-width: 480px) {
+            .lakum-section { padding: 30px 0; }
+            .lakum-section--upcoming { padding: 20px 0; }
+            .lakum-section--exhibitions { padding: 30px 0; }
+            .lakum-container { padding: 0 clamp(12px, 3vw, 20px); }
+            .lakum-section-header { margin-bottom: 20px; }
+            .lakum-section-header__title { font-size: 1.5rem; margin-bottom: 10px; }
+            .lakum-section-header__subtitle { font-size: 0.9rem; }
+        }
+        
+        .lakum-featured-banner { padding: 0; background: #edecdf; width: 100%; margin: 0; contain: layout style paint; }
+        .lakum-featured-banner__content { display: grid; grid-template-columns: 1fr 1fr; gap: 0; align-items: stretch; width: 100%; }
         .lakum-featured-banner__image { width: 100%; height: 450px; overflow: hidden; border-radius: 0; }
-        .lakum-featured-banner__image img { width: 100%; height: 100%; display: block; border-radius: 0; box-shadow: none; object-fit: cover; }
+        .lakum-featured-banner__image img { width: 100%; height: 100%; display: block; border-radius: 0; box-shadow: none; object-fit: cover; decoding: async; }
         .lakum-featured-banner__text { padding: 60px; display: flex; flex-direction: column; justify-content: center; }
         .lakum-featured-banner__date { font-size: 0.85rem; color: #999; text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 15px; }
         .lakum-featured-banner__title { font-size: 2rem; font-weight: 300; margin-bottom: 20px; color: #1a1a1a; }
         .lakum-featured-banner__description { font-size: 1.05rem; line-height: 1.8; color: #555; margin-bottom: 25px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-clamp: 2; word-break: break-word; }
+        
+        @media (max-width: 1024px) {
+            .lakum-featured-banner__content { grid-template-columns: 1fr; }
+            .lakum-featured-banner__image { height: 350px; }
+            .lakum-featured-banner__text { padding: 40px; }
+            .lakum-featured-banner__title { font-size: 1.75rem; }
+            .lakum-featured-banner__description { font-size: 1rem; }
+        }
+        
+        @media (max-width: 768px) {
+            .lakum-featured-banner__content { grid-template-columns: 1fr; gap: 20px; }
+            .lakum-featured-banner__image { height: 300px; }
+            .lakum-featured-banner__text { padding: 30px 20px; }
+            .lakum-featured-banner__title { font-size: 1.5rem; margin-bottom: 15px; }
+            .lakum-featured-banner__description { font-size: 0.95rem; margin-bottom: 20px; }
+            .lakum-featured-banner__date { font-size: 0.8rem; margin-bottom: 10px; }
+        }
+        
+        @media (max-width: 480px) {
+            .lakum-featured-banner__image { height: 250px; }
+            .lakum-featured-banner__text { padding: 20px 15px; }
+            .lakum-featured-banner__title { font-size: 1.25rem; margin-bottom: 12px; }
+            .lakum-featured-banner__description { font-size: 0.9rem; margin-bottom: 15px; -webkit-line-clamp: 3; }
+            .lakum-featured-banner__date { font-size: 0.75rem; }
+        }
         
         .lakum-upcoming-grid {          display: grid;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -135,6 +189,29 @@ require_once 'config.css-loader.php';
         .lakum-event-card__time { font-size: 0.9rem; color: #ff6b35; margin-bottom: 12px; }
         .lakum-event-card__link { font-size: 0.9rem; color: #1a1a1a; text-decoration: none; font-weight: 500; }
         
+        @media (max-width: 1024px) {
+            .lakum-upcoming-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+            .lakum-event-card { height: auto; }
+            .lakum-event-card__image { height: 280px; }
+        }
+        
+        @media (max-width: 768px) {
+            .lakum-upcoming-grid { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; }
+            .lakum-event-card__image { height: 250px; }
+            .lakum-event-card__content { padding: 15px; }
+            .lakum-event-card__title { font-size: 1.1rem; margin-bottom: 6px; }
+            .lakum-event-card__time { font-size: 0.85rem; margin-bottom: 8px; }
+        }
+        
+        @media (max-width: 480px) {
+            .lakum-upcoming-grid { grid-template-columns: 1fr; gap: 1rem; }
+            .lakum-event-card__image { height: 220px; }
+            .lakum-event-card__content { padding: 12px; }
+            .lakum-event-card__title { font-size: 1rem; }
+            .lakum-event-card__date { top: 8px; left: 8px; padding: 8px 12px; }
+            .lakum-event-card__date-day { font-size: 1.5rem; }
+        }
+        
         .lakum-cta { padding: 80px 0; text-align: center; }
         .lakum-cta--primary { background: linear-gradient(135deg, #edecdf 0%, #f6f6eb 100%); }
         .lakum-cta--primary .lakum-cta__title { color: #1a1a1a; }
@@ -146,23 +223,75 @@ require_once 'config.css-loader.php';
         .lakum-cta__title { font-size: 2.5rem; font-weight: 300; margin-bottom: 20px; color: white; }
         .lakum-cta__text { font-size: 1.1rem; margin-bottom: 30px; line-height: 1.6; color: white; text-align: center; max-width: 600px; margin-left: auto; margin-right: auto; }
         
+        @media (max-width: 1024px) {
+            .lakum-cta { padding: 60px 0; }
+            .lakum-cta__title { font-size: 2rem; margin-bottom: 15px; }
+            .lakum-cta__text { font-size: 1rem; margin-bottom: 25px; }
+        }
+        
+        @media (max-width: 768px) {
+            .lakum-cta { padding: 40px 0; }
+            .lakum-cta__title { font-size: 1.75rem; margin-bottom: 12px; }
+            .lakum-cta__text { font-size: 0.95rem; margin-bottom: 20px; }
+        }
+        
+        @media (max-width: 480px) {
+            .lakum-cta { padding: 30px 0; }
+            .lakum-cta__title { font-size: 1.5rem; margin-bottom: 10px; }
+            .lakum-cta__text { font-size: 0.9rem; margin-bottom: 15px; }
+        }
+        
         .lakum-section-divider { display: flex; align-items: center; gap: 20px; margin-bottom: 60px; }
         .lakum-section-divider__line { flex: 1; height: 1px; background: #d1d1d1; }
         .lakum-section-divider__title { font-size: 2.5rem; font-weight: 300; color: #1a1a1a; white-space: nowrap; }
         
+        @media (max-width: 1024px) {
+            .lakum-section-divider { margin-bottom: 50px; }
+            .lakum-section-divider__title { font-size: 2rem; }
+        }
+        
+        @media (max-width: 768px) {
+            .lakum-section-divider { flex-direction: column; gap: 15px; margin-bottom: 30px; }
+            .lakum-section-divider__line { display: none; }
+            .lakum-section-divider__title { font-size: 1.75rem; white-space: normal; }
+        }
+        
+        @media (max-width: 480px) {
+            .lakum-section-divider { margin-bottom: 20px; }
+            .lakum-section-divider__title { font-size: 1.5rem; }
+        }
+        
         .lakum-exhibition-grid {      display: grid;
-
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-
-gap: var(--spacing-2xl);
-
-max-width: 1400px;
-
-margin: 0 auto;}
+    gap: var(--spacing-2xl);
+    max-width: 1400px;
+    margin: 0 auto;}
+        
+        @media (max-width: 1024px) {
+            .lakum-exhibition-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+        }
+        
+        @media (max-width: 768px) {
+            .lakum-exhibition-grid { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; }
+        }
+        
+        @media (max-width: 480px) {
+            .lakum-exhibition-grid { grid-template-columns: 1fr; gap: 1rem; }
+        }
         .lakum-skeleton-card { background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%); background-size: 200% 100%; animation: loading 1.5s infinite; height: 350px; border-radius: 8px; }
         @keyframes loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
         
         .lakum-section-cta { display: flex; justify-content: center; margin-top: 40px; }
+        
+        @media (max-width: 768px) {
+            .lakum-skeleton-card { height: 300px; }
+            .lakum-section-cta { margin-top: 30px; }
+        }
+        
+        @media (max-width: 480px) {
+            .lakum-skeleton-card { height: 250px; }
+            .lakum-section-cta { margin-top: 20px; }
+        }
         
         @media (max-width: 768px) {
             .lakum-hero { height: 60vh; min-height: 450px; }
@@ -236,6 +365,20 @@ margin: 0 auto;}
             background: #333 !important; 
             transform: translateY(-2px) !important;
         }
+        
+        @media (max-width: 768px) {
+            .lakum-btn, .lakum-btn--primary, .lakum-btn--outline {
+                padding: 12px 30px !important;
+                font-size: 0.95rem !important;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .lakum-btn, .lakum-btn--primary, .lakum-btn--outline {
+                padding: 10px 24px !important;
+                font-size: 0.9rem !important;
+            }
+        }
     </style>
 </head>
 <body class="<?php echo getLanguageClass(); ?>">
@@ -245,38 +388,60 @@ margin: 0 auto;}
         </div>
     </div>
 
-    <header class="lakum-header">
-        <div class="lakum-header__container">
+  <div class="lakum-header__container">
             <div class="lakum-header__logo">
-                <a href="./" class="lakum-logo">
+                <a href="" class="lakum-logo">
+                    <!-- English: Swapped -->
                     <img src="assest/logo/right_section.png" alt="LAKUM" class="lakum-logo__left" width="105" height="80" decoding="async">
                     <img src="assest/logo/left_section.png" alt="Artspace" class="lakum-logo__right" width="105" height="80" decoding="async">
                 </a>
             </div>
+
             <nav class="lakum-nav">
                 <ul class="lakum-nav__list">
-                    <li class="lakum-nav__item"><a href="index.php" class="lakum-nav__link lakum-nav__link--active"><?php echo t('home', 'Home'); ?></a></li>
-                    <li class="lakum-nav__item"><a href="about.php" class="lakum-nav__link"><?php echo t('about', 'About'); ?></a></li>
-                    <li class="lakum-nav__item"><a href="spaces.php" class="lakum-nav__link"><?php echo t('spaces', 'Spaces'); ?></a></li>
-                    <li class="lakum-nav__item"><a href="exhibitions.php" class="lakum-nav__link"><?php echo t('exhibitions', 'Exhibitions'); ?></a></li>
-                    <li class="lakum-nav__item"><a href="calendar.php" class="lakum-nav__link"><?php echo t('calendar', 'Calendar'); ?></a></li>
-                    <li class="lakum-nav__item"><a href="blog.php" class="lakum-nav__link"><?php echo t('blog', 'Blog'); ?></a></li>
-                    <li class="lakum-nav__item"><a href="press.php" class="lakum-nav__link"><?php echo t('press', 'Press'); ?></a></li>
-                    <li class="lakum-nav__item"><a href="contact.php" class="lakum-nav__link"><?php echo t('contact_us', 'Contact'); ?></a></li>
-                    <li class="lakum-nav__item"><a href="shop.php" class="lakum-nav__link"><?php echo t('shop', 'Shop'); ?></a></li>
+                    <li class="lakum-nav__item">
+                        <a href="index.php" class="lakum-nav__link "><?php echo t('home', 'Home'); ?></a>
+                    </li>
+                    <li class="lakum-nav__item">
+                        <a href="about.php" class="lakum-nav__link "><?php echo t('about', 'About'); ?></a>
+                    </li>
+                    <li class="lakum-nav__item">
+                        <a href="spaces.php" class="lakum-nav__link lakum-nav__link--active"><?php echo t('spaces', 'Spaces'); ?></a>
+                    </li>
+                    <li class="lakum-nav__item">
+                        <a href="exhibitions.php" class="lakum-nav__link "><?php echo t('exhibitions', 'Exhibitions'); ?></a>
+                    </li>
+                    <li class="lakum-nav__item">
+                        <a href="calendar.php" class="lakum-nav__link "><?php echo t('calendar', 'Calendar'); ?></a>
+                    </li>
+                    <li class="lakum-nav__item">
+                        <a href="blog.php" class="lakum-nav__link "><?php echo t('blog', 'Blog'); ?></a>
+                    </li>
+                    <li class="lakum-nav__item">
+                        <a href="press.php" class="lakum-nav__link "><?php echo t('press', 'Press'); ?></a>
+                    </li>
+                    <li class="lakum-nav__item">
+                        <a href="contact.php" class="lakum-nav__link "><?php echo t('contact_us', 'Contact'); ?></a>
+                    </li>
+                    <li class="lakum-nav__item">
+                        <a href="shop.php" class="lakum-nav__link "><?php echo t('shop', 'Shop'); ?></a>
+                    </li>
+
                 </ul>
             </nav>
+
+            <!-- Language Switcher -->
             <div class="lakum-language-switcher">
                 <a href="<?php echo buildLanguageSwitcherUrl(); ?>" class="lakum-lang-link" title="<?php echo isArabic() ? 'Language: English' : 'Language: العربية'; ?>">
-                    <i class="ri-global-line"></i>
-                    <span class="lakum-lang-text"><?php echo isArabic() ? 'En' : 'Ar'; ?></span>
-                </a>
+                <i class="ri-global-line"></i>
+                <span class="lakum-lang-text"><?php echo isArabic() ? 'En' : 'Ar'; ?></span>
+            </a>
             </div>
-            <button class="lakum-header__mobile-toggle" aria-label="Toggle navigation menu">
-                <span class="lakum-header__mobile-icon" aria-hidden="true"></span>
-            </button>
+
+            <button class="lakum-header__mobile-toggle" aria-label="Toggle menu">
+            <span class="lakum-header__mobile-icon"></span>
+        </button>
         </div>
-    </header>
 
     <section class="lakum-hero" style="aspect-ratio: 16/9">
         <div class="lakum-hero__image-wrapper">
@@ -377,18 +542,20 @@ margin: 0 auto;}
         </div>
     </section>
 
-    <footer class="lakum-footer">
+   <footer class="lakum-footer">
         <div class="lakum-footer__container">
             <div class="lakum-footer__content">
                 <div class="lakum-footer__brand">
                     <div class="lakum-footer__logo">
+                        <!-- English: Swapped -->
                         <img src="assest/logo/right_section.png" alt="LAKUM" class="lakum-footer__logo-left" width="105" height="80" decoding="async">
                         <img src="assest/logo/left_section.png" alt="Artspace" class="lakum-footer__logo-right" width="105" height="80" decoding="async">
                     </div>
-                    <p class="lakum-footer__tagline"><?php echo t('tagline', 'Where Encounters Shape Culture'); ?></p>
+                    <p class="lakum-footer__tagline"><?php echo t('footer_tagline', 'Where Encounters Shape Culture'); ?></p>
                 </div>
+
                 <nav class="lakum-footer__nav">
-                    <h4 class="lakum-footer__nav-title"><?php echo t('navigate', 'Navigate'); ?></h4>
+                    <h4 class="lakum-footer__nav-title"><?php echo t('footer_navigate', 'Navigate'); ?></h4>
                     <ul class="lakum-footer__nav-list">
                         <li><a href="index.php" class="lakum-footer__link"><?php echo t('home', 'Home'); ?></a></li>
                         <li><a href="about.php" class="lakum-footer__link"><?php echo t('about', 'About'); ?></a></li>
@@ -396,8 +563,9 @@ margin: 0 auto;}
                         <li><a href="exhibitions.php" class="lakum-footer__link"><?php echo t('exhibitions', 'Exhibitions'); ?></a></li>
                     </ul>
                 </nav>
+
                 <nav class="lakum-footer__nav">
-                    <h4 class="lakum-footer__nav-title"><?php echo t('explore', 'Explore'); ?></h4>
+                    <h4 class="lakum-footer__nav-title"><?php echo t('footer_explore', 'Explore'); ?></h4>
                     <ul class="lakum-footer__nav-list">
                         <li><a href="calendar.php" class="lakum-footer__link"><?php echo t('calendar', 'Calendar'); ?></a></li>
                         <li><a href="blog.php" class="lakum-footer__link"><?php echo t('blog', 'Blog'); ?></a></li>
@@ -405,28 +573,46 @@ margin: 0 auto;}
                         <li><a href="contact.php" class="lakum-footer__link"><?php echo t('contact_us', 'Contact'); ?></a></li>
                     </ul>
                 </nav>
-                <div class="lakum-footer__social"><h4 class="lakum-footer__nav-title"><?php echo t('connect', 'Connect'); ?></h4><div class="lakum-footer__social-links"><a href="https://www.instagram.com/lakumartspace/" target="_blank" class="lakum-footer__social-link" aria-label="Instagram"><i class="ri-instagram-fill"></i></a><a href="https://x.com/Lakumartspace" target="_blank" class="lakum-footer__social-link" aria-label="Twitter"><i class="ri-twitter-x-fill"></i></a></div></div>
+
+                <div class="lakum-footer__social"><h4 class="lakum-footer__nav-title"><?php echo t('footer_connect', 'Connect'); ?></h4><div class="lakum-footer__social-links"><a href="https://www.instagram.com/lakumartspace/" target="_blank" class="lakum-footer__social-link" aria-label="Instagram"><i class="ri-instagram-fill"></i></a><a href="https://x.com/Lakumartspace" target="_blank" class="lakum-footer__social-link" aria-label="Twitter"><i class="ri-twitter-x-fill"></i></a></div></div>
             </div>
+
             <div class="lakum-footer__bottom">
-                <p class="lakum-footer__copyright"><?php echo t('footer_copyright', '© 2025 - 2027 LAKUM Artspace. All rights reserved.'); ?></p>
+                <p class="lakum-footer__copyright"><?php echo t('footer_copyright', '� 2025 - 2027 LAKUM Artspace. All rights reserved.'); ?></p>
                 <div class="lakum-footer__legal">
-                    <a href="terms.php" class="lakum-footer__legal-link"><?php echo t('footer_terms', 'Terms & Conditions'); ?></a>
+                    <a href="terms" class="lakum-footer__legal-link"><?php echo t('footer_terms', 'Terms & Conditions'); ?></a>
                     <span class="lakum-footer__legal-divider">|</span>
-                    <a href="privacy.php" class="lakum-footer__legal-link"><?php echo t('footer_privacy', 'Privacy Policy'); ?></a>
+                    <a href="privacy" class="lakum-footer__legal-link"><?php echo t('footer_privacy', 'Privacy Policy'); ?></a>
                 </div>
             </div>
         </div>
     </footer>
 
-    <div class="lakum-contact-fab" id="lakumContactFab"><button class="lakum-contact-fab__trigger" id="fabTrigger" aria-label="Contact options"><i class="ri-mail-line lakum-contact-fab__icon"></i><i class="ri-close-line lakum-contact-fab__close"></i></button><div class="lakum-contact-fab__menu" id="fabMenu"><a href="tel:+966920012083" class="lakum-contact-fab__item" data-tooltip="Call us"><i class="ri-phone-line"></i></a><a href="https://wa.me/966920012083" target="_blank" class="lakum-contact-fab__item" data-tooltip="WhatsApp"><i class="ri-whatsapp-line"></i></a><a href="mailto:info@lakumartspace.com" class="lakum-contact-fab__item" data-tooltip="Email"><i class="ri-mail-line"></i></a></div></div>
+   <div class="lakum-contact-fab" id="lakumContactFab">
+        <button class="lakum-contact-fab__trigger" id="fabTrigger" aria-label="Contact options">
+        <i class="ri-mail-line lakum-contact-fab__icon"></i>
+        <i class="ri-close-line lakum-contact-fab__close"></i>
+    </button>
 
+        <div class="lakum-contact-fab__menu" id="fabMenu">
+            <a href="tel:+966920012083" class="lakum-contact-fab__item" data-tooltip="Call us">
+            <i class="ri-phone-line"></i>
+        </a>
+            <a href="https://wa.me/966920012083" target="_blank" class="lakum-contact-fab__item" data-tooltip="WhatsApp">
+            <i class="ri-whatsapp-line"></i>
+        </a>
+            <a href="mailto:info@lakumartspace.com" class="lakum-contact-fab__item" data-tooltip="Email">
+            <i class="ri-mail-line"></i>
+        </a>
+        </div>
+    </div>
     <script src="assest/fun-interactions.js?v=5.0.0" defer></script>
     <script src="js/LanguageManager.js?v=1.0.0" defer></script>
     <script>
         // Set current language from PHP
         window.LAKUM_LANG = '<?php echo getCurrentLanguage(); ?>';
         
-        // Load featured event (next/closest event)
+        // Load featured event - prioritize admin-marked featured events
         async function loadFeaturedEvent() {
             try {
                 const lang = window.LAKUM_LANG || 'en';
@@ -442,29 +628,40 @@ margin: 0 auto;}
                 const data = await response.json();
 
                 if (data.success && data.data && Array.isArray(data.data)) {
-                    // Get next upcoming event
                     const now = new Date();
                     now.setHours(0, 0, 0, 0);
                     
+                    // Filter upcoming events
                     const upcomingEvents = data.data.filter(e => {
                         const eventDate = new Date(e.event_date);
                         eventDate.setHours(0, 0, 0, 0);
                         return eventDate >= now;
                     }).sort((a, b) => new Date(a.event_date) - new Date(b.event_date));
 
-                    if (upcomingEvents.length > 0) {
-                        const event = upcomingEvents[0];
-                        const eventDate = new Date(event.event_date);
+                    // Priority 1: Admin-marked featured event
+                    let featuredEvent = upcomingEvents.find(e => e.is_featured == 1);
+                    
+                    // Priority 2: Next upcoming event if no featured event
+                    if (!featuredEvent && upcomingEvents.length > 0) {
+                        featuredEvent = upcomingEvents[0];
+                    }
+
+                    if (featuredEvent) {
+                        const eventDate = new Date(featuredEvent.event_date);
                         const month = eventDate.toLocaleString('en-US', { month: 'short' }).toUpperCase();
                         const day = eventDate.getDate();
                         
-                        // Update featured banner
-                        document.getElementById('featuredEventImage').src = event.cover_image || 'heroImage/img-4.webp';
-                        document.getElementById('featuredEventImage').alt = event.title;
+                        // Update featured banner with responsive image
+                        const imgElement = document.getElementById('featuredEventImage');
+                        imgElement.src = featuredEvent.cover_image || 'heroImage/img-4.webp';
+                        imgElement.alt = featuredEvent.title;
+                        imgElement.loading = 'lazy';
+                        imgElement.decoding = 'async';
+                        
                         document.getElementById('featuredEventDate').textContent = `${month} ${day}`;
-                        document.getElementById('featuredEventTitle').textContent = event.title;
-                        document.getElementById('featuredEventDesc').textContent = event.description || event.title;
-                        document.getElementById('featuredEventLink').href = `event.php?id=${event.id}`;
+                        document.getElementById('featuredEventTitle').textContent = featuredEvent.title;
+                        document.getElementById('featuredEventDesc').textContent = featuredEvent.description || featuredEvent.title;
+                        document.getElementById('featuredEventLink').href = `event.php?id=${featuredEvent.id}`;
                     }
                 }
             } catch (error) {

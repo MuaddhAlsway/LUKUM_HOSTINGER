@@ -509,7 +509,7 @@ require_once 'api/image-helper.php';
             <div class="lakum-spaces-facilities__grid">
                 <div class="lakum-facility-card" onclick="openFacilityPopup('hall1')">
                     <div class="lakum-facility-card__image">
-                        <?php echo ImageHelper::render('HadafCompany/Hall1.png', 'Hall 1', 'gallery'); ?>
+                        <?php echo ImageHelper::render('HADAFCompany/Hall1.png', 'Hall 1', 'gallery'); ?>
                     </div>
                     <h3 class="lakum-facility-card__name"><?php echo t('spaces_hall1', 'Hall 1'); ?></h3>
                 </div>
@@ -521,13 +521,13 @@ require_once 'api/image-helper.php';
                 </div>
                 <div class="lakum-facility-card" onclick="openFacilityPopup('cafe')">
                     <div class="lakum-facility-card__image">
-                        <?php echo ImageHelper::render('HadafCompany/Hall3.png', 'Café', 'gallery'); ?>
+                        <?php echo ImageHelper::render('HADAFCompany/Hall3.png', 'Café', 'gallery'); ?>
                     </div>
                     <h3 class="lakum-facility-card__name"><?php echo t('spaces_cafe', 'Café'); ?></h3>
                 </div>
                 <div class="lakum-facility-card" onclick="openFacilityPopup('meeting')">
                     <div class="lakum-facility-card__image">
-                        <?php echo ImageHelper::render('HadafCompany/Hall4.png', 'Meeting Room', 'gallery'); ?>
+                        <?php echo ImageHelper::render('HADAFCompany/Hall4.png', 'Meeting Room', 'gallery'); ?>
                     </div>
                     <h3 class="lakum-facility-card__name"><?php echo t('spaces_meeting_room', 'Meeting Room'); ?></h3>
                 </div>
