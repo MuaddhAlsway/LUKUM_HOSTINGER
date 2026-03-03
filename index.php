@@ -14,14 +14,10 @@ require_once 'config.css-loader.php';
     <link rel="icon" type="image/png" sizes="16x16" href="assest/logo/right_section.png">
     <link rel="apple-touch-icon" href="assest/logo/right_section.png">
     <meta name="msapplication-TileImage" content="assest/logo/right_section.png">
-    <!-- CRITICAL: Preload ONLY smallest hero variant (480w) for LCP -->
-    <link rel="preload" as="image" 
-          href="heroImage/img-4-480w.webp"
-          imagesrcset="heroImage/img-4-320w.webp 320w, heroImage/img-4-480w.webp 480w"
-          imagesizes="(max-width: 640px) 100vw, 480px"
-          fetchpriority="high">
+    <!-- CRITICAL: Preload hero image (use existing img-4.webp) -->
+    <link rel="preload" as="image" href="heroImage/img-4.webp" fetchpriority="high">
     
-    <!-- Preload critical fonts WOFF2 only -->
+    <!-- Preload critical fonts -->
     <link rel="preload" href="assest/fonts/GretaArabicAR+LT-Regular.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="assest/fonts/GretaTextArabicAR+LT-Regular.woff2" as="font" type="font/woff2" crossorigin>
     
@@ -29,43 +25,41 @@ require_once 'config.css-loader.php';
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
     
-    <!-- Critical CSS - inline for instant render -->
-    <link rel="stylesheet" href="global-styles.css">
-    <link rel="stylesheet" href="lakum-components.css">
+    <!-- CRITICAL CSS - INLINE for instant render (NO RENDER BLOCKING) -->
+    <style>
+        *{box-sizing:border-box;margin:0;padding:0}html{font-size:16px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}body{background:#f6f6eb;color:#1a1a1a;overflow-x:hidden;line-height:1.6;font-family:-apple-system,BlinkMacSystemFont,sans-serif}.lakum-hero{position:relative;width:100vw;margin-left:calc(-50vw + 50%);height:85vh;min-height:600px;display:flex;align-items:center;justify-content:center;background:#1a1a1a}.lakum-hero__image-wrapper{position:absolute;inset:0;z-index:1;overflow:hidden;width:100%;height:100%}.lakum-hero__image{width:100%;height:100%;object-fit:cover;display:block}.lakum-hero__overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.5) 0%,rgba(0,0,0,.65) 100%);z-index:2}.lakum-hero__content{position:relative;z-index:3;text-align:center;color:#fff;max-width:1400px;width:90%;padding:0 20px}.lakum-hero__title{font-size:clamp(2.5rem,6vw,4.5rem);font-weight:500;letter-spacing:-.02em;line-height:1.2;margin:0 0 20px 0;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.3)}.lakum-hero__subtitle{font-size:clamp(1.1rem,2vw,1.4rem);font-weight:300;line-height:1.6;color:#fff;text-align:center}.lakum-header{background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.1);position:sticky;top:0;z-index:100}.lakum-header__container{max-width:1600px;margin:0 auto;padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:80px}.lakum-logo{display:flex;gap:10px;align-items:center;text-decoration:none}.lakum-nav{display:flex;gap:30px;list-style:none}@media(max-width:768px){.lakum-nav{display:none}.lakum-hero{height:60vh;min-height:450px}}@media(max-width:480px){.lakum-hero{height:50vh;min-height:400px}}
+    </style>
     
-    <!-- Non-critical CSS - defer with onload trick -->
+    <!-- Non-critical CSS - ASYNC load (NO BLOCKING) -->
+    <link rel="preload" href="global-styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="lakum-components.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preload" href="<?php echo getCSSFile('Home'); ?>" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preload" href="rtl.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preload" href="fonts/greta-arabic.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preload" href="assest/language-switcher.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preload" href="assest/popup-notification.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="assest/remixicon-minimal.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     
     <!-- Fallback for no-JS -->
     <noscript>
+        <link rel="stylesheet" href="global-styles.css">
+        <link rel="stylesheet" href="lakum-components.css">
         <link rel="stylesheet" href="<?php echo getCSSFile('Home'); ?>">
         <link rel="stylesheet" href="rtl.css">
         <link rel="stylesheet" href="fonts/greta-arabic.css">
         <link rel="stylesheet" href="assest/language-switcher.css">
         <link rel="stylesheet" href="assest/popup-notification.css">
+        <link rel="stylesheet" href="assest/remixicon-minimal.css">
     </noscript>
     
-    <!-- Minimal remixicon - only used icons, deferred -->
-    <link rel="preload" href="assest/remixicon-minimal.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="assest/remixicon-minimal.css"></noscript>
-    <!-- API Cache Manager - Deferred to avoid blocking render -->
+    <!-- ALL JS DEFERRED (NO BLOCKING) -->
+    <script src="js/error-handler.js?v=1.0.0" defer></script>
+    <script src="js/reflow-prevention.js?v=1.0.0" defer></script>
     <script src="js/deferred-events-loader.js?v=1.0.0" defer></script>
     <script src="js/api-cache-manager.js?v=1.0.0" defer></script>
-    
-    <!-- API Helper with caching support - Deferred -->
     <script src="js/api-helper.js?v=1.0.0" defer></script>
-    
-    <!-- Settings Loader with caching -->
     <script src="assest/settings-loader.js?v=1.0.0" defer></script>
-    
-    <!-- Dynamic Content Loader with caching -->
     <script src="assest/dynamic-content-loader.js?v=1.0.0" defer></script>
-    
-    <!-- UI Scripts - Minified & Deferred -->
     <script src="assest/popup-notification.min.js?v=5.0.0" defer></script>
     <script src="assest/navbar-mobile-toggle.min.js?v=5.0.0" defer></script>
     <script src="assest/language-link-preserver.js?v=1.0.0" defer></script>
@@ -292,30 +286,16 @@ margin: 0 auto;}
 
     <section class="lakum-hero" style="aspect-ratio: 16/9">
         <div class="lakum-hero__image-wrapper">
-            <!-- OPTIMIZATION: Fully responsive hero image with AVIF/WebP + eager loading for LCP -->
-            <picture>
-                <source type="image/avif" 
-                        srcset="heroImage/img-4-320w.avif 320w,
-                                heroImage/img-4-480w.avif 480w,
-                                heroImage/img-4-768w.avif 768w,
-                                heroImage/img-4-1200w.avif 1200w"
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 1200px">
-                <source type="image/webp" 
-                        srcset="heroImage/img-4-320w.webp 320w,
-                                heroImage/img-4-480w.webp 480w,
-                                heroImage/img-4-768w.webp 768w,
-                                heroImage/img-4-1200w.webp 1200w"
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 1200px">
-                <img src="heroImage/img-4-480w.webp"
-                     alt="LAKUM Artspace - Where Encounters Shape Culture"
-                     fetchpriority="high"
-                     loading="eager"
-                     decoding="async"
-                     width="1200"
-                     height="800"
-                     class="lakum-hero__image"
-                     style="aspect-ratio: 1200/800">
-            </picture>
+            <!-- LCP IMAGE: Eager load, high priority, NO lazy loading -->
+            <img src="heroImage/img-4.webp"
+                 alt="LAKUM Artspace - Where Encounters Shape Culture"
+                 fetchpriority="high"
+                 loading="eager"
+                 decoding="async"
+                 width="1200"
+                 height="800"
+                 class="lakum-hero__image"
+                 style="aspect-ratio: 1200/800">
             <div class="lakum-hero__overlay"></div>
         </div>
         <div class="lakum-hero__content">
@@ -336,25 +316,12 @@ margin: 0 auto;}
     <section class="lakum-featured-banner" id="featuredBanner">
         <div class="lakum-featured-banner__content">
                 <div class="lakum-featured-banner__image">
-                    <!-- OPTIMIZATION: Responsive featured banner image -->
-                    <picture>
-                        <source type="image/avif" 
-                                srcset="heroImage/img-4-320w.avif 320w,
-                                        heroImage/img-4-480w.avif 480w,
-                                        heroImage/img-4-768w.avif 768w"
-                                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 450px">
-                        <source type="image/webp" 
-                                srcset="heroImage/img-4-320w.webp 320w,
-                                        heroImage/img-4-480w.webp 480w,
-                                        heroImage/img-4-768w.webp 768w"
-                                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 450px">
-                        <img src="heroImage/img-4-768w.webp"
-                             alt="Featured Event"
-                             loading="lazy"
-                             decoding="async"
-                             width="800"
-                             height="450">
-                    </picture>
+                    <img src="heroImage/img-4.webp"
+                         alt="Featured Event"
+                         loading="lazy"
+                         decoding="async"
+                         width="800"
+                         height="450">
                 </div>
                 <div class="lakum-featured-banner__text">
                     <span class="lakum-featured-banner__date"><?php echo t('closest_event', 'Closest Event'); ?></span>

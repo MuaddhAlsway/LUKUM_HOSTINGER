@@ -112,16 +112,12 @@
             const day = eventDate.getDate();
             const title = event.title || 'Untitled Event';
             const time = event.time || 'TBD';
-            const image = event.image || 'assest/img-4.webp';
+            const image = event.image || 'heroImage/img-4.webp';
 
             return `
                 <div class="lakum-event-card">
                     <div class="lakum-event-card__image">
-                        <picture>
-                            <source type="image/avif" srcset="${image}-320w.avif 320w, ${image}-480w.avif 480w, ${image}-768w.avif 768w" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw">
-                            <source type="image/webp" srcset="${image}-320w.webp 320w, ${image}-480w.webp 480w, ${image}-768w.webp 768w" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw">
-                            <img src="${image}-768w.webp" alt="${title}" loading="lazy" decoding="async" width="768" height="512">
-                        </picture>
+                        <img src="${image}" alt="${title}" loading="lazy" decoding="async" width="768" height="512" style="width: 100%; height: 100%; object-fit: cover;">
                         <div class="lakum-event-card__date">
                             <span class="lakum-event-card__date-month">${month}</span>
                             <span class="lakum-event-card__date-day">${day}</span>
@@ -140,13 +136,24 @@
     // Initialize and load events after first paint
     window.deferredEventsLoader = new DeferredEventsLoader();
     
+    // Safe load function with error handling
+    window.deferredEventsLoader.safeLoad = function() {
+        if (this.loadAfterPaint) {
+            this.loadAfterPaint();
+        }
+    };
+    
     // Start loading when DOM is ready
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => {
-            window.deferredEventsLoader.loadAfterPaint();
+            if (window.deferredEventsLoader?.safeLoad) {
+                window.deferredEventsLoader.safeLoad();
+            }
         });
     } else {
-        window.deferredEventsLoader.loadAfterPaint();
+        if (window.deferredEventsLoader?.safeLoad) {
+            window.deferredEventsLoader.safeLoad();
+        }
     }
 
     console.log('✓ Deferred Events Loader initialized');
