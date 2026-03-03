@@ -10,38 +10,29 @@ require_once 'config.css-loader.php';
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title><?php echo t('page_title','LAKUM Artspace - Cultural Hub in Riyadh | Art Exhibitions & Events');?></title>
 <link rel="icon" type="image/png" sizes="32x32" href="assest/logo/right_section.png">
-<link rel="preload" as="image" href="assest/optimized/img-4-768.webp" fetchpriority="high">
+<link rel="preload" as="image" href="heroImage/img-4.webp" fetchpriority="high">
 <link rel="preload" href="assest/fonts/GretaArabicAR+LT-Regular.otf" as="font" type="font/otf" crossorigin>
-<link rel="preload" href="accessibility-fixes.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-<style><?php readfile('critical-inline-optimized.css');?></style>
-<link rel="preload" href="deferred-styles-optimized.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<link rel="preload" href="<?php echo getCSSFile('Home');?>" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<link rel="preload" href="rtl.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<link rel="preload" href="fonts/greta-arabic.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<link rel="preload" href="assest/remixicon-minimal.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<link rel="preload" href="assest/language-switcher.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<link rel="preload" href="assest/popup-notification.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<noscript>
-<link rel="stylesheet" href="deferred-styles-optimized.css">
-<link rel="stylesheet" href="<?php echo getCSSFile('Home');?>">
+<!-- Core Styles - Critical CSS loaded synchronously -->
+<link rel="stylesheet" href="global-styles.css">
+<link rel="stylesheet" href="lakum-components.css">
+<link rel="stylesheet" href="assest/mobile-menu.css">
+<link rel="stylesheet" href="Home.css">
+<!-- RTL Styles -->
 <link rel="stylesheet" href="rtl.css">
+<!-- Fonts -->
 <link rel="stylesheet" href="fonts/greta-arabic.css">
-<link rel="stylesheet" href="assest/remixicon-minimal.css">
-<link rel="stylesheet" href="assest/language-switcher.css">
-<link rel="stylesheet" href="assest/popup-notification.css">
-<link rel="stylesheet" href="accessibility-fixes.css">
-</noscript>
+<!-- Icons - Defer non-critical icon loading -->
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" media="print
+<noscript><link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet"></noscript>
 <meta name="description" content="LAKUM Artspace is Riyadh's premier cultural destination for contemporary art exhibitions, creative workshops, and cultural events.">
 <meta name="theme-color" content="#1a1a1a">
 <meta name="mobile-web-app-capable" content="yes">
-<script src="js/deferred-events-loader.js?v=1.0.0" defer></script>
-<script src="js/api-cache-manager.js?v=1.0.0" defer></script>
-<script src="assest/fun-interactions.js?v=5.0.0" defer></script>
+<script src="assest/navbar-mobile-toggle.js?v=5.0.0" defer></script>
+<script src="assest/settings-links-loader.js?v=5.0.0" defer></script>
 <script src="js/LanguageManager.js?v=1.0.0" defer></script>
-<script src="assest/navbar-mobile-toggle.min.js?v=1.0.0" defer></script>
-<script src="js/dom-batch-optimizer.js?v=1.0.0" defer></script>
+<script src="assest/fun-interactions.js" defer></script>
 </head>
 <body class="<?php echo getLanguageClass();?>">
 <a href="#main-content" class="lakum-skip-link">Skip to main content</a>
@@ -82,10 +73,7 @@ require_once 'config.css-loader.php';
 
 <section class="lakum-hero" style="aspect-ratio:16/9">
 <div class="lakum-hero__image-wrapper">
-<picture>
-<source type="image/webp" srcset="assest/optimized/img-4-320.webp 320w, assest/optimized/img-4-480.webp 480w, assest/optimized/img-4-768.webp 768w, assest/optimized/img-4-1024.webp 1024w, assest/optimized/img-4-1600.webp 1600w" sizes="100vw">
-<img src="assest/optimized/img-4-768.webp" alt="LAKUM Artspace - Where Encounters Shape Culture" fetchpriority="high" loading="eager" decoding="async" width="768" height="432" class="lakum-hero__image" style="width:100%;height:100%;object-fit:cover;display:block;aspect-ratio:16/9;">
-</picture>
+<img src="heroImage/img-4.webp" srcset="heroImage/img-4.webp 1200w" sizes="100vw" alt="LAKUM Artspace - Where Encounters Shape Culture" fetchpriority="high" loading="eager" decoding="async" width="1200" height="800" class="lakum-hero__image" style="width:100%;height:100%;object-fit:cover;display:block;aspect-ratio:16/9;">
 <div class="lakum-hero__overlay"></div>
 </div>
 <div class="lakum-hero__content">
@@ -106,10 +94,7 @@ require_once 'config.css-loader.php';
 <section class="lakum-featured-banner" id="featuredBanner">
 <div class="lakum-featured-banner__content">
 <div class="lakum-featured-banner__image">
-<picture>
-<source type="image/webp" srcset="assest/optimized/featured-320.webp 320w, assest/optimized/featured-480.webp 480w, assest/optimized/featured-768.webp 768w, assest/optimized/featured-1024.webp 1024w" sizes="(max-width: 768px) 100vw, 50vw">
-<img src="assest/optimized/featured-768.webp" alt="Featured Event" loading="lazy" decoding="async" width="768" height="432" id="featuredEventImage" style="width:100%;height:100%;object-fit:cover;display:block;aspect-ratio:16/9;">
-</picture>
+<img src="heroImage/img-4.webp" alt="Featured Event" loading="lazy" decoding="async" width="800" height="450" id="featuredEventImage">
 </div>
 <div class="lakum-featured-banner__text">
 <span class="lakum-featured-banner__date" id="featuredEventDate"><?php echo t('closest_event','Closest Event');?></span>
@@ -159,7 +144,7 @@ require_once 'config.css-loader.php';
 </section>
 
 <section class="lakum-cta lakum-cta--dark">
-<div class="lakum-cta__background" style="background-image:url('assest/optimized/img-4-1024.webp');will-change:background-image;contain:layout style paint;"></div>
+<div class="lakum-cta__background" style="background-image:url('heroImage/img-4.webp');will-change:background-image;contain:layout style paint;"></div>
 <div class="lakum-container">
 <div class="lakum-cta__content">
 <h2 class="lakum-cta__title"><?php echo t('create_event','Create Your Own Event');?></h2>
@@ -171,6 +156,7 @@ require_once 'config.css-loader.php';
 
 <footer class="lakum-footer">
 <div class="lakum-footer__container">
+<div class="lakum-footer__content">
 <div class="lakum-footer__brand">
 <div class="lakum-footer__logo">
 <img src="assest/logo/right_section.png" alt="LAKUM" class="lakum-footer__logo-left" width="105" height="80" decoding="async">
@@ -179,7 +165,7 @@ require_once 'config.css-loader.php';
 <p class="lakum-footer__tagline"><?php echo t('footer_tagline', 'Where Encounters Shape Culture'); ?></p>
 </div>
 <nav class="lakum-footer__nav">
-<h2 class="lakum-footer__nav-title"><?php echo t('navigate','Navigate');?></h2>
+<h4 class="lakum-footer__nav-title"><?php echo t('footer_navigate','Navigate');?></h4>
 <ul class="lakum-footer__nav-list">
 <li><a href="index.php" class="lakum-footer__link"><?php echo t('home','Home');?></a></li>
 <li><a href="about.php" class="lakum-footer__link"><?php echo t('about','About');?></a></li>
@@ -188,7 +174,7 @@ require_once 'config.css-loader.php';
 </ul>
 </nav>
 <nav class="lakum-footer__nav">
-<h2 class="lakum-footer__nav-title"><?php echo t('explore','Explore');?></h2>
+<h4 class="lakum-footer__nav-title"><?php echo t('footer_explore','Explore');?></h4>
 <ul class="lakum-footer__nav-list">
 <li><a href="calendar.php" class="lakum-footer__link"><?php echo t('calendar','Calendar');?></a></li>
 <li><a href="blog.php" class="lakum-footer__link"><?php echo t('blog','Blog');?></a></li>
@@ -201,9 +187,9 @@ require_once 'config.css-loader.php';
 <div class="lakum-footer__bottom">
 <p class="lakum-footer__copyright"><?php echo t('footer_copyright','© 2025 - 2027 LAKUM Artspace. All rights reserved.');?></p>
 <div class="lakum-footer__legal">
-<a href="terms.php" class="lakum-footer__legal-link"><?php echo t('footer_terms','Terms & Conditions');?></a>
+<a href="terms" class="lakum-footer__legal-link"><?php echo t('footer_terms','Terms & Conditions');?></a>
 <span class="lakum-footer__legal-divider">|</span>
-<a href="privacy.php" class="lakum-footer__legal-link"><?php echo t('footer_privacy','Privacy Policy');?></a>
+<a href="privacy" class="lakum-footer__legal-link"><?php echo t('footer_privacy','Privacy Policy');?></a>
 </div>
 </div>
 </div>

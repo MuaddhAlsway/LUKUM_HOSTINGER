@@ -28,14 +28,10 @@
 /* Banner text contrast */
 .lakum-featured-banner__title {
   color: #000;
-  background: rgba(255, 255, 255, 0.95);
-  padding: 8px 12px;
 }
 
 .lakum-featured-banner__description {
   color: #333;
-  background: rgba(255, 255, 255, 0.95);
-  padding: 8px 12px;
 }
 
 /* 2. TOUCH TARGET SIZING (48px minimum) */
