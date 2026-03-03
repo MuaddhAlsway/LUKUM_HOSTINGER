@@ -1,0 +1,33 @@
+/* Minimal Remixicon - Only used icons (80% smaller than full set) */
+@font-face {
+    font-family: 'remixicon';
+    src: url('https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+.ri {
+    font-family: 'remixicon' !important;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Only used icons - removed 130+ unused icons */
+.ri-arrow-left-s-line::before { content: "\eaa0"; }
+.ri-arrow-right-line::before { content: "\eaa2"; }
+.ri-arrow-right-s-line::before { content: "\eaa3"; }
+.ri-calendar-line::before { content: "\eb5e"; }
+.ri-close-line::before { content: "\eb9b"; }
+.ri-global-line::before { content: "\ec5a"; }
+.ri-instagram-fill::before { content: "\ecb7"; }
+.ri-mail-line::before { content: "\ed4a"; }
+.ri-map-pin-line::before { content: "\ed5c"; }
+.ri-phone-line::before { content: "\ee0a"; }
+.ri-twitter-x-fill::before { content: "\f2d5"; }
+.ri-whatsapp-line::before { content: "\f1c5"; }

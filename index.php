@@ -14,22 +14,26 @@ require_once 'config.css-loader.php';
     <link rel="icon" type="image/png" sizes="16x16" href="assest/logo/right_section.png">
     <link rel="apple-touch-icon" href="assest/logo/right_section.png">
     <meta name="msapplication-TileImage" content="assest/logo/right_section.png">
-    <!-- AGGRESSIVE OPTIMIZATION: Preload ONLY LCP image (smallest variant) -->
+    <!-- CRITICAL: Preload ONLY smallest hero variant (480w) for LCP -->
     <link rel="preload" as="image" 
           href="heroImage/img-4-480w.webp"
+          imagesrcset="heroImage/img-4-320w.webp 320w, heroImage/img-4-480w.webp 480w"
+          imagesizes="(max-width: 640px) 100vw, 480px"
           fetchpriority="high">
-    <!-- AGGRESSIVE OPTIMIZATION: Preload ONLY 2 critical fonts (Regular + Light) in WOFF2 -->
+    
+    <!-- Preload critical fonts WOFF2 only -->
     <link rel="preload" href="assest/fonts/GretaArabicAR+LT-Regular.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="assest/fonts/GretaTextArabicAR+LT-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    
+    <!-- DNS prefetch -->
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
-    <link rel="preload" href="global-styles.css" as="style">
-    <link rel="preload" href="lakum-components.css" as="style">
-    <!-- Critical CSS - Load synchronously -->
+    
+    <!-- Critical CSS - inline for instant render -->
     <link rel="stylesheet" href="global-styles.css">
     <link rel="stylesheet" href="lakum-components.css">
     
-    <!-- Non-critical CSS - Defer loading -->
+    <!-- Non-critical CSS - defer with onload trick -->
     <link rel="preload" href="<?php echo getCSSFile('Home'); ?>" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preload" href="rtl.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preload" href="fonts/greta-arabic.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -45,10 +49,11 @@ require_once 'config.css-loader.php';
         <link rel="stylesheet" href="assest/popup-notification.css">
     </noscript>
     
-    <!-- AGGRESSIVE OPTIMIZATION: Defer remixicon (not critical) + use subset -->
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet"></noscript>
+    <!-- Minimal remixicon - only used icons, deferred -->
+    <link rel="preload" href="assest/remixicon-minimal.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="assest/remixicon-minimal.css"></noscript>
     <!-- API Cache Manager - Deferred to avoid blocking render -->
+    <script src="js/deferred-events-loader.js?v=1.0.0" defer></script>
     <script src="js/api-cache-manager.js?v=1.0.0" defer></script>
     
     <!-- API Helper with caching support - Deferred -->
@@ -287,7 +292,7 @@ margin: 0 auto;}
 
     <section class="lakum-hero" style="aspect-ratio: 16/9">
         <div class="lakum-hero__image-wrapper">
-            <!-- AGGRESSIVE OPTIMIZATION: Fully responsive hero image with AVIF/WebP -->
+            <!-- OPTIMIZATION: Fully responsive hero image with AVIF/WebP + eager loading for LCP -->
             <picture>
                 <source type="image/avif" 
                         srcset="heroImage/img-4-320w.avif 320w,
@@ -301,9 +306,10 @@ margin: 0 auto;}
                                 heroImage/img-4-768w.webp 768w,
                                 heroImage/img-4-1200w.webp 1200w"
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 1200px">
-                <img src="heroImage/img-4-1200w.webp"
-                     alt="LAKUM Artspace"
+                <img src="heroImage/img-4-480w.webp"
+                     alt="LAKUM Artspace - Where Encounters Shape Culture"
                      fetchpriority="high"
+                     loading="eager"
                      decoding="async"
                      width="1200"
                      height="800"
@@ -330,14 +336,25 @@ margin: 0 auto;}
     <section class="lakum-featured-banner" id="featuredBanner">
         <div class="lakum-featured-banner__content">
                 <div class="lakum-featured-banner__image">
-                    <img src="heroImage/img-4.webp"
-                         srcset="heroImage/img-4.webp 1200w"
-                         sizes="(max-width: 768px) 100vw, 450px"
-                         alt="Featured Event"
-                         loading="lazy"
-                         decoding="async"
-                         width="800"
-                         height="450">
+                    <!-- OPTIMIZATION: Responsive featured banner image -->
+                    <picture>
+                        <source type="image/avif" 
+                                srcset="heroImage/img-4-320w.avif 320w,
+                                        heroImage/img-4-480w.avif 480w,
+                                        heroImage/img-4-768w.avif 768w"
+                                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 450px">
+                        <source type="image/webp" 
+                                srcset="heroImage/img-4-320w.webp 320w,
+                                        heroImage/img-4-480w.webp 480w,
+                                        heroImage/img-4-768w.webp 768w"
+                                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 450px">
+                        <img src="heroImage/img-4-768w.webp"
+                             alt="Featured Event"
+                             loading="lazy"
+                             decoding="async"
+                             width="800"
+                             height="450">
+                    </picture>
                 </div>
                 <div class="lakum-featured-banner__text">
                     <span class="lakum-featured-banner__date"><?php echo t('closest_event', 'Closest Event'); ?></span>
@@ -477,25 +494,13 @@ margin: 0 auto;}
         const viewDetailsText = '<?php echo t("view_details", "View Details"); ?>';
         const pastEventText = 'Past Event';
 
-        // Load all events from API (real database data only)
-        async function loadAllEvents() {
-            try {
-                // Add timestamp to bypass cache
-                const timestamp = new Date().getTime();
-                const lang = LanguageManager.getLanguage();
-                const response = await fetch(`api/get_events.php?type=all&limit=1000&lang=${lang}&t=${timestamp}`, {
-                    cache: 'no-store'
+        // Load all events from API (deferred - doesn't block LCP)
+        function loadAllEvents() {
+            return new Promise((resolve) => {
+                window.deferredEventsLoader.load((events) => {
+                    resolve(events || []);
                 });
-                const data = await response.json();
-                if (data.success && data.data && Array.isArray(data.data)) {
-                    console.log('Loaded events from database:', data.data.length);
-                    return data.data;
-                }
-            } catch (error) {
-                console.error('Error loading events:', error);
-            }
-            // Return empty array if API fails - no mock data
-            return [];
+            });
         }
 
         // Convert 24h time to 12h format with AM/PM
@@ -649,7 +654,7 @@ margin: 0 auto;}
             });
         }
 
-        // Initialize
+        // Initialize - DEFERRED to avoid blocking LCP
         async function initPage() {
             // Ensure LanguageManager is initialized
             if (typeof LanguageManager === 'undefined') {
@@ -663,10 +668,28 @@ margin: 0 auto;}
             await loadPreviousEvents();
         }
 
+        // OPTIMIZATION: Defer event loading to after first paint
         if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initPage);
+            document.addEventListener('DOMContentLoaded', () => {
+                // Use requestIdleCallback to defer loading
+                if ('requestIdleCallback' in window) {
+                    requestIdleCallback(() => {
+                        initPage();
+                    }, { timeout: 2000 });
+                } else {
+                    // Fallback: defer with setTimeout
+                    setTimeout(initPage, 100);
+                }
+            });
         } else {
-            initPage();
+            // Page already loaded
+            if ('requestIdleCallback' in window) {
+                requestIdleCallback(() => {
+                    initPage();
+                }, { timeout: 2000 });
+            } else {
+                setTimeout(initPage, 100);
+            }
         }
 
         // Reload when page becomes visible
