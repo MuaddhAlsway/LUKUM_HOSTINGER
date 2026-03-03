@@ -11,14 +11,19 @@ require_once 'lang/loader.php';
     <link rel="preload" as="image" href="heroImage/img-4.webp" fetchpriority="high">
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    
+    <!-- Critical CSS - Inline for fast render -->
     <link rel="stylesheet" href="global-styles.css">
     <link rel="stylesheet" href="lakum-components.css">
     <link rel="stylesheet" href="assest/remixicon-minimal.css">
-    <link rel="stylesheet" href="Home.css" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="rtl.css" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="fonts/greta-arabic.css" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="assest/language-switcher.css" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="assest/popup-notification.css" media="print" onload="this.media='all'">
+    
+    <!-- Async CSS - Non-blocking -->
+    <link rel="preload" href="Home.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="rtl.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="fonts/greta-arabic.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="assest/language-switcher.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="assest/popup-notification.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    
     <noscript>
         <link rel="stylesheet" href="Home.css">
         <link rel="stylesheet" href="rtl.css">
@@ -28,6 +33,7 @@ require_once 'lang/loader.php';
     </noscript>
     <script src="assest/popup-notification.js?v=5.0.0" defer></script>
     <script src="assest/navbar-mobile-toggle.js?v=5.0.0" defer></script>
+    <script src="assest/responsive-images.js?v=5.0.0" defer></script>
     <meta name="title" content="LAKUM Artspace - Cultural Hub in Riyadh | Art Exhibitions & Events">
     <meta name="description" content="LAKUM Artspace is Riyadh's premier cultural destination for contemporary art exhibitions, creative workshops, and cultural events.">
     <meta name="keywords" content="art gallery Riyadh, cultural events Riyadh, art exhibitions Saudi Arabia">
@@ -250,7 +256,16 @@ margin: 0 auto;}
 
     <section class="lakum-hero" style="aspect-ratio: 16/9">
         <div class="lakum-hero__image-wrapper">
-            <img src="heroImage/img-4.webp" alt="LAKUM Artspace" class="lakum-hero__image" width="1200" height="800" fetchpriority="high" loading="eager" decoding="async" style="aspect-ratio: 16/9">
+            <img 
+                src="heroImage/img-4.webp" 
+                alt="LAKUM Artspace" 
+                class="lakum-hero__image" 
+                width="1200" 
+                height="800" 
+                fetchpriority="high" 
+                loading="eager" 
+                decoding="async" 
+                style="aspect-ratio: 16/9; content-visibility: auto;">
             <div class="lakum-hero__overlay"></div>
         </div>
         <div class="lakum-hero__content">
@@ -271,7 +286,14 @@ margin: 0 auto;}
     <section class="lakum-featured-banner" id="featuredBanner">
         <div class="lakum-featured-banner__content">
                 <div class="lakum-featured-banner__image">
-                    <img src="heroImage/img-4.webp" alt="Featured Event" loading="lazy" decoding="async" width="800" height="450">
+                    <img 
+                        src="heroImage/img-4.webp" 
+                        alt="Featured Event" 
+                        loading="lazy" 
+                        decoding="async" 
+                        width="800" 
+                        height="450"
+                        style="content-visibility: auto;">
                 </div>
                 <div class="lakum-featured-banner__text">
                     <span class="lakum-featured-banner__date"><?php echo t('closest_event', 'Closest Event'); ?></span>
@@ -473,7 +495,7 @@ margin: 0 auto;}
             container.innerHTML = `
                 <div class="lakum-featured-banner__content">
                     <div class="lakum-featured-banner__image">
-                        <img src="${featuredEvent.cover_image || 'assest/img-4.png'}" alt="${featuredEvent.title}" loading="lazy">
+                        <img src="${featuredEvent.cover_image || 'assest/img-4.png'}" alt="${featuredEvent.title}" loading="lazy" decoding="async" style="content-visibility: auto;">
                     </div>
                     <div class="lakum-featured-banner__text">
                         <span class="lakum-featured-banner__date">${dateStr} • ${timeStr}</span>
@@ -519,7 +541,7 @@ margin: 0 auto;}
                 card.className = 'lakum-event-card';
                 card.innerHTML = `
                     <div class="lakum-event-card__image">
-                        <img src="${event.cover_image || 'assest/img-4.png'}" alt="${event.title}" loading="lazy">
+                        <img src="${event.cover_image || 'assest/img-4.png'}" alt="${event.title}" loading="lazy" decoding="async" style="content-visibility: auto;">
                         <div class="lakum-event-card__date">
                             <span class="lakum-event-card__date-month">${month}</span>
                             <span class="lakum-event-card__date-day">${day}</span>
@@ -565,7 +587,7 @@ margin: 0 auto;}
                 card.className = 'lakum-event-card';
                 card.innerHTML = `
                     <div class="lakum-event-card__image">
-                        <img src="${event.cover_image || 'assest/img-4.png'}" alt="${event.title}" loading="lazy">
+                        <img src="${event.cover_image || 'assest/img-4.png'}" alt="${event.title}" loading="lazy" decoding="async" style="content-visibility: auto;">
                         <div class="lakum-event-card__date">
                             <span class="lakum-event-card__date-month">${month}</span>
                             <span class="lakum-event-card__date-day">${day}</span>
@@ -581,17 +603,22 @@ margin: 0 auto;}
             });
         }
 
-        // Initialize
+        // Initialize - DEFERRED until after LCP
         async function initPage() {
             const featuredId = await loadFeaturedEvent();
             await loadUpcomingEvents(featuredId);
             await loadPreviousEvents();
         }
 
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initPage);
+        // Defer API loading until after page load
+        if (document.readyState === 'complete') {
+            // Page already loaded
+            setTimeout(initPage, 200);
         } else {
-            initPage();
+            // Wait for load event
+            window.addEventListener('load', function() {
+                setTimeout(initPage, 200);
+            });
         }
 
         // Reload when page becomes visible
