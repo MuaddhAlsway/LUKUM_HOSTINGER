@@ -240,7 +240,7 @@ require_once 'lang/loader.php';
     <meta property="og:url" content="https://lakumartspace.infinityfree.me/calendar">
     <meta property="og:title" content="Events Calendar | LAKUM Artspace Riyadh">
     <meta property="og:description" content="View LAKUM Artspace&#039;s complete events calendar. Find upcoming art exhibitions, workshops, cultural events, and creative sessions in Riyadh.">
-    <meta property="og:image" content="https://lakumartspace.infinityfree.me/assest/img-4.png">
+    <meta property="og:image" content="https://lakumartspace.infinityfree.me/heroImage/img-4.webp">
     <meta property="og:site_name" content="LAKUM Artspace">
     <meta property="og:locale" content="en_US">
     <meta property="og:locale:alternate" content="ar_SA">
@@ -250,7 +250,7 @@ require_once 'lang/loader.php';
     <meta name="twitter:url" content="https://lakumartspace.infinityfree.me/calendar">
     <meta name="twitter:title" content="Events Calendar | LAKUM Artspace Riyadh">
     <meta name="twitter:description" content="View LAKUM Artspace&#039;s complete events calendar. Find upcoming art exhibitions, workshops, cultural events, and creative sessions in Riyadh.">
-    <meta name="twitter:image" content="https://lakumartspace.infinityfree.me/assest/img-4.png">
+    <meta name="twitter:image" content="https://lakumartspace.infinityfree.me/heroImage/img-4.webp">
 
     <!-- Additional SEO -->
     <meta name="theme-color" content="#1a1a1a">

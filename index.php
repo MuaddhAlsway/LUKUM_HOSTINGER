@@ -147,7 +147,7 @@ require_once 'config.css-loader.php';
         .lakum-cta--primary .lakum-cta__title { color: #1a1a1a; }
         .lakum-cta--primary .lakum-cta__text { color: #555; }
         .lakum-cta--dark { position: relative; color: white; overflow: hidden; }
-        .lakum-cta__background { position: absolute; inset: 0; z-index: 0; background-image: url('assest/img-4.png'); background-size: cover; background-position: center; background-attachment: scroll; }
+        .lakum-cta__background { position: absolute; inset: 0; z-index: 0; background-image: url('heroImage/img-4.webp'); background-size: cover; background-position: center; background-attachment: scroll; }
         .lakum-cta__background::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.4) 100%); z-index: 1; }
         .lakum-cta__content { position: relative; z-index: 2; text-align: center; color: white; }
         .lakum-cta__title { font-size: 2.5rem; font-weight: 300; margin-bottom: 20px; color: white; }
@@ -373,7 +373,7 @@ margin: 0 auto;}
     </section>
 
     <section class="lakum-cta lakum-cta--dark">
-        <div class="lakum-cta__background" style="background-image: url('assest/img-4.png'); will-change: background-image; contain: layout style paint;"></div>
+        <div class="lakum-cta__background" style="background-image: url('heroImage/img-4.webp'); will-change: background-image; contain: layout style paint;"></div>
         <div class="lakum-container">
             <div class="lakum-cta__content">
                 <h2 class="lakum-cta__title"><?php echo t('create_event', 'Create Your Own Event'); ?></h2>

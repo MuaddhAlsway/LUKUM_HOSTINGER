@@ -75,7 +75,7 @@
             if (!container) return;
 
             // Get next 2 upcoming events
-            const upcoming = events.filter(e => new Date(e.date) > new Date()).slice(0, 2);
+            const upcoming = events.filter(e => new Date(e.event_date) > new Date()).slice(0, 2);
 
             if (upcoming.length === 0) {
                 container.innerHTML = '<p>No upcoming events</p>';
@@ -93,7 +93,7 @@
             if (!container) return;
 
             // Get past events (reverse chronological)
-            const recent = events.filter(e => new Date(e.date) <= new Date()).reverse().slice(0, 3);
+            const recent = events.filter(e => new Date(e.event_date) <= new Date()).reverse().slice(0, 3);
 
             if (recent.length === 0) {
                 container.innerHTML = '<p>No past events</p>';
@@ -107,12 +107,12 @@
          * Create event card HTML
          */
         createEventCard(event) {
-            const eventDate = new Date(event.date);
+            const eventDate = new Date(event.event_date);
             const month = eventDate.toLocaleString('en-US', { month: 'short' }).toUpperCase();
             const day = eventDate.getDate();
             const title = event.title || 'Untitled Event';
-            const time = event.time || 'TBD';
-            const image = event.image || 'heroImage/img-4.webp';
+            const time = event.event_time || 'TBD';
+            const image = event.cover_image || 'heroImage/img-4.webp';
 
             return `
                 <div class="lakum-event-card">

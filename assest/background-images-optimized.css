@@ -23,7 +23,7 @@
 /* Fallback for older browsers */
 @supports not (background-image: url('data:image/webp;base64,')) {
     .lakum-hero-bg {
-        background-image: url('../assest/img-4.png');
+        background-image: url('../heroImage/img-4.webp');
     }
 }
 

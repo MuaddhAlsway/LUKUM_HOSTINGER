@@ -662,7 +662,7 @@ html[lang="ar"] .lakum-event-card__date {
             card.className = 'lakum-event-card';
             card.innerHTML = `
                 <div class="lakum-event-card__image">
-                    <img src="${event.cover_image || 'assest/img-4.png'}" alt="${event.title}" loading="lazy">
+                    <img src="${event.cover_image || 'heroImage/img-4.webp'}" alt="${event.title}" loading="lazy">
                 </div>
                 <div class="lakum-event-card__content">
                     <h3 class="lakum-event-card__title">${event.title}</h3>
