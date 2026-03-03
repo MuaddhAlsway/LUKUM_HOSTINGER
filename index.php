@@ -14,21 +14,21 @@ require_once 'config.css-loader.php';
     <link rel="icon" type="image/png" sizes="16x16" href="assest/logo/right_section.png">
     <link rel="apple-touch-icon" href="assest/logo/right_section.png">
     <meta name="msapplication-TileImage" content="assest/logo/right_section.png">
-    <!-- CRITICAL: Preload hero image for LCP -->
-    <link rel="preload" as="image" href="heroImage/img-4.webp" fetchpriority="high">
+    <!-- CRITICAL: Preload hero image for LCP with responsive sizes -->
+    <link rel="preload" as="image" href="heroImage/img-4.webp" fetchpriority="high" imagesrcset="heroImage/img-4.webp 1200w" imagesizes="(max-width: 768px) 100vw, 1200px">
     
-    <!-- Preload critical fonts -->
+    <!-- Preload critical font only -->
     <link rel="preload" href="assest/fonts/GretaArabicAR+LT-Regular.otf" as="font" type="font/otf" crossorigin>
     
-    <!-- DNS prefetch -->
+    <!-- DNS prefetch and preconnect for critical resources -->
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
-    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     
     <!-- Critical CSS - inline for instant render -->
     <link rel="stylesheet" href="global-styles.css">
     <link rel="stylesheet" href="lakum-components.css">
     
-    <!-- Non-critical CSS - defer with onload trick -->
+    <!-- Non-critical CSS - defer loading -->
     <link rel="preload" href="<?php echo getCSSFile('Home'); ?>" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preload" href="rtl.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preload" href="fonts/greta-arabic.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -44,20 +44,14 @@ require_once 'config.css-loader.php';
         <link rel="stylesheet" href="assest/popup-notification.css">
     </noscript>
     
-    <!-- Minimal remixicon - only used icons, deferred -->
+    <!-- Remixicon - deferred -->
     <link rel="preload" href="assest/remixicon-minimal.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="assest/remixicon-minimal.css"></noscript>
-    <!-- API Cache Manager - Deferred to avoid blocking render -->
+    <!-- Deferred Scripts - Load after page render -->
     <script src="js/deferred-events-loader.js?v=1.0.0" defer></script>
     <script src="js/api-cache-manager.js?v=1.0.0" defer></script>
-    
-    <!-- API Helper with caching support - Deferred -->
     <script src="js/api-helper.js?v=1.0.0" defer></script>
-    
-    <!-- Settings Loader with caching -->
     <script src="assest/settings-loader.js?v=1.0.0" defer></script>
-    
-    <!-- Dynamic Content Loader with caching -->
     <script src="assest/dynamic-content-loader.js?v=1.0.0" defer></script>
     
     <!-- UI Scripts - Minified & Deferred -->
@@ -296,7 +290,7 @@ margin: 0 auto;}
                  width="1200"
                  height="800"
                  class="lakum-hero__image"
-                 style="aspect-ratio: 1200/800">
+                 style="aspect-ratio: 1200/800; width: 100%; height: 100%; object-fit: cover; display: block;">
             <div class="lakum-hero__overlay"></div>
         </div>
         <div class="lakum-hero__content">
@@ -424,7 +418,12 @@ margin: 0 auto;}
             </div>
         </div>
     </footer>
-<div class="lakum-contact-fab" id="lakumContactFab"><button class="lakum-contact-fab__trigger" id="fabTrigger" aria-label="Contact options"><i class="ri-mail-line lakum-contact-fab__icon"></i><i class="ri-close-line lakum-contact-fab__close"></i></button><div class="lakum-contact-fab__menu" id="fabMenu"><a href="tel:+966920012083" class="lakum-contact-fab__item" data-tooltip="Call us"><i class="ri-phone-line"></i></a><a href="https://wa.me/966920012083" target="_blank" class="lakum-contact-fab__item" data-tooltip="WhatsApp"><i class="ri-whatsapp-line"></i></a><a href="mailto:info@lakumartspace.com" class="lakum-contact-fab__item" data-tooltip="Email"><i class="ri-mail-line"></i></a></div></div>
+
+    <div class="lakum-contact-fab" id="lakumContactFab"><button class="lakum-contact-fab__trigger" id="fabTrigger" aria-label="Contact options"><i class="ri-mail-line lakum-contact-fab__icon"></i><i class="ri-close-line lakum-contact-fab__close"></i></button><div class="lakum-contact-fab__menu" id="fabMenu"><a href="tel:+966920012083" class="lakum-contact-fab__item" data-tooltip="Call us"><i class="ri-phone-line"></i></a><a href="https://wa.me/966920012083" target="_blank" class="lakum-contact-fab__item" data-tooltip="WhatsApp"><i class="ri-whatsapp-line"></i></a><a href="mailto:info@lakumartspace.com" class="lakum-contact-fab__item" data-tooltip="Email"><i class="ri-mail-line"></i></a></div></div>
+
+    <script src="assest/fun-interactions.js?v=5.0.0" defer></script>
+    <script src="js/LanguageManager.js?v=1.0.0" defer></script>
+    <script>
         // Set current language from PHP
         window.LAKUM_LANG = '<?php echo getCurrentLanguage(); ?>';
         

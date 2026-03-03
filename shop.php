@@ -82,6 +82,8 @@ body{font-family:'Greta Arabic','Greta Text Arabic',-apple-system,BlinkMacSystem
 <!-- Scripts - Defer non-critical JavaScript -->
 <script src="assest/navbar-mobile-toggle.js?v=5.0.0" defer></script>
 <script src="assest/settings-links-loader.js?v=5.0.0" defer></script>
+<script src="assest/fun-interactions.js" defer></script>
+<script src="mobile-performance-optimizer.js" defer></script>
 <script>
     // Set language for JavaScript - Inline critical config
     window.LAKUM_LANG = 'en';

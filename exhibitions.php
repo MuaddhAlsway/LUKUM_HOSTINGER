@@ -33,7 +33,9 @@ require_once 'api/image-helper.php';
     <link rel="stylesheet" href="exhibitions.css">
 <link rel="alternate" hreflang="en" href="https://lakumartspace.infinityfree.me/exhibitions.php?lang=en" />
 <link rel="alternate" hreflang="ar" href="https://lakumartspace.infinityfree.me/exhibitions.php?lang=ar" />
-<script src="assest/static-json-translator.js?v=1.0.0" defer></script></head>
+<script src="assest/static-json-translator.js?v=1.0.0" defer></script>
+<script src="assest/fun-interactions.js" defer></script>
+<script src="mobile-performance-optimizer.js" defer></script></head>
 <body class="<?php echo getLanguageClass(); ?>">
 
     <!-- Page Loader -->
@@ -87,6 +89,7 @@ require_once 'api/image-helper.php';
              sizes="100vw"
              alt="LAKUM Exhibitions"
              fetchpriority="high"
+             loading="eager"
              decoding="async"
              width="1200"
              height="800"

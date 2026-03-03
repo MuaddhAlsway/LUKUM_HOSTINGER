@@ -15,6 +15,11 @@ jobs:
         with:
           fetch-depth: 1
 
+      - name: Validate PHP Syntax
+        run: |
+          find . -name "*.php" -type f ! -path "./vendor/*" ! -path "./.git/*" -exec php -l {} \;
+        continue-on-error: true
+
       - name: Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
@@ -56,3 +61,9 @@ jobs:
             -H "Content-Type: application/json" \
             -w "\nHTTP Status: %{http_code}\n"
         continue-on-error: true
+
+      - name: Deployment Status
+        if: always()
+        run: |
+          echo "Deployment workflow completed"
+          echo "Check FTP logs for detailed information"

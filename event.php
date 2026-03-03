@@ -176,6 +176,8 @@ require_once 'api/image-helper.php';
     <!-- Image Optimizer - Critical for performance -->
     <script src="assest/navbar-mobile-toggle.js?v=5.0.0" defer></script>
     <script src="js/LanguageManager.js?v=1.0.0" defer></script>
+    <script src="assest/fun-interactions.js" defer></script>
+    <script src="mobile-performance-optimizer.js" defer></script>
 
     <!-- Scripts - Defer non-critical JavaScript -->
     <script>
@@ -293,7 +295,7 @@ require_once 'api/image-helper.php';
     <!-- Hero Section -->
     <section class="event-hero">
         <div class="event-hero__image-wrapper">
-            <img id="hero-image" src="assest/img-4.webp" alt="Event" class="event-hero__image" loading="eager" fetchpriority="high">
+            <img id="hero-image" src="assest/img-4.webp" alt="Event" class="event-hero__image" loading="eager" fetchpriority="high" decoding="async" style="width: 100%; height: 100%; object-fit: cover; display: block;">
             <div class="event-hero__overlay"></div>
         </div>
         <div class="event-hero__content">

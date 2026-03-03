@@ -174,6 +174,8 @@ require_once 'api/image-helper.php';
     <script src="assest/navbar-mobile-toggle.js?v=5.0.0" defer></script>
     <script src="assest/settings-links-loader.js?v=5.0.0" defer></script>
     <script src="js/LanguageManager.js?v=1.0.0" defer></script>
+    <script src="assest/fun-interactions.js" defer></script>
+    <script src="mobile-performance-optimizer.js" defer></script>
     <script>
         // Set language for JavaScript - Read from URL parameter or localStorage
         const urlParams = new URLSearchParams(window.location.search);

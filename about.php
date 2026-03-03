@@ -40,6 +40,8 @@ require_once 'api/image-helper.php';
 <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" media="print" onload="this.media='all'">
 <noscript><link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet"></noscript>
 <script src="assest/navbar-mobile-toggle.js?v=5.0.0" defer></script>
+<script src="assest/fun-interactions.js" defer></script>
+<script src="mobile-performance-optimizer.js" defer></script>
 <meta name="title" content="About LAKUM Artspace - Our Story & Mission">
 <meta name="description" content="Learn about LAKUM Artspace, a premier cultural destination in Riyadh dedicated to fostering artistic expression, cultural exchange, and creative innovation.">
 <meta name="keywords" content="about LAKUM, art gallery Riyadh, cultural hub, art exhibitions, creative workshops">

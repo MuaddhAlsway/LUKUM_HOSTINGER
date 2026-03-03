@@ -1,5 +1,5 @@
 # LAKUM Artspace - Performance & Security Optimization
-# Last Updated: March 1, 2026
+# Last Updated: March 3, 2026
 
 # ============================================================================
 # 1. ENABLE GZIP COMPRESSION (70% reduction in file size)
@@ -90,9 +90,6 @@
         Header set Pragma "no-cache"
         Header set Expires "0"
     </FilesMatch>
-    
-    # Add ETag for conditional requests
-    Header set ETag "%{TIME_YEAR}%{TIME_MON}%{TIME_MDAY}%{TIME_HOUR}%{TIME_MIN}%{TIME_SEC}"
 </IfModule>
 
 # ============================================================================
@@ -116,17 +113,7 @@
 </IfModule>
 
 # ============================================================================
-# 5. GZIP COMPRESSION FOR API RESPONSES
-# ============================================================================
-<IfModule mod_deflate.c>
-    # Ensure API responses are gzipped
-    <FilesMatch "\.php$">
-        AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json
-    </FilesMatch>
-</IfModule>
-
-# ============================================================================
-# 6. ENABLE MOD_REWRITE FOR CLEAN URLS
+# 5. ENABLE MOD_REWRITE FOR CLEAN URLS
 # ============================================================================
 <IfModule mod_rewrite.c>
     RewriteEngine On
@@ -147,28 +134,39 @@
 </IfModule>
 
 # ============================================================================
-# 7. DISABLE DIRECTORY LISTING
+# 6. DISABLE DIRECTORY LISTING
 # ============================================================================
 Options -Indexes
 
 # ============================================================================
-# 8. CUSTOM ERROR PAGES
+# 7. CUSTOM ERROR PAGES
 # ============================================================================
 ErrorDocument 404 /404.php
 ErrorDocument 500 /500.php
 
 # ============================================================================
-# 9. PERFORMANCE: ETAG OPTIMIZATION
-# ============================================================================
-<IfModule mod_headers.c>
-    # Remove ETags to reduce header size
-    Header unset ETag
-    FileETag None
-</IfModule>
-
-# ============================================================================
-# 10. PERFORMANCE: KEEP-ALIVE
+# 8. PERFORMANCE: KEEP-ALIVE
 # ============================================================================
 <IfModule mod_headers.c>
     Header set Connection keep-alive
 </IfModule>
+
+# ============================================================================
+# 9. MOBILE PERFORMANCE: REDUCE REDIRECTS
+# ============================================================================
+<IfModule mod_rewrite.c>
+    # Avoid redirect chains
+    RewriteCond %{HTTP_HOST} ^lakumartspace\.infinityfree\.me$ [NC]
+    RewriteRule ^(.*)$ https://lakumartspace.infinityfree.me/$1 [R=301,L]
+</IfModule>
+
+# ============================================================================
+# 10. PERFORMANCE: MINIMIZE PAYLOAD
+# ============================================================================
+<IfModule mod_deflate.c>
+    # Ensure all text-based content is compressed
+    <FilesMatch "\.(php|html|css|js|json|xml)$">
+        AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json
+    </FilesMatch>
+</IfModule>
+
