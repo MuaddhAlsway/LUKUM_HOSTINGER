@@ -103,8 +103,3 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Ne
   .lakum-contact-fab__item { width: 48px !important; height: 48px !important; font-size: 18px !important; }
   .lakum-contact-fab__item::before { display: none !important; }
 }
-  
-  .lakum-header__mobile-toggle {
-    display: flex !important;
-  }
-}
