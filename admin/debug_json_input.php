@@ -33,3 +33,4 @@ file_put_contents('../logs/json_debug.log', date('Y-m-d H:i:s') . ' - ' . json_e
 echo json_encode($debug, JSON_PRETTY_PRINT);
 ?>
 
+

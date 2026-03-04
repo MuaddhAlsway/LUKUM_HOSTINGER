@@ -778,7 +778,7 @@ require_once 'api/image-helper.php';
             };
 
             // Update navbar
-            const navItems = document.querySelectorAll('.lakum-nav__link');
+            const navItems = document.querySelectorAll('.app-nav__link');
             navItems.forEach(link => {
                 const href = link.getAttribute('href');
                 if (href === 'index.php') link.textContent = navLinks.home;
@@ -965,11 +965,11 @@ require_once 'api/image-helper.php';
     </div>
 
     <script src="assest/navbar-mobile-toggle.js" defer></script>
-    <script src="assest/fab-button.js" defer></script>
     <script src="assest/app-header.js" defer></script>
 </body>
 
 </html>
+
 
 
 

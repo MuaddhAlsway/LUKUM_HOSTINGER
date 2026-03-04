@@ -1048,7 +1048,7 @@ require_once 'api/image-helper.php';
             };
 
             // Update navbar
-            const navItems = document.querySelectorAll('.lakum-nav__link');
+            const navItems = document.querySelectorAll('.app-nav__link');
             navItems.forEach(link => {
                 const href = link.getAttribute('href');
                 if (href === 'index.php') link.textContent = navLinks.home;
@@ -1149,6 +1149,7 @@ require_once 'api/image-helper.php';
     </body>
 
 </html>
+
 
 
 

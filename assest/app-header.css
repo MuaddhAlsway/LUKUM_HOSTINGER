@@ -72,6 +72,8 @@
     flex-direction: row !important;
     top: auto !important;
     left: auto !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
 .app-nav::before {

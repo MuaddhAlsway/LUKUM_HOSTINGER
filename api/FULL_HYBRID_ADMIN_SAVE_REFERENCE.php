@@ -371,3 +371,4 @@ function saveLegalPageHybrid($db, $data) {
 
 ?>
 
+

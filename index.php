@@ -107,7 +107,7 @@ require_once 'lang/loader.php';
     gap: var(--spacing-2xl);
     max-width: 1400px;
     margin: 0 auto;}
-        .lakum-event-card { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); transition: transform 0.3s ease; width: 100%; height: 485.56px; display: flex; flex-direction: column; }
+        .lakum-event-card { background: white; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); transition: transform 0.3s ease; width: 100%; height: 485.56px; display: flex; flex-direction: column; }
         .lakum-event-card:hover { transform: translateY(-8px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
         .lakum-event-card__image {  position: relative;width: 100%;height: 320px;overflow: hidden;background: #edecdf; }
         .lakum-event-card__image img { width: 100%; height: 100%; object-fit: cover; }
@@ -636,6 +636,7 @@ margin: 0 auto;}
     <script src="assest/app-header.js" defer></script>
 </body>
 </html>
+
 
 
 

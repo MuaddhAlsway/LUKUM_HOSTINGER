@@ -80,3 +80,4 @@ function responsiveSizes($type = 'card') {
 }
 ?>
 
+

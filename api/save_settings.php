@@ -52,3 +52,4 @@ if (file_put_contents($settingsFile, json_encode($settings, JSON_PRETTY_PRINT | 
 }
 ?>
 
+

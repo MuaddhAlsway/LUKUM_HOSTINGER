@@ -122,3 +122,4 @@ class ResponsiveImageHelper {
 // echo $helper->generateLogo('logo-right', 'LAKUM');
 ?>
 
+

@@ -60,3 +60,4 @@ $conn->close();
 echo "\nAll Arabic descriptions populated successfully!\n";
 ?>
 
+

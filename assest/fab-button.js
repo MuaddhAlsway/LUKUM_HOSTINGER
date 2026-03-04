@@ -12,9 +12,15 @@
         const fabMenu = document.getElementById('fabMenu');
 
         if (!fabButton || !fabTrigger || !fabMenu) {
-            console.warn('FAB button elements not found');
+            console.warn('FAB button elements not found:', {
+                fabButton: !!fabButton,
+                fabTrigger: !!fabTrigger,
+                fabMenu: !!fabMenu
+            });
             return;
         }
+
+        console.log('FAB button initialized successfully');
 
         // Toggle menu on button click
         fabTrigger.addEventListener('click', function(e) {
@@ -24,6 +30,7 @@
             const isExpanded = fabTrigger.getAttribute('aria-expanded') === 'true';
             fabTrigger.setAttribute('aria-expanded', !isExpanded);
             fabButton.classList.toggle('fab-button--active');
+            console.log('FAB button toggled:', !isExpanded);
         });
 
         // Close menu when clicking outside

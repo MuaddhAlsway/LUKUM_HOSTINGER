@@ -130,3 +130,4 @@ $optimizer = new BatchImageOptimizer();
 $optimizer->run();
 ?>
 
+
