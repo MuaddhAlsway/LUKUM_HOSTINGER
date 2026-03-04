@@ -625,29 +625,9 @@ html[lang="ar"] .lakum-event-card__date {
 <div class="lakum-contact-fab" id="lakumContactFab"><button class="lakum-contact-fab__trigger" id="fabTrigger" aria-label="Contact options"><i class="ri-mail-line lakum-contact-fab__icon"></i><i class="ri-close-line lakum-contact-fab__close"></i></button><div class="lakum-contact-fab__menu" id="fabMenu"><a href="tel:+966920012083" class="lakum-contact-fab__item" data-tooltip="Call us"><i class="ri-phone-line"></i></a><a href="https://wa.me/966920012083" target="_blank" class="lakum-contact-fab__item" data-tooltip="WhatsApp"><i class="ri-whatsapp-line"></i></a><a href="mailto:info@lakumartspace.com" class="lakum-contact-fab__item" data-tooltip="Email"><i class="ri-mail-line"></i></a></div></div>
 
 <script src="assest/fun-interactions.js" defer></script>
+<script src="assest/navbar-mobile-toggle.js" defer></script>
 <script src="js/LanguageManager.js?v=1.0.0" defer></script>
 <script>
-    // Expandable FAB functionality
-    (function() {
-        const fab = document.getElementById('lakumContactFab');
-        const trigger = document.getElementById('fabTrigger');
-        const menu = document.getElementById('fabMenu');
-
-        if (trigger && fab) {
-            trigger.addEventListener('click', function(e) {
-                e.preventDefault();
-                fab.classList.toggle('lakum-contact-fab--active');
-            });
-
-            // Close when clicking outside
-            document.addEventListener('click', function(e) {
-                if (!fab.contains(e.target)) {
-                    fab.classList.remove('lakum-contact-fab--active');
-                }
-            });
-        }
-    })();
-
     // Set current language from PHP
     window.LAKUM_LANG = '<?php echo getCurrentLanguage(); ?>';
     

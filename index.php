@@ -617,29 +617,10 @@ margin: 0 auto;}
                 initPage();
             }
         });
-
-        // Expandable FAB functionality
-        (function() {
-            const fab = document.getElementById('lakumContactFab');
-            const trigger = document.getElementById('fabTrigger');
-            const menu = document.getElementById('fabMenu');
-
-            if (trigger && fab) {
-                trigger.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    fab.classList.toggle('lakum-contact-fab--active');
-                });
-
-                // Close when clicking outside
-                document.addEventListener('click', function(e) {
-                    if (!fab.contains(e.target)) {
-                        fab.classList.remove('lakum-contact-fab--active');
-                    }
-                });
-            }
-        })();
     </script>
 
+    <script src="assest/fun-interactions.js" defer></script>
+    <script src="assest/navbar-mobile-toggle.js" defer></script>
     <script src="assest/popup-notification.js?v=5.0.0" defer></script>
 </body>
 </html>

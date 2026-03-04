@@ -528,26 +528,16 @@ require_once 'api/image-helper.php';
         // Update titles on page load
         updateBlogSectionTitles();
 
-        // Expandable FAB functionality
-        (function() {
-            const fab = document.getElementById('lakumContactFab');
-            const trigger = document.getElementById('fabTrigger');
-            const menu = document.getElementById('fabMenu');
+        // Load external scripts for FAB and mobile menu
+        const fabScript = document.createElement('script');
+        fabScript.src = 'assest/fun-interactions.js';
+        fabScript.defer = true;
+        document.head.appendChild(fabScript);
 
-            if (trigger && fab) {
-                trigger.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    fab.classList.toggle('lakum-contact-fab--active');
-                });
-
-                // Close when clicking outside
-                document.addEventListener('click', function(e) {
-                    if (!fab.contains(e.target)) {
-                        fab.classList.remove('lakum-contact-fab--active');
-                    }
-                });
-            }
-        })();
+        const navScript = document.createElement('script');
+        navScript.src = 'assest/navbar-mobile-toggle.js';
+        navScript.defer = true;
+        document.head.appendChild(navScript);
 
         // Mobile menu toggle
         (function() {
