@@ -996,9 +996,6 @@ html[dir="rtl"] {
    ============================================ */
 
 /* Ensure no horizontal overflow on any screen size */
-[dir="rtl"] * {
-    max-width: 100%;
-}
 
 [dir="rtl"] body,
 [dir="rtl"] html {
@@ -1865,12 +1862,14 @@ html[dir="rtl"] {
     }
 
     [dir="rtl"] .app-nav[aria-expanded="true"],
+    [dir="rtl"] .app-nav.app-nav--active,
     [dir="rtl"] .app-nav.is-open {
         transform: translateX(0);
         z-index: 999;
     }
 
     [dir="rtl"] .app-nav[aria-expanded="true"]::before,
+    [dir="rtl"] .app-nav.app-nav--active::before,
     [dir="rtl"] .app-nav.is-open::before {
         opacity: 1;
         visibility: visible;

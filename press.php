@@ -540,25 +540,25 @@ require_once 'api/image-helper.php';
     <script>
         // Mobile menu toggle
         (function() {
-            const toggle = document.querySelector('.lakum-header__mobile-toggle');
-            const nav = document.querySelector('.lakum-nav');
-            const header = document.querySelector('.lakum-header');
+            const toggle = document.querySelector('.app-header__menu-toggle');
+            const nav = document.querySelector('.app-nav');
+            const header = document.querySelector('.app-header');
 
             if (toggle && nav) {
                 toggle.addEventListener('click', function() {
-                    toggle.classList.toggle('lakum-header__mobile-toggle--active');
-                    nav.classList.toggle('lakum-nav--active');
-                    header.classList.toggle('lakum-header--menu-open');
-                    document.body.style.overflow = nav.classList.contains('lakum-nav--active') ? 'hidden' : '';
+                    toggle.classList.toggle('app-header__menu-toggle--active');
+                    nav.classList.toggle('app-nav--active');
+                    header.classList.toggle('app-header--menu-open');
+                    document.body.style.overflow = nav.classList.contains('app-nav--active') ? 'hidden' : '';
                 });
 
                 // Close menu when clicking nav link
-                const navLinks = document.querySelectorAll('.lakum-nav__link');
+                const navLinks = document.querySelectorAll('.app-nav__link');
                 navLinks.forEach(link => {
                     link.addEventListener('click', function() {
-                        toggle.classList.remove('lakum-header__mobile-toggle--active');
-                        nav.classList.remove('lakum-nav--active');
-                        header.classList.remove('lakum-header--menu-open');
+                        toggle.classList.remove('app-header__menu-toggle--active');
+                        nav.classList.remove('app-nav--active');
+                        header.classList.remove('app-header--menu-open');
                         document.body.style.overflow = '';
                     });
                 });
