@@ -369,7 +369,9 @@ require_once 'api/image-helper.php';
                 
                 // Build API URL - if blogIdentifier is numeric, use as ID, otherwise search by title
                 let apiUrl = `api/get_blogs_working.php?lang=${lang}`;
-                if (!isNaN(blogIdentifier)) {
+                let isNumericId = !isNaN(blogIdentifier) && blogIdentifier.trim() !== '';
+                
+                if (isNumericId) {
                     apiUrl += `&id=${blogIdentifier}`;
                 } else {
                     // For title-based search, we need to fetch all blogs and filter
@@ -399,20 +401,23 @@ require_once 'api/image-helper.php';
                         return;
                     }
 
-                    // Update URL to use title slug (always use English title for URL consistency)
+                    // ALWAYS redirect to title slug URL (remove ID parameter)
                     const englishTitle = blog.title_en || blog.title;
                     const titleSlug = englishTitle.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
                     
-                    if (!new URLSearchParams(window.location.search).get('title') || new URLSearchParams(window.location.search).get('id')) {
+                    // Check if we need to redirect (if using ID or wrong slug)
+                    const currentTitle = new URLSearchParams(window.location.search).get('title');
+                    const currentId = new URLSearchParams(window.location.search).get('id');
+                    
+                    if (currentId || currentTitle !== titleSlug) {
                         const newUrl = new URL(window.location);
                         newUrl.searchParams.set('title', titleSlug);
                         newUrl.searchParams.delete('id');
-                        // Preserve language parameter if present
                         if (!newUrl.searchParams.get('lang')) {
                             newUrl.searchParams.set('lang', lang);
                         }
-                        window.history.replaceState({}, '', newUrl);
-                        blogIdentifier = titleSlug;
+                        window.location.replace(newUrl.toString());
+                        return;
                     }
 
                     // Update page title
