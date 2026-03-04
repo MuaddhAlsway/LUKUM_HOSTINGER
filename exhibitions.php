@@ -88,7 +88,7 @@ require_once 'api/image-helper.php';
                         echo $currentPage . '.php?lang=' . $lang;
                     ?>" class="app-lang-link" title="<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? 'Language: English' : 'Language: العربية'; ?>">
                         <i class="ri-global-line"></i>
-                        <span class="app-lang-text"><?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? 'En' : 'Ar'; ?></span>
+                        <span class="app-lang-text"><?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? 'English' : 'العربية'; ?></span>
                     </a>
                 </div>
 

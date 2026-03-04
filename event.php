@@ -270,10 +270,16 @@ require_once 'api/image-helper.php';
                         $currentPage = basename($currentPath, '.php');
                         if ($currentPage === '') $currentPage = 'index';
                         $lang = isset($_GET['lang']) && $_GET['lang'] === 'ar' ? 'en' : 'ar';
-                        echo $currentPage . '.php?lang=' . $lang;
+                        $params = '?lang=' . $lang;
+                        if (isset($_GET['title'])) {
+                            $params .= '&title=' . urlencode($_GET['title']);
+                        } elseif (isset($_GET['id'])) {
+                            $params .= '&id=' . urlencode($_GET['id']);
+                        }
+                        echo $currentPage . '.php' . $params;
                     ?>" class="app-lang-link" title="<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? 'Language: English' : 'Language: العربية'; ?>">
                         <i class="ri-global-line"></i>
-                        <span class="app-lang-text"><?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? 'En' : 'Ar'; ?></span>
+                        <span class="app-lang-text"><?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? 'English' : 'العربية'; ?></span>
                     </a>
                 </div>
 

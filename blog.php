@@ -274,7 +274,7 @@ require_once 'api/image-helper.php';
             <div class="app-language-switcher">
                 <a href="<?php echo buildLanguageSwitcherUrl(); ?>" class="app-lang-link" title="<?php echo isArabic() ? 'Language: English' : 'Language: العربية'; ?>">
                     <i class="ri-global-line"></i>
-                    <span class="app-lang-text"><?php echo isArabic() ? 'En' : 'Ar'; ?></span>
+                    <span class="app-lang-text"><?php echo isArabic() ? 'English' : 'العربية'; ?></span>
                 </a>
             </div>
 

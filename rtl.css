@@ -1921,6 +1921,34 @@ html[dir="rtl"] {
     [dir="rtl"] .app-header__container {
         height: 70px;
         padding: 0 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+        flex-direction: row;
+    }
+
+    [dir="rtl"] .app-header__menu-toggle {
+        display: flex;
+        position: absolute;
+        right: 20px;
+        left: auto;
+        margin: 0;
+        z-index: 1001;
+    }
+
+    [dir="rtl"] .app-header__logo {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    [dir="rtl"] .app-language-switcher {
+        position: absolute;
+        left: 10px;
+        right: auto;
+        margin: 0;
+        z-index: 1002;
     }
 
     [dir="rtl"] .app-logo__left,
@@ -1928,12 +1956,92 @@ html[dir="rtl"] {
         height: 42px;
     }
 
+    /* Mobile Navigation */
+    [dir="rtl"] .app-nav {
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: auto;
+        width: 100%;
+        height: 100vh;
+        background: #f6f6eb;
+        padding: 100px 40px 40px;
+        transform: translateX(100%);
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: -4px 0 24px rgba(0, 0, 0, 0.1);
+        overflow-y: auto;
+        z-index: 999;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+
+    [dir="rtl"] .app-nav::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.3);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        z-index: -1;
+    }
+
+    [dir="rtl"] .app-nav[aria-expanded="true"],
+    [dir="rtl"] .app-nav.app-nav--active,
+    [dir="rtl"] .app-nav.is-open {
+        transform: translateX(0) !important;
+        z-index: 999 !important;
+    }
+
+    [dir="rtl"] .app-nav[aria-expanded="true"]::before,
+    [dir="rtl"] .app-nav.app-nav--active::before,
+    [dir="rtl"] .app-nav.is-open::before {
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+
     [dir="rtl"] .app-nav__list {
-        gap: 28px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: clamp(20px, 3vw, 48px);
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+    }
+
+    [dir="rtl"] .app-nav__item {
+        width: 100%;
+        border-bottom: 1px solid rgba(209, 209, 209, 0.2);
+        text-align: center;
     }
 
     [dir="rtl"] .app-nav__link {
-        font-size: 13px;
+        display: block;
+        padding: 20px 0;
+        font-size: 18px;
+        text-align: center;
+        font-family: 'Greta Arabic', 'Greta Text Arabic', 'Atyp Kido TRIAL', sans-serif;
+        direction: rtl;
+    }
+
+    [dir="rtl"] .app-header__controls {
+        gap: 10px;
+        flex-direction: row;
+    }
+
+    [dir="rtl"] .app-lang-link {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+
+    [dir="rtl"] .app-lang-text {
+        font-size: 11px;
     }
 }
 
