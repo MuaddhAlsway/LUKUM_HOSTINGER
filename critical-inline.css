@@ -24,7 +24,20 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Ne
   .lakum-hero { height: 60vh; min-height: 450px; }
 }
 
+@media (max-width: 1024px) {
+  .lakum-header__container { height: 70px; padding: 0 30px; }
+  .lakum-logo__left, .lakum-logo__right { height: 45px; }
+  .lakum-nav__list { gap: 32px; }
+  .lakum-nav__link { font-size: 14px; }
+}
+
 @media (max-width: 820px) {
+  .lakum-header__container { height: 70px; padding: 0 20px; display: flex; align-items: center; justify-content: space-between; position: relative; }
+  .lakum-header__mobile-toggle { display: flex !important; position: absolute; left: 20px; margin: 0; z-index: 1001; }
+  .lakum-header__logo { position: absolute; left: 50%; transform: translateX(-50%); }
+  .lakum-logo__left, .lakum-logo__right { height: 40px; }
+  .lakum-language-switcher { position: absolute; right: 10px; left: auto; margin: 0; z-index: 1002; }
+  
   .lakum-nav {
     position: fixed !important;
     top: 0 !important;
@@ -37,16 +50,59 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Ne
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
     box-shadow: 4px 0 24px rgba(0, 0, 0, 0.1) !important;
     overflow-y: auto !important;
-    z-index: 999 !important;
+    z-index: 1001 !important;
     display: flex !important;
     flex-direction: column !important;
     gap: 0 !important;
+    flex: none !important;
+    justify-content: flex-start !important;
+  }
+  
+  .lakum-nav::before {
+    content: '' !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: rgba(0, 0, 0, 0.3) !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transition: all 0.3s ease !important;
+    z-index: -1 !important;
   }
   
   .lakum-nav--active {
     transform: translateX(0) !important;
     z-index: 1002 !important;
   }
+  
+  .lakum-nav--active::before {
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+  
+  .lakum-nav__list { display: flex !important; flex-direction: column !important; align-items: center !important; gap: clamp(20px, 3vw, 48px) !important; list-style: none !important; margin: 0 !important; padding: 0 !important; width: 100% !important; }
+  .lakum-nav__item { width: 100% !important; border-bottom: 1px solid rgba(209, 209, 209, 0.2) !important; text-align: center !important; }
+  .lakum-nav__link { display: block !important; padding: 20px 0 !important; font-size: 18px !important; text-align: center !important; }
+  
+  .lakum-contact-fab { bottom: 24px !important; right: 24px !important; z-index: 1050 !important; }
+  .lakum-contact-fab__trigger { width: 56px !important; height: 56px !important; }
+  .lakum-contact-fab__icon, .lakum-contact-fab__close { font-size: 22px !important; }
+  .lakum-contact-fab__item { width: 50px !important; height: 50px !important; font-size: 20px !important; }
+  .lakum-contact-fab__menu { bottom: 70px !important; }
+}
+
+@media (max-width: 480px) {
+  .lakum-header__container { height: 60px; padding: 0 20px; }
+  .lakum-logo__left, .lakum-logo__right { height: 40px; }
+  .lakum-nav { max-width: 100% !important; padding: 80px 30px 30px !important; }
+  .lakum-contact-fab { bottom: 20px !important; right: 20px !important; }
+  .lakum-contact-fab__trigger { width: 52px !important; height: 52px !important; }
+  .lakum-contact-fab__icon, .lakum-contact-fab__close { font-size: 20px !important; }
+  .lakum-contact-fab__item { width: 48px !important; height: 48px !important; font-size: 18px !important; }
+  .lakum-contact-fab__item::before { display: none !important; }
+}
   
   .lakum-header__mobile-toggle {
     display: flex !important;
