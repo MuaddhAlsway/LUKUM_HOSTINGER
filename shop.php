@@ -242,7 +242,8 @@ body{font-family:'Greta Arabic','Greta Text Arabic',-apple-system,BlinkMacSystem
         <div class="app-header__controls">
             <div class="app-language-switcher">
                 <a href="<?php 
-                    $currentPage = basename($_SERVER['REQUEST_URI'], '.php');
+                    $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+                    $currentPage = basename($currentPath, '.php');
                     if ($currentPage === '') $currentPage = 'index';
                     $lang = isset($_GET['lang']) && $_GET['lang'] === 'ar' ? 'en' : 'ar';
                     echo $currentPage . '.php?lang=' . $lang;
@@ -384,7 +385,7 @@ body{font-family:'Greta Arabic','Greta Text Arabic',-apple-system,BlinkMacSystem
     <!-- Shop Hero Section -->
     <section class="lakum-shop-hero">
         <div class="lakum-shop-hero__image-wrapper">
-            <?php echo ImageHelper::render('assest/img-3.JPG', 'LAKUM Shop', 'hero'); ?>
+            <?php echo ImageHelper::render('heroImage/img-4.webp', 'LAKUM Shop', 'hero'); ?>
         </div>
         <div class="lakum-shop-hero__content">
             <h1 class="lakum-shop-hero__title"><?php echo t('hero_title', 'Discover Lakum Concept Shop'); ?></h1>

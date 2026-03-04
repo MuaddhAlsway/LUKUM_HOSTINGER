@@ -300,7 +300,8 @@ require_once 'lang/loader.php';
             <div class="app-header__controls">
                 <div class="app-language-switcher">
                     <a href="<?php 
-                        $currentPage = basename($_SERVER['REQUEST_URI'], '.php');
+                        $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+                        $currentPage = basename($currentPath, '.php');
                         if ($currentPage === '') $currentPage = 'index';
                         $lang = isset($_GET['lang']) && $_GET['lang'] === 'ar' ? 'en' : 'ar';
                         echo $currentPage . '.php?lang=' . $lang;
@@ -537,9 +538,9 @@ Compliance with these terms ensures the preservation of Lakum Artspace’s profe
             <div class="lakum-footer__bottom">
                 <p class="lakum-footer__copyright"><?php echo t('footer_copyright', '� 2025 - 2027 LAKUM Artspace. All rights reserved.'); ?></p>
                 <div class="lakum-footer__legal">
-                    <a href="terms.php" class="lakum-footer__legal-link"><?php echo t('footer_terms', 'Terms & Conditions'); ?></a>
+                    <a href="terms.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="lakum-footer__legal-link"><?php echo t('footer_terms', 'Terms & Conditions'); ?></a>
                     <span class="lakum-footer__legal-divider">|</span>
-                    <a href="privacy.php" class="lakum-footer__legal-link"><?php echo t('footer_privacy', 'Privacy Policy'); ?></a>
+                    <a href="privacy.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="lakum-footer__legal-link"><?php echo t('footer_privacy', 'Privacy Policy'); ?></a>
                 </div>
             </div>
         </div>
@@ -611,24 +612,11 @@ Compliance with these terms ensures the preservation of Lakum Artspace’s profe
             loadLegalPageContent();
         });
 
-        // Also watch for manual URL changes (language switcher)
-        const observer = new MutationObserver(function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const newLang = urlParams.get('lang') || 'en';
-            if (newLang !== currentLang) {
-                currentLang = newLang;
-                loadLegalPageContent();
-            }
-        });
-
-        // Start observing for changes
-        observer.observe(document.documentElement, { attributes: true });
-
         async function loadLegalPageContent() {
             try {
-                // Get current language from URL parameter (set by PHP buildLanguageSwitcherUrl)
+                // Get current language from URL parameter
                 const urlParams = new URLSearchParams(window.location.search);
-                const lang = urlParams.get('lang') || 'en';
+                const lang = urlParams.get('lang') || localStorage.getItem('lakum_language') || 'en';
                 
                 console.log('Loading terms content for language:', lang);
                 
@@ -661,6 +649,15 @@ Compliance with these terms ensures the preservation of Lakum Artspace’s profe
                             day: 'numeric'
                         });
                         dateDiv.textContent = formattedDate;
+                    }
+                    
+                    // Update page direction based on language
+                    if (lang === 'ar') {
+                        document.documentElement.dir = 'rtl';
+                        document.documentElement.lang = 'ar';
+                    } else {
+                        document.documentElement.dir = 'ltr';
+                        document.documentElement.lang = 'en';
                     }
                 } else {
                     console.log('No terms content found in database, using default content');
