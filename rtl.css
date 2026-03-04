@@ -108,6 +108,16 @@ html[dir="rtl"] {
     transition: color 0.3s ease;
 }
 
+/* RTL Header menu open state */
+[dir="rtl"] .lakum-header--menu-open {
+    background: rgba(246, 246, 235, 0.95) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+}
+
+[dir="rtl"] .lakum-header--menu-open .lakum-header__container {
+    border-bottom: 1px solid rgba(209, 209, 209, 0.3) !important;
+}
+
 /* Language Switcher - Fix positioning */
 [dir="rtl"] .lakum-language-switcher {
     margin-left: auto;

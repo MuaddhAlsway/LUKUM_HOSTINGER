@@ -13,10 +13,14 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     }
 
+    // Get header element
+    const header = document.querySelector('.lakum-header');
+
     // Toggle menu on button click
     mobileToggle.addEventListener('click', function() {
         mobileToggle.classList.toggle('lakum-header__mobile-toggle--active');
         nav.classList.toggle('lakum-nav--active');
+        header.classList.toggle('lakum-header--menu-open');
         document.body.style.overflow = nav.classList.contains('lakum-nav--active') ? 'hidden' : '';
     });
 
@@ -25,6 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
         link.addEventListener('click', function() {
             mobileToggle.classList.remove('lakum-header__mobile-toggle--active');
             nav.classList.remove('lakum-nav--active');
+            header.classList.remove('lakum-header--menu-open');
             document.body.style.overflow = '';
         });
     });
@@ -37,6 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!isClickInsideNav && !isClickOnToggle && nav.classList.contains('lakum-nav--active')) {
             mobileToggle.classList.remove('lakum-header__mobile-toggle--active');
             nav.classList.remove('lakum-nav--active');
+            header.classList.remove('lakum-header--menu-open');
             document.body.style.overflow = '';
         }
     });
@@ -46,6 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (window.innerWidth > 768) {
             mobileToggle.classList.remove('lakum-header__mobile-toggle--active');
             nav.classList.remove('lakum-nav--active');
+            header.classList.remove('lakum-header--menu-open');
             document.body.style.overflow = '';
         }
     });
@@ -55,6 +62,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (event.key === 'Escape' && nav.classList.contains('lakum-nav--active')) {
             mobileToggle.classList.remove('lakum-header__mobile-toggle--active');
             nav.classList.remove('lakum-nav--active');
+            header.classList.remove('lakum-header--menu-open');
             document.body.style.overflow = 'auto';
         }
     });
