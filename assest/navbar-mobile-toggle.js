@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
     mobileToggle.addEventListener('click', function() {
         mobileToggle.classList.toggle('lakum-header__mobile-toggle--active');
         nav.classList.toggle('lakum-nav--active');
-        document.body.style.overflow = nav.classList.contains('lakum-nav--active') ? 'hidden' : 'auto';
+        document.body.style.overflow = nav.classList.contains('lakum-nav--active') ? 'hidden' : '';
     });
 
     // Close menu when a link is clicked
@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
         link.addEventListener('click', function() {
             mobileToggle.classList.remove('lakum-header__mobile-toggle--active');
             nav.classList.remove('lakum-nav--active');
-            document.body.style.overflow = 'auto';
+            document.body.style.overflow = '';
         });
     });
 
@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!isClickInsideNav && !isClickOnToggle && nav.classList.contains('lakum-nav--active')) {
             mobileToggle.classList.remove('lakum-header__mobile-toggle--active');
             nav.classList.remove('lakum-nav--active');
-            document.body.style.overflow = 'auto';
+            document.body.style.overflow = '';
         }
     });
 
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (window.innerWidth > 768) {
             mobileToggle.classList.remove('lakum-header__mobile-toggle--active');
             nav.classList.remove('lakum-nav--active');
-            document.body.style.overflow = 'auto';
+            document.body.style.overflow = '';
         }
     });
 
