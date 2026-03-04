@@ -1,21 +1,15 @@
 /* ========================================LAKUM ARTSPACE - PERFECT COMPONENTSComplete Redesign - Navigation, Footer, FAB======================================== *//* ===== UNIVERSAL FONT FAMILY ===== */* {font-family: 'Greta Arabic', 'Greta Text Arabic', -apple-system, BlinkMacSystemFont, sans-serif !important;}body {font-family: 'Greta Arabic', 'Greta Text Arabic', -apple-system, BlinkMacSystemFont, sans-serif !important;}/* ===== HEADER / NAVIGATION ===== */.lakum-header {position: sticky;top: 0;left: 0;right: 0;z-index: 1000;background: rgba(246, 246, 235, 0.98);backdrop-filter: blur(10px);border-bottom: 1px solid rgba(209, 209, 209, 0.2);transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);}.lakum-header__container {max-width: 1600px;margin: 0 auto;padding: 0 clamp(20px, 5vw, 60px);display: flex;align-items: center;justify-content: space-between;height: 80px;}.lakum-header__logo {flex-shrink: 0;}.lakum-logo {display: flex;align-items: center;gap: 0;transition: opacity 0.3s ease;}.lakum-logo:hover {opacity: 0.8;}.lakum-logo__left,.lakum-logo__right {height: 50px;width: auto;max-width: 100px;aspect-ratio: auto;display: block;}.lakum-logo__left {margin-right: -2px;/* Remove any gap between parts */}.lakum-logo__right {margin-left: -2px;/* Remove any gap between parts */}/* Navigation - Desktop Base Styles */
 .lakum-nav {
-    margin: 0;
-    padding: 0;
     flex: 1;
     display: flex;
     justify-content: center;
-    align-items: center;
 }
 
 .lakum-nav__list {
     display: flex;
-    align-items: center;
     justify-content: center;
     gap: clamp(20px, 3vw, 48px);
     list-style: none;
-    margin: 0;
-    padding: 0;
     width: 100%;
 }
 

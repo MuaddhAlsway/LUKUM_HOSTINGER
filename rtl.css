@@ -76,23 +76,16 @@ html[dir="rtl"] {
 
 /* Navigation - Ensure no extra spacing */
 [dir="rtl"] .lakum-nav {
-    margin: 0;
-    padding: 0;
     flex: 1;
     display: flex;
     justify-content: center;
-    align-items: center;
-    z-index: 999;
 }
 
 [dir="rtl"] .lakum-nav__list {
     display: flex;
-    align-items: center;
     justify-content: center;
     gap: clamp(20px, 3vw, 48px);
     list-style: none;
-    margin: 0;
-    padding: 0;
     width: 100%;
 }
 
