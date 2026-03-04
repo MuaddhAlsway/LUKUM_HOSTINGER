@@ -23,6 +23,8 @@ require_once 'api/image-helper.php';
 <link rel="stylesheet" href="global-styles.css">
 <link rel="stylesheet" href="lakum-components.css">
 <link rel="stylesheet" href="assest/mobile-menu.css">
+<link rel="stylesheet" href="assest/fab-button.css">
+<link rel="stylesheet" href="assest/app-header.css">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" media="print" onload="this.media='all'">
 <noscript><link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet"></noscript>
 <link rel="stylesheet" href="Home.min.css" media="print" onload="this.media='all'">
@@ -594,13 +596,43 @@ html[lang="ar"] .lakum-event-card__date {
 <script src="assest/static-json-translator.js?v=1.0.0" defer></script></head>
 <body class="<?php echo getLanguageClass(); ?>">
 <div class="lakum-page-loader" id="pageLoader"><div class="lakum-page-loader__content"><div class="lakum-page-loader__spinner"></div></div></div>
-<header class="lakum-header" role="banner">
-<div class="lakum-header__container"><div class="lakum-header__logo"><a href="index.php" class="lakum-logo"><img src="assest/logo/right_section.png" alt="LAKUM" class="lakum-logo__left" width="105" height="80" decoding="async"><img src="assest/logo/left_section.png" alt="Artspace" class="lakum-logo__right" width="105" height="80" decoding="async"></a></div><nav class="lakum-nav"><ul class="lakum-nav__list"><li class="lakum-nav__item"><a href="index.php" class="lakum-nav__link"><?php echo t('home', 'Home'); ?></a></li><li class="lakum-nav__item"><a href="about.php" class="lakum-nav__link lakum-nav__link--active"><?php echo t('about', 'About'); ?></a></li><li class="lakum-nav__item"><a href="spaces.php" class="lakum-nav__link"><?php echo t('spaces', 'Spaces'); ?></a></li><li class="lakum-nav__item"><a href="exhibitions.php" class="lakum-nav__link"><?php echo t('exhibitions', 'Exhibitions'); ?></a></li><li class="lakum-nav__item"><a href="calendar.php" class="lakum-nav__link"><?php echo t('calendar', 'Calendar'); ?></a></li><li class="lakum-nav__item"><a href="blog.php" class="lakum-nav__link"><?php echo t('blog', 'Blog'); ?></a></li><li class="lakum-nav__item"><a href="press.php" class="lakum-nav__link"><?php echo t('press', 'Press'); ?></a></li><li class="lakum-nav__item"><a href="contact.php" class="lakum-nav__link"><?php echo t('contact_us', 'Contact'); ?></a></li><li class="lakum-nav__item"><a href="shop.php" class="lakum-nav__link"><?php echo t('shop', 'Shop'); ?></a></li></ul></nav><div class="lakum-language-switcher">
-<a href="<?php echo buildLanguageSwitcherUrl(); ?>" class="lakum-lang-link" title="<?php echo isArabic() ? 'Language: English' : 'Language: العربية'; ?>">
-<i class="ri-global-line"></i>
-<span class="lakum-lang-text"><?php echo isArabic() ? 'En' : 'Ar'; ?></span>
-</a>
-</div><button class="lakum-header__mobile-toggle" aria-label="Toggle menu"><span class="lakum-header__mobile-icon" aria-hidden="true"></span></button></div></header>
+<header class="app-header" role="banner">
+    <div class="app-header__container">
+        <div class="app-header__logo">
+            <a href="index.php" class="app-logo">
+                <img src="assest/logo/right_section.png" alt="LAKUM" class="app-logo__left" width="105" height="80" decoding="async">
+                <img src="assest/logo/left_section.png" alt="Artspace" class="app-logo__right" width="105" height="80" decoding="async">
+            </a>
+        </div>
+
+        <nav class="app-nav" id="appNav" role="navigation">
+            <ul class="app-nav__list">
+                <li class="app-nav__item"><a href="index.php" class="app-nav__link">Home</a></li>
+                <li class="app-nav__item"><a href="about.php" class="app-nav__link">About</a></li>
+                <li class="app-nav__item"><a href="spaces.php" class="app-nav__link">Spaces</a></li>
+                <li class="app-nav__item"><a href="exhibitions.php" class="app-nav__link">Exhibitions</a></li>
+                <li class="app-nav__item"><a href="calendar.php" class="app-nav__link">Calendar</a></li>
+                <li class="app-nav__item"><a href="blog.php" class="app-nav__link">Blog</a></li>
+                <li class="app-nav__item"><a href="press.php" class="app-nav__link">Press</a></li>
+                <li class="app-nav__item"><a href="contact.php" class="app-nav__link">Contact</a></li>
+                <li class="app-nav__item"><a href="shop.php" class="app-nav__link">Shop</a></li>
+            </ul>
+        </nav>
+
+        <div class="app-header__controls">
+            <div class="app-language-switcher">
+                <a href="<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '/exhibitions.php?lang=en' : '/exhibitions.php?lang=ar'; ?>" class="app-lang-link" title="<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? 'Language: English' : 'Language: العربية'; ?>">
+                    <i class="ri-global-line"></i>
+                    <span class="app-lang-text"><?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? 'En' : 'Ar'; ?></span>
+                </a>
+            </div>
+
+            <button class="app-header__menu-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="appNav">
+                <span class="app-header__menu-icon"></span>
+            </button>
+        </div>
+    </div>
+</header>
 <section class="page-hero">
     <div class="page-hero__image-wrapper">
         <img src="heroImage/img-4.webp"
@@ -622,9 +654,25 @@ html[lang="ar"] .lakum-event-card__date {
 <section class="lakum-section"><div class="lakum-container"><div class="lakum-section-header"><h2 class="lakum-section-header__title"><?php echo t('upcoming_exhibitions', 'Upcoming Exhibitions'); ?></h2></div><div class="lakum-upcoming-grid" id="upcomingEvents"><div class="lakum-skeleton-card"></div><div class="lakum-skeleton-card"></div><div class="lakum-skeleton-card"></div></div><div class="lakum-section-cta"><a href="exhibitions.php" class="lakum-btn lakum-btn--outline"><?php echo t('view_more', 'View More'); ?></a></div></div></section>
 </div>
 <footer class="lakum-footer"><div class="lakum-footer__container"><div class="lakum-footer__content"><div class="lakum-footer__brand"><div class="lakum-footer__logo"><img src="assest/logo/right_section.png" alt="LAKUM" class="lakum-footer__logo-left" width="105" height="80" decoding="async"><img src="assest/logo/left_section.png" alt="Artspace" class="lakum-footer__logo-right" width="105" height="80" decoding="async"></div><p class="lakum-footer__tagline"><?php echo t('footer_tagline', 'Where Encounters Shape Culture'); ?></p></div><nav class="lakum-footer__nav"><h4 class="lakum-footer__nav-title"><?php echo t('footer_navigate', 'Navigate'); ?></h4><ul class="lakum-footer__nav-list"><li><a href="index.php" class="lakum-footer__link"><?php echo t('home', 'Home'); ?></a></li><li><a href="about.php" class="lakum-footer__link"><?php echo t('about', 'About'); ?></a></li><li><a href="spaces.php" class="lakum-footer__link"><?php echo t('spaces', 'Spaces'); ?></a></li><li><a href="exhibitions.php" class="lakum-footer__link"><?php echo t('exhibitions', 'Exhibitions'); ?></a></li></ul></nav><nav class="lakum-footer__nav"><h4 class="lakum-footer__nav-title"><?php echo t('footer_explore', 'Explore'); ?></h4><ul class="lakum-footer__nav-list"><li><a href="calendar.php" class="lakum-footer__link"><?php echo t('calendar', 'Calendar'); ?></a></li><li><a href="blog.php" class="lakum-footer__link"><?php echo t('blog', 'Blog'); ?></a></li><li><a href="press.php" class="lakum-footer__link"><?php echo t('press', 'Press'); ?></a></li><li><a href="contact.php" class="lakum-footer__link"><?php echo t('contact_us', 'Contact'); ?></a></li></ul></nav><div class="lakum-footer__social"><h4 class="lakum-footer__nav-title"><?php echo t('footer_connect', 'Connect'); ?></h4><div class="lakum-footer__social-links"><a href="https://www.instagram.com/lakumartspace/" target="_blank" class="lakum-footer__social-link" aria-label="Instagram"><i class="ri-instagram-fill"></i></a><a href="https://x.com/Lakumartspace" target="_blank" class="lakum-footer__social-link" aria-label="Twitter"><i class="ri-twitter-x-fill"></i></a></div></div></div><div class="lakum-footer__bottom"><p class="lakum-footer__copyright"><?php echo t('footer_copyright', '� 2025 - 2027 LAKUM Artspace. All rights reserved.'); ?></p><div class="lakum-footer__legal"><a href="terms.php" class="lakum-footer__legal-link"><?php echo t('footer_terms', 'Terms & Conditions'); ?></a><span class="lakum-footer__legal-divider">|</span><a href="privacy.php" class="lakum-footer__legal-link"><?php echo t('footer_privacy', 'Privacy Policy'); ?></a></div></div></div></footer>
-<div class="lakum-contact-fab" id="lakumContactFab"><button class="lakum-contact-fab__trigger" id="fabTrigger" aria-label="Contact options"><i class="ri-mail-line lakum-contact-fab__icon"></i><i class="ri-close-line lakum-contact-fab__close"></i></button><div class="lakum-contact-fab__menu" id="fabMenu"><a href="tel:+966920012083" class="lakum-contact-fab__item" data-tooltip="Call us"><i class="ri-phone-line"></i></a><a href="https://wa.me/966920012083" target="_blank" class="lakum-contact-fab__item" data-tooltip="WhatsApp"><i class="ri-whatsapp-line"></i></a><a href="mailto:info@lakumartspace.com" class="lakum-contact-fab__item" data-tooltip="Email"><i class="ri-mail-line"></i></a></div></div>
+<div class="fab-button" id="fabButton">
+    <button class="fab-button__trigger" id="fabTrigger" aria-label="Contact options" aria-expanded="false">
+        <i class="ri-mail-line fab-button__icon"></i>
+        <i class="ri-close-line fab-button__close"></i>
+    </button>
+    <div class="fab-button__menu" id="fabMenu" role="menu">
+        <a href="tel:+966920012083" class="fab-button__item" role="menuitem" data-tooltip="Call us">
+            <i class="ri-phone-line"></i>
+        </a>
+        <a href="https://wa.me/966920012083" target="_blank" class="fab-button__item" role="menuitem" data-tooltip="WhatsApp">
+            <i class="ri-whatsapp-line"></i>
+        </a>
+        <a href="mailto:info@lakumartspace.com" class="fab-button__item" role="menuitem" data-tooltip="Email">
+            <i class="ri-mail-line"></i>
+        </a>
+    </div>
+</div>
 
-<script src="assest/fun-interactions.js" defer></script>
+<script src="assest/fab-button.js" defer></script>
 <script src="assest/navbar-mobile-toggle.js" defer></script>
 <script src="js/LanguageManager.js?v=1.0.0" defer></script>
 <script>
@@ -914,6 +962,7 @@ html[lang="ar"] .lakum-event-card__date {
     <div class="lakum-contact-fab" id="lakumContactFab"><button class="lakum-contact-fab__trigger" id="fabTrigger" aria-label="Contact options"><i class="ri-mail-line lakum-contact-fab__icon"></i><i class="ri-close-line lakum-contact-fab__close"></i></button><div class="lakum-contact-fab__menu" id="fabMenu"><a href="tel:+966920012083" class="lakum-contact-fab__item" data-tooltip="Call us"><i class="ri-phone-line"></i></a><a href="https://wa.me/966920012083" target="_blank" class="lakum-contact-fab__item" data-tooltip="WhatsApp"><i class="ri-whatsapp-line"></i></a><a href="mailto:info@lakumartspace.com" class="lakum-contact-fab__item" data-tooltip="Email"><i class="ri-mail-line"></i></a></div></div>
 
     <script src="assest/fun-interactions.js?v=5.0.0" defer></script>
+    <script src="assest/app-header.js" defer></script>
 </body>
 </html>
 

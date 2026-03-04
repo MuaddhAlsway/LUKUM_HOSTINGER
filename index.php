@@ -19,6 +19,7 @@ require_once 'lang/loader.php';
     <link rel="stylesheet" href="global-styles.css">
     <link rel="stylesheet" href="lakum-components.css">
     <link rel="stylesheet" href="assest/mobile-menu.css">
+    <link rel="stylesheet" href="assest/app-header.css">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" media="print" onload="this.media='all'">
     <noscript><link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet"></noscript>
     
@@ -227,36 +228,41 @@ margin: 0 auto;}
         </div>
     </div>
 
-    <header class="lakum-header" role="banner">
-        <div class="lakum-header__container">
-            <div class="lakum-header__logo">
-                <a href="./" class="lakum-logo">
-                    <img src="assest/logo/right_section.png" alt="LAKUM" class="lakum-logo__left" loading="eager" decoding="async" onerror="this.style.display='none'">
-                    <img src="assest/logo/left_section.png" alt="Artspace" class="lakum-logo__right" loading="eager" decoding="async" onerror="this.style.display='none'">
+    <header class="app-header" role="banner">
+        <div class="app-header__container">
+            <div class="app-header__logo">
+                <a href="index.php" class="app-logo">
+                    <img src="assest/logo/right_section.png" alt="LAKUM" class="app-logo__left" width="105" height="80" decoding="async">
+                    <img src="assest/logo/left_section.png" alt="Artspace" class="app-logo__right" width="105" height="80" decoding="async">
                 </a>
             </div>
-            <nav class="lakum-nav">
-                <ul class="lakum-nav__list">
-                    <li class="lakum-nav__item"><a href="index.php" class="lakum-nav__link lakum-nav__link--active"><?php echo t('home', 'Home'); ?></a></li>
-                    <li class="lakum-nav__item"><a href="about.php" class="lakum-nav__link"><?php echo t('about', 'About'); ?></a></li>
-                    <li class="lakum-nav__item"><a href="spaces.php" class="lakum-nav__link"><?php echo t('spaces', 'Spaces'); ?></a></li>
-                    <li class="lakum-nav__item"><a href="exhibitions.php" class="lakum-nav__link"><?php echo t('exhibitions', 'Exhibitions'); ?></a></li>
-                    <li class="lakum-nav__item"><a href="calendar.php" class="lakum-nav__link"><?php echo t('calendar', 'Calendar'); ?></a></li>
-                    <li class="lakum-nav__item"><a href="blog.php" class="lakum-nav__link"><?php echo t('blog', 'Blog'); ?></a></li>
-                    <li class="lakum-nav__item"><a href="press.php" class="lakum-nav__link"><?php echo t('press', 'Press'); ?></a></li>
-                    <li class="lakum-nav__item"><a href="contact.php" class="lakum-nav__link"><?php echo t('contact_us', 'Contact'); ?></a></li>
-                    <li class="lakum-nav__item"><a href="shop.php" class="lakum-nav__link"><?php echo t('shop', 'Shop'); ?></a></li>
+
+            <nav class="app-nav" id="appNav" role="navigation">
+                <ul class="app-nav__list">
+                    <li class="app-nav__item"><a href="index.php" class="app-nav__link">Home</a></li>
+                    <li class="app-nav__item"><a href="about.php" class="app-nav__link">About</a></li>
+                    <li class="app-nav__item"><a href="spaces.php" class="app-nav__link">Spaces</a></li>
+                    <li class="app-nav__item"><a href="exhibitions.php" class="app-nav__link">Exhibitions</a></li>
+                    <li class="app-nav__item"><a href="calendar.php" class="app-nav__link">Calendar</a></li>
+                    <li class="app-nav__item"><a href="blog.php" class="app-nav__link">Blog</a></li>
+                    <li class="app-nav__item"><a href="press.php" class="app-nav__link">Press</a></li>
+                    <li class="app-nav__item"><a href="contact.php" class="app-nav__link">Contact</a></li>
+                    <li class="app-nav__item"><a href="shop.php" class="app-nav__link">Shop</a></li>
                 </ul>
             </nav>
-            <div class="lakum-language-switcher">
-                <a href="<?php echo buildLanguageSwitcherUrl(); ?>" class="lakum-lang-link" title="<?php echo isArabic() ? 'Language: English' : 'Language: ???????'; ?>">
-                    <i class="ri-global-line"></i>
-                    <span class="lakum-lang-text"><?php echo isArabic() ? 'EN' : 'AR'; ?></span>
-                </a>
+
+            <div class="app-header__controls">
+                <div class="app-language-switcher">
+                    <a href="<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '/exhibitions.php?lang=en' : '/exhibitions.php?lang=ar'; ?>" class="app-lang-link" title="<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? 'Language: English' : 'Language: العربية'; ?>">
+                        <i class="ri-global-line"></i>
+                        <span class="app-lang-text"><?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? 'En' : 'Ar'; ?></span>
+                    </a>
+                </div>
+
+                <button class="app-header__menu-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="appNav">
+                    <span class="app-header__menu-icon"></span>
+                </button>
             </div>
-            <button class="lakum-header__mobile-toggle" aria-label="Toggle menu">
-                <span class="lakum-header__mobile-icon" aria-hidden="true"></span>
-            </button>
         </div>
     </header>
 
@@ -410,9 +416,7 @@ margin: 0 auto;}
         </div>
     </footer>
 
-    <div class="lakum-contact-fab" id="lakumContactFab"><button class="lakum-contact-fab__trigger" id="fabTrigger" aria-label="Contact options"><i class="ri-mail-line lakum-contact-fab__icon"></i><i class="ri-close-line lakum-contact-fab__close"></i></button><div class="lakum-contact-fab__menu" id="fabMenu"><a href="tel:+966920012083" class="lakum-contact-fab__item" data-tooltip="Call us"><i class="ri-phone-line"></i></a><a href="https://wa.me/966920012083" target="_blank" class="lakum-contact-fab__item" data-tooltip="WhatsApp"><i class="ri-whatsapp-line"></i></a><a href="mailto:info@lakumartspace.com" class="lakum-contact-fab__item" data-tooltip="Email"><i class="ri-mail-line"></i></a></div></div>
-
-    <script src="assest/fun-interactions.js?v=5.0.0" defer></script>
+    <div class="fab-button" id="fabButton"><button class="fab-button__trigger" id="fabTrigger" aria-label="Contact options" aria-expanded="false"><i class="ri-mail-line fab-button__icon"></i><i class="ri-close-line fab-button__close"></i></button><div class="fab-button__menu" id="fabMenu" role="menu"><a href="tel:+966920012083" class="fab-button__item" role="menuitem" data-tooltip="Call us"><i class="ri-phone-line"></i></a><a href="https://wa.me/966920012083" target="_blank" class="fab-button__item" role="menuitem" data-tooltip="WhatsApp"><i class="ri-whatsapp-line"></i></a><a href="mailto:info@lakumartspace.com" class="fab-button__item" role="menuitem" data-tooltip="Email"><i class="ri-mail-line"></i></a></div></div><script src="assest/fab-button.js" defer></script>
     <script>
         // Set current language from PHP
         window.LAKUM_LANG = '<?php echo getCurrentLanguage(); ?>';
@@ -624,3 +628,5 @@ margin: 0 auto;}
     <script src="assest/popup-notification.js?v=5.0.0" defer></script>
 </body>
 </html>
+
+
