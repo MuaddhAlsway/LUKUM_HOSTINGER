@@ -55,6 +55,9 @@
     const lakumContactFab = document.getElementById('lakumContactFab');
 
     if (fabTrigger && fabMenu && lakumContactFab) {
+        // Ensure FAB starts closed
+        lakumContactFab.classList.remove('lakum-contact-fab--active');
+        
         // Toggle FAB menu on click
         fabTrigger.addEventListener('click', function(e) {
             e.preventDefault();
