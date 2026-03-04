@@ -240,15 +240,15 @@ margin: 0 auto;}
 
             <nav class="app-nav" id="appNav" role="navigation">
                 <ul class="app-nav__list">
-                    <li class="app-nav__item"><a href="index.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link">Home</a></li>
-                    <li class="app-nav__item"><a href="about.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link">About</a></li>
-                    <li class="app-nav__item"><a href="spaces.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link">Spaces</a></li>
-                    <li class="app-nav__item"><a href="exhibitions.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link">Exhibitions</a></li>
-                    <li class="app-nav__item"><a href="calendar.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link">Calendar</a></li>
-                    <li class="app-nav__item"><a href="blog.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link">Blog</a></li>
-                    <li class="app-nav__item"><a href="press.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link">Press</a></li>
-                    <li class="app-nav__item"><a href="contact.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link">Contact</a></li>
-                    <li class="app-nav__item"><a href="shop.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link">Shop</a></li>
+                    <li class="app-nav__item"><a href="index.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link"><?php echo t('home', 'Home'); ?></a></li>
+                    <li class="app-nav__item"><a href="about.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link"><?php echo t('about', 'About'); ?></a></li>
+                    <li class="app-nav__item"><a href="spaces.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link"><?php echo t('spaces', 'Spaces'); ?></a></li>
+                    <li class="app-nav__item"><a href="exhibitions.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link"><?php echo t('exhibitions', 'Exhibitions'); ?></a></li>
+                    <li class="app-nav__item"><a href="calendar.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link"><?php echo t('calendar', 'Calendar'); ?></a></li>
+                    <li class="app-nav__item"><a href="blog.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link"><?php echo t('blog', 'Blog'); ?></a></li>
+                    <li class="app-nav__item"><a href="press.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link"><?php echo t('press', 'Press'); ?></a></li>
+                    <li class="app-nav__item"><a href="contact.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link"><?php echo t('contact_us', 'Contact'); ?></a></li>
+                    <li class="app-nav__item"><a href="shop.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link"><?php echo t('shop', 'Shop'); ?></a></li>
                 </ul>
             </nav>
 

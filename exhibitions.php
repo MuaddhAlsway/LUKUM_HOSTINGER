@@ -66,15 +66,15 @@ require_once 'api/image-helper.php';
 
             <nav class="app-nav" id="appNav" role="navigation">
                 <ul class="app-nav__list">
-                    <li class="app-nav__item"><a href="index.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link">Home</a></li>
-                    <li class="app-nav__item"><a href="about.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link">About</a></li>
-                    <li class="app-nav__item"><a href="spaces.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link">Spaces</a></li>
-                    <li class="app-nav__item"><a href="exhibitions.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link">Exhibitions</a></li>
-                    <li class="app-nav__item"><a href="calendar.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link">Calendar</a></li>
-                    <li class="app-nav__item"><a href="blog.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link">Blog</a></li>
-                    <li class="app-nav__item"><a href="press.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link">Press</a></li>
-                    <li class="app-nav__item"><a href="contact.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link">Contact</a></li>
-                    <li class="app-nav__item"><a href="shop.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link">Shop</a></li>
+                    <li class="app-nav__item"><a href="index.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link"><?php echo t('home', 'Home'); ?></a></li>
+                    <li class="app-nav__item"><a href="about.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link"><?php echo t('about', 'About'); ?></a></li>
+                    <li class="app-nav__item"><a href="spaces.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link"><?php echo t('spaces', 'Spaces'); ?></a></li>
+                    <li class="app-nav__item"><a href="exhibitions.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link"><?php echo t('exhibitions', 'Exhibitions'); ?></a></li>
+                    <li class="app-nav__item"><a href="calendar.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link"><?php echo t('calendar', 'Calendar'); ?></a></li>
+                    <li class="app-nav__item"><a href="blog.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link"><?php echo t('blog', 'Blog'); ?></a></li>
+                    <li class="app-nav__item"><a href="press.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link"><?php echo t('press', 'Press'); ?></a></li>
+                    <li class="app-nav__item"><a href="contact.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link"><?php echo t('contact_us', 'Contact'); ?></a></li>
+                    <li class="app-nav__item"><a href="shop.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link"><?php echo t('shop', 'Shop'); ?></a></li>
                 </ul>
             </nav>
 
@@ -377,143 +377,10 @@ require_once 'api/image-helper.php';
 
     <script src="assest/fab-button.js" defer></script>
     <script src="assest/popup-notification.js?v=5.0.0" defer></script>
-
-<script>
-    // Translation strings for JavaScript
-    const translations = {
-        nav_home: "<?php echo t('home', 'Home'); ?>",
-        nav_about: "<?php echo t('about', 'About'); ?>",
-        nav_spaces: "<?php echo t('spaces', 'Spaces'); ?>",
-        nav_exhibitions: "<?php echo t('exhibitions', 'Exhibitions'); ?>",
-        nav_calendar: "<?php echo t('calendar', 'Calendar'); ?>",
-        nav_blog: "<?php echo t('blog', 'Blog'); ?>",
-        nav_press: "<?php echo t('press', 'Press'); ?>",
-        nav_contact: "<?php echo t('contact_us', 'Contact'); ?>",
-        nav_shop: "<?php echo t('shop', 'Shop'); ?>",
-        footer_tagline: "<?php echo t('footer_tagline', 'Where Encounters Shape Culture'); ?>",
-        footer_navigate: "<?php echo t('footer_navigate', 'Navigate'); ?>",
-        footer_explore: "<?php echo t('footer_explore', 'Explore'); ?>",
-        footer_connect: "<?php echo t('footer_connect', 'Connect'); ?>",
-        footer_copyright: "<?php echo t('footer_copyright', '� 2026 LAKUM Artspace. All rights reserved.'); ?>",
-        footer_terms: "<?php echo t('footer_terms', 'Terms & Conditions'); ?>",
-        footer_privacy: "<?php echo t('footer_privacy', 'Privacy Policy'); ?>"
-    };
-
-    // Update navbar and footer text when language changes
-    function updateNavbarFooterLanguage() {
-        // Navbar links
-        const navLinks = {
-            'home': translations.nav_home || 'Home',
-            'about': translations.nav_about || 'About',
-            'spaces': translations.nav_spaces || 'Spaces',
-            'exhibitions': translations.nav_exhibitions || 'Exhibitions',
-            'calendar': translations.nav_calendar || 'Calendar',
-            'blog': translations.nav_blog || 'Blog',
-            'press': translations.nav_press || 'Press',
-            'contact_us': translations.nav_contact || 'Contact',
-            'shop': translations.nav_shop || 'Shop'
-        };
-
-        // Update navbar
-        const navItems = document.querySelectorAll('.lakum-nav__link');
-        navItems.forEach(link => {
-            const href = link.getAttribute('href');
-            if (href === 'index.php') link.textContent = navLinks.home;
-            else if (href === 'about.php') link.textContent = navLinks.about;
-            else if (href === 'spaces.php') link.textContent = navLinks.spaces;
-            else if (href === 'exhibitions.php') link.textContent = navLinks.exhibitions;
-            else if (href === 'calendar.php') link.textContent = navLinks.calendar;
-            else if (href === 'blog.php') link.textContent = navLinks.blog;
-            else if (href === 'press.php') link.textContent = navLinks.press;
-            else if (href === 'contact.php') link.textContent = navLinks.contact_us;
-            else if (href === 'shop.php') link.textContent = navLinks.shop;
-        });
-
-        // Update footer tagline
-        const footerTagline = document.querySelector('.lakum-footer__tagline');
-        if (footerTagline) {
-            footerTagline.textContent = translations.footer_tagline || 'Where Encounters Shape Culture';
-        }
-
-        // Update footer navigation titles
-        const footerNavTitles = document.querySelectorAll('.lakum-footer__nav-title');
-        if (footerNavTitles.length >= 3) {
-            footerNavTitles[0].textContent = translations.footer_navigate || 'Navigate';
-            footerNavTitles[1].textContent = translations.footer_explore || 'Explore';
-            footerNavTitles[2].textContent = translations.footer_connect || 'Connect';
-        }
-
-        // Update footer links
-        const footerLinks = document.querySelectorAll('.lakum-footer__link');
-        footerLinks.forEach(link => {
-            const href = link.getAttribute('href');
-            if (href === 'index.php') link.textContent = navLinks.home;
-            else if (href === 'about.php') link.textContent = navLinks.about;
-            else if (href === 'spaces.php') link.textContent = navLinks.spaces;
-            else if (href === 'exhibitions.php') link.textContent = navLinks.exhibitions;
-            else if (href === 'calendar.php') link.textContent = navLinks.calendar;
-            else if (href === 'blog.php') link.textContent = navLinks.blog;
-            else if (href === 'press.php') link.textContent = navLinks.press;
-            else if (href === 'contact.php') link.textContent = navLinks.contact_us;
-        });
-
-        // Update footer bottom
-        const footerCopyright = document.querySelector('.lakum-footer__copyright');
-        if (footerCopyright) {
-            footerCopyright.textContent = translations.footer_copyright || '� 2026 LAKUM Artspace. All rights reserved.';
-        }
-
-        const footerTermsLink = document.querySelector('.lakum-footer__legal-link:first-child');
-        if (footerTermsLink) {
-            footerTermsLink.textContent = translations.footer_terms || 'Terms & Conditions';
-        }
-
-        const footerPrivacyLink = document.querySelector('.lakum-footer__legal-link:last-child');
-        if (footerPrivacyLink) {
-            footerPrivacyLink.textContent = translations.footer_privacy || 'Privacy Policy';
-        }
-    }
-
-    // Listen for language changes
-    document.addEventListener('lakum-language-changed', (e) => {
-        const lang = e.detail?.lang || document.documentElement.lang;
-        // Reload translations for the new language
-        fetch(`api/get-translations.php?lang=${lang}`)
-            .then(r => r.json())
-            .then(data => {
-                if (data.success && data.translations) {
-                    // Update translations object
-                    Object.assign(translations, data.translations);
-                    // Update navbar and footer
-                    updateNavbarFooterLanguage();
-                }
-            })
-            .catch(err => console.log('Language update skipped'));
-    });
-
-    // Also listen for storage changes (multi-tab sync)
-    window.addEventListener('storage', (e) => {
-        if (e.key === 'lakum_language' && e.newValue) {
-            const lang = e.newValue;
-            fetch(`api/get-translations.php?lang=${lang}`)
-                .then(r => r.json())
-                .then(data => {
-                    if (data.success && data.translations) {
-                        Object.assign(translations, data.translations);
-                        updateNavbarFooterLanguage();
-                    }
-                })
-                .catch(err => console.log('Language update skipped'));
-        }
-    });
-
-    // Call on page load
-    updateNavbarFooterLanguage();
-</script>
-
-    <div class="fab-button" id="fabButton"><button class="fab-button__trigger" id="fabTrigger" aria-label="Contact options" aria-expanded="false"><i class="ri-mail-line fab-button__icon"></i><i class="ri-close-line fab-button__close"></i></button><div class="fab-button__menu" id="fabMenu" role="menu"><a href="tel:+966920012083" class="fab-button__item" role="menuitem" data-tooltip="Call us"><i class="ri-phone-line"></i></a><a href="https://wa.me/966920012083" target="_blank" class="fab-button__item" role="menuitem" data-tooltip="WhatsApp"><i class="ri-whatsapp-line"></i></a><a href="mailto:info@lakumartspace.com" class="fab-button__item" role="menuitem" data-tooltip="Email"><i class="ri-mail-line"></i></a></div></div><script src="assest/fab-button.js" defer></script>
     <script src="assest/navbar-mobile-toggle.js?v=5.0.0" defer></script>
     <script src="assest/app-header.js" defer></script>
+
+    <div class="fab-button" id="fabButton"><button class="fab-button__trigger" id="fabTrigger" aria-label="Contact options" aria-expanded="false"><i class="ri-mail-line fab-button__icon"></i><i class="ri-close-line fab-button__close"></i></button><div class="fab-button__menu" id="fabMenu" role="menu"><a href="tel:+966920012083" class="fab-button__item" role="menuitem" data-tooltip="Call us"><i class="ri-phone-line"></i></a><a href="https://wa.me/966920012083" target="_blank" class="fab-button__item" role="menuitem" data-tooltip="WhatsApp"><i class="ri-whatsapp-line"></i></a><a href="mailto:info@lakumartspace.com" class="fab-button__item" role="menuitem" data-tooltip="Email"><i class="ri-mail-line"></i></a></div></div>
 </body>
 </html>
 
