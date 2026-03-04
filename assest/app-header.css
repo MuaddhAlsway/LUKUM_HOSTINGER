@@ -58,8 +58,24 @@
 /* Desktop Navigation */
 .app-nav {
     flex: 1;
-    display: flex;
+    display: flex !important;
     justify-content: center;
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
+    background: transparent !important;
+    padding: 0 !important;
+    transform: none !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+    z-index: auto !important;
+    flex-direction: row !important;
+    top: auto !important;
+    left: auto !important;
+}
+
+.app-nav::before {
+    display: none !important;
 }
 
 .app-nav__list {
