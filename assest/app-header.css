@@ -239,8 +239,40 @@
     }
 }
 
+/* Tablet - 820px breakpoint */
+@media (max-width: 1024px) and (min-width: 769px) {
+    .app-header {
+        background: rgba(246, 246, 235, 0.98);
+    }
+}
+
+/* 820px Responsive Breakpoint */
+@media (max-width: 820px) {
+    .app-header__container {
+        height: 70px;
+        padding: 0 20px;
+    }
+
+    .app-logo__left,
+    .app-logo__right {
+        height: 42px;
+    }
+
+    .app-nav__list {
+        gap: 28px;
+    }
+
+    .app-nav__link {
+        font-size: 13px;
+    }
+}
+
 /* Mobile - Show hamburger menu */
 @media (max-width: 768px) {
+    .app-header {
+        background: rgba(246, 246, 235, 0.98);
+    }
+
     .app-header__container {
         height: 70px;
         padding: 0 20px;

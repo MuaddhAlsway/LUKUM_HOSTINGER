@@ -241,7 +241,12 @@ body{font-family:'Greta Arabic','Greta Text Arabic',-apple-system,BlinkMacSystem
 
         <div class="app-header__controls">
             <div class="app-language-switcher">
-                <a href="<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '/exhibitions.php?lang=en' : '/exhibitions.php?lang=ar'; ?>" class="app-lang-link" title="<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? 'Language: English' : 'Language: العربية'; ?>">
+                <a href="<?php 
+                    $currentPage = basename($_SERVER['REQUEST_URI'], '.php');
+                    if ($currentPage === '') $currentPage = 'index';
+                    $lang = isset($_GET['lang']) && $_GET['lang'] === 'ar' ? 'en' : 'ar';
+                    echo $currentPage . '.php?lang=' . $lang;
+                ?>" class="app-lang-link" title="<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? 'Language: English' : 'Language: العربية'; ?>">
                     <i class="ri-global-line"></i>
                     <span class="app-lang-text"><?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? 'En' : 'Ar'; ?></span>
                 </a>

@@ -1780,6 +1780,10 @@ html[dir="rtl"] {
 
 /* App Navigation - Mobile */
 @media (max-width: 768px) {
+    [dir="rtl"] .app-header {
+        background: rgba(246, 246, 235, 0.98);
+    }
+
     [dir="rtl"] .app-header__container {
         height: 70px;
         padding: 0 20px;
@@ -1897,6 +1901,27 @@ html[dir="rtl"] {
 
     [dir="rtl"] .app-lang-text {
         font-size: 11px;
+    }
+}
+
+/* 820px Responsive Breakpoint */
+@media (max-width: 820px) {
+    [dir="rtl"] .app-header__container {
+        height: 70px;
+        padding: 0 20px;
+    }
+
+    [dir="rtl"] .app-logo__left,
+    [dir="rtl"] .app-logo__right {
+        height: 42px;
+    }
+
+    [dir="rtl"] .app-nav__list {
+        gap: 28px;
+    }
+
+    [dir="rtl"] .app-nav__link {
+        font-size: 13px;
     }
 }
 
