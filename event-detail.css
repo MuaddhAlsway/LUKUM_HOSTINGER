@@ -283,6 +283,11 @@
     font-weight: bold;
 }
 
+.lightbox__close i {
+    font-size: 1.8rem;
+    color: #fff;
+}
+
 .lightbox.active .lightbox__close {
     animation: closeIconPulse 2s ease-in-out infinite;
 }

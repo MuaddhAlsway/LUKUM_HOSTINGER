@@ -437,7 +437,7 @@ require_once 'api/image-helper.php';
 
     <!-- Lightbox -->
     <div class="lightbox" id="lightbox" onclick="closeLightbox()">
-       <button class="lightbox__close" onclick="closeLightbox()" title="Close">�</button>
+       <button class="lightbox__close" onclick="closeLightbox()" title="Close"><i class="ri-close-line"></i></button>
         <button class="lightbox__prev" onclick="event.stopPropagation(); prevImage()">
             <i class="ri-arrow-left-s-line"></i>
         </button>
@@ -445,7 +445,7 @@ require_once 'api/image-helper.php';
             <i class="ri-arrow-right-s-line"></i>
         </button>
         <div class="lightbox__content" onclick="event.stopPropagation()">
-            <img id="lightboxImage" src="" alt="Gallery Image" class="lightbox__image">
+            <img id="lightboxImage" src="" alt="Gallery Image" class="lightbox__image" loading="lazy">
             <div class="lightbox__counter">
                 <span id="lightboxCounter"></span>
             </div>
@@ -1149,6 +1149,7 @@ require_once 'api/image-helper.php';
     </body>
 
 </html>
+
 
 
 

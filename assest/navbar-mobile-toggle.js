@@ -38,6 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
         mobileToggle.classList.toggle('lakum-header__mobile-toggle--active');
         nav.classList.toggle('app-nav--active');
         nav.classList.toggle('lakum-nav--active');
+        nav.classList.toggle('is-open');
         if (header) {
             header.classList.toggle('app-header--menu-open');
             header.classList.toggle('lakum-header--menu-open');
@@ -52,6 +53,7 @@ document.addEventListener('DOMContentLoaded', function() {
             mobileToggle.classList.remove('lakum-header__mobile-toggle--active');
             nav.classList.remove('app-nav--active');
             nav.classList.remove('lakum-nav--active');
+            nav.classList.remove('is-open');
             if (header) {
                 header.classList.remove('app-header--menu-open');
                 header.classList.remove('lakum-header--menu-open');
@@ -71,6 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
             mobileToggle.classList.remove('lakum-header__mobile-toggle--active');
             nav.classList.remove('app-nav--active');
             nav.classList.remove('lakum-nav--active');
+            nav.classList.remove('is-open');
             if (header) {
                 header.classList.remove('app-header--menu-open');
                 header.classList.remove('lakum-header--menu-open');
@@ -86,6 +89,7 @@ document.addEventListener('DOMContentLoaded', function() {
             mobileToggle.classList.remove('lakum-header__mobile-toggle--active');
             nav.classList.remove('app-nav--active');
             nav.classList.remove('lakum-nav--active');
+            nav.classList.remove('is-open');
             if (header) {
                 header.classList.remove('app-header--menu-open');
                 header.classList.remove('lakum-header--menu-open');
@@ -102,6 +106,7 @@ document.addEventListener('DOMContentLoaded', function() {
             mobileToggle.classList.remove('lakum-header__mobile-toggle--active');
             nav.classList.remove('app-nav--active');
             nav.classList.remove('lakum-nav--active');
+            nav.classList.remove('is-open');
             if (header) {
                 header.classList.remove('app-header--menu-open');
                 header.classList.remove('lakum-header--menu-open');

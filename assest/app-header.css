@@ -343,15 +343,15 @@
     .app-nav[aria-expanded="true"],
     .app-nav.app-nav--active,
     .app-nav.is-open {
-        transform: translateX(0);
-        z-index: 999;
+        transform: translateX(0) !important;
+        z-index: 999 !important;
     }
 
     .app-nav[aria-expanded="true"]::before,
     .app-nav.app-nav--active::before,
     .app-nav.is-open::before {
-        opacity: 1;
-        visibility: visible;
+        opacity: 1 !important;
+        visibility: visible !important;
     }
 
     .app-nav__list {
@@ -460,17 +460,17 @@
 [dir="rtl"] .app-nav[aria-expanded="true"],
 [dir="rtl"] .app-nav.app-nav--active,
 [dir="rtl"] .app-nav.is-open {
-    transform: translateX(0);
+    transform: translateX(0) !important;
 }
 
 @media (max-width: 768px) {
     [dir="rtl"] .app-nav {
-        transform: translateX(100%);
+        transform: translateX(100%) !important;
     }
 
     [dir="rtl"] .app-nav[aria-expanded="true"],
     [dir="rtl"] .app-nav.app-nav--active,
     [dir="rtl"] .app-nav.is-open {
-        transform: translateX(0);
+        transform: translateX(0) !important;
     }
 }

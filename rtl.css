@@ -1864,15 +1864,15 @@ html[dir="rtl"] {
     [dir="rtl"] .app-nav[aria-expanded="true"],
     [dir="rtl"] .app-nav.app-nav--active,
     [dir="rtl"] .app-nav.is-open {
-        transform: translateX(0);
-        z-index: 999;
+        transform: translateX(0) !important;
+        z-index: 999 !important;
     }
 
     [dir="rtl"] .app-nav[aria-expanded="true"]::before,
     [dir="rtl"] .app-nav.app-nav--active::before,
     [dir="rtl"] .app-nav.is-open::before {
-        opacity: 1;
-        visibility: visible;
+        opacity: 1 !important;
+        visibility: visible !important;
     }
 
     [dir="rtl"] .app-nav__list {
