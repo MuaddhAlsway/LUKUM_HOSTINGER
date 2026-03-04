@@ -364,8 +364,8 @@ margin: 0 auto;}
             <div class="lakum-footer__content">
                 <div class="lakum-footer__brand">
                     <div class="lakum-footer__logo">
-                        <img src="assest/logo/right_section.png" alt="LAKUM" class="lakum-footer__logo-left" loading="lazy" decoding="async" onerror="this.style.display='none'">
-                        <img src="assest/logo/left_section.png" alt="Artspace" class="lakum-footer__logo-right" loading="lazy" decoding="async" onerror="this.style.display='none'">
+                        <img src="assest/logo/right_section.png" alt="LAKUM" class="lakum-footer__logo-left" loading="eager" decoding="async" onerror="this.style.display='none'">
+                        <img src="assest/logo/left_section.png" alt="Artspace" class="lakum-footer__logo-right" loading="eager" decoding="async" onerror="this.style.display='none'">
                     </div>
                     <p class="lakum-footer__tagline"><?php echo t('footer_tagline', 'Where Encounters Shape Culture'); ?></p>
                 </div>
