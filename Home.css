@@ -59,8 +59,7 @@
 .lakum-nav__link:focus,
 .lakum-footer__link:focus,
 .lakum-btn:focus {
-    outline: 2px solid #f8a63a;
-    outline-offset: 2px;
+    outline: none;
 }
 
 body {

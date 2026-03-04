@@ -114,8 +114,7 @@
 .lakum-footer__link:focus,
 .lakum-btn:focus,
 .lakum-lang-link:focus {
-  outline: 2px solid #f8a63a;
-  outline-offset: 2px;
+  outline: none;
 }
 
 /* 4. SKIP LINK (for screen readers) */
