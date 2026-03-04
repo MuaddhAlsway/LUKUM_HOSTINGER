@@ -399,13 +399,20 @@ require_once 'api/image-helper.php';
                         return;
                     }
 
-                    // Update URL to use ID (more reliable)
-                    if (!new URLSearchParams(window.location.search).get('id')) {
+                    // Update URL to use title slug (always use English title for URL consistency)
+                    const englishTitle = blog.title_en || blog.title;
+                    const titleSlug = englishTitle.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+                    
+                    if (!new URLSearchParams(window.location.search).get('title') || new URLSearchParams(window.location.search).get('id')) {
                         const newUrl = new URL(window.location);
-                        newUrl.searchParams.set('id', blog.id);
-                        newUrl.searchParams.delete('title');
+                        newUrl.searchParams.set('title', titleSlug);
+                        newUrl.searchParams.delete('id');
+                        // Preserve language parameter if present
+                        if (!newUrl.searchParams.get('lang')) {
+                            newUrl.searchParams.set('lang', lang);
+                        }
                         window.history.replaceState({}, '', newUrl);
-                        blogIdentifier = blog.id;
+                        blogIdentifier = titleSlug;
                     }
 
                     // Update page title
@@ -516,8 +523,10 @@ require_once 'api/image-helper.php';
                     relatedBlogs.forEach(blog => {
                         const card = document.createElement('div');
                         card.className = 'event-related__item';
+                        const blogSlug = (blog.title_en || blog.title || '').toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+                        const langParam = lang !== 'en' ? `&lang=${lang}` : '';
                         card.innerHTML = `
-                            <a href="blogPageDetails.php?id=${blog.id}" class="event-related__link">
+                            <a href="blogPageDetails.php?title=${blogSlug}${langParam}" class="event-related__link">
                                 <div class="event-related__image">
                                     <img src="${blog.cover_image}" alt="${blog.title}" loading="lazy">
                                 </div>
