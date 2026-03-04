@@ -59,16 +59,20 @@ class AppHeader {
     openMenu() {
         this.isOpen = true;
         this.menuToggle.setAttribute('aria-expanded', 'true');
+        this.menuToggle.classList.add('app-header__menu-toggle--active');
         this.appNav.setAttribute('aria-expanded', 'true');
         this.appNav.classList.add('is-open');
+        this.appNav.classList.add('app-nav--active');
         document.body.style.overflow = 'hidden';
     }
 
     closeMenu() {
         this.isOpen = false;
         this.menuToggle.setAttribute('aria-expanded', 'false');
+        this.menuToggle.classList.remove('app-header__menu-toggle--active');
         this.appNav.setAttribute('aria-expanded', 'false');
         this.appNav.classList.remove('is-open');
+        this.appNav.classList.remove('app-nav--active');
         document.body.style.overflow = '';
     }
 }
