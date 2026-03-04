@@ -67,6 +67,7 @@ body{font-family:'Greta Arabic','Greta Text Arabic',-apple-system,BlinkMacSystem
 <link rel="stylesheet" href="global-styles.css">
 <link rel="stylesheet" href="lakum-components.css">
 <link rel="stylesheet" href="assest/mobile-menu.css">
+<link rel="stylesheet" href="assest/fab-button.css">
 <link rel="stylesheet" href="assest/app-header.css">
 <link rel="stylesheet" href="Home.min.css">
 
@@ -85,6 +86,7 @@ body{font-family:'Greta Arabic','Greta Text Arabic',-apple-system,BlinkMacSystem
 <!-- Image Optimizer - Critical for performance -->
 <!-- Scripts - Defer non-critical JavaScript -->
 <script src="assest/navbar-mobile-toggle.js?v=5.0.0" defer></script>
+<script src="assest/fab-button.js" defer></script>
 <script src="assest/settings-links-loader.js?v=5.0.0" defer></script>
 <script src="assest/fun-interactions.js" defer></script>
 <script>
@@ -225,15 +227,15 @@ body{font-family:'Greta Arabic','Greta Text Arabic',-apple-system,BlinkMacSystem
 
         <nav class="app-nav" id="appNav" role="navigation">
             <ul class="app-nav__list">
-                <li class="app-nav__item"><a href="index.php" class="app-nav__link">Home</a></li>
-                <li class="app-nav__item"><a href="about.php" class="app-nav__link">About</a></li>
-                <li class="app-nav__item"><a href="spaces.php" class="app-nav__link">Spaces</a></li>
-                <li class="app-nav__item"><a href="exhibitions.php" class="app-nav__link">Exhibitions</a></li>
-                <li class="app-nav__item"><a href="calendar.php" class="app-nav__link">Calendar</a></li>
-                <li class="app-nav__item"><a href="blog.php" class="app-nav__link">Blog</a></li>
-                <li class="app-nav__item"><a href="press.php" class="app-nav__link">Press</a></li>
-                <li class="app-nav__item"><a href="contact.php" class="app-nav__link">Contact</a></li>
-                <li class="app-nav__item"><a href="shop.php" class="app-nav__link">Shop</a></li>
+                <li class="app-nav__item"><a href="index.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link">Home</a></li>
+                <li class="app-nav__item"><a href="about.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link">About</a></li>
+                <li class="app-nav__item"><a href="spaces.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link">Spaces</a></li>
+                <li class="app-nav__item"><a href="exhibitions.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link">Exhibitions</a></li>
+                <li class="app-nav__item"><a href="calendar.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link">Calendar</a></li>
+                <li class="app-nav__item"><a href="blog.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link">Blog</a></li>
+                <li class="app-nav__item"><a href="press.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link">Press</a></li>
+                <li class="app-nav__item"><a href="contact.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link">Contact</a></li>
+                <li class="app-nav__item"><a href="shop.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link">Shop</a></li>
             </ul>
         </nav>
 
@@ -465,6 +467,7 @@ body{font-family:'Greta Arabic','Greta Text Arabic',-apple-system,BlinkMacSystem
 
 <script src="assest/fun-interactions.js" defer></script>
 <script src="assest/navbar-mobile-toggle.js" defer></script>
+<script src="assest/app-header.js" defer></script>
 <script>
 // Mobile menu toggle
 (function() {

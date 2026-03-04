@@ -160,6 +160,7 @@ require_once 'api/image-helper.php';
     <link rel="stylesheet" href="global-styles.css">
     <link rel="stylesheet" href="lakum-components.css">
     <link rel="stylesheet" href="assest/mobile-menu.css">
+    <link rel="stylesheet" href="assest/fab-button.css">
     <link rel="stylesheet" href="assest/app-header.css">
     
     <!-- Non-critical CSS - Defer loading -->
@@ -179,6 +180,7 @@ require_once 'api/image-helper.php';
 
     <!-- Image Optimizer - Critical for performance -->
     <script src="assest/navbar-mobile-toggle.js?v=5.0.0" defer></script>
+    <script src="assest/fab-button.js" defer></script>
     <script src="js/LanguageManager.js?v=1.0.0" defer></script>
     <script src="assest/fun-interactions.js" defer></script>
 
@@ -249,15 +251,15 @@ require_once 'api/image-helper.php';
 
             <nav class="app-nav" id="appNav" role="navigation">
                 <ul class="app-nav__list">
-                    <li class="app-nav__item"><a href="index.php" class="app-nav__link">Home</a></li>
-                    <li class="app-nav__item"><a href="about.php" class="app-nav__link">About</a></li>
-                    <li class="app-nav__item"><a href="spaces.php" class="app-nav__link">Spaces</a></li>
-                    <li class="app-nav__item"><a href="exhibitions.php" class="app-nav__link">Exhibitions</a></li>
-                    <li class="app-nav__item"><a href="calendar.php" class="app-nav__link">Calendar</a></li>
-                    <li class="app-nav__item"><a href="blog.php" class="app-nav__link">Blog</a></li>
-                    <li class="app-nav__item"><a href="press.php" class="app-nav__link">Press</a></li>
-                    <li class="app-nav__item"><a href="contact.php" class="app-nav__link">Contact</a></li>
-                    <li class="app-nav__item"><a href="shop.php" class="app-nav__link">Shop</a></li>
+                    <li class="app-nav__item"><a href="index.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link">Home</a></li>
+                    <li class="app-nav__item"><a href="about.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link">About</a></li>
+                    <li class="app-nav__item"><a href="spaces.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link">Spaces</a></li>
+                    <li class="app-nav__item"><a href="exhibitions.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link">Exhibitions</a></li>
+                    <li class="app-nav__item"><a href="calendar.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link">Calendar</a></li>
+                    <li class="app-nav__item"><a href="blog.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link">Blog</a></li>
+                    <li class="app-nav__item"><a href="press.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link">Press</a></li>
+                    <li class="app-nav__item"><a href="contact.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link">Contact</a></li>
+                    <li class="app-nav__item"><a href="shop.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link">Shop</a></li>
                 </ul>
             </nav>
 
@@ -1140,6 +1142,7 @@ require_once 'api/image-helper.php';
     </script>
 
     <div class="fab-button" id="fabButton"><button class="fab-button__trigger" id="fabTrigger" aria-label="Contact options" aria-expanded="false"><i class="ri-mail-line fab-button__icon"></i><i class="ri-close-line fab-button__close"></i></button><div class="fab-button__menu" id="fabMenu" role="menu"><a href="tel:+966920012083" class="fab-button__item" role="menuitem" data-tooltip="Call us"><i class="ri-phone-line"></i></a><a href="https://wa.me/966920012083" target="_blank" class="fab-button__item" role="menuitem" data-tooltip="WhatsApp"><i class="ri-whatsapp-line"></i></a><a href="mailto:info@lakumartspace.com" class="fab-button__item" role="menuitem" data-tooltip="Email"><i class="ri-mail-line"></i></a></div></div><script src="assest/fab-button.js" defer></script>
+    <script src="assest/app-header.js" defer></script>
     </body>
 
 </html>

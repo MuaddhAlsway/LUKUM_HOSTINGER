@@ -214,7 +214,8 @@ body {
 }
 
 .lakum-footer__container {
-    width: 1600px;
+    max-width: 1600px;
+    width: 100%;
     margin: 0 auto;
     padding: 0 clamp(20px, 5vw, 60px);
 }
@@ -224,6 +225,8 @@ body {
     grid-template-columns: 2fr 1fr 1fr 1fr;
     gap: 60px;
     padding-bottom: 60px;
+    width: 100%;
+    overflow-x: hidden;
 }
 
 .lakum-footer__brand {
@@ -370,14 +373,60 @@ body {
         font-size: 14px;
     }
 
+    .lakum-footer {
+        padding: 60px 0 0;
+        margin-top: 100px;
+    }
+
+    .lakum-footer__container {
+        padding: 0 30px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
     .lakum-footer__content {
         grid-template-columns: 1fr 1fr;
         gap: 40px;
+        width: 100%;
     }
 
     .lakum-footer__brand {
         grid-column: 1 / -1;
     }
+
+    .lakum-footer__logo-left,
+    .lakum-footer__logo-right {
+        height: 50px;
+    }
+
+    .lakum-footer__tagline {
+        max-width: 100%;
+        font-size: 15px;
+    }
+
+    .lakum-footer__nav-title {
+        font-size: 13px;
+    }
+
+    .lakum-footer__link {
+        font-size: 14px;
+    }
+
+    .lakum-footer__bottom {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .lakum-footer__legal {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .lakum-footer__copyright {
+        font-size: 13px;
+        width: 100%;
+    }
+}
 }
 
 /* Mobile Menu - Only below 768px */
@@ -497,14 +546,54 @@ body {
         margin-top: 80px;
     }
 
+    .lakum-footer__container {
+        padding: 0 20px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
     .lakum-footer__content {
         grid-template-columns: 1fr;
         gap: 40px;
         padding-bottom: 40px;
+        width: 100%;
     }
 
     .lakum-footer__brand {
         grid-column: 1;
+    }
+
+    .lakum-footer__logo-left,
+    .lakum-footer__logo-right {
+        height: 45px;
+    }
+
+    .lakum-footer__tagline {
+        max-width: 100%;
+        font-size: 14px;
+    }
+
+    .lakum-footer__nav-title {
+        font-size: 13px;
+    }
+
+    .lakum-footer__link {
+        font-size: 14px;
+    }
+
+    .lakum-footer__bottom {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .lakum-footer__legal {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .lakum-footer__copyright {
+        font-size: 13px;
+        width: 100%;
     }
 }
 
@@ -530,9 +619,66 @@ body {
         margin-top: 60px;
     }
 
+    .lakum-footer__container {
+        padding: 0 16px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
     .lakum-footer__content {
-        gap: 30px;
-        padding-bottom: 30px;
+        gap: 24px;
+        padding-bottom: 24px;
+        width: 100%;
+    }
+
+    .lakum-footer__logo-left,
+    .lakum-footer__logo-right {
+        height: 40px;
+    }
+
+    .lakum-footer__tagline {
+        max-width: 100%;
+        font-size: 13px;
+    }
+
+    .lakum-footer__nav-title {
+        font-size: 12px;
+        margin-bottom: 12px;
+    }
+
+    .lakum-footer__link {
+        font-size: 13px;
+    }
+
+    .lakum-footer__social-link {
+        width: 36px;
+        height: 36px;
+        font-size: 16px;
+    }
+
+    .lakum-footer__bottom {
+        flex-direction: column;
+        gap: 12px;
+        padding: 20px 0;
+    }
+
+    .lakum-footer__legal {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .lakum-footer__copyright {
+        font-size: 12px;
+        width: 100%;
+    }
+
+    .lakum-footer__legal-link {
+        font-size: 12px;
+    }
+
+    .lakum-footer__legal-divider {
+        font-size: 12px;
     }
 }
 

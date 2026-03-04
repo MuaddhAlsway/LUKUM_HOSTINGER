@@ -297,7 +297,13 @@
         z-index: 999;
     }
 
-    .app-nav[aria-expanded="true"]::before {
+    .app-nav.is-open {
+        transform: translateX(0);
+        z-index: 999;
+    }
+
+    .app-nav[aria-expanded="true"]::before,
+    .app-nav.is-open::before {
         opacity: 1;
         visibility: visible;
     }
@@ -402,7 +408,8 @@
         transform: translateX(100%);
     }
 
-    [dir="rtl"] .app-nav[aria-expanded="true"] {
+    [dir="rtl"] .app-nav[aria-expanded="true"],
+    [dir="rtl"] .app-nav.is-open {
         transform: translateX(0);
     }
 }

@@ -60,6 +60,7 @@ class AppHeader {
         this.isOpen = true;
         this.menuToggle.setAttribute('aria-expanded', 'true');
         this.appNav.setAttribute('aria-expanded', 'true');
+        this.appNav.classList.add('is-open');
         document.body.style.overflow = 'hidden';
     }
 
@@ -67,6 +68,7 @@ class AppHeader {
         this.isOpen = false;
         this.menuToggle.setAttribute('aria-expanded', 'false');
         this.appNav.setAttribute('aria-expanded', 'false');
+        this.appNav.classList.remove('is-open');
         document.body.style.overflow = '';
     }
 }
