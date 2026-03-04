@@ -145,3 +145,4 @@ try {
 http_response_code($response['status'] === 'SUCCESS' ? 200 : 500);
 echo json_encode($response, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 ?>
+

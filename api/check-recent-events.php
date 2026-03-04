@@ -47,3 +47,4 @@ echo json_encode([
     'recent_events' => $events
 ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 ?>
+

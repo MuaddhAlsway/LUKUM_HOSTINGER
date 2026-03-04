@@ -209,3 +209,4 @@ if (php_sapi_name() === 'cli' && basename(__FILE__) === basename($_SERVER['PHP_S
     $optimizer->optimizeDirectory('HadafCompany/*.{jpg,jpeg,png}');
 }
 ?>
+

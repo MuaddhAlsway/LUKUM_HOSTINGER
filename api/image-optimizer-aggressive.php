@@ -142,3 +142,4 @@ class AggressiveImageOptimizer {
  * echo AggressiveImageOptimizer::render('assest/logo/right_section.webp', 'LAKUM', 'logo', false);
  */
 ?>
+

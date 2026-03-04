@@ -79,3 +79,4 @@ function responsiveSizes($type = 'card') {
     return $gen->generateSizes($type);
 }
 ?>
+

@@ -169,3 +169,4 @@ foreach ($folders as $folder) {
 
 echo json_encode($results);
 ?>
+

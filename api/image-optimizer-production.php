@@ -273,3 +273,4 @@ if (php_sapi_name() === 'cli') {
     echo $optimizer->generateReport();
 }
 ?>
+

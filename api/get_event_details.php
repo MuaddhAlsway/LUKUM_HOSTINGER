@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * LAKUM Artspace - Get Event Details API
  * Retrieves single event with gallery images and bilingual translations from database
@@ -177,4 +177,5 @@ try {
     ]);
 }
 ?>
+
 

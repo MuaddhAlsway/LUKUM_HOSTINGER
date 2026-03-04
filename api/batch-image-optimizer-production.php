@@ -129,3 +129,4 @@ class BatchImageOptimizer {
 $optimizer = new BatchImageOptimizer();
 $optimizer->run();
 ?>
+

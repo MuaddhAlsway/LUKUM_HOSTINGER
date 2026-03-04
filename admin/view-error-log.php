@@ -42,3 +42,4 @@ $lastLines = array_slice($lines, -100);
     <pre><?php echo htmlspecialchars(implode('', $lastLines)); ?></pre>
 </body>
 </html>
+

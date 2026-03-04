@@ -283,3 +283,4 @@ if (php_sapi_name() === 'cli') {
     echo "Next: Update HTML to use responsive images with srcset and sizes\n";
 }
 ?>
+

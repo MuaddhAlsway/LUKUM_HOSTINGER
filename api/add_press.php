@@ -165,3 +165,4 @@ function generateSlug($text) {
     return strtolower($text);
 }
 ?>
+

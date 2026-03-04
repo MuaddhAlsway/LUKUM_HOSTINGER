@@ -243,3 +243,4 @@ $hero = ResponsiveImage::renderHero('img-4', 'LAKUM Artspace');
 <?php echo ResponsiveImage::renderWithFallback('gallery/img28', 'Gallery Image', 'gallery'); ?>
 */
 ?>
+

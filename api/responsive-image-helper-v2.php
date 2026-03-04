@@ -244,3 +244,4 @@ if (php_sapi_name() === 'cli') {
     echo "  echo ResponsiveImageHelper::renderLogo('logo', 'Logo', 100, 50);\n";
 }
 ?>
+

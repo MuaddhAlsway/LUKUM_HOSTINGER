@@ -370,3 +370,4 @@ function saveLegalPageHybrid($db, $data) {
 // - This allows partial updates without losing data
 
 ?>
+

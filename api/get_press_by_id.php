@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * LAKUM Artspace - Get Press by ID API
  * Retrieves a single press release from database
@@ -128,4 +128,5 @@ try {
     echo json_encode(['success' => false, 'message' => $e->getMessage()]);
 }
 ?>
+
 

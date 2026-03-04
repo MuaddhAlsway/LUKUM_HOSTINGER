@@ -121,3 +121,4 @@ class ResponsiveImageHelper {
 // echo $helper->generateImage('img-4', 'Hero image', true);
 // echo $helper->generateLogo('logo-right', 'LAKUM');
 ?>
+

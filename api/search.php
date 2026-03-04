@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * LAKUM Artspace - Search API
  * Handles search across events, blogs, and press
@@ -103,4 +103,5 @@ try {
     error_log($e->getMessage());
     echo Response::error('Search failed: ' . $e->getMessage(), 500);
 }
+
 

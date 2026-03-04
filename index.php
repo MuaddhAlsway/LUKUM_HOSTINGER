@@ -233,8 +233,8 @@ margin: 0 auto;}
         <div class="app-header__container">
             <div class="app-header__logo">
                 <a href="index.php" class="app-logo">
-                    <img src="assest/logo/right_section.png" alt="LAKUM" class="app-logo__left" width="105" height="80" decoding="async">
-                    <img src="assest/logo/left_section.png" alt="Artspace" class="app-logo__right" width="105" height="80" decoding="async">
+                    <img src="assest/logo/right_section.png" alt="LAKUM" class="app-logo__left" width="105" height="80" loading="eager" decoding="async">
+                    <img src="assest/logo/left_section.png" alt="Artspace" class="app-logo__right" width="105" height="80" loading="eager" decoding="async">
                 </a>
             </div>
 
@@ -636,5 +636,6 @@ margin: 0 auto;}
     <script src="assest/app-header.js" defer></script>
 </body>
 </html>
+
 
 

@@ -125,3 +125,4 @@ if (empty($checks['data']['events_count'])) {
 
 echo json_encode($checks, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 ?>
+

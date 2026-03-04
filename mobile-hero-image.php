@@ -91,3 +91,4 @@ HTML;
 // Usage in index.php:
 // echo renderMobileHeroImage('heroImage/img-4', 'LAKUM Artspace');
 ?>
+

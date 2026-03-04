@@ -297,3 +297,4 @@ if (php_sapi_name() === 'cli') {
     echo "Next: Update HTML to use mobile-first responsive images\n";
 }
 ?>
+

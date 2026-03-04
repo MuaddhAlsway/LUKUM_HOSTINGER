@@ -242,3 +242,4 @@ if (php_sapi_name() === 'cli') {
     echo "  echo MobileImageHelper::renderLogo('logo/right_section', 'Logo', 105, 80);\n";
 }
 ?>
+

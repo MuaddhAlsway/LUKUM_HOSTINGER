@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 header('Content-Type: application/json');
 
 $settingsFile = '../data/settings.json';
@@ -20,4 +20,5 @@ if (file_exists($settingsFile)) {
     echo json_encode(['success' => true, 'data' => $defaultSettings]);
 }
 ?>
+
 

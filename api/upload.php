@@ -110,3 +110,4 @@ try {
     error_log($e->getMessage());
     echo Response::error('Failed to upload file: ' . $e->getMessage(), 500);
 }
+

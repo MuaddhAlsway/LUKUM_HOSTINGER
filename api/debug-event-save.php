@@ -52,3 +52,4 @@ echo json_encode([
     'gallery' => $gallery
 ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 ?>
+

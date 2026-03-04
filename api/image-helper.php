@@ -257,3 +257,4 @@ class ImageHelper {
 // Initialize on include
 ImageHelper::init();
 ?>
+

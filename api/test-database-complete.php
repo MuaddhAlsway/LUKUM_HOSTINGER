@@ -301,3 +301,4 @@ try {
 http_response_code($report['status'] === 'SUCCESS' ? 200 : 500);
 echo json_encode($report, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 ?>
+

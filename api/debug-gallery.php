@@ -56,3 +56,4 @@ echo json_encode([
     'files_in_upload_dir' => array_values($files)
 ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 ?>
+

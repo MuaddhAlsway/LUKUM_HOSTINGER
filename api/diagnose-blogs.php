@@ -115,3 +115,4 @@ try {
 
 echo json_encode($diagnostics, JSON_PRETTY_PRINT);
 ?>
+

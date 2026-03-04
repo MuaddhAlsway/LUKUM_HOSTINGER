@@ -101,3 +101,4 @@ echo json_encode([
     'message' => 'Images optimized successfully'
 ]);
 ?>
+

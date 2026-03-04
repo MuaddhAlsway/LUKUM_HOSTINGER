@@ -116,3 +116,4 @@ class ImageCompressionStrategy {
 // $srcset = $strategy->generateSrcset('image', false);
 // $sizes = $strategy->generateSizes(false);
 ?>
+

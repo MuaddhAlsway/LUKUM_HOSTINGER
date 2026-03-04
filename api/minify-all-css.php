@@ -56,3 +56,4 @@ foreach ($files as $input => $output) {
 
 echo json_encode($results, JSON_PRETTY_PRINT);
 ?>
+

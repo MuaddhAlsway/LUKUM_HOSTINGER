@@ -80,3 +80,4 @@ echo json_encode([
     'translations_created' => $translations_created
 ]);
 ?>
+

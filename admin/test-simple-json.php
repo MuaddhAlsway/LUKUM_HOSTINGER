@@ -19,3 +19,4 @@ echo json_encode([
     'session_admin_id' => $_SESSION['admin_id'] ?? 'not set'
 ], JSON_PRETTY_PRINT);
 ?>
+
