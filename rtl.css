@@ -83,10 +83,11 @@ html[dir="rtl"] {
 
 [dir="rtl"] .lakum-nav__list {
     display: flex;
-    justify-content: center;
+    align-items: center;
     gap: clamp(20px, 3vw, 48px);
     list-style: none;
-    width: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 [dir="rtl"] .lakum-nav__item {
@@ -95,17 +96,16 @@ html[dir="rtl"] {
 }
 
 [dir="rtl"] .lakum-nav__link {
-    font-family: 'Greta Text Arabic', 'Greta Arabic', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: 'Atyp Kido TRIAL', sans-serif;
     font-size: 15px;
-    font-weight: 500;
-    letter-spacing: 0.3px;
+    font-weight: 400;
+    letter-spacing: 0.5px;
     color: #1a1a1a;
     text-decoration: none;
     text-transform: capitalize;
     padding: 8px 0;
     position: relative;
     transition: color 0.3s ease;
-    display: inline-block;
 }
 
 /* Language Switcher - Fix positioning */
