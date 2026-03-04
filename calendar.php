@@ -146,11 +146,13 @@ require_once 'lang/loader.php';
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
 
     <!-- Preload critical assets -->
+    <link rel="preload" href="critical-inline.css" as="style">
     <link rel="preload" href="global-styles.css" as="style">
     <link rel="preload" href="lakum-components.css" as="style">
     
 
     <!-- Core Styles - Critical CSS loaded synchronously -->
+    <link rel="stylesheet" href="critical-inline.css">
     <link rel="stylesheet" href="global-styles.css">
     <link rel="stylesheet" href="lakum-components.css">
     <link rel="stylesheet" href="assest/mobile-menu.css">

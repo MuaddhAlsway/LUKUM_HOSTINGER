@@ -15,6 +15,7 @@ require_once 'lang/loader.php';
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     
     <!-- Critical CSS - Inline for fast render -->
+    <link rel="stylesheet" href="critical-inline.css">
     <link rel="stylesheet" href="global-styles.css">
     <link rel="stylesheet" href="lakum-components.css">
     <link rel="stylesheet" href="assest/mobile-menu.css">
