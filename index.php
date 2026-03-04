@@ -39,7 +39,6 @@ require_once 'lang/loader.php';
         <link rel="stylesheet" href="assest/popup-notification.css">
     </noscript>
     <script src="assest/popup-notification.js?v=5.0.0" defer></script>
-    <script src="assest/navbar-mobile-toggle.js?v=5.0.0" defer></script>
     <script src="assest/responsive-images.js?v=5.0.0" defer></script>
     <script src="assest/aggressive-optimization.js?v=5.0.0" defer></script>
     <meta name="title" content="LAKUM Artspace - Cultural Hub in Riyadh | Art Exhibitions & Events">
@@ -631,7 +630,6 @@ margin: 0 auto;}
     </script>
 
     <script src="assest/fun-interactions.js" defer></script>
-    <script src="assest/navbar-mobile-toggle.js" defer></script>
     <script src="assest/popup-notification.js?v=5.0.0" defer></script>
     <script src="assest/app-header.js" defer></script>
 </body>

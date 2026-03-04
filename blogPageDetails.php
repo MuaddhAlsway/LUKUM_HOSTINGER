@@ -180,10 +180,6 @@ require_once 'api/image-helper.php';
     <!-- Blog Page Details Styles -->
     <link rel="stylesheet" href="blog-page-details.css">
 
-    <!-- Image Optimizer - Critical for performance -->
-    <script src="assest/navbar-mobile-toggle.js?v=5.0.0" defer></script>
-    <script src="assest/fab-button.js" defer></script>
-
     <!-- Scripts - Defer non-critical JavaScript -->
     <script src="assest/settings-links-loader.js?v=5.0.0" defer></script>
     <script src="js/LanguageManager.js?v=1.0.0" defer></script>
@@ -370,14 +366,84 @@ require_once 'api/image-helper.php';
                 // Fetch blog details from API with language parameter
                 // Priority: URL parameter > window.LAKUM_LANG > localStorage > 'en'
                 const lang = urlLang || window.LAKUM_LANG || localStorage.getItem('lakum_language') || 'en';
-                const response = await fetch(`api/get_blogs_working.php?id=${blogIdentifier}&lang=${lang}`);
+                
+                // Build API URL - if blogIdentifier is numeric, use as ID, otherwise search by title
+                let apiUrl = `api/get_blogs_working.php?lang=${lang}`;
+                if (!isNaN(blogIdentifier)) {
+                    apiUrl += `&id=${blogIdentifier}`;
+                } else {
+                    // For title-based search, we need to fetch all blogs and filter
+                    apiUrl = `api/get_blogs_working.php?lang=${lang}&limit=1000`;
+                }
+                
+                const response = await fetch(apiUrl);
                 const result = await response.json();
 
                 if (result.success && result.data) {
-                    const blog = result.data;
+                    let blog = null;
+                    
+                    // If we got a single blog (ID-based search)
+                    if (result.data.id) {
+                        blog = result.data;
+                    } else if (Array.isArray(result.data)) {
+                        // If we got an array (title-based search), find matching blog
+                        const titleSlug = blogIdentifier.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+                        blog = result.data.find(b => {
+                            const blogSlug = (b.title_en || b.title || '').toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+                            return blogSlug === titleSlug;
+                        });
+                    }
+                    
+                    if (!blog) {
+                        document.getElementById('blog-title').textContent = 'Blog not found';
+                        return;
+                    }
 
-                    // Update URL to use English title slug (only once)
-                    if (!new URLSearchParams(window.location.search).get('title')) {
+                    // Update URL to use ID (more reliable)
+                    if (!new URLSearchParams(window.location.search).get('id')) {
+                        const newUrl = new URL(window.location);
+                        newUrl.searchParams.set('id', blog.id);
+                        newUrl.searchParams.delete('title');
+                        window.history.replaceState({}, '', newUrl);
+                        blogIdentifier = blog.id;
+                    }
+
+                    // Update page title
+                    document.title = `${blog.title} - LAKUM Artspace`;
+                    document.getElementById('page-title').textContent = `${blog.title} - LAKUM Artspace`;
+
+                    // Update hero section
+                    document.getElementById('blog-title').textContent = blog.title;
+                    document.getElementById('blog-date').textContent = new Date(blog.created_at).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                    });
+                    document.getElementById('blog-author').textContent = blog.author || 'LAKUM Team';
+
+                    // Update hero image
+                    if (blog.cover_image) {
+                        document.getElementById('hero-image').src = blog.cover_image;
+                    }
+
+                    // Update content
+                    document.getElementById('blog-content').innerHTML = blog.content;
+
+                    // Load gallery images if available
+                    if (blog.gallery && blog.gallery.length > 0) {
+                        loadGallery(blog.gallery);
+                    }
+
+                    // Load related blogs
+                    loadRelatedBlogs(blog.id);
+                } else {
+                    document.getElementById('blog-title').textContent = 'Blog not found';
+                }
+            } catch (error) {
+                console.error('Error loading blog details:', error);
+                document.getElementById('blog-title').textContent = 'Error loading blog';
+            }
+        }
                         const englishTitle = blog.title_en || blog.title;
                         const blogSlug = englishTitle.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
                         const newUrl = new URL(window.location);
@@ -519,44 +585,6 @@ require_once 'api/image-helper.php';
 
         // Update titles on page load
         updateBlogSectionTitles();
-
-        // Load external scripts for FAB and mobile menu
-        const fabScript = document.createElement('script');
-        fabScript.src = 'assest/fun-interactions.js';
-        fabScript.defer = true;
-        document.head.appendChild(fabScript);
-
-        const navScript = document.createElement('script');
-        navScript.src = 'assest/navbar-mobile-toggle.js';
-        navScript.defer = true;
-        document.head.appendChild(navScript);
-
-        // Mobile menu toggle
-        (function() {
-            const toggle = document.querySelector('.app-header__menu-toggle');
-            const nav = document.querySelector('.app-nav');
-            const header = document.querySelector('.app-header');
-
-            if (toggle && nav) {
-                toggle.addEventListener('click', function() {
-                    toggle.classList.toggle('app-header__menu-toggle--active');
-                    nav.classList.toggle('app-nav--active');
-                    header.classList.toggle('app-header--menu-open');
-                    document.body.style.overflow = nav.classList.contains('app-nav--active') ? 'hidden' : '';
-                });
-
-                // Close menu when clicking nav link
-                const navLinks = document.querySelectorAll('.app-nav__link');
-                navLinks.forEach(link => {
-                    link.addEventListener('click', function() {
-                        toggle.classList.remove('app-header__menu-toggle--active');
-                        nav.classList.remove('app-nav--active');
-                        header.classList.remove('app-header--menu-open');
-                        document.body.style.overflow = '';
-                    });
-                });
-            }
-        })();
     </script>
 
     <script>

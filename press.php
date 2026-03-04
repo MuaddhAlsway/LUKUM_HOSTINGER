@@ -610,7 +610,7 @@ require_once 'api/image-helper.php';
 
                 pressCard.innerHTML = `
                     <div class="lakum-press-card__image">
-                        <img src="${item.cover_image || 'assest/img-4.png'}" alt="${item.source || 'Press Release'}" loading="lazy">
+                        <img src="${item.cover_image || 'assest/img-4.png'}" alt="${item.source || 'Press Release'}" loading="eager" decoding="async">
                     </div>
                     <div class="lakum-press-card__content">
                         <span class="lakum-press-card__source">${item.source || 'LAKUM Press'}</span>
@@ -802,7 +802,7 @@ require_once 'api/image-helper.php';
                     
                     pressCard.innerHTML = `
                         <div class="lakum-press-card__image">
-                            <img src="${item.cover_image || 'assest/img-4.png'}" alt="${item.source || 'Press Release'}" loading="lazy">
+                            <img src="${item.cover_image || 'assest/img-4.png'}" alt="${item.source || 'Press Release'}" loading="eager" decoding="async">
                         </div>
                         <div class="lakum-press-card__content">
                             <span class="lakum-press-card__source">${item.source || 'LAKUM Press'}</span>

@@ -178,9 +178,6 @@ require_once 'api/image-helper.php';
     <!-- Icons - Critical for UI elements like close button -->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
 
-    <!-- Image Optimizer - Critical for performance -->
-    <script src="assest/navbar-mobile-toggle.js?v=5.0.0" defer></script>
-    <script src="assest/fab-button.js" defer></script>
     <script src="js/LanguageManager.js?v=1.0.0" defer></script>
     <script src="assest/fun-interactions.js" defer></script>
 
@@ -459,36 +456,6 @@ require_once 'api/image-helper.php';
     </div>
 
     <script src="assest/fun-interactions.js" defer></script>
-    <script src="assest/navbar-mobile-toggle.js" defer></script>
-    <script>
-        // Mobile menu toggle
-        (function() {
-            const toggle = document.querySelector('.app-header__menu-toggle');
-            const nav = document.querySelector('.app-nav');
-            const header = document.querySelector('.app-header');
-
-            if (toggle && nav) {
-                toggle.addEventListener('click', function() {
-                    toggle.classList.toggle('app-header__menu-toggle--active');
-                    nav.classList.toggle('app-nav--active');
-                    header.classList.toggle('app-header--menu-open');
-                    document.body.style.overflow = nav.classList.contains('app-nav--active') ? 'hidden' : '';
-                });
-
-                // Close menu when clicking nav link
-                const navLinks = document.querySelectorAll('.app-nav__link');
-                navLinks.forEach(link => {
-                    link.addEventListener('click', function() {
-                        toggle.classList.remove('app-header__menu-toggle--active');
-                        nav.classList.remove('app-nav--active');
-                        header.classList.remove('app-header--menu-open');
-                        document.body.style.overflow = '';
-                    });
-                });
-            }
-        })();
-    </script>
-
     <script>
         // Gallery lightbox
         let currentImageIndex = 0;
