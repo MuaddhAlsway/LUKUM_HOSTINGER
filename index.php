@@ -230,8 +230,8 @@ margin: 0 auto;}
         <div class="lakum-header__container">
             <div class="lakum-header__logo">
                 <a href="./" class="lakum-logo">
-                    <img src="assest/logo/right_section.png" alt="LAKUM" class="lakum-logo__left">
-                    <img src="assest/logo/left_section.png" alt="Artspace" class="lakum-logo__right">
+                    <img src="assest/logo/right_section.png" alt="LAKUM" class="lakum-logo__left" loading="eager" decoding="async" onerror="this.style.display='none'">
+                    <img src="assest/logo/left_section.png" alt="Artspace" class="lakum-logo__right" loading="eager" decoding="async" onerror="this.style.display='none'">
                 </a>
             </div>
             <nav class="lakum-nav">
@@ -363,8 +363,8 @@ margin: 0 auto;}
             <div class="lakum-footer__content">
                 <div class="lakum-footer__brand">
                     <div class="lakum-footer__logo">
-                        <img src="assest/logo/right_section.png" alt="LAKUM" class="lakum-footer__logo-left">
-                        <img src="assest/logo/left_section.png" alt="Artspace" class="lakum-footer__logo-right">
+                        <img src="assest/logo/right_section.png" alt="LAKUM" class="lakum-footer__logo-left" loading="lazy" decoding="async" onerror="this.style.display='none'">
+                        <img src="assest/logo/left_section.png" alt="Artspace" class="lakum-footer__logo-right" loading="lazy" decoding="async" onerror="this.style.display='none'">
                     </div>
                     <p class="lakum-footer__tagline"><?php echo t('footer_tagline', 'Where Encounters Shape Culture'); ?></p>
                 </div>
