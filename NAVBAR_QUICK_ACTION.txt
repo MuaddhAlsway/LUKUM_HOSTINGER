@@ -1,0 +1,80 @@
+NAVBAR MOBILE NOT OPENING - QUICK FIX
+
+PROBLEM
+=======
+Mobile navbar not opening when clicking hamburger menu
+
+ROOT CAUSE
+==========
+Duplicate JavaScript code:
+- External file: assest/navbar-mobile-toggle.js (complete)
+- Inline code in 3 pages (incomplete)
+- Both running = conflict = menu doesn't open
+
+SOLUTION
+========
+Removed inline code from 3 pages:
+1. index.php ✅
+2. about.php ✅
+3. exhibitions.php ✅
+
+Now only external script runs (complete implementation)
+
+WHAT CHANGED
+============
+Removed this inline code from 3 pages:
+
+// Mobile menu toggle
+(function() {
+    function initMobileMenu() {
+        const toggle = document.querySelector('.lakum-header__mobile-toggle');
+        const nav = document.querySelector('.lakum-nav');
+        const header = document.querySelector('.lakum-header');
+        ...
+    }
+})();
+
+DEPLOYMENT
+==========
+1. Upload 3 files:
+   - index.php
+   - about.php
+   - exhibitions.php
+
+2. Clear cache:
+   - Ctrl+Shift+Delete (browser cache)
+   - Ctrl+F5 (hard refresh)
+
+3. Test:
+   - Click hamburger on mobile
+   - Menu should open
+   - Click outside or menu item
+   - Menu should close
+
+EXPECTED RESULT
+===============
+✓ Click hamburger → menu opens
+✓ Menu slides in from left
+✓ Header background darkens
+✓ Click menu item → menu closes
+✓ Click outside → menu closes
+✓ Press Escape → menu closes
+✓ Works on all mobile devices
+✓ Works in English & Arabic
+
+FILES MODIFIED
+==============
+index.php ✅
+about.php ✅
+exhibitions.php ✅
+
+FILES CORRECT
+=============
+assest/navbar-mobile-toggle.js ✅
+lakum-components.css ✅
+rtl.css ✅
+
+STATUS: READY FOR DEPLOYMENT ✅
+
+Deployment Time: < 5 minutes
+Risk Level: Very Low

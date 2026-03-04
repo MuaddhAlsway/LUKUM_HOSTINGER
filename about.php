@@ -648,47 +648,6 @@ html[lang="ar"] .lakum-event-card__date {
         }
     })();
 
-    // Mobile menu toggle
-    (function() {
-        function initMobileMenu() {
-            const toggle = document.querySelector('.lakum-header__mobile-toggle');
-            const nav = document.querySelector('.lakum-nav');
-            const header = document.querySelector('.lakum-header');
-
-            if (!toggle || !nav) {
-                console.warn('Mobile menu elements not found');
-                return;
-            }
-
-            toggle.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                toggle.classList.toggle('lakum-header__mobile-toggle--active');
-                nav.classList.toggle('lakum-nav--active');
-                if (header) header.classList.toggle('lakum-header--menu-open');
-                document.body.style.overflow = nav.classList.contains('lakum-nav--active') ? 'hidden' : '';
-            });
-
-            // Close menu when clicking nav link
-            const navLinks = document.querySelectorAll('.lakum-nav__link');
-            navLinks.forEach(link => {
-                link.addEventListener('click', function() {
-                    toggle.classList.remove('lakum-header__mobile-toggle--active');
-                    nav.classList.remove('lakum-nav--active');
-                    if (header) header.classList.remove('lakum-header--menu-open');
-                    document.body.style.overflow = '';
-                });
-            });
-        }
-
-        // Run when DOM is ready
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initMobileMenu);
-        } else {
-            initMobileMenu();
-        }
-    })();
-
     // Set current language from PHP
     window.LAKUM_LANG = '<?php echo getCurrentLanguage(); ?>';
     
