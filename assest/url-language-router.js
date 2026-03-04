@@ -62,16 +62,18 @@
     
     /**
      * Update language switcher links to use URL parameters
+     * Handles both app-lang-link and lakum-lang-link classes
      */
     function setupLanguageSwitcher() {
-        const switchers = document.querySelectorAll('.lakum-language-switcher a');
+        // Get all language switcher links (both old and new class names)
+        const switchers = document.querySelectorAll('.app-lang-link, .lakum-lang-link');
         
         switchers.forEach(switcher => {
             // Get current page URL without query string
             const currentPath = window.location.pathname;
             const currentParams = new URLSearchParams(window.location.search);
             
-            // Determine target language
+            // Determine target language (toggle)
             const targetLang = lang === 'ar' ? 'en' : 'ar';
             
             // Build new URL with language parameter
@@ -83,14 +85,23 @@
             switcher.title = targetLang === 'ar' ? 'Language: العربية' : 'Language: English';
             
             // Update text
-            const langText = switcher.querySelector('.lakum-lang-text');
+            const langText = switcher.querySelector('.app-lang-text, .lakum-lang-text');
             if (langText) {
-                langText.textContent = targetLang === 'ar' ? 'AR' : 'EN';
+                langText.textContent = targetLang === 'ar' ? 'Ar' : 'En';
             }
             
             // Remove data-lang-switch attribute (no longer needed)
             switcher.removeAttribute('data-lang-switch');
         });
+        
+        // Remove duplicate lakum-language-switcher divs if they exist
+        const lakumSwitchers = document.querySelectorAll('.lakum-language-switcher');
+        if (lakumSwitchers.length > 1) {
+            // Keep only the first one, remove duplicates
+            for (let i = 1; i < lakumSwitchers.length; i++) {
+                lakumSwitchers[i].remove();
+            }
+        }
     }
     
     // Setup switcher when DOM is ready
@@ -120,6 +131,11 @@
             
             // Skip if already has lang parameter
             if (href.includes('?lang=') || href.includes('&lang=')) {
+                return;
+            }
+            
+            // Skip language switcher links (they handle their own URLs)
+            if (link.classList.contains('app-lang-link') || link.classList.contains('lakum-lang-link')) {
                 return;
             }
             
