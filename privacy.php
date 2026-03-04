@@ -289,15 +289,9 @@ require_once 'lang/loader.php';
 
             <div class="app-header__controls">
                 <div class="app-language-switcher">
-                    <a href="<?php 
-                        $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-                        $currentPage = basename($currentPath, '.php');
-                        if ($currentPage === '') $currentPage = 'index';
-                        $lang = isset($_GET['lang']) && $_GET['lang'] === 'ar' ? 'en' : 'ar';
-                        echo $currentPage . '.php?lang=' . $lang;
-                    ?>" class="app-lang-link" title="<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? 'Language: English' : 'Language: العربية'; ?>">
+                    <a href="<?php echo buildLanguageSwitcherUrl(); ?>" class="app-lang-link" title="<?php echo isArabic() ? 'Language: English' : 'Language: العربية'; ?>">
                         <i class="ri-global-line"></i>
-                        <span class="app-lang-text"><?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? 'En' : 'Ar'; ?></span>
+                        <span class="app-lang-text"><?php echo isArabic() ? 'En' : 'Ar'; ?></span>
                     </a>
                 </div>
 

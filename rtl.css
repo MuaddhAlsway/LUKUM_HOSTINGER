@@ -67,6 +67,17 @@ html[dir="rtl"] {
     padding: 0 clamp(20px, 5vw, 60px);
 }
 
+/* App Header Container - RTL Support */
+[dir="rtl"] .app-header__container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 80px;
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 clamp(20px, 5vw, 60px);
+}
+
 /* Logo - Remove extra margin */
 [dir="rtl"] .lakum-header__logo {
     flex-shrink: 0;
@@ -1596,6 +1607,8 @@ html[dir="rtl"] {
     align-items: center;
     justify-content: space-between;
     flex-direction: row-reverse;
+    max-width: 1600px;
+    margin: 0 auto;
 }
 
 /* App Logo */

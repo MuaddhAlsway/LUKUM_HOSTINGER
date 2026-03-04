@@ -323,15 +323,9 @@ require_once 'api/image-helper.php';
 
             <div class="app-header__controls">
                 <div class="app-language-switcher">
-                    <a href="<?php 
-                        $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-                        $currentPage = basename($currentPath, '.php');
-                        if ($currentPage === '') $currentPage = 'index';
-                        $lang = isset($_GET['lang']) && $_GET['lang'] === 'ar' ? 'en' : 'ar';
-                        echo $currentPage . '.php?lang=' . $lang;
-                    ?>" class="app-lang-link" title="<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? 'Language: English' : 'Language: العربية'; ?>">
+                    <a href="<?php echo buildLanguageSwitcherUrl(); ?>" class="app-lang-link" title="<?php echo isArabic() ? 'Language: English' : 'Language: العربية'; ?>">
                         <i class="ri-global-line"></i>
-                        <span class="app-lang-text"><?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? 'En' : 'Ar'; ?></span>
+                        <span class="app-lang-text"><?php echo isArabic() ? 'En' : 'Ar'; ?></span>
                     </a>
                 </div>
 
@@ -633,186 +627,107 @@ require_once 'api/image-helper.php';
             <h2 class="lakum-spaces-pricing__title"><?php echo t('spaces_pricing_title', 'Spaces Pricing'); ?></h2>
 
             <div class="lakum-spaces-pricing__grid" id="pricingGrid">
-                <div class="pricing-card-wrapper" data-pricing-id="1">
-                    <details class="pricing-accordion">
-                        <summary class="pricing-accordion__header">
-                            <div class="pricing-accordion__info">
-                                <h3 class="pricing-accordion__name">Hall 1</h3>
-                                <div class="pricing-accordion__price">
-                                    <span class="pricing-accordion__amount">12,000</span>
-                                    <span class="pricing-accordion__currency">SAR/day</span>
-                                </div>
-                                <span class="pricing-accordion__vat">*(excluding VAT)</span>
-                            </div>
-                            <span class="pricing-accordion__icon"></span>
-                        </summary>
-                        <div class="pricing-accordion__content">
-                            <div class="pricing-accordion__service"><span></span>
-                                <div><strong>Support Services</strong>
-                                    <p>Provision of comprehensive logistical and technical support, including managing entry flow, on-site assistance staff, and professional cleaning services.</p>
-                                </div>
-                            </div>
-                            <div class="pricing-accordion__service"><span></span>
-                                <div><strong>Operational Services</strong>
-                                    <p>Management of essential technical operations, covering lighting, sound systems, air conditioning, and reliable electrical supply.</p>
-                                </div>
-                            </div>
-                            <div class="pricing-accordion__service"><span></span>
-                                <div><strong>Custom Events Set Up</strong>
-                                    <p>Provision of additional furniture and display items, available upon request and tailored to perfectly suit your event's specific requirements.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </details>
-                    <div class="pricing-button-fixed">
-                        <a href="#form" class="lakum-btn lakum-btn--primary">Book Now</a>
-                    </div>
-                </div>
-                <div class="pricing-card-wrapper" data-pricing-id="2">
-                    <details class="pricing-accordion">
-                        <summary class="pricing-accordion__header">
-                            <div class="pricing-accordion__info">
-                                <h3 class="pricing-accordion__name">Hall 2</h3>
-                                <div class="pricing-accordion__price">
-                                    <span class="pricing-accordion__amount">7,200</span>
-                                    <span class="pricing-accordion__currency">SAR/day</span>
-                                </div>
-                                <span class="pricing-accordion__vat">*(excluding VAT)</span>
-                            </div>
-                            <span class="pricing-accordion__icon"></span>
-                        </summary>
-                        <div class="pricing-accordion__content">
-                            <div class="pricing-accordion__service"><span></span>
-                                <div><strong>Support Services</strong>
-                                    <p>Provision of comprehensive logistical and technical support, including managing entry flow, on-site assistance staff, and professional cleaning services.</p>
-                                </div>
-                            </div>
-                            <div class="pricing-accordion__service"><span></span>
-                                <div><strong>Operational Services</strong>
-                                    <p>Management of essential technical operations, covering lighting, sound systems, air conditioning, reliable electrical supply, and the provision of a projector and screen.</p>
-                                </div>
-                            </div>
-                            <div class="pricing-accordion__service"><span></span>
-                                <div><strong>Custom Events Set Up</strong>
-                                    <p>Provision of additional furniture and display items, available upon request and tailored to perfectly suit your event's specific requirements.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </details>
-                    <div class="pricing-button-fixed">
-                        <a href="#form" class="lakum-btn lakum-btn--primary">Book Now</a>
-                    </div>
-                </div>
-                <div class="pricing-card-wrapper" data-pricing-id="3">
-                    <details class="pricing-accordion">
-                        <summary class="pricing-accordion__header">
-                            <div class="pricing-accordion__info">
-                                <h3 class="pricing-accordion__name">Hourly Rate</h3>
-                                <div class="pricing-accordion__price pricing-accordion__price--multi">
-                                    <div>Hall 1: 1,000 SAR/hour</div>
-                                    <div>Hall 2: 600 SAR/hour</div>
-                                </div>
-                                <span class="pricing-accordion__vat">*(excluding VAT)</span>
-                            </div>
-                            <span class="pricing-accordion__icon"></span>
-                        </summary>
-                        <div class="pricing-accordion__content">
-                            <p class="pricing-accordion__intro">Our hourly bookings exclusively for short-format experiences, including:</p>
-                            <ul class="pricing-accordion__list">
-                                <li>Creative workshops and hands-on sessions</li>
-                                <li>Talks, panels, and intimate discussions</li>
-                                <li>Music lessons, rehearsals, or small performances</li>
-                                <li>Yoga, wellness, and movement sessions</li>
-                                <li>Training sessions or educational programs</li>
-                                <li>Photoshoots and video filming</li>
-                                <li>Other short gatherings or community-based activities</li>
-                            </ul>
-                            <div class="pricing-accordion__note"><strong>Please note:</strong>
-                                <p>Hourly rates apply only to short-duration events, typically lasting a few hours. This option is not available for full-day events, exhibitions, or large-scale productions.</p>
-                            </div>
-                        </div>
-                    </details>
-                    <div class="pricing-button-fixed">
-                        <a href="#form" class="lakum-btn lakum-btn--primary">Book Now</a>
-                    </div>
-                </div>
-                <div class="pricing-card-wrapper" data-pricing-id="4">
-                    <details class="pricing-accordion">
-                        <summary class="pricing-accordion__header">
-                            <div class="pricing-accordion__info">
-                                <h3 class="pricing-accordion__name">Set up/Dismantle Day</h3>
-                                <div class="pricing-accordion__price">
-                                    <span class="pricing-accordion__amount">3,400</span>
-                                    <span class="pricing-accordion__currency">SAR/day</span>
-                                </div>
-                                <span class="pricing-accordion__vat">*(excluding VAT)</span>
-                            </div>
-                            <span class="pricing-accordion__icon"></span>
-                        </summary>
-                        <div class="pricing-accordion__content">
-                            <h4>Setup/Dismantle Day Services</h4>
-                            <p>This service is exclusively available for multi-day events that require a dedicated day for either pre-event setup or post-event dismantling. It provides essential access and support to ensure a smooth and efficient transition
-                                for your main event days.</p>
-                            <p>We offer flexibility with the times and openings of the space to align precisely with the event organizer's needs.</p>
-                        </div>
-                    </details>
-                    <div class="pricing-button-fixed">
-                        <a href="#form" class="lakum-btn lakum-btn--primary">Book Now</a>
-                    </div>
-                </div>
-                <div class="pricing-card-wrapper" data-pricing-id="5">
-                    <details class="pricing-accordion">
-                        <summary class="pricing-accordion__header">
-                            <div class="pricing-accordion__info">
-                                <h3 class="pricing-accordion__name">Café</h3>
-                                <div class="pricing-accordion__price">
-                                    <span class="pricing-accordion__amount">3,400</span>
-                                    <span class="pricing-accordion__currency">SAR/day</span>
-                                </div>
-                                <span class="pricing-accordion__vat">*(excluding VAT)</span>
-                            </div>
-                            <span class="pricing-accordion__icon"></span>
-                        </summary>
-                        <div class="pricing-accordion__content">
-                            <h4>Café Rental</h4>
-                            <p>This exclusive service is offered when a client chooses to rent the entire space, ensuring a fully private and uninterrupted experience.</p>
-                            <p>The café can be booked in full, and the rental fee is fully redeemable, allowing the client to benefit from ordering beverages up to the same amount.</p>
-                        </div>
-                    </details>
-                    <div class="pricing-button-fixed">
-                        <a href="#form" class="lakum-btn lakum-btn--primary">Book Now</a>
-                    </div>
-                </div>
-                <div class="pricing-card-wrapper" data-pricing-id="6">
-                    <details class="pricing-accordion">
-                        <summary class="pricing-accordion__header">
-                            <div class="pricing-accordion__info">
-                                <h3 class="pricing-accordion__name">Meeting Room</h3>
-                                <div class="pricing-accordion__price">
-                                    <span class="pricing-accordion__amount">60</span>
-                                    <span class="pricing-accordion__currency">SAR/hour</span>
-                                </div>
-                                <span class="pricing-accordion__vat">*(excluding VAT)</span>
-                            </div>
-                            <span class="pricing-accordion__icon"></span>
-                        </summary>
-                        <div class="pricing-accordion__content">
-                            <h4>Services Provided</h4>
-                            <ul class="pricing-accordion__features">
-                                <li><strong>Capacity:</strong> Up to six people.</li>
-                                <li><strong>Inclusive Refreshments:</strong> Complimentary coffee of the day and water provided per person.</li>
-                                <li><strong>Technology:</strong> Projector included and free high-speed Wi-Fi access.</li>
-                                <li><strong>Supplies:</strong> Essential notepads and pens.</li>
-                            </ul>
-                        </div>
-                    </details>
-                    <div class="pricing-button-fixed">
-                        <a href="#form" class="lakum-btn lakum-btn--primary">Book Now</a>
-                    </div>
-                </div>
+                <!-- Pricing will be loaded dynamically from API -->
             </div>
         </div>
     </section>
+
+    <script>
+        // Fetch and render pricing based on current language
+        (function() {
+            const currentLang = document.documentElement.lang || 'en';
+            const pricingGrid = document.getElementById('pricingGrid');
+            
+            if (!pricingGrid) return;
+
+            // Fetch pricing data from API
+            fetch('api/get_pricing.php')
+                .then(response => response.json())
+                .then(data => {
+                    if (!data.success || !data.data || data.data.length === 0) {
+                        console.warn('No pricing data available');
+                        return;
+                    }
+
+                    // Clear existing content
+                    pricingGrid.innerHTML = '';
+
+                    // Render each pricing item
+                    data.data.forEach((item, index) => {
+                        const pricingCard = createPricingCard(item, currentLang, index + 1);
+                        pricingGrid.appendChild(pricingCard);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching pricing:', error);
+                    pricingGrid.innerHTML = '<p>Unable to load pricing information. Please try again later.</p>';
+                });
+
+            // Create pricing card element
+            function createPricingCard(item, lang, index) {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'pricing-card-wrapper';
+                wrapper.setAttribute('data-pricing-id', item.id);
+
+                // Get language-specific content
+                const name = lang === 'ar' ? (item.name_ar || item.name_en) : (item.name_en || item.name_ar);
+                const description = lang === 'ar' ? (item.description_ar || item.description_en) : (item.description_en || item.description_ar);
+                const priceUnit = lang === 'ar' ? (item.price_unit_ar || item.price_unit) : (item.price_unit || 'SAR');
+                const vatNote = lang === 'ar' ? (item.vat_note_ar || item.vat_note) : (item.vat_note || '*(excluding VAT)');
+
+                // Parse price_sec for secondary pricing (e.g., "Hall 1: 1,000 SAR/hour")
+                const hasSecondaryPrice = item.price_sec && item.price_sec.trim() !== '';
+                
+                // Create the card HTML
+                wrapper.innerHTML = `
+                    <details class="pricing-accordion">
+                        <summary class="pricing-accordion__header">
+                            <div class="pricing-accordion__info">
+                                <h3 class="pricing-accordion__name">${escapeHtml(name)}</h3>
+                                <div class="pricing-accordion__price${hasSecondaryPrice ? ' pricing-accordion__price--multi' : ''}">
+                                    ${hasSecondaryPrice ? 
+                                        `<div>${escapeHtml(item.price_sec)}</div>` :
+                                        `<span class="pricing-accordion__amount">${formatPrice(item.price)}</span>
+                                         <span class="pricing-accordion__currency">${escapeHtml(priceUnit)}</span>`
+                                    }
+                                </div>
+                                <span class="pricing-accordion__vat">${escapeHtml(vatNote)}</span>
+                            </div>
+                            <span class="pricing-accordion__icon"></span>
+                        </summary>
+                        <div class="pricing-accordion__content">
+                            ${description ? `<p>${escapeHtml(description)}</p>` : ''}
+                            ${item.content ? `<div>${item.content}</div>` : ''}
+                        </div>
+                    </details>
+                    <div class="pricing-button-fixed">
+                        <a href="#form" class="lakum-btn lakum-btn--primary">${lang === 'ar' ? 'احجز الآن' : 'Book Now'}</a>
+                    </div>
+                `;
+
+                return wrapper;
+            }
+
+            // Utility function to escape HTML
+            function escapeHtml(text) {
+                if (!text) return '';
+                const map = {
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    '"': '&quot;',
+                    "'": '&#039;'
+                };
+                return text.replace(/[&<>"']/g, m => map[m]);
+            }
+
+            // Format price with thousands separator
+            function formatPrice(price) {
+                if (!price) return '0';
+                return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            }
+        })();
+    </script>
 
     <!-- Book Your Space Section -->
     <section class="lakum-spaces-booking" id="form">

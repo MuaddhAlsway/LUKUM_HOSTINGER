@@ -242,3 +242,50 @@
         bottom: 65px;
     }
 }
+
+
+/* ========================================
+   RTL SUPPORT - Arabic Language
+   ======================================== */
+
+[dir="rtl"] .fab-button {
+    right: auto;
+    left: 32px;
+}
+
+[dir="rtl"] .fab-button__menu {
+    right: auto;
+    left: 0;
+}
+
+[dir="rtl"] .fab-button__item::before {
+    right: auto;
+    left: 70px;
+    transform: translateX(-10px);
+}
+
+[dir="rtl"] .fab-button__item:hover::before {
+    transform: translateX(0);
+}
+
+/* RTL Responsive */
+@media (max-width: 1024px) {
+    [dir="rtl"] .fab-button {
+        right: auto;
+        left: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    [dir="rtl"] .fab-button {
+        right: auto;
+        left: 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    [dir="rtl"] .fab-button {
+        right: auto;
+        left: 20px;
+    }
+}
