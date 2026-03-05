@@ -377,9 +377,11 @@ require_once 'api/image-helper.php';
                         blog = result.data;
                     } else if (Array.isArray(result.data)) {
                         // If we got an array (title-based search), find matching blog
+                        // Always match against English title for user-friendly URLs
                         const titleSlug = blogIdentifier.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
                         blog = result.data.find(b => {
-                            const blogSlug = (b.title_en || b.title || '').toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+                            // Always use title_en for slug matching (user-friendly URLs)
+                            const blogSlug = (b.title_en || '').toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
                             return blogSlug === titleSlug;
                         });
                     }
@@ -392,9 +394,14 @@ require_once 'api/image-helper.php';
                     // Update page title
                     document.title = `${blog.title} - LAKUM Artspace`;
                     document.getElementById('page-title').textContent = `${blog.title} - LAKUM Artspace`;
+                    
+                    // Format and display date
+                    const formattedDate = blog.created_at ? new Date(blog.created_at).toLocaleDateString('en-US', {
+                        year: 'numeric',
                         month: 'long',
                         day: 'numeric'
-                    });
+                    }) : 'Unknown Date';
+                    document.getElementById('blog-date').textContent = formattedDate;
                     document.getElementById('blog-author').textContent = blog.author || 'LAKUM Team';
 
                     // Update hero image
@@ -467,7 +474,8 @@ require_once 'api/image-helper.php';
                     relatedBlogs.forEach(blog => {
                         const card = document.createElement('div');
                         card.className = 'event-related__item';
-                        const blogSlug = (blog.title_en || blog.title || '').toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+                        // Always use English title for user-friendly slug
+                        const blogSlug = (blog.title_en || '').toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
                         const langParam = lang !== 'en' ? `&lang=${lang}` : '';
                         card.innerHTML = `
                             <a href="blogPageDetails.php?title=${blogSlug}${langParam}" class="event-related__link">

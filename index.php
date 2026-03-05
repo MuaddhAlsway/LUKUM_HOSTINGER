@@ -228,60 +228,37 @@ margin: 0 auto;}
         </div>
     </div>
 
-    <!-- App Header -->
-    <header class="app-header" id="appHeader">
-        <div class="app-header__container">
-            <div class="app-header__logo">
-                <a href="index.php" class="app-header__logo-link">
-                    <img src="assest/logo/right_section.png" alt="LAKUM" class="app-header__logo-left" loading="eager" decoding="async">
-                    <img src="assest/logo/left_section.png" alt="Artspace" class="app-header__logo-right" loading="eager" decoding="async">
+    <!-- LAKUM Header -->
+    <header class="lakum-header" role="banner">
+        <div class="lakum-header__container">
+            <div class="lakum-header__logo">
+                <a href="./" class="lakum-logo">
+                    <img src="assest/logo/right_section.png" alt="LAKUM" class="lakum-logo__left">
+                    <img src="assest/logo/left_section.png" alt="Artspace" class="lakum-logo__right">
                 </a>
             </div>
-            <nav class="app-header__nav" id="appNav">
-                <ul class="app-header__nav-list">
-                    <li class="app-header__nav-item">
-                        <a href="index.php" class="app-header__nav-link <?php echo basename($_SERVER['PHP_SELF']) === 'index.php' ? 'active' : ''; ?>"><?php echo t('home', 'Home'); ?></a>
-                    </li>
-                    <li class="app-header__nav-item">
-                        <a href="about.php" class="app-header__nav-link <?php echo basename($_SERVER['PHP_SELF']) === 'about.php' ? 'active' : ''; ?>"><?php echo t('about', 'About'); ?></a>
-                    </li>
-                    <li class="app-header__nav-item">
-                        <a href="spaces.php" class="app-header__nav-link <?php echo basename($_SERVER['PHP_SELF']) === 'spaces.php' ? 'active' : ''; ?>"><?php echo t('spaces', 'Spaces'); ?></a>
-                    </li>
-                    <li class="app-header__nav-item">
-                        <a href="exhibitions.php" class="app-header__nav-link <?php echo basename($_SERVER['PHP_SELF']) === 'exhibitions.php' ? 'active' : ''; ?>"><?php echo t('exhibitions', 'Exhibitions'); ?></a>
-                    </li>
-                    <li class="app-header__nav-item">
-                        <a href="calendar.php" class="app-header__nav-link <?php echo basename($_SERVER['PHP_SELF']) === 'calendar.php' ? 'active' : ''; ?>"><?php echo t('calendar', 'Calendar'); ?></a>
-                    </li>
-                    <li class="app-header__nav-item">
-                        <a href="blog.php" class="app-header__nav-link <?php echo basename($_SERVER['PHP_SELF']) === 'blog.php' ? 'active' : ''; ?>"><?php echo t('blog', 'Blog'); ?></a>
-                    </li>
-                    <li class="app-header__nav-item">
-                        <a href="press.php" class="app-header__nav-link <?php echo basename($_SERVER['PHP_SELF']) === 'press.php' ? 'active' : ''; ?>"><?php echo t('press', 'Press'); ?></a>
-                    </li>
-                    <li class="app-header__nav-item">
-                        <a href="contact.php" class="app-header__nav-link <?php echo basename($_SERVER['PHP_SELF']) === 'contact.php' ? 'active' : ''; ?>"><?php echo t('contact_us', 'Contact'); ?></a>
-                    </li>
+            <nav class="lakum-nav">
+                <ul class="lakum-nav__list">
+                    <li class="lakum-nav__item"><a href="index.php" class="lakum-nav__link lakum-nav__link--active"><?php echo t('home', 'Home'); ?></a></li>
+                    <li class="lakum-nav__item"><a href="about.php" class="lakum-nav__link"><?php echo t('about', 'About'); ?></a></li>
+                    <li class="lakum-nav__item"><a href="spaces.php" class="lakum-nav__link"><?php echo t('spaces', 'Spaces'); ?></a></li>
+                    <li class="lakum-nav__item"><a href="exhibitions.php" class="lakum-nav__link"><?php echo t('exhibitions', 'Exhibitions'); ?></a></li>
+                    <li class="lakum-nav__item"><a href="calendar.php" class="lakum-nav__link"><?php echo t('calendar', 'Calendar'); ?></a></li>
+                    <li class="lakum-nav__item"><a href="blog.php" class="lakum-nav__link"><?php echo t('blog', 'Blog'); ?></a></li>
+                    <li class="lakum-nav__item"><a href="press.php" class="lakum-nav__link"><?php echo t('press', 'Press'); ?></a></li>
+                    <li class="lakum-nav__item"><a href="contact.php" class="lakum-nav__link"><?php echo t('contact_us', 'Contact'); ?></a></li>
+                    <li class="lakum-nav__item"><a href="shop.php" class="lakum-nav__link"><?php echo t('shop', 'Shop'); ?></a></li>
                 </ul>
             </nav>
-            <div class="app-header__controls">
-                <div class="app-header__language-switcher" id="languageSwitcher">
-                    <button class="app-header__language-btn" id="languageBtn" aria-label="Switch language">
-                        <span class="app-header__language-text"><?php echo isArabic() ? 'العربية' : 'English'; ?></span>
-                        <i class="ri-global-line"></i>
-                    </button>
-                    <div class="app-header__language-menu" id="languageMenu">
-                        <a href="?lang=en" class="app-header__language-option <?php echo !isArabic() ? 'active' : ''; ?>">English</a>
-                        <a href="?lang=ar" class="app-header__language-option <?php echo isArabic() ? 'active' : ''; ?>">العربية</a>
-                    </div>
-                </div>
-                <button class="app-header__mobile-toggle" id="mobileToggle" aria-label="Toggle menu" aria-expanded="false">
-                    <span class="app-header__mobile-toggle-line"></span>
-                    <span class="app-header__mobile-toggle-line"></span>
-                    <span class="app-header__mobile-toggle-line"></span>
-                </button>
+            <div class="lakum-language-switcher">
+                <a href="<?php echo buildLanguageSwitcherUrl(); ?>" class="lakum-lang-link" title="<?php echo isArabic() ? 'Language: English' : 'Language: العربية'; ?>">
+                    <i class="ri-global-line"></i>
+                    <span class="lakum-lang-text"><?php echo isArabic() ? 'EN' : 'AR'; ?></span>
+                </a>
             </div>
+            <button class="lakum-header__mobile-toggle" aria-label="Toggle menu">
+                <span class="lakum-header__mobile-icon" aria-hidden="true"></span>
+            </button>
         </div>
     </header>
 

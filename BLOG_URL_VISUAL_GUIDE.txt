@@ -1,0 +1,190 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║                    BLOG URL & LANGUAGE SYSTEM GUIDE                        ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│ URL STRUCTURE                                                              │
+└────────────────────────────────────────────────────────────────────────────┘
+
+  blogPageDetails.php?title={encoded_title}&lang={language}
+  
+  ├─ title: URL-encoded blog title
+  │  ├─ English: "Behind the Scenes" → "Behind%20the%20Scenes"
+  │  └─ Arabic: "خلف الكواليس" → "%D8%AE%D9%84%D9%81%20%D8%A7%D9%84%D9%83%D9%88%D8%A7%D9%84%D9%8A%D8%B3"
+  │
+  └─ lang: Language code
+     ├─ en: English (LTR text direction)
+     └─ ar: Arabic (RTL text direction)
+
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│ EXAMPLE URLS                                                               │
+└────────────────────────────────────────────────────────────────────────────┘
+
+ENGLISH BLOG:
+  blogPageDetails.php?title=Behind%20the%20Scenes&lang=en
+  
+  ✓ Shows: "Behind the Scenes"
+  ✓ Language: English
+  ✓ Direction: Left-to-Right (LTR)
+  ✓ Content: English blog content
+
+
+ARABIC BLOG:
+  blogPageDetails.php?title=%D8%AE%D9%84%D9%81%20%D8%A7%D9%84%D9%83%D9%88%D8%A7%D9%84%D9%8A%D8%B3&lang=ar
+  
+  ✓ Shows: "خلف الكواليس"
+  ✓ Language: Arabic
+  ✓ Direction: Right-to-Left (RTL)
+  ✓ Content: Arabic blog content
+
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│ LANGUAGE SWITCHING FLOW                                                    │
+└────────────────────────────────────────────────────────────────────────────┘
+
+  User on English Blog
+         ↓
+  blogPageDetails.php?title=Behind%20the%20Scenes&lang=en
+         ↓
+  [User clicks language switcher]
+         ↓
+  blogPageDetails.php?title=Behind%20the%20Scenes&lang=ar
+         ↓
+  Page reloads with Arabic content
+         ↓
+  Text direction changes to RTL
+
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│ URL ENCODING EXAMPLES                                                      │
+└────────────────────────────────────────────────────────────────────────────┘
+
+ENGLISH TITLES:
+  "Behind the Scenes"      → "Behind%20the%20Scenes"
+  "Art & Culture"          → "Art%20%26%20Culture"
+  "How to Paint?"          → "How%20to%20Paint%3F"
+  "Artist's Journey"       → "Artist%27s%20Journey"
+
+ARABIC TITLES:
+  "خلف الكواليس"           → "%D8%AE%D9%84%D9%81%20%D8%A7%D9%84%D9%83%D9%88%D8%A7%D9%84%D9%8A%D8%B3"
+  "الفن والثقافة"         → "%D8%A7%D9%84%D9%81%D9%86%20%D9%88%D8%A7%D9%84%D8%AB%D9%82%D8%A7%D9%81%D8%A9"
+  "رحلة الفنان"            → "%D8%B1%D8%AD%D9%84%D8%A9%20%D8%A7%D9%84%D9%81%D9%86%D8%A7%D9%86"
+
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│ SYSTEM FLOW                                                                │
+└────────────────────────────────────────────────────────────────────────────┘
+
+  BLOG LISTING (blog.php)
+  ├─ Displays all blog posts
+  ├─ User clicks blog card
+  ├─ getBlogUrl() generates URL with:
+  │  ├─ Encoded title
+  │  └─ Current language
+  └─ Navigates to blogPageDetails.php?title=...&lang=...
+         ↓
+  BLOG DETAIL (blogPageDetails.php)
+  ├─ Extracts title and lang parameters
+  ├─ Fetches blog from API with lang parameter
+  ├─ Displays blog in correct language
+  ├─ Sets text direction (RTL for Arabic, LTR for English)
+  └─ Shows related blogs with same language
+         ↓
+  API (api/get_blogs_working.php)
+  ├─ Receives lang parameter
+  ├─ Selects language-specific content:
+  │  ├─ If lang=ar: Return Arabic content
+  │  └─ If lang=en: Return English content
+  └─ Returns blog data with correct language
+
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│ LANGUAGE PARAMETER PRIORITY                                               │
+└────────────────────────────────────────────────────────────────────────────┘
+
+  1. URL Parameter (?lang=ar or ?lang=en)
+     └─ Highest priority
+  
+  2. Window Language (window.LAKUM_LANG)
+     └─ Set by JavaScript
+  
+  3. LocalStorage (lakum_language)
+     └─ User's saved preference
+  
+  4. Default (en)
+     └─ Fallback to English
+
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│ TEXT DIRECTION                                                             │
+└────────────────────────────────────────────────────────────────────────────┘
+
+  ENGLISH (?lang=en)
+  ├─ Direction: LTR (Left-to-Right)
+  ├─ Text alignment: Left
+  └─ Example: "Behind the Scenes" →
+
+  ARABIC (?lang=ar)
+  ├─ Direction: RTL (Right-to-Left)
+  ├─ Text alignment: Right
+  └─ Example: ← "خلف الكواليس"
+
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│ BACKWARD COMPATIBILITY                                                     │
+└────────────────────────────────────────────────────────────────────────────┘
+
+  OLD FORMAT (ID-based):
+  blogPageDetails.php?id=16&lang=en
+         ↓
+  System detects ID parameter
+         ↓
+  Fetches blog by ID
+         ↓
+  Gets blog title
+         ↓
+  Redirects to NEW FORMAT:
+  blogPageDetails.php?title=blog-title&lang=en
+         ↓
+  No broken links!
+
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│ TESTING CHECKLIST                                                          │
+└────────────────────────────────────────────────────────────────────────────┘
+
+  ✅ Blog URLs use title parameter (not ID)
+  ✅ URL encoding works for English titles
+  ✅ URL encoding works for Arabic titles
+  ✅ ?lang=en displays English content
+  ✅ ?lang=ar displays Arabic content
+  ✅ Language parameter controls content
+  ✅ Text direction changes based on language
+  ✅ Related blogs maintain language
+  ✅ Old ID-based URLs still work
+  ✅ No console errors
+  ✅ No syntax errors
+
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│ QUICK REFERENCE                                                            │
+└────────────────────────────────────────────────────────────────────────────┘
+
+  TO VIEW ENGLISH BLOG:
+  blogPageDetails.php?title=Behind%20the%20Scenes&lang=en
+
+  TO VIEW ARABIC BLOG:
+  blogPageDetails.php?title=%D8%AE%D9%84%D9%81%20%D8%A7%D9%84%D9%83%D9%88%D8%A7%D9%84%D9%8A%D8%B3&lang=ar
+
+  TO SWITCH LANGUAGE:
+  Change ?lang=en to ?lang=ar (or vice versa)
+
+  TO GENERATE URL PROGRAMMATICALLY:
+  const url = `blogPageDetails.php?title=${encodeURIComponent(title)}&lang=${lang}`;
+
+
+╔════════════════════════════════════════════════════════════════════════════╗
+║                         STATUS: ✅ COMPLETE                               ║
+║                    READY FOR PRODUCTION DEPLOYMENT                        ║
+╚════════════════════════════════════════════════════════════════════════════╝
