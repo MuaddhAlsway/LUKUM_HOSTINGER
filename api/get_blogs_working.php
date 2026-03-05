@@ -131,7 +131,13 @@ try {
             CASE 
                 WHEN ? = 'ar' AND b.content_ar IS NOT NULL AND b.content_ar != '' THEN b.content_ar
                 ELSE COALESCE(b.content_en, b.content)
-            END as content
+            END as content,
+            b.title_en,
+            b.excerpt_en,
+            b.content_en,
+            b.title_ar,
+            b.excerpt_ar,
+            b.content_ar
         FROM blogs b
         ORDER BY b.created_at DESC
         LIMIT ? OFFSET ?
