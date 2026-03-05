@@ -26,6 +26,10 @@ require_once 'api/image-helper.php';
     <link rel="preload" href="assest/fonts/GretaTextArabicAR+LT-Light.otf" as="font" type="font/otf" crossorigin>
     <!-- Global Stylesheets (Centralized) -->
     <?php include('includes/stylesheets.php'); ?>
+    
+    <!-- Page-specific Styles -->
+    <link rel="stylesheet" href="exhibitions.css">
+    
 <link rel="alternate" hreflang="en" href="https://lakumartspace.infinityfree.me/exhibitions.php?lang=en" />
 <link rel="alternate" hreflang="ar" href="https://lakumartspace.infinityfree.me/exhibitions.php?lang=ar" />
 <script src="assest/static-json-translator.js?v=1.0.0" defer></script>
