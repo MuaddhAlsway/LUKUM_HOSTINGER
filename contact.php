@@ -13,8 +13,14 @@ require_once 'lang/loader.php';
     <link rel="apple-touch-icon" href="assest/logo/right_section.png">
     <meta name="msapplication-TileImage" content="assest/logo/right_section.png">
 
-    <!-- Preload LCP image (contact hero) - Mobile-first -->
-    <link rel="preload" as="image" href="heroImage/img-4.webp" fetchpriority="high">
+    <!-- Preload LCP image (hero) - Mobile-first with responsive variants -->
+    <link rel="preload" as="image" 
+          href="heroImage/img-4.webp"
+          imagesrcset="heroImage/img-4.webp 1200w"
+          imagesizes="(max-width: 768px) 100vw, 650px"
+          fetchpriority="high">
+    <!-- Preload critical fonts -->
+    <link rel="preload" href="assest/fonts/GretaArabicAR+LT-Regular.otf" as="font" type="font/otf" crossorigin>
 
     <!-- Inline Critical CSS for Instant LCP -->
     <style>
@@ -123,17 +129,10 @@ require_once 'lang/loader.php';
         }
     </style>
 
-    <!-- Preload Hero Image (Critical for LCP) - Mobile-first with responsive variants -->
-    <link rel="preload" as="image" 
-          href="heroImage/img-4.webp"
-          imagesrcset="heroImage/img-4.webp 1200w"
-          imagesizes="(max-width: 768px) 100vw, 650px"
-          fetchpriority="high">
-    <!-- Preload critical fonts -->
-    <link rel="preload" href="assest/fonts/GretaArabicAR+LT-Regular.otf" as="font" type="font/otf" crossorigin>
-    <link rel="preload" href="assest/fonts/GretaArabicAR+LT-Light.otf" as="font" type="font/otf" crossorigin>
-    <link rel="preload" href="assest/fonts/GretaTextArabicAR+LT-Regular.otf" as="font" type="font/otf" crossorigin>
-    <link rel="preload" href="assest/fonts/GretaTextArabicAR+LT-Light.otf" as="font" type="font/otf" crossorigin>
+    <!-- Preload Hero Image (Critical for LCP) -->
+    <link rel="preload" as="image" href="heroImage/img-3.webp" fetchpriority="high">
+
+
 
     <!-- DNS Prefetch for external resources -->
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
@@ -155,49 +154,13 @@ require_once 'lang/loader.php';
     <link rel="prefetch" href="assest/fonts/GretaArabicAR+LT-Regular.otf" as="font" type="font/otf" crossorigin>
     <link rel="prefetch" href="assest/fonts/GretaArabicAR+LT-Light.otf" as="font" type="font/otf" crossorigin>
 
-    <!-- Core Styles - Critical CSS loaded synchronously -->
     <!-- Global Stylesheets (Centralized) -->
     <?php include('includes/stylesheets.php'); ?>
 
-    <!-- Image Optimizer - Critical for performance -->
-    <script src="assest/navbar-mobile-toggle.js?v=5.0.0" defer></script>
-    <script src="assest/fab-button.js" defer></script>
+    <!-- Page-specific styles -->
+    <link rel="stylesheet" href="contact.css">
+    <script src="assest/static-json-translator.js?v=1.0.0" defer></script>
 
-    <!-- Scripts - Defer non-critical JavaScript -->
-    <script src="assest/popup-notification.js?v=5.0.0" defer></script>
-    <script src="assest/fun-interactions.js" defer></script>
-    <script>
-        // Set language for JavaScript - Read from URL parameter or localStorage
-        const urlParams = new URLSearchParams(window.location.search);
-        const urlLang = urlParams.get('lang');
-        const storedLang = localStorage.getItem('lakum_language');
-        window.LAKUM_LANG = urlLang || storedLang || 'en';
-        window.LAKUM_DIR = window.LAKUM_LANG === 'ar' ? 'rtl' : 'ltr';
-
-        // Performance monitoring
-        if ('PerformanceObserver' in window) {
-            // Monitor Largest Contentful Paint
-            const lcpObserver = new PerformanceObserver((list) => {
-                const entries = list.getEntries();
-                const lastEntry = entries[entries.length - 1];
-                console.log('LCP:', lastEntry.renderTime || lastEntry.loadTime);
-            });
-            lcpObserver.observe({
-                entryTypes: ['largest-contentful-paint']
-            });
-
-            // Monitor First Input Delay
-            const fidObserver = new PerformanceObserver((list) => {
-                const entries = list.getEntries();
-                entries.forEach((entry) => {
-                    console.log('FID:', entry.processingStart - entry.startTime);
-                });
-            });
-            fidObserver.observe({
-                entryTypes: ['first-input']
-            });
-        }
-    </script>
     <link rel="stylesheet" href="contact.css">
 <link rel="alternate" hreflang="en" href="https://lakumartspace.infinityfree.me/contact.php?lang=en" />
 <link rel="alternate" hreflang="ar" href="https://lakumartspace.infinityfree.me/contact.php?lang=ar" />

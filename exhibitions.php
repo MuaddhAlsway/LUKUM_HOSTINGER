@@ -12,7 +12,7 @@ require_once 'api/image-helper.php';
     <link rel="icon" type="image/png" sizes="16x16" href="assest/logo/right_section.png">
     <link rel="apple-touch-icon" href="assest/logo/right_section.png">
     <meta name="msapplication-TileImage" content="assest/logo/right_section.png">
-    <!-- Preload LCP image (hero) - Mobile-first (400w) -->
+    
     <!-- Preload LCP image (hero) - Mobile-first with responsive variants -->
     <link rel="preload" as="image" 
           href="heroImage/img-4.webp"
@@ -21,9 +21,133 @@ require_once 'api/image-helper.php';
           fetchpriority="high">
     <!-- Preload critical fonts -->
     <link rel="preload" href="assest/fonts/GretaArabicAR+LT-Regular.otf" as="font" type="font/otf" crossorigin>
-    <link rel="preload" href="assest/fonts/GretaArabicAR+LT-Light.otf" as="font" type="font/otf" crossorigin>
-    <link rel="preload" href="assest/fonts/GretaTextArabicAR+LT-Regular.otf" as="font" type="font/otf" crossorigin>
-    <link rel="preload" href="assest/fonts/GretaTextArabicAR+LT-Light.otf" as="font" type="font/otf" crossorigin>
+
+    <!-- Inline Critical CSS for Instant LCP -->
+    <style>
+        /* Critical CSS - Inline for instant rendering */
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        html {
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            background: #f6f6eb;
+            color: #1a1a1a;
+            overflow-x: hidden;
+            line-height: 1.6
+        }
+        
+        * {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+        }
+
+        .lakum-hero {
+            position: relative;
+            width: 100%;
+            height: 85vh;
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #1a1a1a;
+            contain: layout style paint
+        }
+
+        .lakum-hero__image-wrapper {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            overflow: hidden
+        }
+
+        .lakum-hero__image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            will-change: transform;
+            transform: translateZ(0)
+        }
+
+        .lakum-hero__overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.65) 100%);
+            z-index: 2
+        }
+
+        .lakum-hero__content {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            color: #fff;
+            max-width: 1400px;
+            width: 90%;
+            padding: 0 20px
+        }
+
+        .lakum-hero__title {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 300;
+            line-height: 1.2;
+            margin: 0 0 20px 0;
+            color: #fff;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3)
+        }
+
+        .lakum-hero__subtitle {
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
+            font-weight: 300;
+            line-height: 1.6;
+            color: #fff;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3)
+        }
+
+        @media(max-width:768px) {
+            .lakum-hero {
+                height: 60vh;
+                min-height: 450px
+            }
+        }
+
+        @media(max-width:480px) {
+            .lakum-hero {
+                height: 50vh;
+                min-height: 400px
+            }
+        }
+    </style>
+
+    <!-- DNS Prefetch for external resources -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+
+    <!-- Preconnect to external domains -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+
+    <!-- Preload critical assets -->
+    <link rel="preload" href="critical-inline.css" as="style">
+    <link rel="preload" href="global-styles.css" as="style">
+    <link rel="preload" href="lakum-components.css" as="style">
+    
+    <!-- Preload critical fonts -->
+    <link rel="prefetch" href="assest/fonts/GretaArabicAR+LT-Regular.otf" as="font" type="font/otf" crossorigin>
+    <link rel="prefetch" href="assest/fonts/GretaArabicAR+LT-Light.otf" as="font" type="font/otf" crossorigin>
+
     <!-- Global Stylesheets (Centralized) -->
     <?php include('includes/stylesheets.php'); ?>
     

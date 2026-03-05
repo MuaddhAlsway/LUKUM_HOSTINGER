@@ -8,7 +8,19 @@ require_once 'lang/loader.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Privacy Policy - LAKUM Artspace</title>
-    <link rel="icon" href="assest/favicon.png" type="image/png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assest/logo/right_section.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assest/logo/right_section.png">
+    <link rel="apple-touch-icon" href="assest/logo/right_section.png">
+    <meta name="msapplication-TileImage" content="assest/logo/right_section.png">
+
+    <!-- Preload LCP image (hero) - Mobile-first with responsive variants -->
+    <link rel="preload" as="image" 
+          href="heroImage/img-4.webp"
+          imagesrcset="heroImage/img-4.webp 1200w"
+          imagesizes="(max-width: 768px) 100vw, 650px"
+          fetchpriority="high">
+    <!-- Preload critical fonts -->
+    <link rel="preload" href="assest/fonts/GretaArabicAR+LT-Regular.otf" as="font" type="font/otf" crossorigin>
 
     <!-- Inline Critical CSS for Instant LCP -->
     <style>
@@ -29,11 +41,15 @@ require_once 'lang/loader.php';
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
             background: #f6f6eb;
             color: #1a1a1a;
             overflow-x: hidden;
             line-height: 1.6
+        }
+        
+        * {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
         }
 
         .lakum-hero {
@@ -114,7 +130,7 @@ require_once 'lang/loader.php';
     </style>
 
     <!-- Preload Hero Image (Critical for LCP) -->
-    <link rel="preload" as="image" href="assest/img-4.webp" fetchpriority="high">
+    <link rel="preload" as="image" href="heroImage/img-3.webp" fetchpriority="high">
 
     <!-- DNS Prefetch for external resources -->
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
@@ -136,44 +152,13 @@ require_once 'lang/loader.php';
     <link rel="prefetch" href="assest/fonts/GretaArabicAR+LT-Regular.otf" as="font" type="font/otf" crossorigin>
     <link rel="prefetch" href="assest/fonts/GretaArabicAR+LT-Light.otf" as="font" type="font/otf" crossorigin>
 
-    <!-- Core Styles - Critical CSS loaded synchronously -->
     <!-- Global Stylesheets (Centralized) -->
     <?php include('includes/stylesheets.php'); ?>
 
-    <!-- Image Optimizer - Critical for performance -->
-    <!-- Scripts - Defer non-critical JavaScript -->
-    <script src="assest/navbar-mobile-toggle.js?v=5.0.0" defer></script>
-    <script src="assest/language-link-preserver.js?v=1.0.0" defer></script>
-    <script src="assest/fun-interactions.js" defer></script>
-    <script>
-        // Set language for JavaScript - Inline critical config
-        window.LAKUM_LANG = 'en';
-        window.LAKUM_DIR = 'ltr';
+    <!-- Page-specific styles -->
+    <link rel="stylesheet" href="privacy.css">
+    <script src="assest/static-json-translator.js?v=1.0.0" defer></script>
 
-        // Performance monitoring
-        if ('PerformanceObserver' in window) {
-            // Monitor Largest Contentful Paint
-            const lcpObserver = new PerformanceObserver((list) => {
-                const entries = list.getEntries();
-                const lastEntry = entries[entries.length - 1];
-                console.log('LCP:', lastEntry.renderTime || lastEntry.loadTime);
-            });
-            lcpObserver.observe({
-                entryTypes: ['largest-contentful-paint']
-            });
-
-            // Monitor First Input Delay
-            const fidObserver = new PerformanceObserver((list) => {
-                const entries = list.getEntries();
-                entries.forEach((entry) => {
-                    console.log('FID:', entry.processingStart - entry.startTime);
-                });
-            });
-            fidObserver.observe({
-                entryTypes: ['first-input']
-            });
-        }
-    </script>
     <style>
         .lakum-legal-hero {
             padding: clamp(120px, 15vw, 180px) 0 clamp(40px, 5vw, 60px) 0;

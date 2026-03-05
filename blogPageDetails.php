@@ -120,7 +120,10 @@ require_once 'api/image-helper.php';
         }
     </style>
 
-    <!-- Preload Hero Image (Critical for LCP) - Mobile-first with responsive variants -->
+    <!-- Preload Hero Image (Critical for LCP) -->
+    <link rel="preload" as="image" href="heroImage/img-3.webp" fetchpriority="high">
+
+    <!-- Preload LCP image (hero) - Mobile-first with responsive variants -->
     <link rel="preload" as="image" 
           href="heroImage/img-4.webp"
           imagesrcset="heroImage/img-4.webp 1200w"
@@ -128,9 +131,6 @@ require_once 'api/image-helper.php';
           fetchpriority="high">
     <!-- Preload critical fonts -->
     <link rel="preload" href="assest/fonts/GretaArabicAR+LT-Regular.otf" as="font" type="font/otf" crossorigin>
-    <link rel="preload" href="assest/fonts/GretaArabicAR+LT-Light.otf" as="font" type="font/otf" crossorigin>
-    <link rel="preload" href="assest/fonts/GretaTextArabicAR+LT-Regular.otf" as="font" type="font/otf" crossorigin>
-    <link rel="preload" href="assest/fonts/GretaTextArabicAR+LT-Light.otf" as="font" type="font/otf" crossorigin>
 
     <!-- DNS Prefetch for external resources -->
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
@@ -151,26 +151,12 @@ require_once 'api/image-helper.php';
     <link rel="prefetch" href="assest/fonts/GretaArabicAR+LT-Regular.otf" as="font" type="font/otf" crossorigin>
     <link rel="prefetch" href="assest/fonts/GretaArabicAR+LT-Light.otf" as="font" type="font/otf" crossorigin>
 
-    <!-- Greta Arabic Font - Universal for both Arabic and English -->
-    <!-- Core Styles - Critical CSS loaded synchronously -->
     <!-- Global Stylesheets (Centralized) -->
     <?php include('includes/stylesheets.php'); ?>
 
-    <!-- Blog Styles -->
-    <link rel="stylesheet" href="blog.css">
-
-    <!-- Blog Page Details Styles -->
+    <!-- Page-specific styles -->
     <link rel="stylesheet" href="blog-page-details.css">
-
-    <!-- Scripts - Defer non-critical JavaScript -->
-    <script src="assest/settings-links-loader.js?v=5.0.0" defer></script>
-    <script src="js/LanguageManager.js?v=1.0.0" defer></script>
-    <script src="assest/fun-interactions.js" defer></script>
-    <script>
-        // Set current language from PHP
-        window.LAKUM_LANG = '<?php echo getCurrentLanguage(); ?>';
-        window.LAKUM_DIR = window.LAKUM_LANG === 'ar' ? 'rtl' : 'ltr';
-    </script>
+    <script src="assest/static-json-translator.js?v=1.0.0" defer></script>
 <link rel="alternate" hreflang="en" href="https://lakumartspace.infinityfree.me/blogPageDetails.php?lang=en" />
 <link rel="alternate" hreflang="ar" href="https://lakumartspace.infinityfree.me/blogPageDetails.php?lang=ar" />
     <script src="assest/static-json-translator.js?v=1.0.0" defer></script></head>

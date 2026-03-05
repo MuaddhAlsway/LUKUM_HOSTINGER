@@ -6,41 +6,131 @@ require_once 'api/image-helper.php';
 <head>
 
     <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shop - LAKUM Artspace</title>
-<link rel="icon" type="image/png" sizes="32x32" href="assest/logo/right_section.png">
-<link rel="icon" type="image/png" sizes="16x16" href="assest/logo/right_section.png">
-<link rel="apple-touch-icon" href="assest/logo/right_section.png">
-<meta name="msapplication-TileImage" content="assest/logo/right_section.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop - LAKUM Artspace</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="assest/logo/right_section.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assest/logo/right_section.png">
+    <link rel="apple-touch-icon" href="assest/logo/right_section.png">
+    <meta name="msapplication-TileImage" content="assest/logo/right_section.png">
 
-<!-- Inline Critical CSS for Instant LCP -->
-<style>
-/* Critical CSS - Inline for instant rendering */
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{font-size:16px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
-body{font-family:'Greta Arabic','Greta Text Arabic',-apple-system,BlinkMacSystemFont,sans-serif!important;background:#f6f6eb;color:#1a1a1a;overflow-x:hidden;line-height:1.6}*{font-family:'Greta Arabic','Greta Text Arabic',-apple-system,BlinkMacSystemFont,sans-serif!important}
-.lakum-hero{position:relative;width:100%;height:85vh;min-height:600px;display:flex;align-items:center;justify-content:center;background:#1a1a1a;contain:layout style paint}
-.lakum-hero__image-wrapper{position:absolute;inset:0;z-index:1;overflow:hidden}
-.lakum-hero__image{width:100%;height:100%;object-fit:cover;display:block;will-change:transform;transform:translateZ(0)}
-.lakum-hero__overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.5) 0%,rgba(0,0,0,0.65) 100%);z-index:2}
-.lakum-hero__content{position:relative;z-index:3;text-align:center;color:#fff;max-width:1400px;width:90%;padding:0 20px}
-.lakum-hero__title{font-size:clamp(2.5rem,6vw,4.5rem);font-weight:300;line-height:1.2;margin:0 0 20px 0;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,0.3)}
-.lakum-hero__subtitle{font-size:clamp(1.1rem,2vw,1.4rem);font-weight:300;line-height:1.6;color:#fff;text-shadow:0 2px 6px rgba(0,0,0,0.3)}
-@media(max-width:768px){.lakum-hero{height:60vh;min-height:450px}}
-@media(max-width:480px){.lakum-hero{height:50vh;min-height:400px}}
-</style>
+    <!-- Preload LCP image (hero) - Mobile-first with responsive variants -->
+    <link rel="preload" as="image" 
+          href="heroImage/img-3.webp"
+          imagesrcset="heroImage/img-3.webp 1200w"
+          imagesizes="(max-width: 768px) 100vw, 650px"
+          fetchpriority="high">
+    <!-- Preload critical fonts -->
+    <link rel="preload" href="assest/fonts/GretaArabicAR+LT-Regular.otf" as="font" type="font/otf" crossorigin>
 
-<!-- Preload Hero Image (Critical for LCP) - Mobile-first with responsive variants -->
-<link rel="preload" as="image" 
-      href="heroImage/img-3.webp"
-      imagesrcset="heroImage/img-3.webp 1200w"
-      imagesizes="(max-width: 768px) 100vw, 650px"
-      fetchpriority="high">
-<!-- Preload critical fonts -->
-<link rel="preload" href="assest/fonts/GretaArabicAR+LT-Regular.otf" as="font" type="font/otf" crossorigin>
-<link rel="preload" href="assest/fonts/GretaArabicAR+LT-Light.otf" as="font" type="font/otf" crossorigin>
-<link rel="preload" href="assest/fonts/GretaTextArabicAR+LT-Regular.otf" as="font" type="font/otf" crossorigin>
-<link rel="preload" href="assest/fonts/GretaTextArabicAR+LT-Light.otf" as="font" type="font/otf" crossorigin>
+    <!-- Inline Critical CSS for Instant LCP -->
+    <style>
+        /* Critical CSS - Inline for instant rendering */
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        html {
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            background: #f6f6eb;
+            color: #1a1a1a;
+            overflow-x: hidden;
+            line-height: 1.6
+        }
+        
+        * {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+        }
+
+        .lakum-hero {
+            position: relative;
+            width: 100%;
+            height: 85vh;
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #1a1a1a;
+            contain: layout style paint
+        }
+
+        .lakum-hero__image-wrapper {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            overflow: hidden
+        }
+
+        .lakum-hero__image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            will-change: transform;
+            transform: translateZ(0)
+        }
+
+        .lakum-hero__overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.65) 100%);
+            z-index: 2
+        }
+
+        .lakum-hero__content {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            color: #fff;
+            max-width: 1400px;
+            width: 90%;
+            padding: 0 20px
+        }
+
+        .lakum-hero__title {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 300;
+            line-height: 1.2;
+            margin: 0 0 20px 0;
+            color: #fff;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3)
+        }
+
+        .lakum-hero__subtitle {
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
+            font-weight: 300;
+            line-height: 1.6;
+            color: #fff;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3)
+        }
+
+        @media(max-width:768px) {
+            .lakum-hero {
+                height: 60vh;
+                min-height: 450px
+            }
+        }
+
+        @media(max-width:480px) {
+            .lakum-hero {
+                height: 50vh;
+                min-height: 400px
+            }
+        }
+    </style>
+
+    <!-- Preload Hero Image (Critical for LCP) -->
+    <link rel="preload" as="image" href="heroImage/img-3.webp" fetchpriority="high">
 
 <!-- DNS Prefetch for external resources -->
 <link rel="dns-prefetch" href="https://fonts.googleapis.com">
@@ -52,146 +142,24 @@ body{font-family:'Greta Arabic','Greta Text Arabic',-apple-system,BlinkMacSystem
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
 
-<!-- Preload critical assets -->
-<link rel="preload" href="critical-inline.css" as="style">
-<link rel="preload" href="global-styles.css" as="style">
-<link rel="preload" href="lakum-components.css" as="style">
-
-
-<!-- Preload critical fonts -->
-<link rel="prefetch" href="assest/fonts/GretaArabicAR+LT-Regular.otf" as="font" type="font/otf" crossorigin>
-<link rel="prefetch" href="assest/fonts/GretaArabicAR+LT-Light.otf" as="font" type="font/otf" crossorigin>
-
-<!-- Core Styles - Critical CSS loaded synchronously -->
-<!-- Global Stylesheets (Centralized) -->
-<?php include('includes/stylesheets.php'); ?>
-<link rel="alternate" hreflang="en" href="https://lakumartspace.infinityfree.me/shop.php?lang=en" />
-<link rel="alternate" hreflang="ar" href="https://lakumartspace.infinityfree.me/shop.php?lang=ar" />
-
-<!-- Image Optimizer - Critical for performance -->
-<!-- Scripts - Defer non-critical JavaScript -->
-<script src="assest/navbar-mobile-toggle.js?v=5.0.0" defer></script>
-<script src="assest/fab-button.js" defer></script>
-<script src="assest/settings-links-loader.js?v=5.0.0" defer></script>
-<script src="assest/fun-interactions.js" defer></script>
-<script>
-    // Set language for JavaScript - Inline critical config
-    window.LAKUM_LANG = 'en';
-    window.LAKUM_DIR = 'ltr';
+    <!-- Preload critical assets -->
+    <link rel="preload" href="critical-inline.css" as="style">
+    <link rel="preload" href="global-styles.css" as="style">
+    <link rel="preload" href="lakum-components.css" as="style">
     
-    // Performance monitoring
-    if ('PerformanceObserver' in window) {
-        // Monitor Largest Contentful Paint
-        const lcpObserver = new PerformanceObserver((list) => {
-            const entries = list.getEntries();
-            const lastEntry = entries[entries.length - 1];
-            console.log('LCP:', lastEntry.renderTime || lastEntry.loadTime);
-        });
-        lcpObserver.observe({ entryTypes: ['largest-contentful-paint'] });
-        
-        // Monitor First Input Delay
-        const fidObserver = new PerformanceObserver((list) => {
-            const entries = list.getEntries();
-            entries.forEach((entry) => {
-                console.log('FID:', entry.processingStart - entry.startTime);
-            });
-        });
-        fidObserver.observe({ entryTypes: ['first-input'] });
-    }
-</script>
-    <style>
-        .lakum-shop-hero {
-            position: relative;
-            width: 100%;
-            height: 100vh;
-            min-height: 600px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-        
-        .lakum-shop-hero__image-wrapper {
-            position: absolute;
-            inset: 0;
-            z-index: 0;
-            overflow: hidden;
-        }
-        
-        .lakum-shop-hero__image-wrapper picture,
-        .lakum-shop-hero__image-wrapper img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-        
-        .lakum-shop-hero::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7));
-            z-index: 1;
-        }
-        
-        .lakum-shop-hero__content {
-            position: relative;
-            z-index: 2;
-            text-align: center;
-            color: #ffffff;
-            max-width: 800px;
-            padding: 0 clamp(20px, 3vw, 32px);
-        }
-        
-        .lakum-shop-hero__title {
-            font-size: clamp(2.5rem, 6vw, 4.5rem);
-            font-weight: 300;
-            letter-spacing: -0.02em;
-            margin: 0 0 clamp(24px, 3vw, 40px) 0;
-            line-height: 1.2;
-            color: #ffffff;
-            white-space: nowrap;
-            overflow: visible;
-        }
-        
-        /* Allow title to wrap on smaller screens */
-        @media (max-width: 1024px) {
-            .lakum-shop-hero__title {
-                white-space: normal;
-            }
-        }
-        
-        .lakum-shop-hero__btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            padding: clamp(16px, 2vw, 20px) clamp(40px, 5vw, 56px);
-            font-family: 'Atyp Kido TRIAL', sans-serif;
-            font-size: clamp(1rem, 1.5vw, 1.1rem);
-            font-weight: 500;
-            letter-spacing: 0.5px;
-            text-decoration: none;
-            background: #ffffff;
-            color: #1a1a1a;
-            border: 2px solid #ffffff;
-            border-radius: 2px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: pointer;
-        }
-        
-        .lakum-shop-hero__btn:hover {
-            background: #f6f6eb;
-            border-color: #f6f6eb;
-            transform: translateY(-3px);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
-        }
-        
-        .lakum-shop-hero__btn i {
-            font-size: 20px;
-        }
-    </style>
-<script src="assest/static-json-translator.js?v=1.0.0" defer></script></head>
+
+    <!-- Preload critical fonts -->
+    <link rel="prefetch" href="assest/fonts/GretaArabicAR+LT-Regular.otf" as="font" type="font/otf" crossorigin>
+    <link rel="prefetch" href="assest/fonts/GretaArabicAR+LT-Light.otf" as="font" type="font/otf" crossorigin>
+
+    <!-- Global Stylesheets (Centralized) -->
+    <?php include('includes/stylesheets.php'); ?>
+
+    <!-- Page-specific styles -->
+    <link rel="stylesheet" href="shop.css">
+    <script src="assest/static-json-translator.js?v=1.0.0" defer></script>
+<link rel="alternate" hreflang="en" href="https://lakumartspace.infinityfree.me/shop.php?lang=en" />
+<link rel="alternate" hreflang="ar" href="https://lakumartspace.infinityfree.me/shop.php?lang=ar" /></head>
 <body class="<?php echo getLanguageClass(); ?>">
     <div class="lakum-page-loader" id="pageLoader">
         <div class="lakum-page-loader__content">
@@ -201,126 +169,128 @@ body{font-family:'Greta Arabic','Greta Text Arabic',-apple-system,BlinkMacSystem
 
     <!-- Global Header Navigation (Centralized) -->
     <?php include('includes/header.php'); ?>
-// Intelligent Page Loader - Proper Implementation
-(function() {
-    const loader = document.getElementById('pageLoader');
-    if (!loader) return;
-    
-    // Hide loader immediately on page load
-    hideLoader();
-    
-    function showLoader() {
-        loader.classList.add('lakum-page-loader--active');
-    }
-    
-    function hideLoader() {
-        loader.classList.remove('lakum-page-loader--active');
-    }
-    
-    // Detect if link will open in new tab
-    function willOpenInNewTab(event, link) {
-        // Check if link has target attribute
-        if (link.target && link.target !== '_self') {
-            return true;
+
+    <script>
+    // Intelligent Page Loader - Proper Implementation
+    (function() {
+        const loader = document.getElementById('pageLoader');
+        if (!loader) return;
+        
+        // Hide loader immediately on page load
+        hideLoader();
+        
+        function showLoader() {
+            loader.classList.add('lakum-page-loader--active');
         }
         
-        // Check for modifier keys (Ctrl, Cmd, Shift)
-        if (event.ctrlKey || event.metaKey || event.shiftKey) {
-            return true;
+        function hideLoader() {
+            loader.classList.remove('lakum-page-loader--active');
         }
         
-        // Check for middle mouse button
-        if (event.button === 1) {
-            return true;
-        }
-        
-        return false;
-    }
-    
-    // Check if link is valid for loader
-    function shouldShowLoader(event, link) {
-        // No href
-        if (!link.href) return false;
-        
-        // JavaScript link
-        if (link.href.startsWith('javascript:')) return false;
-        
-        // External link
-        try {
-            const linkUrl = new URL(link.href);
-            const currentUrl = new URL(window.location.href);
+        // Detect if link will open in new tab
+        function willOpenInNewTab(event, link) {
+            // Check if link has target attribute
+            if (link.target && link.target !== '_self') {
+                return true;
+            }
             
-            // Different domain
-            if (linkUrl.hostname !== currentUrl.hostname) return false;
+            // Check for modifier keys (Ctrl, Cmd, Shift)
+            if (event.ctrlKey || event.metaKey || event.shiftKey) {
+                return true;
+            }
             
-            // Same page (including hash)
-            if (linkUrl.pathname === currentUrl.pathname) return false;
+            // Check for middle mouse button
+            if (event.button === 1) {
+                return true;
+            }
             
-        } catch (e) {
             return false;
         }
         
-        // Will open in new tab
-        if (willOpenInNewTab(event, link)) return false;
-        
-        return true;
-    }
-    
-    // Handle link clicks
-    document.addEventListener('click', function(e) {
-        const link = e.target.closest('a');
-        if (!link) return;
-        
-        if (shouldShowLoader(e, link)) {
-            showLoader();
+        // Check if link is valid for loader
+        function shouldShowLoader(event, link) {
+            // No href
+            if (!link.href) return false;
+            
+            // JavaScript link
+            if (link.href.startsWith('javascript:')) return false;
+            
+            // External link
+            try {
+                const linkUrl = new URL(link.href);
+                const currentUrl = new URL(window.location.href);
+                
+                // Different domain
+                if (linkUrl.hostname !== currentUrl.hostname) return false;
+                
+                // Same page (including hash)
+                if (linkUrl.pathname === currentUrl.pathname) return false;
+                
+            } catch (e) {
+                return false;
+            }
+            
+            // Will open in new tab
+            if (willOpenInNewTab(event, link)) return false;
+            
+            return true;
         }
-    }, true); // Use capture phase
-    
-    // Handle middle mouse button
-    document.addEventListener('auxclick', function(e) {
-        // Middle click (button 1) should not show loader
-        if (e.button === 1) {
+        
+        // Handle link clicks
+        document.addEventListener('click', function(e) {
+            const link = e.target.closest('a');
+            if (!link) return;
+            
+            if (shouldShowLoader(e, link)) {
+                showLoader();
+            }
+        }, true); // Use capture phase
+        
+        // Handle middle mouse button
+        document.addEventListener('auxclick', function(e) {
+            // Middle click (button 1) should not show loader
+            if (e.button === 1) {
+                hideLoader();
+            }
+        });
+        
+        // Hide loader when page becomes visible (handles all load scenarios)
+        function handlePageLoad() {
             hideLoader();
         }
-    });
-    
-    // Hide loader when page becomes visible (handles all load scenarios)
-    function handlePageLoad() {
-        hideLoader();
-    }
-    
-    // Multiple events to ensure loader hides
-    window.addEventListener('pageshow', handlePageLoad);
-    window.addEventListener('load', handlePageLoad);
-    document.addEventListener('DOMContentLoaded', handlePageLoad);
-    
-    // Handle back/forward navigation
-    window.addEventListener('popstate', handlePageLoad);
-    
-    // Hide if user switches tabs
-    document.addEventListener('visibilitychange', function() {
-        if (!document.hidden) {
-            hideLoader();
-        }
-    });
-    
-    // Failsafe: hide after 5 seconds
-    let loaderTimeout;
-    document.addEventListener('click', function(e) {
-        const link = e.target.closest('a');
-        if (link && shouldShowLoader(e, link)) {
+        
+        // Multiple events to ensure loader hides
+        window.addEventListener('pageshow', handlePageLoad);
+        window.addEventListener('load', handlePageLoad);
+        document.addEventListener('DOMContentLoaded', handlePageLoad);
+        
+        // Handle back/forward navigation
+        window.addEventListener('popstate', handlePageLoad);
+        
+        // Hide if user switches tabs
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) {
+                hideLoader();
+            }
+        });
+        
+        // Failsafe: hide after 5 seconds
+        let loaderTimeout;
+        document.addEventListener('click', function(e) {
+            const link = e.target.closest('a');
+            if (link && shouldShowLoader(e, link)) {
+                clearTimeout(loaderTimeout);
+                loaderTimeout = setTimeout(hideLoader, 5000);
+            }
+        }, true);
+        
+        // Clear timeout on page load
+        window.addEventListener('pageshow', function() {
             clearTimeout(loaderTimeout);
-            loaderTimeout = setTimeout(hideLoader, 5000);
-        }
-    }, true);
-    
-    // Clear timeout on page load
-    window.addEventListener('pageshow', function() {
-        clearTimeout(loaderTimeout);
-    });
-    
-})();
-</script>
+        });
+        
+    })();
+    </script>
 
     <!-- Shop Hero Section -->
     <section class="lakum-hero">
