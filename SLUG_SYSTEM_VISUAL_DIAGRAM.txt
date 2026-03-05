@@ -1,0 +1,61 @@
+╔═══════════════════════════════════════════════════════════════════════════════╗
+║                    SLUG-BASED URL SYSTEM - VISUAL DIAGRAM                    ║
+╚═══════════════════════════════════════════════════════════════════════════════╝
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ URL STRUCTURE COMPARISON                                                    │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+OLD (ID-based):
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ blogPageDetails.php?id=14&lang=en                                           │
+│                                                                              │
+│ Problems:                                                                    │
+│ ❌ Not SEO-friendly                                                          │
+│ ❌ No keywords in URL                                                        │
+│ ❌ Not user-friendly                                                         │
+│ ❌ Hard to remember                                                          │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+NEW (Slug-based):
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ blogPageDetails.php?title=performance-optimization-tips&lang=en             │
+│                                                                              │
+│ Benefits:                                                                    │
+│ ✅ SEO-friendly                                                              │
+│ ✅ Keywords in URL                                                           │
+│ ✅ User-friendly                                                             │
+│ ✅ Easy to remember                                                          │
+│ ✅ Shareable                                                                 │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ SLUG GENERATION PROCESS                                                     │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+Database:
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ id: 14                                                                       │
+│ title_en: "How to Optimize Performance"                                     │
+│ title_ar: "كيفية تحسين الأداء"                                              │
+│ content_en: "..."                                                            │
+│ content_ar: "..."                                                            │
+└─────────────────────────────────────────────────────────────────────────────┘
+                                    ↓
+                        Slug Generation Process
+                                    ↓
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ Step 1: Take title_en                                                       │
+│ "How to Optimize Performance"                                               │
+│                                                                              │
+│ Step 2: Convert to lowercase                                                │
+│ "how to optimize performance"                                               │
+│                                                                              │
+│ Step 3: Replace spaces with hyphens                                         │
+│ "how-to-optimize-performance"                                               │
+│                                                                              │
+│ Step 4: Remove special characters                                           │
+│ "how-to-optimize-performance" (no special chars to remove)                  │
+│                                                                              │
+│ Result: SLUG                                                                │
+│ "how-to-optimize-performance"                            
