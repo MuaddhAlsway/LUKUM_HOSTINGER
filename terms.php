@@ -142,7 +142,7 @@ require_once 'lang/loader.php';
     <link rel="stylesheet" href="lakum-components.css">
     <link rel="stylesheet" href="assest/mobile-menu.css">
     <link rel="stylesheet" href="assest/fab-button.css">
-    <link rel="stylesheet" href="assest/app-header.css">
+    <link rel="stylesheet" href="assest/lakum-header.css">
     <link rel="stylesheet" href="Home.min.css">
 
     <!-- RTL Styles -->
@@ -548,7 +548,7 @@ Compliance with these terms ensures the preservation of Lakum Artspace’s profe
     </script>
 
     <script src="assest/popup-notification.js?v=5.0.0" defer></script>
-    <script src="assest/app-header.js" defer></script>
+    <script src="assest/lakum-header.js" defer></script>
 
     <script>
         // Load legal page content dynamically based on current language

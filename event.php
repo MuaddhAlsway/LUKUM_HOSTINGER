@@ -161,7 +161,7 @@ require_once 'api/image-helper.php';
     <link rel="stylesheet" href="lakum-components.css">
     <link rel="stylesheet" href="assest/mobile-menu.css">
     <link rel="stylesheet" href="assest/fab-button.css">
-    <link rel="stylesheet" href="assest/app-header.css">
+    <link rel="stylesheet" href="assest/lakum-header.css">
     
     <!-- Non-critical CSS - Defer loading -->
     <link rel="preload" href="Home.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -1063,7 +1063,7 @@ require_once 'api/image-helper.php';
     </script>
 
     <div class="fab-button" id="fabButton"><button class="fab-button__trigger" id="fabTrigger" aria-label="Contact options" aria-expanded="false"><i class="ri-mail-line fab-button__icon"></i><i class="ri-close-line fab-button__close"></i></button><div class="fab-button__menu" id="fabMenu" role="menu"><a href="tel:+966920012083" class="fab-button__item" role="menuitem" data-tooltip="Call us"><i class="ri-phone-line"></i></a><a href="https://wa.me/966920012083" target="_blank" class="fab-button__item" role="menuitem" data-tooltip="WhatsApp"><i class="ri-whatsapp-line"></i></a><a href="mailto:info@lakumartspace.com" class="fab-button__item" role="menuitem" data-tooltip="Email"><i class="ri-mail-line"></i></a></div></div><script src="assest/fab-button.js" defer></script>
-    <script src="assest/app-header.js" defer></script>
+    <script src="assest/lakum-header.js" defer></script>
     </body>
 
 </html>

@@ -24,7 +24,7 @@ require_once 'api/image-helper.php';
 <link rel="stylesheet" href="lakum-components.css">
 <link rel="stylesheet" href="assest/mobile-menu.css">
 <link rel="stylesheet" href="assest/fab-button.css">
-<link rel="stylesheet" href="assest/app-header.css">
+<link rel="stylesheet" href="assest/lakum-header.css">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" media="print" onload="this.media='all'">
 <noscript><link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet"></noscript>
 <link rel="stylesheet" href="Home.min.css" media="print" onload="this.media='all'">
@@ -929,7 +929,7 @@ html[lang="ar"] .lakum-event-card__date {
 
     <script src="assest/fun-interactions.js?v=5.0.0" defer></script>
     <script src="assest/navbar-mobile-toggle.js?v=5.0.0" defer></script>
-    <script src="assest/app-header.js" defer></script>
+    <script src="assest/lakum-header.js" defer></script>
 </body>
 </html>
 

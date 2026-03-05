@@ -68,7 +68,7 @@ body{font-family:'Greta Arabic','Greta Text Arabic',-apple-system,BlinkMacSystem
 <link rel="stylesheet" href="lakum-components.css">
 <link rel="stylesheet" href="assest/mobile-menu.css">
 <link rel="stylesheet" href="assest/fab-button.css">
-<link rel="stylesheet" href="assest/app-header.css">
+<link rel="stylesheet" href="assest/lakum-header.css">
 <link rel="stylesheet" href="Home.min.css">
 
 <!-- RTL Styles -->
@@ -404,7 +404,7 @@ body{font-family:'Greta Arabic','Greta Text Arabic',-apple-system,BlinkMacSystem
 
 <script src="assest/fun-interactions.js" defer></script>
 <script src="assest/navbar-mobile-toggle.js" defer></script>
-<script src="assest/app-header.js" defer></script>
+<script src="assest/lakum-header.js" defer></script>
 <script>
 // Mobile menu toggle
 (function() {
