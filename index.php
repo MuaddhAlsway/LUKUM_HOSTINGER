@@ -26,7 +26,6 @@ require_once 'lang/loader.php';
     <noscript><link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet"></noscript>
     
     <!-- Async CSS - Non-blocking -->
-    <link rel="preload" href="Home.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preload" href="fonts/greta-arabic.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preload" href="assest/language-switcher.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preload" href="assest/popup-notification.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
