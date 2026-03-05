@@ -193,7 +193,7 @@ require_once 'api/image-helper.php';
 
 <link rel="alternate" hreflang="en" href="https://lakumartspace.infinityfree.me/blog.php?lang=en" />
 <link rel="alternate" hreflang="ar" href="https://lakumartspace.infinityfree.me/blog.php?lang=ar" />
-    <script src="assest/static-json-translator.js?v=1.0.0" defer></script></head>
+</head>
 
 <body class="<?php echo getLanguageClass(); ?>">
     <div class="lakum-page-loader" id="pageLoader">
