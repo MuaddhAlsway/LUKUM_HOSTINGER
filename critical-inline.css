@@ -4,10 +4,16 @@ html { font-size: 16px; -webkit-font-smoothing: antialiased; -moz-osx-font-smoot
 body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif; background: #f6f6eb; color: #1a1a1a; overflow-x: hidden; line-height: 1.6; }
 
 /* Header */
-.lakum-header { background: #fff; border-bottom: 1px solid #e8e8e8; position: sticky; top: 0; z-index: 100; }
-.lakum-header__container { max-width: 1600px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 60px); display: flex; align-items: center; justify-content: space-between; height: 80px; }
-.lakum-logo { display: flex; align-items: center; gap: 8px; text-decoration: none; }
-.lakum-logo img { height: 50px; width: auto; display: block; }
+.app-header { background: rgba(246, 246, 235, 0.98); border-bottom: 1px solid rgba(209, 209, 209, 0.2); position: sticky; top: 0; z-index: 1000; }
+.app-header__container { max-width: 1600px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 60px); display: flex; align-items: center; justify-content: space-between; height: 80px; }
+.app-logo { display: flex; align-items: center; gap: 0; text-decoration: none; }
+.app-logo__left, .app-logo__right { height: 50px; width: auto; display: block; }
+
+/* Navigation - Desktop */
+.app-nav { flex: 1; display: flex; justify-content: center; position: static; width: auto; height: auto; background: transparent; padding: 0; transform: none; box-shadow: none; overflow: visible; z-index: auto; flex-direction: row; top: auto; left: auto; visibility: visible; opacity: 1; }
+.app-nav__list { display: flex; align-items: center; gap: clamp(20px, 3vw, 48px); list-style: none; margin: 0; padding: 0; visibility: visible; opacity: 1; width: 100%; }
+.app-nav__item { position: relative; display: flex; align-items: center; flex-shrink: 0; width: auto; }
+.app-nav__link { font-family: 'Atyp Kido TRIAL', sans-serif; font-size: 15px; font-weight: 400; letter-spacing: 0.5px; color: #1a1a1a; text-decoration: none; text-transform: capitalize; padding: 8px 0; position: relative; transition: color 0.3s ease; }
 
 /* Hero */
 .lakum-hero { position: relative; width: 100%; height: 85vh; min-height: 600px; display: flex; align-items: center; justify-content: center; background: #1a1a1a; contain: layout style paint; }
@@ -32,13 +38,13 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Ne
 }
 
 @media (max-width: 768px) {
-  .lakum-header__container { height: 70px; padding: 0 20px; display: flex; align-items: center; justify-content: space-between; position: relative; }
-  .lakum-header__mobile-toggle { display: flex !important; position: absolute; left: 20px; margin: 0; z-index: 1001; }
-  .lakum-header__logo { position: absolute; left: 50%; transform: translateX(-50%); }
-  .lakum-logo__left, .lakum-logo__right { height: 40px; }
-  .lakum-language-switcher { position: absolute; right: 10px; left: auto; margin: 0; z-index: 1002; }
+  .app-header__container { height: 70px; padding: 0 20px; display: flex; align-items: center; justify-content: space-between; position: relative; }
+  .app-header__menu-toggle { display: flex !important; position: absolute; right: 20px; margin: 0; z-index: 1001; }
+  .app-header__logo { position: absolute; left: 50%; transform: translateX(-50%); }
+  .app-logo__left, .app-logo__right { height: 40px; }
+  .app-header__controls { position: absolute; left: 20px; margin: 0; z-index: 1002; display: flex; align-items: center; gap: 10px; flex-direction: row-reverse; }
   
-  .lakum-nav {
+  .app-nav {
     position: fixed !important;
     top: 0 !important;
     left: 0 !important;
@@ -50,7 +56,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Ne
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
     box-shadow: 4px 0 24px rgba(0, 0, 0, 0.1) !important;
     overflow-y: auto !important;
-    z-index: 1001 !important;
+    z-index: 999 !important;
     display: flex !important;
     flex-direction: column !important;
     gap: 0 !important;
@@ -58,7 +64,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Ne
     justify-content: flex-start !important;
   }
   
-  .lakum-nav::before {
+  .app-nav::before {
     content: '' !important;
     position: fixed !important;
     top: 0 !important;
@@ -72,34 +78,23 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Ne
     z-index: -1 !important;
   }
   
-  .lakum-nav--active {
+  .app-nav--active {
     transform: translateX(0) !important;
-    z-index: 999 !important;
+    z-index: 1001 !important;
   }
   
-  .lakum-nav--active::before {
+  .app-nav--active::before {
     opacity: 1 !important;
     visibility: visible !important;
   }
   
-  .lakum-nav__list { display: flex !important; flex-direction: column !important; align-items: center !important; gap: clamp(20px, 3vw, 48px) !important; list-style: none !important; margin: 0 !important; padding: 0 !important; width: 100% !important; }
-  .lakum-nav__item { width: 100% !important; border-bottom: 1px solid rgba(209, 209, 209, 0.2) !important; text-align: center !important; }
-  .lakum-nav__link { display: block !important; padding: 20px 0 !important; font-size: 18px !important; text-align: center !important; }
-  
-  .lakum-contact-fab { bottom: 24px !important; right: 24px !important; z-index: 1050 !important; }
-  .lakum-contact-fab__trigger { width: 56px !important; height: 56px !important; }
-  .lakum-contact-fab__icon, .lakum-contact-fab__close { font-size: 22px !important; }
-  .lakum-contact-fab__item { width: 50px !important; height: 50px !important; font-size: 20px !important; }
-  .lakum-contact-fab__menu { bottom: 70px !important; }
+  .app-nav__list { display: flex !important; flex-direction: column !important; align-items: center !important; gap: clamp(20px, 3vw, 48px) !important; list-style: none !important; margin: 0 !important; padding: 0 !important; width: 100% !important; }
+  .app-nav__item { width: 100% !important; border-bottom: 1px solid rgba(209, 209, 209, 0.2) !important; text-align: center !important; flex-shrink: 0 !important; }
+  .app-nav__link { display: block !important; padding: 20px 0 !important; font-size: 18px !important; text-align: center !important; }
 }
 
 @media (max-width: 480px) {
-  .lakum-header__container { height: 60px; padding: 0 20px; }
-  .lakum-logo__left, .lakum-logo__right { height: 40px; }
-  .lakum-nav { max-width: 100% !important; padding: 80px 30px 30px !important; }
-  .lakum-contact-fab { bottom: 20px !important; right: 20px !important; }
-  .lakum-contact-fab__trigger { width: 52px !important; height: 52px !important; }
-  .lakum-contact-fab__icon, .lakum-contact-fab__close { font-size: 20px !important; }
-  .lakum-contact-fab__item { width: 48px !important; height: 48px !important; font-size: 18px !important; }
-  .lakum-contact-fab__item::before { display: none !important; }
+  .app-header__container { height: 60px; padding: 0 20px; }
+  .app-logo__left, .app-logo__right { height: 40px; }
+  .app-nav { max-width: 100% !important; padding: 80px 30px 30px !important; }
 }
