@@ -528,7 +528,8 @@ require_once 'api/image-helper.php';
         // Helper function to get blog URL (slug or id)
         const getBlogUrl = (blog) => {
             const slug = blog.slug || blog.id;
-            return `blogPageDetails.php?id=${slug}`;
+            const lang = window.LAKUM_LANG || localStorage.getItem('lakum_language') || 'en';
+            return `blogPageDetails.php?id=${slug}&lang=${lang}`;
         };
 
         // Translation strings for JavaScript
@@ -934,7 +935,8 @@ require_once 'api/image-helper.php';
                     `;
                     
                     card.addEventListener('click', () => {
-                        window.location.href = `blogPageDetails.php?id=${blog.id}`;
+                        const lang = window.LAKUM_LANG || localStorage.getItem('lakum_language') || 'en';
+                        window.location.href = `blogPageDetails.php?id=${blog.id}&lang=${lang}`;
                     });
                     
                     blogGrid.appendChild(card);
