@@ -204,7 +204,6 @@
     background: #1a1a1a;
     color: rgb(255, 255, 255);
     overflow: hidden;
-    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-clamp: 2; word-break: break-word;
 }
 
 .lakum-exhibitions-featured__text {
@@ -250,10 +249,9 @@
 /* Ensure button in featured banner has dark border */
 
 .lakum-exhibitions-featured .lakum-btn--primary {
-    border: 2px solid #1a1a1a !important;
+    border: 2px solid #ffffff !important;
     background: transparent !important;
     color: #ffffff !important;
-    border:solid #ffff 1px !important;
 }
 
 .lakum-exhibitions-featured .lakum-btn--primary:hover {

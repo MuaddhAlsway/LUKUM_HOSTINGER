@@ -41,7 +41,7 @@ require_once 'lang/loader.php';
         html { font-size: 16px; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
         body {  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f6f6eb; color: #1a1a1a; overflow-x: hidden; line-height: 1.6; }
         
-        .lakum-hero { position: relative; width: 100%; height: 85vh; min-height: 600px; display: flex; align-items: center; justify-content: center; background: #1a1a1a; }
+        .lakum-hero { width: 100%; height: 65vh; min-height: 450px; max-height: 650px; overflow: hidden; position: relative; display: flex; align-items: center; justify-content: center; background: #1a1a1a; }
         .lakum-hero__image-wrapper { position: absolute; inset: 0; overflow: hidden; }
         .lakum-hero__image { width: 100%; height: 100%; object-fit: cover; display: block; }
         .lakum-hero__overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.65) 100%); }
@@ -127,14 +127,14 @@ margin: 0 auto;}
         .lakum-section-cta { display: flex; justify-content: center; margin-top: 40px; }
         
         @media (max-width: 768px) {
-            .lakum-hero { height: 60vh; min-height: 450px; }
+            .lakum-hero { height: 55vh; min-height: 400px; }
             .lakum-featured-banner__content { grid-template-columns: 1fr; gap: 30px; }
             .lakum-cta__title { font-size: 2rem; }
             .lakum-section-divider { flex-direction: column; gap: 15px; }
             .lakum-section-divider__line { display: none; }
         }
         @media (max-width: 480px) {
-            .lakum-hero { height: 50vh; min-height: 400px; }
+            .lakum-hero { height: 45vh; min-height: 350px; }
         }
         .lakum-btn { 
             background: #000 !important; 

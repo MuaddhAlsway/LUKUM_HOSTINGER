@@ -60,15 +60,11 @@ body {
 }
 
 .lakum-hero {
-  position: relative;
   width: 100%;
-  height: 85vh;
-  min-height: 600px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #1a1a1a;
-  z-index: 0;
+  height: 65vh;
+  min-height: 450px;
+  max-height: 650px;
+  overflow: hidden;
 }
 
 @media (max-width: 768px) {
