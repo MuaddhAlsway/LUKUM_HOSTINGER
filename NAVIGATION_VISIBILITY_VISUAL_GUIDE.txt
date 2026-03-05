@@ -1,0 +1,236 @@
+╔═══════════════════════════════════════════════════════════════════════════════╗
+║                  NAVIGATION VISIBILITY FIX - VISUAL GUIDE                     ║
+╚═══════════════════════════════════════════════════════════════════════════════╝
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ PROBLEM: Navigation Items Invisible                                         │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+BEFORE FIX:
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ <nav class="app-nav">                                                       │
+│   <ul class="app-nav__list">                                                │
+│     <li class="app-nav__item">  ← EXISTS IN DOM BUT INVISIBLE               │
+│       <a class="app-nav__link">Home</a>                                     │
+│     </li>                                                                    │
+│     <li class="app-nav__item">  ← EXISTS IN DOM BUT INVISIBLE               │
+│       <a class="app-nav__link">About</a>                                    │
+│     </li>                                                                    │
+│     <!-- 7 more items -->                                                   │
+│   </ul>                                                                      │
+│ </nav>                                                                       │
+│                                                                              │
+│ DevTools Shows:                                                              │
+│   ✅ Elements present                                                        │
+│   ✅ Classes applied                                                         │
+│   ✅ display: flex                                                           │
+│   ❌ width: 0 (COLLAPSED)                                                    │
+│   ❌ Not visible on page                                                     │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ ROOT CAUSE: CSS Flexbox Constraint                                          │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+CSS BEFORE FIX:
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ .app-nav {                                                                   │
+│     flex: 1;              ← Expand to fill space                            │
+│     min-width: 0;         ← But can shrink to 0 ← PROBLEM!                  │
+│     display: flex;                                                           │
+│ }                                                                            │
+│                                                                              │
+│ .app-nav__item {                                                             │
+│     display: flex;                                                           │
+│     /* No width constraint */                                                │
+│ }                                                                            │
+│                                                                              │
+│ RESULT:                                                                      │
+│   flex: 1 (expand) + min-width: 0 (shrink) = SHRINK                        │
+│   Items collapse to 0 width → INVISIBLE                                     │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ SOLUTION: Remove Constraint & Add Width Properties                          │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+CSS AFTER FIX:
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ .app-nav {                                                                   │
+│     flex: 1;              ← Expand to fill space                            │
+│     display: flex;                                                           │
+│     /* min-width: 0 removed */                                               │
+│ }                                                                            │
+│                                                                              │
+│ .app-nav__item {                                                             │
+│     display: flex;                                                           │
+│     flex-shrink: 0;       ← Don't shrink                                    │
+│     width: auto;          ← Maintain content width                          │
+│ }                                                                            │
+│                                                                              │
+│ RESULT:                                                                      │
+│   flex: 1 (expand) + flex-shrink: 0 (don't shrink) = EXPAND                │
+│   Items maintain width → VISIBLE                                            │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ BEFORE vs AFTER COMPARISON                                                  │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+DESKTOP VIEW (> 768px):
+
+BEFORE:
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ [LOGO]                    [HAMBURGER]                                       │
+│                                                                              │
+│ Navigation items: (invisible - width: 0)                                    │
+│                                                                              │
+│ Page content...                                                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+AFTER:
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ [LOGO]  Home  About  Spaces  Exhibitions  Calendar  Blog  Press  Contact   │
+│                                                                              │
+│ Page content...                                                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+MOBILE VIEW (≤ 768px):
+
+BEFORE:
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ [LANG] [LOGO] [MENU]                                                        │
+│                                                                              │
+│ Menu opened but items invisible:                                            │
+│ ┌─────────────────────────────────────────────────────────────────────────┐ │
+│ │ (empty - items have width: 0)                                           │ │
+│ │                                                                          │ │
+│ │                                                                          │ │
+│ └─────────────────────────────────────────────────────────────────────────┘ │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+AFTER:
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ [LANG] [LOGO] [MENU]                                                        │
+│                                                                              │
+│ Menu opened with visible items:                                             │
+│ ┌─────────────────────────────────────────────────────────────────────────┐ │
+│ │ Home                                                                    │ │
+│ │ About                                                                   │ │
+│ │ Spaces                                                                  │ │
+│ │ Exhibitions                                                             │ │
+│ │ Calendar                                                                │ │
+│ │ Blog                                                                    │ │
+│ │ Press                                                                   │ │
+│ │ Contact                                                                 │ │
+│ │ Shop                                                                    │ │
+│ └─────────────────────────────────────────────────────────────────────────┘ │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ DEVTOOLS INSPECTION                                                         │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+BEFORE FIX:
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ <li class="app-nav__item">                                                   │
+│   Computed Styles:                                                           │
+│   ├─ display: flex                                                           │
+│   ├─ position: relative                                                      │
+│   ├─ align-items: center                                                     │
+│   ├─ width: 0px          ← PROBLEM!                                         │
+│   ├─ height: auto                                                            │
+│   ├─ visibility: visible                                                     │
+│   └─ opacity: 1                                                              │
+│                                                                              │
+│ Result: ❌ INVISIBLE (width is 0)                                            │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+AFTER FIX:
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ <li class="app-nav__item">                                                   │
+│   Computed Styles:                                                           │
+│   ├─ display: flex                                                           │
+│   ├─ position: relative                                                      │
+│   ├─ align-items: center                                                     │
+│   ├─ flex-shrink: 0      ← ADDED                                            │
+│   ├─ width: auto         ← ADDED                                            │
+│   ├─ height: auto                                                            │
+│   ├─ visibility: visible                                                     │
+│   └─ opacity: 1                                                              │
+│                                                                              │
+│ Result: ✅ VISIBLE (width is auto)                                           │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ FLEXBOX LAYOUT DIAGRAM                                                      │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+BEFORE FIX (BROKEN):
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ .app-nav (flex: 1, min-width: 0)                                             │
+│ ┌─────────────────────────────────────────────────────────────────────────┐ │
+│ │ .app-nav__list (display: flex)                                          │ │
+│ │ ┌──┐ ┌──┐ ┌──┐ ┌──┐ ┌──┐ ┌──┐ ┌──┐ ┌──┐ ┌──┐                          │ │
+│ │ │  │ │  │ │  │ │  │ │  │ │  │ │  │ │  │ │  │  ← width: 0 (collapsed) │ │
+│ │ └──┘ └──┘ └──┘ └──┘ └──┘ └──┘ └──┘ └──┘ └──┘                          │ │
+│ │ Items invisible!                                                        │ │
+│ └─────────────────────────────────────────────────────────────────────────┘ │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+AFTER FIX (WORKING):
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ .app-nav (flex: 1)                                                           │
+│ ┌─────────────────────────────────────────────────────────────────────────┐ │
+│ │ .app-nav__list (display: flex)                                          │ │
+│ │ ┌────┐ ┌────┐ ┌────┐ ┌────┐ ┌────┐ ┌────┐ ┌────┐ ┌────┐ ┌────┐       │ │
+│ │ │Home│ │Abt │ │Spc │ │Exh │ │Cal │ │Blog│ │Prs │ │Cnt │ │Shop│       │ │
+│ │ └────┘ └────┘ └────┘ └────┘ └────┘ └────┘ └────┘ └────┘ └────┘       │ │
+│ │ Items visible with proper width!                                       │ │
+│ └─────────────────────────────────────────────────────────────────────────┘ │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ TESTING CHECKLIST                                                           │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+DESKTOP (> 768px):
+  ✅ Navigation items visible
+  ✅ Items have proper spacing
+  ✅ Items are clickable
+  ✅ Horizontal layout
+
+MOBILE (≤ 768px):
+  ✅ Menu opens correctly
+  ✅ Navigation items visible
+  ✅ Items have full width
+  ✅ Items are clickable
+  ✅ Vertical layout
+
+RTL (Arabic):
+  ✅ Items visible and right-aligned
+  ✅ All functionality works
+
+GENERAL:
+  ✅ No console errors
+  ✅ No layout shift
+  ✅ No performance issues
+  ✅ No breaking changes
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ SUMMARY                                                                     │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+PROBLEM:    Navigation items invisible (width: 0)
+ROOT CAUSE: min-width: 0 on flex container
+SOLUTION:   Remove min-width: 0 + add flex-shrink: 0; width: auto;
+RESULT:     ✅ Navigation items now visible and functional
+
+FILES:      assest/app-header.css (3 CSS rules changed)
+TIME:       2 minutes
+IMPACT:     Positive (removed unnecessary constraint)
+BREAKING:   None
+
+╔═══════════════════════════════════════════════════════════════════════════════╗
+║                            ✅ ISSUE RESOLVED                                 ║
+╚═══════════════════════════════════════════════════════════════════════════════╝
