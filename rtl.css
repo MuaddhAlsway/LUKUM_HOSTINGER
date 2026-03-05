@@ -57,17 +57,6 @@ html[dir="rtl"] {
    ============================================ */
 
 /* Header Container - Fix layout shift */
-[dir="rtl"] .lakum-header__container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 80px;
-    max-width: 1600px;
-    margin: 0 auto;
-    padding: 0 clamp(20px, 5vw, 60px);
-}
-
-/* App Header Container - RTL Support */
 [dir="rtl"] .app-header__container {
     display: flex;
     align-items: center;
@@ -79,20 +68,20 @@ html[dir="rtl"] {
 }
 
 /* Logo - Remove extra margin */
-[dir="rtl"] .lakum-header__logo {
+[dir="rtl"] .app-header__logo {
     flex-shrink: 0;
     margin-right: 0;
     margin-left: 0;
 }
 
 /* Navigation - Ensure no extra spacing */
-[dir="rtl"] .lakum-nav {
+[dir="rtl"] .app-nav {
     flex: 1;
     display: flex;
     justify-content: center;
 }
 
-[dir="rtl"] .lakum-nav__list {
+[dir="rtl"] .app-nav__list {
     display: flex;
     align-items: center;
     gap: clamp(20px, 3vw, 48px);
@@ -101,12 +90,12 @@ html[dir="rtl"] {
     padding: 0;
 }
 
-[dir="rtl"] .lakum-nav__item {
+[dir="rtl"] .app-nav__item {
     margin: 0;
     padding: 0;
 }
 
-[dir="rtl"] .lakum-nav__link {
+[dir="rtl"] .app-nav__link {
     font-family: 'Atyp Kido TRIAL', sans-serif;
     font-size: 15px;
     font-weight: 400;
@@ -120,41 +109,41 @@ html[dir="rtl"] {
 }
 
 /* RTL Header menu open state */
-[dir="rtl"] .lakum-header--menu-open {
-    background: rgba(246, 246, 235, 0.95) !important;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+[dir="rtl"] .app-header--menu-open {
+    background: rgba(246, 246, 235, 0.95);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-[dir="rtl"] .lakum-header--menu-open .lakum-header__container {
-    border-bottom: 1px solid rgba(209, 209, 209, 0.3) !important;
+[dir="rtl"] .app-header--menu-open .app-header__container {
+    border-bottom: 1px solid rgba(209, 209, 209, 0.3);
 }
 
 /* Language Switcher - Fix positioning */
-[dir="rtl"] .lakum-language-switcher {
+[dir="rtl"] .app-language-switcher {
     margin-left: auto;
     margin-right: 0;
     flex-shrink: 0;
 }
 
-[dir="rtl"] .lakum-lang-link {
+[dir="rtl"] .app-lang-link {
     flex-direction: row-reverse;
     white-space: nowrap;
 }
 
-[dir="rtl"] .lakum-lang-link i {
+[dir="rtl"] .app-lang-link i {
     margin-left: 0;
     margin-right: 6px;
 }
 
 /* Mobile Toggle */
-[dir="rtl"] .lakum-header__mobile-toggle {
+[dir="rtl"] .app-header__menu-toggle {
     right: auto;
     left: 20px;
     flex-shrink: 0;
 }
 
 /* Mobile Menu */
-[dir="rtl"] .lakum-nav {
+[dir="rtl"] .app-nav {
     margin: 0;
 }
 

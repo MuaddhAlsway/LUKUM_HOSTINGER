@@ -445,7 +445,7 @@
 }
 
 [dir="rtl"] .app-header__menu-toggle[aria-expanded="true"] .app-header__menu-icon::before {
-    transform: rotate(45deg);
+    transform: rotate(45deg) translate(8px, 8px);
 }
 
 [dir="rtl"] .app-header__menu-toggle[aria-expanded="true"] .app-header__menu-icon {
@@ -453,7 +453,7 @@
 }
 
 [dir="rtl"] .app-header__menu-toggle[aria-expanded="true"] .app-header__menu-icon::after {
-    transform: rotate(-45deg);
+    transform: rotate(-45deg) translate(7px, -7px);
 }
 
 [dir="rtl"] .app-nav {

@@ -21,12 +21,12 @@ require_once 'lang/loader.php';
     <link rel="stylesheet" href="assest/mobile-menu.css">
     <link rel="stylesheet" href="assest/fab-button.css">
     <link rel="stylesheet" href="assest/app-header.css">
+    <link rel="stylesheet" href="rtl.css">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" media="print" onload="this.media='all'">
     <noscript><link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet"></noscript>
     
     <!-- Async CSS - Non-blocking -->
     <link rel="preload" href="Home.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="rtl.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preload" href="fonts/greta-arabic.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preload" href="assest/language-switcher.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preload" href="assest/popup-notification.css" as="style" onload="this.onload=null;this.rel='stylesheet'">

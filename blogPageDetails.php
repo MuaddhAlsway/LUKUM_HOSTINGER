@@ -368,19 +368,27 @@ require_once 'api/image-helper.php';
                 .then(data => {
                     if (data.success && data.data) {
                         const blog = data.data;
-                        const englishTitle = blog.title_en || blog.title;
+                        const englishTitle = blog.title_en || blog.title || '';
                         const titleSlug = englishTitle.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
                         
-                        const newUrl = new URL(window.location);
-                        newUrl.searchParams.set('title', titleSlug);
-                        newUrl.searchParams.delete('id');
-                        if (!newUrl.searchParams.get('lang')) {
-                            newUrl.searchParams.set('lang', lang);
+                        if (titleSlug) {
+                            const newUrl = new URL(window.location);
+                            newUrl.searchParams.set('title', titleSlug);
+                            newUrl.searchParams.delete('id');
+                            if (!newUrl.searchParams.get('lang')) {
+                                newUrl.searchParams.set('lang', lang);
+                            }
+                            window.location.replace(newUrl.toString());
                         }
-                        window.location.replace(newUrl.toString());
+                    } else {
+                        console.error('Blog not found:', data);
+                        document.getElementById('blog-title').textContent = 'Blog not found';
                     }
                 })
-                .catch(err => console.error('Redirect error:', err));
+                .catch(err => {
+                    console.error('Redirect error:', err);
+                    document.getElementById('blog-title').textContent = 'Error loading blog';
+                });
             
             // Exit early - don't load blog details yet
             document.addEventListener('DOMContentLoaded', () => {
