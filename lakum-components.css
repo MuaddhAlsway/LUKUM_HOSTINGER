@@ -71,6 +71,8 @@ body {
     flex: 1;
     display: flex;
     justify-content: center;
+    position: relative;
+    z-index: 1001;
 }
 
 .lakum-nav__list {
@@ -80,6 +82,8 @@ body {
     list-style: none;
     margin: 0;
     padding: 0;
+    position: relative;
+    z-index: 1001;
 }
 
 .lakum-nav__item {
