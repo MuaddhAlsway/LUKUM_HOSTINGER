@@ -103,13 +103,13 @@
     left: 50%;
     width: 0;
     height: 2px;
-    background: var(--header-active);
+    background: var(--header-text);
     transform: translateX(-50%);
     transition: width 0.3s ease;
 }
 
 .lakum-nav__link:hover {
-    background: var(--header-hover);
+    background: var(--header-text);
 }
 
 .lakum-nav__link:hover::after {
@@ -148,8 +148,8 @@
 
 .lakum-lang-link:hover {
     background: var(--header-hover);
-    border-color: var(--header-active);
-    color: var(--header-active);
+    border-color: var(--header-bg);
+    color: var(--header-text);
 }
 
 .lakum-lang-link i {
@@ -258,6 +258,10 @@ html[dir="rtl"] .lakum-lang-link {
         --header-height: 60px;
     }
 
+    .lakum-header {
+        background: #ffffff;
+    }
+
     .lakum-header__container {
         gap: 12px;
     }
@@ -267,21 +271,25 @@ html[dir="rtl"] .lakum-lang-link {
     }
 
     .lakum-nav {
-        position: absolute;
+        position: fixed;
         top: var(--header-height);
         left: 0;
         right: 0;
-        background: var(--header-bg);
+        background: #f6f6eb;
         border-bottom: 1px solid var(--header-border);
         flex-direction: column;
         max-height: 0;
         overflow: hidden;
-        transition: max-height 0.3s ease;
-        box-shadow: var(--header-shadow);
+        transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        z-index: 999;
     }
 
     .lakum-nav.active {
-        max-height: 500px;
+        max-height: calc(100vh - var(--header-height));
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
     }
 
     .lakum-nav__list {
@@ -305,6 +313,12 @@ html[dir="rtl"] .lakum-lang-link {
         height: auto;
         width: 100%;
         font-size: 0.95rem;
+        color: var(--header-text);
+        transition: all 0.2s ease;
+    }
+
+    .lakum-nav__link:active {
+        background: #e8e8d8;
     }
 
     .lakum-nav__link::after {
@@ -312,16 +326,18 @@ html[dir="rtl"] .lakum-lang-link {
     }
 
     .lakum-nav__link--active {
-        background: var(--header-hover);
-        border-left: 3px solid var(--header-active);
-        padding-left: 17px;
+        background: #e8e8d8;
+        border-left: 4px solid var(--header-active);
+        padding-left: 16px;
+        color: var(--header-active);
+        font-weight: 600;
     }
 
     html[dir="rtl"] .lakum-nav__link--active {
         border-left: none;
-        border-right: 3px solid var(--header-active);
+        border-right: 4px solid var(--header-active);
         padding-left: 20px;
-        padding-right: 17px;
+        padding-right: 16px;
     }
 
     .lakum-logo__left,

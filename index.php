@@ -15,12 +15,14 @@ require_once 'lang/loader.php';
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     
     <link rel="stylesheet" href="critical-inline.css">
-    <link rel="stylesheet" href="global-styles.css">
-    <link rel="stylesheet" href="lakum-components.css">
-    <link rel="stylesheet" href="assest/mobile-menu.css">
-    <link rel="stylesheet" href="assest/fab-button.css">
     <link rel="stylesheet" href="assest/lakum-header.css">
     <link rel="stylesheet" href="rtl.css">
+    
+    <!-- Defer non-critical CSS -->
+    <link rel="preload" href="global-styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="lakum-components.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="assest/mobile-menu.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="assest/fab-button.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" media="print" onload="this.media='all'">
     <noscript><link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet"></noscript>
     
@@ -58,7 +60,7 @@ require_once 'lang/loader.php';
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0;  }
         html { font-size: 16px; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-        body {  sans-serif; background: #f6f6eb; color: #1a1a1a; overflow-x: hidden; line-height: 1.6; }
+        body {  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f6f6eb; color: #1a1a1a; overflow-x: hidden; line-height: 1.6; }
         
         .lakum-hero { position: relative; width: 100%; height: 85vh; min-height: 600px; display: flex; align-items: center; justify-content: center; background: #1a1a1a; }
         .lakum-hero__image-wrapper { position: absolute; inset: 0; z-index: 1; overflow: hidden; }
