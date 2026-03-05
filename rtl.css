@@ -1719,3 +1719,16 @@ html[dir="rtl"] {
         padding: 80px 30px 30px !important;
     }
 }
+
+/* Mobile Controls Positioning - RTL */
+@media (max-width: 768px) {
+    [dir="rtl"] .app-header__menu-toggle {
+        left: auto;
+        right: 20px;
+    }
+
+    [dir="rtl"] .app-header__controls {
+        left: 20px;
+        right: auto;
+    }
+}
