@@ -123,6 +123,35 @@ require_once 'api/image-helper.php';
                 min-height: 400px
             }
         }
+
+        .lakum-blog-hero__overlay {
+            position: absolute;
+            inset: 0;
+            background-image: url(assest/img-4.png);
+            background-size: cover;
+            background-position: center;
+            opacity: 0.1;
+            z-index: 1;
+        }
+
+        .lakum-blog-hero__title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 300;
+            letter-spacing: -0.02em;
+            color: #ffffff;
+            margin: 0 0 clamp(16px, 2vw, 24px) 0;
+            line-height: 1.2;
+            text-align: center !important;
+        }
+
+        .lakum-blog-hero__subtitle {
+            font-size: clamp(1rem, 1.5vw, 1.2rem);
+            font-weight: 300;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.9);
+            margin: 0;
+            text-align: center !important;
+        }
     </style>
 
     <!-- Preload Hero Image (Critical for LCP) - Mobile-first with responsive variants -->
