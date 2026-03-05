@@ -1,0 +1,31 @@
+================================================================================
+MOBILE MENU FIX - QUICK REFERENCE
+================================================================================
+
+ISSUE:
+Mobile hamburger menu did NOT work on INDEX page (mobile/tablet only)
+
+ROOT CAUSE:
+Featured banner on index.php used width: 100vw + negative margin
+This created a stacking context that blocked the mobile menu
+
+FIXES APPLIED:
+1. Increased mobile menu z-index from 999 to 1002 (assest/lakum-header.css)
+2. Changed featured banner width from 100vw to 100% (index.php)
+3. Removed featured banner negative margin (index.php)
+
+FILES CHANGED:
+- assest/lakum-header.css (Line 287)
+- index.php (Line 75)
+
+TESTING:
+✓ Mobile menu opens on INDEX page
+✓ Mobile menu closes on INDEX page
+✓ Mobile menu works on ABOUT page
+✓ Mobile menu works on SPACES page
+✓ Featured banner displays correctly
+✓ No visual regressions
+
+STATUS: READY FOR PRODUCTION ✓
+
+================================================================================
