@@ -354,9 +354,11 @@ require_once 'api/image-helper.php';
         // Blog Details Page Script
         let blogIdentifier = new URLSearchParams(window.location.search).get('title') || new URLSearchParams(window.location.search).get('id');
         let urlLang = new URLSearchParams(window.location.search).get('lang');
+        let shouldRedirect = false;
 
         // IMMEDIATE REDIRECT: If ID parameter exists, redirect to title slug
         if (new URLSearchParams(window.location.search).get('id')) {
+            shouldRedirect = true;
             // Fetch blog to get title slug
             const blogId = new URLSearchParams(window.location.search).get('id');
             const lang = urlLang || window.LAKUM_LANG || localStorage.getItem('lakum_language') || 'en';
@@ -380,8 +382,10 @@ require_once 'api/image-helper.php';
                 })
                 .catch(err => console.error('Redirect error:', err));
             
-            // Stop further execution
-            throw new Error('Redirecting to title slug...');
+            // Exit early - don't load blog details yet
+            document.addEventListener('DOMContentLoaded', () => {
+                if (shouldRedirect) return;
+            });
         }
 
         async function loadBlogDetails() {

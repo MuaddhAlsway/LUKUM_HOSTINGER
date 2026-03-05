@@ -277,8 +277,26 @@
         position: relative;
     }
 
+    .app-header__logo {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        flex-shrink: 0;
+    }
+
     .app-header__menu-toggle {
         display: flex !important;
+        position: absolute;
+        left: 20px;
+        margin: 0;
+        z-index: 1001;
+    }
+
+    .app-header__controls {
+        position: absolute;
+        right: 20px;
+        margin: 0;
+        z-index: 1002;
     }
 
     .app-logo__left,
@@ -386,8 +404,26 @@
         position: relative;
     }
 
+    .app-header__logo {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        flex-shrink: 0;
+    }
+
     .app-header__menu-toggle {
         display: flex !important;
+        position: absolute;
+        left: 20px;
+        margin: 0;
+        z-index: 1001;
+    }
+
+    .app-header__controls {
+        position: absolute;
+        right: 20px;
+        margin: 0;
+        z-index: 1002;
     }
 
     .app-logo__left,

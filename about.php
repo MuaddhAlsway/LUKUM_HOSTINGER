@@ -75,7 +75,7 @@ body {
 
 .page-hero {
   position: relative;
-  width: 100%;
+  width: 100vw;
   height: 65vh;
   min-height: 450px;
   max-height: 650px;
@@ -88,8 +88,10 @@ body {
   overflow: hidden;
   contain: layout style paint;
   margin: 0;
+  padding: 0 !important;
   left: 0;
   right: 0;
+  margin-left: calc(-50vw + 50%);
 }
 
 @media (max-width: 768px) {
@@ -97,7 +99,8 @@ body {
     height: 60vh;
     min-height: 400px;
     max-height: 500px;
-    padding: 40px 15px !important;
+    padding: 0 !important;
+    margin: 0;
   }
 }
 
@@ -106,7 +109,8 @@ body {
     height: 50vh;
     min-height: 300px;
     max-height: 400px;
-    padding: 30px 10px !important;
+    padding: 0 !important;
+    margin: 0;
   }
 }
 
