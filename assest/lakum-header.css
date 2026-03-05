@@ -14,7 +14,7 @@
     position: sticky;
     top: 0;
     z-index: 1000;
-    background: var(--header-bg);
+  
     border-bottom: 1px solid var(--header-border);
     box-shadow: var(--header-shadow);
     transition: all 0.3s ease;
@@ -72,7 +72,7 @@
     list-style: none;
     margin: 0;
     padding: 0;
-    width: 100%;
+   
 }
 
 .lakum-nav__item {
@@ -87,7 +87,7 @@
     align-items: center;
     height: 100%;
     padding: 0 20px;
-    color: var(--header-text);
+    color: black;
     text-decoration: none;
     font-size: 0.95rem;
     font-weight: 500;
