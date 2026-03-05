@@ -4,7 +4,7 @@ html { font-size: 16px; -webkit-font-smoothing: antialiased; -moz-osx-font-smoot
 body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif; background: #f6f6eb; color: #1a1a1a; overflow-x: hidden; line-height: 1.6; }
 
 /* Header */
-.app-header { background: rgba(246, 246, 235, 0.98); border-bottom: 1px solid rgba(209, 209, 209, 0.2); position: sticky; top: 0; z-index: 1000; }
+where are index.php.app-header { background: rgba(246, 246, 235, 0.98); border-bottom: 1px solid rgba(209, 209, 209, 0.2); position: sticky; top: 0; z-index: 1000; }
 .app-header__container { max-width: 1600px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 60px); display: flex; align-items: center; justify-content: space-between; height: 80px; }
 .app-logo { display: flex; align-items: center; gap: 0; text-decoration: none; }
 .app-logo__left, .app-logo__right { height: 50px; width: auto; display: block; }

@@ -292,51 +292,8 @@ require_once 'api/image-helper.php';
 <script src="assest/static-json-translator.js?v=1.0.0" defer></script></head>
 
 <body class="<?php echo getLanguageClass(); ?>">
-
-    <!-- Page Loader -->
-    <div class="lakum-page-loader" id="pageLoader">
-        <div class="lakum-page-loader__content">
-            <div class="lakum-page-loader__spinner"></div>
-        </div>
-    </div>
-
-    <header class="app-header" role="banner">
-        <div class="app-header__container">
-            <div class="app-header__logo">
-                <a href="index.php" class="app-logo">
-                    <img src="assest/logo/right_section.png" alt="LAKUM" class="app-logo__left" width="105" height="80" loading="eager" decoding="async">
-                    <img src="assest/logo/left_section.png" alt="Artspace" class="app-logo__right" width="105" height="80" loading="eager" decoding="async">
-                </a>
-            </div>
-
-            <nav class="app-nav" id="appNav" role="navigation">
-                <ul class="app-nav__list">
-                    <li class="app-nav__item"><a href="index.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link"><?php echo t('home', 'Home'); ?></a></li>
-                    <li class="app-nav__item"><a href="about.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link"><?php echo t('about', 'About'); ?></a></li>
-                    <li class="app-nav__item"><a href="spaces.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link"><?php echo t('spaces', 'Spaces'); ?></a></li>
-                    <li class="app-nav__item"><a href="exhibitions.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link"><?php echo t('exhibitions', 'Exhibitions'); ?></a></li>
-                    <li class="app-nav__item"><a href="calendar.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link"><?php echo t('calendar', 'Calendar'); ?></a></li>
-                    <li class="app-nav__item"><a href="blog.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link"><?php echo t('blog', 'Blog'); ?></a></li>
-                    <li class="app-nav__item"><a href="press.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link"><?php echo t('press', 'Press'); ?></a></li>
-                    <li class="app-nav__item"><a href="contact.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link"><?php echo t('contact_us', 'Contact'); ?></a></li>
-                    <li class="app-nav__item"><a href="shop.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link"><?php echo t('shop', 'Shop'); ?></a></li>
-                </ul>
-            </nav>
-
-            <div class="app-header__controls">
-                <div class="app-language-switcher">
-                    <a href="<?php echo buildLanguageSwitcherUrl(); ?>" class="app-lang-link" title="<?php echo isArabic() ? 'Language: English' : 'Language: العربية'; ?>">
-                        <i class="ri-global-line"></i>
-                        <span class="app-lang-text"><?php echo isArabic() ? 'English' : 'العربية'; ?></span>
-                    </a>
-                </div>
-
-                <button class="app-header__menu-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="appNav">
-                    <span class="app-header__menu-icon"></span>
-                </button>
-            </div>
-        </div>
-    </header>
+<div class="lakum-page-loader" id="pageLoader"><div class="lakum-page-loader__content"><div class="lakum-page-loader__spinner"></div></div></div>
+<header class="lakum-header" role="banner"><div class="lakum-header__container"><div class="lakum-header__logo"><a href="./" class="lakum-logo"><img src="assest/logo/right_section.png" alt="LAKUM" class="lakum-logo__left"><img src="assest/logo/left_section.png" alt="Artspace" class="lakum-logo__right"></a></div><nav class="lakum-nav"><ul class="lakum-nav__list"><li class="lakum-nav__item"><a href="index.php" class="lakum-nav__link"><?php echo t('home', 'Home'); ?></a></li><li class="lakum-nav__item"><a href="about.php" class="lakum-nav__link"><?php echo t('about', 'About'); ?></a></li><li class="lakum-nav__item"><a href="spaces.php" class="lakum-nav__link"><?php echo t('spaces', 'Spaces'); ?></a></li><li class="lakum-nav__item"><a href="exhibitions.php" class="lakum-nav__link"><?php echo t('exhibitions', 'Exhibitions'); ?></a></li><li class="lakum-nav__item"><a href="calendar.php" class="lakum-nav__link"><?php echo t('calendar', 'Calendar'); ?></a></li><li class="lakum-nav__item"><a href="blog.php" class="lakum-nav__link"><?php echo t('blog', 'Blog'); ?></a></li><li class="lakum-nav__item"><a href="press.php" class="lakum-nav__link lakum-nav__link--active"><?php echo t('press', 'Press'); ?></a></li><li class="lakum-nav__item"><a href="contact.php" class="lakum-nav__link"><?php echo t('contact_us', 'Contact'); ?></a></li><li class="lakum-nav__item"><a href="shop.php" class="lakum-nav__link"><?php echo t('shop', 'Shop'); ?></a></li></ul></nav><div class="lakum-language-switcher"><a href="<?php echo buildLanguageSwitcherUrl(); ?>" class="lakum-lang-link" title="<?php echo isArabic() ? 'Language: English' : 'Language: العربية'; ?>"><i class="ri-global-line"></i><span class="lakum-lang-text"><?php echo isArabic() ? 'EN' : 'AR'; ?></span></a></div><button class="lakum-header__mobile-toggle" aria-label="Toggle menu"><span class="lakum-header__mobile-icon" aria-hidden="true"></span></button></div></header>
 
     <script>
         // Intelligent Page Loader - Proper Implementation

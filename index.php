@@ -14,7 +14,6 @@ require_once 'lang/loader.php';
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     
-    <!-- Critical CSS - Inline for fast render -->
     <link rel="stylesheet" href="critical-inline.css">
     <link rel="stylesheet" href="global-styles.css">
     <link rel="stylesheet" href="lakum-components.css">
@@ -227,45 +226,58 @@ margin: 0 auto;}
         </div>
     </div>
 
-    <header class="app-header" role="banner">
+    <!-- App Header -->
+    <header class="app-header" id="appHeader">
         <div class="app-header__container">
             <div class="app-header__logo">
-                <a href="index.php" class="app-logo">
-                    <img src="assest/logo/right_section.png" alt="LAKUM" class="app-logo__left" width="105" height="80" loading="eager" decoding="async">
-                    <img src="assest/logo/left_section.png" alt="Artspace" class="app-logo__right" width="105" height="80" loading="eager" decoding="async">
+                <a href="index.php" class="app-header__logo-link">
+                    <img src="assest/logo/right_section.png" alt="LAKUM" class="app-header__logo-left" loading="eager" decoding="async">
+                    <img src="assest/logo/left_section.png" alt="Artspace" class="app-header__logo-right" loading="eager" decoding="async">
                 </a>
             </div>
-
-            <nav class="app-nav" id="appNav" role="navigation">
-                <ul class="app-nav__list">
-                    <li class="app-nav__item"><a href="index.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link"><?php echo t('home', 'Home'); ?></a></li>
-                    <li class="app-nav__item"><a href="about.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link"><?php echo t('about', 'About'); ?></a></li>
-                    <li class="app-nav__item"><a href="spaces.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link"><?php echo t('spaces', 'Spaces'); ?></a></li>
-                    <li class="app-nav__item"><a href="exhibitions.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link"><?php echo t('exhibitions', 'Exhibitions'); ?></a></li>
-                    <li class="app-nav__item"><a href="calendar.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link"><?php echo t('calendar', 'Calendar'); ?></a></li>
-                    <li class="app-nav__item"><a href="blog.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link"><?php echo t('blog', 'Blog'); ?></a></li>
-                    <li class="app-nav__item"><a href="press.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link"><?php echo t('press', 'Press'); ?></a></li>
-                    <li class="app-nav__item"><a href="contact.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link"><?php echo t('contact_us', 'Contact'); ?></a></li>
-                    <li class="app-nav__item"><a href="shop.php<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? '?lang=ar' : ''; ?>" class="app-nav__link"><?php echo t('shop', 'Shop'); ?></a></li>
+            <nav class="app-header__nav" id="appNav">
+                <ul class="app-header__nav-list">
+                    <li class="app-header__nav-item">
+                        <a href="index.php" class="app-header__nav-link <?php echo basename($_SERVER['PHP_SELF']) === 'index.php' ? 'active' : ''; ?>"><?php echo t('home', 'Home'); ?></a>
+                    </li>
+                    <li class="app-header__nav-item">
+                        <a href="about.php" class="app-header__nav-link <?php echo basename($_SERVER['PHP_SELF']) === 'about.php' ? 'active' : ''; ?>"><?php echo t('about', 'About'); ?></a>
+                    </li>
+                    <li class="app-header__nav-item">
+                        <a href="spaces.php" class="app-header__nav-link <?php echo basename($_SERVER['PHP_SELF']) === 'spaces.php' ? 'active' : ''; ?>"><?php echo t('spaces', 'Spaces'); ?></a>
+                    </li>
+                    <li class="app-header__nav-item">
+                        <a href="exhibitions.php" class="app-header__nav-link <?php echo basename($_SERVER['PHP_SELF']) === 'exhibitions.php' ? 'active' : ''; ?>"><?php echo t('exhibitions', 'Exhibitions'); ?></a>
+                    </li>
+                    <li class="app-header__nav-item">
+                        <a href="calendar.php" class="app-header__nav-link <?php echo basename($_SERVER['PHP_SELF']) === 'calendar.php' ? 'active' : ''; ?>"><?php echo t('calendar', 'Calendar'); ?></a>
+                    </li>
+                    <li class="app-header__nav-item">
+                        <a href="blog.php" class="app-header__nav-link <?php echo basename($_SERVER['PHP_SELF']) === 'blog.php' ? 'active' : ''; ?>"><?php echo t('blog', 'Blog'); ?></a>
+                    </li>
+                    <li class="app-header__nav-item">
+                        <a href="press.php" class="app-header__nav-link <?php echo basename($_SERVER['PHP_SELF']) === 'press.php' ? 'active' : ''; ?>"><?php echo t('press', 'Press'); ?></a>
+                    </li>
+                    <li class="app-header__nav-item">
+                        <a href="contact.php" class="app-header__nav-link <?php echo basename($_SERVER['PHP_SELF']) === 'contact.php' ? 'active' : ''; ?>"><?php echo t('contact_us', 'Contact'); ?></a>
+                    </li>
                 </ul>
             </nav>
-
             <div class="app-header__controls">
-                <div class="app-language-switcher">
-                    <a href="<?php 
-                        $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-                        $currentPage = basename($currentPath, '.php');
-                        if ($currentPage === '') $currentPage = 'index';
-                        $lang = isset($_GET['lang']) && $_GET['lang'] === 'ar' ? 'en' : 'ar';
-                        echo $currentPage . '.php?lang=' . $lang;
-                    ?>" class="app-lang-link" title="<?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? 'Language: English' : 'Language: العربية'; ?>">
+                <div class="app-header__language-switcher" id="languageSwitcher">
+                    <button class="app-header__language-btn" id="languageBtn" aria-label="Switch language">
+                        <span class="app-header__language-text"><?php echo isArabic() ? 'العربية' : 'English'; ?></span>
                         <i class="ri-global-line"></i>
-                        <span class="app-lang-text"><?php echo isset($_GET['lang']) && $_GET['lang'] === 'ar' ? 'En' : 'Ar'; ?></span>
-                    </a>
+                    </button>
+                    <div class="app-header__language-menu" id="languageMenu">
+                        <a href="?lang=en" class="app-header__language-option <?php echo !isArabic() ? 'active' : ''; ?>">English</a>
+                        <a href="?lang=ar" class="app-header__language-option <?php echo isArabic() ? 'active' : ''; ?>">العربية</a>
+                    </div>
                 </div>
-
-                <button class="app-header__menu-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="appNav">
-                    <span class="app-header__menu-icon"></span>
+                <button class="app-header__mobile-toggle" id="mobileToggle" aria-label="Toggle menu" aria-expanded="false">
+                    <span class="app-header__mobile-toggle-line"></span>
+                    <span class="app-header__mobile-toggle-line"></span>
+                    <span class="app-header__mobile-toggle-line"></span>
                 </button>
             </div>
         </div>
