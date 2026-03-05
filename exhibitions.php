@@ -24,23 +24,8 @@ require_once 'api/image-helper.php';
     <link rel="preload" href="assest/fonts/GretaArabicAR+LT-Light.otf" as="font" type="font/otf" crossorigin>
     <link rel="preload" href="assest/fonts/GretaTextArabicAR+LT-Regular.otf" as="font" type="font/otf" crossorigin>
     <link rel="preload" href="assest/fonts/GretaTextArabicAR+LT-Light.otf" as="font" type="font/otf" crossorigin>
-    <link rel="stylesheet" href="critical-inline.css">
-    <link rel="stylesheet" href="global-styles.css">
-    <link rel="stylesheet" href="lakum-components.css">
-    <link rel="stylesheet" href="assest/mobile-menu.css">
-    <link rel="stylesheet" href="assest/fab-button.css">
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" media="print" onload="this.media='all'">
-    <noscript><link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet"></noscript>
-    <link rel="stylesheet" href="Home.min.css" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="rtl.css" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="fonts/greta-arabic.css" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="exhibitions.css" media="print" onload="this.media='all'">
-    <noscript>
-        <link rel="stylesheet" href="Home.min.css">
-        <link rel="stylesheet" href="rtl.css">
-        <link rel="stylesheet" href="fonts/greta-arabic.css">
-        <link rel="stylesheet" href="exhibitions.css">
-    </noscript>
+    <!-- Global Stylesheets (Centralized) -->
+    <?php include('includes/stylesheets.php'); ?>
 <link rel="alternate" hreflang="en" href="https://lakumartspace.infinityfree.me/exhibitions.php?lang=en" />
 <link rel="alternate" hreflang="ar" href="https://lakumartspace.infinityfree.me/exhibitions.php?lang=ar" />
 <script src="assest/static-json-translator.js?v=1.0.0" defer></script>
@@ -52,39 +37,8 @@ require_once 'api/image-helper.php';
         </div>
     </div>
 
-    <!-- LAKUM Header -->
-    <header class="lakum-header" role="banner">
-        <div class="lakum-header__container">
-            <div class="lakum-header__logo">
-                <a href="./" class="lakum-logo">
-                    <img src="assest/logo/right_section.png" alt="LAKUM" class="lakum-logo__left">
-                    <img src="assest/logo/left_section.png" alt="Artspace" class="lakum-logo__right">
-                </a>
-            </div>
-            <nav class="lakum-nav">
-                <ul class="lakum-nav__list">
-                    <li class="lakum-nav__item"><a href="index.php" class="lakum-nav__link"><?php echo t('home', 'Home'); ?></a></li>
-                    <li class="lakum-nav__item"><a href="about.php" class="lakum-nav__link"><?php echo t('about', 'About'); ?></a></li>
-                    <li class="lakum-nav__item"><a href="spaces.php" class="lakum-nav__link"><?php echo t('spaces', 'Spaces'); ?></a></li>
-                    <li class="lakum-nav__item"><a href="exhibitions.php" class="lakum-nav__link lakum-nav__link--active"><?php echo t('exhibitions', 'Exhibitions'); ?></a></li>
-                    <li class="lakum-nav__item"><a href="calendar.php" class="lakum-nav__link"><?php echo t('calendar', 'Calendar'); ?></a></li>
-                    <li class="lakum-nav__item"><a href="blog.php" class="lakum-nav__link"><?php echo t('blog', 'Blog'); ?></a></li>
-                    <li class="lakum-nav__item"><a href="press.php" class="lakum-nav__link"><?php echo t('press', 'Press'); ?></a></li>
-                    <li class="lakum-nav__item"><a href="contact.php" class="lakum-nav__link"><?php echo t('contact_us', 'Contact'); ?></a></li>
-                    <li class="lakum-nav__item"><a href="shop.php" class="lakum-nav__link"><?php echo t('shop', 'Shop'); ?></a></li>
-                </ul>
-            </nav>
-            <div class="lakum-language-switcher">
-                <a href="<?php echo buildLanguageSwitcherUrl(); ?>" class="lakum-lang-link" title="<?php echo isArabic() ? 'Language: English' : 'Language: العربية'; ?>">
-                    <i class="ri-global-line"></i>
-                    <span class="lakum-lang-text"><?php echo isArabic() ? 'EN' : 'AR'; ?></span>
-                </a>
-            </div>
-            <button class="lakum-header__mobile-toggle" aria-label="Toggle menu">
-                <span class="lakum-header__mobile-icon" aria-hidden="true"></span>
-            </button>
-        </div>
-    </header>
+    <!-- Global Header Navigation (Centralized) -->
+    <?php include('includes/header.php'); ?>
 
     <!-- Hero Section -->
     <section class="lakum-hero" style="aspect-ratio: 16/9">
@@ -369,10 +323,8 @@ require_once 'api/image-helper.php';
 
     </script>
 
-    <script src="assest/fab-button.js" defer></script>
-    <script src="assest/popup-notification.js?v=5.0.0" defer></script>
-    <script src="assest/navbar-mobile-toggle.js?v=5.0.0" defer></script>
-    <script src="assest/lakum-header.js" defer></script>
+    <!-- Global Scripts (Centralized) -->
+    <?php include('includes/scripts.php'); ?>
 
     <div class="fab-button" id="fabButton"><button class="fab-button__trigger" id="fabTrigger" aria-label="Contact options" aria-expanded="false"><i class="ri-mail-line fab-button__icon"></i><i class="ri-close-line fab-button__close"></i></button><div class="fab-button__menu" id="fabMenu" role="menu"><a href="tel:+966920012083" class="fab-button__item" role="menuitem" data-tooltip="Call us"><i class="ri-phone-line"></i></a><a href="https://wa.me/966920012083" target="_blank" class="fab-button__item" role="menuitem" data-tooltip="WhatsApp"><i class="ri-whatsapp-line"></i></a><a href="mailto:info@lakumartspace.com" class="fab-button__item" role="menuitem" data-tooltip="Email"><i class="ri-mail-line"></i></a></div></div>
 </body>

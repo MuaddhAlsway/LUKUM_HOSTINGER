@@ -152,139 +152,12 @@ require_once 'api/image-helper.php';
     <link rel="prefetch" href="assest/fonts/GretaArabicAR+LT-Regular.otf" as="font" type="font/otf" crossorigin>
     <link rel="prefetch" href="assest/fonts/GretaArabicAR+LT-Light.otf" as="font" type="font/otf" crossorigin>
 
-    <!-- Core Styles - Critical CSS loaded synchronously -->
-    <link rel="stylesheet" href="critical-inline.css">
-    <link rel="stylesheet" href="global-styles.css">
-    <link rel="stylesheet" href="lakum-components.css">
-    <link rel="stylesheet" href="assest/mobile-menu.css">
-    <link rel="stylesheet" href="assest/fab-button.css">
-    <link rel="stylesheet" href="Home.min.css">
+    <!-- Global Stylesheets (Centralized) -->
+    <?php include('includes/stylesheets.php'); ?>
 
-    <!-- RTL Styles -->
-    <link rel="stylesheet" href="rtl.css">
-
-    <!-- Fonts -->
-    <link rel="stylesheet" href="fonts/greta-arabic.css">
-
-    <!-- Icons - Defer non-critical icon loading -->
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" media="print" onload="this.media='all'">
-    <noscript><link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet"></noscript>
-
-    <!-- Image Optimizer - Critical for performance -->
-    <!-- Scripts - Defer non-critical JavaScript -->
-    <script src="assest/navbar-mobile-toggle.js?v=5.0.0" defer></script>
-    <script src="assest/settings-links-loader.js?v=5.0.0" defer></script>
-    <script src="js/LanguageManager.js?v=1.0.0" defer></script>
-    <script src="assest/fun-interactions.js" defer></script>
-    <script>
-        // Set language for JavaScript - Read from URL parameter or localStorage
-        const urlParams = new URLSearchParams(window.location.search);
-        const urlLang = urlParams.get('lang');
-        const storedLang = localStorage.getItem('lakum_language');
-        window.LAKUM_LANG = urlLang || storedLang || 'en';
-        window.LAKUM_DIR = window.LAKUM_LANG === 'ar' ? 'rtl' : 'ltr';
-        
-        // CRITICAL: Save language to localStorage whenever URL parameter is present
-        // This ensures language persists across page navigation
-        if (urlLang && ['en', 'ar'].includes(urlLang)) {
-            localStorage.setItem('lakum_language', urlLang);
-            console.log('Language saved to localStorage:', urlLang);
-        }
-
-        // Performance monitoring
-        if ('PerformanceObserver' in window) {
-            // Monitor Largest Contentful Paint
-            const lcpObserver = new PerformanceObserver((list) => {
-                const entries = list.getEntries();
-                const lastEntry = entries[entries.length - 1];
-                console.log('LCP:', lastEntry.renderTime || lastEntry.loadTime);
-            });
-            lcpObserver.observe({
-                entryTypes: ['largest-contentful-paint']
-            });
-
-            // Monitor First Input Delay
-            const fidObserver = new PerformanceObserver((list) => {
-                const entries = list.getEntries();
-                entries.forEach((entry) => {
-                    console.log('FID:', entry.processingStart - entry.startTime);
-                });
-            });
-            fidObserver.observe({
-                entryTypes: ['first-input']
-            });
-        }
-    </script>
-
-    <!-- Primary Meta Tags -->
-    <meta name="title" content="Event Spaces for Rent in Riyadh | LAKUM Artspace Venues">
-    <meta name="description" content="Rent versatile event spaces in Riyadh for exhibitions, workshops, meetings, and cultural events. LAKUM offers Hall 1, Hall 2, Café, and Meeting Rooms with full support services.">
-    <meta name="keywords" content="art gallery Riyadh, cultural events Riyadh, art exhibitions Saudi Arabia, event space rental Riyadh, contemporary art gallery, cultural hub Riyadh, art workshops Riyadh, creative space Riyadh">
-    <meta name="author" content="LAKUM Artspace">
-    <meta name="language" content="<?php echo isArabic() ? "Arabic" : "English"; ?>">
-    <meta name="robots" content="index, follow">
-    <meta name="googlebot" content="index, follow">
-
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://lakumartspace.infinityfree.me/spaces.php">
-
-    <!-- Alternate Language -->
-    <link rel="alternate" hreflang="en" href="https://lakumartspace.infinityfree.me/spaces.php?lang=en" />
-    <link rel="alternate" hreflang="ar" href="https://lakumartspace.infinityfree.me/spaces.php?lang=ar" />
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://lakumartspace.infinityfree.me/spaces">
-    <meta property="og:title" content="Event Spaces for Rent in Riyadh | LAKUM Artspace Venues">
-    <meta property="og:description" content="Rent versatile event spaces in Riyadh for exhibitions, workshops, meetings, and cultural events. LAKUM offers Hall 1, Hall 2, Café, and Meeting Rooms with full support services.">
-    <meta property="og:image" content="https://lakumartspace.infinityfree.me/assest/img-4.webp">
-    <meta property="og:site_name" content="LAKUM Artspace">
-    <meta property="og:locale" content="en_US">
-    <meta property="og:locale:alternate" content="ar_SA">
-
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="https://lakumartspace.infinityfree.me/spaces">
-    <meta name="twitter:title" content="Event Spaces for Rent in Riyadh | LAKUM Artspace Venues">
-    <meta name="twitter:description" content="Rent versatile event spaces in Riyadh for exhibitions, workshops, meetings, and cultural events. LAKUM offers Hall 1, Hall 2, Café, and Meeting Rooms with full support services.">
-    <meta name="twitter:image" content="https://lakumartspace.infinityfree.me/assest/img-4.webp">
-
-    <!-- Additional SEO -->
-    <meta name="theme-color" content="#1a1a1a">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="format-detection" content="telephone=no">
-
-    <!-- Structured Data - Organization -->
-    <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "ArtGallery",
-            "name": "LAKUM Artspace",
-            "alternateName": "لكم آرت سبيس",
-            "url": "https://lakumartspace.infinityfree.me",
-            "logo": "https://lakumartspace.infinityfree.me/assest/favicon.png",
-            "description": "A living space for art, connection, and cultural exchange in the heart of Riyadh",
-            "address": {
-                "@type": "PostalAddress",
-                "addressLocality": "Riyadh",
-                "addressCountry": "SA"
-            },
-            "geo": {
-                "@type": "GeoCoordinates",
-                "latitude": "24.7136",
-                "longitude": "46.6753"
-            },
-            "sameAs": [
-                "https://www.instagram.com/lakum.artspace/",
-                "https://twitter.com/lakumartspace"
-            ]
-        }
-    </script>
-
+    <!-- Page-specific styles -->
     <link rel="stylesheet" href="spaces.css">
-<script src="assest/static-json-translator.js?v=1.0.0" defer></script>
+    <script src="assest/static-json-translator.js?v=1.0.0" defer></script>
 <!-- Pricing is loaded dynamically via inline JavaScript below -->
 <!-- <script src="assest/spaces-pricing-loader.js?v=1.0.0" defer></script> --></head>
 
@@ -295,39 +168,8 @@ require_once 'api/image-helper.php';
         </div>
     </div>
 
-    <!-- LAKUM Header -->
-    <header class="lakum-header" role="banner">
-        <div class="lakum-header__container">
-            <div class="lakum-header__logo">
-                <a href="./" class="lakum-logo">
-                    <img src="assest/logo/right_section.png" alt="LAKUM" class="lakum-logo__left">
-                    <img src="assest/logo/left_section.png" alt="Artspace" class="lakum-logo__right">
-                </a>
-            </div>
-            <nav class="lakum-nav">
-                <ul class="lakum-nav__list">
-                    <li class="lakum-nav__item"><a href="index.php" class="lakum-nav__link"><?php echo t('home', 'Home'); ?></a></li>
-                    <li class="lakum-nav__item"><a href="about.php" class="lakum-nav__link"><?php echo t('about', 'About'); ?></a></li>
-                    <li class="lakum-nav__item"><a href="spaces.php" class="lakum-nav__link lakum-nav__link--active"><?php echo t('spaces', 'Spaces'); ?></a></li>
-                    <li class="lakum-nav__item"><a href="exhibitions.php" class="lakum-nav__link"><?php echo t('exhibitions', 'Exhibitions'); ?></a></li>
-                    <li class="lakum-nav__item"><a href="calendar.php" class="lakum-nav__link"><?php echo t('calendar', 'Calendar'); ?></a></li>
-                    <li class="lakum-nav__item"><a href="blog.php" class="lakum-nav__link"><?php echo t('blog', 'Blog'); ?></a></li>
-                    <li class="lakum-nav__item"><a href="press.php" class="lakum-nav__link"><?php echo t('press', 'Press'); ?></a></li>
-                    <li class="lakum-nav__item"><a href="contact.php" class="lakum-nav__link"><?php echo t('contact_us', 'Contact'); ?></a></li>
-                    <li class="lakum-nav__item"><a href="shop.php" class="lakum-nav__link"><?php echo t('shop', 'Shop'); ?></a></li>
-                </ul>
-            </nav>
-            <div class="lakum-language-switcher">
-                <a href="<?php echo buildLanguageSwitcherUrl(); ?>" class="lakum-lang-link" title="<?php echo isArabic() ? 'Language: English' : 'Language: العربية'; ?>">
-                    <i class="ri-global-line"></i>
-                    <span class="lakum-lang-text"><?php echo isArabic() ? 'EN' : 'AR'; ?></span>
-                </a>
-            </div>
-            <button class="lakum-header__mobile-toggle" aria-label="Toggle menu">
-                <span class="lakum-header__mobile-icon" aria-hidden="true"></span>
-            </button>
-        </div>
-    </header>
+    <!-- Global Header Navigation (Centralized) -->
+    <?php include('includes/header.php'); ?>
 
     <script>
         // Intelligent Page Loader - Proper Implementation
@@ -1703,8 +1545,8 @@ require_once 'api/image-helper.php';
         });
     </script>
 
-    <script src="assest/popup-notification.js?v=5.0.0" defer></script>
-    <script src="assest/lakum-header.js" defer></script>
+    <!-- Global Scripts (Centralized) -->
+    <?php include('includes/scripts.php'); ?>
 
 <script>
     // Translation strings for JavaScript

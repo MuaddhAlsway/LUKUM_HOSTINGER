@@ -19,23 +19,10 @@ require_once 'api/image-helper.php';
 <link rel="preload" href="assest/fonts/GretaArabicAR+LT-Regular.otf" as="font" type="font/otf" crossorigin>
 <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-<link rel="stylesheet" href="critical-inline.css">
-<link rel="stylesheet" href="global-styles.css">
-<link rel="stylesheet" href="lakum-components.css">
-<link rel="stylesheet" href="assest/mobile-menu.css">
-<link rel="stylesheet" href="assest/fab-button.css">
-<link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" media="print" onload="this.media='all'">
-<noscript><link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet"></noscript>
-<link rel="stylesheet" href="Home.min.css" media="print" onload="this.media='all'">
-<link rel="stylesheet" href="rtl.css" media="print" onload="this.media='all'">
-<link rel="stylesheet" href="fonts/greta-arabic.css" media="print" onload="this.media='all'">
-<noscript>
-<link rel="stylesheet" href="Home.min.css">
-<link rel="stylesheet" href="rtl.css">
-<link rel="stylesheet" href="fonts/greta-arabic.css">
-</noscript>
-<script src="assest/navbar-mobile-toggle.js?v=5.0.0" defer></script>
-<script src="assest/fun-interactions.js" defer></script>
+
+<!-- Global Stylesheets (Centralized) -->
+<?php include('includes/stylesheets.php'); ?>
+
 <meta name="title" content="About LAKUM Artspace - Our Story & Mission">
 <meta name="description" content="Learn about LAKUM Artspace, a premier cultural destination in Riyadh dedicated to fostering artistic expression, cultural exchange, and creative innovation.">
 <meta name="keywords" content="about LAKUM, art gallery Riyadh, cultural hub, art exhibitions, creative workshops">
@@ -606,39 +593,8 @@ html[lang="ar"] .lakum-event-card__date {
         </div>
     </div>
 
-    <!-- LAKUM Header -->
-    <header class="lakum-header" role="banner">
-        <div class="lakum-header__container">
-            <div class="lakum-header__logo">
-                <a href="./" class="lakum-logo">
-                    <img src="assest/logo/right_section.png" alt="LAKUM" class="lakum-logo__left">
-                    <img src="assest/logo/left_section.png" alt="Artspace" class="lakum-logo__right">
-                </a>
-            </div>
-            <nav class="lakum-nav">
-                <ul class="lakum-nav__list">
-                    <li class="lakum-nav__item"><a href="index.php" class="lakum-nav__link"><?php echo t('home', 'Home'); ?></a></li>
-                    <li class="lakum-nav__item"><a href="about.php" class="lakum-nav__link lakum-nav__link--active"><?php echo t('about', 'About'); ?></a></li>
-                    <li class="lakum-nav__item"><a href="spaces.php" class="lakum-nav__link"><?php echo t('spaces', 'Spaces'); ?></a></li>
-                    <li class="lakum-nav__item"><a href="exhibitions.php" class="lakum-nav__link"><?php echo t('exhibitions', 'Exhibitions'); ?></a></li>
-                    <li class="lakum-nav__item"><a href="calendar.php" class="lakum-nav__link"><?php echo t('calendar', 'Calendar'); ?></a></li>
-                    <li class="lakum-nav__item"><a href="blog.php" class="lakum-nav__link"><?php echo t('blog', 'Blog'); ?></a></li>
-                    <li class="lakum-nav__item"><a href="press.php" class="lakum-nav__link"><?php echo t('press', 'Press'); ?></a></li>
-                    <li class="lakum-nav__item"><a href="contact.php" class="lakum-nav__link"><?php echo t('contact_us', 'Contact'); ?></a></li>
-                    <li class="lakum-nav__item"><a href="shop.php" class="lakum-nav__link"><?php echo t('shop', 'Shop'); ?></a></li>
-                </ul>
-            </nav>
-            <div class="lakum-language-switcher">
-                <a href="<?php echo buildLanguageSwitcherUrl(); ?>" class="lakum-lang-link" title="<?php echo isArabic() ? 'Language: English' : 'Language: العربية'; ?>">
-                    <i class="ri-global-line"></i>
-                    <span class="lakum-lang-text"><?php echo isArabic() ? 'EN' : 'AR'; ?></span>
-                </a>
-            </div>
-            <button class="lakum-header__mobile-toggle" aria-label="Toggle menu">
-                <span class="lakum-header__mobile-icon" aria-hidden="true"></span>
-            </button>
-        </div>
-    </header>
+    <!-- Global Header Navigation (Centralized) -->
+    <?php include('includes/header.php'); ?>
 
     <section class="lakum-hero" style="aspect-ratio: 16/9">
         <div class="lakum-hero__image-wrapper">
@@ -681,8 +637,6 @@ html[lang="ar"] .lakum-event-card__date {
     </div>
 </div>
 
-<script src="assest/fab-button.js" defer></script>
-<script src="assest/navbar-mobile-toggle.js" defer></script>
 <script src="js/LanguageManager.js?v=1.0.0" defer></script>
 <script>
     // Set current language from PHP
@@ -968,9 +922,8 @@ html[lang="ar"] .lakum-event-card__date {
     }
 </script>
 
-    <script src="assest/fun-interactions.js?v=5.0.0" defer></script>
-    <script src="assest/navbar-mobile-toggle.js?v=5.0.0" defer></script>
-    <script src="assest/lakum-header.js" defer></script>
+    <!-- Global Scripts (Centralized) -->
+    <?php include('includes/scripts.php'); ?>
 </body>
 </html>
 
