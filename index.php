@@ -15,6 +15,7 @@ require_once 'lang/loader.php';
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     
     <link rel="stylesheet" href="critical-inline.css">
+    <link rel="stylesheet" href="assest/lakum-header.css">
     <link rel="stylesheet" href="lakum-components.css">
     <link rel="stylesheet" href="rtl.css">
     

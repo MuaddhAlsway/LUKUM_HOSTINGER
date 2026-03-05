@@ -13,7 +13,7 @@
 .lakum-header {
     position: sticky;
     top: 0;
-    z-index: 1000;
+    z-index: 1001;
   
     border-bottom: 1px solid var(--header-border);
     box-shadow: var(--header-shadow);
@@ -173,6 +173,8 @@
     padding: 8px;
     margin: -8px;
     flex-shrink: 0;
+    position: relative;
+    z-index: 1002;
 }
 
 .lakum-header__mobile-icon {
@@ -272,36 +274,66 @@ html[dir="rtl"] .lakum-lang-link {
 
     .lakum-nav {
         position: fixed;
-        top: var(--header-height);
+        top: 0;
         left: 0;
-        right: 0;
-        background: #f6f6eb;
-        border-bottom: 1px solid var(--header-border);
-        flex-direction: column;
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         width: 100%;
+        height: 100vh;
+        background: #f6f6eb;
+        padding: 100px 40px 40px;
+        transform: translateX(-100%);
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 4px 0 24px rgba(0, 0, 0, 0.1);
+        overflow-y: auto;
         z-index: 999;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .lakum-nav::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.3);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        z-index: 998;
+        pointer-events: none;
     }
 
     .lakum-nav.lakum-nav--active {
-        max-height: calc(100vh - var(--header-height));
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
+        transform: translateX(0);
+        z-index: 999;
+    }
+
+    .lakum-nav.lakum-nav--active::before {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
     }
 
     .lakum-nav__list {
+        display: flex;
         flex-direction: column;
-        gap: 0;
+        align-items: center;
+        gap: clamp(20px, 3vw, 48px);
+        list-style: none;
+        margin: 0;
+        padding: 0;
         width: 100%;
+        position: relative;
+        z-index: 1000;
     }
 
     .lakum-nav__item {
         width: 100%;
-        height: auto;
-        border-bottom: 1px solid var(--header-border);
+        border-bottom: 1px solid rgba(209, 209, 209, 0.2);
+        text-align: center;
+        position: relative;
+        z-index: 1000;
     }
 
     .lakum-nav__item:last-child {
@@ -309,12 +341,15 @@ html[dir="rtl"] .lakum-lang-link {
     }
 
     .lakum-nav__link {
-        padding: 16px 20px;
-        height: auto;
-        width: 100%;
-        font-size: 0.95rem;
+        display: block;
+        padding: 20px 0;
+        font-size: 18px;
+        text-align: center;
         color: var(--header-text);
+        text-decoration: none;
         transition: all 0.2s ease;
+        position: relative;
+        z-index: 1000;
     }
 
     .lakum-nav__link:active {
@@ -349,7 +384,7 @@ html[dir="rtl"] .lakum-lang-link {
         position: absolute;
         top: var(--header-height);
         right: 20px;
-        z-index: 999;
+        z-index: 1002;
     }
 
     html[dir="rtl"] .lakum-language-switcher {
