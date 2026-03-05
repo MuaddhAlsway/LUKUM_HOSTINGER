@@ -214,23 +214,14 @@ require_once 'api/image-helper.php';
         }
     </script>
     <script>
-        // Check if this is a detail view request
+        // Set language from URL parameter if provided
         const urlParams = new URLSearchParams(window.location.search);
-        const blogId = urlParams.get('id');
         const langParam = urlParams.get('lang');
         
-        // Set language from URL parameter if provided
         if (langParam && ['en', 'ar'].includes(langParam)) {
             localStorage.setItem('selectedLanguage', langParam);
             document.documentElement.lang = langParam;
             document.documentElement.dir = langParam === 'ar' ? 'rtl' : 'ltr';
-        }
-        
-        if (blogId) {
-            // Redirect to detail page with language parameter
-            const lang = localStorage.getItem('selectedLanguage') || 'en';
-            const title = event.target.closest('.blog-card')?.dataset.title || 'blog';
-            window.location.href = `blogPageDetails.php?title=${encodeURIComponent(title)}&lang=${lang}`;
         }
     </script>
 
@@ -485,6 +476,7 @@ require_once 'api/image-helper.php';
     <script>
         // Helper function to get blog URL (using title instead of ID)
         const getBlogUrl = (blog) => {
+            // Always use English title for user-friendly slug
             const title = blog.title_en || blog.title || 'blog';
             const lang = window.LAKUM_LANG || localStorage.getItem('lakum_language') || 'en';
             return `blogPageDetails.php?title=${encodeURIComponent(title)}&lang=${lang}`;

@@ -348,6 +348,9 @@ require_once 'api/image-helper.php';
                 if (!blogIdentifier) {
                     console.error('No blog ID or title provided');
                     document.getElementById('blog-title').textContent = 'Blog not found';
+                    // Hide page loader
+                    const loader = document.getElementById('pageLoader');
+                    if (loader) loader.classList.remove('lakum-page-loader--active');
                     return;
                 }
 
@@ -431,20 +434,22 @@ require_once 'api/image-helper.php';
 
                     // Load related blogs
                     loadRelatedBlogs(blog.id);
+                    
+                    // Hide page loader after content is loaded
+                    const loader = document.getElementById('pageLoader');
+                    if (loader) loader.classList.remove('lakum-page-loader--active');
                 } else {
                     document.getElementById('blog-title').textContent = 'Blog not found';
+                    // Hide page loader
+                    const loader = document.getElementById('pageLoader');
+                    if (loader) loader.classList.remove('lakum-page-loader--active');
                 }
             } catch (error) {
                 console.error('Error loading blog details:', error);
                 document.getElementById('blog-title').textContent = 'Error loading blog';
-            }
-        }
-                } else {
-                    document.getElementById('blog-title').textContent = 'Blog not found';
-                }
-            } catch (error) {
-                console.error('Error loading blog details:', error);
-                document.getElementById('blog-title').textContent = 'Error loading blog';
+                // Hide page loader
+                const loader = document.getElementById('pageLoader');
+                if (loader) loader.classList.remove('lakum-page-loader--active');
             }
         }
 
@@ -506,7 +511,14 @@ require_once 'api/image-helper.php';
             loadBlogDetails();
         }
         
-        document.addEventListener('DOMContentLoaded', initBlogDetailsPage);
+        document.addEventListener('DOMContentLoaded', function() {
+            initBlogDetailsPage();
+            // Ensure page loader is hidden after 3 seconds max
+            setTimeout(function() {
+                const loader = document.getElementById('pageLoader');
+                if (loader) loader.classList.remove('lakum-page-loader--active');
+            }, 3000);
+        });
 
         // Update section titles when language changes
         function updateBlogSectionTitles() {
