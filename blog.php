@@ -148,7 +148,6 @@ require_once 'api/image-helper.php';
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
 
     <!-- Preload critical assets -->
-    <link rel="preload" href="critical-inline.css" as="style">
     <link rel="preload" href="global-styles.css" as="style">
     <link rel="preload" href="lakum-components.css" as="style">
     
