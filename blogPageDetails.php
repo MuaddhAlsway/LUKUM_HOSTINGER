@@ -355,6 +355,35 @@ require_once 'api/image-helper.php';
         let blogIdentifier = new URLSearchParams(window.location.search).get('title') || new URLSearchParams(window.location.search).get('id');
         let urlLang = new URLSearchParams(window.location.search).get('lang');
 
+        // IMMEDIATE REDIRECT: If ID parameter exists, redirect to title slug
+        if (new URLSearchParams(window.location.search).get('id')) {
+            // Fetch blog to get title slug
+            const blogId = new URLSearchParams(window.location.search).get('id');
+            const lang = urlLang || window.LAKUM_LANG || localStorage.getItem('lakum_language') || 'en';
+            
+            fetch(`api/get_blogs_working.php?lang=${lang}&id=${blogId}`)
+                .then(r => r.json())
+                .then(data => {
+                    if (data.success && data.data) {
+                        const blog = data.data;
+                        const englishTitle = blog.title_en || blog.title;
+                        const titleSlug = englishTitle.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+                        
+                        const newUrl = new URL(window.location);
+                        newUrl.searchParams.set('title', titleSlug);
+                        newUrl.searchParams.delete('id');
+                        if (!newUrl.searchParams.get('lang')) {
+                            newUrl.searchParams.set('lang', lang);
+                        }
+                        window.location.replace(newUrl.toString());
+                    }
+                })
+                .catch(err => console.error('Redirect error:', err));
+            
+            // Stop further execution
+            throw new Error('Redirecting to title slug...');
+        }
+
         async function loadBlogDetails() {
             try {
                 if (!blogIdentifier) {
@@ -401,33 +430,9 @@ require_once 'api/image-helper.php';
                         return;
                     }
 
-                    // ALWAYS redirect to title slug URL (remove ID parameter)
-                    const englishTitle = blog.title_en || blog.title;
-                    const titleSlug = englishTitle.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
-                    
-                    // Check if we need to redirect (if using ID or wrong slug)
-                    const currentTitle = new URLSearchParams(window.location.search).get('title');
-                    const currentId = new URLSearchParams(window.location.search).get('id');
-                    
-                    if (currentId || currentTitle !== titleSlug) {
-                        const newUrl = new URL(window.location);
-                        newUrl.searchParams.set('title', titleSlug);
-                        newUrl.searchParams.delete('id');
-                        if (!newUrl.searchParams.get('lang')) {
-                            newUrl.searchParams.set('lang', lang);
-                        }
-                        window.location.replace(newUrl.toString());
-                        return;
-                    }
-
                     // Update page title
                     document.title = `${blog.title} - LAKUM Artspace`;
                     document.getElementById('page-title').textContent = `${blog.title} - LAKUM Artspace`;
-
-                    // Update hero section
-                    document.getElementById('blog-title').textContent = blog.title;
-                    document.getElementById('blog-date').textContent = new Date(blog.created_at).toLocaleDateString('en-US', {
-                        year: 'numeric',
                         month: 'long',
                         day: 'numeric'
                     });
@@ -438,8 +443,20 @@ require_once 'api/image-helper.php';
                         document.getElementById('hero-image').src = blog.cover_image;
                     }
 
-                    // Update content
-                    document.getElementById('blog-content').innerHTML = blog.content;
+                    // Update content with proper UTF-8 handling
+                    const contentEl = document.getElementById('blog-content');
+                    if (contentEl) {
+                        // Ensure proper text encoding for Arabic and other languages
+                        contentEl.innerHTML = blog.content || '';
+                        // Force text direction based on language
+                        if (lang === 'ar') {
+                            contentEl.setAttribute('dir', 'rtl');
+                            contentEl.style.textAlign = 'right';
+                        } else {
+                            contentEl.setAttribute('dir', 'ltr');
+                            contentEl.style.textAlign = 'left';
+                        }
+                    }
 
                     // Load gallery images if available
                     if (blog.gallery && blog.gallery.length > 0) {
@@ -456,43 +473,6 @@ require_once 'api/image-helper.php';
                 document.getElementById('blog-title').textContent = 'Error loading blog';
             }
         }
-                        const englishTitle = blog.title_en || blog.title;
-                        const blogSlug = englishTitle.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
-                        const newUrl = new URL(window.location);
-                        newUrl.searchParams.set('title', blogSlug);
-                        newUrl.searchParams.delete('id');
-                        window.history.replaceState({}, '', newUrl);
-                        blogIdentifier = blog.id; // Update for related blogs
-                    }
-
-                    // Update page title
-                    document.title = `${blog.title} - LAKUM Artspace`;
-                    document.getElementById('page-title').textContent = `${blog.title} - LAKUM Artspace`;
-
-                    // Update hero section
-                    document.getElementById('blog-title').textContent = blog.title;
-                    document.getElementById('blog-date').textContent = new Date(blog.created_at).toLocaleDateString('en-US', {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric'
-                    });
-                    document.getElementById('blog-author').textContent = blog.author || 'LAKUM Team';
-
-                    // Update hero image
-                    if (blog.cover_image) {
-                        document.getElementById('hero-image').src = blog.cover_image;
-                    }
-
-                    // Update content
-                    document.getElementById('blog-content').innerHTML = blog.content;
-
-                    // Load gallery images if available
-                    if (blog.gallery && blog.gallery.length > 0) {
-                        loadGallery(blog.gallery);
-                    }
-
-                    // Load related blogs
-                    loadRelatedBlogs(blog.id);
                 } else {
                     document.getElementById('blog-title').textContent = 'Blog not found';
                 }
