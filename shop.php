@@ -368,15 +368,19 @@ body{font-family:'Greta Arabic','Greta Text Arabic',-apple-system,BlinkMacSystem
 </script>
 
     <!-- Shop Hero Section -->
-    <section class="lakum-shop-hero">
-        <div class="lakum-shop-hero__image-wrapper">
-            <?php echo ImageHelper::render('heroImage/img-4.webp', 'LAKUM Shop', 'hero'); ?>
+    <section class="lakum-hero">
+        <div class="lakum-hero__image-wrapper">
+            <img src="heroImage/img-4.webp" alt="LAKUM Shop" class="lakum-hero__image" loading="eager" fetchpriority="high" decoding="async" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+            <div class="lakum-hero__overlay"></div>
         </div>
-        <div class="lakum-shop-hero__content">
-            <h1 class="lakum-shop-hero__title"><?php echo t('hero_title', 'Discover Lakum Concept Shop'); ?></h1>
-            <a href="https://souvenirs.sa/ar/category/oyajz" class="lakum-shop-hero__btn" target="_blank" rel="noopener noreferrer" data-link-type="shop">
-                                <?php echo t('hero_button', 'Explore Shop'); ?>                <i class="ri-arrow-right-line"></i>
-                            </a>
+        <div class="lakum-hero__content">
+            <h1 class="lakum-hero__title"><?php echo t('hero_title', 'Discover Lakum Concept Shop'); ?></h1>
+            <p class="lakum-hero__subtitle">
+                <a href="https://souvenirs.sa/ar/category/oyajz" class="lakum-btn lakum-btn--primary" target="_blank" rel="noopener noreferrer" data-link-type="shop">
+                    <?php echo t('hero_button', 'Explore Shop'); ?>
+                    <i class="ri-arrow-right-line"></i>
+                </a>
+            </p>
         </div>
     </section>
 

@@ -87,18 +87,19 @@ require_once 'api/image-helper.php';
     </header>
 
     <!-- Hero Section -->
-    <section class="lakum-exhibitions-hero">
-        <img src="heroImage/img-4.webp"
-             srcset="heroImage/img-4.webp 1200w"
-             sizes="100vw"
-             alt="LAKUM Exhibitions"
-             fetchpriority="high"
-             loading="eager"
-             decoding="async"
-             width="1200"
-             height="800"
-             style="width: 100%; height: 100%; object-fit: cover; display: block;">
-        <div class="lakum-exhibitions-hero__overlay"></div>
+    <section class="lakum-hero" style="aspect-ratio: 16/9">
+        <div class="lakum-hero__image-wrapper">
+            <img src="heroImage/img-4.webp"
+                 alt="Exhibitions"
+                 fetchpriority="high"
+                 loading="eager"
+                 decoding="async"
+                 width="1200"
+                 height="800"
+                 class="lakum-hero__image"
+                 style="width: 100%; height: 100%; object-fit: cover; display: block;">
+            <div class="lakum-hero__overlay"></div>
+        </div>
     </section>
 
     <!-- Upcoming Section -->

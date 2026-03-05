@@ -72,79 +72,81 @@ body {
   line-height: 1.6;
 }
 
-.page-hero {
+.lakum-hero {
   position: relative;
-  width: 100vw;
-  height: 65vh;
-  min-height: 450px;
-  max-height: 650px;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  color: white !important;
-  text-align: center !important;
-  
-  overflow: hidden;
-  contain: layout style paint;
-  margin: 0;
-  padding: 0 !important;
-  left: 0;
-  right: 0;
-  margin-left: calc(-50vw + 50%);
+  width: 100%;
+  height: 85vh;
+  min-height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #1a1a1a;
+  z-index: 0;
 }
 
 @media (max-width: 768px) {
-  .page-hero {
+  .lakum-hero {
     height: 60vh;
-    min-height: 400px;
-    max-height: 500px;
-    padding: 0 !important;
-    margin: 0;
+    min-height: 450px;
   }
 }
 
 @media (max-width: 480px) {
-  .page-hero {
+  .lakum-hero {
     height: 50vh;
-    min-height: 300px;
-    max-height: 400px;
-    padding: 0 !important;
-    margin: 0;
+    min-height: 400px;
   }
 }
 
-.page-hero__image-wrapper {
+.lakum-hero__image-wrapper {
   position: absolute;
   inset: 0;
-  z-index: 0;
+  z-index: -1;
   overflow: hidden;
-  width: 100%;
-  height: 100%;
 }
 
-.page-hero__image-wrapper picture,
-.page-hero__image-wrapper img {
+.lakum-hero__image {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
-  position: absolute;
-  inset: 0;
-  margin: 0;
-  padding: 0;
 }
 
-.page-hero::before {
+.lakum-hero__overlay {
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.35);
-  z-index: 1;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.65) 100%);
+  z-index: 0;
 }
 
-.page-hero > * {
+.lakum-hero__content {
   position: relative;
-  z-index: 2;
+  z-index: 1;
+  text-align: center;
+  color: #fff;
+  max-width: 1400px;
+  width: 90%;
+  padding: 0 20px;
+}
+
+.lakum-hero__title {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin: 0 0 20px 0;
+  color: #ffffff;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  font-family: 'Greta Arabic', 'Greta Text Arabic', -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+.lakum-hero__subtitle {
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  font-weight: 300;
+  line-height: 1.6;
+  color: #fff;
+  text-align: center;
 }
 
 .page-content {
@@ -638,19 +640,21 @@ html[lang="ar"] .lakum-event-card__date {
         </div>
     </header>
 
-<section class="page-hero">
-    <div class="page-hero__image-wrapper">
-        <img src="heroImage/img-4.webp"
-             alt="About LAKUM Artspace"
-             fetchpriority="high"
-             loading="eager"
-             decoding="async"
-             width="1200"
-             height="800"
-             style="width: 100%; height: 100%; object-fit: cover; display: block;">
-    </div>
-    <div class="page-hero__overlay"></div>
-</section>
+    <section class="lakum-hero" style="aspect-ratio: 16/9">
+        <div class="lakum-hero__image-wrapper">
+            <img src="heroImage/img-4.webp"
+                 alt="About LAKUM Artspace"
+                 fetchpriority="high"
+                 loading="eager"
+                 decoding="async"
+                 width="1200"
+                 height="800"
+                 class="lakum-hero__image"
+                 style="width: 100%; height: 100%; object-fit: cover; display: block;">
+            <div class="lakum-hero__overlay"></div>
+        </div>
+    </section>
+
 <div class="page-content">
 <section class="lakum-about-section"><div class="lakum-container"><div class="lakum-about-section__content"><div class="lakum-about-section__text"><h2 class="lakum-about-section__title"><?php echo t('about_heading', 'About Us'); ?></h2><div class="lakum-about-section__description"><div class="lakum-about-text__paragraphs"><p><strong><?php echo t('about_intro', 'Lakum Artspace is more than a gallery. It is a living space for connection. Rooted in Riyadh and reaching beyond, Lakum Artspace has evolved into a multidisciplinary platform where artists, thinkers, makers, and audiences come together.'); ?></strong></p><p><?php echo t('about_belief', 'We believe art is not only seen but shared, not only displayed but lived. At Lakum Artspace, exhibitions transform into gatherings, ideas become collaborations, and disciplines intersect to form new ways of engaging with culture.'); ?></p><p><?php echo t('about_exchange', 'As a dynamic space for cultural exchange, Lakum Artspace embraces the unexpected. Our programming spans art, design, sound, film, food, and performance, guided by curiosity, critical thought, and care. Each encounter is an invitation to witness, participate, and contribute to the evolving cultural dialogue.'); ?></p><p><strong><?php echo t('about_closing', 'For those who seek meaning through connection, this is the new face of Lakum Artspace.'); ?></strong></p></div></div></div><div class="lakum-about-section__image"><?php echo ImageHelper::render('about/1.jpg', 'LAKUM Artspace', 'gallery'); ?></div></div></div></section>
 <section class="lakum-workshops-section"><div class="lakum-container"><div class="lakum-workshops-section__content"><div class="lakum-workshops-section__image"><?php echo ImageHelper::render('about/2.jpg', 'Workshops & Seminars', 'gallery'); ?></div><div class="lakum-workshops-section__text"><h2 class="lakum-workshops-section__title"><?php echo t('workshops_heading', 'Workshops & Seminars'); ?></h2><p class="lakum-workshops-section__description"><?php echo t('workshops_description_1', 'We offer a diverse range of workshops, seminars, and educational programs designed to inspire creativity and foster artistic growth. From beginner-friendly classes to advanced masterclasses, our expert instructors provide comprehensive guidance and mentorship.'); ?></p><p class="lakum-workshops-section__description"><?php echo t('workshops_description_2', 'Whether you\'re looking to develop new skills, explore different artistic mediums, or connect with fellow creatives, our programs provide the perfect platform for artistic development and cultural exchange.'); ?></p></div></div></div></section>

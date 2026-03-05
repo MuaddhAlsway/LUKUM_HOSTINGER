@@ -393,13 +393,22 @@ require_once 'api/image-helper.php';
     </script>
 
     <!-- Hero Section -->
-    <section class="lakum-blog-hero">
-        <div class="lakum-blog-hero__overlay"></div>
-        <div class="lakum-container">
-            <div class="lakum-blog-hero__content">
-                <h1 class="lakum-blog-hero__title"><?php echo t('blog_hero_title', 'Stories & Insights'); ?></h1>
-                <p class="lakum-blog-hero__subtitle"><?php echo t('blog_hero_subtitle', 'Explore the world of art, culture, and creativity through our curated collection of articles, interviews, and behind-the-scenes stories'); ?></p>
-            </div>
+    <section class="lakum-hero" style="aspect-ratio: 16/9">
+        <div class="lakum-hero__image-wrapper">
+            <img src="heroImage/img-4.webp"
+                 alt="Blog"
+                 fetchpriority="high"
+                 loading="eager"
+                 decoding="async"
+                 width="1200"
+                 height="800"
+                 class="lakum-hero__image"
+                 style="width: 100%; height: 100%; object-fit: cover; display: block;">
+            <div class="lakum-hero__overlay"></div>
+        </div>
+        <div class="lakum-hero__content">
+            <h1 class="lakum-hero__title"><?php echo t('blog_hero_title', 'Stories & Insights'); ?></h1>
+            <p class="lakum-hero__subtitle"><?php echo t('blog_hero_subtitle', 'Explore the world of art, culture, and creativity through our curated collection of articles, interviews, and behind-the-scenes stories'); ?></p>
         </div>
     </section>
 

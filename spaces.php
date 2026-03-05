@@ -452,18 +452,13 @@ require_once 'api/image-helper.php';
     </script>
 
     <!-- Hero Section -->
-    <section class="lakum-spaces-hero" id="spaceHeroSection">
-        <div class="lakum-spaces-hero__overlay"></div>
-        <div class="lakum-spaces-hero__content">
-            <h1 class="lakum-spaces-hero__title"><?php echo t('spaces_hero_title', 'Discover Our Dynamic'); ?> <span><?php echo t('spaces_hero_subtitle', ''); ?></span></h1>
-            <ul class="lakum-spaces-hero__tags">
-                <li class="lakum-spaces-hero__tag"><?php echo t('spaces_tag_art', 'Art'); ?></li>
-                <li class="lakum-spaces-hero__tag"><?php echo t('spaces_tag_gallery', 'Gallery'); ?></li>
-                <li class="lakum-spaces-hero__tag"><?php echo t('spaces_tag_hub', 'Hub'); ?></li>
-                <li class="lakum-spaces-hero__tag"><?php echo t('spaces_tag_library', 'Library'); ?></li>
-                <li class="lakum-spaces-hero__tag"><?php echo t('spaces_tag_shop', 'Shop'); ?></li>
-                <li class="lakum-spaces-hero__tag"><?php echo t('spaces_tag_cafe', 'Caf�'); ?></li>
-            </ul>
+    <section class="lakum-hero">
+        <div class="lakum-hero__image-wrapper">
+            <img src="heroImage/img-3.webp" alt="LAKUM Spaces" class="lakum-hero__image" loading="eager" fetchpriority="high" decoding="async" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+            <div class="lakum-hero__overlay"></div>
+        </div>
+        <div class="lakum-hero__content">
+            <h1 class="lakum-hero__title"><?php echo t('spaces_hero_title', 'Discover Our Dynamic'); ?> <span><?php echo t('spaces_hero_subtitle', ''); ?></span></h1>
         </div>
     </section>
 

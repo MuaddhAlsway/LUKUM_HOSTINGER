@@ -234,25 +234,16 @@ require_once 'api/image-helper.php';
     </header>
 
     <!-- Hero Section -->
-    <section class="event-hero">
-        <div class="event-hero__image-wrapper">
-            <img id="hero-image" src="assest/img-4.webp" alt="Blog" class="event-hero__image">
-            <div class="event-hero__overlay"></div>
+    <section class="lakum-hero">
+        <div class="lakum-hero__image-wrapper">
+            <img id="hero-image" src="assest/img-4.webp" alt="Blog" class="lakum-hero__image" loading="eager" fetchpriority="high" decoding="async" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+            <div class="lakum-hero__overlay"></div>
         </div>
-        <div class="event-hero__content">
-            <div class="event-container">
-                <h1 class="event-hero__title" id="blog-title">Loading...</h1>
-                <div class="event-hero__meta">
-                    <span class="event-hero__meta-item">
-                        <i class="ri-calendar-line"></i>
-                        <span id="blog-date">Loading...</span>
-                    </span>
-                    <span class="event-hero__meta-item">
-                        <i class="ri-user-line"></i>
-                        <span id="blog-author">Loading...</span>
-                    </span>
-                </div>
-            </div>
+        <div class="lakum-hero__content">
+            <h1 class="lakum-hero__title" id="blog-title">Loading...</h1>
+            <p class="lakum-hero__subtitle">
+                <span id="blog-date">Loading...</span> • <span id="blog-author">Loading...</span>
+            </p>
         </div>
     </section>
 
