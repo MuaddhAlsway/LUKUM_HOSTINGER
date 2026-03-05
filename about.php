@@ -970,6 +970,7 @@ html[lang="ar"] .lakum-event-card__date {
 </script>
 
     <script src="assest/fun-interactions.js?v=5.0.0" defer></script>
+    <script src="assest/navbar-mobile-toggle.js?v=5.0.0" defer></script>
     <script src="assest/app-header.js" defer></script>
 </body>
 </html>
