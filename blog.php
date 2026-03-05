@@ -164,7 +164,6 @@ require_once 'api/image-helper.php';
     <link rel="stylesheet" href="lakum-components.css">
     <link rel="stylesheet" href="assest/mobile-menu.css">
     <link rel="stylesheet" href="assest/fab-button.css">
-    <link rel="stylesheet" href="assest/lakum-header.css">
     <link rel="stylesheet" href="Home.min.css">
 
     <!-- RTL Styles -->

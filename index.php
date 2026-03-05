@@ -15,12 +15,11 @@ require_once 'lang/loader.php';
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     
     <link rel="stylesheet" href="critical-inline.css">
-    <link rel="stylesheet" href="assest/lakum-header.css">
+    <link rel="stylesheet" href="lakum-components.css">
     <link rel="stylesheet" href="rtl.css">
     
     <!-- Defer non-critical CSS -->
     <link rel="preload" href="global-styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="lakum-components.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preload" href="assest/mobile-menu.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preload" href="assest/fab-button.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" media="print" onload="this.media='all'">

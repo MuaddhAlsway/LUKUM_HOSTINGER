@@ -24,7 +24,6 @@ require_once 'api/image-helper.php';
 <link rel="stylesheet" href="lakum-components.css">
 <link rel="stylesheet" href="assest/mobile-menu.css">
 <link rel="stylesheet" href="assest/fab-button.css">
-<link rel="stylesheet" href="assest/lakum-header.css">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" media="print" onload="this.media='all'">
 <noscript><link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet"></noscript>
 <link rel="stylesheet" href="Home.min.css" media="print" onload="this.media='all'">

@@ -286,7 +286,7 @@ html[dir="rtl"] .lakum-lang-link {
         z-index: 999;
     }
 
-    .lakum-nav.active {
+    .lakum-nav.lakum-nav--active {
         max-height: calc(100vh - var(--header-height));
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;

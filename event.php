@@ -161,7 +161,6 @@ require_once 'api/image-helper.php';
     <link rel="stylesheet" href="lakum-components.css">
     <link rel="stylesheet" href="assest/mobile-menu.css">
     <link rel="stylesheet" href="assest/fab-button.css">
-    <link rel="stylesheet" href="assest/lakum-header.css">
     
     <!-- Non-critical CSS - Defer loading -->
     <link rel="preload" href="Home.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">

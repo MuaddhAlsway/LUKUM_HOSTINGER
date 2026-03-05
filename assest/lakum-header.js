@@ -13,7 +13,7 @@
         navSelector: '.lakum-nav',
         navLinkSelector: '.lakum-nav__link',
         langLinkSelector: '.lakum-lang-link',
-        activeClass: 'active',
+        activeClass: 'lakum-nav--active',
         activeLinkClass: 'lakum-nav__link--active',
         mobileBreakpoint: 768
     };
