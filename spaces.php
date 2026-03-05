@@ -301,17 +301,16 @@ require_once 'api/image-helper.php';
         </div>
         <div class="lakum-hero__content">
             <h1 class="lakum-hero__title"><?php echo t('spaces_hero_title', 'Discover Our Dynamic'); ?> <span><?php echo t('spaces_hero_subtitle', ''); ?></span></h1>
+            <ul class="lakum-spaces-hero__tags">
+                <li class="lakum-spaces-hero__tag">Art</li>
+                <li class="lakum-spaces-hero__tag">Gallery</li>
+                <li class="lakum-spaces-hero__tag">Hub</li>
+                <li class="lakum-spaces-hero__tag">Library</li>
+                <li class="lakum-spaces-hero__tag">Shop</li>
+                <li class="lakum-spaces-hero__tag">Café</li>
+            </ul>
         </div>
     </section>
-
-    <ul class="lakum-spaces-hero__tags">
-        <li class="lakum-spaces-hero__tag">فن</li>
-        <li class="lakum-spaces-hero__tag">معرض</li>
-        <li class="lakum-spaces-hero__tag">مركز</li>
-        <li class="lakum-spaces-hero__tag">مكتبة</li>
-        <li class="lakum-spaces-hero__tag">متجر</li>
-        <li class="lakum-spaces-hero__tag">مقهى</li>
-    </ul>
 
     <!-- Venue Introduction -->
     <section class="lakum-spaces-intro">
