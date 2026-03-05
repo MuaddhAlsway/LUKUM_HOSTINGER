@@ -621,6 +621,7 @@ margin: 0 auto;}
 
     <script src="assest/fun-interactions.js" defer></script>
     <script src="assest/popup-notification.js?v=5.0.0" defer></script>
+     <script src="assest/navbar-mobile-toggle.js?v=5.0.0" defer></script>
     <script src="assest/lakum-header.js" defer></script>
 </body>
 </html>

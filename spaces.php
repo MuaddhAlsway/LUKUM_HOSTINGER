@@ -462,6 +462,15 @@ require_once 'api/image-helper.php';
         </div>
     </section>
 
+    <ul class="lakum-spaces-hero__tags">
+        <li class="lakum-spaces-hero__tag">فن</li>
+        <li class="lakum-spaces-hero__tag">معرض</li>
+        <li class="lakum-spaces-hero__tag">مركز</li>
+        <li class="lakum-spaces-hero__tag">مكتبة</li>
+        <li class="lakum-spaces-hero__tag">متجر</li>
+        <li class="lakum-spaces-hero__tag">مقهى</li>
+    </ul>
+
     <!-- Venue Introduction -->
     <section class="lakum-spaces-intro">
         <div class="lakum-container">
