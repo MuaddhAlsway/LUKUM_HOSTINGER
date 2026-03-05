@@ -72,7 +72,7 @@ require_once 'lang/loader.php';
         .lakum-section-header__subtitle { font-size: 1.1rem; color: #666; text-align: center; }
         
         .lakum-featured-banner { padding: 0; background: #edecdf; }
-        .lakum-featured-banner__content { display: grid; grid-template-columns: 1fr 1fr; gap: 0; align-items: stretch; width: 100%; margin-left: 0; }
+        .lakum-featured-banner__content { display: grid; grid-template-columns: 1fr 1fr; gap: 0; align-items: stretch; width: 100vw; margin-left: calc(-50vw + 50%); }
         .lakum-featured-banner__image { width: 100%; height: 450px; overflow: hidden; border-radius: 0; }
         .lakum-featured-banner__image img { width: 100%; height: 100%; display: block; border-radius: 0; box-shadow: none; object-fit: cover; }
         .lakum-featured-banner__text { padding: 60px; display: flex; flex-direction: column; justify-content: center; }
