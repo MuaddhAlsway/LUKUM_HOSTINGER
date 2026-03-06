@@ -11,9 +11,10 @@ body {
     font-family: 'Greta Arabic', 'Greta Text Arabic', -apple-system, BlinkMacSystemFont, sans-serif !important;
 }
 
-/* ===== HEADER / NAVIGATION ===== */
+/* ===== HEADER / NAVIGATION =====
 .lakum-header {
       position: relative; /* or fixed for sticky header */
+      /*
   z-index: 2000;   
     top: 0;
     left: 0;
@@ -220,7 +221,7 @@ body {
 
 .lakum-header--menu-open .lakum-header__container {
     border-bottom: 1px solid rgba(209, 209, 209, 0.3) !important;
-}
+} */
 
 /* ===== FOOTER ===== */
 .lakum-footer {
