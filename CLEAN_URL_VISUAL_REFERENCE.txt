@@ -1,0 +1,207 @@
+╔════════════════════════════════════════════════════════════════════════════════╗
+║                    CLEAN URL SYSTEM - VISUAL REFERENCE                         ║
+╚════════════════════════════════════════════════════════════════════════════════╝
+
+┌─ BEFORE vs AFTER ─────────────────────────────────────────────────────────────┐
+│                                                                                 │
+│  BEFORE (Current)                                                               │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  event.php?slug=dior-exhibition&lang=en                                        │
+│  blogPageDetails.php?slug=my-blog-post&lang=en                                 │
+│  pressPageDetails.php?slug=press-release-1&lang=en                             │
+│                                                                                 │
+│  AFTER (Clean URLs)                                                             │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  /event/dior-exhibition?lang=en                                                │
+│  /blog/my-blog-post?lang=en                                                    │
+│  /press/press-release-1?lang=en                                                │
+│                                                                                 │
+└─────────────────────────────────────────────────────────────────────────────────┘
+
+┌─ HOW IT WORKS ────────────────────────────────────────────────────────────────┐
+│                                                                                 │
+│  USER VISITS                                                                    │
+│  ↓                                                                              │
+│  /event/dior-exhibition?lang=en                                                │
+│  ↓                                                                              │
+│  .HTACCESS REWRITES TO                                                          │
+│  ↓                                                                              │
+│  event.php?slug=dior-exhibition&lang=en                                        │
+│  ↓                                                                              │
+│  PHP RECEIVES                                                                   │
+│  ↓                                                                              │
+│  $_GET['slug'] = 'dior-exhibition'                                             │
+│  $_GET['lang'] = 'en'                                                          │
+│  ↓                                                                              │
+│  FETCHES FROM API                                                               │
+│  ↓                                                                              │
+│  api/get_events.php?slug=dior-exhibition&lang=en                               │
+│  ↓                                                                              │
+│  DATABASE QUERY                                                                 │
+│  ↓                                                                              │
+│  SELECT * FROM events WHERE slug = 'dior-exhibition'                           │
+│  ↓                                                                              │
+│  RETURNS EVENT DATA                                                             │
+│  ↓                                                                              │
+│  PAGE DISPLAYS EVENT                                                            │
+│                                                                                 │
+└─────────────────────────────────────────────────────────────────────────────────┘
+
+┌─ URL EXAMPLES ────────────────────────────────────────────────────────────────┐
+│                                                                                 │
+│  EVENTS                                                                         │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  /event/dior-exhibition?lang=en                                                │
+│  /event/ysl?lang=en                                                            │
+│  /event/cheval-blanc?lang=ar                                                   │
+│  /event/shiseido?lang=en                                                       │
+│  /event/boucheron?lang=ar                                                      │
+│                                                                                 │
+│  BLOGS                                                                          │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  /blog/lakum-impact-on-local-artists?lang=en                                   │
+│  /blog/the-art-of-contemporary-expression?lang=ar                              │
+│  /blog/behind-the-scenes-curating-an-exhibition?lang=en                        │
+│                                                                                 │
+│  PRESS                                                                          │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  /press/press-release-1?lang=en                                                │
+│  /press/tiktok-creator-hub-awards?lang=ar                                      │
+│                                                                                 │
+└─────────────────────────────────────────────────────────────────────────────────┘
+
+┌─ IMPLEMENTATION STEPS ────────────────────────────────────────────────────────┐
+│                                                                                 │
+│  STEP 1: UPDATE FRONTEND URL GENERATION (5 min)                                │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  Files: blog.php, event.php, press.php                                         │
+│                                                                                 │
+│  BEFORE:                                                                        │
+│  return `blogPageDetails.php?title=${encodeURIComponent(title)}&lang=${lang}`; │
+│                                                                                 │
+│  AFTER:                                                                         │
+│  return `blog/${slug}?lang=${lang}`;                                           │
+│                                                                                 │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  STEP 2: UPDATE DETAIL PAGES (10 min)                                          │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  Files: event.php, blogPageDetails.php, pressPageDetails.php                   │
+│                                                                                 │
+│  ADD AT TOP:                                                                    │
+│  $slug = $_GET['slug'] ?? null;                                                │
+│  $lang = $_GET['lang'] ?? 'en';                                                │
+│  if (!$slug) { header('HTTP/1.0 404 Not Found'); exit; }                       │
+│                                                                                 │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  STEP 3: UPDATE API ENDPOINTS (10 min)                                         │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  Files: api/get_events.php, api/get_blogs.php, api/get_press.php               │
+│                                                                                 │
+│  ADD SLUG SUPPORT:                                                              │
+│  if (isset($_GET['slug'])) {                                                   │
+│      $slug = $_GET['slug'];                                                    │
+│      $query = 'SELECT * FROM table WHERE slug = ? LIMIT 1';                    │
+│      $stmt = $db->prepare($query);                                             │
+│      $stmt->bind_param('s', $slug);                                            │
+│      $stmt->execute();                                                         │
+│  }                                                                              │
+│                                                                                 │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  STEP 4: TEST (10 min)                                                         │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  ✓ Test event URLs                                                             │
+│  ✓ Test blog URLs                                                              │
+│  ✓ Test press URLs                                                             │
+│  ✓ Test language switching                                                     │
+│  ✓ Test 404 errors                                                             │
+│  ✓ Test mobile and desktop                                                     │
+│                                                                                 │
+└─────────────────────────────────────────────────────────────────────────────────┘
+
+┌─ DATABASE STATUS ─────────────────────────────────────────────────────────────┐
+│                                                                                 │
+│  ✅ events.slug - Already populated                                            │
+│  ✅ blogs.slug - Already populated                                             │
+│  ✅ press.slug - Already populated                                             │
+│                                                                                 │
+│  NO DATABASE CHANGES NEEDED!                                                   │
+│                                                                                 │
+└─────────────────────────────────────────────────────────────────────────────────┘
+
+┌─ .HTACCESS REWRITE RULES ─────────────────────────────────────────────────────┐
+│                                                                                 │
+│  EVENTS:                                                                        │
+│  RewriteRule ^event/([a-z0-9-]+)/?$ event.php?slug=$1 [QSA,L]                 │
+│                                                                                 │
+│  BLOGS:                                                                         │
+│  RewriteRule ^blog/([a-z0-9-]+)/?$ blogPageDetails.php?slug=$1 [QSA,L]        │
+│                                                                                 │
+│  PRESS:                                                                         │
+│  RewriteRule ^press/([a-z0-9-]+)/?$ pressPageDetails.php?slug=$1 [QSA,L]      │
+│                                                                                 │
+│  ✅ ALREADY UPDATED IN .HTACCESS                                               │
+│                                                                                 │
+└─────────────────────────────────────────────────────────────────────────────────┘
+
+┌─ FILES TO UPDATE ─────────────────────────────────────────────────────────────┐
+│                                                                                 │
+│  FRONTEND (5 min)                                                               │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  [ ] blog.php - Update getBlogUrl()                                            │
+│  [ ] event.php - Update getEventUrl()                                          │
+│  [ ] press.php - Update getPressUrl()                                          │
+│                                                                                 │
+│  DETAIL PAGES (10 min)                                                          │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  [ ] event.php - Add slug parameter handling                                   │
+│  [ ] blogPageDetails.php - Add slug parameter handling                         │
+│  [ ] pressPageDetails.php - Create new file                                    │
+│                                                                                 │
+│  API ENDPOINTS (10 min)                                                         │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  [ ] api/get_events.php - Add slug support                                     │
+│  [ ] api/get_blogs.php - Add slug support                                      │
+│  [ ] api/get_press.php - Add slug support                                      │
+│                                                                                 │
+│  TESTING (10 min)                                                               │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  [ ] Test all URLs                                                             │
+│  [ ] Test language switching                                                   │
+│  [ ] Test 404 errors                                                           │
+│  [ ] Test mobile and desktop                                                   │
+│                                                                                 │
+│  TOTAL TIME: 35 MINUTES                                                        │
+│                                                                                 │
+└─────────────────────────────────────────────────────────────────────────────────┘
+
+┌─ BENEFITS ────────────────────────────────────────────────────────────────────┐
+│                                                                                 │
+│  ✅ SEO-Friendly - Clean, readable URLs with keywords                          │
+│  ✅ User-Friendly - Easy to share and remember                                 │
+│  ✅ Professional - Modern URL structure                                        │
+│  ✅ Consistent - Same format across all pages                                  │
+│  ✅ Bilingual - Works with both English and Arabic                             │
+│  ✅ Database-Driven - Slugs from database, no hardcoding                       │
+│  ✅ Admin Controlled - Admin panel controls slugs                              │
+│  ✅ No Hardcoding - Fully dynamic                                              │
+│                                                                                 │
+└─────────────────────────────────────────────────────────────────────────────────┘
+
+┌─ QUICK START ─────────────────────────────────────────────────────────────────┐
+│                                                                                 │
+│  1. Read CLEAN_URL_QUICK_START.md                                              │
+│  2. Update frontend URL generation (5 min)                                     │
+│  3. Update detail pages (10 min)                                               │
+│  4. Update API endpoints (10 min)                                              │
+│  5. Test all URLs (10 min)                                                     │
+│  6. Deploy to production                                                       │
+│                                                                                 │
+│  TOTAL: 35 MINUTES                                                             │
+│                                                                                 │
+└─────────────────────────────────────────────────────────────────────────────────┘
+
+╔════════════════════════════════════════════════════════════════════════════════╗
+║                         READY TO IMPLEMENT!                                    ║
+║                                                                                 ║
+║  Start with: CLEAN_URL_QUICK_START.md                                          ║
+╚════════════════════════════════════════════════════════════════════════════════╝

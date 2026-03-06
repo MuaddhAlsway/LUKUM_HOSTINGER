@@ -1,0 +1,52 @@
+================================================================================
+QUICK FIX: Spaces Page Past Exhibitions Not Loading
+================================================================================
+
+EXACT ISSUE:
+-----------
+The LanguageManager.js script is NOT loaded in spaces.php, but the 
+loadPastExhibitions() function depends on it. This causes an infinite retry 
+loop and the API call is never made.
+
+ROOT CAUSE:
+-----------
+Missing script tag in spaces.php:
+  <script src="js/LanguageManager.js?v=1.0.0" defer></script>
+
+THE FIX (1 LINE):
+-----------------
+File: spaces.php
+Location: Line 641-642 (after navbar and fab-button scripts)
+
+BEFORE:
+    <script src="assest/navbar-mobile-toggle.js" defer></script>
+    <script src="assest/fab-button.js" defer></script>
+    <script>
+
+AFTER:
+    <script src="assest/navbar-mobile-toggle.js" defer></script>
+    <script src="assest/fab-button.js" defer></script>
+    <script src="js/LanguageManager.js?v=1.0.0" defer></script>
+    <script>
+
+WHAT HAPPENS NOW:
+-----------------
+1. LanguageManager.js loads
+2. initSpacesPage() finds LanguageManager available
+3. loadPastExhibitions() is called
+4. API call made: api/get_events.php?type=all&limit=1000&lang=en
+5. Past exhibitions carousel displays events
+
+VERIFICATION:
+--------------
+After fix, check:
+✓ Open Spaces page
+✓ Open DevTools (F12) → Network tab
+✓ Look for "api/get_events.php" request
+✓ Scroll to "Past Exhibitions" section
+✓ Verify carousel displays events
+
+EFFORT: 1 minute
+RISK: None (same pattern used on exhibitions.php, calendar.php, about.php)
+
+================================================================================

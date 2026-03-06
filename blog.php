@@ -206,6 +206,11 @@ require_once 'api/image-helper.php';
     <?php include('includes/header.php'); ?>
 
 <script>
+    // Set current language from PHP (respects URL parameter ?lang=en or ?lang=ar)
+    window.LAKUM_LANG = '<?php echo getCurrentLanguage(); ?>';
+</script>
+
+<script>
         // Intelligent Page Loader - Proper Implementation
         (function() {
             const loader = document.getElementById('pageLoader');
@@ -510,7 +515,9 @@ require_once 'api/image-helper.php';
 
         // Load blogs from API
         function loadBlogs() {
-            const lang = localStorage.getItem('selectedLanguage') || 'en';
+            // Use language from PHP (respects URL parameter ?lang=en or ?lang=ar)
+            // Falls back to LanguageManager if window.LAKUM_LANG not set
+            const lang = window.LAKUM_LANG || LanguageManager.getLanguage() || 'en';
             const apiUrl = `api/get_blogs_working.php?type=all&lang=${lang}`;
             console.log('Fetching blogs from:', apiUrl);
 

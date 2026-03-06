@@ -25,9 +25,20 @@ try {
         $lang = 'en';
     }
     
-    // Check if fetching a single blog by ID
-    if (isset($_GET['id'])) {
-        $blog_id = (int)$_GET['id'];
+    // Check if fetching a single blog by slug, ID, or title
+    if (isset($_GET['slug']) || isset($_GET['id']) || isset($_GET['title'])) {
+        $blog_id = null;
+        $blog_slug = null;
+        $blog_title = null;
+        
+        // Determine which parameter to use (slug > id > title)
+        if (isset($_GET['slug'])) {
+            $blog_slug = $_GET['slug'];
+        } elseif (isset($_GET['id'])) {
+            $blog_id = (int)$_GET['id'];
+        } elseif (isset($_GET['title'])) {
+            $blog_title = $_GET['title'];
+        }
         
         // Query from blogs table with bilingual columns
         $query = "
@@ -37,6 +48,7 @@ try {
                 b.category,
                 b.cover_image,
                 b.created_at,
+                b.slug,
                 CASE 
                     WHEN ? = 'ar' AND b.title_ar IS NOT NULL AND b.title_ar != '' THEN b.title_ar
                     ELSE COALESCE(b.title_en, b.title)
@@ -56,15 +68,43 @@ try {
                 b.excerpt_ar,
                 b.content_ar
             FROM blogs b
-            WHERE b.id = ?
-        ";
+            WHERE ";
+        
+        if ($blog_slug !== null) {
+            $query .= "b.slug = ?";
+            $stmt = $conn->prepare($query);
+            if (!$stmt) {
+                throw new Exception('Query preparation failed: ' . $conn->error);
+            }
+            $stmt->bind_param('ssss', $lang, $lang, $lang, $blog_slug);
+        } elseif ($blog_id !== null) {
+            $query .= "b.id = ?";
+            $stmt = $conn->prepare($query);
+            if (!$stmt) {
+                throw new Exception('Query preparation failed: ' . $conn->error);
+            }
+            $stmt->bind_param('sssi', $lang, $lang, $lang, $blog_id);
+        } else {
+            $query .= "b.title_en = ? OR b.title = ?";
+            $stmt = $conn->prepare($query);
+            if (!$stmt) {
+                throw new Exception('Query preparation failed: ' . $conn->error);
+            }
+            $stmt->bind_param('sssss', $lang, $lang, $lang, $blog_title, $blog_title);
+        }
         
         $stmt = $conn->prepare($query);
         if (!$stmt) {
             throw new Exception('Query preparation failed: ' . $conn->error);
         }
         
-        $stmt->bind_param('sssi', $lang, $lang, $lang, $blog_id);
+        if ($blog_slug !== null) {
+            $stmt->bind_param('ssss', $lang, $lang, $lang, $blog_slug);
+        } elseif ($blog_id !== null) {
+            $stmt->bind_param('sssi', $lang, $lang, $lang, $blog_id);
+        } else {
+            $stmt->bind_param('sssss', $lang, $lang, $lang, $blog_title, $blog_title);
+        }
         
         if (!$stmt->execute()) {
             throw new Exception('Query execution failed: ' . $stmt->error);

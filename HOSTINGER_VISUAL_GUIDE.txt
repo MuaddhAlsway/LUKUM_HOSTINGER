@@ -1,0 +1,244 @@
+╔════════════════════════════════════════════════════════════════════════════════╗
+║                                                                                ║
+║              HOSTINGER CLEAN URL SYSTEM - VISUAL GUIDE                         ║
+║                                                                                ║
+║                    File-Based Routing Solution                                ║
+║                                                                                ║
+╚════════════════════════════════════════════════════════════════════════════════╝
+
+┌─ HOW HOSTINGER WORKS ─────────────────────────────────────────────────────────┐
+│                                                                                 │
+│  Traditional Hosting (with .htaccess):                                         │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  URL: /event/dior-exhibition                                                  │
+│  ↓                                                                              │
+│  .htaccess rewrites to: event.php?slug=dior-exhibition                         │
+│  ↓                                                                              │
+│  Loads event.php                                                               │
+│                                                                                 │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  Hostinger (File-Based):                                                       │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  URL: /event/dior-exhibition                                                  │
+│  ↓                                                                              │
+│  Hostinger looks for: /event/dior-exhibition.php                              │
+│  ↓                                                                              │
+│  If found, loads the file                                                      │
+│  ↓                                                                              │
+│  If not found, 404 error                                                       │
+│                                                                                 │
+│  ⚠️  NO .HTACCESS REWRITING ON HOSTINGER!                                      │
+│                                                                                 │
+└─────────────────────────────────────────────────────────────────────────────────┘
+
+┌─ OUR SOLUTION: CREATE PHYSICAL FILES ──────────────────────────────────────────┐
+│                                                                                 │
+│  STEP 1: Create File Generator                                                │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  FileGenerator::generateEventFile('dior-exhibition')                           │
+│  ↓                                                                              │
+│  Creates: /event/dior-exhibition.php                                          │
+│  ↓                                                                              │
+│  File contains: <?php require_once __DIR__ . "/../event.php"; ?>              │
+│                                                                                 │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  STEP 2: User Visits URL                                                       │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  URL: /event/dior-exhibition?lang=en                                          │
+│  ↓                                                                              │
+│  Hostinger looks for: /event/dior-exhibition.php                              │
+│  ↓                                                                              │
+│  Finds the file (we created it!)                                              │
+│  ↓                                                                              │
+│  File includes: event.php                                                      │
+│  ↓                                                                              │
+│  event.php reads slug from filename                                           │
+│  ↓                                                                              │
+│  Fetches event data from database                                             │
+│  ↓                                                                              │
+│  Displays event page                                                           │
+│                                                                                 │
+└─────────────────────────────────────────────────────────────────────────────────┘
+
+┌─ DIRECTORY STRUCTURE ─────────────────────────────────────────────────────────┐
+│                                                                                 │
+│  /                                                                              │
+│  ├── event.php (main event page)                                              │
+│  ├── event/                                                                    │
+│  │   ├── dior-exhibition.php (auto-generated)                                 │
+│  │   ├── ysl.php (auto-generated)                                             │
+│  │   ├── cheval-blanc.php (auto-generated)                                    │
+│  │   └── ... (more auto-generated files)                                      │
+│  │                                                                              │
+│  ├── blog/                                                                     │
+│  │   ├── lakum-impact-on-local-artists.php (auto-generated)                   │
+│  │   ├── the-art-of-contemporary-expression.php (auto-generated)              │
+│  │   └── ... (more auto-generated files)                                      │
+│  │                                                                              │
+│  ├── press/                                                                    │
+│  │   ├── press-release-1.php (auto-generated)                                 │
+│  │   └── ... (more auto-generated files)                                      │
+│  │                                                                              │
+│  ├── blogPageDetails.php (main blog detail page)                              │
+│  ├── pressPageDetails.php (main press detail page)                            │
+│  │                                                                              │
+│  └── api/                                                                      │
+│      ├── file-generator.php (NEW - generates files)                           │
+│      ├── slug-helper.php                                                      │
+│      └── ... (other APIs)                                                     │
+│                                                                                 │
+└─────────────────────────────────────────────────────────────────────────────────┘
+
+┌─ IMPLEMENTATION FLOW ─────────────────────────────────────────────────────────┐
+│                                                                                 │
+│  STEP 1: Create File Generator (5 min)                                        │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  Create: api/file-generator.php                                               │
+│  Contains: FileGenerator class with methods to create files                    │
+│                                                                                 │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  STEP 2: Create Directories (1 min)                                           │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  Create: /event/, /blog/, /press/                                             │
+│  In Hostinger File Manager                                                    │
+│                                                                                 │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  STEP 3: Generate Initial Files (2 min)                                       │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  Create: generate-files.php                                                   │
+│  Run: https://yoursite.com/generate-files.php                                 │
+│  Result: All existing events/blogs/press get .php files                       │
+│                                                                                 │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  STEP 4: Update Detail Pages (3 min)                                          │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  Update: event.php, blogPageDetails.php, pressPageDetails.php                 │
+│  Add: $slug = basename(__FILE__, '.php');                                     │
+│  Result: Pages read slug from filename                                        │
+│                                                                                 │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  STEP 5: Update Frontend URLs (2 min)                                         │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  Update: blog.php, event.php, press.php                                       │
+│  Change: return `blog/${slug}?lang=${lang}`;                                  │
+│  Result: URLs use clean format                                                │
+│                                                                                 │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  STEP 6: Auto-Generate on Create/Update (2 min)                               │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  Update: Admin panel or API                                                   │
+│  Add: FileGenerator::generateEventFile($slug);                                │
+│  Result: Files created automatically when admin adds content                  │
+│                                                                                 │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  STEP 7: Test (5 min)                                                         │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  Test: /event/dior-exhibition?lang=en                                        │
+│  Test: /blog/my-blog-post?lang=en                                            │
+│  Test: /press/press-release-1?lang=en                                        │
+│  Result: All URLs work!                                                       │
+│                                                                                 │
+│  TOTAL TIME: 20 MINUTES                                                       │
+│                                                                                 │
+└─────────────────────────────────────────────────────────────────────────────────┘
+
+┌─ URL EXAMPLES ────────────────────────────────────────────────────────────────┐
+│                                                                                 │
+│  EVENTS                                                                         │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  /event/dior-exhibition?lang=en                                               │
+│  /event/ysl?lang=en                                                           │
+│  /event/cheval-blanc?lang=ar                                                  │
+│  /event/shiseido?lang=en                                                      │
+│                                                                                 │
+│  BLOGS                                                                          │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  /blog/lakum-impact-on-local-artists?lang=en                                  │
+│  /blog/the-art-of-contemporary-expression?lang=ar                             │
+│  /blog/behind-the-scenes-curating-an-exhibition?lang=en                       │
+│                                                                                 │
+│  PRESS                                                                          │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  /press/press-release-1?lang=en                                               │
+│  /press/tiktok-creator-hub-awards?lang=ar                                     │
+│                                                                                 │
+└─────────────────────────────────────────────────────────────────────────────────┘
+
+┌─ FILE GENERATOR CODE ─────────────────────────────────────────────────────────┐
+│                                                                                 │
+│  class FileGenerator {                                                         │
+│      public static function generateEventFile($slug) {                        │
+│          $dir = __DIR__ . '/../event';                                        │
+│          if (!is_dir($dir)) mkdir($dir, 0755, true);                          │
+│                                                                                 │
+│          $file = $dir . '/' . $slug . '.php';                                 │
+│          $code = '<?php require_once __DIR__ . "/../event.php"; ?>';          │
+│                                                                                 │
+│          file_put_contents($file, $code);                                     │
+│          chmod($file, 0644);                                                  │
+│      }                                                                         │
+│  }                                                                             │
+│                                                                                 │
+│  Usage:                                                                        │
+│  FileGenerator::generateEventFile('dior-exhibition');                         │
+│  → Creates: /event/dior-exhibition.php                                        │
+│                                                                                 │
+└─────────────────────────────────────────────────────────────────────────────────┘
+
+┌─ SLUG EXTRACTION IN DETAIL PAGES ─────────────────────────────────────────────┐
+│                                                                                 │
+│  event.php:                                                                    │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  <?php                                                                         │
+│  // Get slug from filename (Hostinger file-based)                             │
+│  $slug = basename(__FILE__, '.php');                                          │
+│  // If file is: /event/dior-exhibition.php                                    │
+│  // Then $slug = 'dior-exhibition'                                            │
+│                                                                                 │
+│  $lang = $_GET['lang'] ?? 'en';                                               │
+│                                                                                 │
+│  if (!$slug || $slug === 'event') {                                           │
+│      header('HTTP/1.0 404 Not Found');                                        │
+│      exit('Event not found');                                                 │
+│  }                                                                             │
+│  // Rest of your event.php code...                                            │
+│  ?>                                                                            │
+│                                                                                 │
+└─────────────────────────────────────────────────────────────────────────────────┘
+
+┌─ BENEFITS ────────────────────────────────────────────────────────────────────┐
+│                                                                                 │
+│  ✅ Hostinger Compatible - Works with file-based routing                      │
+│  ✅ No .htaccess - No rewriting needed                                        │
+│  ✅ Automatic - Files generated on create/update                              │
+│  ✅ Clean URLs - Professional, SEO-friendly                                   │
+│  ✅ Database-Driven - Slugs from database                                     │
+│  ✅ Admin Controlled - Admin panel controls slugs                             │
+│  ✅ Scalable - Works with any number of items                                 │
+│  ✅ Simple - Just 20 minutes to implement                                     │
+│                                                                                 │
+└─────────────────────────────────────────────────────────────────────────────────┘
+
+┌─ QUICK START ─────────────────────────────────────────────────────────────────┐
+│                                                                                 │
+│  1. Create api/file-generator.php (5 min)                                     │
+│  2. Create directories: /event/, /blog/, /press/ (1 min)                      │
+│  3. Create and run generate-files.php (2 min)                                 │
+│  4. Update detail pages to read slug from filename (3 min)                    │
+│  5. Update frontend URL generation (2 min)                                    │
+│  6. Add auto-generation to admin panel (2 min)                                │
+│  7. Test all URLs (5 min)                                                     │
+│                                                                                 │
+│  TOTAL: 20 MINUTES                                                            │
+│                                                                                 │
+└─────────────────────────────────────────────────────────────────────────────────┘
+
+╔════════════════════════════════════════════════════════════════════════════════╗
+║                                                                                ║
+║                    🚀 READY FOR HOSTINGER!                                    ║
+║                                                                                ║
+║              Start with: HOSTINGER_QUICK_START.md                             ║
+║                                                                                ║
+║                    20 minutes to clean URLs                                   ║
+║                                                                                ║
+╚════════════════════════════════════════════════════════════════════════════════╝

@@ -119,16 +119,44 @@
     RewriteEngine On
     RewriteBase /
     
-    # Remove .php extension
+    # ========================================================================
+    # CLEAN URLS - Database-driven slugs (NO HARDCODING)
+    # ========================================================================
+    
+    # Clean URL for event detail pages
+    # /event/dior-exhibition?lang=en → event.php?slug=dior-exhibition&lang=en
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule ^([^\.]+)$ $1.php [NC, L]
+    RewriteRule ^event/([a-z0-9-]+)/?$ event.php?slug=$1 [QSA,L]
     
-    # Redirect www to non-www
+    # Clean URL for blog detail pages
+    # /blog/my-blog-post?lang=en → blogPageDetails.php?slug=my-blog-post&lang=en
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^blog/([a-z0-9-]+)/?$ blogPageDetails.php?slug=$1 [QSA,L]
+    
+    # Clean URL for press detail pages
+    # /press/press-release-1?lang=en → pressPageDetails.php?slug=press-release-1&lang=en
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^press/([a-z0-9-]+)/?$ pressPageDetails.php?slug=$1 [QSA,L]
+    
+    # ========================================================================
+    # REMOVE .PHP EXTENSION (for other pages)
+    # ========================================================================
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^([^\.]+)$ $1.php [NC,L]
+    
+    # ========================================================================
+    # REDIRECT WWW TO NON-WWW
+    # ========================================================================
     RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
     RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
     
-    # Redirect HTTP to HTTPS
+    # ========================================================================
+    # REDIRECT HTTP TO HTTPS
+    # ========================================================================
     RewriteCond %{HTTPS} off
     RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 </IfModule>

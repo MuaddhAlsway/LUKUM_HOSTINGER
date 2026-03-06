@@ -22,6 +22,12 @@ const LanguageManager = {
             // Use stored language or default to English
             this.applyLanguage(this.currentLanguage);
         }
+        
+        // Mark as ready
+        window.LAKUM_LANGUAGE_MANAGER_READY = true;
+        window.dispatchEvent(new CustomEvent('languageManagerReady', {
+            detail: { language: this.currentLanguage }
+        }));
     },
     
     /**

@@ -242,6 +242,11 @@ require_once 'api/image-helper.php';
     <?php include('includes/header.php'); ?>
 
     <script>
+        // Set current language from PHP (respects URL parameter ?lang=en or ?lang=ar)
+        window.LAKUM_LANG = '<?php echo getCurrentLanguage(); ?>';
+    </script>
+
+    <script>
         // Intelligent Page Loader - Proper Implementation
         (function() {
             const loader = document.getElementById('pageLoader');
@@ -486,9 +491,9 @@ require_once 'api/image-helper.php';
     <script>
         async function loadPressReleases() {
             try {
-                // Get current language from URL or localStorage
-                const urlParams = new URLSearchParams(window.location.search);
-                const lang = LanguageManager.getLanguage();
+                // Use language from PHP (respects URL parameter ?lang=en or ?lang=ar)
+                // Falls back to LanguageManager if window.LAKUM_LANG not set
+                const lang = window.LAKUM_LANG || LanguageManager.getLanguage() || 'en';
                 
                 const response = await fetch(`api/get_press.php?lang=${lang}`);
                 const data = await response.json();
@@ -551,18 +556,22 @@ require_once 'api/image-helper.php';
 
         // Load press releases when page loads
         function initPressPage() {
+            // LanguageManager is guaranteed to be ready by now
+            // because it's loaded with defer and this runs on DOMContentLoaded
             if (typeof LanguageManager === 'undefined') {
-                console.warn('LanguageManager not ready, retrying...');
-                setTimeout(initPressPage, 100);
+                console.error('LanguageManager failed to load');
                 return;
             }
             loadPressReleases();
         }
         
+        // Wait for LanguageManager to be fully initialized
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', initPressPage);
         } else {
+            // DOM already loaded, run immediately
             initPressPage();
+        }
         }
     </script>
 

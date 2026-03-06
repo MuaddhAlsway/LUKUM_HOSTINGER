@@ -172,6 +172,11 @@ require_once 'api/image-helper.php';
     <?php include('includes/header.php'); ?>
 
     <script>
+        // Set current language from PHP (respects URL parameter ?lang=en or ?lang=ar)
+        window.LAKUM_LANG = '<?php echo getCurrentLanguage(); ?>';
+    </script>
+
+    <script>
         // Intelligent Page Loader - Proper Implementation
         (function() {
             const loader = document.getElementById('pageLoader');
@@ -640,6 +645,7 @@ require_once 'api/image-helper.php';
 
     <script src="assest/navbar-mobile-toggle.js" defer></script>
     <script src="assest/fab-button.js" defer></script>
+    <script src="js/LanguageManager.js?v=1.0.0" defer></script>
     <script>
         // Mobile menu toggle
         (function() {
@@ -742,7 +748,9 @@ require_once 'api/image-helper.php';
         // Load Past Exhibitions Dynamically
         async function loadPastExhibitions() {
             try {
-                const lang = LanguageManager.getLanguage();
+                // Use language from PHP (respects URL parameter ?lang=en or ?lang=ar)
+                // Falls back to LanguageManager if window.LAKUM_LANG not set
+                const lang = window.LAKUM_LANG || LanguageManager.getLanguage() || 'en';
                 const response = await fetch(`api/get_events.php?type=all&limit=1000&lang=${lang}`);
                 const data = await response.json();
                 
@@ -802,15 +810,22 @@ require_once 'api/image-helper.php';
 
         // Load past exhibitions when page loads
         function initSpacesPage() {
+            // LanguageManager is guaranteed to be ready by now
+            // because it's loaded with defer and this runs on DOMContentLoaded
             if (typeof LanguageManager === 'undefined') {
-                console.warn('LanguageManager not ready, retrying...');
-                setTimeout(initSpacesPage, 100);
+                console.error('LanguageManager failed to load');
                 return;
             }
             loadPastExhibitions();
         }
         
-        document.addEventListener('DOMContentLoaded', initSpacesPage);
+        // Wait for LanguageManager to be fully initialized
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initSpacesPage);
+        } else {
+            // DOM already loaded, run immediately
+            initSpacesPage();
+        }
 
         // Keyboard navigation for facility popup
         document.addEventListener('keydown', (e) => {

@@ -1,0 +1,228 @@
+================================================================================
+LAKUM ARTSPACE - BILINGUAL COLUMNS QUICK REFERENCE
+================================================================================
+
+DATABASE: u812122863_lakum_artspace
+ANALYSIS DATE: March 6, 2026
+
+================================================================================
+1. TABLES WITH COMPLETE BILINGUAL SUPPORT ✅
+================================================================================
+
+EVENTS TABLE
+  ✅ title_en, title_ar
+  ✅ description_en, description_ar
+  ✅ location_en, location_ar
+  Status: COMPLETE
+
+BLOGS TABLE
+  ✅ title_en, title_ar
+  ✅ content_en, content_ar
+  ✅ excerpt_en, excerpt_ar
+  Status: COMPLETE
+
+PRESS TABLE
+  ✅ title_en, title_ar
+  ✅ content_en, content_ar
+  ✅ excerpt_en, excerpt_ar
+  Status: COMPLETE
+
+PRICING TABLE
+  ✅ name_en, name_ar
+  ✅ description_en, description_ar
+  ✅ duration_en, duration_ar
+  ✅ features_en, features_ar
+  ✅ price_unit_ar
+  ✅ vat_note_ar
+  Status: COMPLETE
+
+================================================================================
+2. TABLES WITH MISSING BILINGUAL COLUMNS ⚠️
+================================================================================
+
+EVENT_GALLERY TABLE
+  ❌ MISSING: caption_en, caption_ar
+  Current: caption (single language only)
+  Action: ADD COLUMNS
+  SQL: ALTER TABLE `event_gallery`
+       ADD COLUMN `caption_en` varchar(255) DEFAULT NULL,
+       ADD COLUMN `caption_ar` varchar(255) DEFAULT NULL;
+
+BLOG_GALLERY TABLE
+  ❌ MISSING: caption, caption_en, caption_ar (no captions at all)
+  Current: id, blog_id, image_url, display_order, created_at
+  Action: ADD COLUMNS
+  SQL: ALTER TABLE `blog_gallery`
+       ADD COLUMN `caption` varchar(255) DEFAULT NULL,
+       ADD COLUMN `caption_en` varchar(255) DEFAULT NULL,
+       ADD COLUMN `caption_ar` varchar(255) DEFAULT NULL;
+
+================================================================================
+3. MISSING TABLES ❌
+================================================================================
+
+PRESS_GALLERY TABLE
+  Status: DOES NOT EXIST
+  Recommendation: CREATE for consistency with event_gallery and blog_gallery
+  Columns needed:
+    - id (INT, PRIMARY KEY, AUTO_INCREMENT)
+    - press_id (INT, FOREIGN KEY)
+    - image_url (VARCHAR 500)
+    - caption (VARCHAR 255)
+    - caption_en (VARCHAR 255)
+    - caption_ar (VARCHAR 255)
+    - display_order (INT)
+    - created_at (TIMESTAMP)
+
+================================================================================
+4. REDUNDANCY ISSUES ⚠️
+================================================================================
+
+HYBRID COLUMNS vs TRANSLATION TABLES CONFLICT:
+
+The database uses BOTH approaches simultaneously:
+
+TABLE              | HYBRID COLUMNS | TRANSLATION TABLE | STATUS
+-------------------|---|---|---
+events             | ✅ YES | ✅ event_translations | REDUNDANT
+blogs              | ✅ YES | ✅ blog_translations | REDUNDANT
+press              | ✅ YES | ✅ press_translations | REDUNDANT
+pricing            | ✅ YES | ❌ NO | CORRECT
+
+RECOMMENDATION:
+Choose ONE approach:
+  Option A (Recommended): Keep hybrid columns, DELETE translation tables
+  Option B: Keep translation tables, REMOVE hybrid columns from main tables
+
+Current state creates data duplication and potential inconsistency.
+
+================================================================================
+5. COMPLETE COLUMN INVENTORY
+================================================================================
+
+EVENTS TABLE (21 columns)
+  id, title, description, location, event_date, event_time, event_end_time,
+  end_date, cover_image, video_url, is_featured, category, slug, created_at,
+  updated_at, title_en, title_ar, description_en, description_ar, location_en,
+  location_ar
+
+BLOGS TABLE (20 columns)
+  id, title, content, excerpt, author, cover_image, category, tags, slug,
+  is_published, views, created_at, updated_at, title_en, title_ar, content_en,
+  content_ar, excerpt_en, excerpt_ar
+
+PRESS TABLE (20 columns)
+  id, title, content, excerpt, source, cover_image, press_date, url, category,
+  slug, is_published, created_at, updated_at, title_en, title_ar, content_en,
+  content_ar, excerpt_en, excerpt_ar
+
+PRICING TABLE (21 columns)
+  id, title, name_en, name_ar, description_en, description_ar, duration_en,
+  duration_ar, features_en, features_ar, price, price_unit, price_unit_ar,
+  price_sec, vat_note, vat_note_ar, content, display_order, is_active,
+  created_at, updated_at
+
+EVENT_GALLERY TABLE (5 columns → 7 after migration)
+  id, event_id, image_url, caption, display_order, created_at
+  + caption_en, caption_ar (TO BE ADDED)
+
+BLOG_GALLERY TABLE (5 columns → 8 after migration)
+  id, blog_id, image_url, display_order, created_at
+  + caption, caption_en, caption_ar (TO BE ADDED)
+
+PRESS_GALLERY TABLE (8 columns - TO BE CREATED)
+  id, press_id, image_url, caption, caption_en, caption_ar, display_order,
+  created_at
+
+================================================================================
+6. TRANSLATION TABLES (REDUNDANT)
+================================================================================
+
+EVENT_TRANSLATIONS TABLE (8 columns)
+  id, event_id, language, title, description, location, created_at, updated_at
+  Status: REDUNDANT (data duplicates events table)
+
+BLOG_TRANSLATIONS TABLE (10 columns)
+  id, blog_id, language, title, excerpt, content, slug, display_order,
+  created_at, updated_at
+  Status: REDUNDANT (data duplicates blogs table)
+
+PRESS_TRANSLATIONS TABLE (9 columns)
+  id, press_id, language, title, content, excerpt, slug, created_at, updated_at
+  Status: REDUNDANT (data duplicates press table)
+
+LEGAL_PAGE_TRANSLATIONS TABLE (7 columns)
+  id, page_key, language, title, content, created_at, updated_at
+  Status: APPROPRIATE (separate translation table for legal pages)
+
+================================================================================
+7. QUICK ACTION ITEMS
+================================================================================
+
+PRIORITY 1 - REQUIRED (Add Missing Columns):
+  [ ] Add caption_en, caption_ar to event_gallery
+  [ ] Add caption, caption_en, caption_ar to blog_gallery
+
+PRIORITY 2 - RECOMMENDED (Create Missing Table):
+  [ ] Create press_gallery table
+
+PRIORITY 3 - IMPORTANT (Resolve Redundancy):
+  [ ] Decide: Keep hybrid columns OR keep translation tables
+  [ ] If keeping hybrid: Delete event_translations, blog_translations, press_translations
+  [ ] If keeping translation tables: Remove hybrid columns from events, blogs, press
+
+PRIORITY 4 - BEST PRACTICE (Add Constraints):
+  [ ] Add foreign key constraints to all gallery tables
+  [ ] Add indexes for performance optimization
+
+================================================================================
+8. SQL EXECUTION ORDER
+================================================================================
+
+1. Backup database
+2. Run: ALTER TABLE event_gallery ADD COLUMNS...
+3. Run: ALTER TABLE blog_gallery ADD COLUMNS...
+4. Run: CREATE TABLE press_gallery...
+5. Run: ADD FOREIGN KEY CONSTRAINTS...
+6. Run: ADD INDEXES...
+7. Test all API endpoints
+8. Update API code if needed
+9. (Optional) Drop redundant translation tables
+
+================================================================================
+9. VERIFICATION QUERIES
+================================================================================
+
+-- Check event_gallery columns
+SELECT COLUMN_NAME, COLUMN_TYPE FROM INFORMATION_SCHEMA.COLUMNS 
+WHERE TABLE_NAME = 'event_gallery' AND TABLE_SCHEMA = 'u812122863_lakum_artspace';
+
+-- Check blog_gallery columns
+SELECT COLUMN_NAME, COLUMN_TYPE FROM INFORMATION_SCHEMA.COLUMNS 
+WHERE TABLE_NAME = 'blog_gallery' AND TABLE_SCHEMA = 'u812122863_lakum_artspace';
+
+-- Check press_gallery exists
+SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES 
+WHERE TABLE_NAME = 'press_gallery' AND TABLE_SCHEMA = 'u812122863_lakum_artspace';
+
+-- Count records in translation tables
+SELECT 'event_translations' as table_name, COUNT(*) as record_count FROM event_translations
+UNION ALL
+SELECT 'blog_translations', COUNT(*) FROM blog_translations
+UNION ALL
+SELECT 'press_translations', COUNT(*) FROM press_translations;
+
+================================================================================
+10. NOTES
+================================================================================
+
+- All tables use utf8mb4_unicode_ci collation for proper Arabic support
+- Bilingual columns follow naming convention: field_en, field_ar
+- Gallery tables should have bilingual captions for consistency
+- Translation tables are currently redundant with hybrid columns
+- Foreign key constraints ensure referential integrity
+- Indexes improve query performance on frequently accessed columns
+
+================================================================================
+END OF QUICK REFERENCE
+================================================================================

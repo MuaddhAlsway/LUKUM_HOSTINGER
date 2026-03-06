@@ -1,7 +1,7 @@
 <?php
 /**
- * LAKUM Artspace - Get Events API
- * Retrieves events from database - REAL DATA ONLY
+ * LAKUM Artspace - Get Events API (Fixed - Hybrid Columns)
+ * Retrieves events from database with bilingual support
  */
 
 header('Content-Type: application/json');
@@ -11,7 +11,6 @@ header('Cache-Control: no-cache, no-store, must-revalidate');
 header('Pragma: no-cache');
 header('Expires: 0');
 
-// Use config.php for database connection
 require_once 'config.php';
 
 try {
@@ -21,8 +20,7 @@ try {
         throw new Exception('Database connection failed');
     }
     
-    // Get current language from URL parameter or session
-    $lang = $_GET['lang'] ?? $_SESSION['language'] ?? 'en';
+    $lang = $_GET['lang'] ?? 'en';
     if (!in_array($lang, ['en', 'ar'])) {
         $lang = 'en';
     }
@@ -31,7 +29,6 @@ try {
     $limit = (int)($_GET['limit'] ?? 100);
     $offset = (int)($_GET['offset'] ?? 0);
     
-    // Get today's date in the correct format
     $today = date('Y-m-d');
     
     error_log('=== GET EVENTS API ===');
@@ -39,7 +36,110 @@ try {
     error_log('Today: ' . $today);
     error_log('Language: ' . $lang);
     
-    // Query to get events with bilingual support
+    // Check if fetching a single event by slug or ID
+    if (isset($_GET['slug']) || isset($_GET['id'])) {
+        $event_slug = $_GET['slug'] ?? null;
+        $event_id = isset($_GET['id']) ? (int)$_GET['id'] : null;
+        
+        error_log('Fetching single event - Slug: ' . ($event_slug ?? 'null') . ', ID: ' . ($event_id ?? 'null'));
+        
+        $query = '
+            SELECT 
+                e.id,
+                e.event_date,
+                e.event_time,
+                e.event_end_time,
+                e.end_date,
+                e.cover_image,
+                e.video_url,
+                e.is_featured,
+                e.category,
+                e.slug,
+                CASE 
+                    WHEN ? = "ar" AND e.title_ar IS NOT NULL AND e.title_ar != "" THEN e.title_ar
+                    ELSE COALESCE(e.title_en, e.title)
+                END as title,
+                CASE 
+                    WHEN ? = "ar" AND e.description_ar IS NOT NULL AND e.description_ar != "" THEN e.description_ar
+                    ELSE COALESCE(e.description_en, e.description)
+                END as description,
+                CASE 
+                    WHEN ? = "ar" AND e.location_ar IS NOT NULL AND e.location_ar != "" THEN e.location_ar
+                    ELSE COALESCE(e.location_en, e.location)
+                END as location,
+                e.title_en,
+                e.description_en,
+                e.location_en,
+                e.title_ar,
+                e.description_ar,
+                e.location_ar
+            FROM events e
+            WHERE ';
+        
+        if ($event_slug !== null) {
+            $query .= 'e.slug = ?';
+            $stmt = $db->prepare($query);
+            if (!$stmt) {
+                throw new Exception('Prepare failed: ' . $db->getConnection()->error);
+            }
+            $stmt->bind_param('ssss', $lang, $lang, $lang, $event_slug);
+        } else {
+            $query .= 'e.id = ?';
+            $stmt = $db->prepare($query);
+            if (!$stmt) {
+                throw new Exception('Prepare failed: ' . $db->getConnection()->error);
+            }
+            $stmt->bind_param('sssi', $lang, $lang, $lang, $event_id);
+        }
+        
+        if (!$stmt->execute()) {
+            throw new Exception('Execute failed: ' . $stmt->error);
+        }
+        
+        $result = $stmt->get_result();
+        
+        if ($result->num_rows === 0) {
+            http_response_code(404);
+            echo json_encode(['success' => false, 'error' => 'Event not found']);
+            exit;
+        }
+        
+        $event = $result->fetch_assoc();
+        
+        // Add computed fields for frontend
+        $eventDate = new DateTime($event['event_date']);
+        $event['day'] = $eventDate->format('d');
+        $event['month'] = $eventDate->format('F');
+        $event['month_short'] = $eventDate->format('M');
+        $event['year'] = $eventDate->format('Y');
+        
+        // Fetch gallery images for this event
+        $galleryQuery = "SELECT * FROM event_gallery WHERE event_id = ? ORDER BY display_order";
+        $galleryStmt = $db->prepare($galleryQuery);
+        if ($galleryStmt) {
+            $galleryStmt->bind_param('i', $event['id']);
+            $galleryStmt->execute();
+            $galleryResult = $galleryStmt->get_result();
+            
+            $gallery = [];
+            while ($row = $galleryResult->fetch_assoc()) {
+                $gallery[] = $row;
+            }
+            $galleryStmt->close();
+        } else {
+            $gallery = [];
+        }
+        
+        echo json_encode([
+            'success' => true,
+            'data' => $event,
+            'gallery' => $gallery,
+            'language' => $lang
+        ]);
+        exit;
+    }
+    
+    // Query to get events list with bilingual support (hybrid columns)
     $query = '
         SELECT 
             e.id,
@@ -52,9 +152,21 @@ try {
             e.is_featured,
             e.category,
             e.slug,
-            COALESCE(NULLIF(e.title_en, ""), e.title) as title,
-            COALESCE(NULLIF(e.description_en, ""), e.description) as description,
-            COALESCE(NULLIF(e.location_en, ""), e.location) as location,
+            CASE 
+                WHEN ? = "ar" AND e.title_ar IS NOT NULL AND e.title_ar != "" THEN e.title_ar
+                ELSE COALESCE(e.title_en, e.title)
+            END as title,
+            CASE 
+                WHEN ? = "ar" AND e.description_ar IS NOT NULL AND e.description_ar != "" THEN e.description_ar
+                ELSE COALESCE(e.description_en, e.description)
+            END as description,
+            CASE 
+                WHEN ? = "ar" AND e.location_ar IS NOT NULL AND e.location_ar != "" THEN e.location_ar
+                ELSE COALESCE(e.location_en, e.location)
+            END as location,
+            e.title_en,
+            e.description_en,
+            e.location_en,
             e.title_ar,
             e.description_ar,
             e.location_ar
@@ -93,10 +205,16 @@ try {
         throw new Exception('Prepare failed: ' . $db->getConnection()->error);
     }
     
-    // Bind parameters dynamically
-    if (!empty($bindParams)) {
-        call_user_func_array([$stmt, 'bind_param'], array_merge([$bindTypes], $bindParams));
-    }
+    // Bind language parameters first
+    $langParam1 = $lang;
+    $langParam2 = $lang;
+    $langParam3 = $lang;
+    
+    $allBindTypes = 'sss' . $bindTypes;
+    $allBindParams = [&$langParam1, &$langParam2, &$langParam3];
+    $allBindParams = array_merge($allBindParams, $bindParams);
+    
+    call_user_func_array([$stmt, 'bind_param'], array_merge([$allBindTypes], $allBindParams));
     
     if (!$stmt->execute()) {
         throw new Exception('Execute failed: ' . $stmt->error);
@@ -112,13 +230,6 @@ try {
         $row['month'] = $eventDate->format('F');
         $row['month_short'] = $eventDate->format('M');
         $row['year'] = $eventDate->format('Y');
-        
-        // Use Arabic fields if language is Arabic and they exist
-        if ($lang === 'ar') {
-            if ($row['title_ar']) $row['title'] = $row['title_ar'];
-            if ($row['description_ar']) $row['description'] = $row['description_ar'];
-            if ($row['location_ar']) $row['location'] = $row['location_ar'];
-        }
         
         $events[] = $row;
     }

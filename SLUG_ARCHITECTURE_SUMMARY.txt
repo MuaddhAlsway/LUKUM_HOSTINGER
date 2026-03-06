@@ -1,0 +1,248 @@
+================================================================================
+                    SLUG ARCHITECTURE ANALYSIS & PLAN
+                Database-Driven, English-Only, Language-Aware
+================================================================================
+
+YOUR REQUIREMENT:
+  ✓ Slug must be database-driven (not hardcoded or frontend-generated)
+  ✓ Slug must be English-only (no Arabic slugs)
+  ✓ Support ?lang=en and ?lang=ar to change content
+  ✓ Slug stays same, only content changes with language parameter
+
+================================================================================
+CURRENT STATE (PROBLEMS)
+================================================================================
+
+BLOG SYSTEM:
+  ❌ Slug generated on frontend: titleSlug = title.toLowerCase().replace(...)
+  ❌ Uses title parameter: blogPageDetails.php?title=my-blog-post
+  ❌ Database slug field exists but NOT used
+  ❌ Inconsistent slug generation
+
+EVENT SYSTEM:
+  ❌ Database slug field exists but NOT used in URLs
+  ❌ Uses ID parameter: event.php?id=123
+  ❌ Frontend generates slug from title
+  ❌ Inconsistent with database
+
+PRESS SYSTEM:
+  ❌ No slug support at all
+  ❌ No detail page for individual press releases
+  ❌ No URL structure for press items
+
+================================================================================
+PROPOSED SOLUTION
+================================================================================
+
+CORE PRINCIPLE:
+  Slug is stored in DATABASE (English only)
+  Language parameter (?lang=ar) changes CONTENT only, not slug
+
+URL STRUCTURE:
+
+  BEFORE (WRONG):
+    blog.php?title=My%20Blog%20Post&lang=en
+    event.php?id=123&lang=en
+    press.php (no detail page)
+
+  AFTER (CORRECT):
+    blog.php?slug=my-blog-post&lang=en
+    event.php?slug=dior&lang=en
+    press.php?slug=press-release&lang=en
+
+LANGUAGE BEHAVIOR:
+
+  blog.php?slug=my-article&lang=en
+    → Fetches blog with slug "my-article"
+    → Returns English content (title_en, content_en)
+    → Displays in English
+
+  blog.php?slug=my-article&lang=ar
+    → Fetches SAME blog with slug "my-article"
+    → Returns Arabic content (title_ar, content_ar)
+    → Displays in Arabic
+
+  IMPORTANT: Slug NEVER changes, only content changes!
+
+================================================================================
+IMPLEMENTATION PLAN (3 PHASES)
+================================================================================
+
+PHASE 1: API UPDATES (Backend)
+  [ ] Update api/get_blogs_working.php
+      - Add support for ?slug parameter
+      - Keep backward compatibility with ?id parameter
+      
+  [ ] Update api/get_events.php
+      - Add support for ?slug parameter
+      - Keep backward compatibility with ?id parameter
+      
+  [ ] Update api/get_press.php
+      - Add support for ?slug parameter
+      - Keep backward compatibility with ?id parameter
+
+PHASE 2: FRONTEND UPDATES (JavaScript)
+  [ ] Update blog.php
+      - Change getBlogUrl() to use slug instead of title
+      - Use: blogPageDetails.php?slug=my-article&lang=en
+      
+  [ ] Update blogPageDetails.php
+      - Fetch blog by slug: api/get_blogs_working.php?slug=...
+      - Remove frontend slug generation
+      
+  [ ] Update exhibitions.php
+      - Change getEventUrl() to use slug instead of id
+      - Use: event.php?slug=dior&lang=en
+      
+  [ ] Update event.php
+      - Fetch event by slug: api/get_events.php?slug=...
+      
+  [ ] Update press.php
+      - Add slug support for detail pages
+      - Fetch press by slug: api/get_press.php?slug=...
+
+PHASE 3: URL REWRITING (Optional - For Clean URLs)
+  [ ] Update .htaccess
+      - Rewrite /blog/my-article to blog.php?slug=my-article
+      - Rewrite /event/dior to event.php?slug=dior
+      - Rewrite /press/release to press.php?slug=release
+
+================================================================================
+SLUG GENERATION RULES
+================================================================================
+
+ENGLISH SLUG GENERATION (Database):
+
+  Input: "My Blog Post"
+  Process:
+    1. Lowercase: "my blog post"
+    2. Replace spaces with hyphens: "my-blog-post"
+    3. Remove special characters: "my-blog-post"
+    4. Remove multiple hyphens: "my-blog-post"
+    5. Trim hyphens: "my-blog-post"
+  Output: "my-blog-post"
+
+  Examples:
+    "Dior" → "dior"
+    "Anastasia Beverly Hills" → "anastasia-beverly-hills"
+    "Press Release!" → "press-release"
+    "YSL" → "ysl"
+
+WHY ENGLISH-ONLY SLUGS?
+
+  ✓ Consistency: Same slug regardless of language
+  ✓ SEO: Search engines prefer English slugs
+  ✓ Shareability: URL works in any language
+  ✓ Simplicity: No encoding issues with Arabic
+  ✓ Performance: Faster database lookups
+  ✓ Reliability: No character encoding problems
+
+================================================================================
+BACKWARD COMPATIBILITY
+================================================================================
+
+APIs should support multiple formats:
+
+  NEW FORMAT (Preferred):
+    api/get_blogs_working.php?slug=my-article&lang=en
+
+  OLD FORMAT (Fallback):
+    api/get_blogs_working.php?id=123&lang=en
+    api/get_blogs_working.php?title=my-article&lang=en
+
+This ensures old URLs still work during transition.
+
+================================================================================
+BENEFITS
+================================================================================
+
+FOR USERS:
+  ✓ Clean URLs: /blog/my-article instead of /blog.php?title=My%20Article
+  ✓ Shareable: Works in any language
+  ✓ Consistent: Same URL regardless of language
+
+FOR ADMIN:
+  ✓ Database-driven: No frontend slug generation
+  ✓ Consistent: All slugs generated same way
+  ✓ Maintainable: Single source of truth
+
+FOR SEO:
+  ✓ Clean URLs: Better for search engines
+  ✓ hreflang tags: Work correctly with slugs
+  ✓ Consistent: Same slug across all languages
+
+FOR DEVELOPERS:
+  ✓ Predictable: Slug always in database
+  ✓ Reliable: No encoding issues
+  ✓ Scalable: Easy to add new content types
+
+================================================================================
+TESTING CHECKLIST
+================================================================================
+
+BLOGS:
+  [ ] blog.php?slug=my-article&lang=en (English)
+  [ ] blog.php?slug=my-article&lang=ar (Arabic)
+  [ ] Language switching works
+  [ ] Slug stays same, content changes
+
+EVENTS:
+  [ ] event.php?slug=dior&lang=en (English)
+  [ ] event.php?slug=dior&lang=ar (Arabic)
+  [ ] Language switching works
+  [ ] Slug stays same, content changes
+
+PRESS:
+  [ ] press.php?slug=press-release&lang=en (English)
+  [ ] press.php?slug=press-release&lang=ar (Arabic)
+  [ ] Language switching works
+  [ ] Slug stays same, content changes
+
+BACKWARD COMPATIBILITY:
+  [ ] Old URLs still work: event.php?id=123
+  [ ] Old URLs still work: blog.php?title=my-article
+  [ ] Redirects to new format (optional)
+
+================================================================================
+SUMMARY
+================================================================================
+
+BEFORE:
+  ❌ Slug generated on frontend
+  ❌ Inconsistent across pages
+  ❌ Not database-driven
+  ❌ Arabic slugs cause errors
+  ❌ Language changes slug
+
+AFTER:
+  ✓ Slug stored in database
+  ✓ Consistent across all pages
+  ✓ Database-driven
+  ✓ English-only (no errors)
+  ✓ Language changes content, not slug
+
+ARCHITECTURE:
+  ✓ Database-driven (not hardcoded)
+  ✓ English-only slugs
+  ✓ Language parameter for content
+  ✓ Consistent URL structure
+  ✓ SEO-friendly
+  ✓ Shareable URLs
+  ✓ Admin-controlled
+
+================================================================================
+NEXT STEPS
+================================================================================
+
+1. REVIEW this architecture plan
+2. APPROVE the approach
+3. IMPLEMENT Phase 1 (API updates)
+4. IMPLEMENT Phase 2 (Frontend updates)
+5. TEST all functionality
+6. DEPLOY to production
+7. (OPTIONAL) IMPLEMENT Phase 3 (URL rewriting)
+
+Ready to proceed with implementation?
+
+================================================================================
+

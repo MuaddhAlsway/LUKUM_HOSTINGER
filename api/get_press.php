@@ -1,7 +1,7 @@
 <?php
 /**
- * LAKUM Artspace - Get Press API
- * Retrieves press releases from database
+ * LAKUM Artspace - Get Press API (Fixed - Hybrid Columns)
+ * Retrieves press releases from database with bilingual support
  */
 
 header('Content-Type: application/json');
@@ -16,12 +16,13 @@ try {
     
     if (!$db->isConnected()) {
         http_response_code(500);
-        echo json_encode(['success' => false, 'message' => 'Database connection failed']);
+        echo json_encode(['success' => false, 'error' => 'Database connection failed']);
         exit;
     }
     
-    // Get current language from URL parameter or session
-    $lang = $_GET['lang'] ?? $_SESSION['language'] ?? 'en';
+    $conn = $db->getConnection();
+    
+    $lang = $_GET['lang'] ?? 'en';
     if (!in_array($lang, ['en', 'ar'])) {
         $lang = 'en';
     }
@@ -29,7 +30,8 @@ try {
     $limit = (int)($_GET['limit'] ?? 100);
     $offset = (int)($_GET['offset'] ?? 0);
     
-    $query = '
+    // Query from press table with bilingual columns (hybrid approach)
+    $query = "
         SELECT 
             p.id,
             p.source,
@@ -37,41 +39,64 @@ try {
             p.url,
             p.category,
             p.cover_image,
-            COALESCE(t_current.title, t_en.title) as title,
-            COALESCE(t_current.content, t_en.content) as content,
-            COALESCE(t_current.excerpt, t_en.excerpt) as excerpt,
-            COALESCE(t_current.slug, t_en.slug) as slug
+            p.slug,
+            p.is_published,
+            CASE 
+                WHEN ? = 'ar' AND p.title_ar IS NOT NULL AND p.title_ar != '' THEN p.title_ar
+                ELSE COALESCE(p.title_en, p.title)
+            END as title,
+            CASE 
+                WHEN ? = 'ar' AND p.content_ar IS NOT NULL AND p.content_ar != '' THEN p.content_ar
+                ELSE COALESCE(p.content_en, p.content)
+            END as content,
+            CASE 
+                WHEN ? = 'ar' AND p.excerpt_ar IS NOT NULL AND p.excerpt_ar != '' THEN p.excerpt_ar
+                ELSE COALESCE(p.excerpt_en, p.excerpt)
+            END as excerpt,
+            p.title_en,
+            p.excerpt_en,
+            p.content_en,
+            p.title_ar,
+            p.excerpt_ar,
+            p.content_ar
         FROM press p
-        LEFT JOIN press_translations t_current ON p.id = t_current.press_id AND t_current.language = ?
-        LEFT JOIN press_translations t_en ON p.id = t_en.press_id AND t_en.language = "en"
         WHERE p.is_published = 1
         ORDER BY p.press_date DESC
         LIMIT ? OFFSET ?
-    ';
+    ";
     
-    $stmt = $db->prepare($query);
+    $stmt = $conn->prepare($query);
     if (!$stmt) {
-        throw new Exception('Prepare failed: ' . $db->getConnection()->error);
+        throw new Exception('Query preparation failed: ' . $conn->error);
     }
     
-    $stmt->bind_param('sii', $lang, $limit, $offset);
+    $stmt->bind_param('sssii', $lang, $lang, $lang, $limit, $offset);
+    
     if (!$stmt->execute()) {
-        throw new Exception('Execute failed: ' . $stmt->error);
+        throw new Exception('Query execution failed: ' . $stmt->error);
     }
     
     $result = $stmt->get_result();
-    $press = [];
     
+    $press = [];
     while ($row = $result->fetch_assoc()) {
         $press[] = $row;
     }
     
-    echo json_encode(['success' => true, 'data' => $press, 'source' => 'database', 'language' => $lang]);
+    $stmt->close();
+    
+    http_response_code(200);
+    echo json_encode([
+        'success' => true,
+        'data' => $press,
+        'language' => $lang,
+        'count' => count($press)
+    ]);
     
 } catch (Exception $e) {
     error_log('Press API Error: ' . $e->getMessage());
     http_response_code(500);
-    echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+    echo json_encode(['success' => false, 'error' => $e->getMessage()]);
 }
 ?>
 

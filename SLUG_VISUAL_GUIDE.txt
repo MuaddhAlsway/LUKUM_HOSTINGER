@@ -1,0 +1,239 @@
+╔════════════════════════════════════════════════════════════════════════════════╗
+║                    SLUG SYSTEM - VISUAL GUIDE                                  ║
+╚════════════════════════════════════════════════════════════════════════════════╝
+
+┌─ BEFORE vs AFTER ─────────────────────────────────────────────────────────────┐
+│                                                                                 │
+│  BLOG PAGE                                                                      │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  BEFORE: blog.php?title=My%20Blog%20Post&lang=en                              │
+│  AFTER:  blog.php?slug=my-blog-post&lang=en                                   │
+│                                                                                 │
+│  EVENT PAGE                                                                     │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  BEFORE: event.php?title=dior&lang=en                                          │
+│  AFTER:  event.php?slug=dior-exhibition&lang=en                               │
+│                                                                                 │
+│  PRESS PAGE                                                                     │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  BEFORE: press.php (no detail page)                                            │
+│  AFTER:  pressPageDetails.php?slug=press-release-1&lang=en                    │
+│                                                                                 │
+└─────────────────────────────────────────────────────────────────────────────────┘
+
+┌─ SLUG GENERATION EXAMPLES ────────────────────────────────────────────────────┐
+│                                                                                 │
+│  Input                          →  Output                                      │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  "My Blog Post"                 →  "my-blog-post"                             │
+│  "Dior Exhibition"              →  "dior-exhibition"                          │
+│  "Press Release #1"             →  "press-release-1"                         │
+│  "Art & Culture 🎨"             →  "art-culture"                             │
+│  "Event (2025)"                 →  "event-2025"                              │
+│  "50% Off Sale!"                →  "50-off-sale"                             │
+│  "Dior's Exhibition"            →  "diors-exhibition"                        │
+│  "Multiple   Spaces"            →  "multiple-spaces"                        │
+│  "UPPERCASE TEXT"               →  "uppercase-text"                         │
+│  "Hello_World"                  →  "hello-world"                            │
+│                                                                                 │
+└─────────────────────────────────────────────────────────────────────────────────┘
+
+┌─ SPECIAL CHARACTER HANDLING ──────────────────────────────────────────────────┐
+│                                                                                 │
+│  REMOVED CHARACTERS:                                                            │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  Emojis:        🎨 🎭 🎪 🎬 🎤 🎧 🎮 🎯 🎲 🎰                                 │
+│  Symbols:       * [ ] : @ ? > ( ) & ^ % $ £ " +                               │
+│  Spaces:        Converted to hyphens (-)                                       │
+│  Underscores:   Converted to hyphens (-)                                       │
+│                                                                                 │
+│  KEPT CHARACTERS:                                                               │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  Alphanumeric:  a-z, 0-9                                                       │
+│  Hyphens:       -                                                              │
+│                                                                                 │
+└─────────────────────────────────────────────────────────────────────────────────┘
+
+┌─ IMPLEMENTATION FLOW ─────────────────────────────────────────────────────────┐
+│                                                                                 │
+│  STEP 1: DATABASE MIGRATION                                                    │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  ┌─────────────────────────────────────────────────────────────────────┐      │
+│  │ ALTER TABLE events ADD COLUMN slug VARCHAR(255) UNIQUE NOT NULL;   │      │
+│  │ ALTER TABLE blogs ADD COLUMN slug VARCHAR(255) UNIQUE NOT NULL;    │      │
+│  │ ALTER TABLE press ADD COLUMN slug VARCHAR(255) UNIQUE NOT NULL;    │      │
+│  │ UPDATE events SET slug = LOWER(REPLACE(title, ' ', '-'));          │      │
+│  │ UPDATE blogs SET slug = LOWER(REPLACE(title_en, ' ', '-'));        │      │
+│  │ UPDATE press SET slug = LOWER(REPLACE(title_en, ' ', '-'));        │      │
+│  └─────────────────────────────────────────────────────────────────────┘      │
+│                                                                                 │
+│  STEP 2: INCLUDE SLUG HELPER                                                   │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  ┌─────────────────────────────────────────────────────────────────────┐      │
+│  │ require_once 'api/slug-helper.php';                                │      │
+│  └─────────────────────────────────────────────────────────────────────┘      │
+│                                                                                 │
+│  STEP 3: UPDATE API ENDPOINTS                                                  │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  ┌─────────────────────────────────────────────────────────────────────┐      │
+│  │ if (isset($_GET['slug'])) {                                        │      │
+│  │     $query = "SELECT * FROM events WHERE slug = ?";                │      │
+│  │     $stmt = $db->prepare($query);                                  │      │
+│  │     $stmt->bind_param('s', $_GET['slug']);                         │      │
+│  │     $stmt->execute();                                              │      │
+│  │ }                                                                   │      │
+│  └─────────────────────────────────────────────────────────────────────┘      │
+│                                                                                 │
+│  STEP 4: UPDATE FRONTEND URL GENERATION                                        │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  ┌─────────────────────────────────────────────────────────────────────┐      │
+│  │ const getBlogUrl = (blog) => {                                     │      │
+│  │     const slug = blog.slug || blog.title_en;                       │      │
+│  │     const lang = window.LAKUM_LANG || 'en';                        │      │
+│  │     return `blogPageDetails.php?slug=${slug}&lang=${lang}`;        │      │
+│  │ };                                                                  │      │
+│  └─────────────────────────────────────────────────────────────────────┘      │
+│                                                                                 │
+│  STEP 5: UPDATE DETAIL PAGES                                                   │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  ┌─────────────────────────────────────────────────────────────────────┐      │
+│  │ $slug = $_GET['slug'] ?? null;                                     │      │
+│  │ $title = $_GET['title'] ?? null;  // Backward compatibility        │      │
+│  │ if (!$slug && $title) {                                            │      │
+│  │     $slug = SlugHelper::fromTitle($title);                         │      │
+│  │ }                                                                   │      │
+│  │ // Fetch from API using slug                                       │      │
+│  │ fetch(`api/get_blogs.php?slug=${slug}&lang=${lang}`);              │      │
+│  └─────────────────────────────────────────────────────────────────────┘      │
+│                                                                                 │
+│  STEP 6: TEST                                                                  │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  ✓ Test new URLs with slugs                                                    │
+│  ✓ Test old URLs (backward compatibility)                                      │
+│  ✓ Test special characters                                                     │
+│  ✓ Test language switching                                                     │
+│  ✓ Test on mobile and desktop                                                  │
+│                                                                                 │
+│  STEP 7: DEPLOY                                                                │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  ✓ Deploy to production                                                        │
+│  ✓ Monitor for 404 errors                                                      │
+│  ✓ Update sitemap                                                              │
+│  ✓ Update hreflang tags                                                        │
+│                                                                                 │
+└─────────────────────────────────────────────────────────────────────────────────┘
+
+┌─ SLUG HELPER FUNCTIONS ───────────────────────────────────────────────────────┐
+│                                                                                 │
+│  SlugHelper::generate($text)                                                   │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  Generates URL-friendly slug from text                                         │
+│  Example: SlugHelper::generate('My Blog Post') → 'my-blog-post'               │
+│                                                                                 │
+│  SlugHelper::validate($slug)                                                   │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  Validates slug format                                                         │
+│  Example: SlugHelper::validate('my-blog-post') → true                         │
+│                                                                                 │
+│  SlugHelper::sanitize($slug)                                                   │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  Ensures slug is valid                                                         │
+│  Example: SlugHelper::sanitize('My Blog Post') → 'my-blog-post'               │
+│                                                                                 │
+│  SlugHelper::fromTitle($title)                                                 │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  Converts title to slug (backward compatibility)                               │
+│  Example: SlugHelper::fromTitle('My Blog Post') → 'my-blog-post'              │
+│                                                                                 │
+│  SlugHelper::generateUnique($text, $table)                                     │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  Generates unique slug with auto-increment                                     │
+│  Example: SlugHelper::generateUnique('My Blog Post', 'blogs')                 │
+│           → 'my-blog-post' or 'my-blog-post-1' if duplicate                   │
+│                                                                                 │
+│  SlugHelper::extract($_GET)                                                    │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  Extracts slug from URL parameters                                             │
+│  Example: SlugHelper::extract($_GET) → 'my-blog-post'                         │
+│                                                                                 │
+└─────────────────────────────────────────────────────────────────────────────────┘
+
+┌─ API ENDPOINTS ───────────────────────────────────────────────────────────────┐
+│                                                                                 │
+│  GET /api/get_events.php?slug=dior-exhibition&lang=en                         │
+│  GET /api/get_blogs.php?slug=my-blog-post&lang=en                             │
+│  GET /api/get_press.php?slug=press-release-1&lang=en                          │
+│                                                                                 │
+│  Backward Compatibility:                                                       │
+│  GET /api/get_events.php?id=18&lang=en                                        │
+│  GET /api/get_blogs.php?title=My%20Blog%20Post&lang=en                        │
+│                                                                                 │
+└─────────────────────────────────────────────────────────────────────────────────┘
+
+┌─ FILES CREATED ───────────────────────────────────────────────────────────────┐
+│                                                                                 │
+│  1. SLUG_COMPREHENSIVE_SOLUTION.md                                             │
+│     └─ Complete documentation and architecture                                 │
+│                                                                                 │
+│  2. api/slug-helper.php                                                        │
+│     └─ Slug utility functions                                                  │
+│                                                                                 │
+│  3. SLUG_DATABASE_MIGRATION.sql                                                │
+│     └─ Database schema updates                                                 │
+│                                                                                 │
+│  4. SLUG_IMPLEMENTATION_GUIDE.md                                               │
+│     └─ Step-by-step implementation                                             │
+│                                                                                 │
+│  5. SLUG_QUICK_REFERENCE.md                                                    │
+│     └─ Quick lookup guide                                                      │
+│                                                                                 │
+│  6. SLUG_CODE_EXAMPLES.md                                                      │
+│     └─ Code samples and examples                                               │
+│                                                                                 │
+│  7. SLUG_SYSTEM_SUMMARY.md                                                     │
+│     └─ Complete summary                                                        │
+│                                                                                 │
+│  8. SLUG_VISUAL_GUIDE.txt                                                      │
+│     └─ This file                                                               │
+│                                                                                 │
+└─────────────────────────────────────────────────────────────────────────────────┘
+
+┌─ BENEFITS ────────────────────────────────────────────────────────────────────┐
+│                                                                                 │
+│  ✓ SEO-Friendly URLs                                                           │
+│    Readable URLs with keywords improve search rankings                         │
+│                                                                                 │
+│  ✓ User-Friendly                                                               │
+│    Easy to share, remember, and type                                           │
+│                                                                                 │
+│  ✓ Consistent                                                                  │
+│    Same format across all pages (blog, event, press)                           │
+│                                                                                 │
+│  ✓ Scalable                                                                    │
+│    Handles special characters, emojis, and international text                  │
+│                                                                                 │
+│  ✓ Bilingual                                                                   │
+│    English slugs work for both English and Arabic content                      │
+│                                                                                 │
+│  ✓ Backward Compatible                                                         │
+│    Old URLs still work, no broken links                                        │
+│                                                                                 │
+│  ✓ Database Efficient                                                          │
+│    Indexed slug column for fast lookups                                        │
+│                                                                                 │
+└─────────────────────────────────────────────────────────────────────────────────┘
+
+┌─ QUICK START ─────────────────────────────────────────────────────────────────┐
+│                                                                                 │
+│  1. Read SLUG_COMPREHENSIVE_SOLUTION.md                                        │
+│  2. Run SLUG_DATABASE_MIGRATION.sql                                            │
+│  3. Follow SLUG_IMPLEMENTATION_GUIDE.md                                        │
+│  4. Use SLUG_CODE_EXAMPLES.md for reference                                    │
+│  5. Test using SLUG_QUICK_REFERENCE.md                                         │
+│  6. Deploy to production                                                       │
+│                                                                                 │
+└─────────────────────────────────────────────────────────────────────────────────┘
+
+╔════════════════════════════════════════════════════════════════════════════════╗
+║                         READY TO IMPLEMENT!                                    ║
+╚════════════════════════════════════════════════════════════════════════════════╝

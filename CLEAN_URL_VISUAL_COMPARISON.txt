@@ -1,0 +1,38 @@
+╔════════════════════════════════════════════════════════════════════════════════╗
+║                    CLEAN URL - VISUAL COMPARISON                               ║
+╚════════════════════════════════════════════════════════════════════════════════╝
+
+┌─ URL FORMAT COMPARISON ───────────────────────────────────────────────────────┐
+│                                                                                 │
+│  TRADITIONAL FORMAT (Query Parameter Names)                                    │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  event.php?slug=dior-exhibition&lang=en                                        │
+│  blogPageDetails.php?slug=my-blog-post&lang=en                                 │
+│  pressPageDetails.php?slug=press-release-1&lang=en                             │
+│                                                                                 │
+│  CLEAN FORMAT (No Parameter Names)                                             │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  event.php?dior-exhibition&lang=en                                             │
+│  blogPageDetails.php?my-blog-post&lang=en                                      │
+│  pressPageDetails.php?press-release-1&lang=en                                  │
+│                                                                                 │
+│  BENEFITS:                                                                      │
+│  ✓ Shorter URLs                                                                │
+│  ✓ Cleaner appearance                                                          │
+│  ✓ Better for sharing                                                          │
+│  ✓ More user-friendly                                                          │
+│                                                                                 │
+└─────────────────────────────────────────────────────────────────────────────────┘
+
+┌─ HOW IT WORKS ────────────────────────────────────────────────────────────────┐
+│                                                                                 │
+│  STEP 1: URL PARSER READS QUERY STRING                                         │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  URL: event.php?dior-exhibition&lang=en                                        │
+│  Query String: "dior-exhibition&lang=en"                                       │
+│                                                                                 │
+│  STEP 2: SPLIT BY & CHARACTER                                                  │
+│  ─────────────────────────────────────────────────────────────────────────     │
+│  Part 1: "dior-exhibition" (no = sign) → SLUG                                  │
+│  Part 2: "lang=en" (has = sign) → LANGUAGE                                     │
+│                                                                 
