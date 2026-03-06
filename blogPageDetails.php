@@ -289,7 +289,7 @@ if (!$title) {
             const blogId = new URLSearchParams(window.location.search).get('id');
             const lang = urlLang || window.LAKUM_LANG || localStorage.getItem('lakum_language') || 'en';
             
-            fetch(`/api/get_blogs_working.php?lang=${lang}&id=${blogId}`)
+            fetch(`/api/get_blogs.php?lang=${lang}&id=${blogId}`)
                 .then(r => r.json())
                 .then(data => {
                     if (data.success && data.data) {
@@ -447,7 +447,7 @@ if (!$title) {
         async function loadRelatedBlogs(currentBlogId) {
             try {
                 const lang = urlLang || window.LAKUM_LANG || localStorage.getItem('lakum_language') || 'en';
-                const response = await fetch(`/api/get_blogs_working.php?limit=3&lang=${lang}`);
+                const response = await fetch(`/api/get_blogs.php?limit=3&lang=${lang}`);
                 const result = await response.json();
 
                 if (result.success && result.data) {
