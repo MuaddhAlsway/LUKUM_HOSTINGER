@@ -818,18 +818,16 @@ require_once 'api/image-helper.php';
 
         // Load blogs on page load
         function initBlogPage() {
-            if (typeof LanguageManager === 'undefined') {
-                console.warn('LanguageManager not ready, retrying...');
-                setTimeout(initBlogPage, 100);
-                return;
-            }
+            console.log('Initializing blog page...');
             loadBlogs();
         }
         
+        // Load immediately when DOM is ready
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', initBlogPage);
         } else {
-            initBlogPage();
+            // DOM already loaded
+            setTimeout(initBlogPage, 100);
         }
     </script>
 

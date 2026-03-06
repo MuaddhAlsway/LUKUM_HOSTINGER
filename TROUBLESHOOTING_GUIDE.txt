@@ -1,0 +1,245 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║                    TROUBLESHOOTING GUIDE                                  ║
+║              Blog, Press, Event Pages Not Showing Data                    ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+PROBLEM 1: Blog page shows blank grid
+─────────────────────────────────────────────────────────────────────────────
+
+DIAGNOSIS:
+1. Open browser console (F12 → Console tab)
+2. Look for message: "Initializing blog page..."
+3. Look for message: "Fetching blogs from: /api/get_blogs_working.php?lang=en"
+4. Look for message: "API result:" followed by JSON data
+
+SOLUTION:
+
+If you see "Initializing blog page..." but no "Fetching blogs from:":
+  → JavaScript error occurred
+  → Check console for red error messages
+  → Try refreshing page
+
+If you see "Fetching blogs from:" but no "API result:":
+  → API call failed
+  → Check Network tab (F12 → Network)
+  → Look for failed request to get_blogs_working.php
+  → Check if API returns 404 or 500 error
+
+If you see "API result:" but no blogs displayed:
+  → API returned empty data
+  → Visit: https://lakumartspace.com/api/check-database-now.php
+  → Check if blogs_total is 0
+  → If 0, database has no blogs - need to add data
+
+If you see error message in red:
+  → Read the error message carefully
+  → Common errors:
+    - "No blogs found in database" → Add blogs to database
+    - "Network response was not ok" → API server error
+    - "JSON parse error" → API returning invalid JSON
+
+
+PROBLEM 2: Press page shows "Loading press releases..." forever
+─────────────────────────────────────────────────────────────────────────────
+
+DIAGNOSIS:
+1. Open browser console (F12 → Console tab)
+2. Look for message: "Initializing press page..."
+3. Look for message: "Loading press from API with lang: en"
+4. Look for message: "Press API response:" followed by JSON data
+
+SOLUTION:
+
+If you see "Initializing press page..." but no "Loading press from API":
+  → JavaScript error occurred
+  → Check console for red error messages
+  → Try refreshing page
+
+If you see "Loading press from API" but no "Press API response:":
+  → API call failed or is very slow
+  → Check Network tab (F12 → Network)
+  → Look for request to get_press.php
+  → Check if it's pending or failed
+
+If you see "Press API response:" but no press displayed:
+  → API returned empty data
+  → Visit: https://lakumartspace.com/api/check-database-now.php
+  → Check if press_total is 0
+  → If 0, database has no press - need to add data
+
+If you see error message:
+  → Read the error message
+  → Common errors:
+    - "No press data available" → Add press to database
+    - Network errors → API server issue
+
+
+PROBLEM 3: Event page shows "Event not found"
+─────────────────────────────────────────────────────────────────────────────
+
+DIAGNOSIS:
+1. Open browser console (F12 → Console tab)
+2. Look for message: "Initializing event page..."
+3. Look for message: "Loading event with title/ID: 72 Language: en"
+4. Look for message: "Fetching from: /api/get_event_details.php?id=72&lang=en"
+5. Look for message: "API Response:" followed by JSON data
+
+SOLUTION:
+
+If you see "Initializing event page..." but no "Loading event with title/ID":
+  → JavaScript error occurred
+  → Check console for red error messages
+  → Try refreshing page
+
+If you see "Fetching from:" but no "API Response:":
+  → API call failed
+  → Check Network tab (F12 → Network)
+  → Look for failed request to get_event_details.php
+  → Check if API returns 404 or 500 error
+
+If you see "API Response:" with success: false:
+  → Event not found in database
+  → Visit: https://lakumartspace.com/api/check-database-now.php
+  → Check if event_72_exists is true or false
+  → If false, event 72 doesn't exist
+  → Try different event ID or check events_sample
+
+If you see error message:
+  → Read the error message
+  → Common errors:
+    - "Event not found with ID: 72" → Event doesn't exist
+    - "Database connection failed" → Database issue
+    - Network errors → API server issue
+
+
+STEP-BY-STEP DEBUGGING
+─────────────────────────────────────────────────────────────────────────────
+
+Step 1: Check Database
+  URL: https://lakumartspace.com/api/check-database-now.php
+  
+  Look for:
+  - events_total: Should be > 0
+  - blogs_total: Should be > 0
+  - press_total: Should be > 0
+  - event_72_exists: Should be true (if testing event 72)
+  
+  If all are 0:
+    → Database is empty
+    → Need to add data to database
+    → Contact database administrator
+
+Step 2: Check APIs
+  URL: https://lakumartspace.com/api/test-apis-simple.php
+  
+  Look for:
+  - Blogs API: Success YES, Count > 0
+  - Press API: Success YES, Count > 0
+  - Event API: Success YES
+  - All Events API: Success YES, Count > 0
+  
+  If any show "ERROR":
+    → API is not working
+    → Check server error logs
+    → Verify API files exist
+
+Step 3: Check Browser Console
+  Press: F12 → Console tab
+  
+  Look for:
+  - "Initializing blog page..." (or press/event)
+  - "Fetching from:" messages
+  - "API result:" or "API Response:"
+  - Red error messages
+  
+  If you see red errors:
+    → Read error message carefully
+    → Search for solution based on error text
+
+Step 4: Check Network Tab
+  Press: F12 → Network tab
+  Refresh page
+  
+  Look for:
+  - Requests to /api/get_blogs_working.php
+  - Requests to /api/get_press.php
+  - Requests to /api/get_event_details.php
+  
+  If requests show:
+  - 404: API file not found
+  - 500: Server error
+  - Pending: API is slow or hanging
+  - Success (200): Check response data
+
+
+COMMON SOLUTIONS
+─────────────────────────────────────────────────────────────────────────────
+
+Problem: "No blogs/press/events in database"
+Solution: Add data to database using admin panel or SQL
+
+Problem: "Event not found with ID: 72"
+Solution: Use different event ID or check if event 72 exists
+
+Problem: "Network response was not ok: 404"
+Solution: API file doesn't exist or wrong URL
+
+Problem: "Network response was not ok: 500"
+Solution: Server error - check server error logs
+
+Problem: "JSON parse error"
+Solution: API returning invalid JSON - check API code
+
+Problem: Page loads but shows "Loading..." forever
+Solution: API is very slow or hanging - check server performance
+
+Problem: Page shows error message in red
+Solution: Read error message and follow specific solution
+
+
+QUICK REFERENCE
+─────────────────────────────────────────────────────────────────────────────
+
+Check Database:
+  https://lakumartspace.com/api/check-database-now.php
+
+Test APIs:
+  https://lakumartspace.com/api/test-apis-simple.php
+
+Test Blog:
+  https://lakumartspace.com/blog.php?lang=en
+
+Test Press:
+  https://lakumartspace.com/press.php?lang=en
+
+Test Event:
+  https://lakumartspace.com/event.php?id=72&lang=en
+
+Browser Console:
+  F12 → Console tab
+
+Network Tab:
+  F12 → Network tab → Refresh page
+
+Server Error Logs:
+  Check /logs/ or /error_log file on server
+
+
+WHEN TO CONTACT SUPPORT
+─────────────────────────────────────────────────────────────────────────────
+
+Contact support if:
+1. Database shows 0 for all counts
+2. APIs show "ERROR: Could not reach API"
+3. Server error logs show PHP errors
+4. Network requests show 500 errors
+5. You've tried all steps above and still have issues
+
+Provide:
+- Screenshot of browser console
+- Screenshot of API test results
+- Screenshot of database check results
+- URL of page with issue
+- What you expected to see vs what you see
+
+╚════════════════════════════════════════════════════════════════════════════╝

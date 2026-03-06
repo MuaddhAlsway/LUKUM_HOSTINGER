@@ -746,11 +746,7 @@ if (!$title) {
 
         // Load event data on page load
         function initEventPage() {
-            if (typeof LanguageManager === 'undefined') {
-                console.warn('LanguageManager not ready, retrying...');
-                setTimeout(initEventPage, 100);
-                return;
-            }
+            console.log('Initializing event page...');
             loadEventData();
         }
         

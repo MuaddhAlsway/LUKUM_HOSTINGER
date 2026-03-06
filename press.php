@@ -562,21 +562,16 @@ require_once 'api/image-helper.php';
 
         // Load press releases when page loads
         function initPressPage() {
-            // LanguageManager is guaranteed to be ready by now
-            // because it's loaded with defer and this runs on DOMContentLoaded
-            if (typeof LanguageManager === 'undefined') {
-                console.error('LanguageManager failed to load');
-                return;
-            }
+            console.log('Initializing press page...');
             loadPressReleases();
         }
         
-        // Wait for LanguageManager to be fully initialized
+        // Load immediately when DOM is ready
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', initPressPage);
         } else {
-            // DOM already loaded, run immediately
-            initPressPage();
+            // DOM already loaded
+            setTimeout(initPressPage, 100);
         }
     </script>
 
