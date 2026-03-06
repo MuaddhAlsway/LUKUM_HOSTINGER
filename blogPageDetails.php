@@ -307,8 +307,11 @@ if (!$title) {
             // Fetch blog to get title slug
             const blogId = new URLSearchParams(window.location.search).get('id');
             const lang = urlLang || window.LAKUM_LANG || localStorage.getItem('lakum_language') || 'en';
+            const apiUrl = `${window.location.origin}/api/get_blogs.php?lang=${lang}&id=${blogId}`;
             
-            fetch(`/api/get_blogs.php?lang=${lang}&id=${blogId}`)
+            console.log('Redirecting from ID to slug, fetching from:', apiUrl);
+            
+            fetch(apiUrl)
                 .then(r => r.json())
                 .then(data => {
                     if (data.success && data.data) {
@@ -357,7 +360,7 @@ if (!$title) {
                 const lang = urlLang || window.LAKUM_LANG || localStorage.getItem('lakum_language') || 'en';
                 
                 // Build API URL - if blogIdentifier is numeric, use as ID, otherwise use as slug
-                let apiUrl = `/api/get_blogs_working.php?lang=${lang}`;
+                let apiUrl = `${window.location.origin}/api/get_blogs_working.php?lang=${lang}`;
                 let isNumericId = !isNaN(blogIdentifier) && blogIdentifier.trim() !== '';
                 
                 if (isNumericId) {
@@ -367,8 +370,11 @@ if (!$title) {
                     apiUrl += `&slug=${encodeURIComponent(blogIdentifier)}`;
                 }
                 
+                console.log('Fetching blog from:', apiUrl);
                 const response = await fetch(apiUrl);
                 const result = await response.json();
+                
+                console.log('API Response:', result);
 
                 if (result.success && result.data) {
                     // API returns single blog object when using slug or ID
@@ -424,6 +430,7 @@ if (!$title) {
                     const loader = document.getElementById('pageLoader');
                     if (loader) loader.classList.remove('lakum-page-loader--active');
                 } else {
+                    console.error('API Error:', result.error);
                     document.getElementById('blog-title').textContent = 'Blog not found';
                     // Hide page loader
                     const loader = document.getElementById('pageLoader');
@@ -453,7 +460,10 @@ if (!$title) {
         async function loadRelatedBlogs(currentBlogId) {
             try {
                 const lang = urlLang || window.LAKUM_LANG || localStorage.getItem('lakum_language') || 'en';
-                const response = await fetch(`/api/get_blogs.php?limit=3&lang=${lang}`);
+                const apiUrl = `${window.location.origin}/api/get_blogs.php?limit=3&lang=${lang}`;
+                console.log('Fetching related blogs from:', apiUrl);
+                
+                const response = await fetch(apiUrl);
                 const result = await response.json();
 
                 if (result.success && result.data) {
