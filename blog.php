@@ -459,12 +459,12 @@ require_once 'api/image-helper.php';
     </script>
 
     <script>
-        // Helper function to get blog URL (using title instead of ID)
+        // Helper function to get blog URL (using slug from database)
         const getBlogUrl = (blog) => {
-            // Always use English title for user-friendly slug
-            const title = blog.title_en || blog.title || 'blog';
+            // Use slug from database for clean URLs
+            const slug = blog.slug || blog.title_en || 'blog';
             const lang = window.LAKUM_LANG || localStorage.getItem('lakum_language') || 'en';
-            return `blogPageDetails.php?title=${encodeURIComponent(title)}&lang=${lang}`;
+            return `blog/${slug}?lang=${lang}`;
         };
 
         // Translation strings for JavaScript

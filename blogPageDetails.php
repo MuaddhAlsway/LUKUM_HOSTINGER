@@ -1,6 +1,19 @@
 <?php
 require_once 'lang/loader.php';
 require_once 'api/image-helper.php';
+
+// Get slug from filename (Hostinger file-based clean URLs)
+$slug = basename(__FILE__, '.php');
+$lang = $_GET['lang'] ?? 'en';
+
+// If accessed as main blogPageDetails.php (not from clean URL), redirect or show error
+if ($slug === 'blogPageDetails') {
+    $slug = $_GET['slug'] ?? null;
+    if (!$slug) {
+        header('HTTP/1.0 404 Not Found');
+        exit('Blog not found');
+    }
+}
 ?><!DOCTYPE html>
 <html <?php echo getLanguageAttributes(); ?>>
 

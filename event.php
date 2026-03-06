@@ -1,6 +1,19 @@
 <?php
 require_once 'lang/loader.php';
 require_once 'api/image-helper.php';
+
+// Get slug from filename (Hostinger file-based clean URLs)
+$slug = basename(__FILE__, '.php');
+$lang = $_GET['lang'] ?? 'en';
+
+// If accessed as main event.php (not from clean URL), redirect or show error
+if ($slug === 'event') {
+    $slug = $_GET['slug'] ?? null;
+    if (!$slug) {
+        header('HTTP/1.0 404 Not Found');
+        exit('Event not found');
+    }
+}
 ?><!DOCTYPE html>
 <html <?php echo getLanguageAttributes(); ?>>
 
@@ -491,8 +504,8 @@ require_once 'api/image-helper.php';
             // Update hreflang tags with event title (always use English slug)
             const hreflangEn = document.getElementById('hreflang-en');
             const hreflangAr = document.getElementById('hreflang-ar');
-            if (hreflangEn) hreflangEn.href = `${window.location.origin}/event.php?title=${eventSlug}&lang=en`;
-            if (hreflangAr) hreflangAr.href = `${window.location.origin}/event.php?title=${eventSlug}&lang=ar`;
+            if (hreflangEn) hreflangEn.href = `${window.location.origin}/event/${eventSlug}?lang=en`;
+            if (hreflangAr) hreflangAr.href = `${window.location.origin}/event/${eventSlug}?lang=ar`;
 
             // Update hero section with real data
             document.getElementById('event-title').textContent = title;

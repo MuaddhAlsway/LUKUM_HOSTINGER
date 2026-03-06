@@ -516,9 +516,12 @@ require_once 'api/image-helper.php';
 
             pressItems.forEach(item => {
                 const pressCard = document.createElement('a');
-                pressCard.href = item.url || '#';
-                pressCard.target = '_blank';
-                pressCard.rel = 'noopener';
+                
+                // Use clean URL for internal press detail pages
+                const lang = window.LAKUM_LANG || localStorage.getItem('lakum_language') || 'en';
+                const slug = item.slug || item.id;
+                pressCard.href = `press/${slug}?lang=${lang}`;
+                
                 pressCard.className = 'lakum-press-card';
                 pressCard.setAttribute('data-press-id', item.id);
 
@@ -716,9 +719,12 @@ require_once 'api/image-helper.php';
                 // Render press releases
                 pressReleases.forEach((item) => {
                     const pressCard = document.createElement('a');
-                    pressCard.href = item.url || '#';
-                    pressCard.target = '_blank';
-                    pressCard.rel = 'noopener';
+                    
+                    // Use clean URL for internal press detail pages
+                    const lang = window.LAKUM_LANG || localStorage.getItem('lakum_language') || 'en';
+                    const slug = item.slug || item.id;
+                    pressCard.href = `press/${slug}?lang=${lang}`;
+                    
                     pressCard.className = 'lakum-press-card';
                     pressCard.setAttribute('data-press-id', item.id);
                     
