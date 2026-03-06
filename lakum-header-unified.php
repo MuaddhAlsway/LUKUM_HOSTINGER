@@ -194,3 +194,6 @@ $htmlDir = $isArabic ? 'rtl' : 'ltr';
     - Extensible via CSS custom properties
 
 ===== END IMPLEMENTATION NOTES ===== -->
+
+<!-- Header JavaScript Initialization -->
+<script src="js/lakum-header-init.js" defer></script>

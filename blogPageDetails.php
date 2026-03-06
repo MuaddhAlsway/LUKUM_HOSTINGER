@@ -140,7 +140,7 @@ if (!$title) {
           imagesizes="(max-width: 768px) 100vw, 650px"
           fetchpriority="high">
     <!-- Preload critical fonts -->
-    <link rel="preload" href="assest/fonts/GretaArabicAR+LT-Regular.otf" as="font" type="font/otf" crossorigin>
+    <link rel="preload" href="fonts/GretaArabicAR+LT-Regular.otf" as="font" type="font/otf" crossorigin>
 
     <!-- DNS Prefetch for external resources -->
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
@@ -158,18 +158,19 @@ if (!$title) {
     <link rel="preload" href="lakum-components.css" as="style">
 
     <!-- Preload critical fonts -->
-    <link rel="prefetch" href="assest/fonts/GretaArabicAR+LT-Regular.otf" as="font" type="font/otf" crossorigin>
-    <link rel="prefetch" href="assest/fonts/GretaArabicAR+LT-Light.otf" as="font" type="font/otf" crossorigin>
+    <link rel="prefetch" href="fonts/GretaArabicAR+LT-Regular.otf" as="font" type="font/otf" crossorigin>
+    <link rel="prefetch" href="fonts/GretaArabicAR+LT-Light.otf" as="font" type="font/otf" crossorigin>
 
     <!-- Global Stylesheets (Centralized) -->
     <?php include('includes/stylesheets.php'); ?>
 
     <!-- Page-specific styles -->
     <link rel="stylesheet" href="blog-page-details.css">
-    <script src="assest/static-json-translator.js?v=1.0.0" defer></script>
-<link rel="alternate" hreflang="en" href="https://lakumartspace.infinityfree.me/blogPageDetails.php?lang=en" />
-<link rel="alternate" hreflang="ar" href="https://lakumartspace.infinityfree.me/blogPageDetails.php?lang=ar" />
-    <script src="assest/static-json-translator.js?v=1.0.0" defer></script></head>
+    
+    <!-- Alternate language links for SEO -->
+    <link rel="alternate" hreflang="en" href="https://lakumartspace.com/blogPageDetails.php?lang=en" />
+    <link rel="alternate" hreflang="ar" href="https://lakumartspace.com/blogPageDetails.php?lang=ar" />
+</head>
 
 <body class="<?php echo getLanguageClass(); ?>">
     <div class="lakum-page-loader" id="pageLoader">
@@ -270,7 +271,6 @@ if (!$title) {
     </footer>
 
     <script src="assest/fun-interactions.js?v=5.0.0" defer></script>
-    <script src="mobile-performance-optimizer.js?v=5.0.0" defer></script>
 
     <script>
         // Blog Details Page Script
@@ -469,11 +469,7 @@ if (!$title) {
 
         // Load blog details when page loads
         function initBlogDetailsPage() {
-            if (typeof LanguageManager === 'undefined') {
-                console.warn('LanguageManager not ready, retrying...');
-                setTimeout(initBlogDetailsPage, 100);
-                return;
-            }
+            // Load blog immediately - don't wait for LanguageManager
             loadBlogDetails();
         }
         
@@ -490,9 +486,10 @@ if (!$title) {
         function updateBlogSectionTitles() {
             const lang = new URLSearchParams(window.location.search).get('lang') || localStorage.getItem('lakum_language') || 'en';
             
+            // Use PHP-provided translations or fallback
             const translations = {
-                'article': lang === 'ar' ? '????' : 'Article',
-                'related_articles': lang === 'ar' ? '?????? ??? ???' : 'Related Articles'
+                'article': lang === 'ar' ? 'المقالة' : 'Article',
+                'related_articles': lang === 'ar' ? 'مقالات ذات صلة' : 'Related Articles'
             };
 
             const articleTitle = document.getElementById('article-title');
@@ -557,10 +554,11 @@ if (!$title) {
         });
     </script>
 
-    <!-- Service Worker Registration -->
+    <!-- Service Worker Registration (optional) -->
     <script>
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js').catch(err => console.log('SW registration failed:', err));
+        if ('serviceWorker' in navigator && false) {
+            // Disabled - sw.js not available
+            // navigator.serviceWorker.register('sw.js').catch(err => console.log('SW registration failed:', err));
         }
     </script>
 
