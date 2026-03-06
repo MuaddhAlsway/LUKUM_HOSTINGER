@@ -462,9 +462,12 @@ require_once 'api/image-helper.php';
         // Helper function to get blog URL (using slug from database)
         const getBlogUrl = (blog) => {
             // Use slug from database for clean URLs
-            const slug = blog.slug || blog.title_en || 'blog';
+            const slug = blog.slug || (blog.title_en || blog.title || 'blog')
+                .toLowerCase()
+                .replace(/\s+/g, '-')
+                .replace(/[^\w-]/g, '');
             const lang = window.LAKUM_LANG || localStorage.getItem('lakum_language') || 'en';
-            return `blog/${slug}?lang=${lang}`;
+            return `blogPageDetails.php?title=${slug}&lang=${lang}`;
         };
 
         // Translation strings for JavaScript
@@ -876,8 +879,11 @@ require_once 'api/image-helper.php';
                     
                     card.addEventListener('click', () => {
                         const lang = window.LAKUM_LANG || localStorage.getItem('lakum_language') || 'en';
-                        const title = blog.title_en || blog.title || 'blog';
-                        window.location.href = `blogPageDetails.php?title=${encodeURIComponent(title)}&lang=${lang}`;
+                        const slug = (blog.slug || blog.title_en || blog.title || 'blog')
+                            .toLowerCase()
+                            .replace(/\s+/g, '-')
+                            .replace(/[^\w-]/g, '');
+                        window.location.href = `blogPageDetails.php?title=${slug}&lang=${lang}`;
                     });
                     
                     blogGrid.appendChild(card);

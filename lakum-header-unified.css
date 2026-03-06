@@ -1,8 +1,8 @@
 /**
- * LAKUM ARTSPACE - Unified Header System
+ * LAKUM ARTSPACE - Unified Header System (STANDALONE)
  * Complete CSS for header, navigation, and mobile menu
  * 
- * CRITICAL: This file MUST be loaded FIRST before any other CSS
+ * CRITICAL: This file is STANDALONE and works without lakum-components.css
  * All rules use !important to guarantee override of conflicting CSS
  * 
  * Architecture:
@@ -12,7 +12,18 @@
  * - Mobile-first responsive design
  * - RTL support built-in
  * - Accessibility first
+ * - NO DEPENDENCIES on other CSS files
  */
+
+/* ===== RESET ALL CONFLICTING STYLES ===== */
+.lakum-header,
+.lakum-header *,
+.lakum-nav,
+.lakum-nav *,
+.lakum-nav--mobile,
+.lakum-nav--mobile * {
+    box-sizing: border-box !important;
+}
 
 /* ===== CSS CUSTOM PROPERTIES (Easy to customize) ===== */
 :root {
@@ -53,16 +64,7 @@
     --radius-lg: 12px;
 }
 
-/* ===== RESET & BASE STYLES ===== */
-* {
-    box-sizing: border-box;
-    
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
+/* ===== BODY PADDING ===== */
 body {
     padding-top: var(--header-height-desktop) !important;
     transition: padding-top var(--transition-normal) !important;
@@ -138,6 +140,8 @@ body {
     visibility: visible !important;
     opacity: 1 !important;
     min-height: 100% !important;
+    position: relative !important;
+    z-index: 100 !important;
 }
 
 .lakum-nav__list {
@@ -148,6 +152,8 @@ body {
     padding: 0 !important;
     gap: var(--spacing-lg) !important;
     color: #1a1a1a !important;
+    width: 100% !important;
+    height: 100% !important;
 }
 
 .lakum-nav__item {
@@ -406,7 +412,39 @@ html[dir="rtl"] .lakum-nav--mobile .lakum-nav__link--active {
     top: 0 !important;
 }
 
-/* ===== TABLET BREAKPOINT (768px - 1024px) ===== */
+/* ===== CRITICAL: ENSURE NAV SHOWS ON DESKTOP ===== */
+@media (min-width: 769px) {
+    .lakum-nav {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        position: relative !important;
+    }
+    
+    .lakum-nav__list {
+        display: flex !important;
+    }
+    
+    .lakum-nav__item {
+        display: flex !important;
+    }
+    
+    .lakum-nav__link {
+        display: inline-block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+    
+    /* Hide mobile toggle on desktop */
+    .lakum-header__mobile-toggle {
+        display: none !important;
+    }
+    
+    /* Hide mobile nav on desktop */
+    .lakum-nav--mobile {
+        display: none !important;
+    }
+}
 @media (max-width: 1024px) {
     :root {
         --header-height-desktop: 70px;

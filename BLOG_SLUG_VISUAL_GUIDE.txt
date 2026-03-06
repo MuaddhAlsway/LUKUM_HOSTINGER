@@ -1,0 +1,293 @@
+╔═══════════════════════════════════════════════════════════════════════════════╗
+║                    BLOG SLUG URL - VISUAL GUIDE                              ║
+╚═══════════════════════════════════════════════════════════════════════════════╝
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ USER JOURNEY                                                                │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+    ┌──────────────┐
+    │  blog.php    │
+    │ (Blog List)  │
+    └──────┬───────┘
+           │
+           │ User clicks blog card
+           │
+           ▼
+    ┌──────────────────────────────────────────────────────────┐
+    │ getBlogUrl() generates slug                              │
+    │                                                          │
+    │ Input: blog.title_en = "Behind the Scenes"              │
+    │ Output: slug = "behind-the-scenes"                      │
+    └──────┬───────────────────────────────────────────────────┘
+           │
+           │ URL: blogPageDetails.php?title=behind-the-scenes&lang=en
+           │
+           ▼
+    ┌──────────────────────────────────────────────────────────┐
+    │ blogPageDetails.php                                      │
+    │ (Blog Details Page)                                      │
+    │                                                          │
+    │ Receives: title=behind-the-scenes, lang=en              │
+    └──────┬───────────────────────────────────────────────────┘
+           │
+           │ API call: /api/get_blogs_working.php?slug=...
+           │
+           ▼
+    ┌──────────────────────────────────────────────────────────┐
+    │ API Response                                             │
+    │ {                                                        │
+    │   "success": true,                                       │
+    │   "data": {                                              │
+    │     "id": 1,                                             │
+    │     "title": "Behind the Scenes",                        │
+    │     "slug": "behind-the-scenes",                         │
+    │     "content": "...",                                    │
+    │     "cover_image": "..."                                 │
+    │   }                                                      │
+    │ }                                                        │
+    └──────┬───────────────────────────────────────────────────┘
+           │
+           │ Display blog content
+           │
+           ▼
+    ┌──────────────────────────────────────────────────────────┐
+    │ Blog Content Displayed                                   │
+    │ - Title                                                  │
+    │ - Cover Image                                            │
+    │ - Content                                                │
+    │ - Author                                                 │
+    │ - Related Blogs                                          │
+    └──────────────────────────────────────────────────────────┘
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ SLUG GENERATION PROCESS                                                     │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+    Input Title: "Behind the Scenes"
+           │
+           ▼
+    .toLowerCase()
+           │
+           ▼
+    "behind the scenes"
+           │
+           ▼
+    .replace(/\s+/g, '-')
+           │
+           ▼
+    "behind-the-scenes"
+           │
+           ▼
+    .replace(/[^\w-]/g, '')
+           │
+           ▼
+    "behind-the-scenes"
+           │
+           ▼
+    Output Slug: "behind-the-scenes"
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ URL FORMAT COMPARISON                                                       │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+    OLD (Incorrect):
+    ┌─────────────────────────────────────────────────────────┐
+    │ blog.php → blog/my-blog-post?lang=en                    │
+    │                                                         │
+    │ Problems:                                               │
+    │ ✗ Not pointing to blogPageDetails.php                   │
+    │ ✗ Using /blog/ path instead of query parameter         │
+    │ ✗ Inconsistent with slug system                         │
+    └─────────────────────────────────────────────────────────┘
+
+    NEW (Correct):
+    ┌─────────────────────────────────────────────────────────┐
+    │ blog.php → blogPageDetails.php?title=my-blog-post&lang=en
+    │                                                         │
+    │ Benefits:                                               │
+    │ ✓ Points to blogPageDetails.php                         │
+    │ ✓ Uses query parameters                                 │
+    │ ✓ Consistent with slug system                           │
+    │ ✓ Language parameter included                           │
+    └─────────────────────────────────────────────────────────┘
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ EXAMPLE URLS                                                                │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+    Blog 1 - English:
+    ┌─────────────────────────────────────────────────────────┐
+    │ https://lakumartspace.com/blogPageDetails.php           │
+    │ ?title=behind-the-scenes-curation&lang=en              │
+    └─────────────────────────────────────────────────────────┘
+
+    Blog 1 - Arabic:
+    ┌─────────────────────────────────────────────────────────┐
+    │ https://lakumartspace.com/blogPageDetails.php           │
+    │ ?title=behind-the-scenes-curation&lang=ar              │
+    └─────────────────────────────────────────────────────────┘
+
+    Blog 2 - English:
+    ┌─────────────────────────────────────────────────────────┐
+    │ https://lakumartspace.com/blogPageDetails.php           │
+    │ ?title=art-history-101&lang=en                         │
+    └─────────────────────────────────────────────────────────┘
+
+    Blog 3 - English:
+    ┌─────────────────────────────────────────────────────────┐
+    │ https://lakumartspace.com/blogPageDetails.php           │
+    │ ?title=photography-tips-2024&lang=en                   │
+    └─────────────────────────────────────────────────────────┘
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ SLUG PRIORITY                                                               │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+    Priority 1: blog.slug (from database)
+    ┌─────────────────────────────────────────────────────────┐
+    │ Fastest lookup                                          │
+    │ Consistent                                              │
+    │ Handles special cases                                   │
+    └─────────────────────────────────────────────────────────┘
+                    ▼
+    Priority 2: blog.title_en (English title)
+    ┌─────────────────────────────────────────────────────────┐
+    │ Automatic generation                                    │
+    │ Consistent with database slugs                          │
+    │ Works without database slug field                       │
+    └─────────────────────────────────────────────────────────┘
+                    ▼
+    Priority 3: blog.title (Fallback title)
+    ┌─────────────────────────────────────────────────────────┐
+    │ Last resort                                             │
+    │ Still generates valid slug                              │
+    └─────────────────────────────────────────────────────────┘
+                    ▼
+    Priority 4: 'blog' (Default)
+    ┌─────────────────────────────────────────────────────────┐
+    │ Ultimate fallback                                       │
+    │ Used if all else fails                                  │
+    └─────────────────────────────────────────────────────────┘
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ LANGUAGE SUPPORT                                                            │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+    Slug: Always in English (from title_en)
+    ┌─────────────────────────────────────────────────────────┐
+    │ behind-the-scenes                                       │
+    │ art-history-101                                         │
+    │ photography-tips-2024                                   │
+    └─────────────────────────────────────────────────────────┘
+
+    Language Parameter: Determines content language
+    ┌─────────────────────────────────────────────────────────┐
+    │ ?lang=en  → Display in English                          │
+    │ ?lang=ar  → Display in Arabic                           │
+    └─────────────────────────────────────────────────────────┘
+
+    Example:
+    ┌─────────────────────────────────────────────────────────┐
+    │ Same blog, different languages:                         │
+    │                                                         │
+    │ English: ?title=behind-the-scenes&lang=en              │
+    │ Arabic:  ?title=behind-the-scenes&lang=ar              │
+    │                                                         │
+    │ Slug is identical, only language changes               │
+    └─────────────────────────────────────────────────────────┘
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ CODE CHANGES                                                                │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+    File: blog.php
+
+    Function 1: getBlogUrl()
+    ┌─────────────────────────────────────────────────────────┐
+    │ const getBlogUrl = (blog) => {                          │
+    │     const slug = blog.slug ||                           │
+    │         (blog.title_en || blog.title || 'blog')         │
+    │         .toLowerCase()                                  │
+    │         .replace(/\s+/g, '-')                           │
+    │         .replace(/[^\w-]/g, '');                        │
+    │     const lang = window.LAKUM_LANG ||                   │
+    │         localStorage.getItem('lakum_language') || 'en'; │
+    │     return `blogPageDetails.php?title=${slug}&lang=${lang}`;
+    │ };                                                      │
+    └─────────────────────────────────────────────────────────┘
+
+    Function 2: Click Handler
+    ┌─────────────────────────────────────────────────────────┐
+    │ card.addEventListener('click', () => {                 │
+    │     const lang = window.LAKUM_LANG ||                   │
+    │         localStorage.getItem('lakum_language') || 'en'; │
+    │     const slug = (blog.slug ||                          │
+    │         blog.title_en || blog.title || 'blog')          │
+    │         .toLowerCase()                                  │
+    │         .replace(/\s+/g, '-')                           │
+    │         .replace(/[^\w-]/g, '');                        │
+    │     window.location.href =                              │
+    │         `blogPageDetails.php?title=${slug}&lang=${lang}`;
+    │ });                                                     │
+    └─────────────────────────────────────────────────────────┘
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ TESTING CHECKLIST                                                           │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+    Blog Page (blog.php):
+    ☐ Blog cards display correctly
+    ☐ Click card navigates to blog details
+    ☐ URL format is correct
+    ☐ Language parameter preserved
+    ☐ Works in English
+    ☐ Works in Arabic
+
+    Blog Details Page (blogPageDetails.php):
+    ☐ Page loads with correct blog
+    ☐ Blog title displays
+    ☐ Blog content displays
+    ☐ Images load correctly
+    ☐ Language switching works
+    ☐ Related blogs show correct links
+
+    Mobile:
+    ☐ Works on mobile devices
+    ☐ Touch targets adequate
+    ☐ Responsive layout works
+
+    Browsers:
+    ☐ Chrome/Edge
+    ☐ Firefox
+    ☐ Safari
+    ☐ iOS Safari
+    ☐ Android Chrome
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ BENEFITS                                                                    │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+    ✓ Clean, readable URLs
+    ✓ SEO-friendly (keywords in URL)
+    ✓ Language support (multi-language)
+    ✓ Consistent URL structure
+    ✓ Easy to share and remember
+    ✓ Fast slug generation
+    ✓ No additional API calls
+    ✓ Automatic slug generation from title
+    ✓ Database slug support
+    ✓ Fallback mechanisms
+
+
+╔═══════════════════════════════════════════════════════════════════════════════╗
+║                         IMPLEMENTATION COMPLETE                              ║
+╚═══════════════════════════════════════════════════════════════════════════════╝

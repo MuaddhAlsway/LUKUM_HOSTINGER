@@ -1,0 +1,156 @@
+═══════════════════════════════════════════════════════════════════════════════
+  LAKUM HEADER - QUICK FIX REFERENCE
+═══════════════════════════════════════════════════════════════════════════════
+
+ISSUE: Navigation not showing on desktop
+
+SOLUTION: Updated lakum-header-unified.css to be standalone
+
+═══════════════════════════════════════════════════════════════════════════════
+  WHAT WAS FIXED
+═══════════════════════════════════════════════════════════════════════════════
+
+1. ✅ Added reset section to clear conflicting styles
+2. ✅ Enhanced nav rules with explicit display: flex
+3. ✅ Added critical desktop override (@media min-width: 769px)
+4. ✅ Removed dependency on lakum-components.css
+5. ✅ Made CSS completely standalone
+
+═══════════════════════════════════════════════════════════════════════════════
+  CURRENT BEHAVIOR
+═══════════════════════════════════════════════════════════════════════════════
+
+DESKTOP (> 1024px)
+  ✅ Navigation shows horizontally
+  ✅ All nav items visible
+  ✅ Header height: 80px
+  ✅ Mobile toggle hidden
+  ✅ Mobile menu hidden
+
+TABLET (820px - 1024px)
+  ✅ Navigation shows horizontally (compact)
+  ✅ All nav items visible
+  ✅ Header height: 70px
+  ✅ Mobile toggle hidden
+  ✅ Mobile menu hidden
+
+MOBILE (< 768px)
+  ✅ Navigation hidden
+  ✅ Hamburger menu visible
+  ✅ Header height: 60px
+  ✅ Mobile menu works on click
+
+═══════════════════════════════════════════════════════════════════════════════
+  CSS LOADING ORDER
+═══════════════════════════════════════════════════════════════════════════════
+
+REQUIRED:
+  1. lakum-header-unified.css (MUST BE FIRST)
+  2. js/lakum-header-init.js (for mobile toggle)
+
+NOT NEEDED:
+  ❌ lakum-components.css (removed dependency)
+
+═══════════════════════════════════════════════════════════════════════════════
+  TESTING
+═══════════════════════════════════════════════════════════════════════════════
+
+Desktop Test:
+  1. Open browser at 1024px+ width
+  2. Navigation should display horizontally
+  3. All 10 nav items should be visible
+  4. Hover over items - underline should appear
+  5. No hamburger menu should be visible
+
+Mobile Test:
+  1. Resize browser to < 768px
+  2. Navigation should hide
+  3. Hamburger menu should appear
+  4. Click hamburger - menu should slide in
+  5. Click link - menu should close
+
+═══════════════════════════════════════════════════════════════════════════════
+  DEBUGGING
+═══════════════════════════════════════════════════════════════════════════════
+
+If nav still doesn't show:
+
+1. Clear cache: Ctrl+Shift+Delete
+2. Hard refresh: Ctrl+F5
+3. Check DevTools:
+   - Right-click .lakum-nav
+   - Select "Inspect"
+   - Check "Computed" tab
+   - Should show: display: flex
+4. Check console for errors
+5. Verify screen width > 768px
+
+═══════════════════════════════════════════════════════════════════════════════
+  KEY CSS RULES
+═══════════════════════════════════════════════════════════════════════════════
+
+Base Rule (Always applies):
+  .lakum-nav {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+Desktop Override (769px+):
+  @media (min-width: 769px) {
+    .lakum-nav { display: flex !important; }
+    .lakum-header__mobile-toggle { display: none !important; }
+    .lakum-nav--mobile { display: none !important; }
+  }
+
+Mobile Override (< 768px):
+  @media (max-width: 768px) {
+    .lakum-nav { display: none !important; }
+    .lakum-header__mobile-toggle { display: flex !important; }
+    .lakum-nav--mobile { display: flex !important; }
+  }
+
+═══════════════════════════════════════════════════════════════════════════════
+  RESPONSIVE BREAKPOINTS
+═══════════════════════════════════════════════════════════════════════════════
+
+Desktop:        > 1024px  (80px header, full nav)
+Tablet Large:   820-1024px (70px header, compact nav)
+Tablet Medium:  768-820px  (68px header, compact nav)
+Mobile:         < 768px   (60px header, hamburger menu)
+Small Mobile:   < 480px   (56px header, minimal layout)
+
+═══════════════════════════════════════════════════════════════════════════════
+  FILES MODIFIED
+═══════════════════════════════════════════════════════════════════════════════
+
+✅ lakum-header-unified.css
+   - Added reset section
+   - Enhanced nav rules
+   - Added critical desktop override
+   - Removed dependencies
+
+═══════════════════════════════════════════════════════════════════════════════
+  ACCESSIBILITY FEATURES
+═══════════════════════════════════════════════════════════════════════════════
+
+✅ aria-expanded on toggle button
+✅ aria-current="page" on active link
+✅ aria-label on all interactive elements
+✅ Keyboard navigation (ESC to close)
+✅ Skip to main content link
+✅ Semantic HTML structure
+✅ Proper color contrast
+✅ Focus indicators visible
+
+═══════════════════════════════════════════════════════════════════════════════
+  SUPPORT
+═══════════════════════════════════════════════════════════════════════════════
+
+If you need help:
+1. Check LAKUM_HEADER_STANDALONE_FIX.md for detailed explanation
+2. Check HEADER_RESPONSIVE_BREAKPOINTS.md for breakpoint details
+3. Check browser console for JavaScript errors
+4. Verify CSS file is loaded first in includes/stylesheets.php
+
+═══════════════════════════════════════════════════════════════════════════════

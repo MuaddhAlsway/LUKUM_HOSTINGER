@@ -12,142 +12,58 @@ body {
 }
 
 /* ===== HEADER / NAVIGATION =====
-.lakum-header {
-      position: relative; /* or fixed for sticky header */
-      /*
-  z-index: 2000;   
-    top: 0;
-    left: 0;
-    right: 0;
-   
-    background: rgba(246, 246, 235, 0.98);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(209, 209, 209, 0.2);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
+   DEPRECATED: Navigation styles moved to lakum-header-unified.css
+   This file should NOT override header styles
+   ===== */
 
-.lakum-header__container {
-    max-width: 1600px;
-    margin: 0 auto;
-    padding: 0 clamp(20px, 5vw, 60px);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 80px;
-}
-
-.lakum-header__logo {
-    flex-shrink: 0;
-}
-
-.lakum-logo {
-    display: flex;
-    align-items: center;
-    gap: 0;
-    transition: opacity 0.3s ease;
-}
-
-.lakum-logo:hover {
-    opacity: 0.8;
-}
-
-.lakum-logo__left,
-.lakum-logo__right {
-    height: 50px;
-    width: auto;
-    max-width: 100px;
-    aspect-ratio: auto;
-    display: block;
-}
-
-.lakum-logo__left {
-    margin-right: -2px;
-}
-
-.lakum-logo__right {
-    margin-left: -2px;
-}
-
-/* Navigation - Desktop Base Styles */
+/* Navigation - DISABLED (use lakum-header-unified.css instead) */
 .lakum-nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    background: #f6f6eb;
-    transform: translateX(100%);
-    transition: transform 0.3s ease;
-    z-index: 99999; /* much higher than hero */
+    /* All styles now in lakum-header-unified.css */
+    /* DO NOT MODIFY - conflicts with unified header */
 }
+
 .lakum-nav.lakum-nav--open {
-    transform: translateX(0);
-    z-index: 99999; /* reinforce */
+    /* Handled by js/lakum-header-init.js */
 }
+
 .lakum-nav.lakum-nav--open::before {
-    opacity: 1;
-    visibility: visible;
+    /* Handled by lakum-header-unified.css */
 }
+
 .lakum-nav__list {
-    display: flex;
-    align-items: center;
-    gap: clamp(20px, 3vw, 48px);
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    position: relative;
-    z-index: 1001;
+    /* All styles now in lakum-header-unified.css */
 }
 
 .lakum-nav__item {
-    position: relative;
-    display: flex;
-    align-items: center;
+    /* All styles now in lakum-header-unified.css */
 }
 
 .lakum-nav__link {
-    font-family: 'Atyp Kido TRIAL', sans-serif;
-    font-size: 15px;
-    font-weight: 400;
-    letter-spacing: 0.5px;
-    color: #1a1a1a;
-    text-decoration: none;
-    text-transform: capitalize;
-    padding: 8px 0;
-    position: relative;
-    transition: color 0.3s ease;
+    /* All styles now in lakum-header-unified.css */
 }
 
 .lakum-nav__link::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 1px;
-    background: #1a1a1a;
-    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    /* All styles now in lakum-header-unified.css */
 }
 
 .lakum-nav__link:hover {
-    color: #8a7968;
+    /* All styles now in lakum-header-unified.css */
 }
 
 .lakum-nav__link:hover::after {
-    width: 100%;
+    /* All styles now in lakum-header-unified.css */
 }
 
 .lakum-nav__link:focus {
-    outline: none;
+    /* All styles now in lakum-header-unified.css */
 }
 
 .lakum-nav__link:active {
-    outline: none;
+    /* All styles now in lakum-header-unified.css */
 }
 
 .lakum-nav__link--active {
-    color: #1a1a1a;
-    font-weight: 500;
+    /* All styles now in lakum-header-unified.css */
 }
 
 .lakum-nav__link--active::after {
