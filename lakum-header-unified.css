@@ -24,7 +24,7 @@
     /* Colors */
     --header-bg: #f6f6eb;
     --header-text: #1a1a1a;
-    --header-hover: #8a7968;
+    --header-hover: #1a1a1a;
     --header-border: #e0e0e0;
     --overlay-bg: rgba(0, 0, 0, 0.3);
     
@@ -75,8 +75,8 @@ body {
     right: 0 !important;
     width: 100% !important;
     height: var(--header-height-desktop) !important;
-    background: var(--header-bg) !important;
-    color: var(--header-text) !important;
+    background:rgba(246, 246, 235, 0.98)!important;
+    color: #1a1a1a !important;
     z-index: var(--z-header) !important;
     border-bottom: 1px solid var(--header-border) !important;
     box-shadow: none !important;
@@ -153,7 +153,8 @@ body {
 .lakum-nav__link {
     display: inline-block !important;
     padding: var(--spacing-md) var(--spacing-lg) !important;
-    color: var(--header-text) !important;
+    color: #1a1a1a
+    !important;
     text-decoration: none !important;
     font-size: 0.95rem !important;
     font-weight: 500 !important;
@@ -169,7 +170,7 @@ body {
     left: 0 !important;
     width: 0 !important;
     height: 2px !important;
-    background: var(--header-hover) !important;
+    background: transparent !important;
     transition: width var(--transition-fast) !important;
 }
 
@@ -388,7 +389,7 @@ html[dir="rtl"] .lakum-nav--mobile .lakum-nav__link--active {
     position: absolute !important;
     top: -40px !important;
     left: 0 !important;
-    background: var(--header-hover) !important;
+    background: transparent !important;
     color: white !important;
     padding: var(--spacing-md) var(--spacing-lg) !important;
     text-decoration: none !important;
@@ -399,10 +400,56 @@ html[dir="rtl"] .lakum-nav--mobile .lakum-nav__link--active {
     top: 0 !important;
 }
 
-/* ===== TABLET BREAKPOINT (768px - 1024px) ===== */
+/* ===== TABLET BREAKPOINT (1024px - 1200px) ===== */
 @media (max-width: 1024px) {
     :root {
-        --header-height-desktop: 70px;
+        --header-height-desktop: 75px;
+    }
+    
+    body {
+        padding-top: var(--header-height-desktop) !important;
+    }
+    
+    .lakum-header {
+        height: var(--header-height-desktop) !important;
+    }
+    
+    .lakum-header__container {
+        padding: 0 var(--spacing-lg) !important;
+    }
+    
+    .lakum-nav {
+        margin: 0 var(--spacing-lg) !important;
+    }
+    
+    .lakum-nav__list {
+        gap: var(--spacing-lg) !important;
+    }
+    
+    .lakum-nav__link {
+        padding: var(--spacing-md) var(--spacing-lg) !important;
+        font-size: 0.92rem !important;
+    }
+    
+    .lakum-logo__left,
+    .lakum-logo__right {
+        height: 38px !important;
+    }
+    
+    .lakum-language-switcher {
+        gap: var(--spacing-md) !important;
+    }
+    
+    .lakum-lang-link {
+        padding: var(--spacing-md) var(--spacing-lg) !important;
+        font-size: 0.82rem !important;
+    }
+}
+
+/* ===== MEDIUM TABLET BREAKPOINT (820px - 1024px) ===== */
+@media (max-width: 820px) {
+    :root {
+        --header-height-desktop: 65px;
     }
     
     body {
@@ -427,12 +474,21 @@ html[dir="rtl"] .lakum-nav--mobile .lakum-nav__link--active {
     
     .lakum-nav__link {
         padding: var(--spacing-sm) var(--spacing-md) !important;
-        font-size: 0.9rem !important;
+        font-size: 0.88rem !important;
     }
     
     .lakum-logo__left,
     .lakum-logo__right {
-        height: 35px !important;
+        height: 32px !important;
+    }
+    
+    .lakum-language-switcher {
+        gap: var(--spacing-sm) !important;
+    }
+    
+    .lakum-lang-link {
+        padding: var(--spacing-sm) var(--spacing-md) !important;
+        font-size: 0.78rem !important;
     }
 }
 

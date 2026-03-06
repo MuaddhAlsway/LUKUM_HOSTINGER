@@ -43,12 +43,20 @@ try {
         $eventId = (int)$eventIdParam;
     } else {
         // Try to find event by slug from base table
-        $slugParam = strtolower(str_replace(' ', '-', $eventIdParam));
+        // Normalize slug: lowercase, replace spaces with hyphens, remove special chars
+        $slugParam = strtolower(trim($eventIdParam));
+        $slugParam = preg_replace('/[^a-z0-9-]/', '', $slugParam);
+        $slugParam = preg_replace('/-+/', '-', $slugParam);
+        $slugParam = trim($slugParam, '-');
+        
+        error_log("DEBUG: Looking for slug: '$slugParam' from param: '$eventIdParam'");
         
         // Check if slug column exists in events table
         $columnCheckQuery = "SHOW COLUMNS FROM events LIKE 'slug'";
         $columnResult = $db->getConnection()->query($columnCheckQuery);
         $slugColumnExists = $columnResult && $columnResult->num_rows > 0;
+        
+        error_log("DEBUG: Slug column exists: " . ($slugColumnExists ? 'yes' : 'no'));
         
         if ($slugColumnExists) {
             // Query slug from events table (language-independent)
@@ -60,6 +68,22 @@ try {
                     $result = $stmt->get_result();
                     if ($row = $result->fetch_assoc()) {
                         $eventId = (int)$row['id'];
+                        error_log("DEBUG: Found event ID: $eventId for slug: $slugParam");
+                    } else {
+                        error_log("DEBUG: No event found for slug: $slugParam");
+                        // Try case-insensitive search
+                        $slugQuery2 = 'SELECT id FROM events WHERE LOWER(slug) = LOWER(?) LIMIT 1';
+                        $stmt2 = $db->prepare($slugQuery2);
+                        if ($stmt2) {
+                            $stmt2->bind_param('s', $slugParam);
+                            if ($stmt2->execute()) {
+                                $result2 = $stmt2->get_result();
+                                if ($row2 = $result2->fetch_assoc()) {
+                                    $eventId = (int)$row2['id'];
+                                    error_log("DEBUG: Found event ID (case-insensitive): $eventId for slug: $slugParam");
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -77,15 +101,20 @@ try {
                     $result = $stmt->get_result();
                     if ($row = $result->fetch_assoc()) {
                         $eventId = (int)$row['id'];
+                        error_log("DEBUG: Found event ID (title fallback): $eventId for slug: $slugParam");
                     }
                 }
             }
         }
     }
     
-    // If no event found by slug, use numeric ID or default to 1
+    // If no event found by slug, throw error instead of defaulting to 1
     if ($eventId === null) {
-        $eventId = $isNumeric ? (int)$eventIdParam : 1;
+        if ($isNumeric) {
+            $eventId = (int)$eventIdParam;
+        } else {
+            throw new Exception("Event not found with slug: $eventIdParam");
+        }
     }
     
     // Get event details with translation support

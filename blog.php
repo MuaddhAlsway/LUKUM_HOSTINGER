@@ -202,8 +202,8 @@ require_once 'api/image-helper.php';
         </div>
     </div>
 
-    <!-- Global Header Navigation (Centralized) -->
-    <?php include('includes/header.php'); ?>
+    <!-- Global Header Navigation (Unified) -->
+    <?php include('lakum-header-unified.php'); ?>
 
 <script>
     // Set current language from PHP (respects URL parameter ?lang=en or ?lang=ar)

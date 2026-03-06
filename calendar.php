@@ -238,8 +238,8 @@ require_once 'lang/loader.php';
         </div>
     </div>
 
-    <!-- Global Header Navigation (Centralized) -->
-    <?php include('includes/header.php'); ?>
+    <!-- Global Header Navigation (Unified) -->
+    <?php include('lakum-header-unified.php'); ?>
 
     <script>
         // Intelligent Page Loader - Proper Implementation
@@ -553,13 +553,15 @@ require_once 'lang/loader.php';
             return timeRange;
         }
 
-        // Helper function to get event URL (slug or id)
+        // Helper function to get event URL (slug-based)
         const getEventUrl = (event) => {
             console.log('getEventUrl called with event:', event);
-            const slug = event.slug || event.id;
-            console.log('Using slug/id:', slug);
+            // Use slug-based URL instead of ID
+            // Slug is language-independent (always English)
+            const slug = event.slug || event.title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+            console.log('Using slug:', slug);
             const lang = window.LAKUM_LANG || localStorage.getItem('lakum_language') || 'en';
-            const url = `event.php?id=${slug}&lang=${lang}`;
+            const url = `event.php?title=${slug}&lang=${lang}`;
             console.log('Generated URL:', url);
             return url;
         };

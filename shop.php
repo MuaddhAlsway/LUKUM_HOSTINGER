@@ -167,8 +167,8 @@ require_once 'api/image-helper.php';
         </div>
     </div>
 
-    <!-- Global Header Navigation (Centralized) -->
-    <?php include('includes/header.php'); ?>
+    <!-- Global Header Navigation (Unified) -->
+    <?php include('lakum-header-unified.php'); ?>
 
     <script>
     // Intelligent Page Loader - Proper Implementation

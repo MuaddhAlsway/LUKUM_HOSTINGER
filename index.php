@@ -572,7 +572,7 @@ margin: 0 auto;}
                         <span class="lakum-featured-banner__date">${dateStr} • ${timeStr}</span>
                         <h3 class="lakum-featured-banner__title">${featuredEvent.title}</h3>
                         <p class="lakum-featured-banner__description">${featuredEvent.description}</p>
-                        <a href="event.php?id=${featuredEvent.id}&lang=${window.LAKUM_LANG || 'en'}" class="lakum-btn lakum-btn--primary">` + viewDetailsText + `</a>
+                        <a href="event.php?title=${(featuredEvent.slug || featuredEvent.title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, ''))}&lang=${window.LAKUM_LANG || 'en'}" class="lakum-btn lakum-btn--primary">` + viewDetailsText + `</a>
                     </div>
                 </div>
             `;
@@ -621,7 +621,7 @@ margin: 0 auto;}
                     <div class="lakum-event-card__content">
                         <h3 class="lakum-event-card__title">${event.title}</h3>
                         <p class="lakum-event-card__time">${timeStr}</p>
-                        <a href="event.php?id=${event.id}&lang=${window.LAKUM_LANG || 'en'}" class="lakum-event-card__link">View Details</a>
+                        <a href="event.php?title=${(event.slug || event.title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, ''))}&lang=${window.LAKUM_LANG || 'en'}" class="lakum-event-card__link">View Details</a>
                     </div>
                 `;
                 container.appendChild(card);
@@ -667,7 +667,7 @@ margin: 0 auto;}
                     <div class="lakum-event-card__content">
                         <h3 class="lakum-event-card__title">${event.title}</h3>
                         <p class="lakum-event-card__time">${timeStr}</p>
-                        <a href="event.php?id=${event.id}&lang=${window.LAKUM_LANG || 'en'}" class="lakum-event-card__link">View Details</a>
+                        <a href="event.php?title=${(event.slug || event.title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, ''))}&lang=${window.LAKUM_LANG || 'en'}" class="lakum-event-card__link">View Details</a>
                     </div>
                 `;
                 container.appendChild(card);

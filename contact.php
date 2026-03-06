@@ -173,8 +173,8 @@ require_once 'lang/loader.php';
         </div>
     </div>
 
-    <!-- Global Header Navigation (Centralized) -->
-    <?php include('includes/header.php'); ?>
+    <!-- Global Header Navigation (Unified) -->
+    <?php include('lakum-header-unified.php'); ?>
 
     <script>
         // Intelligent Page Loader - Proper Implementation

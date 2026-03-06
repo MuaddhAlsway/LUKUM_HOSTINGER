@@ -717,8 +717,8 @@ html[lang="ar"] .lakum-event-card__date {
         </div>
     </div>
 
-    <!-- Global Header Navigation (Centralized) -->
-    <?php include('includes/header.php'); ?>
+    <!-- Global Header Navigation (Unified) -->
+    <?php include('lakum-header-unified.php'); ?>
 
     <section class="lakum-hero" style="aspect-ratio: 16/9">
         <div class="lakum-hero__image-wrapper">

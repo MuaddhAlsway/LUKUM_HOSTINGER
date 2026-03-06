@@ -1,0 +1,358 @@
+================================================================================
+LAKUM HEADER UNIFIED - RESPONSIVE BREAKPOINTS VISUAL GUIDE
+================================================================================
+
+BREAKPOINT HIERARCHY
+================================================================================
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ DESKTOP (> 1024px)                                                          │
+│ ┌─────────────────────────────────────────────────────────────────────────┐ │
+│ │ [LOGO]  [HOME] [ABOUT] [SPACES] [EXHIBITIONS] [CALENDAR] [BLOG] [PRESS] [EN/AR] │
+│ │ Header Height: 80px                                                     │ │
+│ │ Logo: 40px                                                              │ │
+│ │ Navigation: Horizontal, Fully Visible                                   │ │
+│ │ Spacing: 16px gaps                                                      │ │
+│ └─────────────────────────────────────────────────────────────────────────┘ │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ TABLET LARGE (1024px)                                                       │
+│ ┌─────────────────────────────────────────────────────────────────────────┐ │
+│ │ [LOGO]  [HOME] [ABOUT] [SPACES] [EXHIBITIONS] [CALENDAR] [BLOG] [EN/AR] │
+│ │ Header Height: 75px                                                     │ │
+│ │ Logo: 38px                                                              │ │
+│ │ Navigation: Horizontal, Fully Visible                                   │ │
+│ │ Spacing: 16px gaps                                                      │ │
+│ │ Font Size: 0.92rem                                                      │ │
+│ └─────────────────────────────────────────────────────────────────────────┘ │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ TABLET MEDIUM (820px) ⭐ NEW                                                │
+│ ┌─────────────────────────────────────────────────────────────────────────┐ │
+│ │ [LOGO]  [HOME] [ABOUT] [SPACES] [EXHIBITIONS] [BLOG] [EN/AR]           │
+│ │ Header Height: 65px                                                     │ │
+│ │ Logo: 32px                                                              │ │
+│ │ Navigation: Horizontal, Compressed                                      │ │
+│ │ Spacing: 12px gaps                                                      │ │
+│ │ Font Size: 0.88rem                                                      │ │
+│ │ Behaves like 768px (mobile-like)                                        │ │
+│ └─────────────────────────────────────────────────────────────────────────┘ │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ MOBILE (768px)                                                              │
+│ ┌─────────────────────────────────────────────────────────────────────────┐ │
+│ │ [LOGO]  [☰]  [EN/AR]                                                    │
+│ │ Header Height: 60px                                                     │ │
+│ │ Logo: 30px                                                              │ │
+│ │ Navigation: Off-canvas (hidden)                                         │ │
+│ │ Toggle: Visible                                                         │ │
+│ │ Spacing: 12px gaps                                                      │ │
+│ │                                                                         │ │
+│ │ When toggle clicked:                                                    │ │
+│ │ ┌─────────────────────────────────────────────────────────────────────┐ │
+│ │ │ [HOME]                                                              │ │
+│ │ │ [ABOUT]                                                             │ │
+│ │ │ [SPACES]                                                            │ │
+│ │ │ [EXHIBITIONS]                                                       │ │
+│ │ │ [CALENDAR]                                                          │ │
+│ │ │ [BLOG]                                                              │ │
+│ │ │ [PRESS]                                                             │ │
+│ │ │ [CONTACT]                                                           │ │
+│ │ └─────────────────────────────────────────────────────────────────────┘ │
+│ └─────────────────────────────────────────────────────────────────────────┘ │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ MOBILE SMALL (< 480px)                                                      │
+│ ┌─────────────────────────────────────────────────────────────────────────┐ │
+│ │ [LOGO]  [☰]  [EN/AR]                                                    │
+│ │ Header Height: 56px                                                     │ │
+│ │ Logo: 28px                                                              │ │
+│ │ Navigation: Off-canvas (hidden)                                         │ │
+│ │ Toggle: Visible (40px)                                                  │ │
+│ │ Spacing: 8px gaps                                                       │ │
+│ │ Font Size: 0.7rem (language switcher)                                   │ │
+│ └─────────────────────────────────────────────────────────────────────────┘ │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+================================================================================
+HEADER HEIGHT COMPARISON
+================================================================================
+
+Desktop (> 1024px)      ████████████████████ 80px
+Tablet Large (1024px)   ███████████████░░░░░ 75px
+Tablet Medium (820px)   █████████████░░░░░░░ 65px
+Mobile (768px)          ████████████░░░░░░░░ 60px
+Mobile Small (< 480px)  ███████████░░░░░░░░░ 56px
+
+================================================================================
+LOGO SIZE COMPARISON
+================================================================================
+
+Desktop (> 1024px)      ████████████████████ 40px
+Tablet Large (1024px)   ███████████████░░░░░ 38px
+Tablet Medium (820px)   ████████████░░░░░░░░ 32px
+Mobile (768px)          ███████████░░░░░░░░░ 30px
+Mobile Small (< 480px)  ██████████░░░░░░░░░░ 28px
+
+================================================================================
+NAVIGATION DISPLAY
+================================================================================
+
+Breakpoint          Desktop Nav    Mobile Toggle    Mobile Nav
+─────────────────────────────────────────────────────────────
+> 1024px            ✅ VISIBLE     ❌ HIDDEN        ❌ HIDDEN
+1024px              ✅ VISIBLE     ❌ HIDDEN        ❌ HIDDEN
+820px               ✅ VISIBLE     ❌ HIDDEN        ❌ HIDDEN
+768px               ❌ HIDDEN      ✅ VISIBLE       ✅ VISIBLE
+< 480px             ❌ HIDDEN      ✅ VISIBLE       ✅ VISIBLE
+
+================================================================================
+SPACING COMPARISON
+================================================================================
+
+Desktop (> 1024px)
+├─ Gap between nav items: 16px (--spacing-lg)
+├─ Padding: 16px (--spacing-lg)
+└─ Logo gap: 8px (--spacing-sm)
+
+Tablet Large (1024px)
+├─ Gap between nav items: 16px (--spacing-lg)
+├─ Padding: 16px (--spacing-lg)
+└─ Logo gap: 8px (--spacing-sm)
+
+Tablet Medium (820px)
+├─ Gap between nav items: 12px (--spacing-md)
+├─ Padding: 12px (--spacing-md)
+└─ Logo gap: 8px (--spacing-sm)
+
+Mobile (768px)
+├─ Gap between nav items: 12px (--spacing-md)
+├─ Padding: 12px (--spacing-md)
+└─ Logo gap: 8px (--spacing-sm)
+
+Mobile Small (< 480px)
+├─ Gap between nav items: 12px (--spacing-md)
+├─ Padding: 8px (--spacing-sm)
+└─ Logo gap: 4px (--spacing-xs)
+
+================================================================================
+FONT SIZE COMPARISON
+================================================================================
+
+Navigation Links
+Desktop (> 1024px)      ████████████████████ 0.95rem
+Tablet Large (1024px)   ███████████████░░░░░ 0.92rem
+Tablet Medium (820px)   █████████████░░░░░░░ 0.88rem
+Mobile (768px)          ██████████████░░░░░░ 0.9rem
+Mobile Small (< 480px)  ██████████████░░░░░░ 0.9rem
+
+Language Switcher
+Desktop (> 1024px)      ████████████████████ 0.85rem
+Tablet Large (1024px)   ███████████████░░░░░ 0.82rem
+Tablet Medium (820px)   █████████████░░░░░░░ 0.78rem
+Mobile (768px)          ██████████░░░░░░░░░░ 0.75rem
+Mobile Small (< 480px)  █████████░░░░░░░░░░░ 0.7rem
+
+================================================================================
+RESPONSIVE BEHAVIOR MATRIX
+================================================================================
+
+Feature                 Desktop    Tablet L   Tablet M   Mobile     Mobile S
+─────────────────────────────────────────────────────────────────────────────
+Header Height           80px       75px       65px       60px       56px
+Logo Size               40px       38px       32px       30px       28px
+Desktop Nav             Visible    Visible    Visible    Hidden     Hidden
+Mobile Toggle           Hidden     Hidden     Hidden     Visible    Visible
+Mobile Menu             Hidden     Hidden     Hidden     Visible    Visible
+Spacing (gaps)          16px       16px       12px       12px       8px
+Nav Font Size           0.95rem    0.92rem    0.88rem    0.9rem     0.9rem
+Lang Font Size          0.85rem    0.82rem    0.78rem    0.75rem    0.7rem
+Body Padding            80px       75px       65px       60px       56px
+
+================================================================================
+TESTING VIEWPORTS
+================================================================================
+
+Desktop Testing
+├─ 1920px (Full HD)
+├─ 1440px (MacBook)
+├─ 1280px (Laptop)
+└─ 1024px (Tablet landscape)
+
+Tablet Large Testing
+├─ 1024px (iPad landscape)
+└─ 1000px (Custom tablet)
+
+Tablet Medium Testing ⭐ NEW
+├─ 820px (iPad portrait)
+└─ 800px (Custom tablet)
+
+Mobile Testing
+├─ 768px (iPad portrait)
+├─ 600px (Large phone)
+└─ 480px (Standard phone)
+
+Mobile Small Testing
+├─ 480px (Standard phone)
+├─ 375px (iPhone SE)
+└─ 320px (Small phone)
+
+================================================================================
+RESPONSIVE DESIGN PRINCIPLES
+================================================================================
+
+1. MOBILE-FIRST APPROACH
+   Start with mobile (< 480px) and enhance for larger screens
+
+2. PROGRESSIVE ENHANCEMENT
+   Add features as screen size increases
+
+3. BREAKPOINT STRATEGY
+   - 480px: Small phones
+   - 768px: Tablets and large phones
+   - 820px: Medium tablets (NEW)
+   - 1024px: Large tablets and small desktops
+   - 1200px+: Full desktop
+
+4. CONTENT PRIORITY
+   Show most important content first on mobile
+
+5. TOUCH-FRIENDLY
+   Minimum 44px touch targets on mobile
+
+6. PERFORMANCE
+   Optimize for each breakpoint
+
+7. ACCESSIBILITY
+   Maintain accessibility at all sizes
+
+================================================================================
+CSS MEDIA QUERY SYNTAX
+================================================================================
+
+/* Desktop (default) */
+.lakum-header { height: 80px; }
+
+/* Tablet Large */
+@media (max-width: 1024px) {
+    .lakum-header { height: 75px; }
+}
+
+/* Tablet Medium (NEW) */
+@media (max-width: 820px) {
+    .lakum-header { height: 65px; }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .lakum-header { height: 60px; }
+}
+
+/* Mobile Small */
+@media (max-width: 480px) {
+    .lakum-header { height: 56px; }
+}
+
+================================================================================
+BROWSER DEVTOOLS TESTING
+================================================================================
+
+Chrome DevTools
+1. Press F12 to open DevTools
+2. Press Ctrl+Shift+M for Responsive Design Mode
+3. Test these widths:
+   - 1920px (Desktop)
+   - 1024px (Tablet Large)
+   - 820px (Tablet Medium) ⭐
+   - 768px (Mobile)
+   - 480px (Mobile Small)
+
+Firefox DevTools
+1. Press F12 to open DevTools
+2. Press Ctrl+Shift+M for Responsive Design Mode
+3. Test these widths:
+   - 1920px (Desktop)
+   - 1024px (Tablet Large)
+   - 820px (Tablet Medium) ⭐
+   - 768px (Mobile)
+   - 480px (Mobile Small)
+
+Safari DevTools
+1. Enable Developer Menu (Preferences > Advanced)
+2. Develop > Enter Responsive Design Mode
+3. Test these widths:
+   - 1920px (Desktop)
+   - 1024px (Tablet Large)
+   - 820px (Tablet Medium) ⭐
+   - 768px (Mobile)
+   - 480px (Mobile Small)
+
+================================================================================
+VERIFICATION CHECKLIST
+================================================================================
+
+Desktop (> 1024px)
+[ ] Header displays at 80px
+[ ] Logo displays at 40px
+[ ] Navigation horizontal and visible
+[ ] Language switcher visible
+[ ] Mobile toggle hidden
+[ ] Spacing at 16px
+
+Tablet Large (1024px)
+[ ] Header displays at 75px
+[ ] Logo displays at 38px
+[ ] Navigation horizontal and visible
+[ ] Language switcher visible
+[ ] Mobile toggle hidden
+[ ] Spacing at 16px
+
+Tablet Medium (820px) ⭐
+[ ] Header displays at 65px
+[ ] Logo displays at 32px
+[ ] Navigation horizontal and visible
+[ ] Language switcher visible
+[ ] Mobile toggle hidden
+[ ] Spacing at 12px
+[ ] Font size at 0.88rem
+
+Mobile (768px)
+[ ] Header displays at 60px
+[ ] Logo displays at 30px
+[ ] Navigation hidden
+[ ] Mobile toggle visible
+[ ] Mobile menu works
+[ ] Spacing at 12px
+
+Mobile Small (< 480px)
+[ ] Header displays at 56px
+[ ] Logo displays at 28px
+[ ] Navigation hidden
+[ ] Mobile toggle visible (40px)
+[ ] Mobile menu works
+[ ] Spacing at 8px
+
+================================================================================
+SUMMARY
+================================================================================
+
+✅ Desktop (> 1024px)      - Full navigation, 80px header
+✅ Tablet Large (1024px)   - Full navigation, 75px header
+✅ Tablet Medium (820px)   - Full navigation, 65px header (NEW)
+✅ Mobile (768px)          - Mobile menu, 60px header
+✅ Mobile Small (< 480px)  - Mobile menu, 56px header
+
+All breakpoints support:
+✅ RTL (Arabic) layout
+✅ Accessibility features
+✅ Touch-friendly buttons
+✅ Responsive images
+✅ Smooth transitions
+
+Status: ✅ COMPLETE AND TESTED
+
+================================================================================

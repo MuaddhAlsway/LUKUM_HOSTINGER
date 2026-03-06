@@ -165,8 +165,8 @@ require_once 'api/image-helper.php';
         </div>
     </div>
 
-    <!-- Global Header Navigation (Centralized) -->
-    <?php include('includes/header.php'); ?>
+    <!-- Global Header Navigation (Unified) -->
+    <?php include('lakum-header-unified.php'); ?>
 
     <!-- Hero Section -->
     <section class="lakum-hero" style="aspect-ratio: 16/9">
@@ -305,7 +305,10 @@ require_once 'api/image-helper.php';
 
         const getEventUrl = (event) => {
             const lang = window.LAKUM_LANG || localStorage.getItem('lakum_language') || 'en';
-            return `event.php?id=${event.id}&lang=${lang}`;
+            // Use slug-based URL instead of ID
+            // Slug is language-independent (always English)
+            const slug = event.slug || event.title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+            return `event.php?title=${slug}&lang=${lang}`;
         };
 
         function displayFeaturedEvent(event) {

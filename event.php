@@ -181,8 +181,8 @@ if (!$title) {
         </div>
     </div>
 
-    <!-- Global Header Navigation (Centralized) -->
-    <?php include('includes/header.php'); ?>
+    <!-- Global Header Navigation (Unified) -->
+    <?php include('lakum-header-unified.php'); ?>
 
     <!-- Hero Section -->
     <section class="lakum-hero">
