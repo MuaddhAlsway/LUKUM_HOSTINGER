@@ -518,7 +518,7 @@ require_once 'api/image-helper.php';
             // Use language from PHP (respects URL parameter ?lang=en or ?lang=ar)
             // Falls back to LanguageManager if window.LAKUM_LANG not set
             const lang = window.LAKUM_LANG || (typeof LanguageManager !== 'undefined' ? LanguageManager.getLanguage() : 'en') || 'en';
-            const apiUrl = `/api/get_blogs_working.php?lang=${lang}`;
+            const apiUrl = `/api/get_blogs.php?lang=${lang}`;
             console.log('Fetching blogs from:', apiUrl);
 
             fetch(apiUrl)

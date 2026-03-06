@@ -1,0 +1,222 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║                    MANUAL DEPLOYMENT GUIDE                                ║
+║                  Deploy Files to Hostinger Server                         ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+CURRENT ERRORS:
+❌ event.php → 404 Not Found (file not on server)
+❌ api/get_blogs_working.php → 500 Internal Server Error
+❌ blog.php → Shows error (API failing)
+
+SOLUTION: Upload files to Hostinger server
+
+════════════════════════════════════════════════════════════════════════════
+
+STEP 1: LOGIN TO HOSTINGER CONTROL PANEL
+────────────────────────────────────────────────────────────────────────────
+
+1. Go to: https://hpanel.hostinger.com
+2. Login with your email and password
+3. Select your domain: lakumartspace.com
+
+════════════════════════════════════════════════════════════════════════════
+
+STEP 2: OPEN FILE MANAGER
+────────────────────────────────────────────────────────────────────────────
+
+1. In Hostinger control panel, find: "File Manager"
+2. Click to open File Manager
+3. You should see: public_html folder
+4. Double-click: public_html to enter
+
+════════════════════════════════════════════════════════════════════════════
+
+STEP 3: UPLOAD ROOT FILES
+────────────────────────────────────────────────────────────────────────────
+
+Upload these 3 files to public_html:
+
+1. event.php
+   - From: C:\xampp\htdocs\LUKUM_HOSTINGER\event.php
+   - To: public_html/event.php
+   - Action: Right-click → Upload or drag-drop
+
+2. blog.php
+   - From: C:\xampp\htdocs\LUKUM_HOSTINGER\blog.php
+   - To: public_html/blog.php
+   - Action: Right-click → Upload or drag-drop
+
+3. press.php
+   - From: C:\xampp\htdocs\LUKUM_HOSTINGER\press.php
+   - To: public_html/press.php
+   - Action: Right-click → Upload or drag-drop
+
+════════════════════════════════════════════════════════════════════════════
+
+STEP 4: NAVIGATE TO API FOLDER
+────────────────────────────────────────────────────────────────────────────
+
+1. In File Manager, double-click: api folder
+2. You should now be in: public_html/api
+
+════════════════════════════════════════════════════════════════════════════
+
+STEP 5: UPLOAD API FILES
+────────────────────────────────────────────────────────────────────────────
+
+Upload these 4 files to public_html/api:
+
+1. get_blogs_working.php
+   - From: C:\xampp\htdocs\LUKUM_HOSTINGER\api\get_blogs_working.php
+   - To: public_html/api/get_blogs_working.php
+   - Action: Right-click → Upload or drag-drop
+
+2. get_press.php
+   - From: C:\xampp\htdocs\LUKUM_HOSTINGER\api\get_press.php
+   - To: public_html/api/get_press.php
+   - Action: Right-click → Upload or drag-drop
+
+3. check-database-now.php
+   - From: C:\xampp\htdocs\LUKUM_HOSTINGER\api\check-database-now.php
+   - To: public_html/api/check-database-now.php
+   - Action: Right-click → Upload or drag-drop
+
+4. test-apis-simple.php
+   - From: C:\xampp\htdocs\LUKUM_HOSTINGER\api\test-apis-simple.php
+   - To: public_html/api/test-apis-simple.php
+   - Action: Right-click → Upload or drag-drop
+
+════════════════════════════════════════════════════════════════════════════
+
+STEP 6: VERIFY UPLOAD
+────────────────────────────────────────────────────────────────────────────
+
+After uploading all files, verify they're on the server:
+
+1. Check event.php:
+   Visit: https://lakumartspace.com/event.php?id=1&lang=en
+   Expected: Should load (not 404)
+
+2. Check blog.php:
+   Visit: https://lakumartspace.com/blog.php?lang=en
+   Expected: Should load (not 404)
+
+3. Check press.php:
+   Visit: https://lakumartspace.com/press.php?lang=en
+   Expected: Should load (not 404)
+
+4. Check API:
+   Visit: https://lakumartspace.com/api/get_blogs_working.php?lang=en
+   Expected: Should return JSON (not 500)
+
+════════════════════════════════════════════════════════════════════════════
+
+STEP 7: IF API STILL RETURNS 500 ERROR
+────────────────────────────────────────────────────────────────────────────
+
+If api/get_blogs_working.php still returns 500:
+
+1. Check database connection:
+   Visit: https://lakumartspace.com/api/check-database-now.php
+   
+   If shows error:
+   - Database connection is broken
+   - Check api/config.php credentials
+   - Verify database is running
+
+2. Check server error logs:
+   - In Hostinger control panel
+   - Find: Error Logs or Logs
+   - Look for PHP errors
+   - Check what's causing the 500 error
+
+3. Check if database tables exist:
+   - In Hostinger control panel
+   - Find: MySQL Databases
+   - Open phpMyAdmin
+   - Check if tables exist: events, blogs, press
+
+════════════════════════════════════════════════════════════════════════════
+
+TROUBLESHOOTING
+────────────────────────────────────────────────────────────────────────────
+
+Problem: Still getting 404 for event.php
+Solution: 
+  1. Verify file was uploaded to public_html (not a subfolder)
+  2. Check file name is exactly: event.php (lowercase)
+  3. Try refreshing browser (Ctrl+F5)
+  4. Clear browser cache
+
+Problem: API returns 500 error
+Solution:
+  1. Check database connection in api/config.php
+  2. Verify database credentials are correct
+  3. Check if database tables exist
+  4. Check server error logs for PHP errors
+  5. Verify api/get_blogs_working.php was uploaded correctly
+
+Problem: Blog page shows "Check back soon for articles and stories"
+Solution:
+  1. This means API is failing (500 error)
+  2. Follow "API returns 500 error" solution above
+  3. Or database has no blogs - add blogs to database
+
+Problem: Font 404 error (greta-arabic.css)
+Solution:
+  1. This is not critical - just a missing font file
+  2. Upload missing fonts to: public_html/fonts/
+  3. Or ignore - site will still work without this font
+
+════════════════════════════════════════════════════════════════════════════
+
+FILES TO UPLOAD SUMMARY
+────────────────────────────────────────────────────────────────────────────
+
+Total: 7 files
+
+Root Directory (public_html/):
+  ✓ event.php
+  ✓ blog.php
+  ✓ press.php
+
+API Directory (public_html/api/):
+  ✓ get_blogs_working.php
+  ✓ get_press.php
+  ✓ check-database-now.php
+  ✓ test-apis-simple.php
+
+════════════════════════════════════════════════════════════════════════════
+
+AFTER DEPLOYMENT CHECKLIST
+────────────────────────────────────────────────────────────────────────────
+
+□ event.php uploaded to public_html
+□ blog.php uploaded to public_html
+□ press.php uploaded to public_html
+□ get_blogs_working.php uploaded to public_html/api
+□ get_press.php uploaded to public_html/api
+□ check-database-now.php uploaded to public_html/api
+□ test-apis-simple.php uploaded to public_html/api
+
+□ event.php loads without 404
+□ blog.php loads without 404
+□ press.php loads without 404
+
+□ API returns JSON (not 500)
+□ Blog page shows blog grid
+□ Press page shows press grid
+□ Event page shows event details
+
+════════════════════════════════════════════════════════════════════════════
+
+NEED HELP?
+────────────────────────────────────────────────────────────────────────────
+
+If you're stuck:
+1. Take a screenshot of the error
+2. Check browser console (F12)
+3. Visit: https://lakumartspace.com/api/check-database-now.php
+4. Share the error message and database check results
+
+╚════════════════════════════════════════════════════════════════════════════╝

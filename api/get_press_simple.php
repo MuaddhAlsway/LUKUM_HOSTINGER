@@ -1,6 +1,6 @@
 <?php
 /**
- * Simple Blogs API - Direct database query
+ * Simple Press API - Direct database query
  */
 
 header('Content-Type: application/json; charset=utf-8');
@@ -14,8 +14,8 @@ try {
     
     $lang = $_GET['lang'] ?? 'en';
     
-    // Simple query - get all blogs
-    $query = "SELECT id, title, excerpt, content, author, category, cover_image, created_at FROM blogs ORDER BY created_at DESC LIMIT 100";
+    // Simple query - get all press
+    $query = "SELECT id, title, excerpt, content, source, press_date, cover_image FROM press WHERE is_published = 1 ORDER BY press_date DESC LIMIT 100";
     
     $result = $conn->query($query);
     
@@ -23,15 +23,15 @@ try {
         throw new Exception('Query failed: ' . $conn->error);
     }
     
-    $blogs = [];
+    $press = [];
     while ($row = $result->fetch_assoc()) {
-        $blogs[] = $row;
+        $press[] = $row;
     }
     
     echo json_encode([
         'success' => true,
-        'data' => $blogs,
-        'count' => count($blogs)
+        'data' => $press,
+        'count' => count($press)
     ], JSON_UNESCAPED_UNICODE);
     
 } catch (Exception $e) {
