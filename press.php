@@ -495,7 +495,7 @@ require_once 'api/image-helper.php';
                 // Falls back to LanguageManager if window.LAKUM_LANG not set
                 const lang = window.LAKUM_LANG || LanguageManager.getLanguage() || 'en';
                 
-                const response = await fetch(`api/get_press.php?lang=${lang}`);
+                const response = await fetch(`/api/get_press.php?lang=${lang}`);
                 const data = await response.json();
                 
                 if (data.success && data.data && data.data.length > 0) {
@@ -854,7 +854,7 @@ require_once 'api/image-helper.php';
     document.addEventListener('lakum-language-changed', (e) => {
         const lang = e.detail?.lang || document.documentElement.lang;
         // Reload translations for the new language
-        fetch(`api/get-translations.php?lang=${lang}`)
+        fetch(`/api/get-translations.php?lang=${lang}`)
             .then(r => r.json())
             .then(data => {
                 if (data.success && data.translations) {

@@ -253,7 +253,7 @@ if ($slug === 'event') {
             async function updateBookingLink() {
                 try {
                     console.log('Fetching booking link from settings...');
-                    const response = await fetch('api/get_settings.php');
+                    const response = await fetch('/api/get_settings.php');
                     const data = await response.json();
                     
                     if (data.success && data.data && data.data.booking_link) {
@@ -416,7 +416,7 @@ if ($slug === 'event') {
 
             try {
                 // Try to fetch from API (supports both numeric ID and slug/title)
-                let response = await fetch(`api/get_event_details.php?id=${eventTitleParam}&lang=${lang}`);
+                let response = await fetch(`/api/get_event_details.php?id=${eventTitleParam}&lang=${lang}`);
                 
                 let data = await response.json();
                 console.log('API Response:', data);
@@ -425,13 +425,13 @@ if ($slug === 'event') {
                 if (!data.success && eventTitleParam === '1') {
                     console.log('Event not found, fetching first available event...');
                     const lang = LanguageManager.getLanguage();
-                    response = await fetch(`api/get_events.php?lang=${lang}`);
+                    response = await fetch(`/api/get_events.php?lang=${lang}`);
                     const eventsData = await response.json();
                     
                     if (eventsData.success && eventsData.data && eventsData.data.length > 0) {
                         const firstEventId = eventsData.data[0].id;
                         console.log('Found first event ID:', firstEventId);
-                        response = await fetch(`api/get_event_details.php?id=${firstEventId}&lang=${lang}`);
+                        response = await fetch(`/api/get_event_details.php?id=${firstEventId}&lang=${lang}`);
                         data = await response.json();
                     }
                 }
@@ -980,7 +980,7 @@ if ($slug === 'event') {
         document.addEventListener('lakum-language-changed', (e) => {
             const lang = e.detail?.lang || document.documentElement.lang;
             // Reload translations for the new language
-            fetch(`api/get-translations.php?lang=${lang}`)
+            fetch(`/api/get-translations.php?lang=${lang}`)
                 .then(r => r.json())
                 .then(data => {
                     if (data.success && data.translations) {
@@ -997,7 +997,7 @@ if ($slug === 'event') {
         window.addEventListener('storage', (e) => {
             if (e.key === 'lakum_language' && e.newValue) {
                 const lang = e.newValue;
-                fetch(`api/get-translations.php?lang=${lang}`)
+                fetch(`/api/get-translations.php?lang=${lang}`)
                     .then(r => r.json())
                     .then(data => {
                         if (data.success && data.translations) {

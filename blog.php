@@ -518,7 +518,7 @@ require_once 'api/image-helper.php';
             // Use language from PHP (respects URL parameter ?lang=en or ?lang=ar)
             // Falls back to LanguageManager if window.LAKUM_LANG not set
             const lang = window.LAKUM_LANG || LanguageManager.getLanguage() || 'en';
-            const apiUrl = `api/get_blogs_working.php?type=all&lang=${lang}`;
+            const apiUrl = `/api/get_blogs_working.php?type=all&lang=${lang}`;
             console.log('Fetching blogs from:', apiUrl);
 
             fetch(apiUrl)
@@ -779,7 +779,7 @@ require_once 'api/image-helper.php';
         document.addEventListener('lakum-language-changed', (e) => {
             const lang = e.detail?.lang || document.documentElement.lang;
             // Reload translations for the new language
-            fetch(`api/get-translations.php?lang=${lang}`)
+            fetch(`/api/get-translations.php?lang=${lang}`)
                 .then(r => r.json())
                 .then(data => {
                     if (data.success && data.translations) {
@@ -798,7 +798,7 @@ require_once 'api/image-helper.php';
         window.addEventListener('storage', (e) => {
             if (e.key === 'lakum_language' && e.newValue) {
                 const lang = e.newValue;
-                fetch(`api/get-translations.php?lang=${lang}`)
+                fetch(`/api/get-translations.php?lang=${lang}`)
                     .then(r => r.json())
                     .then(data => {
                         if (data.success && data.translations) {

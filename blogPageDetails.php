@@ -292,7 +292,7 @@ if ($slug === 'blogPageDetails') {
             const blogId = new URLSearchParams(window.location.search).get('id');
             const lang = urlLang || window.LAKUM_LANG || localStorage.getItem('lakum_language') || 'en';
             
-            fetch(`api/get_blogs_working.php?lang=${lang}&id=${blogId}`)
+            fetch(`/api/get_blogs_working.php?lang=${lang}&id=${blogId}`)
                 .then(r => r.json())
                 .then(data => {
                     if (data.success && data.data) {
@@ -341,14 +341,14 @@ if ($slug === 'blogPageDetails') {
                 const lang = urlLang || window.LAKUM_LANG || localStorage.getItem('lakum_language') || 'en';
                 
                 // Build API URL - if blogIdentifier is numeric, use as ID, otherwise search by title
-                let apiUrl = `api/get_blogs_working.php?lang=${lang}`;
+                let apiUrl = `/api/get_blogs_working.php?lang=${lang}`;
                 let isNumericId = !isNaN(blogIdentifier) && blogIdentifier.trim() !== '';
                 
                 if (isNumericId) {
                     apiUrl += `&id=${blogIdentifier}`;
                 } else {
                     // For title-based search, we need to fetch all blogs and filter
-                    apiUrl = `api/get_blogs_working.php?lang=${lang}&limit=1000`;
+                    apiUrl = `/api/get_blogs_working.php?lang=${lang}&limit=1000`;
                 }
                 
                 const response = await fetch(apiUrl);
@@ -450,7 +450,7 @@ if ($slug === 'blogPageDetails') {
         async function loadRelatedBlogs(currentBlogId) {
             try {
                 const lang = urlLang || window.LAKUM_LANG || localStorage.getItem('lakum_language') || 'en';
-                const response = await fetch(`api/get_blogs_working.php?limit=3&lang=${lang}`);
+                const response = await fetch(`/api/get_blogs_working.php?limit=3&lang=${lang}`);
                 const result = await response.json();
 
                 if (result.success && result.data) {
@@ -680,7 +680,7 @@ if ($slug === 'blogPageDetails') {
         document.addEventListener('lakum-language-changed', (e) => {
             const lang = e.detail?.lang || document.documentElement.lang;
             // Reload translations for the new language
-            fetch(`api/get-translations.php?lang=${lang}`)
+            fetch(`/api/get-translations.php?lang=${lang}`)
                 .then(r => r.json())
                 .then(data => {
                     if (data.success && data.translations) {
@@ -697,7 +697,7 @@ if ($slug === 'blogPageDetails') {
         window.addEventListener('storage', (e) => {
             if (e.key === 'lakum_language' && e.newValue) {
                 const lang = e.newValue;
-                fetch(`api/get-translations.php?lang=${lang}`)
+                fetch(`/api/get-translations.php?lang=${lang}`)
                     .then(r => r.json())
                     .then(data => {
                         if (data.success && data.translations) {

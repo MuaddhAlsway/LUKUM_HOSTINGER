@@ -113,7 +113,7 @@ if ($slug === 'pressPageDetails') {
             }
             
             try {
-                const response = await fetch(`api/get_press.php?slug=${slug}&lang=${lang}`);
+                const response = await fetch(`/api/get_press.php?slug=${slug}&lang=${lang}`);
                 const data = await response.json();
                 
                 if (data.success && data.data) {
