@@ -269,29 +269,7 @@ body {
     width: 24px !important;
     height: 20px !important;
     position: relative !important;
-}
-
-.lakum-header__mobile-icon::before,
-.lakum-header__mobile-icon::after {
-    content: '' !important;
-    position: absolute !important;
-    width: 100% !important;
-    height: 2px !important;
-    background: var(--header-text) !important;
-    left: 0 !important;
-    transition: all var(--transition-normal) !important;
-}
-
-.lakum-header__mobile-icon::before {
-    top: 0 !important;
-}
-
-.lakum-header__mobile-icon::after {
-    bottom: 0 !important;
-}
-
-.lakum-header__mobile-icon {
-    background: linear-gradient(to bottom, var(--header-text) 0%, var(--header-text) 2px, transparent 2px, transparent 9px, var(--header-text) 9px, var(--header-text) 11px, transparent 11px, transparent 18px, var(--header-text) 18px, var(--header-text) 20px) !important;
+    background: linear-gradient(to bottom, #000000 0%, #000000 2px, transparent 2px, transparent 9px, #000000 9px, #000000 11px, transparent 11px, transparent 18px, #000000 18px, #000000 20px) !important;
     background-size: 100% 100% !important;
     background-repeat: no-repeat !important;
 }
@@ -399,21 +377,8 @@ html[dir="rtl"] .lakum-nav--mobile .lakum-nav__link--active {
     padding-right: calc(var(--spacing-xl) - 3px) !important;
 }
 
-/* ===== SKIP TO MAIN CONTENT (Accessibility) ===== */
-.lakum-skip-link {
-    position: absolute !important;
-    top: -40px !important;
-    left: 0 !important;
-    background: var(--header-hover) !important;
-    color: white !important;
-    padding: var(--spacing-md) var(--spacing-lg) !important;
-    text-decoration: none !important;
-    z-index: 99999 !important;
-}
-
-.lakum-skip-link:focus {
-    top: 0 !important;
-}
+/* ===== SKIP TO MAIN CONTENT (Accessibility - Disabled) ===== */
+/* Removed per user request */
 
 /* ===== CRITICAL: ENSURE NAV SHOWS ON DESKTOP ===== */
 @media (min-width: 769px) {

@@ -15,8 +15,8 @@ $htmlDir = $isArabic ? 'rtl' : 'ltr';
      Complete PHP template for all pages
      ======================================== -->
 
-<!-- ===== SKIP TO MAIN CONTENT (Accessibility) ===== -->
-<a href="#main-content" class="lakum-skip-link">Skip to main content</a>
+<!-- ===== SKIP TO MAIN CONTENT (Accessibility - Disabled) ===== -->
+<!-- Removed per user request -->
 
 <!-- ===== HEADER ===== -->
 <header class="lakum-header" role="banner">
