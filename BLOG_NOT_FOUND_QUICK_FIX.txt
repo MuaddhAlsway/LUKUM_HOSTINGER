@@ -1,0 +1,151 @@
+═══════════════════════════════════════════════════════════════════════════════
+  BLOG NOT FOUND - QUICK FIX GUIDE
+═══════════════════════════════════════════════════════════════════════════════
+
+ISSUE: {success: false, error: "Blog not found"}
+
+CAUSE: The blog slug "behind-the-scenes-curation" doesn't exist in the database
+
+═══════════════════════════════════════════════════════════════════════════════
+  STEP 1: CHECK WHAT BLOGS EXIST
+═══════════════════════════════════════════════════════════════════════════════
+
+Visit this URL in your browser:
+https://lakumartspace.com/api/debug-blogs-slugs.php
+
+This will show:
+✓ All blogs in the database
+✓ Their IDs
+✓ Their slugs
+✓ Their titles
+
+Look for a blog with title "Behind the Scenes Curation" or similar.
+
+═══════════════════════════════════════════════════════════════════════════════
+  STEP 2: TEST SLUG LOOKUP
+═══════════════════════════════════════════════════════════════════════════════
+
+If you found the blog, note its slug and test it:
+https://lakumartspace.com/api/test-blog-slug-lookup.php?slug=YOUR-SLUG&lang=en
+
+Replace YOUR-SLUG with the actual slug from Step 1.
+
+This will show:
+✓ If the slug works
+✓ The blog data
+✓ Any errors
+
+═══════════════════════════════════════════════════════════════════════════════
+  STEP 3: POSSIBLE SOLUTIONS
+═══════════════════════════════════════════════════════════════════════════════
+
+SOLUTION A: Blog doesn't exist
+→ Create the blog in admin panel
+→ Title: "Behind the Scenes Curation"
+→ Slug will be auto-generated
+
+SOLUTION B: Slug is different
+→ Use the correct slug from Step 1
+→ Update the blog page URL with correct slug
+
+SOLUTION C: Slug column is empty
+→ Run SQL to populate slugs:
+   UPDATE blogs 
+   SET slug = LOWER(REPLACE(title_en, ' ', '-'))
+   WHERE slug IS NULL OR slug = '';
+
+═══════════════════════════════════════════════════════════════════════════════
+  STEP 4: UPDATE BLOG PAGE URL
+═══════════════════════════════════════════════════════════════════════════════
+
+Once you know the correct slug, update the URL:
+
+CURRENT (WRONG):
+https://lakumartspace.com/blogPageDetails.php?title=behind-the-scenes-curation&lang=en
+
+CORRECT (with actual slug):
+https://lakumartspace.com/blogPageDetails.php?title=ACTUAL-SLUG&lang=en
+
+═══════════════════════════════════════════════════════════════════════════════
+  DEBUGGING APIS (NEW)
+═══════════════════════════════════════════════════════════════════════════════
+
+1. Debug Blogs & Slugs:
+   https://lakumartspace.com/api/debug-blogs-slugs.php
+   
+   Shows: All blogs with their slugs
+
+2. Test Slug Lookup:
+   https://lakumartspace.com/api/test-blog-slug-lookup.php?slug=YOUR-SLUG&lang=en
+   
+   Shows: If slug exists and blog data
+
+3. Get All Blogs:
+   https://lakumartspace.com/api/get_blogs_working.php?lang=en
+   
+   Shows: All blogs in JSON format
+
+═══════════════════════════════════════════════════════════════════════════════
+  COMMON ISSUES
+═══════════════════════════════════════════════════════════════════════════════
+
+ISSUE 1: Slug has spaces
+  WRONG: "behind the scenes curation"
+  RIGHT: "behind-the-scenes-curation"
+
+ISSUE 2: Slug has uppercase
+  WRONG: "Behind-The-Scenes-Curation"
+  RIGHT: "behind-the-scenes-curation"
+
+ISSUE 3: Slug has underscores
+  WRONG: "behind_the_scenes_curation"
+  RIGHT: "behind-the-scenes-curation"
+
+ISSUE 4: Blog doesn't exist
+  SOLUTION: Create blog in admin panel
+
+═══════════════════════════════════════════════════════════════════════════════
+  WHAT WAS FIXED IN THE API
+═══════════════════════════════════════════════════════════════════════════════
+
+✓ Removed duplicate query preparation
+✓ Fixed bind_param conflicts
+✓ Fixed gallery ID reference
+✓ Added proper error handling
+
+═══════════════════════════════════════════════════════════════════════════════
+  FILES CREATED FOR DEBUGGING
+═══════════════════════════════════════════════════════════════════════════════
+
+1. api/debug-blogs-slugs.php
+   → Shows all blogs and their slugs
+
+2. api/test-blog-slug-lookup.php
+   → Tests if a specific slug exists
+
+3. BLOG_NOT_FOUND_DIAGNOSTIC.md
+   → Detailed diagnostic guide
+
+═══════════════════════════════════════════════════════════════════════════════
+  QUICK CHECKLIST
+═══════════════════════════════════════════════════════════════════════════════
+
+☐ Visit debug-blogs-slugs.php
+☐ Find the blog you want
+☐ Note its slug
+☐ Test with test-blog-slug-lookup.php
+☐ Update blog page URL with correct slug
+☐ Test blog page loads
+☐ Verify no console errors
+
+═══════════════════════════════════════════════════════════════════════════════
+  NEXT STEPS
+═══════════════════════════════════════════════════════════════════════════════
+
+1. Run debug-blogs-slugs.php to see what blogs exist
+2. Find the correct slug for your blog
+3. Update the blog page URL with the correct slug
+4. Test the blog page loads
+5. If still not working, check database directly
+
+═══════════════════════════════════════════════════════════════════════════════

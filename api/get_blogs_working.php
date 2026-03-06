@@ -72,11 +72,6 @@ try {
         
         if ($blog_slug !== null) {
             $query .= "b.slug = ?";
-            $stmt = $conn->prepare($query);
-            if (!$stmt) {
-                throw new Exception('Query preparation failed: ' . $conn->error);
-            }
-            $stmt->bind_param('ssss', $lang, $lang, $lang, $blog_slug);
         } elseif ($blog_id !== null) {
             $query .= "b.id = ?";
         } else {
@@ -115,7 +110,8 @@ try {
         $galleryQuery = "SELECT * FROM blog_gallery WHERE blog_id = ? ORDER BY display_order";
         $galleryStmt = $conn->prepare($galleryQuery);
         if ($galleryStmt) {
-            $galleryStmt->bind_param('i', $blog_id);
+            $blog_id_for_gallery = $blog['id'];
+            $galleryStmt->bind_param('i', $blog_id_for_gallery);
             $galleryStmt->execute();
             $galleryResult = $galleryStmt->get_result();
             
