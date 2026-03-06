@@ -369,7 +369,7 @@ require_once 'api/image-helper.php';
     </script>
 
     <!-- Hero Section -->
-    <section class="lakum-hero" style="aspect-ratio: 16/9">
+    <section class="lakum-press-hero" style="padding: clamp(60px, 8vw, 90px) 0 clamp(60px, 8vw, 100px) 0; background: #f6f6eb; text-align: center;">
         <div class="lakum-hero__image-wrapper">
             <img src="heroImage/img-4.webp"
                  alt="Press"

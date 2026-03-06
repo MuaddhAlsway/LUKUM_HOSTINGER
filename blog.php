@@ -333,7 +333,7 @@ require_once 'api/image-helper.php';
     </script>
 
     <!-- Hero Section -->
-    <section class="lakum-hero" style="aspect-ratio: 16/9">
+    <section class="lakum-hero lakum-blog-hero" style="aspect-ratio: 16/9">
         <div class="lakum-hero__image-wrapper">
             <img src="heroImage/img-4.webp"
                  alt="Blog"

@@ -364,7 +364,7 @@ require_once 'lang/loader.php';
     </script>
 
     <!-- Hero Section -->
-    <section class="lakum-hero" style="aspect-ratio: 16/9">
+    <section class="lakum-calendar-hero" style="padding: clamp(40px, 5vw, 64px) 0 clamp(60px, 8vw, 96px) 0; background: #f6f6eb; text-align: center;">
         <div class="lakum-hero__image-wrapper">
             <img src="heroImage/img-4.webp"
                  alt="Calendar"

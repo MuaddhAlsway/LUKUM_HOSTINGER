@@ -472,33 +472,41 @@ require_once 'api/image-helper.php';
     <script>
         // Fetch and render pricing based on current language
         (function() {
-            const currentLang = document.documentElement.lang || 'en';
             const pricingGrid = document.getElementById('pricingGrid');
             
             if (!pricingGrid) return;
 
-            // Fetch pricing data from API
-            fetch('api/get_pricing.php')
-                .then(response => response.json())
-                .then(data => {
-                    if (!data.success || !data.data || data.data.length === 0) {
-                        console.warn('No pricing data available');
-                        return;
-                    }
+            // Get current language - use window.LAKUM_LANG set by PHP
+            function getCurrentLang() {
+                return window.LAKUM_LANG || localStorage.getItem('lakum_language') || 'en';
+            }
 
-                    // Clear existing content
-                    pricingGrid.innerHTML = '';
+            // Load and render pricing
+            function loadPricing() {
+                const currentLang = getCurrentLang();
+                
+                fetch('api/get_pricing.php')
+                    .then(response => response.json())
+                    .then(data => {
+                        if (!data.success || !data.data || data.data.length === 0) {
+                            console.warn('No pricing data available');
+                            return;
+                        }
 
-                    // Render each pricing item
-                    data.data.forEach((item, index) => {
-                        const pricingCard = createPricingCard(item, currentLang, index + 1);
-                        pricingGrid.appendChild(pricingCard);
+                        // Clear existing content
+                        pricingGrid.innerHTML = '';
+
+                        // Render each pricing item
+                        data.data.forEach((item, index) => {
+                            const pricingCard = createPricingCard(item, currentLang, index + 1);
+                            pricingGrid.appendChild(pricingCard);
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error fetching pricing:', error);
+                        pricingGrid.innerHTML = '<p>Unable to load pricing information. Please try again later.</p>';
                     });
-                })
-                .catch(error => {
-                    console.error('Error fetching pricing:', error);
-                    pricingGrid.innerHTML = '<p>Unable to load pricing information. Please try again later.</p>';
-                });
+            }
 
             // Create pricing card element
             function createPricingCard(item, lang, index) {
@@ -511,6 +519,7 @@ require_once 'api/image-helper.php';
                 const description = lang === 'ar' ? (item.description_ar || item.description_en) : (item.description_en || item.description_ar);
                 const priceUnit = lang === 'ar' ? (item.price_unit_ar || item.price_unit) : (item.price_unit || 'SAR');
                 const vatNote = lang === 'ar' ? (item.vat_note_ar || item.vat_note) : (item.vat_note || '*(excluding VAT)');
+                const currencyImage = item.currency_image || null;
 
                 // Parse price_sec for secondary pricing (e.g., "Hall 1: 1,000 SAR/hour")
                 const hasSecondaryPrice = item.price_sec && item.price_sec.trim() !== '';
@@ -525,7 +534,10 @@ require_once 'api/image-helper.php';
                                     ${hasSecondaryPrice ? 
                                         `<div>${escapeHtml(item.price_sec)}</div>` :
                                         `<span class="pricing-accordion__amount">${formatPrice(item.price)}</span>
-                                         <span class="pricing-accordion__currency">${escapeHtml(priceUnit)}</span>`
+                                         <div class="pricing-accordion__currency-wrapper">
+                                             ${currencyImage ? `<img src="${currencyImage}" alt="Currency" class="pricing-accordion__currency-image" loading="lazy">` : ''}
+                                             <span class="pricing-accordion__currency">${escapeHtml(priceUnit)}</span>
+                                         </div>`
                                     }
                                 </div>
                                 <span class="pricing-accordion__vat">${escapeHtml(vatNote)}</span>
@@ -563,6 +575,16 @@ require_once 'api/image-helper.php';
                 if (!price) return '0';
                 return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
             }
+
+            // Initial load
+            loadPricing();
+
+            // Listen for language changes
+            window.addEventListener('storage', (e) => {
+                if (e.key === 'lakum_language' && e.newValue) {
+                    loadPricing();
+                }
+            });
         })();
     </script>
 

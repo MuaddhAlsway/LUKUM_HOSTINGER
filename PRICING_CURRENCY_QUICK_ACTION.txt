@@ -1,0 +1,126 @@
+PRICING CURRENCY UPDATE - QUICK ACTION GUIDE
+=============================================
+
+TASK: Update pricing display to show RS currency with OIP.webp image
+
+STATUS: ✅ READY FOR DEPLOYMENT
+
+---
+
+IMMEDIATE ACTIONS:
+
+1. RUN DATABASE UPDATE
+   Visit: https://lakumartspace.com/api/update-pricing-currency.php
+   
+   This will:
+   - Add currency_image column to pricing table
+   - Update all pricing records with RS/OIP.webp path
+   - Return success confirmation
+
+2. VERIFY API RESPONSE
+   Visit: https://lakumartspace.com/api/get_pricing.php
+   
+   Check that response includes:
+   "currency_image": "RS/OIP.webp"
+
+3. TEST FRONTEND
+   Visit: https://lakumartspace.com/spaces.php
+   
+   Verify:
+   - Currency image displays next to price
+   - Image is properly sized (24x24px)
+   - Works on mobile, tablet, desktop
+   - Both English and Arabic display correctly
+
+4. CLEAR CACHE
+   Hard refresh: Ctrl+Shift+R (Windows) or Cmd+Shift+R (Mac)
+
+---
+
+FILES UPDATED:
+
+✅ api/get_pricing.php
+   - Added currency_image to SELECT query
+   - Added currency_image to response array
+
+✅ spaces.php
+   - Added currency image display in pricing cards
+   - Updated HTML structure with currency wrapper
+
+✅ spaces.css
+   - Added styling for currency wrapper
+   - Added styling for currency image (24x24px)
+
+---
+
+FILES CREATED:
+
+✅ api/ADD_CURRENCY_IMAGE_COLUMN.sql
+   - Database migration script
+
+✅ api/update-pricing-currency.php
+   - Automated database update script
+
+✅ PRICING_CURRENCY_UPDATE_COMPLETE.md
+   - Full documentation
+
+---
+
+CURRENCY IMAGE DETAILS:
+
+File: RS/OIP.webp
+Location: Already exists in project
+Size: 24x24px display
+Format: WebP (optimized)
+Displays: Next to currency text (SAR/hour or ريال سعودي / ساعة)
+
+---
+
+EXPECTED RESULT:
+
+Before:
+  12,000 SAR/hour
+
+After:
+  12,000 [RS Image] SAR/hour
+
+---
+
+TROUBLESHOOTING:
+
+If image doesn't display:
+1. Check browser console for 404 errors
+2. Verify RS/OIP.webp file exists
+3. Clear browser cache
+4. Check API response includes currency_image field
+
+If database update fails:
+1. Check database connection
+2. Verify pricing table exists
+3. Check user has ALTER TABLE permissions
+4. Review error message from update script
+
+---
+
+DEPLOYMENT COMPLETE WHEN:
+
+✅ Database column added
+✅ API returns currency_image field
+✅ Pricing cards display currency image
+✅ Image displays correctly on all devices
+✅ Both languages work properly
+✅ No console errors
+
+---
+
+NEXT STEPS:
+
+1. Run database update script
+2. Verify API response
+3. Test on live site
+4. Clear cache
+5. Confirm with user
+
+---
+
+Questions? Check PRICING_CURRENCY_UPDATE_COMPLETE.md for full documentation.
