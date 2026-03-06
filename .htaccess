@@ -123,18 +123,18 @@
     # CLEAN URLS - Database-driven titles (NO HARDCODING)
     # ========================================================================
     
+    # Clean URL for blog detail pages (MUST come before generic event rule)
+    # /blog/my-blog-post?lang=en → blogPageDetails.php?title=my-blog-post&lang=en
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^blog/([a-z0-9-]+)/?$ blogPageDetails.php?title=$1 [QSA,L]
+    
     # Clean URL for event detail pages
     # /dior-exhibition?lang=en → event.php?title=dior-exhibition&lang=en
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_URI} !^/(event|blog|press|api|assest|fonts|uploads|heroImage|gallery|scripts|includes|lang|translations|data|logs|admin|about)/ [NC]
     RewriteRule ^([a-z0-9-]+)/?$ event.php?title=$1 [QSA,L]
-    
-    # Clean URL for blog detail pages
-    # /my-blog-post?lang=en → blogPageDetails.php?title=my-blog-post&lang=en
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule ^blog/([a-z0-9-]+)/?$ blogPageDetails.php?title=$1 [QSA,L]
     
     # Clean URL for press detail pages
     # /press-release-1?lang=en → pressPageDetails.php?title=press-release-1&lang=en

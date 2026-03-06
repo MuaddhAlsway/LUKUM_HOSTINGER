@@ -337,38 +337,25 @@ if (!$title) {
                 // Priority: URL parameter > window.LAKUM_LANG > localStorage > 'en'
                 const lang = urlLang || window.LAKUM_LANG || localStorage.getItem('lakum_language') || 'en';
                 
-                // Build API URL - if blogIdentifier is numeric, use as ID, otherwise search by title
+                // Build API URL - if blogIdentifier is numeric, use as ID, otherwise use as slug
                 let apiUrl = `/api/get_blogs_working.php?lang=${lang}`;
                 let isNumericId = !isNaN(blogIdentifier) && blogIdentifier.trim() !== '';
                 
                 if (isNumericId) {
                     apiUrl += `&id=${blogIdentifier}`;
                 } else {
-                    // For title-based search, we need to fetch all blogs and filter
-                    apiUrl = `/api/get_blogs_working.php?lang=${lang}&limit=1000`;
+                    // Use slug parameter for slug-based lookup (more efficient)
+                    apiUrl += `&slug=${encodeURIComponent(blogIdentifier)}`;
                 }
                 
                 const response = await fetch(apiUrl);
                 const result = await response.json();
 
                 if (result.success && result.data) {
-                    let blog = null;
+                    // API returns single blog object when using slug or ID
+                    const blog = result.data;
                     
-                    // If we got a single blog (ID-based search)
-                    if (result.data.id) {
-                        blog = result.data;
-                    } else if (Array.isArray(result.data)) {
-                        // If we got an array (title-based search), find matching blog
-                        // Always match against English title for user-friendly URLs
-                        const titleSlug = blogIdentifier.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
-                        blog = result.data.find(b => {
-                            // Always use title_en for slug matching (user-friendly URLs)
-                            const blogSlug = (b.title_en || '').toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
-                            return blogSlug === titleSlug;
-                        });
-                    }
-                    
-                    if (!blog) {
+                    if (!blog || !blog.id) {
                         document.getElementById('blog-title').textContent = 'Blog not found';
                         return;
                     }
