@@ -277,8 +277,12 @@ if ($slug === 'blogPageDetails') {
 
     <script>
         // Blog Details Page Script
-        let blogIdentifier = new URLSearchParams(window.location.search).get('title') || new URLSearchParams(window.location.search).get('id');
-        let urlLang = new URLSearchParams(window.location.search).get('lang');
+        // Pass slug from PHP to JavaScript (for clean URLs)
+        window.LAKUM_BLOG_SLUG = '<?php echo htmlspecialchars($slug, ENT_QUOTES, 'UTF-8'); ?>';
+        window.LAKUM_LANG = '<?php echo htmlspecialchars($lang, ENT_QUOTES, 'UTF-8'); ?>';
+        
+        let blogIdentifier = window.LAKUM_BLOG_SLUG || new URLSearchParams(window.location.search).get('title') || new URLSearchParams(window.location.search).get('id');
+        let urlLang = window.LAKUM_LANG || new URLSearchParams(window.location.search).get('lang');
         let shouldRedirect = false;
 
         // IMMEDIATE REDIRECT: If ID parameter exists, redirect to title slug

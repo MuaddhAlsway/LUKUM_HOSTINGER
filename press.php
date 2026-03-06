@@ -557,11 +557,6 @@ require_once 'api/image-helper.php';
             pressGrid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #999;">No press releases available</div>';
         }
 
-        function displayNoPressMessage() {
-            const pressGrid = document.getElementById('pressGrid');
-            pressGrid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #999;">No press releases available</div>';
-        }
-
         // Load press releases when page loads
         function initPressPage() {
             // LanguageManager is guaranteed to be ready by now
@@ -579,7 +574,6 @@ require_once 'api/image-helper.php';
         } else {
             // DOM already loaded, run immediately
             initPressPage();
-        }
         }
     </script>
 

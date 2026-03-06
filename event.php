@@ -382,6 +382,10 @@ if ($slug === 'event') {
             document.getElementById('lightboxCounter').textContent = `${currentImageIndex + 1} / ${galleryImages.length}`;
         }
 
+        // Pass slug from PHP to JavaScript (for clean URLs)
+        window.LAKUM_EVENT_SLUG = '<?php echo htmlspecialchars($slug, ENT_QUOTES, 'UTF-8'); ?>';
+        window.LAKUM_LANG = '<?php echo htmlspecialchars($lang, ENT_QUOTES, 'UTF-8'); ?>';
+
         // Mock data - REMOVED - Now using only real database data
         const mockEvents = {};
         let currentLanguage = 'en'; // Track current language
@@ -393,8 +397,9 @@ if ($slug === 'event') {
             // 1. /event/dior (rewritten to /event.php?title=dior)
             // 2. /event.php?title=dior
             // 3. /event.php?id=18 (backward compatibility)
-            let eventTitleParam = params.get('title') || params.get('id') || '1';
-            let lang = params.get('lang');
+            // 4. /event/slug.php (clean URL - slug from filename)
+            let eventTitleParam = window.LAKUM_EVENT_SLUG || params.get('title') || params.get('id') || '1';
+            let lang = window.LAKUM_LANG || params.get('lang');
             
             // If no lang in URL, get from localStorage or default to 'en'
             if (!lang) {
