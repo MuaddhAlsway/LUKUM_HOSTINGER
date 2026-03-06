@@ -2,17 +2,14 @@
 require_once 'lang/loader.php';
 require_once 'api/image-helper.php';
 
-// Get slug from filename (Hostinger file-based clean URLs)
-$slug = basename(__FILE__, '.php');
+// Get title from query parameter (rewritten by .htaccess)
+$title = $_GET['title'] ?? null;
 $lang = $_GET['lang'] ?? 'en';
 
-// If accessed as main event.php (not from clean URL), redirect or show error
-if ($slug === 'event') {
-    $slug = $_GET['slug'] ?? null;
-    if (!$slug) {
-        header('HTTP/1.0 404 Not Found');
-        exit('Event not found');
-    }
+// If no title, show error
+if (!$title) {
+    header('HTTP/1.0 404 Not Found');
+    exit('Event not found');
 }
 ?><!DOCTYPE html>
 <html <?php echo getLanguageAttributes(); ?>>
@@ -382,8 +379,8 @@ if ($slug === 'event') {
             document.getElementById('lightboxCounter').textContent = `${currentImageIndex + 1} / ${galleryImages.length}`;
         }
 
-        // Pass slug from PHP to JavaScript (for clean URLs)
-        window.LAKUM_EVENT_SLUG = '<?php echo htmlspecialchars($slug, ENT_QUOTES, 'UTF-8'); ?>';
+        // Pass title from PHP to JavaScript (for clean URLs)
+        window.LAKUM_EVENT_TITLE = '<?php echo htmlspecialchars($title, ENT_QUOTES, 'UTF-8'); ?>';
         window.LAKUM_LANG = '<?php echo htmlspecialchars($lang, ENT_QUOTES, 'UTF-8'); ?>';
 
         // Mock data - REMOVED - Now using only real database data
@@ -394,11 +391,11 @@ if ($slug === 'event') {
             const params = new URLSearchParams(window.location.search);
             
             // Support multiple URL formats:
-            // 1. /event/dior (rewritten to /event.php?title=dior)
-            // 2. /event.php?title=dior
+            // 1. /dior-exhibition (rewritten to /event.php?title=dior-exhibition)
+            // 2. /event.php?title=dior-exhibition
             // 3. /event.php?id=18 (backward compatibility)
-            // 4. /event/slug.php (clean URL - slug from filename)
-            let eventTitleParam = window.LAKUM_EVENT_SLUG || params.get('title') || params.get('id') || '1';
+            // 4. /dior-exhibition?lang=en (clean URL - title from .htaccess rewrite)
+            let eventTitleParam = window.LAKUM_EVENT_TITLE || params.get('title') || params.get('id') || '1';
             let lang = window.LAKUM_LANG || params.get('lang');
             
             // If no lang in URL, get from localStorage or default to 'en'

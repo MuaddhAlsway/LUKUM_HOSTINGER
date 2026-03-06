@@ -1,0 +1,180 @@
+================================================================================
+CLEAN URL SYSTEM - TITLE PARAMETER READY ✅
+================================================================================
+
+STATUS: ALL FILES UPDATED - READY FOR TESTING
+
+================================================================================
+WHAT WAS CHANGED
+================================================================================
+
+✅ Changed from slug= to title= parameter
+   - event.php?slug=dior → event.php?title=dior
+   - blogPageDetails.php?slug=post → blogPageDetails.php?title=post
+   - pressPageDetails.php?slug=press → pressPageDetails.php?title=press
+
+✅ Updated .htaccess rewrite rules
+   - /dior-exhibition?lang=en → event.php?title=dior-exhibition&lang=en
+   - /blog/post?lang=en → blogPageDetails.php?title=post&lang=en
+   - /press/release?lang=en → pressPageDetails.php?title=release&lang=en
+
+✅ Updated all PHP files
+   - event.php - Uses title parameter
+   - blogPageDetails.php - Uses title parameter
+   - pressPageDetails.php - Uses title parameter
+
+✅ Updated all API files
+   - api/get_event_details.php - Accepts title parameter
+   - api/get_press.php - Filters by title parameter
+   - api/get_blogs_working.php - Already supports title
+
+================================================================================
+IMMEDIATE ACTION
+================================================================================
+
+1. CLEAR BROWSER CACHE
+   Windows: Ctrl+Shift+R
+   Mac: Cmd+Shift+R
+   Or: Settings > Clear browsing data > All time
+
+2. TEST EVENT URLS
+   https://yoursite.com/dior-exhibition?lang=en
+   https://yoursite.com/ysl-2?lang=ar
+   https://yoursite.com/cheval-blanc?lang=en
+
+3. TEST BLOG URLS
+   https://yoursite.com/blog/lakum-impact-on-local-artists?lang=en
+
+4. TEST PRESS URLS
+   https://yoursite.com/press/press-release-1?lang=en
+
+5. VERIFY IN CONSOLE
+   Open F12 > Console
+   Should see NO errors
+   Should see content loading
+
+================================================================================
+EXPECTED RESULTS
+================================================================================
+
+✅ Event pages load with content
+✅ Blog pages load with content
+✅ Press pages load with content
+✅ Language switching works
+✅ No 404 errors
+✅ No JSON parsing errors
+✅ Clean URLs without .php extension
+✅ Title parameter instead of slug
+
+================================================================================
+URL FORMAT
+================================================================================
+
+BEFORE:
+  event.php?slug=dior-exhibition&lang=en
+  blogPageDetails.php?slug=my-blog-post&lang=en
+  pressPageDetails.php?slug=press-release-1&lang=en
+
+AFTER (Clean URLs):
+  /dior-exhibition?lang=en
+  /blog/my-blog-post?lang=en
+  /press/press-release-1?lang=en
+
+ACTUAL REWRITE:
+  /dior-exhibition?lang=en → event.php?title=dior-exhibition&lang=en
+  /blog/my-blog-post?lang=en → blogPageDetails.php?title=my-blog-post&lang=en
+  /press/press-release-1?lang=en → pressPageDetails.php?title=press-release-1&lang=en
+
+================================================================================
+QUICK TEST URLS
+================================================================================
+
+EVENTS:
+  /dior-exhibition?lang=en
+  /ysl-2?lang=ar
+  /cheval-blanc?lang=en
+  /shiseido?lang=en
+
+BLOGS:
+  /blog/lakum-impact-on-local-artists?lang=en
+
+PRESS:
+  /press/press-release-1?lang=en
+
+================================================================================
+BROWSER CONSOLE CHECK
+================================================================================
+
+Open browser console (F12) and verify:
+✅ No red error messages
+✅ No 404 errors
+✅ No "Unexpected token" errors
+✅ API responses are valid JSON
+✅ Content displays correctly
+
+================================================================================
+FILES MODIFIED
+================================================================================
+
+✅ .htaccess - Rewrite rules updated to use title=
+✅ event.php - Changed to use title parameter
+✅ blogPageDetails.php - Changed to use title parameter
+✅ pressPageDetails.php - Changed to use title parameter
+✅ api/get_event_details.php - Accepts title parameter
+✅ api/get_press.php - Filters by title parameter
+
+================================================================================
+TROUBLESHOOTING
+================================================================================
+
+ISSUE: Still seeing 404 errors
+FIX: 
+  1. Hard refresh browser cache (Ctrl+Shift+R)
+  2. Check if .htaccess is enabled on server
+  3. Verify mod_rewrite is enabled
+
+ISSUE: "Unexpected token" error
+FIX:
+  1. Check if API is returning JSON
+  2. Verify database connection
+  3. Check if title exists in database
+
+ISSUE: Blank page
+FIX:
+  1. Check browser console for errors
+  2. Verify database has data
+  3. Check if title matches database
+
+ISSUE: Language not switching
+FIX:
+  1. Verify ?lang=en or ?lang=ar parameter in URL
+  2. Check if language API is working
+  3. Clear localStorage
+
+================================================================================
+SUCCESS CRITERIA
+================================================================================
+
+✅ All clean URLs load without errors
+✅ Content displays correctly
+✅ Language switching works
+✅ No console errors
+✅ Title parameter used instead of slug
+✅ Mobile responsive
+
+================================================================================
+NEXT STEPS
+================================================================================
+
+1. Clear browser cache
+2. Test the URLs above
+3. Verify language switching
+4. Check mobile responsiveness
+5. Monitor console for errors
+6. Deploy when ready
+
+================================================================================
+STATUS: ✅ READY FOR TESTING
+================================================================================
+
+All files updated to use title= parameter. Start testing now!

@@ -2,17 +2,14 @@
 require_once 'lang/loader.php';
 require_once 'api/image-helper.php';
 
-// Get slug from filename (Hostinger file-based clean URLs)
-$slug = basename(__FILE__, '.php');
+// Get title from query parameter (rewritten by .htaccess)
+$title = $_GET['title'] ?? null;
 $lang = $_GET['lang'] ?? 'en';
 
-// If accessed as main pressPageDetails.php (not from clean URL), redirect or show error
-if ($slug === 'pressPageDetails') {
-    $slug = $_GET['slug'] ?? null;
-    if (!$slug) {
-        header('HTTP/1.0 404 Not Found');
-        exit('Press release not found');
-    }
+// If no title, show error
+if (!$title) {
+    header('HTTP/1.0 404 Not Found');
+    exit('Press release not found');
 }
 ?><!DOCTYPE html>
 <html <?php echo getLanguageAttributes(); ?>>
@@ -104,16 +101,16 @@ if ($slug === 'pressPageDetails') {
 
     <script>
         async function loadPressData() {
-            const slug = '<?php echo $slug; ?>';
-            const lang = '<?php echo $lang; ?>';
+            const title = '<?php echo htmlspecialchars($title, ENT_QUOTES, 'UTF-8'); ?>';
+            const lang = '<?php echo htmlspecialchars($lang, ENT_QUOTES, 'UTF-8'); ?>';
             
-            if (!slug || slug === 'pressPageDetails') {
+            if (!title || title === 'pressPageDetails') {
                 document.getElementById('press-content').innerHTML = '<p style="color: red;">Press release not found</p>';
                 return;
             }
             
             try {
-                const response = await fetch(`/api/get_press.php?slug=${slug}&lang=${lang}`);
+                const response = await fetch(`/api/get_press.php?title=${title}&lang=${lang}`);
                 const data = await response.json();
                 
                 if (data.success && data.data) {

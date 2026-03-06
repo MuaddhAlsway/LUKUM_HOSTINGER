@@ -2,17 +2,14 @@
 require_once 'lang/loader.php';
 require_once 'api/image-helper.php';
 
-// Get slug from filename (Hostinger file-based clean URLs)
-$slug = basename(__FILE__, '.php');
+// Get title from query parameter (rewritten by .htaccess)
+$title = $_GET['title'] ?? null;
 $lang = $_GET['lang'] ?? 'en';
 
-// If accessed as main blogPageDetails.php (not from clean URL), redirect or show error
-if ($slug === 'blogPageDetails') {
-    $slug = $_GET['slug'] ?? null;
-    if (!$slug) {
-        header('HTTP/1.0 404 Not Found');
-        exit('Blog not found');
-    }
+// If no title, show error
+if (!$title) {
+    header('HTTP/1.0 404 Not Found');
+    exit('Blog not found');
 }
 ?><!DOCTYPE html>
 <html <?php echo getLanguageAttributes(); ?>>
@@ -277,11 +274,11 @@ if ($slug === 'blogPageDetails') {
 
     <script>
         // Blog Details Page Script
-        // Pass slug from PHP to JavaScript (for clean URLs)
-        window.LAKUM_BLOG_SLUG = '<?php echo htmlspecialchars($slug, ENT_QUOTES, 'UTF-8'); ?>';
+        // Pass title from PHP to JavaScript (for clean URLs)
+        window.LAKUM_BLOG_TITLE = '<?php echo htmlspecialchars($title, ENT_QUOTES, 'UTF-8'); ?>';
         window.LAKUM_LANG = '<?php echo htmlspecialchars($lang, ENT_QUOTES, 'UTF-8'); ?>';
         
-        let blogIdentifier = window.LAKUM_BLOG_SLUG || new URLSearchParams(window.location.search).get('title') || new URLSearchParams(window.location.search).get('id');
+        let blogIdentifier = window.LAKUM_BLOG_TITLE || new URLSearchParams(window.location.search).get('title') || new URLSearchParams(window.location.search).get('id');
         let urlLang = window.LAKUM_LANG || new URLSearchParams(window.location.search).get('lang');
         let shouldRedirect = false;
 

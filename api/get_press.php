@@ -30,47 +30,95 @@ try {
     $limit = (int)($_GET['limit'] ?? 100);
     $offset = (int)($_GET['offset'] ?? 0);
     
+    // Check if fetching a single press by slug or title
+    $filterBySlug = isset($_GET['slug']) || isset($_GET['title']);
+    $pressSlug = $_GET['slug'] ?? $_GET['title'] ?? null;
+    
     // Query from press table with bilingual columns (hybrid approach)
-    $query = "
-        SELECT 
-            p.id,
-            p.source,
-            p.press_date,
-            p.url,
-            p.category,
-            p.cover_image,
-            p.slug,
-            p.is_published,
-            CASE 
-                WHEN ? = 'ar' AND p.title_ar IS NOT NULL AND p.title_ar != '' THEN p.title_ar
-                ELSE COALESCE(p.title_en, p.title)
-            END as title,
-            CASE 
-                WHEN ? = 'ar' AND p.content_ar IS NOT NULL AND p.content_ar != '' THEN p.content_ar
-                ELSE COALESCE(p.content_en, p.content)
-            END as content,
-            CASE 
-                WHEN ? = 'ar' AND p.excerpt_ar IS NOT NULL AND p.excerpt_ar != '' THEN p.excerpt_ar
-                ELSE COALESCE(p.excerpt_en, p.excerpt)
-            END as excerpt,
-            p.title_en,
-            p.excerpt_en,
-            p.content_en,
-            p.title_ar,
-            p.excerpt_ar,
-            p.content_ar
-        FROM press p
-        WHERE p.is_published = 1
-        ORDER BY p.press_date DESC
-        LIMIT ? OFFSET ?
-    ";
-    
-    $stmt = $conn->prepare($query);
-    if (!$stmt) {
-        throw new Exception('Query preparation failed: ' . $conn->error);
+    if ($filterBySlug && $pressSlug) {
+        // Single press release by slug/title
+        $query = "
+            SELECT 
+                p.id,
+                p.source,
+                p.press_date,
+                p.url,
+                p.category,
+                p.cover_image,
+                p.slug,
+                p.is_published,
+                CASE 
+                    WHEN ? = 'ar' AND p.title_ar IS NOT NULL AND p.title_ar != '' THEN p.title_ar
+                    ELSE COALESCE(p.title_en, p.title)
+                END as title,
+                CASE 
+                    WHEN ? = 'ar' AND p.content_ar IS NOT NULL AND p.content_ar != '' THEN p.content_ar
+                    ELSE COALESCE(p.content_en, p.content)
+                END as content,
+                CASE 
+                    WHEN ? = 'ar' AND p.excerpt_ar IS NOT NULL AND p.excerpt_ar != '' THEN p.excerpt_ar
+                    ELSE COALESCE(p.excerpt_en, p.excerpt)
+                END as excerpt,
+                p.title_en,
+                p.excerpt_en,
+                p.content_en,
+                p.title_ar,
+                p.excerpt_ar,
+                p.content_ar
+            FROM press p
+            WHERE (p.slug = ? OR p.title_en = ? OR p.title = ?) AND p.is_published = 1
+            LIMIT 1
+        ";
+        
+        $stmt = $conn->prepare($query);
+        if (!$stmt) {
+            throw new Exception('Query preparation failed: ' . $conn->error);
+        }
+        
+        $stmt->bind_param('sssss', $lang, $lang, $lang, $pressSlug, $pressSlug, $pressSlug);
+    } else {
+        // All press releases
+        $query = "
+            SELECT 
+                p.id,
+                p.source,
+                p.press_date,
+                p.url,
+                p.category,
+                p.cover_image,
+                p.slug,
+                p.is_published,
+                CASE 
+                    WHEN ? = 'ar' AND p.title_ar IS NOT NULL AND p.title_ar != '' THEN p.title_ar
+                    ELSE COALESCE(p.title_en, p.title)
+                END as title,
+                CASE 
+                    WHEN ? = 'ar' AND p.content_ar IS NOT NULL AND p.content_ar != '' THEN p.content_ar
+                    ELSE COALESCE(p.content_en, p.content)
+                END as content,
+                CASE 
+                    WHEN ? = 'ar' AND p.excerpt_ar IS NOT NULL AND p.excerpt_ar != '' THEN p.excerpt_ar
+                    ELSE COALESCE(p.excerpt_en, p.excerpt)
+                END as excerpt,
+                p.title_en,
+                p.excerpt_en,
+                p.content_en,
+                p.title_ar,
+                p.excerpt_ar,
+                p.content_ar
+            FROM press p
+            WHERE p.is_published = 1
+            ORDER BY p.press_date DESC
+            LIMIT ? OFFSET ?
+        ";
+        
+        $stmt = $conn->prepare($query);
+        if (!$stmt) {
+            throw new Exception('Query preparation failed: ' . $conn->error);
+        }
+        
+        $stmt->bind_param('sssii', $lang, $lang, $lang, $limit, $offset);
     }
-    
-    $stmt->bind_param('sssii', $lang, $lang, $lang, $limit, $offset);
     
     if (!$stmt->execute()) {
         throw new Exception('Query execution failed: ' . $stmt->error);

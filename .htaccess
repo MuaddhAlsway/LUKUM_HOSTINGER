@@ -120,26 +120,27 @@
     RewriteBase /
     
     # ========================================================================
-    # CLEAN URLS - Database-driven slugs (NO HARDCODING)
+    # CLEAN URLS - Database-driven titles (NO HARDCODING)
     # ========================================================================
     
     # Clean URL for event detail pages
-    # /event/dior-exhibition?lang=en → event.php?slug=dior-exhibition&lang=en
+    # /dior-exhibition?lang=en → event.php?title=dior-exhibition&lang=en
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule ^event/([a-z0-9-]+)/?$ event.php?slug=$1 [QSA,L]
+    RewriteCond %{REQUEST_URI} !^/(event|blog|press|api|assest|fonts|uploads|heroImage|gallery|scripts|includes|lang|translations|data|logs|admin|about)/ [NC]
+    RewriteRule ^([a-z0-9-]+)/?$ event.php?title=$1 [QSA,L]
     
     # Clean URL for blog detail pages
-    # /blog/my-blog-post?lang=en → blogPageDetails.php?slug=my-blog-post&lang=en
+    # /my-blog-post?lang=en → blogPageDetails.php?title=my-blog-post&lang=en
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule ^blog/([a-z0-9-]+)/?$ blogPageDetails.php?slug=$1 [QSA,L]
+    RewriteRule ^blog/([a-z0-9-]+)/?$ blogPageDetails.php?title=$1 [QSA,L]
     
     # Clean URL for press detail pages
-    # /press/press-release-1?lang=en → pressPageDetails.php?slug=press-release-1&lang=en
+    # /press-release-1?lang=en → pressPageDetails.php?title=press-release-1&lang=en
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule ^press/([a-z0-9-]+)/?$ pressPageDetails.php?slug=$1 [QSA,L]
+    RewriteRule ^press/([a-z0-9-]+)/?$ pressPageDetails.php?title=$1 [QSA,L]
     
     # ========================================================================
     # REMOVE .PHP EXTENSION (for other pages)

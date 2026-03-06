@@ -17,7 +17,8 @@ require_once 'slug-utils.php';
 
 try {
     $db = Database::getInstance();
-    $eventIdParam = $_GET['id'] ?? 1;
+    // Accept both 'id', 'slug', and 'title' parameters
+    $eventIdParam = $_GET['id'] ?? $_GET['slug'] ?? $_GET['title'] ?? 1;
     
     // Get current language from URL parameter or session
     $lang = $_GET['lang'] ?? $_SESSION['language'] ?? 'en';
