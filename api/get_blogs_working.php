@@ -79,18 +79,8 @@ try {
             $stmt->bind_param('ssss', $lang, $lang, $lang, $blog_slug);
         } elseif ($blog_id !== null) {
             $query .= "b.id = ?";
-            $stmt = $conn->prepare($query);
-            if (!$stmt) {
-                throw new Exception('Query preparation failed: ' . $conn->error);
-            }
-            $stmt->bind_param('sssi', $lang, $lang, $lang, $blog_id);
         } else {
             $query .= "b.title_en = ? OR b.title = ?";
-            $stmt = $conn->prepare($query);
-            if (!$stmt) {
-                throw new Exception('Query preparation failed: ' . $conn->error);
-            }
-            $stmt->bind_param('sssss', $lang, $lang, $lang, $blog_title, $blog_title);
         }
         
         $stmt = $conn->prepare($query);

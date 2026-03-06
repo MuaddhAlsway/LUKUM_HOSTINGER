@@ -78,12 +78,13 @@ body {
     right: 0 !important;
     width: 100% !important;
     height: var(--header-height-desktop) !important;
-    background: var(--header-bg) !important;
+    background: rgba(246, 246, 235, 0.98) !important;
     color: var(--header-text) !important;
     z-index: var(--z-header) !important;
     border-bottom: 1px solid var(--header-border) !important;
     box-shadow: none !important;
     transition: box-shadow var(--transition-normal) !important;
+    backdrop-filter: blur(10px) !important;
 }
 
 .lakum-header.lakum-header--scrolled {
@@ -164,7 +165,7 @@ body {
 .lakum-nav__link {
     display: inline-block !important;
     padding: var(--spacing-md) var(--spacing-lg) !important;
-    color: #1a1a1a !important;
+    color: #000000 !important;
     text-decoration: none !important;
     font-size: 0.95rem !important;
     font-weight: 500 !important;
@@ -221,8 +222,9 @@ body {
     font-size: 0.85rem !important;
     font-weight: 600 !important;
     transition: all var(--transition-fast) !important;
-    border-radius: var(--radius-sm) !important;
+    border-radius: 4px !important;
     cursor: pointer !important;
+    border: none !important;
 }
 
 .lakum-lang-link:hover {
@@ -231,8 +233,9 @@ body {
 }
 
 .lakum-lang-link--active {
-    background: var(--header-hover) !important;
-    color: white !important;
+    background: #000000 !important;
+    color: #ffffff !important;
+    border-radius: 4px !important;
 }
 
 .lakum-lang-text {
