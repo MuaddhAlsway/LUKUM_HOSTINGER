@@ -517,8 +517,8 @@ require_once 'api/image-helper.php';
         function loadBlogs() {
             // Use language from PHP (respects URL parameter ?lang=en or ?lang=ar)
             // Falls back to LanguageManager if window.LAKUM_LANG not set
-            const lang = window.LAKUM_LANG || LanguageManager.getLanguage() || 'en';
-            const apiUrl = `/api/get_blogs_working.php?type=all&lang=${lang}`;
+            const lang = window.LAKUM_LANG || (typeof LanguageManager !== 'undefined' ? LanguageManager.getLanguage() : 'en') || 'en';
+            const apiUrl = `/api/get_blogs_working.php?lang=${lang}`;
             console.log('Fetching blogs from:', apiUrl);
 
             fetch(apiUrl)
@@ -535,6 +535,11 @@ require_once 'api/image-helper.php';
                     const blogs = result.data || result || [];
                     console.log('Blogs received:', blogs);
                     console.log('Number of blogs:', blogs.length);
+                    
+                    if (!blogs || blogs.length === 0) {
+                        throw new Error('No blogs found in database');
+                    }
+                    
                     allBlogs = blogs;
                     generateFilters(blogs);
                     renderBlogs(blogs);

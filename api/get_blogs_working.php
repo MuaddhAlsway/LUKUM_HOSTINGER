@@ -160,6 +160,7 @@ try {
             b.category,
             b.cover_image,
             b.created_at,
+            b.slug,
             CASE 
                 WHEN ? = 'ar' AND b.title_ar IS NOT NULL AND b.title_ar != '' THEN b.title_ar
                 ELSE COALESCE(b.title_en, b.title)
@@ -177,7 +178,8 @@ try {
             b.content_en,
             b.title_ar,
             b.excerpt_ar,
-            b.content_ar
+            b.content_ar,
+            b.read_time
         FROM blogs b
         ORDER BY b.created_at DESC
         LIMIT ? OFFSET ?
@@ -209,7 +211,7 @@ try {
         'data' => $blogs,
         'language' => $lang,
         'count' => count($blogs)
-    ]);
+    ], JSON_UNESCAPED_UNICODE);
     
 } catch (Exception $e) {
     error_log('Get Blogs API Error: ' . $e->getMessage());

@@ -493,15 +493,18 @@ require_once 'api/image-helper.php';
             try {
                 // Use language from PHP (respects URL parameter ?lang=en or ?lang=ar)
                 // Falls back to LanguageManager if window.LAKUM_LANG not set
-                const lang = window.LAKUM_LANG || LanguageManager.getLanguage() || 'en';
+                const lang = window.LAKUM_LANG || (typeof LanguageManager !== 'undefined' ? LanguageManager.getLanguage() : 'en') || 'en';
                 
+                console.log('Loading press from API with lang:', lang);
                 const response = await fetch(`/api/get_press.php?lang=${lang}`);
                 const data = await response.json();
+                
+                console.log('Press API response:', data);
                 
                 if (data.success && data.data && data.data.length > 0) {
                     displayPressReleases(data.data);
                 } else {
-                    console.warn('No press data available');
+                    console.warn('No press data available:', data);
                     displayNoPressMessage();
                 }
             } catch (error) {

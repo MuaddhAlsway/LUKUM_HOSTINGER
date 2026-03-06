@@ -413,7 +413,18 @@ if (!$title) {
 
             try {
                 // Try to fetch from API (supports both numeric ID and slug/title)
-                let response = await fetch(`/api/get_event_details.php?id=${eventTitleParam}&lang=${lang}`);
+                // Use the parameter name that matches what was provided
+                let apiUrl = `/api/get_event_details.php?lang=${lang}`;
+                
+                // Determine if it's numeric (ID) or text (slug/title)
+                if (!isNaN(eventTitleParam) && eventTitleParam.trim() !== '') {
+                    apiUrl += `&id=${eventTitleParam}`;
+                } else {
+                    apiUrl += `&title=${encodeURIComponent(eventTitleParam)}`;
+                }
+                
+                console.log('Fetching from:', apiUrl);
+                let response = await fetch(apiUrl);
                 
                 let data = await response.json();
                 console.log('API Response:', data);
@@ -421,7 +432,7 @@ if (!$title) {
                 // If event not found and ID was default (1), try to get first available event
                 if (!data.success && eventTitleParam === '1') {
                     console.log('Event not found, fetching first available event...');
-                    const lang = LanguageManager.getLanguage();
+                    const lang = (typeof LanguageManager !== 'undefined') ? LanguageManager.getLanguage() : 'en';
                     response = await fetch(`/api/get_events.php?lang=${lang}`);
                     const eventsData = await response.json();
                     

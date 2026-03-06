@@ -139,7 +139,7 @@ try {
         'data' => $press,
         'language' => $lang,
         'count' => count($press)
-    ]);
+    ], JSON_UNESCAPED_UNICODE);
     
 } catch (Exception $e) {
     error_log('Press API Error: ' . $e->getMessage());
