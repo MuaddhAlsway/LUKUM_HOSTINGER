@@ -50,7 +50,9 @@ require_once 'api/image-helper.php';
         }
 
         .lakum-hero {
-            position: relative;
+            position: relative; /* keep hero in its context */
+  z-index: 1;         /* lower than header/nav */
+
             width: 100%;
             height: 85vh;
             min-height: 600px;
@@ -338,8 +340,8 @@ margin: 0 auto;}
         </div>
     </div>
 
-    <!-- Global Header Navigation (Centralized) -->
-    <?php include('includes/header.php'); ?>
+    <!-- Global Header Navigation (Unified) -->
+    <?php include('lakum-header-unified.php'); ?>
 
     <section class="lakum-hero" style="aspect-ratio: 16/9">
         <div class="lakum-hero__image-wrapper">

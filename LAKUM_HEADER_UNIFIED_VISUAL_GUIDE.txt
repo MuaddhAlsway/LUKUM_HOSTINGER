@@ -1,0 +1,372 @@
+================================================================================
+LAKUM HEADER UNIFIED SYSTEM - VISUAL GUIDE
+================================================================================
+
+DESKTOP VIEW (> 1024px)
+================================================================================
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ [LOGO]  HOME  ABOUT  SPACES  EXHIBITIONS  CALENDAR  BLOG  PRESS  CONTACT  │
+│                                                                    EN | AR   │
+└─────────────────────────────────────────────────────────────────────────────┘
+│                                                                             │
+│                          MAIN CONTENT AREA                                 │
+│                                                                             │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+Header Height: 80px
+Navigation: Horizontal, centered
+Logo: Left side
+Language Switcher: Right side
+Mobile Toggle: Hidden
+
+
+TABLET VIEW (768px - 1024px)
+================================================================================
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ [LOGO]  HOME  ABOUT  SPACES  EXHIBITIONS  BLOG  PRESS  CONTACT  EN | AR   │
+└─────────────────────────────────────────────────────────────────────────────┘
+│                                                                             │
+│                          MAIN CONTENT AREA                                 │
+│                                                                             │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+Header Height: 70px
+Navigation: Horizontal, still visible
+Logo: Smaller
+Language Switcher: Smaller
+Mobile Toggle: Hidden
+
+
+MOBILE VIEW (< 768px)
+================================================================================
+
+CLOSED STATE:
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ [LOGO]                                                    EN | AR  [☰]     │
+└─────────────────────────────────────────────────────────────────────────────┘
+│                                                                             │
+│                          MAIN CONTENT AREA                                 │
+│                                                                             │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+Header Height: 60px
+Navigation: Hidden (off-canvas)
+Logo: Smaller
+Language Switcher: Smaller
+Mobile Toggle: Visible (hamburger icon)
+
+
+OPEN STATE (Menu Opened):
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ [LOGO]                                                    EN | AR  [✕]     │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ │
+│ ░ HOME                                                                    ░ │
+│ ░ ABOUT                                                                   ░ │
+│ ░ SPACES                                                                  ░ │
+│ ░ EXHIBITIONS                                                             ░ │
+│ ░ CALENDAR                                                                ░ │
+│ ░ BLOG                                                                    ░ │
+│ ░ PRESS                                                                   ░ │
+│ ░ CONTACT                                                                 ░ │
+│ ░ SHOP                                                                    ░ │
+│ ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ │
+│                                                                             │
+│                          MAIN CONTENT AREA                                 │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+Header Height: 60px
+Navigation: Slides from left (off-canvas)
+Overlay: Semi-transparent backdrop
+Toggle: Changes to X icon
+Body: Scroll prevented
+
+
+SMALL MOBILE VIEW (< 480px)
+================================================================================
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ [L]                                                      EN|AR [☰]         │
+└─────────────────────────────────────────────────────────────────────────────┘
+│                                                                             │
+│                          MAIN CONTENT AREA                                 │
+│                                                                             │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+Header Height: 56px
+Logo: Very small
+Language Switcher: Very small
+Mobile Toggle: Smaller
+All elements: Optimized for small screens
+
+
+RTL VIEW (Arabic - < 768px)
+================================================================================
+
+CLOSED STATE:
+┌─────────────────────────────────────────────────────────────────────────────┐
+│     [☰]  AR | EN                                                    [LOGO] │
+└─────────────────────────────────────────────────────────────────────────────┘
+│                                                                             │
+│                          MAIN CONTENT AREA                                 │
+│                                                                             │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+OPEN STATE (Menu Opened):
+┌─────────────────────────────────────────────────────────────────────────────┐
+│     [✕]  AR | EN                                                    [LOGO] │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ │
+│ ░                                                                    الرئيسية ░ │
+│ ░                                                                      حول ░ │
+│ ░                                                                    المساحات ░ │
+│ ░                                                                   المعارض ░ │
+│ ░                                                                   التقويم ░ │
+│ ░                                                                    المدونة ░ │
+│ ░                                                                     الصحافة ░ │
+│ ░                                                                   اتصل بنا ░ │
+│ ░                                                                     المتجر ░ │
+│ ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ │
+│                                                                             │
+│                          MAIN CONTENT AREA                                 │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+Navigation: Slides from RIGHT (RTL)
+Text: Right-aligned
+Layout: Automatically reversed
+All elements: Mirrored for RTL
+
+
+Z-INDEX HIERARCHY
+================================================================================
+
+Layer 10001: Toggle Button
+            ┌─────────────────────────────────────────────────────────────┐
+            │ [☰] or [✕]                                                 │
+            └─────────────────────────────────────────────────────────────┘
+
+Layer 10000: Navigation Content
+            ┌─────────────────────────────────────────────────────────────┐
+            │ HOME                                                        │
+            │ ABOUT                                                       │
+            │ SPACES                                                      │
+            │ EXHIBITIONS                                                 │
+            │ CALENDAR                                                    │
+            │ BLOG                                                        │
+            │ PRESS                                                       │
+            │ CONTACT                                                     │
+            │ SHOP                                                        │
+            └─────────────────────────────────────────────────────────────┘
+
+Layer 9999: Overlay Backdrop
+            ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+            ░ (Semi-transparent, clickable to close)                      ░
+            ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+Layer 1000: Header
+            ┌─────────────────────────────────────────────────────────────┐
+            │ [LOGO]  HOME  ABOUT  SPACES  EXHIBITIONS  CALENDAR  BLOG   │
+            └─────────────────────────────────────────────────────────────┘
+
+Layer 1: Page Content
+            ┌─────────────────────────────────────────────────────────────┐
+            │                                                             │
+            │                    MAIN CONTENT AREA                        │
+            │                                                             │
+            └─────────────────────────────────────────────────────────────┘
+
+
+RESPONSIVE BREAKPOINTS
+================================================================================
+
+Desktop (> 1024px)
+├─ Header Height: 80px
+├─ Navigation: Horizontal, visible
+├─ Logo: 40px height
+├─ Mobile Toggle: Hidden
+└─ Layout: Full width
+
+Tablet (768px - 1024px)
+├─ Header Height: 70px
+├─ Navigation: Horizontal, visible
+├─ Logo: 35px height
+├─ Mobile Toggle: Hidden
+└─ Layout: Full width
+
+Mobile (< 768px)
+├─ Header Height: 60px
+├─ Navigation: Off-canvas, hidden
+├─ Logo: 30px height
+├─ Mobile Toggle: Visible
+└─ Layout: Full width
+
+Small Mobile (< 480px)
+├─ Header Height: 56px
+├─ Navigation: Off-canvas, hidden
+├─ Logo: 28px height
+├─ Mobile Toggle: Visible (smaller)
+└─ Layout: Full width
+
+
+ACTIVE LINK INDICATOR
+================================================================================
+
+DESKTOP:
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ [LOGO]  HOME  ABOUT  SPACES  EXHIBITIONS  CALENDAR  BLOG  PRESS  CONTACT  │
+│         ────                                                                │
+│         (underline appears on active link)                                 │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+MOBILE:
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ [LOGO]                                                    EN | AR  [☰]     │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ │
+│ ░ │ HOME                                                                  ░ │
+│ ░   ABOUT                                                                 ░ │
+│ ░   SPACES                                                                ░ │
+│ ░   EXHIBITIONS                                                           ░ │
+│ ░   CALENDAR                                                              ░ │
+│ ░   BLOG                                                                  ░ │
+│ ░   PRESS                                                                 ░ │
+│ ░   CONTACT                                                               ░ │
+│ ░   SHOP                                                                  ░ │
+│ ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ │
+│                                                                             │
+│ (left border on active link)                                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+
+LANGUAGE SWITCHER
+================================================================================
+
+DESKTOP:
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ [LOGO]  HOME  ABOUT  SPACES  EXHIBITIONS  CALENDAR  BLOG  PRESS  CONTACT  │
+│                                                                    EN | AR   │
+│                                                                    ──   ──   │
+│                                                                    (active)  │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+MOBILE:
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ [LOGO]                                                    EN | AR  [☰]     │
+│                                                           ──   ──           │
+│                                                           (active)          │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+Active language: Highlighted background
+Inactive language: Normal background
+
+
+ANIMATION STATES
+================================================================================
+
+TOGGLE BUTTON ANIMATION:
+
+Closed:                    Open:
+  ─                          ╱
+  ─                         ╱
+  ─                        ╱
+                          (rotated 45°)
+
+                          ╲
+                           ╲
+                            ╲
+                          (rotated -45°)
+
+
+MOBILE MENU ANIMATION:
+
+Closed:                    Open:
+┌─────────────────────┐   ┌─────────────────────┐
+│ [LOGO]  [☰]         │   │ [LOGO]  [✕]         │
+├─────────────────────┤   ├─────────────────────┤
+│                     │   │ ░░░░░░░░░░░░░░░░░░░ │
+│                     │   │ ░ HOME              ░ │
+│ MAIN CONTENT        │   │ ░ ABOUT             ░ │
+│                     │   │ ░ SPACES            ░ │
+│                     │   │ ░ EXHIBITIONS       ░ │
+│                     │   │ ░ CALENDAR          ░ │
+│                     │   │ ░ BLOG              ░ │
+│                     │   │ ░ PRESS             ░ │
+│                     │   │ ░ CONTACT           ░ │
+│                     │   │ ░ SHOP              ░ │
+│                     │   │ ░░░░░░░░░░░░░░░░░░░ │
+│                     │   │                     │
+└─────────────────────┘   └─────────────────────┘
+
+(slides from left)         (overlay appears)
+
+
+FOCUS STATES (Accessibility)
+================================================================================
+
+Keyboard Focus:
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ [LOGO]  HOME  ABOUT  SPACES  EXHIBITIONS  CALENDAR  BLOG  PRESS  CONTACT  │
+│         ┌─────────────────────────────────────────────────────────────────┐ │
+│         │ (2px outline around focused element)                           │ │
+│         └─────────────────────────────────────────────────────────────────┘ │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+Tab Order:
+1. Logo (link)
+2. Home (nav link)
+3. About (nav link)
+4. Spaces (nav link)
+5. Exhibitions (nav link)
+6. Calendar (nav link)
+7. Blog (nav link)
+8. Press (nav link)
+9. Contact (nav link)
+10. Shop (nav link)
+11. EN (language link)
+12. AR (language link)
+13. Mobile Toggle (button)
+
+
+HOVER STATES
+================================================================================
+
+Desktop Navigation:
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ [LOGO]  HOME  ABOUT  SPACES  EXHIBITIONS  CALENDAR  BLOG  PRESS  CONTACT  │
+│                ────                                                         │
+│                (underline appears on hover)                                 │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+Language Switcher:
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ [LOGO]  HOME  ABOUT  SPACES  EXHIBITIONS  CALENDAR  BLOG  PRESS  CONTACT  │
+│                                                                    EN | AR   │
+│                                                                    ██   ──   │
+│                                                                    (hover)   │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+
+SUMMARY
+================================================================================
+
+✅ Desktop: Full horizontal navigation
+✅ Tablet: Responsive, still horizontal
+✅ Mobile: Off-canvas navigation with overlay
+✅ RTL: Automatic layout reversal
+✅ Accessibility: Full keyboard support
+✅ Animations: Smooth transitions
+✅ Focus States: Clear visual indicators
+✅ Active States: Clear highlighting
+
+All views are responsive, accessible, and user-friendly.
+
+================================================================================

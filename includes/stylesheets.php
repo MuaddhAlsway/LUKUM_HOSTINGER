@@ -8,14 +8,11 @@
     <!-- Critical CSS - Inline for instant rendering -->
     <link rel="stylesheet" href="critical-inline.css">
     
-    <!-- Header & Navigation Styles -->
-    <link rel="stylesheet" href="assest/lakum-header.css">
+    <!-- Unified Header & Navigation Styles (MUST BE FIRST) -->
+    <link rel="stylesheet" href="lakum-header-unified.css">
     
     <!-- Component Styles -->
     <link rel="stylesheet" href="lakum-components.css">
-    
-    <!-- Mobile Menu Styles -->
-    <link rel="stylesheet" href="assest/mobile-menu.css">
     
     <!-- RTL Support -->
     <link rel="stylesheet" href="rtl.css">

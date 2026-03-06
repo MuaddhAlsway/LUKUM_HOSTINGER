@@ -284,7 +284,7 @@ html[dir="rtl"] .lakum-lang-link {
         transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         box-shadow: 4px 0 24px rgba(0, 0, 0, 0.1);
         overflow-y: auto;
-        z-index: 999;
+         z-index: 99999; /* always on top */
         display: flex;
         flex-direction: column;
     }
@@ -300,7 +300,7 @@ html[dir="rtl"] .lakum-lang-link {
         opacity: 0;
         visibility: hidden;
         transition: all 0.3s ease;
-        z-index: 998;
+    z-index: 99998; /* overlay behind nav but above page content */
         pointer-events: none;
     }
 
@@ -325,7 +325,7 @@ html[dir="rtl"] .lakum-lang-link {
         padding: 0;
         width: 100%;
         position: relative;
-        z-index: 1000;
+        z-index: 10000;
     }
 
     .lakum-nav__item {

@@ -14,8 +14,8 @@
  * 5. Page-specific scripts (loaded by individual pages)
  */
 ?>
-    <!-- Navigation & Header Controller (SINGLE SOURCE OF TRUTH) -->
-    <script src="assest/lakum-header.js" defer></script>
+    <!-- Unified Header Navigation Controller (SINGLE SOURCE OF TRUTH) -->
+    <script src="lakum-header-unified.js" defer></script>
     
     <!-- Interactive Elements -->
     <script src="assest/fun-interactions.js" defer></script>

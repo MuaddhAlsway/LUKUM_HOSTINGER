@@ -13,11 +13,12 @@ body {
 
 /* ===== HEADER / NAVIGATION ===== */
 .lakum-header {
-    position: sticky;
+      position: relative; /* or fixed for sticky header */
+  z-index: 2000;   
     top: 0;
     left: 0;
     right: 0;
-    z-index: 1000;
+   
     background: rgba(246, 246, 235, 0.98);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid rgba(209, 209, 209, 0.2);
@@ -68,13 +69,24 @@ body {
 
 /* Navigation - Desktop Base Styles */
 .lakum-nav {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    position: relative;
-    z-index: 1001;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: #f6f6eb;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    z-index: 99999; /* much higher than hero */
 }
-
+.lakum-nav.lakum-nav--open {
+    transform: translateX(0);
+    z-index: 99999; /* reinforce */
+}
+.lakum-nav.lakum-nav--open::before {
+    opacity: 1;
+    visibility: visible;
+}
 .lakum-nav__list {
     display: flex;
     align-items: center;
@@ -198,8 +210,9 @@ body {
     bottom: 0;
     transform: rotate(-45deg);
 }
-
-/* Header menu open state */
+.lakum-nav--open {
+  transform: translateX(0);
+}/* Header menu open state */
 .lakum-header--menu-open {
     background: rgba(246, 246, 235, 0.95) !important;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;

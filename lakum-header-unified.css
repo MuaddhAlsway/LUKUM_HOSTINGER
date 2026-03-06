@@ -1,0 +1,617 @@
+/**
+ * LAKUM ARTSPACE - Unified Header System
+ * Complete CSS for header, navigation, and mobile menu
+ * 
+ * CRITICAL: This file MUST be loaded FIRST before any other CSS
+ * All rules use !important to guarantee override of conflicting CSS
+ * 
+ * Architecture:
+ * - Single source of truth (no conflicts)
+ * - Aggressive override strategy (!important)
+ * - Proper z-index hierarchy
+ * - Mobile-first responsive design
+ * - RTL support built-in
+ * - Accessibility first
+ */
+
+/* ===== CSS CUSTOM PROPERTIES (Easy to customize) ===== */
+:root {
+    /* Header dimensions */
+    --header-height-desktop: 80px;
+    --header-height-tablet: 70px;
+    --header-height-mobile: 60px;
+    
+    /* Colors */
+    --header-bg: #f6f6eb;
+    --header-text: #1a1a1a;
+    --header-hover: #8a7968;
+    --header-border: #e0e0e0;
+    --overlay-bg: rgba(0, 0, 0, 0.3);
+    
+    /* Z-index hierarchy (CRITICAL) */
+    --z-header: 1000;
+    --z-overlay: 9999;
+    --z-nav-content: 10000;
+    --z-toggle: 10001;
+    
+    /* Spacing */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 12px;
+    --spacing-lg: 16px;
+    --spacing-xl: 24px;
+    --spacing-2xl: 32px;
+    
+    /* Transitions */
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.3s ease;
+    --transition-slow: 0.5s ease;
+    
+    /* Border radius */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+}
+
+/* ===== RESET & BASE STYLES ===== */
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    padding-top: var(--header-height-desktop) !important;
+    transition: padding-top var(--transition-normal) !important;
+}
+
+/* ===== HEADER CONTAINER ===== */
+.lakum-header {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    height: var(--header-height-desktop) !important;
+    background: var(--header-bg) !important;
+    color: var(--header-text) !important;
+    z-index: var(--z-header) !important;
+    border-bottom: 1px solid var(--header-border) !important;
+    box-shadow: none !important;
+    transition: box-shadow var(--transition-normal) !important;
+}
+
+.lakum-header.lakum-header--scrolled {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12) !important;
+}
+
+.lakum-header__container {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    height: 100% !important;
+    max-width: 1600px !important;
+    margin: 0 auto !important;
+    padding: 0 var(--spacing-lg) !important;
+    width: 100% !important;
+}
+
+/* ===== LOGO ===== */
+.lakum-header__logo {
+    display: flex !important;
+    align-items: center !important;
+    flex-shrink: 0 !important;
+    z-index: var(--z-toggle) !important;
+}
+
+.lakum-logo {
+    display: flex !important;
+    align-items: center !important;
+    gap: var(--spacing-sm) !important;
+    text-decoration: none !important;
+    color: var(--header-text) !important;
+    transition: opacity var(--transition-fast) !important;
+}
+
+.lakum-logo:hover {
+    opacity: 0.8 !important;
+}
+
+.lakum-logo__left,
+.lakum-logo__right {
+    height: 40px !important;
+    width: auto !important;
+    display: block !important;
+    object-fit: contain !important;
+}
+
+/* ===== DESKTOP NAVIGATION ===== */
+.lakum-nav {
+    display: flex !important;
+    align-items: center !important;
+    flex: 1 !important;
+    justify-content: center !important;
+    margin: 0 var(--spacing-xl) !important;
+}
+
+.lakum-nav__list {
+    display: flex !important;
+    align-items: center !important;
+    list-style: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    gap: var(--spacing-lg) !important;
+}
+
+.lakum-nav__item {
+    display: flex !important;
+    align-items: center !important;
+}
+
+.lakum-nav__link {
+    display: inline-block !important;
+    padding: var(--spacing-md) var(--spacing-lg) !important;
+    color: var(--header-text) !important;
+    text-decoration: none !important;
+    font-size: 0.95rem !important;
+    font-weight: 500 !important;
+    transition: color var(--transition-fast) !important;
+    position: relative !important;
+    white-space: nowrap !important;
+}
+
+.lakum-nav__link::after {
+    content: '' !important;
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 0 !important;
+    height: 2px !important;
+    background: var(--header-hover) !important;
+    transition: width var(--transition-fast) !important;
+}
+
+.lakum-nav__link:hover {
+    color: var(--header-hover) !important;
+}
+
+.lakum-nav__link:hover::after {
+    width: 100% !important;
+}
+
+.lakum-nav__link--active {
+    color: var(--header-hover) !important;
+}
+
+.lakum-nav__link--active::after {
+    width: 100% !important;
+}
+
+/* ===== LANGUAGE SWITCHER ===== */
+.lakum-language-switcher {
+    display: flex !important;
+    align-items: center !important;
+    gap: var(--spacing-md) !important;
+    flex-shrink: 0 !important;
+    z-index: var(--z-toggle) !important;
+}
+
+.lakum-lang-link {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: var(--spacing-md) var(--spacing-lg) !important;
+    color: var(--header-text) !important;
+    text-decoration: none !important;
+    font-size: 0.85rem !important;
+    font-weight: 600 !important;
+    transition: all var(--transition-fast) !important;
+    border-radius: var(--radius-sm) !important;
+    cursor: pointer !important;
+}
+
+.lakum-lang-link:hover {
+    background: rgba(0, 0, 0, 0.05) !important;
+    color: var(--header-hover) !important;
+}
+
+.lakum-lang-link--active {
+    background: var(--header-hover) !important;
+    color: white !important;
+}
+
+.lakum-lang-text {
+    display: inline-block !important;
+}
+
+/* ===== MOBILE TOGGLE BUTTON ===== */
+.lakum-header__mobile-toggle {
+    display: none !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 44px !important;
+    height: 44px !important;
+    background: transparent !important;
+    border: none !important;
+    cursor: pointer !important;
+    padding: 0 !important;
+    z-index: var(--z-toggle) !important;
+    flex-shrink: 0 !important;
+    transition: all var(--transition-normal) !important;
+}
+
+.lakum-header__mobile-toggle:focus {
+    outline: 2px solid var(--header-hover) !important;
+    outline-offset: 2px !important;
+}
+
+.lakum-header__mobile-icon {
+    display: block !important;
+    width: 24px !important;
+    height: 20px !important;
+    position: relative !important;
+}
+
+.lakum-header__mobile-icon::before,
+.lakum-header__mobile-icon::after {
+    content: '' !important;
+    position: absolute !important;
+    width: 100% !important;
+    height: 2px !important;
+    background: var(--header-text) !important;
+    left: 0 !important;
+    transition: all var(--transition-normal) !important;
+}
+
+.lakum-header__mobile-icon::before {
+    top: 0 !important;
+}
+
+.lakum-header__mobile-icon::after {
+    bottom: 0 !important;
+}
+
+.lakum-header__mobile-icon {
+    background: linear-gradient(to bottom, var(--header-text) 0%, var(--header-text) 2px, transparent 2px, transparent 9px, var(--header-text) 9px, var(--header-text) 11px, transparent 11px, transparent 18px, var(--header-text) 18px, var(--header-text) 20px) !important;
+    background-size: 100% 100% !important;
+    background-repeat: no-repeat !important;
+}
+
+.lakum-header__mobile-toggle--active .lakum-header__mobile-icon {
+    background: transparent !important;
+}
+
+.lakum-header__mobile-toggle--active .lakum-header__mobile-icon::before {
+    top: 50% !important;
+    transform: translateY(-50%) rotate(45deg) !important;
+}
+
+.lakum-header__mobile-toggle--active .lakum-header__mobile-icon::after {
+    bottom: 50% !important;
+    transform: translateY(50%) rotate(-45deg) !important;
+}
+
+/* ===== MOBILE NAVIGATION (Off-canvas) ===== */
+.lakum-nav--mobile {
+    display: none !important;
+    position: fixed !important;
+    top: var(--header-height-mobile) !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: calc(100vh - var(--header-height-mobile)) !important;
+    background: var(--header-bg) !important;
+    z-index: var(--z-nav-content) !important;
+    transform: translateX(-100%) !important;
+    transition: transform var(--transition-normal) !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+}
+
+/* RTL support for mobile nav */
+html[dir="rtl"] .lakum-nav--mobile {
+    left: auto !important;
+    right: 0 !important;
+    transform: translateX(100%) !important;
+}
+
+.lakum-nav--mobile::before {
+    content: '' !important;
+    position: fixed !important;
+    top: var(--header-height-mobile) !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: calc(100vh - var(--header-height-mobile)) !important;
+    background: var(--overlay-bg) !important;
+    z-index: var(--z-overlay) !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transition: all var(--transition-normal) !important;
+}
+
+.lakum-nav--mobile.lakum-nav--active {
+    transform: translateX(0) !important;
+}
+
+html[dir="rtl"] .lakum-nav--mobile.lakum-nav--active {
+    transform: translateX(0) !important;
+}
+
+.lakum-nav--mobile.lakum-nav--active::before {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.lakum-nav--mobile .lakum-nav__list {
+    flex-direction: column !important;
+    gap: 0 !important;
+    padding: var(--spacing-lg) 0 !important;
+}
+
+.lakum-nav--mobile .lakum-nav__item {
+    width: 100% !important;
+}
+
+.lakum-nav--mobile .lakum-nav__link {
+    display: block !important;
+    width: 100% !important;
+    padding: var(--spacing-lg) var(--spacing-xl) !important;
+    border-bottom: 1px solid var(--header-border) !important;
+    border-radius: 0 !important;
+}
+
+.lakum-nav--mobile .lakum-nav__link::after {
+    display: none !important;
+}
+
+.lakum-nav--mobile .lakum-nav__link:hover {
+    background: rgba(0, 0, 0, 0.05) !important;
+}
+
+.lakum-nav--mobile .lakum-nav__link--active {
+    background: rgba(138, 121, 104, 0.1) !important;
+    border-left: 3px solid var(--header-hover) !important;
+    padding-left: calc(var(--spacing-xl) - 3px) !important;
+}
+
+html[dir="rtl"] .lakum-nav--mobile .lakum-nav__link--active {
+    border-left: none !important;
+    border-right: 3px solid var(--header-hover) !important;
+    padding-left: var(--spacing-xl) !important;
+    padding-right: calc(var(--spacing-xl) - 3px) !important;
+}
+
+/* ===== SKIP TO MAIN CONTENT (Accessibility) ===== */
+.lakum-skip-link {
+    position: absolute !important;
+    top: -40px !important;
+    left: 0 !important;
+    background: var(--header-hover) !important;
+    color: white !important;
+    padding: var(--spacing-md) var(--spacing-lg) !important;
+    text-decoration: none !important;
+    z-index: 99999 !important;
+}
+
+.lakum-skip-link:focus {
+    top: 0 !important;
+}
+
+/* ===== TABLET BREAKPOINT (768px - 1024px) ===== */
+@media (max-width: 1024px) {
+    :root {
+        --header-height-desktop: 70px;
+    }
+    
+    body {
+        padding-top: var(--header-height-desktop) !important;
+    }
+    
+    .lakum-header {
+        height: var(--header-height-desktop) !important;
+    }
+    
+    .lakum-header__container {
+        padding: 0 var(--spacing-md) !important;
+    }
+    
+    .lakum-nav {
+        margin: 0 var(--spacing-md) !important;
+    }
+    
+    .lakum-nav__list {
+        gap: var(--spacing-md) !important;
+    }
+    
+    .lakum-nav__link {
+        padding: var(--spacing-sm) var(--spacing-md) !important;
+        font-size: 0.9rem !important;
+    }
+    
+    .lakum-logo__left,
+    .lakum-logo__right {
+        height: 35px !important;
+    }
+}
+
+/* ===== MOBILE BREAKPOINT (< 768px) ===== */
+@media (max-width: 768px) {
+    :root {
+        --header-height-desktop: 60px;
+    }
+    
+    body {
+        padding-top: var(--header-height-desktop) !important;
+    }
+    
+    .lakum-header {
+        height: var(--header-height-desktop) !important;
+    }
+    
+    .lakum-header__container {
+        padding: 0 var(--spacing-md) !important;
+    }
+    
+    /* Hide desktop nav */
+    .lakum-nav {
+        display: none !important;
+    }
+    
+    /* Show mobile toggle */
+    .lakum-header__mobile-toggle {
+        display: flex !important;
+    }
+    
+    /* Show mobile nav */
+    .lakum-nav--mobile {
+        display: flex !important;
+        flex-direction: column !important;
+    }
+    
+    /* Language switcher repositioning */
+    .lakum-language-switcher {
+        gap: var(--spacing-sm) !important;
+    }
+    
+    .lakum-lang-link {
+        padding: var(--spacing-sm) var(--spacing-md) !important;
+        font-size: 0.75rem !important;
+    }
+    
+    .lakum-logo__left,
+    .lakum-logo__right {
+        height: 30px !important;
+    }
+}
+
+/* ===== SMALL MOBILE BREAKPOINT (< 480px) ===== */
+@media (max-width: 480px) {
+    :root {
+        --header-height-desktop: 56px;
+    }
+    
+    body {
+        padding-top: var(--header-height-desktop) !important;
+    }
+    
+    .lakum-header {
+        height: var(--header-height-desktop) !important;
+    }
+    
+    .lakum-header__container {
+        padding: 0 var(--spacing-sm) !important;
+    }
+    
+    .lakum-header__mobile-toggle {
+        width: 40px !important;
+        height: 40px !important;
+    }
+    
+    .lakum-header__mobile-icon {
+        width: 20px !important;
+        height: 18px !important;
+    }
+    
+    .lakum-logo__left,
+    .lakum-logo__right {
+        height: 28px !important;
+    }
+    
+    .lakum-language-switcher {
+        gap: var(--spacing-xs) !important;
+    }
+    
+    .lakum-lang-link {
+        padding: var(--spacing-xs) var(--spacing-sm) !important;
+        font-size: 0.7rem !important;
+    }
+    
+    .lakum-nav--mobile {
+        top: var(--header-height-desktop) !important;
+        height: calc(100vh - var(--header-height-desktop)) !important;
+    }
+    
+    .lakum-nav--mobile::before {
+        top: var(--header-height-desktop) !important;
+        height: calc(100vh - var(--header-height-desktop)) !important;
+    }
+}
+
+/* ===== RTL SUPPORT (Arabic) ===== */
+html[dir="rtl"] {
+    direction: rtl !important;
+}
+
+html[dir="rtl"] .lakum-header__container {
+    flex-direction: row-reverse !important;
+}
+
+html[dir="rtl"] .lakum-nav {
+    margin: 0 var(--spacing-xl) !important;
+}
+
+html[dir="rtl"] .lakum-nav__link::after {
+    left: auto !important;
+    right: 0 !important;
+}
+
+html[dir="rtl"] .lakum-language-switcher {
+    flex-direction: row-reverse !important;
+}
+
+html[dir="rtl"] .lakum-logo {
+    flex-direction: row-reverse !important;
+}
+
+/* ===== PRINT STYLES ===== */
+@media print {
+    .lakum-header {
+        position: static !important;
+        height: auto !important;
+    }
+    
+    .lakum-header__mobile-toggle {
+        display: none !important;
+    }
+    
+    .lakum-nav--mobile {
+        display: none !important;
+    }
+    
+    body {
+        padding-top: 0 !important;
+    }
+}
+
+/* ===== ACCESSIBILITY ===== */
+@media (prefers-reduced-motion: reduce) {
+    .lakum-header,
+    .lakum-nav--mobile,
+    .lakum-nav__link,
+    .lakum-lang-link,
+    .lakum-header__mobile-toggle {
+        transition: none !important;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: more) {
+    .lakum-header {
+        border-bottom: 2px solid var(--header-text) !important;
+    }
+    
+    .lakum-nav__link--active {
+        text-decoration: underline !important;
+    }
+}
+
+/* Dark mode support (optional) */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --header-bg: #1a1a1a !important;
+        --header-text: #f6f6eb !important;
+        --header-border: #333 !important;
+    }
+}
