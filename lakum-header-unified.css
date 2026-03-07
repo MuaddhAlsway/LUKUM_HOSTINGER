@@ -161,6 +161,12 @@ html[dir="rtl"] .lakum-nav__list {
     flex-direction: row-reverse !important;
 }
 
+/* Ensure RTL works on all pages including spaces, exhibitions, calendar */
+html[dir="rtl"] .lakum-nav__list,
+html[dir="rtl"] .lakum-nav--mobile .lakum-nav__list {
+    flex-direction: row-reverse !important;
+}
+
 .lakum-nav__item {
     display: flex !important;
     align-items: center !important;

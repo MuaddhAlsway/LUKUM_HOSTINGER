@@ -1066,6 +1066,15 @@ require_once 'lang/loader.php';
         } else {
             initCalendarPage();
         }
+        
+        // Listen for language changes and reload page to apply RTL/LTR to navigation
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'lakum_language' && e.newValue) {
+                console.log('Language changed to:', e.newValue);
+                // Reload page to apply language changes to navigation
+                window.location.href = window.location.pathname + '?lang=' + e.newValue;
+            }
+        });
     </script>
 
     <!-- Mobile Performance Optimizer -->

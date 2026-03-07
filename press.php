@@ -244,6 +244,16 @@ require_once 'api/image-helper.php';
     <script>
         // Set current language from PHP (respects URL parameter ?lang=en or ?lang=ar)
         window.LAKUM_LANG = '<?php echo getCurrentLanguage(); ?>';
+        console.log('Initial language set to:', window.LAKUM_LANG);
+        
+        // Listen for language changes and reload page to apply RTL/LTR to navigation
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'lakum_language' && e.newValue) {
+                console.log('Language changed to:', e.newValue);
+                // Reload page to apply language changes to navigation and press grid
+                window.location.href = window.location.pathname + '?lang=' + e.newValue;
+            }
+        });
     </script>
 
     <script>

@@ -287,6 +287,15 @@ require_once 'api/image-helper.php';
         // Set current language from PHP
         window.LAKUM_LANG = '<?php echo getCurrentLanguage(); ?>';
         
+        // Listen for language changes and reload page to apply RTL/LTR to navigation
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'lakum_language' && e.newValue) {
+                console.log('Language changed to:', e.newValue);
+                // Reload page to apply language changes to navigation
+                window.location.href = window.location.pathname + '?lang=' + e.newValue;
+            }
+        });
+        
         const translations = {
             noUpcomingEvents: '<?php echo t("no_upcoming_events", "No upcoming events at this time"); ?>',
             checkBackSoon: '<?php echo t("check_back_soon", "Check back soon to see our previous exhibitions and events"); ?>',
