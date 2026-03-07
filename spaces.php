@@ -643,7 +643,6 @@ require_once 'api/image-helper.php';
                 initAccordion();
             });
 
-            const pricingGrid = document.getElementById('pricingGrid');
             if (pricingGrid) {
                 observer.observe(pricingGrid, { childList: true, subtree: true });
             }
