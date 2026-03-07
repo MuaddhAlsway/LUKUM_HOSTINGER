@@ -232,3 +232,48 @@
         max-width: 500px;
     }
 }
+
+/* ===== RTL SUPPORT (ARABIC) ===== */
+
+html[dir="rtl"] .lakum-press-grid {
+    direction: rtl;
+}
+
+html[dir="rtl"] .lakum-press-card {
+    direction: rtl;
+    text-align: right;
+}
+
+html[dir="rtl"] .lakum-press-card__content {
+    text-align: right;
+    direction: rtl;
+}
+
+html[dir="rtl"] .lakum-press-card__source {
+    text-align: right;
+}
+
+html[dir="rtl"] .lakum-press-card__title {
+    text-align: right;
+}
+
+html[dir="rtl"] .lakum-press-card__description {
+    text-align: right;
+}
+
+html[dir="rtl"] .lakum-press-card__footer {
+    flex-direction: row-reverse;
+    text-align: right;
+}
+
+html[dir="rtl"] .lakum-press-card__link {
+    flex-direction: row-reverse;
+}
+
+html[dir="rtl"] .lakum-press-hero__title {
+    text-align: center !important;
+}
+
+html[dir="rtl"] .lakum-press-hero__subtitle {
+    text-align: center !important;
+}
