@@ -387,6 +387,9 @@ if (!$title) {
                     document.title = `${blog.title} - LAKUM Artspace`;
                     document.getElementById('page-title').textContent = `${blog.title} - LAKUM Artspace`;
                     
+                    // SET THE BLOG TITLE IN THE HERO
+                    document.getElementById('blog-title').textContent = blog.title;
+                    
                     // Format and display date
                     const formattedDate = blog.created_at ? new Date(blog.created_at).toLocaleDateString('en-US', {
                         year: 'numeric',
@@ -458,7 +461,7 @@ if (!$title) {
         async function loadRelatedBlogs(currentBlogId) {
             try {
                 const lang = urlLang || window.LAKUM_LANG || localStorage.getItem('lakum_language') || 'en';
-                const apiUrl = `${window.location.origin}/api/get_blogs.php?limit=3&lang=${lang}`;
+                const apiUrl = `${window.location.origin}/api/get_blogs_fixed.php?lang=${lang}`;
                 console.log('Fetching related blogs from:', apiUrl);
                 
                 const response = await fetch(apiUrl);
@@ -472,11 +475,24 @@ if (!$title) {
                     relatedBlogs.forEach(blog => {
                         const card = document.createElement('div');
                         card.className = 'event-related__item';
-                        // Always use English title for user-friendly slug
-                        const blogSlug = (blog.title_en || '').toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+                        
+                        // Generate slug: use database slug if available, otherwise generate from title_en
+                        let blogSlug = blog.slug;
+                        if (!blogSlug || blogSlug.trim() === '') {
+                            // Generate from title_en or title
+                            const titleForSlug = blog.title_en || blog.title || '';
+                            blogSlug = titleForSlug.toLowerCase()
+                                .replace(/[^a-z0-9\s-]/g, '')
+                                .replace(/\s+/g, '-')
+                                .replace(/-+/g, '-')
+                                .trim('-');
+                        }
+                        
+                        console.log('Blog:', blog.title, 'Slug:', blogSlug);
+                        
                         const langParam = lang !== 'en' ? `&lang=${lang}` : '';
                         card.innerHTML = `
-                            <a href="blogPageDetails.php?title=${blogSlug}${langParam}" class="event-related__link">
+                            <a href="blogPageDetails.php?title=${encodeURIComponent(blogSlug)}${langParam}" class="event-related__link">
                                 <div class="event-related__image">
                                     <img src="${blog.cover_image}" alt="${blog.title}" loading="lazy">
                                 </div>

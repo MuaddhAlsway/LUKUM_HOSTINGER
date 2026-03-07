@@ -375,21 +375,6 @@ require_once 'api/image-helper.php';
             <p class="lakum-press-hero__subtitle"><?php echo t('press_subtitle', 'Read about LAKUM Artspace in the news'); ?></p>
         </div>
     </section>
-                 alt="Press"
-                 fetchpriority="high"
-                 loading="eager"
-                 decoding="async"
-                 width="1200"
-                 height="800"
-                 class="lakum-hero__image"
-                 style="width: 100%; height: 100%; object-fit: cover; display: block;">
-            <div class="lakum-hero__overlay"></div>
-        </div>
-        <div class="lakum-hero__content">
-            <h1 class="lakum-hero__title"><?php echo t('press_hero_title', 'Press & Media'); ?></h1>
-            <p class="lakum-hero__subtitle"><?php echo t('press_hero_subtitle', 'Read about LAKUM Artspace in the news'); ?></p>
-        </div>
-    </section>
 
     <!-- Press Releases Grid -->
     <section class="lakum-press-content">
@@ -576,6 +561,15 @@ require_once 'api/image-helper.php';
             // DOM already loaded
             setTimeout(initPressPage, 100);
         }
+
+        // Listen for language changes and reload press data
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'lakum_language' && e.newValue) {
+                console.log('Language changed to:', e.newValue);
+                window.LAKUM_LANG = e.newValue;
+                loadPressReleases();
+            }
+        });
     </script>
 
     <script>
