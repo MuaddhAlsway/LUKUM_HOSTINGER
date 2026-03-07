@@ -531,6 +531,7 @@ require_once 'api/image-helper.php';
     </div>
 </div>
 
+<script src="assest/fab-button.js" defer></script>
 <script src="assest/navbar-mobile-toggle.js" defer></script>
     
     </body>

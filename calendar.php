@@ -1297,6 +1297,8 @@ require_once 'lang/loader.php';
         </div>
     </div>
 
+    <script src="assest/fab-button.js" defer></script>
+
 </body>
 
 </html>

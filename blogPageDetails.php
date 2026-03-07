@@ -289,6 +289,8 @@ if (!$title) {
         </div>
     </div>
 
+    <script src="assest/fab-button.js" defer></script>
+
     <script>
         // Blog Details Page Script
         // Pass title from PHP to JavaScript (for clean URLs)
