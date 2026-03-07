@@ -627,21 +627,15 @@ require_once 'api/image-helper.php';
 
     <!-- Global Accordion Controller using Event Delegation -->
     <script>
-        // Single global accordion controller for all pricing cards
-        // Uses event delegation with capture phase for reliable handling
+        // Global accordion controller for all pricing cards
+        // Allows multiple cards to open simultaneously for price comparison
+        // No single-expansion logic - users can open multiple cards at once
         document.addEventListener('toggle', function(e) {
             // Only handle pricing accordion elements
             if (!e.target.classList.contains('pricing-accordion')) return;
             
-            // When a card opens, close all other open cards
-            if (e.target.open) {
-                const allAccordions = document.querySelectorAll('.pricing-accordion[open]');
-                allAccordions.forEach((detail) => {
-                    if (detail !== e.target) {
-                        detail.open = false;
-                    }
-                });
-            }
+            // Allow multiple cards to be open at the same time
+            // No action needed - native <details> element handles toggle automatically
         }, true); // Use capture phase for reliable event handling
     </script>
 
@@ -1030,97 +1024,9 @@ require_once 'api/image-helper.php';
             });
         })();
 
-        // Pricing Cards Height Equalization (Per Row)
-        const pricingWrappers = document.querySelectorAll('.pricing-card-wrapper');
-
-        if (pricingWrappers.length > 0) {
-            function equalizeHeights() {
-                // Wait for animation to complete
-                setTimeout(() => {
-                    // Group cards by row based on their Y position
-                    const rows = new Map();
-
-                    pricingWrappers.forEach(wrapper => {
-                        const rect = wrapper.getBoundingClientRect();
-                        const rowKey = Math.round(rect.top); // Group by Y position
-
-                        if (!rows.has(rowKey)) {
-                            rows.set(rowKey, []);
-                        }
-                        rows.get(rowKey).push(wrapper);
-                    });
-
-                    // Equalize height within each row
-                    rows.forEach(rowWrappers => {
-                        let maxAccordionHeight = 0;
-                        let hasOpenAccordion = false;
-                        const openWrappers = [];
-
-                        // Find open accordions in this row and get max height
-                        rowWrappers.forEach(wrapper => {
-                            const accordion = wrapper.querySelector('.pricing-accordion');
-                            if (accordion && accordion.hasAttribute('open')) {
-                                hasOpenAccordion = true;
-                                openWrappers.push(wrapper);
-
-                                // Measure accordion height only (not including button)
-                                const accordionHeight = accordion.offsetHeight;
-
-                                if (accordionHeight > maxAccordionHeight) {
-                                    maxAccordionHeight = accordionHeight;
-                                }
-                            }
-                        });
-
-                        // Apply heights with smooth animation for this row
-                        if (hasOpenAccordion && maxAccordionHeight > 0) {
-                            // Set all open accordions in this row to max height
-                            openWrappers.forEach(wrapper => {
-                                const accordion = wrapper.querySelector('.pricing-accordion');
-                                if (accordion) {
-                                    accordion.style.height = maxAccordionHeight + 'px';
-                                    accordion.style.transition = 'height 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
-                                }
-                            });
-
-                            // Reset closed accordions in this row to auto height
-                            rowWrappers.forEach(wrapper => {
-                                const accordion = wrapper.querySelector('.pricing-accordion');
-                                if (accordion && !accordion.hasAttribute('open')) {
-                                    accordion.style.height = 'auto';
-                                }
-                            });
-                        } else {
-                            // Reset all heights in this row when all are closed
-                            rowWrappers.forEach(wrapper => {
-                                const accordion = wrapper.querySelector('.pricing-accordion');
-                                if (accordion) {
-                                    accordion.style.height = 'auto';
-                                }
-                            });
-                        }
-                    });
-                }, 50);
-            }
-
-            // Add event listeners to all accordions
-            pricingWrappers.forEach(wrapper => {
-                const accordion = wrapper.querySelector('.pricing-accordion');
-                if (accordion) {
-                    accordion.addEventListener('toggle', equalizeHeights);
-                }
-            });
-
-            // Re-equalize on window resize (to handle row changes)
-            let resizeTimer;
-            window.addEventListener('resize', () => {
-                clearTimeout(resizeTimer);
-                resizeTimer = setTimeout(equalizeHeights, 100);
-            });
-
-            // Initial check
-            equalizeHeights();
-        }
+        // Pricing Cards - No height equalization
+        // Each card expands independently based on its content
+        // This allows users to open multiple cards simultaneously for comparison
 
         // Translate Past Exhibitions if needed
         if (typeof translationHelper !== 'undefined' && translationHelper.needsTranslation()) {
@@ -1376,82 +1282,8 @@ require_once 'api/image-helper.php';
 
                         console.log('Pricing loaded successfully:', data.data.length, 'items from', data.source);
                         
-                        // Re-equalize pricing card heights after loading
-                        setTimeout(() => {
-                            const pricingWrappers = document.querySelectorAll('.pricing-card-wrapper');
-                            if (pricingWrappers.length > 0) {
-                                function equalizeHeights() {
-                                    setTimeout(() => {
-                                        const rows = new Map();
-                                        pricingWrappers.forEach(wrapper => {
-                                            const rect = wrapper.getBoundingClientRect();
-                                            const rowKey = Math.round(rect.top);
-                                            if (!rows.has(rowKey)) {
-                                                rows.set(rowKey, []);
-                                            }
-                                            rows.get(rowKey).push(wrapper);
-                                        });
-
-                                        rows.forEach(rowWrappers => {
-                                            let maxAccordionHeight = 0;
-                                            let hasOpenAccordion = false;
-                                            const openWrappers = [];
-
-                                            rowWrappers.forEach(wrapper => {
-                                                const accordion = wrapper.querySelector('.pricing-accordion');
-                                                if (accordion && accordion.hasAttribute('open')) {
-                                                    hasOpenAccordion = true;
-                                                    openWrappers.push(wrapper);
-                                                    const accordionHeight = accordion.offsetHeight;
-                                                    if (accordionHeight > maxAccordionHeight) {
-                                                        maxAccordionHeight = accordionHeight;
-                                                    }
-                                                }
-                                            });
-
-                                            if (hasOpenAccordion && maxAccordionHeight > 0) {
-                                                openWrappers.forEach(wrapper => {
-                                                    const accordion = wrapper.querySelector('.pricing-accordion');
-                                                    if (accordion) {
-                                                        accordion.style.height = maxAccordionHeight + 'px';
-                                                        accordion.style.transition = 'height 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
-                                                    }
-                                                });
-
-                                                rowWrappers.forEach(wrapper => {
-                                                    const accordion = wrapper.querySelector('.pricing-accordion');
-                                                    if (accordion && !accordion.hasAttribute('open')) {
-                                                        accordion.style.height = 'auto';
-                                                    }
-                                                });
-                                            } else {
-                                                rowWrappers.forEach(wrapper => {
-                                                    const accordion = wrapper.querySelector('.pricing-accordion');
-                                                    if (accordion) {
-                                                        accordion.style.height = 'auto';
-                                                    }
-                                                });
-                                            }
-                                        });
-                                    }, 50);
-                                }
-
-                                pricingWrappers.forEach(wrapper => {
-                                    const accordion = wrapper.querySelector('.pricing-accordion');
-                                    if (accordion) {
-                                        accordion.addEventListener('toggle', equalizeHeights);
-                                    }
-                                });
-
-                                let resizeTimer;
-                                window.addEventListener('resize', () => {
-                                    clearTimeout(resizeTimer);
-                                    resizeTimer = setTimeout(equalizeHeights, 100);
-                                });
-
-                                equalizeHeights();
-                            }
-                        }, 100);
+                        // Pricing cards loaded - no height equalization needed
+                        // Each card expands independently based on its content
                     } else {
                         console.warn('Invalid pricing data format or empty:', data);
                         console.log('Keeping hardcoded pricing');
