@@ -309,6 +309,7 @@
     max-width: 1400px;
     margin: 0 auto;
     padding: 0 clamp(20px, 5vw, 60px);
+    align-items: start;
 }
 
 /* Pricing Card - Expandable */
@@ -833,7 +834,7 @@
     background: #f6f6eb;
     border-radius: 2px 2px 0 0;
     overflow: hidden;
-    flex: 1 1 auto;
+    flex: 0 0 auto;
     max-width: 100%;
 }
 
@@ -975,14 +976,13 @@
     border-top: 1px solid rgba(209, 209, 209, 0.3);
     opacity: 0;
     transition: opacity 0.2s ease;
-    max-height: 0;
-    overflow: hidden;
+    visibility: hidden;
 }
 
 .pricing-accordion[open] .pricing-accordion__content {
     opacity: 1;
-    max-height: 2000px;
-    transition: opacity 0.2s ease, max-height 0.3s ease;
+    visibility: visible;
+    transition: opacity 0.2s ease;
 }
 
 .pricing-accordion__content h4 {

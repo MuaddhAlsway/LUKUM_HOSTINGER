@@ -625,18 +625,88 @@ require_once 'api/image-helper.php';
         })();
     </script>
 
-    <!-- Global Accordion Controller using Event Delegation -->
+    <!-- Smart Height Equalization for Pricing Cards -->
     <script>
-        // Global accordion controller for all pricing cards
-        // Allows multiple cards to open simultaneously for price comparison
-        // No single-expansion logic - users can open multiple cards at once
+        // Smart height equalization: Only equalize heights of cards in the same row
+        // Non-clicked cards stay at natural height until clicked
+        // Clicked cards in same row match the tallest card's height
+        
+        function equalizeRowHeights() {
+            const pricingGrid = document.getElementById('pricingGrid');
+            if (!pricingGrid) return;
+            
+            const wrappers = Array.from(pricingGrid.querySelectorAll('.pricing-card-wrapper'));
+            if (wrappers.length === 0) return;
+            
+            // Group cards by row based on their Y position
+            const rows = new Map();
+            wrappers.forEach(wrapper => {
+                const rect = wrapper.getBoundingClientRect();
+                const rowKey = Math.round(rect.top);
+                
+                if (!rows.has(rowKey)) {
+                    rows.set(rowKey, []);
+                }
+                rows.get(rowKey).push(wrapper);
+            });
+            
+            // For each row, equalize heights of OPEN cards only
+            rows.forEach(rowWrappers => {
+                const openAccordions = rowWrappers.filter(wrapper => {
+                    const accordion = wrapper.querySelector('.pricing-accordion');
+                    return accordion && accordion.hasAttribute('open');
+                });
+                
+                // If there are open cards in this row, equalize their heights
+                if (openAccordions.length > 0) {
+                    // Find max height among open cards
+                    let maxHeight = 0;
+                    openAccordions.forEach(wrapper => {
+                        const accordion = wrapper.querySelector('.pricing-accordion');
+                        if (accordion) {
+                            const height = accordion.offsetHeight;
+                            if (height > maxHeight) {
+                                maxHeight = height;
+                            }
+                        }
+                    });
+                    
+                    // Apply max height to all open cards in this row
+                    openAccordions.forEach(wrapper => {
+                        const accordion = wrapper.querySelector('.pricing-accordion');
+                        if (accordion) {
+                            accordion.style.minHeight = maxHeight + 'px';
+                        }
+                    });
+                } else {
+                    // No open cards in this row - reset all heights
+                    rowWrappers.forEach(wrapper => {
+                        const accordion = wrapper.querySelector('.pricing-accordion');
+                        if (accordion) {
+                            accordion.style.minHeight = 'auto';
+                        }
+                    });
+                }
+            });
+        }
+        
+        // Listen for toggle events on pricing cards
         document.addEventListener('toggle', function(e) {
-            // Only handle pricing accordion elements
             if (!e.target.classList.contains('pricing-accordion')) return;
             
-            // Allow multiple cards to be open at the same time
-            // No action needed - native <details> element handles toggle automatically
-        }, true); // Use capture phase for reliable event handling
+            // Equalize heights after a short delay to allow animation
+            setTimeout(equalizeRowHeights, 50);
+        }, true);
+        
+        // Re-equalize on window resize
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(equalizeRowHeights, 100);
+        });
+        
+        // Initial equalization
+        setTimeout(equalizeRowHeights, 100);
     </script>
 
     <!-- Book Your Space Section -->
