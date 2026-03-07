@@ -156,6 +156,11 @@ body {
     height: 100% !important;
 }
 
+/* RTL Support for Arabic */
+html[dir="rtl"] .lakum-nav__list {
+    flex-direction: row-reverse !important;
+}
+
 .lakum-nav__item {
     display: flex !important;
     align-items: center !important;
