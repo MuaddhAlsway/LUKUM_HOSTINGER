@@ -299,22 +299,10 @@ require_once 'lang/loader.php';
     </script>
 
     <!-- Hero Section -->
-    <section class="lakum-hero" style="aspect-ratio: 16/9">
-        <div class="lakum-hero__image-wrapper">
-            <img src="heroImage/img-4.webp"
-                 alt="Contact"
-                 fetchpriority="high"
-                 loading="eager"
-                 decoding="async"
-                 width="1200"
-                 height="800"
-                 class="lakum-hero__image"
-                 style="width: 100%; height: 100%; object-fit: cover; display: block;">
-            <div class="lakum-hero__overlay"></div>
-        </div>
-        <div class="lakum-hero__content">
-            <h1 class="lakum-hero__title"><?php echo t('hero_title', 'Get In Touch'); ?></h1>
-            <p class="lakum-hero__subtitle"><?php echo t('hero_subtitle', 'Have a question or want to collaborate? We\'d love to hear from you. Reach out and let\'s create something amazing together.'); ?></p>
+    <section class="lakum-contact-hero">
+        <div class="lakum-container">
+            <h1 class="lakum-contact-hero__title"><?php echo t('hero_title', 'Get In Touch'); ?></h1>
+            <p class="lakum-contact-hero__subtitle"><?php echo t('hero_subtitle', 'Have a question or want to collaborate? We\'d love to hear from you. Reach out and let\'s create something amazing together.'); ?></p>
         </div>
     </section>
 

@@ -712,6 +712,33 @@ body {
     color: #1a1a1a;
 }
 
+/* Contact Hero */
+.lakum-contact-hero {
+    position: relative;
+    padding: clamp(100px, 12vw, 140px) 0 clamp(70px, 9vw, 100px) 0;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    color: #ffffff;
+    text-align: center;
+    overflow: hidden;
+}
+
+.lakum-contact-hero__title {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 300;
+    line-height: 1.2;
+    margin: 0 0 20px 0;
+    color: #ffffff;
+}
+
+.lakum-contact-hero__subtitle {
+    font-size: clamp(1rem, 2vw, 1.3rem);
+    font-weight: 300;
+    line-height: 1.6;
+    color: #ffffff;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
 @media (max-width: 768px) {
     .lakum-blog-hero {
         padding: clamp(60px, 8vw, 100px) 0 clamp(50px, 7vw, 80px) 0;
