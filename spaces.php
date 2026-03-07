@@ -479,6 +479,24 @@ require_once 'api/image-helper.php';
     </section>
 
     <script>
+        // Global function to get duration label from price unit
+        // This must be global so both pricing loading functions can access it
+        function getDurationLabel(priceUnit) {
+            // Extract duration from price unit (e.g., "SAR/day" -> "day", "ريال سعودي / ساعة" -> "hour")
+            if (!priceUnit) return '';
+            
+            // English: SAR/day, SAR/hour, SAR
+            if (priceUnit.includes('/day')) return 'per day';
+            if (priceUnit.includes('/hour')) return 'per hour';
+            if (priceUnit === 'SAR' || priceUnit === 'ريال سعودي') return '';
+            
+            // Arabic: ريال سعودي / يوم, ريال سعودي / ساعة
+            if (priceUnit.includes('يوم')) return 'لكل يوم';
+            if (priceUnit.includes('ساعة')) return 'لكل ساعة';
+            
+            return '';
+        }
+
         // Fetch and render pricing based on current language
         (function() {
             const pricingGrid = document.getElementById('pricingGrid');
@@ -518,21 +536,7 @@ require_once 'api/image-helper.php';
             }
 
             // Create pricing card element
-            function getDurationLabel(priceUnit) {
-                // Extract duration from price unit (e.g., "SAR/day" -> "day", "ريال سعودي / ساعة" -> "hour")
-                if (!priceUnit) return '';
-                
-                // English: SAR/day, SAR/hour, SAR
-                if (priceUnit.includes('/day')) return 'per day';
-                if (priceUnit.includes('/hour')) return 'per hour';
-                if (priceUnit === 'SAR' || priceUnit === 'ريال سعودي') return '';
-                
-                // Arabic: ريال سعودي / يوم, ريال سعودي / ساعة
-                if (priceUnit.includes('يوم')) return 'لكل يوم';
-                if (priceUnit.includes('ساعة')) return 'لكل ساعة';
-                
-                return '';
-            }
+            // Note: getDurationLabel is now global (defined above)
 
             function createPricingCard(item, lang, index) {
                 const wrapper = document.createElement('div');
