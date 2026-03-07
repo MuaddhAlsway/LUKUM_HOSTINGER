@@ -1,0 +1,86 @@
+================================================================================
+PRESS ARABIC TRANSLATION - QUICK ACTION CHECKLIST
+================================================================================
+
+PROBLEM: Press cards show English instead of Arabic when ?lang=ar
+
+SOLUTION: 3 URLs to visit in order
+
+================================================================================
+STEP 1: DIAGNOSE (See what's in your database)
+================================================================================
+
+Visit: https://lakumartspace.com/api/diagnose-press-database.php
+
+This shows:
+- Total press items
+- Published items
+- Items needing Arabic
+
+Save the results.
+
+================================================================================
+STEP 2: POPULATE (Add Arabic translations to database)
+================================================================================
+
+Visit: https://lakumartspace.com/api/populate-press-arabic-smart.php
+
+This will:
+- Find all published press items
+- Add REAL Arabic translations
+- Update database automatically
+
+Look for: "updated": X (where X > 0 means it worked)
+
+================================================================================
+STEP 3: VERIFY (Confirm everything worked)
+================================================================================
+
+Visit: https://lakumartspace.com/api/verify-press-arabic-complete.php
+
+This shows:
+- How many items have Arabic
+- Sample Arabic item
+- Overall status
+
+Look for: "overall_status": "READY"
+
+================================================================================
+STEP 4: CLEAR CACHE AND TEST
+================================================================================
+
+1. Clear browser cache: Ctrl+Shift+Delete
+2. Hard refresh: Ctrl+Shift+R
+3. Test English: https://lakumartspace.com/press.php?lang=en
+4. Test Arabic: https://lakumartspace.com/press.php?lang=ar
+
+================================================================================
+EXPECTED RESULTS
+================================================================================
+
+English (?lang=en):
+- Titles in English
+- Button: "Read Article"
+- Text left-to-right
+
+Arabic (?lang=ar):
+- Titles in Arabic
+- Button: "اقرأ المقال"
+- Text right-to-left
+
+================================================================================
+IF SOMETHING GOES WRONG
+================================================================================
+
+1. Check populate script response - look for "updated" count
+2. Run verify script - check "overall_status"
+3. Open browser console (F12) - look for red errors
+4. Clear cache again and hard refresh
+5. Check if API is returning data: /api/get_press.php?lang=ar
+
+================================================================================
+THAT'S IT!
+================================================================================
+
+Just visit those 3 URLs in order, clear cache, and test.
+The fix is complete - just need to populate the database!
