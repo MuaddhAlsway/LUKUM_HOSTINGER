@@ -1523,7 +1523,7 @@ require_once 'api/image-helper.php';
             const vatNote = lang === 'ar' ? (item.vat_note_ar || '*(غير شامل الضريبة)') : (item.vat_note || '*(excluding VAT)');
             
             // Get "Book Now" button text based on language
-            const bookNowText = lang === 'ar' ? '???? ????' : 'Book Now';
+            const bookNowText = lang === 'ar' ? 'احجز الآن' : 'Book Now';
             
             // Format price
             let priceHTML = '';

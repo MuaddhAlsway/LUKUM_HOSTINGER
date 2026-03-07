@@ -1,0 +1,117 @@
+═══════════════════════════════════════════════════════════════════════════════
+PRICING DISPLAY FIX - QUICK ACTION CHECKLIST
+═══════════════════════════════════════════════════════════════════════════════
+
+ROOT CAUSE: JavaScript scope issue - getDurationLabel() was not accessible to 
+            the second pricing loading function
+
+FIX APPLIED: Moved getDurationLabel() to global scope in spaces.php
+
+═══════════════════════════════════════════════════════════════════════════════
+IMMEDIATE ACTIONS (DO THIS NOW)
+═══════════════════════════════════════════════════════════════════════════════
+
+☐ STEP 1: Clear Browser Cache
+  Windows: Ctrl+Shift+Delete
+  Mac:     Cmd+Shift+Delete
+  → Select "All time"
+  → Check: Cookies, Cache, Site data
+  → Click "Clear data"
+
+☐ STEP 2: Hard Refresh
+  Windows: Ctrl+Shift+R
+  Mac:     Cmd+Shift+R
+
+☐ STEP 3: Visit Spaces Page
+  URL: https://your-domain.com/spaces.php
+  Expected: 6 pricing cards in grid layout
+
+☐ STEP 4: Verify Cards Display
+  ✓ All 6 cards visible
+  ✓ Each card shows: Name, Price, Duration, VAT note
+  ✓ Cards are expandable (click to expand)
+  ✓ "Book Now" button visible on each card
+
+☐ STEP 5: Test Arabic
+  URL: https://your-domain.com/spaces.php?lang=ar
+  Expected: 6 cards in Arabic with RTL layout
+
+☐ STEP 6: Test Language Switcher
+  Click language switcher on page
+  Expected: Pricing reloads with correct language
+
+═══════════════════════════════════════════════════════════════════════════════
+TROUBLESHOOTING
+═══════════════════════════════════════════════════════════════════════════════
+
+IF CARDS STILL DON'T SHOW:
+
+1. Open Browser Console (F12)
+   → Look for JavaScript errors
+   → Check Network tab for API errors
+
+2. Test API Directly
+   URL: https://your-domain.com/api/get_pricing.php
+   Expected: JSON response with 6 items
+
+3. Clear All Caches
+   → Browser cache (Ctrl+Shift+Delete)
+   → Local storage (F12 → Application → Local Storage → Clear All)
+   → Server cache (if applicable)
+
+4. Check Database
+   → 6 pricing items should exist
+   → All should have is_active = 1
+   → price_unit should be: SAR/day, SAR/hour, or SAR
+
+═══════════════════════════════════════════════════════════════════════════════
+WHAT WAS FIXED
+═══════════════════════════════════════════════════════════════════════════════
+
+File: spaces.php
+Lines: 483-500
+
+BEFORE:
+  getDurationLabel() was defined inside IIFE (line 521)
+  → Only accessible within that IIFE
+  → Second pricing function couldn't access it
+  → JavaScript error when rendering cards
+
+AFTER:
+  getDurationLabel() is now global (line 485)
+  → Accessible to both pricing loading functions
+  → No more JavaScript errors
+  → All 6 cards render correctly
+
+═══════════════════════════════════════════════════════════════════════════════
+DATABASE STATUS
+═══════════════════════════════════════════════════════════════════════════════
+
+✓ 6 pricing items in database
+✓ All items are active (is_active = 1)
+✓ price_unit values are correct
+✓ API endpoint working correctly
+✓ No database changes needed
+
+═══════════════════════════════════════════════════════════════════════════════
+EXPECTED RESULT
+═══════════════════════════════════════════════════════════════════════════════
+
+After clearing cache and hard refresh:
+
+ENGLISH (spaces.php):
+  Card 1: [Name] | [Price] | per day | *(excluding VAT) | [Book Now]
+  Card 2: [Name] | [Price] | per hour | *(excluding VAT) | [Book Now]
+  Card 3: [Name] | [Price] | per day | *(excluding VAT) | [Book Now]
+  Card 4: [Name] | [Price] | per hour | *(excluding VAT) | [Book Now]
+  Card 5: [Name] | [Price] | per day | *(excluding VAT) | [Book Now]
+  Card 6: [Name] | [Price] | per day | *(excluding VAT) | [Book Now]
+
+ARABIC (spaces.php?lang=ar):
+  Card 1: [الاسم] | [السعر] | لكل يوم | *(غير شامل الضريبة) | [احجز الآن]
+  Card 2: [الاسم] | [السعر] | لكل ساعة | *(غير شامل الضريبة) | [احجز الآن]
+  ... (6 cards total)
+
+═══════════════════════════════════════════════════════════════════════════════
+STATUS: ✅ FIXED AND READY TO TEST
+═══════════════════════════════════════════════════════════════════════════════
