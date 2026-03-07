@@ -156,7 +156,22 @@ body {
     height: 100% !important;
 }
 
-/* RTL Support for Arabic - CRITICAL */
+/* RTL Support for Arabic - CRITICAL STRUCTURE */
+html[dir="rtl"] {
+    direction: rtl !important;
+    text-align: right !important;
+}
+
+html[dir="rtl"] .lakum-header__container {
+    flex-direction: row-reverse !important;
+}
+
+html[dir="rtl"] .lakum-nav {
+    flex-direction: row-reverse !important;
+    margin-left: var(--spacing-xl) !important;
+    margin-right: 0 !important;
+}
+
 html[dir="rtl"] .lakum-nav__list {
     flex-direction: row-reverse !important;
     direction: rtl !important;
@@ -169,11 +184,16 @@ html[dir="rtl"] .lakum-nav--mobile .lakum-nav__list {
 
 html[dir="rtl"] .lakum-nav__item {
     direction: rtl !important;
+    text-align: right !important;
 }
 
 html[dir="rtl"] .lakum-nav__link {
     direction: rtl !important;
     text-align: right !important;
+}
+
+html[dir="rtl"] .lakum-language-switcher {
+    flex-direction: row-reverse !important;
 }
 
 .lakum-nav__item {
