@@ -1,7 +1,8 @@
 <?php
 /**
  * LAKUM Artspace - Populate Press Arabic Translations
- * This script adds Arabic translations to press releases from database
+ * This script adds Arabic translations to press releases in the database
+ * CRITICAL: Updates the main press table columns (title_ar, content_ar, excerpt_ar)
  */
 
 header('Content-Type: application/json');
@@ -35,8 +36,8 @@ try {
         $excerpt_en = $row['excerpt_en'];
         $content_en = $row['content_en'];
         
-        // Check if Arabic translations already exist
-        $check_query = "SELECT id FROM press_translations WHERE press_id = ? AND language = 'ar'";
+        // Check if Arabic translations already exist in main press table
+        $check_query = "SELECT title_ar FROM press WHERE id = ? AND title_ar IS NOT NULL AND title_ar != ''";
         $check_stmt = $conn->prepare($check_query);
         $check_stmt->bind_param('i', $press_id);
         $check_stmt->execute();
@@ -47,21 +48,24 @@ try {
             continue;
         }
         
-        // Insert Arabic translation (using English as placeholder for now)
-        // In production, you would use a translation API or manual translations
-        $insert_query = "
-            INSERT INTO press_translations (press_id, language, title, content, excerpt)
-            VALUES (?, 'ar', ?, ?, ?)
+        // UPDATE press table with Arabic translations (hybrid approach)
+        // Using English as placeholder - you should update with actual Arabic translations
+        $update_query = "
+            UPDATE press 
+            SET title_ar = ?, content_ar = ?, excerpt_ar = ?
+            WHERE id = ?
         ";
         
-        $insert_stmt = $conn->prepare($insert_query);
-        if (!$insert_stmt) {
+        $update_stmt = $conn->prepare($update_query);
+        if (!$update_stmt) {
             throw new Exception('Prepare failed: ' . $conn->error);
         }
         
-        $insert_stmt->bind_param('isss', $press_id, $title_en, $content_en, $excerpt_en);
+        // For now, using English as placeholder
+        // In production, use a translation API or manual translations
+        $update_stmt->bind_param('sssi', $title_en, $content_en, $excerpt_en, $press_id);
         
-        if ($insert_stmt->execute()) {
+        if ($update_stmt->execute()) {
             $updated++;
         }
     }
@@ -69,10 +73,10 @@ try {
     http_response_code(200);
     echo json_encode([
         'success' => true,
-        'message' => 'Press Arabic translations populated',
+        'message' => 'Press Arabic translations populated in database',
         'updated' => $updated,
         'skipped' => $skipped,
-        'note' => 'Arabic translations are currently using English text as placeholder. Please update with actual Arabic translations in the admin panel.'
+        'note' => 'Arabic translations are currently using English text as placeholder. Please update with actual Arabic translations in the admin panel or database.'
     ]);
     
 } catch (Exception $e) {

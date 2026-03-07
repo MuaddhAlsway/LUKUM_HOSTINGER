@@ -377,6 +377,7 @@ html[dir="rtl"] .lakum-nav--mobile {
     opacity: 0 !important;
     visibility: hidden !important;
     transition: all var(--transition-normal) !important;
+    pointer-events: none !important;
 }
 
 .lakum-nav--mobile.lakum-nav--active {
