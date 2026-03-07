@@ -302,10 +302,8 @@
 }
 
 .lakum-spaces-pricing__grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    align-items: flex-start;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: clamp(32px, 4vw, 48px);
     width: 100%;
     max-width: 1400px;
@@ -823,10 +821,8 @@
 .pricing-card-wrapper {
     display: flex;
     flex-direction: column;
-    flex: 0 1 calc(33.333% - 32px);
+    width: 100%;
     min-width: 300px;
-    max-width: 400px;
-    align-self: flex-start;
 }
 
 /* ===== PRICING ACCORDION (using native details/summary) ===== */
