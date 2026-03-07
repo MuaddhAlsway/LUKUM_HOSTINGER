@@ -358,7 +358,7 @@ if (!$title) {
                 const lang = urlLang || window.LAKUM_LANG || localStorage.getItem('lakum_language') || 'en';
                 
                 // Build API URL - if blogIdentifier is numeric, use as ID, otherwise use as slug
-                let apiUrl = `${window.location.origin}/api/get_blogs_working_fixed.php?lang=${lang}`;
+                let apiUrl = `${window.location.origin}/api/get_blogs_fixed.php?lang=${lang}`;
                 let isNumericId = !isNaN(blogIdentifier) && blogIdentifier.trim() !== '';
                 
                 if (isNumericId) {
