@@ -621,52 +621,28 @@ require_once 'api/image-helper.php';
                 }
             });
 
-            // Accordion behavior - only one card open at a time
-            let accordionInitialized = false;
-            
-            function initAccordion() {
-                if (accordionInitialized) return; // Prevent duplicate initialization
-                
-                const details = document.querySelectorAll('.pricing-accordion');
-                
-                details.forEach(detail => {
-                    // Remove any existing listeners by cloning and replacing
-                    const newDetail = detail.cloneNode(true);
-                    detail.parentNode.replaceChild(newDetail, detail);
-                });
-                
-                // Re-query after cloning
-                const freshDetails = document.querySelectorAll('.pricing-accordion');
-                
-                freshDetails.forEach(detail => {
-                    detail.addEventListener('toggle', (e) => {
-                        if (e.target.open) {
-                            // Close all other details
-                            freshDetails.forEach(otherDetail => {
-                                if (otherDetail !== e.target && otherDetail.open) {
-                                    otherDetail.open = false;
-                                }
-                            });
-                        }
-                    });
-                });
-                
-                accordionInitialized = true;
-            }
-
-            // Initialize accordion after pricing loads
-            const observer = new MutationObserver(() => {
-                accordionInitialized = false; // Reset flag when DOM changes
-                setTimeout(initAccordion, 100);
-            });
-
-            if (pricingGrid) {
-                observer.observe(pricingGrid, { childList: true, subtree: true });
-            }
-
-            // Also initialize on first load
-            setTimeout(initAccordion, 100);
+            // Accordion behavior is now handled by global event delegation below
         })();
+    </script>
+
+    <!-- Global Accordion Controller using Event Delegation -->
+    <script>
+        // Single global accordion controller for all pricing cards
+        // Uses event delegation with capture phase for reliable handling
+        document.addEventListener('toggle', function(e) {
+            // Only handle pricing accordion elements
+            if (!e.target.classList.contains('pricing-accordion')) return;
+            
+            // When a card opens, close all other open cards
+            if (e.target.open) {
+                const allAccordions = document.querySelectorAll('.pricing-accordion[open]');
+                allAccordions.forEach((detail) => {
+                    if (detail !== e.target) {
+                        detail.open = false;
+                    }
+                });
+            }
+        }, true); // Use capture phase for reliable event handling
     </script>
 
     <!-- Book Your Space Section -->

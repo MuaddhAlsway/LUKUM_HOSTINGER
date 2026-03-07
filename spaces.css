@@ -856,6 +856,11 @@
     background: rgba(0, 0, 0, 0.03);
 }
 
+/* Ensure entire header is clickable - disable pointer events on children */
+.pricing-accordion__header * {
+    pointer-events: none;
+}
+
 .pricing-accordion__info {
     flex: 1;
 }
@@ -968,18 +973,16 @@
     padding: 0 28px 28px 28px;
     background: #f6f6eb;
     border-top: 1px solid rgba(209, 209, 209, 0.3);
-    animation: slideDown 0.3s ease;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    max-height: 0;
+    overflow: hidden;
 }
 
-@keyframes slideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.pricing-accordion[open] .pricing-accordion__content {
+    opacity: 1;
+    max-height: 2000px;
+    transition: opacity 0.2s ease, max-height 0.3s ease;
 }
 
 .pricing-accordion__content h4 {
