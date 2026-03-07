@@ -15,8 +15,8 @@ require_once 'lang/loader.php';
 
     <!-- Preload LCP image (hero) - Mobile-first with responsive variants -->
     <link rel="preload" as="image" 
-          href="heroImage/img-4.webp"
-          imagesrcset="heroImage/img-4.webp 1200w"
+          href="heroImage/img-3.webp"
+          imagesrcset="heroImage/img-3.webp 1200w"
           imagesizes="(max-width: 768px) 100vw, 650px"
           fetchpriority="high">
     <!-- Preload critical fonts -->
@@ -300,7 +300,11 @@ require_once 'lang/loader.php';
 
     <!-- Hero Section -->
     <section class="lakum-contact-hero">
-        <div class="lakum-container">
+        <div class="lakum-hero__image-wrapper">
+            <img src="heroImage/img-3.webp" alt="Contact Us" class="lakum-hero__image" loading="eager" fetchpriority="high" decoding="async" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+            <div class="lakum-hero__overlay"></div>
+        </div>
+        <div class="lakum-hero__content">
             <h1 class="lakum-contact-hero__title"><?php echo t('hero_title', 'Get In Touch'); ?></h1>
             <p class="lakum-contact-hero__subtitle"><?php echo t('hero_subtitle', 'Have a question or want to collaborate? We\'d love to hear from you. Reach out and let\'s create something amazing together.'); ?></p>
         </div>

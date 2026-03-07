@@ -695,7 +695,6 @@ require_once 'api/image-helper.php';
     </div>
 
     <script src="assest/navbar-mobile-toggle.js" defer></script>
-    <script src="assest/fab-button.js" defer></script>
     <script src="js/LanguageManager.js?v=1.0.0" defer></script>
     <script>
         // Mobile menu toggle
@@ -1331,9 +1330,8 @@ require_once 'api/image-helper.php';
             (async function loadSpacesPricing() {
                 try {
                     console.log('Loading pricing from API...');
-                    // Get current language
-                    const urlParams = new URLSearchParams(window.location.search);
-                    const lang = urlParams.get('lang') || localStorage.getItem('lakum_language') || 'en';
+                    // Get current language - use window.LAKUM_LANG set by PHP
+                    const lang = window.LAKUM_LANG || localStorage.getItem('lakum_language') || 'en';
                     
                     // Add cache-busting parameter to force fresh data
                     const timestamp = new Date().getTime();

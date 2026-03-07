@@ -15,52 +15,81 @@
 
 .lakum-contact-hero {
     position: relative;
-    padding: clamp(100px, 12vw, 140px) 0 clamp(70px, 9vw, 100px) 0;
-    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-    color: #ffffff;
-    text-align: center;
+    width: 100%;
+    height: 85vh;
+    min-height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #1a1a1a;
+    contain: layout style paint;
     overflow: hidden;
 }
 
-.lakum-contact-hero__overlay {
+.lakum-hero__image-wrapper {
     position: absolute;
     inset: 0;
-    background-image: url('assest/img-4.png');
-    background-size: cover;
-    background-position: center;
-    opacity: 0.1;
     z-index: 1;
+    overflow: hidden;
 }
 
-.lakum-contact-hero__content {
-    position: relative;
+.lakum-hero__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    will-change: transform;
+    transform: translateZ(0);
+}
+
+.lakum-hero__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.65) 100%);
     z-index: 2;
-    max-width: 900px;
-    margin: 0 auto;
+}
+
+.lakum-hero__content {
+    position: relative;
+    z-index: 3;
+    text-align: center;
+    color: #fff;
+    max-width: 1400px;
+    width: 90%;
+    padding: 0 20px;
 }
 
 .lakum-contact-hero__title {
-    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
     font-weight: 300;
-    letter-spacing: -0.02em;
-    color: #ffffff;
-    margin: 0 0 clamp(16px, 2vw, 24px) 0;
     line-height: 1.2;
-    text-align: center !important;
-    /* Force center alignment */
+    margin: 0 0 20px 0;
+    color: #fff;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    letter-spacing: -0.02em;
 }
 
 .lakum-contact-hero__subtitle {
-    font-size: clamp(1rem, 1.5vw, 1.2rem);
+    font-size: clamp(1.1rem, 2vw, 1.4rem);
     font-weight: 300;
-    line-height: 1.8;
-    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.6;
+    color: #fff;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
     margin: 0;
-    max-width: 700px;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center !important;
-    /* Force center alignment */
+}
+
+@media(max-width:768px) {
+    .lakum-contact-hero {
+        height: 60vh;
+        min-height: 450px;
+    }
+}
+
+@media(max-width:480px) {
+    .lakum-contact-hero {
+        height: 50vh;
+        min-height: 400px;
+    }
 }
 
 /* ===== CONTACT CONTENT ===== */

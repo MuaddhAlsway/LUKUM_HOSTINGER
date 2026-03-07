@@ -490,7 +490,7 @@ require_once 'lang/loader.php';
     </footer>
 
     <!-- Expandable Floating Contact Button -->
-    <div class="fab-button" id="fabButton"><button class="fab-button__trigger" id="fabTrigger" aria-label="Contact options" aria-expanded="false"><i class="ri-mail-line fab-button__icon"></i><i class="ri-close-line fab-button__close"></i></button><div class="fab-button__menu" id="fabMenu" role="menu"><a href="tel:+966920012083" class="fab-button__item" role="menuitem" data-tooltip="Call us"><i class="ri-phone-line"></i></a><a href="https://wa.me/966920012083" target="_blank" class="fab-button__item" role="menuitem" data-tooltip="WhatsApp"><i class="ri-whatsapp-line"></i></a><a href="mailto:info@lakumartspace.com" class="fab-button__item" role="menuitem" data-tooltip="Email"><i class="ri-mail-line"></i></a></div></div><script src="assest/fab-button.js" defer></script>
+    <div class="fab-button" id="fabButton"><button class="fab-button__trigger" id="fabTrigger" aria-label="Contact options" aria-expanded="false"><i class="ri-mail-line fab-button__icon"></i><i class="ri-close-line fab-button__close"></i></button><div class="fab-button__menu" id="fabMenu" role="menu"><a href="tel:+966920012083" class="fab-button__item" role="menuitem" data-tooltip="Call us"><i class="ri-phone-line"></i></a><a href="https://wa.me/966920012083" target="_blank" class="fab-button__item" role="menuitem" data-tooltip="WhatsApp"><i class="ri-whatsapp-line"></i></a><a href="mailto:info@lakumartspace.com" class="fab-button__item" role="menuitem" data-tooltip="Email"><i class="ri-mail-line"></i></a></div></div>
     <script src="assest/navbar-mobile-toggle.js" defer></script>
     <script>
         // Mobile menu toggle
@@ -543,15 +543,17 @@ require_once 'lang/loader.php';
     <?php include('includes/scripts.php'); ?>
 
     <script>
+        // Set current language from PHP (respects URL parameter ?lang=en or ?lang=ar)
+        window.LAKUM_LANG = '<?php echo getCurrentLanguage(); ?>';
+        
         // Load legal page content dynamically based on current language
         let currentLang = 'en';
 
         // Define function FIRST before calling it
         async function loadLegalPageContent() {
             try {
-                // Get current language from URL parameter
-                const urlParams = new URLSearchParams(window.location.search);
-                const lang = urlParams.get('lang') || localStorage.getItem('lakum_language') || 'en';
+                // Get current language - use window.LAKUM_LANG set by PHP, then URL parameter, then localStorage
+                const lang = window.LAKUM_LANG || new URLSearchParams(window.location.search).get('lang') || localStorage.getItem('lakum_language') || 'en';
                 
                 console.log('Loading privacy content for language:', lang);
                 
