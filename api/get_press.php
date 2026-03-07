@@ -48,15 +48,15 @@ try {
                 p.slug,
                 p.is_published,
                 CASE 
-                    WHEN ? = 'ar' AND p.title_ar IS NOT NULL AND p.title_ar != '' THEN p.title_ar
+                    WHEN ? = 'ar' THEN COALESCE(NULLIF(p.title_ar, ''), p.title_en, p.title)
                     ELSE COALESCE(p.title_en, p.title)
                 END as title,
                 CASE 
-                    WHEN ? = 'ar' AND p.content_ar IS NOT NULL AND p.content_ar != '' THEN p.content_ar
+                    WHEN ? = 'ar' THEN COALESCE(NULLIF(p.content_ar, ''), p.content_en, p.content)
                     ELSE COALESCE(p.content_en, p.content)
                 END as content,
                 CASE 
-                    WHEN ? = 'ar' AND p.excerpt_ar IS NOT NULL AND p.excerpt_ar != '' THEN p.excerpt_ar
+                    WHEN ? = 'ar' THEN COALESCE(NULLIF(p.excerpt_ar, ''), p.excerpt_en, p.excerpt)
                     ELSE COALESCE(p.excerpt_en, p.excerpt)
                 END as excerpt,
                 p.title_en,
@@ -89,15 +89,15 @@ try {
                 p.slug,
                 p.is_published,
                 CASE 
-                    WHEN ? = 'ar' AND p.title_ar IS NOT NULL AND p.title_ar != '' THEN p.title_ar
+                    WHEN ? = 'ar' THEN COALESCE(NULLIF(p.title_ar, ''), p.title_en, p.title)
                     ELSE COALESCE(p.title_en, p.title)
                 END as title,
                 CASE 
-                    WHEN ? = 'ar' AND p.content_ar IS NOT NULL AND p.content_ar != '' THEN p.content_ar
+                    WHEN ? = 'ar' THEN COALESCE(NULLIF(p.content_ar, ''), p.content_en, p.content)
                     ELSE COALESCE(p.content_en, p.content)
                 END as content,
                 CASE 
-                    WHEN ? = 'ar' AND p.excerpt_ar IS NOT NULL AND p.excerpt_ar != '' THEN p.excerpt_ar
+                    WHEN ? = 'ar' THEN COALESCE(NULLIF(p.excerpt_ar, ''), p.excerpt_en, p.excerpt)
                     ELSE COALESCE(p.excerpt_en, p.excerpt)
                 END as excerpt,
                 p.title_en,
@@ -147,6 +147,3 @@ try {
     echo json_encode(['success' => false, 'error' => $e->getMessage()]);
 }
 ?>
-
-
-

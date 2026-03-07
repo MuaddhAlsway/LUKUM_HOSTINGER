@@ -382,13 +382,11 @@ require_once 'lang/loader.php';
         })();
     </script>
 
-    <section class="lakum-hero">
-        <div class="lakum-hero__image-wrapper">
-            <img src="assest/img-4.webp" alt="Terms & Conditions" class="lakum-hero__image" loading="eager" fetchpriority="high" decoding="async" style="width: 100%; height: 100%; object-fit: cover; display: block;">
-            <div class="lakum-hero__overlay"></div>
-        </div>
-        <div class="lakum-hero__content">
-            <h1 class="lakum-hero__title" id="legal-page-title">Terms & Conditions</h1>
+    <!-- Hero Section -->
+    <section class="lakum-calendar-hero">
+        <div class="lakum-calendar-hero__content">
+            <h1 class="lakum-calendar-hero__title" id="legal-page-title">Terms & Conditions</h1>
+            <p class="lakum-calendar-hero__subtitle" style="text-align: center;">Please read our terms carefully before using our services</p>
         </div>
     </section>
 
