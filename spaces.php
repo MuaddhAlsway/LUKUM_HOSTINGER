@@ -652,6 +652,16 @@ require_once 'api/image-helper.php';
             
             // For each row, equalize heights of OPEN cards only
             rows.forEach(rowWrappers => {
+                // First, reset ALL cards in this row to auto height
+                // This ensures closed cards don't keep old minHeight values
+                rowWrappers.forEach(wrapper => {
+                    const accordion = wrapper.querySelector('.pricing-accordion');
+                    if (accordion) {
+                        accordion.style.minHeight = 'auto';
+                    }
+                });
+                
+                // Now find open cards
                 const openAccordions = rowWrappers.filter(wrapper => {
                     const accordion = wrapper.querySelector('.pricing-accordion');
                     return accordion && accordion.hasAttribute('open');
@@ -676,14 +686,6 @@ require_once 'api/image-helper.php';
                         const accordion = wrapper.querySelector('.pricing-accordion');
                         if (accordion) {
                             accordion.style.minHeight = maxHeight + 'px';
-                        }
-                    });
-                } else {
-                    // No open cards in this row - reset all heights
-                    rowWrappers.forEach(wrapper => {
-                        const accordion = wrapper.querySelector('.pricing-accordion');
-                        if (accordion) {
-                            accordion.style.minHeight = 'auto';
                         }
                     });
                 }
