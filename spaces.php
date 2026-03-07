@@ -515,6 +515,9 @@ require_once 'api/image-helper.php';
                 fetch('api/get_pricing.php')
                     .then(response => response.json())
                     .then(data => {
+                        console.log('Pricing API Response:', data);
+                        console.log('Number of pricing items:', data.data ? data.data.length : 0);
+                        
                         if (!data.success || !data.data || data.data.length === 0) {
                             console.warn('No pricing data available');
                             return;
@@ -525,9 +528,12 @@ require_once 'api/image-helper.php';
 
                         // Render each pricing item
                         data.data.forEach((item, index) => {
+                            console.log(`Rendering card ${index + 1}:`, item.name_en);
                             const pricingCard = createPricingCard(item, currentLang, index + 1);
                             pricingGrid.appendChild(pricingCard);
                         });
+                        
+                        console.log('Total cards rendered:', pricingGrid.children.length);
                     })
                     .catch(error => {
                         console.error('Error fetching pricing:', error);
