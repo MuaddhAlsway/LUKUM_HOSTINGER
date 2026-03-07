@@ -546,25 +546,7 @@ require_once 'lang/loader.php';
         // Load legal page content dynamically based on current language
         let currentLang = 'en';
 
-        document.addEventListener('DOMContentLoaded', function() {
-        document.addEventListener('DOMContentLoaded', function() {
-            loadLegalPageContent();
-        });
-
-        // Watch for language changes via URL parameter
-        window.addEventListener('popstate', function() {
-            loadLegalPageContent();
-        });
-
-        // Listen for language changes via storage event (when language switcher is used)
-        window.addEventListener('storage', (e) => {
-            if (e.key === 'lakum_language' && e.newValue) {
-                console.log('Language changed to:', e.newValue);
-                // Reload page with new language parameter
-                window.location.href = window.location.pathname + '?lang=' + e.newValue;
-            }
-        });
-
+        // Define function FIRST before calling it
         async function loadLegalPageContent() {
             try {
                 // Get current language from URL parameter
@@ -620,7 +602,30 @@ require_once 'lang/loader.php';
                 // Keep default content if API fails
             }
         }
+
+        // NOW call the function after it's defined
+        document.addEventListener('DOMContentLoaded', function() {
+            loadLegalPageContent();
+        });
+
+        // Watch for language changes via URL parameter
+        window.addEventListener('popstate', function() {
+            loadLegalPageContent();
+        });
+
+        // Listen for language changes via storage event (when language switcher is used)
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'lakum_language' && e.newValue) {
+                console.log('Language changed to:', e.newValue);
+                // Reload page with new language parameter
+                window.location.href = window.location.pathname + '?lang=' + e.newValue;
+            }
+        });
     </script>
+
+<script>
+    // Translation strings for JavaScript
+    const translations = {
 
 <script>
     // Translation strings for JavaScript

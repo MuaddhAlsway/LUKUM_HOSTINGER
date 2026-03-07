@@ -1,0 +1,142 @@
+═══════════════════════════════════════════════════════════════════════════════
+TERMS & PRIVACY ARABIC CONTENT - QUICK ACTION
+═══════════════════════════════════════════════════════════════════════════════
+
+WHAT'S DONE:
+✅ Footer links updated on all 8 pages
+✅ Language parameter added to all footer links
+✅ API endpoint ready to serve content
+✅ JavaScript ready to load content
+
+WHAT'S NEEDED:
+⏳ Populate database with Arabic content
+
+═══════════════════════════════════════════════════════════════════════════════
+QUICK SETUP (2 MINUTES)
+═══════════════════════════════════════════════════════════════════════════════
+
+STEP 1: Run Population Script
+─────────────────────────────
+Visit this URL in your browser:
+https://your-domain.com/api/populate-legal-pages-arabic.php
+
+Expected response:
+{
+  "success": true,
+  "message": "Legal pages populated successfully",
+  "log": [
+    "✅ Privacy Arabic inserted/updated",
+    "✅ Terms Arabic inserted/updated"
+  ]
+}
+
+STEP 2: Clear Browser Cache
+────────────────────────────
+Windows: Ctrl+Shift+Delete
+Mac:     Cmd+Shift+Delete
+→ Select "All time"
+→ Clear cache, cookies, site data
+
+STEP 3: Hard Refresh
+────────────────────
+Windows: Ctrl+Shift+R
+Mac:     Cmd+Shift+R
+
+═══════════════════════════════════════════════════════════════════════════════
+QUICK TEST (2 MINUTES)
+═══════════════════════════════════════════════════════════════════════════════
+
+TEST 1: English Terms
+─────────────────────
+1. Visit: https://your-domain.com/terms.php
+2. Expected: Terms page in English (LTR)
+
+TEST 2: Arabic Terms
+────────────────────
+1. Visit: https://your-domain.com/terms.php?lang=ar
+2. Expected: Terms page in Arabic (RTL)
+
+TEST 3: Footer Link from English Page
+──────────────────────────────────────
+1. Visit: https://your-domain.com/spaces.php
+2. Click: "Terms & Conditions" footer link
+3. Expected: Opens terms.php?lang=en (English)
+
+TEST 4: Footer Link from Arabic Page
+─────────────────────────────────────
+1. Visit: https://your-domain.com/spaces.php?lang=ar
+2. Click: "Terms & Conditions" footer link
+3. Expected: Opens terms.php?lang=ar (Arabic)
+
+═══════════════════════════════════════════════════════════════════════════════
+WHAT GETS POPULATED
+═══════════════════════════════════════════════════════════════════════════════
+
+PRIVACY POLICY - ARABIC:
+  Title: سياسة الخصوصية
+  Content: Full Arabic privacy policy with 5 sections
+
+TERMS & CONDITIONS - ARABIC:
+  Title: الشروط والأحكام
+  Content: Full Arabic terms with 8 sections
+
+DATABASE RECORDS AFTER:
+  1. Privacy - English
+  2. Privacy - Arabic ← NEW
+  3. Terms - English
+  4. Terms - Arabic ← NEW
+
+═══════════════════════════════════════════════════════════════════════════════
+EXPECTED RESULT
+═══════════════════════════════════════════════════════════════════════════════
+
+ENGLISH PAGE:
+  Footer "Terms & Conditions" → terms.php?lang=en (English)
+  Footer "Privacy Policy" → privacy.php?lang=en (English)
+
+ARABIC PAGE:
+  Footer "Terms & Conditions" → terms.php?lang=ar (Arabic, RTL)
+  Footer "Privacy Policy" → privacy.php?lang=ar (Arabic, RTL)
+
+LANGUAGE SWITCHER:
+  English → Arabic: Footer links now point to Arabic versions
+  Arabic → English: Footer links now point to English versions
+
+═══════════════════════════════════════════════════════════════════════════════
+TROUBLESHOOTING
+═══════════════════════════════════════════════════════════════════════════════
+
+IF POPULATION SCRIPT FAILS:
+  1. Check database connection
+  2. Verify legal_page_translations table exists
+  3. Check user permissions (INSERT/UPDATE)
+  4. Verify UTF-8 encoding on table
+
+IF ARABIC CONTENT DOESN'T SHOW:
+  1. Test API: https://your-domain.com/api/get_legal_page.php?page_key=privacy&lang=ar
+  2. Check browser console (F12) for errors
+  3. Clear browser cache completely
+  4. Verify database has Arabic records
+
+═══════════════════════════════════════════════════════════════════════════════
+FILES UPDATED
+═══════════════════════════════════════════════════════════════════════════════
+
+✓ spaces.php
+✓ calendar.php
+✓ shop.php
+✓ press.php
+✓ exhibitions.php
+✓ event.php
+✓ index.php
+✓ includes/footer.php
+
+═══════════════════════════════════════════════════════════════════════════════
+NEXT STEP
+═══════════════════════════════════════════════════════════════════════════════
+
+Visit: https://your-domain.com/api/populate-legal-pages-arabic.php
+
+This will populate the database with Arabic content for Terms and Privacy pages.
+
+═══════════════════════════════════════════════════════════════════════════════
