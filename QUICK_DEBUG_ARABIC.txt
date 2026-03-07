@@ -1,0 +1,84 @@
+================================================================================
+                    🔍 QUICK DEBUG - PRESS ARABIC
+================================================================================
+
+PROBLEM: API says lang=ar but still shows English
+
+SOLUTION: Let's find where the problem is
+
+================================================================================
+                         DO THIS NOW
+================================================================================
+
+STEP 1: Check Database
+Go to: https://lakumartspace.com/api/check-press-arabic.php
+
+Look at the response and check "title_ar" field:
+- If NULL or empty → Database wasn't populated
+- If has Arabic text → Database is OK, problem is in API query
+
+STEP 2: Check API Query
+Go to: https://lakumartspace.com/api/debug-press-query.php?lang=ar
+
+Look at "title" field in response:
+- If English → API query is wrong
+- If Arabic → API is OK, problem is in JavaScript
+
+STEP 3: Check JavaScript
+Go to: https://lakumartspace.com/press.php?lang=ar
+Press F12 to open console
+
+Look at logged "Press item":
+- If title has English → API returned English
+- If title has Arabic → JavaScript display is wrong
+
+================================================================================
+                         DIAGNOSIS FLOW
+================================================================================
+
+Check 1: Database
+  ↓
+  ├─ title_ar is NULL/empty → Run populate script
+  └─ title_ar has Arabic → Go to Check 2
+
+Check 2: API Query
+  ↓
+  ├─ title field is English → API query wrong
+  └─ title field is Arabic → Go to Check 3
+
+Check 3: JavaScript
+  ↓
+  ├─ title has English → API returned English
+  └─ title has Arabic → Display issue
+
+================================================================================
+                         WHAT TO TELL ME
+================================================================================
+
+After running Check 1, tell me:
+
+1. What does "title_ar" field contain?
+   - NULL?
+   - Empty string?
+   - Arabic text?
+
+2. What does "title_en" field contain?
+   - English text?
+
+Then I'll know exactly where to fix!
+
+================================================================================
+                         DEBUG FILES CREATED
+================================================================================
+
+✅ api/check-press-arabic.php
+   - Shows raw database content
+   - Check if Arabic is actually in database
+
+✅ api/debug-press-query.php
+   - Shows what API query returns
+   - Check if query returns Arabic or English
+
+Use these to diagnose!
+
+================================================================================
