@@ -236,38 +236,38 @@
 /* ===== RTL SUPPORT (ARABIC) ===== */
 
 html[dir="rtl"] .lakum-press-grid {
-    direction: rtl;
+    direction: rtl !important;
 }
 
 html[dir="rtl"] .lakum-press-card {
-    direction: rtl;
-    text-align: right;
+    direction: rtl !important;
+    text-align: right !important;
 }
 
 html[dir="rtl"] .lakum-press-card__content {
-    text-align: right;
-    direction: rtl;
+    text-align: right !important;
+    direction: rtl !important;
 }
 
 html[dir="rtl"] .lakum-press-card__source {
-    text-align: right;
+    text-align: right !important;
 }
 
 html[dir="rtl"] .lakum-press-card__title {
-    text-align: right;
+    text-align: right !important;
 }
 
 html[dir="rtl"] .lakum-press-card__description {
-    text-align: right;
+    text-align: right !important;
 }
 
 html[dir="rtl"] .lakum-press-card__footer {
-    flex-direction: row-reverse;
-    text-align: right;
+    flex-direction: row-reverse !important;
+    text-align: right !important;
 }
 
 html[dir="rtl"] .lakum-press-card__link {
-    flex-direction: row-reverse;
+    flex-direction: row-reverse !important;
 }
 
 html[dir="rtl"] .lakum-press-hero__title {

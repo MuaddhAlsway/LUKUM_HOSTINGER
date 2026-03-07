@@ -158,7 +158,7 @@ require_once 'api/image-helper.php';
     <?php include('includes/stylesheets.php'); ?>
 
     <!-- Page-specific styles -->
-    <link rel="stylesheet" href="press.css">
+    <link rel="stylesheet" href="press.css?v=2.1.0">
     <script src="assest/static-json-translator.js?v=1.0.0" defer></script>
 
 
@@ -228,7 +228,7 @@ require_once 'api/image-helper.php';
         }
     </script>
 
-    <link rel="stylesheet" href="press.css">
+    <link rel="stylesheet" href="press.css?v=2.1.0">
 <script src="assest/static-json-translator.js?v=1.0.0" defer></script></head>
 
 <body class="<?php echo getLanguageClass(); ?>">
