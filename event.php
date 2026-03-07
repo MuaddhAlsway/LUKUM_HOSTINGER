@@ -964,10 +964,7 @@ if (!$title) {
             });
 
             // Update footer bottom
-            const footerCopyright = document.querySelector('.lakum-footer__copyright');
-            if (footerCopyright) {
-                footerCopyright.textContent = translations.footer_copyright || '� 2026 LAKUM Artspace. All rights reserved.';
-            }
+            
 
             const footerTermsLink = document.querySelector('.lakum-footer__legal-link:first-child');
             if (footerTermsLink) {
@@ -1041,6 +1038,7 @@ if (!$title) {
     </body>
 
 </html>
+
 
 
 

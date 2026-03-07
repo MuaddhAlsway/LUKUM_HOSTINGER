@@ -677,10 +677,7 @@ Compliance with these terms ensures the preservation of Lakum Artspace’s profe
         });
 
         // Update footer bottom
-        const footerCopyright = document.querySelector('.lakum-footer__copyright');
-        if (footerCopyright) {
-            footerCopyright.textContent = translations.footer_copyright || '� 2026 LAKUM Artspace. All rights reserved.';
-        }
+        
 
         const footerTermsLink = document.querySelector('.lakum-footer__legal-link:first-child');
         if (footerTermsLink) {
@@ -722,6 +719,7 @@ Compliance with these terms ensures the preservation of Lakum Artspace’s profe
 </body>
 
 </html>
+
 
 
 
