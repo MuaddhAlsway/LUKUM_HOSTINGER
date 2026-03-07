@@ -256,7 +256,7 @@ require_once 'api/image-helper.php';
             </div>
 
             <div class="lakum-footer__bottom">
-                <p class="lakum-footer__copyright"><?php echo t('footer_copyright', 'ï¿½ 2025 - 2027 LAKUM Artspace. All rights reserved.'); ?></p>
+                <p class="lakum-footer__copyright"><?php echo t('footer_copyright_prefix', '© 2025 - '); ?><span id="year"></span><?php echo t('footer_copyright_suffix', ' LAKUM Artspace. All rights reserved.'); ?></p>
                 <div class="lakum-footer__legal">
                     <a href="terms.php?lang=<?php echo getCurrentLanguage(); ?>" class="lakum-footer__legal-link"><?php echo t('footer_terms', 'Terms & Conditions'); ?></a>
                     <span class="lakum-footer__legal-divider">|</span>
@@ -469,6 +469,7 @@ require_once 'api/image-helper.php';
     <div class="fab-button" id="fabButton"><button class="fab-button__trigger" id="fabTrigger" aria-label="Contact options" aria-expanded="false"><i class="ri-mail-line fab-button__icon"></i><i class="ri-close-line fab-button__close"></i></button><div class="fab-button__menu" id="fabMenu" role="menu"><a href="tel:+966920012083" class="fab-button__item" role="menuitem" data-tooltip="Call us"><i class="ri-phone-line"></i></a><a href="https://wa.me/966920012083" target="_blank" class="fab-button__item" role="menuitem" data-tooltip="WhatsApp"><i class="ri-whatsapp-line"></i></a><a href="mailto:info@lakumartspace.com" class="fab-button__item" role="menuitem" data-tooltip="Email"><i class="ri-mail-line"></i></a></div></div>
 </body>
 </html>
+
 
 
 
