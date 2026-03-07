@@ -1,0 +1,142 @@
+═══════════════════════════════════════════════════════════════════════════════
+LANGUAGE PERSISTENCE FOR FOOTER LINKS - QUICK TEST GUIDE
+═══════════════════════════════════════════════════════════════════════════════
+
+WHAT WAS FIXED:
+All footer links (Terms & Privacy) now preserve the current language when clicked.
+
+═══════════════════════════════════════════════════════════════════════════════
+QUICK TEST (5 MINUTES)
+═══════════════════════════════════════════════════════════════════════════════
+
+TEST 1: English Page → Terms Link
+─────────────────────────────────
+1. Visit: https://your-domain.com/spaces.php
+2. Scroll to footer
+3. Click: "Terms & Conditions"
+4. Expected: Opens terms.php?lang=en (English)
+5. Verify: Page is in English, LTR layout
+
+TEST 2: Arabic Page → Terms Link
+─────────────────────────────────
+1. Visit: https://your-domain.com/spaces.php?lang=ar
+2. Scroll to footer
+3. Click: "Terms & Conditions"
+4. Expected: Opens terms.php?lang=ar (Arabic)
+5. Verify: Page is in Arabic, RTL layout
+
+TEST 3: English Page → Privacy Link
+────────────────────────────────────
+1. Visit: https://your-domain.com/spaces.php
+2. Scroll to footer
+3. Click: "Privacy Policy"
+4. Expected: Opens privacy.php?lang=en (English)
+5. Verify: Page is in English, LTR layout
+
+TEST 4: Arabic Page → Privacy Link
+───────────────────────────────────
+1. Visit: https://your-domain.com/spaces.php?lang=ar
+2. Scroll to footer
+3. Click: "Privacy Policy"
+4. Expected: Opens privacy.php?lang=ar (Arabic)
+5. Verify: Page is in Arabic, RTL layout
+
+TEST 5: Language Switcher
+──────────────────────────
+1. Visit: https://your-domain.com/spaces.php (English)
+2. Click: Language switcher → Arabic
+3. Page reloads in Arabic
+4. Click: "Terms & Conditions" footer link
+5. Expected: Opens terms.php?lang=ar (Arabic)
+6. Verify: Page is in Arabic, RTL layout
+
+TEST 6: All Pages
+─────────────────
+Repeat tests 1-5 on these pages:
+  ☐ spaces.php
+  ☐ calendar.php
+  ☐ shop.php
+  ☐ press.php
+  ☐ exhibitions.php
+  ☐ event.php
+  ☐ index.php
+
+═══════════════════════════════════════════════════════════════════════════════
+EXPECTED RESULTS
+═══════════════════════════════════════════════════════════════════════════════
+
+ENGLISH PAGE:
+  Footer Link URL: terms.php?lang=en
+  Opens: Terms page in English (LTR)
+
+ARABIC PAGE:
+  Footer Link URL: terms.php?lang=ar
+  Opens: Terms page in Arabic (RTL)
+
+LANGUAGE SWITCHER:
+  English → Arabic: Footer links now point to Arabic versions
+  Arabic → English: Footer links now point to English versions
+
+═══════════════════════════════════════════════════════════════════════════════
+FILES UPDATED
+═══════════════════════════════════════════════════════════════════════════════
+
+✓ spaces.php
+✓ calendar.php
+✓ shop.php
+✓ press.php
+✓ exhibitions.php
+✓ event.php
+✓ index.php
+✓ includes/footer.php
+
+═══════════════════════════════════════════════════════════════════════════════
+WHAT CHANGED
+═══════════════════════════════════════════════════════════════════════════════
+
+BEFORE:
+  <a href="terms.php">Terms & Conditions</a>
+  <a href="privacy.php">Privacy Policy</a>
+
+AFTER:
+  <a href="terms.php?lang=<?php echo getCurrentLanguage(); ?>">Terms & Conditions</a>
+  <a href="privacy.php?lang=<?php echo getCurrentLanguage(); ?>">Privacy Policy</a>
+
+═══════════════════════════════════════════════════════════════════════════════
+VERIFICATION CHECKLIST
+═══════════════════════════════════════════════════════════════════════════════
+
+☐ English page → Terms link opens in English
+☐ Arabic page → Terms link opens in Arabic
+☐ English page → Privacy link opens in English
+☐ Arabic page → Privacy link opens in Arabic
+☐ Language switcher works correctly
+☐ All 7 pages have working footer links
+☐ No broken links
+☐ No 404 errors
+☐ RTL layout applied for Arabic
+☐ LTR layout applied for English
+
+═══════════════════════════════════════════════════════════════════════════════
+TROUBLESHOOTING
+═══════════════════════════════════════════════════════════════════════════════
+
+IF LINKS OPEN IN WRONG LANGUAGE:
+  1. Check URL parameter: ?lang=en or ?lang=ar
+  2. Verify getCurrentLanguage() function exists
+  3. Check browser console for errors
+  4. Clear browser cache (Ctrl+Shift+Delete)
+
+IF LINKS ARE BROKEN (404):
+  1. Verify terms.php and privacy.php exist
+  2. Check file paths are correct
+  3. Verify .htaccess rules (if using clean URLs)
+
+IF LANGUAGE SWITCHER DOESN'T WORK:
+  1. Check language switcher JavaScript
+  2. Verify localStorage is working
+  3. Check browser console for errors
+
+═══════════════════════════════════════════════════════════════════════════════
+STATUS: ✅ READY TO TEST
+═══════════════════════════════════════════════════════════════════════════════
