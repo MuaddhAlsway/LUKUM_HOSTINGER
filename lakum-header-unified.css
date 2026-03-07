@@ -365,7 +365,7 @@ html[dir="rtl"] .lakum-nav--mobile {
 }
 
 .lakum-nav--mobile::before {
-    content: '' !important;
+   
     position: fixed !important;
     top: var(--header-height-mobile) !important;
     left: 0 !important;
