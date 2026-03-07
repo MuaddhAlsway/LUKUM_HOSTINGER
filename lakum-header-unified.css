@@ -176,10 +176,11 @@ html[dir="rtl"] .lakum-nav__list {
     flex-direction: row-reverse !important;
     direction: rtl !important;
     text-align: right !important;
+    justify-content: flex-end !important;
 }
 
 html[dir="rtl"] .lakum-nav--mobile .lakum-nav__list {
-    flex-direction: row-reverse !important;
+    flex-direction: column !important;
     direction: rtl !important;
 }
 
@@ -191,6 +192,7 @@ html[dir="rtl"] .lakum-nav__item {
 html[dir="rtl"] .lakum-nav__link {
     direction: rtl !important;
     text-align: right !important;
+    padding: var(--spacing-md) var(--spacing-lg) !important;
 }
 
 html[dir="rtl"] .lakum-language-switcher {

@@ -532,7 +532,7 @@ require_once 'api/image-helper.php';
                     day: 'numeric'
                 });
 
-                // Get bilingual content from database
+                // Get bilingual content from database - CRITICAL: Use title_ar/title_en directly
                 const title = lang === 'ar' ? (item.title_ar || item.title) : (item.title_en || item.title);
                 const excerpt = lang === 'ar' ? (item.excerpt_ar || item.excerpt) : (item.excerpt_en || item.excerpt);
                 const source = item.source || 'LAKUM Press';
