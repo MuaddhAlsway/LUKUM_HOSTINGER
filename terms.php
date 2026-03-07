@@ -386,7 +386,7 @@ require_once 'lang/loader.php';
     <section class="lakum-calendar-hero">
         <div class="lakum-calendar-hero__content">
             <h1 class="lakum-calendar-hero__title" id="legal-page-title">Terms & Conditions</h1>
-            <p class="lakum-calendar-hero__subtitle" style="text-align: center;">Please read our terms carefully before using our services</p>
+            
         </div>
     </section>
 
