@@ -383,7 +383,7 @@
 
 /* ===== RESPONSIVE DESIGN ===== */
 
-/* Tablet */
+/* Tablet - Large (1024px and below) */
 
 @media (max-width: 1024px) {
     .lakum-contact-grid {
@@ -395,19 +395,24 @@
     }
 }
 
-/* Mobile */
+/* Tablet - Medium (768px and below) */
 
 @media (max-width: 768px) {
+    .lakum-contact-grid {
+        grid-template-columns: 1fr;
+        gap: clamp(28px, 3vw, 40px);
+    }
+    .lakum-contact-content {
+        margin-top: clamp(-25px, -3vw, -35px);
+        padding: clamp(24px, 3vw, 40px) 0;
+    }
     .lakum-contact-info,
     .lakum-contact-form-wrapper {
-        padding: clamp(24px, 3vw, 32px);
-    }
-    .lakum-contact-map__wrapper {
-        height: clamp(350px, 45vw, 400px);
+        padding: clamp(24px, 3vw, 40px);
     }
 }
 
-/* Small Mobile */
+/* Mobile */
 
 @media (max-width: 480px) {
     .lakum-contact-info,
