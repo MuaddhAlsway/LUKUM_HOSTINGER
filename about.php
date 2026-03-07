@@ -266,7 +266,7 @@ body {
 }
 
 .lakum-container {
-    max-width: 375px;
+    max-width: 1600px;
     margin: 0 auto;
     padding: 0 clamp(20px, 5vw, 60px);
 }
@@ -281,7 +281,23 @@ body {
   display: grid;
     grid-template-columns: 1fr 1fr;
     gap: clamp(48px, 8vw, 96px);
-    align-items: center;;
+    align-items: center;
+}
+
+/* Tablet Breakpoint */
+@media (max-width: 1024px) {
+    .lakum-about-section__content {
+        grid-template-columns: 1fr;
+        gap: clamp(32px, 5vw, 48px);
+    }
+}
+
+/* Mobile Breakpoint */
+@media (max-width: 768px) {
+    .lakum-about-section__content {
+        grid-template-columns: 1fr;
+        gap: clamp(24px, 4vw, 32px);
+    }
 }
 
 .lakum-about-section__text {
@@ -290,11 +306,19 @@ body {
 }
 
 .lakum-about-section__title {
-  font-size: 2.5rem !important;
+  font-size: clamp(1.75rem, 4vw, 2.5rem) !important;
   font-weight: 300 !important;
-  margin-bottom: 30px !important;
+  margin-bottom: clamp(20px, 3vw, 30px) !important;
   color: #1a1a1a !important;
   text-align: center !important;
+}
+
+/* Mobile Breakpoint */
+@media (max-width: 768px) {
+    .lakum-about-section__title {
+        font-size: clamp(1.5rem, 3vw, 2rem) !important;
+        margin-bottom: clamp(16px, 2vw, 24px) !important;
+    }
 }
 
 .lakum-about-section__description {
@@ -376,6 +400,22 @@ html[lang="ar"] .lakum-workshops-section__description {
     grid-template-columns: 1fr 1fr;
     gap: clamp(48px, 8vw, 96px);
     align-items: center;
+}
+
+/* Tablet Breakpoint */
+@media (max-width: 1024px) {
+    .lakum-workshops-section__content {
+        grid-template-columns: 1fr;
+        gap: clamp(32px, 5vw, 48px);
+    }
+}
+
+/* Mobile Breakpoint */
+@media (max-width: 768px) {
+    .lakum-workshops-section__content {
+        grid-template-columns: 1fr;
+        gap: clamp(24px, 4vw, 32px);
+    }
 }
 
 .lakum-workshops-section__text {
@@ -504,10 +544,23 @@ html[lang="ar"] .lakum-workshops-section__description {
 
 .lakum-upcoming-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: clamp(32px, 4vw, 48px);
   width: 100%;
-  padding: 0 clamp(20px, 5vw, 60px);
+}
+
+/* Tablet: 2 columns */
+@media (max-width: 1024px) {
+  .lakum-upcoming-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile: 1 column */
+@media (max-width: 768px) {
+  .lakum-upcoming-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* Arabic RTL Support */
