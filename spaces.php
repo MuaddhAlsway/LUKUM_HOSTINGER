@@ -480,8 +480,8 @@ require_once 'api/image-helper.php';
 
     <script>
         // Global function to get duration label from price unit
-        // This must be global so both pricing loading functions can access it
-        function getDurationLabel(priceUnit) {
+        // This must be global so all pricing loading functions can access it
+        window.getDurationLabel = function(priceUnit) {
             // Extract duration from price unit (e.g., "SAR/day" -> "day", "ريال سعودي / ساعة" -> "hour")
             if (!priceUnit) return '';
             
@@ -495,7 +495,7 @@ require_once 'api/image-helper.php';
             if (priceUnit.includes('ساعة')) return 'لكل ساعة';
             
             return '';
-        }
+        };
 
         // Fetch and render pricing based on current language
         (function() {
