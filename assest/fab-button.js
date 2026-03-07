@@ -1,6 +1,7 @@
 /**
  * FAB Button - Floating Action Button
  * Handles menu open/close and interactions
+ * CRITICAL: Works on all pages with proper initialization
  */
 
 (function() {
@@ -17,6 +18,8 @@
                 fabTrigger: !!fabTrigger,
                 fabMenu: !!fabMenu
             });
+            // Retry after a short delay
+            setTimeout(initFabButton, 500);
             return;
         }
 
@@ -59,10 +62,17 @@
         });
     }
 
-    // Wait for DOM to be ready
+    // Wait for DOM to be ready - multiple strategies
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initFabButton);
     } else {
+        // DOM already loaded
         initFabButton();
     }
+    
+    // Also try on window load as fallback
+    window.addEventListener('load', initFabButton);
+    
+    // Retry after a delay to ensure all elements are present
+    setTimeout(initFabButton, 100);
 })();

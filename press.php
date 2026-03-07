@@ -532,18 +532,26 @@ require_once 'api/image-helper.php';
                     day: 'numeric'
                 });
 
+                // Get bilingual content from database
+                const title = lang === 'ar' ? (item.title_ar || item.title) : (item.title_en || item.title);
+                const excerpt = lang === 'ar' ? (item.excerpt_ar || item.excerpt) : (item.excerpt_en || item.excerpt);
+                const source = item.source || 'LAKUM Press';
+                
+                // Add RTL direction for Arabic
+                const contentDir = lang === 'ar' ? 'dir="rtl"' : '';
+
                 pressCard.innerHTML = `
                     <div class="lakum-press-card__image">
-                        <img src="${item.cover_image || 'assest/img-4.png'}" alt="${item.source || 'Press Release'}" loading="eager" decoding="async">
+                        <img src="${item.cover_image || 'assest/img-4.png'}" alt="${source}" loading="eager" decoding="async">
                     </div>
-                    <div class="lakum-press-card__content">
-                        <span class="lakum-press-card__source">${item.source || 'LAKUM Press'}</span>
-                        <h3 class="lakum-press-card__title">${item.title}</h3>
-                        <p class="lakum-press-card__description">${item.excerpt || item.content || ''}</p>
+                    <div class="lakum-press-card__content" ${contentDir}>
+                        <span class="lakum-press-card__source">${source}</span>
+                        <h3 class="lakum-press-card__title">${title}</h3>
+                        <p class="lakum-press-card__description">${excerpt || ''}</p>
                         <div class="lakum-press-card__footer">
                             <span class="lakum-press-card__date">${formattedDate}</span>
                             <span class="lakum-press-card__link">
-                                Read Article <i class="ri-external-link-line"></i>
+                                ${lang === 'ar' ? 'اقرأ المقال' : 'Read Article'} <i class="ri-external-link-line"></i>
                             </span>
                         </div>
                     </div>

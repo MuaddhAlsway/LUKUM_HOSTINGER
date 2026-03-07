@@ -156,15 +156,24 @@ body {
     height: 100% !important;
 }
 
-/* RTL Support for Arabic */
+/* RTL Support for Arabic - CRITICAL */
 html[dir="rtl"] .lakum-nav__list {
     flex-direction: row-reverse !important;
+    direction: rtl !important;
 }
 
-/* Ensure RTL works on all pages including spaces, exhibitions, calendar */
-html[dir="rtl"] .lakum-nav__list,
 html[dir="rtl"] .lakum-nav--mobile .lakum-nav__list {
     flex-direction: row-reverse !important;
+    direction: rtl !important;
+}
+
+html[dir="rtl"] .lakum-nav__item {
+    direction: rtl !important;
+}
+
+html[dir="rtl"] .lakum-nav__link {
+    direction: rtl !important;
+    text-align: right !important;
 }
 
 .lakum-nav__item {
