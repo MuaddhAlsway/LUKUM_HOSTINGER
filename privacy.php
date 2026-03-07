@@ -547,12 +547,22 @@ require_once 'lang/loader.php';
         let currentLang = 'en';
 
         document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function() {
             loadLegalPageContent();
         });
 
         // Watch for language changes via URL parameter
         window.addEventListener('popstate', function() {
             loadLegalPageContent();
+        });
+
+        // Listen for language changes via storage event (when language switcher is used)
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'lakum_language' && e.newValue) {
+                console.log('Language changed to:', e.newValue);
+                // Reload page with new language parameter
+                window.location.href = window.location.pathname + '?lang=' + e.newValue;
+            }
         });
 
         async function loadLegalPageContent() {
@@ -573,8 +583,8 @@ require_once 'lang/loader.php';
                     const dateDiv = document.getElementById('legal-page-date');
                     
                     if (contentDiv) {
-                        // Update content with fetched data
-                        contentDiv.innerHTML = `<h2>${data.data.title || 'Privacy Policy'}</h2>${data.data.content || ''}`;
+                        // Update content with fetched data - don't include title in content since it's in header
+                        contentDiv.innerHTML = data.data.content || '';
                         console.log('Privacy content loaded successfully for language:', lang);
                     }
                     

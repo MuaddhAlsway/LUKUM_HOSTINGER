@@ -671,8 +671,9 @@ require_once 'api/image-helper.php';
                 const readTime = blog.read_time || '2';
                 const authorInitials = blog.author ? blog.author.split(' ').map(n => n[0]).join('').toUpperCase() : 'LT';
                 
-                // Add RTL direction for Arabic content
-                const contentDir = lang === 'ar' ? 'dir="rtl"' : '';
+                // Add RTL direction for Arabic content - get current language
+                const currentLang = window.LAKUM_LANG || localStorage.getItem('lakum_language') || 'en';
+                const contentDir = currentLang === 'ar' ? 'dir="rtl"' : '';
 
                 card.innerHTML = `<div class="lakum-blog-card__image-wrapper"><img src="${coverImage}" alt="${blog.title}" class="lakum-blog-card__image"><span class="lakum-blog-card__category">${categoryLabel}</span></div><div class="lakum-blog-card__content" ${contentDir}><div class="lakum-blog-card__meta"><span class="lakum-blog-card__meta-item"><i class="ri-calendar-line"></i>${formattedDate}</span><span class="lakum-blog-card__meta-item"><i class="ri-time-line"></i>${readTime} ${translations.minRead}</span></div><h3 class="lakum-blog-card__title" data-blog-id="${blog.id}" data-original-title="${blog.title}">${blog.title}</h3><p class="lakum-blog-card__excerpt" data-blog-id="${blog.id}" data-original-excerpt="${blog.excerpt}">${blog.excerpt}</p><div class="lakum-blog-card__footer"><div class="lakum-blog-card__author"><div class="lakum-blog-card__author-avatar">${authorInitials}</div><span class="lakum-blog-card__author-name">${blog.author || translations.lakumTeam}</span></div><span class="lakum-blog-card__read-more">${translations.readMore} <i class="ri-arrow-right-line"></i></span></div></div>`;
 
