@@ -614,6 +614,36 @@ require_once 'api/image-helper.php';
                     loadPricing();
                 }
             });
+
+            // Accordion behavior - only one card open at a time
+            function initAccordion() {
+                const details = document.querySelectorAll('.pricing-accordion');
+                details.forEach(detail => {
+                    detail.addEventListener('toggle', (e) => {
+                        if (e.target.open) {
+                            // Close all other details
+                            details.forEach(otherDetail => {
+                                if (otherDetail !== e.target) {
+                                    otherDetail.open = false;
+                                }
+                            });
+                        }
+                    });
+                });
+            }
+
+            // Initialize accordion after pricing loads
+            const observer = new MutationObserver(() => {
+                initAccordion();
+            });
+
+            const pricingGrid = document.getElementById('pricingGrid');
+            if (pricingGrid) {
+                observer.observe(pricingGrid, { childList: true, subtree: true });
+            }
+
+            // Also initialize on first load
+            setTimeout(initAccordion, 100);
         })();
     </script>
 
