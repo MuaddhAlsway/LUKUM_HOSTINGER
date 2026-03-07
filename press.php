@@ -498,9 +498,11 @@ require_once 'api/image-helper.php';
                 const data = await response.json();
                 
                 console.log('Press API response:', data);
+                console.log('Language:', lang);
+                console.log('First item:', data.data ? data.data[0] : 'No data');
                 
                 if (data.success && data.data && data.data.length > 0) {
-                    displayPressReleases(data.data);
+                    displayPressReleases(data.data, lang);
                 } else {
                     console.warn('No press data available:', data);
                     displayNoPressMessage();
@@ -511,7 +513,7 @@ require_once 'api/image-helper.php';
             }
         }
 
-        function displayPressReleases(pressItems) {
+        function displayPressReleases(pressItems, lang) {
             const pressGrid = document.getElementById('pressGrid');
             pressGrid.innerHTML = '';
 
@@ -519,9 +521,9 @@ require_once 'api/image-helper.php';
                 const pressCard = document.createElement('a');
                 
                 // Use clean URL for internal press detail pages
-                const lang = window.LAKUM_LANG || localStorage.getItem('lakum_language') || 'en';
+                const currentLang = lang || window.LAKUM_LANG || localStorage.getItem('lakum_language') || 'en';
                 const slug = item.slug || item.id;
-                pressCard.href = `press/${slug}?lang=${lang}`;
+                pressCard.href = `press/${slug}?lang=${currentLang}`;
                 
                 pressCard.className = 'lakum-press-card';
                 pressCard.setAttribute('data-press-id', item.id);
@@ -533,12 +535,20 @@ require_once 'api/image-helper.php';
                 });
 
                 // Get bilingual content from database - CRITICAL: Use title_ar/title_en directly
-                const title = lang === 'ar' ? (item.title_ar || item.title) : (item.title_en || item.title);
-                const excerpt = lang === 'ar' ? (item.excerpt_ar || item.excerpt) : (item.excerpt_en || item.excerpt);
+                // The API returns these fields based on language parameter
+                const title = item.title || 'Untitled';
+                const excerpt = item.excerpt || '';
                 const source = item.source || 'LAKUM Press';
                 
                 // Add RTL direction for Arabic
-                const contentDir = lang === 'ar' ? 'dir="rtl"' : '';
+                const contentDir = currentLang === 'ar' ? 'dir="rtl"' : '';
+
+                console.log('Press item:', {
+                    id: item.id,
+                    title: title,
+                    excerpt: excerpt,
+                    lang: currentLang
+                });
 
                 pressCard.innerHTML = `
                     <div class="lakum-press-card__image">
@@ -551,7 +561,7 @@ require_once 'api/image-helper.php';
                         <div class="lakum-press-card__footer">
                             <span class="lakum-press-card__date">${formattedDate}</span>
                             <span class="lakum-press-card__link">
-                                ${lang === 'ar' ? 'اقرأ المقال' : 'Read Article'} <i class="ri-external-link-line"></i>
+                                ${currentLang === 'ar' ? 'اقرأ المقال' : 'Read Article'} <i class="ri-external-link-line"></i>
                             </span>
                         </div>
                     </div>
