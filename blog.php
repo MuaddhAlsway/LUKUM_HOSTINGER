@@ -926,8 +926,6 @@ require_once 'api/image-helper.php';
         </div>
     </div>
 
-    <script src="assest/fab-button.js" defer></script>
-
     <!-- Global Scripts (Centralized) -->
     <?php include('includes/scripts.php'); ?>
 </body>

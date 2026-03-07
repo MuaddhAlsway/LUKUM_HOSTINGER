@@ -761,8 +761,6 @@ html[lang="ar"] .lakum-event-card__date {
     </div>
 </div>
 
-<script src="assest/fab-button.js" defer></script>
-
 <script src="js/LanguageManager.js?v=1.0.0" defer></script>
 <script>
     // Set current language from PHP

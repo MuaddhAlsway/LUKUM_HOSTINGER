@@ -20,8 +20,8 @@
     <!-- Global Styles (deferred) -->
     <link rel="preload" href="global-styles.css?v=2.1.0" as="style" onload="this.onload=null;this.rel='stylesheet'">
     
-    <!-- FAB Button Styles (deferred) -->
-    <link rel="preload" href="assest/fab-button.css?v=2.1.0" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <!-- FAB Button Styles (CRITICAL - must load immediately) -->
+    <link rel="stylesheet" href="assest/fab-button.css?v=2.1.0">
     
     <!-- Language Switcher Styles (deferred) -->
     <link rel="preload" href="assest/language-switcher.css?v=2.1.0" as="style" onload="this.onload=null;this.rel='stylesheet'">

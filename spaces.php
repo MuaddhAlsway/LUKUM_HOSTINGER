@@ -1716,6 +1716,14 @@ require_once 'api/image-helper.php';
     // Listen for language changes
     document.addEventListener('lakum-language-changed', (e) => {
         const lang = e.detail?.lang || document.documentElement.lang;
+        console.log('Language changed event detected, new language:', lang);
+        
+        // Update window.LAKUM_LANG
+        window.LAKUM_LANG = lang;
+        
+        // Reload pricing for the new language
+        loadSpacesPricingFromAPI();
+        
         // Reload translations for the new language
         fetch(`api/get-translations.php?lang=${lang}`)
             .then(r => r.json())
@@ -1728,6 +1736,30 @@ require_once 'api/image-helper.php';
                 }
             })
             .catch(err => console.log('Language update skipped'));
+    });
+
+    // Also listen for storage changes (multi-tab sync)
+    window.addEventListener('storage', (e) => {
+        if (e.key === 'lakum_language' && e.newValue) {
+            const lang = e.newValue;
+            console.log('Language changed via storage event, new language:', lang);
+            
+            // Update window.LAKUM_LANG
+            window.LAKUM_LANG = lang;
+            
+            // Reload pricing for the new language
+            loadSpacesPricingFromAPI();
+            
+            fetch(`api/get-translations.php?lang=${lang}`)
+                .then(r => r.json())
+                .then(data => {
+                    if (data.success && data.translations) {
+                        Object.assign(translations, data.translations);
+                        updateNavbarFooterLanguage();
+                    }
+                })
+                .catch(err => console.log('Language update skipped'));
+        }
     });
 
     // Call on page load

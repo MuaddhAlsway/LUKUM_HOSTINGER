@@ -726,7 +726,12 @@ require_once 'lang/loader.php';
     // Listen for language changes
     document.addEventListener('lakum-language-changed', (e) => {
         const lang = e.detail?.lang || document.documentElement.lang;
-        // Reload translations for the new language
+        console.log('Language changed event detected, new language:', lang);
+        
+        // Reload the entire page content based on new language
+        loadLegalPageContent();
+        
+        // Also reload translations for the new language
         fetch(`api/get-translations.php?lang=${lang}`)
             .then(r => r.json())
             .then(data => {

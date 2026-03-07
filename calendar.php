@@ -472,6 +472,9 @@ require_once 'lang/loader.php';
 
     <script src="js/LanguageManager.js?v=1.0.0" defer></script>
     <script>
+        // Set current language from PHP (respects URL parameter ?lang=en or ?lang=ar)
+        window.LAKUM_LANG = '<?php echo getCurrentLanguage(); ?>';
+        
         // Translation strings for JavaScript
         const translations = {
             noEventsFound: '<?php echo t("calendar_no_events_found", "No events found"); ?>',
@@ -1244,6 +1247,15 @@ require_once 'lang/loader.php';
     // Listen for language changes
     document.addEventListener('lakum-language-changed', (e) => {
         const lang = e.detail?.lang || document.documentElement.lang;
+        console.log('Language changed event detected, new language:', lang);
+        
+        // Update window.LAKUM_LANG
+        window.LAKUM_LANG = lang;
+        
+        // Reload events for the new language
+        loadAllEventsFromDatabase();
+        loadFeaturedEvents();
+        
         // Reload translations for the new language
         fetch(`api/get-translations.php?lang=${lang}`)
             .then(r => r.json())
@@ -1262,6 +1274,15 @@ require_once 'lang/loader.php';
     window.addEventListener('storage', (e) => {
         if (e.key === 'lakum_language' && e.newValue) {
             const lang = e.newValue;
+            console.log('Language changed via storage event, new language:', lang);
+            
+            // Update window.LAKUM_LANG
+            window.LAKUM_LANG = lang;
+            
+            // Reload events for the new language
+            loadAllEventsFromDatabase();
+            loadFeaturedEvents();
+            
             fetch(`api/get-translations.php?lang=${lang}`)
                 .then(r => r.json())
                 .then(data => {
@@ -1296,8 +1317,6 @@ require_once 'lang/loader.php';
             </a>
         </div>
     </div>
-
-    <script src="assest/fab-button.js" defer></script>
 
 </body>
 
