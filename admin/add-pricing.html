@@ -119,23 +119,16 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="price_unit">Price Unit</label>
+                                <label for="price_unit">Duration</label>
                                 <select id="price_unit" name="price_unit">
-                                    <option value="SAR/day">SAR/day</option>
-                                    <option value="SAR/hour">SAR/hour</option>
-                                    <option value="SAR">SAR</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="price_unit_ar">Price Unit (AR)</label>
-                                <select id="price_unit_ar" name="price_unit_ar" dir="rtl">
-                                    <option value="ريال سعودي / يوم">ريال سعودي / يوم</option>
-                                    <option value="ريال سعودي / ساعة">ريال سعودي / ساعة</option>
-                                    <option value="ريال سعودي">ريال سعودي</option>
+                                    <option value="SAR/day">Per Day</option>
+                                    <option value="SAR/hour">Per Hour</option>
+                                    <option value="SAR">Fixed Price</option>
                                 </select>
                             </div>
                         </div>
+
+                        <!-- Note: price_unit_ar is no longer used - duration is extracted from price_unit -->
 
                         <div class="form-group">
                             <label for="vat_note">VAT Note</label>
@@ -195,18 +188,7 @@
             }
 
             // Auto-sync Price Unit (AR) when Price Unit (EN) changes
-            const priceUnitSelect = document.getElementById('price_unit');
-            const priceUnitArSelect = document.getElementById('price_unit_ar');
-            if (priceUnitSelect && priceUnitArSelect) {
-                priceUnitSelect.addEventListener('change', function() {
-                    const mapping = {
-                        'SAR/day': 'ريال سعودي / يوم',
-                        'SAR/hour': 'ريال سعودي / ساعة',
-                        'SAR': 'ريال سعودي'
-                    };
-                    priceUnitArSelect.value = mapping[this.value] || 'ريال سعودي';
-                });
-            }
+            // Removed - no longer needed as we only use duration now
 
             // Character count for English
             const descEn = document.getElementById('description_en');
@@ -255,7 +237,6 @@
                         description_ar: document.getElementById('description_ar').value.trim(),
                         price: document.getElementById('price').value.replace(/,/g, ''),
                         price_unit: document.getElementById('price_unit').value,
-                        price_unit_ar: document.getElementById('price_unit_ar').value,
                         price_sec: document.getElementById('price_sec').value.trim(),
                         vat_note: document.getElementById('vat_note').value.trim(),
                         vat_note_ar: document.getElementById('vat_note_ar').value.trim(),
