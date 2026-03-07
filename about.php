@@ -266,7 +266,7 @@ body {
 }
 
 .lakum-container {
-    max-width: 1600px;
+    max-width: 375px;
     margin: 0 auto;
     padding: 0 clamp(20px, 5vw, 60px);
 }
@@ -347,7 +347,7 @@ html[lang="ar"] .lakum-workshops-section__description {
 .lakum-about-section__image {
     position: relative;
     width: 100%;
-    height: 100%;
+    
     min-height: 550px;
 }
 
