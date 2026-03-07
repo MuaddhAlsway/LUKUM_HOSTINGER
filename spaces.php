@@ -518,6 +518,22 @@ require_once 'api/image-helper.php';
             }
 
             // Create pricing card element
+            function getDurationLabel(priceUnit) {
+                // Extract duration from price unit (e.g., "SAR/day" -> "day", "ريال سعودي / ساعة" -> "hour")
+                if (!priceUnit) return '';
+                
+                // English: SAR/day, SAR/hour, SAR
+                if (priceUnit.includes('/day')) return 'per day';
+                if (priceUnit.includes('/hour')) return 'per hour';
+                if (priceUnit === 'SAR' || priceUnit === 'ريال سعودي') return '';
+                
+                // Arabic: ريال سعودي / يوم, ريال سعودي / ساعة
+                if (priceUnit.includes('يوم')) return 'لكل يوم';
+                if (priceUnit.includes('ساعة')) return 'لكل ساعة';
+                
+                return '';
+            }
+
             function createPricingCard(item, lang, index) {
                 const wrapper = document.createElement('div');
                 wrapper.className = 'pricing-card-wrapper';
@@ -528,7 +544,7 @@ require_once 'api/image-helper.php';
                 const description = lang === 'ar' ? (item.description_ar || item.description_en) : (item.description_en || item.description_ar);
                 const priceUnit = lang === 'ar' ? (item.price_unit_ar || item.price_unit) : (item.price_unit || 'SAR');
                 const vatNote = lang === 'ar' ? (item.vat_note_ar || item.vat_note) : (item.vat_note || '*(excluding VAT)');
-                const currencyImage = item.currency_image || 'RS/OIP.webp';
+                const currencyImage = item.currency_image || 'RS/OIP.png';
 
                 // Parse price_sec for secondary pricing (e.g., "Hall 1: 1,000 SAR/hour")
                 const hasSecondaryPrice = item.price_sec && item.price_sec.trim() !== '';
@@ -545,7 +561,7 @@ require_once 'api/image-helper.php';
                                         `<span class="pricing-accordion__amount">${formatPrice(item.price)}</span>
                                          <div class="pricing-accordion__currency-wrapper">
                                              ${currencyImage ? `<img src="${currencyImage}" alt="Currency" class="pricing-accordion__currency-image" loading="lazy">` : ''}
-                                             <span class="pricing-accordion__currency">${escapeHtml(priceUnit)}</span>
+                                             <span class="pricing-accordion__currency">${getDurationLabel(priceUnit)}</span>
                                          </div>`
                                     }
                                 </div>
@@ -1515,12 +1531,12 @@ require_once 'api/image-helper.php';
             } else if (item.price && priceUnit) {
                 // Standard price
                 const formattedPrice = parseInt(item.price).toLocaleString('en-US');
-                const currencyImage = item.currency_image || 'RS/OIP.webp';
+                const currencyImage = item.currency_image || 'RS/OIP.png';
                 priceHTML = `<div class="pricing-accordion__price">
                     <span class="pricing-accordion__amount">${formattedPrice}</span>
                     <div class="pricing-accordion__currency-wrapper">
                         ${currencyImage ? `<img src="${currencyImage}" alt="Currency" class="pricing-accordion__currency-image" loading="lazy">` : ''}
-                        <span class="pricing-accordion__currency">${priceUnit}</span>
+                        <span class="pricing-accordion__currency">${getDurationLabel(priceUnit)}</span>
                     </div>
                 </div>`;
             }

@@ -2,6 +2,7 @@
 /**
  * LAKUM Artspace - Populate Legal Pages (Terms & Privacy)
  * Adds bilingual content to legal_page_translations table
+ * Shows ONLY the requested language based on ?lang parameter
  */
 
 header('Content-Type: application/json');
