@@ -837,10 +837,13 @@ require_once 'api/image-helper.php';
                 [...eventsToDisplay, ...eventsToDisplay].forEach(event => {
                     const eventDate = new Date(event.event_date);
                     const month = eventDate.toLocaleDateString('en-US', { month: 'short', year: 'numeric' }).toUpperCase();
+                    const slug = event.slug || event.title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+                    const lang = window.LAKUM_LANG || 'en';
                     
                     const slide = document.createElement('div');
                     slide.className = 'lakum-spaces-exhibition-slide';
                     slide.setAttribute('data-exhibition-id', event.id);
+                    slide.style.cursor = 'pointer';
                     slide.innerHTML = `
                         <div class="lakum-spaces-exhibition-slide__image">
                             <img src="${event.cover_image || 'assest/img-4.png'}" alt="${event.title}" draggable="false" loading="lazy">
@@ -850,6 +853,9 @@ require_once 'api/image-helper.php';
                             <span class="lakum-spaces-exhibition-slide__date">${month}</span>
                         </div>
                     `;
+                    slide.addEventListener('click', () => {
+                        window.location.href = `event.php?title=${slug}&lang=${lang}`;
+                    });
                     track.appendChild(slide);
                 });
 

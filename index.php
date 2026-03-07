@@ -607,9 +607,12 @@ margin: 0 auto;}
                 const month = eventDate.toLocaleDateString('en-US', { month: 'short' }).toUpperCase();
                 const day = eventDate.getDate();
                 const timeStr = convertTo12HourFormat(event.event_time);
+                const slug = event.slug || event.title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+                const lang = window.LAKUM_LANG || 'en';
 
                 const card = document.createElement('div');
                 card.className = 'lakum-event-card';
+                card.style.cursor = 'pointer';
                 card.innerHTML = `
                     <div class="lakum-event-card__image">
                         <img src="${event.cover_image || 'heroImage/img-4.webp'}" alt="${event.title}" loading="lazy" decoding="async" style="content-visibility: auto;">
@@ -621,9 +624,12 @@ margin: 0 auto;}
                     <div class="lakum-event-card__content">
                         <h3 class="lakum-event-card__title">${event.title}</h3>
                         <p class="lakum-event-card__time">${timeStr}</p>
-                        <a href="event.php?title=${(event.slug || event.title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, ''))}&lang=${window.LAKUM_LANG || 'en'}" class="lakum-event-card__link">View Details</a>
+                        <a href="event.php?title=${slug}&lang=${lang}" class="lakum-event-card__link">View Details</a>
                     </div>
                 `;
+                card.addEventListener('click', () => {
+                    window.location.href = `event.php?title=${slug}&lang=${lang}`;
+                });
                 container.appendChild(card);
             });
         }
@@ -653,9 +659,12 @@ margin: 0 auto;}
                 const month = eventDate.toLocaleDateString('en-US', { month: 'short' }).toUpperCase();
                 const day = eventDate.getDate();
                 const timeStr = convertTo12HourFormat(event.event_time);
+                const slug = event.slug || event.title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+                const lang = window.LAKUM_LANG || 'en';
 
                 const card = document.createElement('div');
                 card.className = 'lakum-event-card';
+                card.style.cursor = 'pointer';
                 card.innerHTML = `
                     <div class="lakum-event-card__image">
                         <img src="${event.cover_image || 'heroImage/img-4.webp'}" alt="${event.title}" loading="lazy" decoding="async" style="content-visibility: auto;">
@@ -667,9 +676,12 @@ margin: 0 auto;}
                     <div class="lakum-event-card__content">
                         <h3 class="lakum-event-card__title">${event.title}</h3>
                         <p class="lakum-event-card__time">${timeStr}</p>
-                        <a href="event.php?title=${(event.slug || event.title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, ''))}&lang=${window.LAKUM_LANG || 'en'}" class="lakum-event-card__link">View Details</a>
+                        <a href="event.php?title=${slug}&lang=${lang}" class="lakum-event-card__link">View Details</a>
                     </div>
                 `;
+                card.addEventListener('click', () => {
+                    window.location.href = `event.php?title=${slug}&lang=${lang}`;
+                });
                 container.appendChild(card);
             });
         }

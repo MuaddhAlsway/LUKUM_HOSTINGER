@@ -867,9 +867,12 @@ html[lang="ar"] .lakum-event-card__date {
             const month = eventDate.toLocaleDateString('en-US', { month: 'short' }).toUpperCase();
             const day = eventDate.getDate();
             const dateStr = `${month} ${day}`;
+            const slug = event.slug || event.title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+            const lang = window.LAKUM_LANG || 'en';
 
             const card = document.createElement('div');
             card.className = 'lakum-event-card';
+            card.style.cursor = 'pointer';
             card.innerHTML = `
                 <div class="lakum-event-card__image">
                     <img src="${event.cover_image || 'heroImage/img-4.webp'}" alt="${event.title}" loading="lazy">
@@ -879,6 +882,9 @@ html[lang="ar"] .lakum-event-card__date {
                     <p class="lakum-event-card__time">${dateStr}</p>
                 </div>
             `;
+            card.addEventListener('click', () => {
+                window.location.href = `event.php?title=${slug}&lang=${lang}`;
+            });
             container.appendChild(card);
         });
     }
