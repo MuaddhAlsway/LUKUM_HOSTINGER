@@ -369,9 +369,12 @@ require_once 'api/image-helper.php';
     </script>
 
     <!-- Hero Section -->
-    <section class="lakum-press-hero" style="padding: clamp(60px, 8vw, 90px) 0 clamp(60px, 8vw, 100px) 0; background: #f6f6eb; text-align: center;">
-        <div class="lakum-hero__image-wrapper">
-            <img src="heroImage/img-4.webp"
+    <section class="lakum-press-hero">
+        <div class="lakum-container">
+            <h1 class="lakum-press-hero__title"><?php echo t('press_heading', 'Press & Media'); ?></h1>
+            <p class="lakum-press-hero__subtitle"><?php echo t('press_subtitle', 'Read about LAKUM Artspace in the news'); ?></p>
+        </div>
+    </section>
                  alt="Press"
                  fetchpriority="high"
                  loading="eager"

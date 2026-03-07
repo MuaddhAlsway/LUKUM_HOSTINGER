@@ -364,22 +364,10 @@ require_once 'lang/loader.php';
     </script>
 
     <!-- Hero Section -->
-    <section class="lakum-calendar-hero" style="padding: clamp(40px, 5vw, 64px) 0 clamp(60px, 8vw, 96px) 0; background: #f6f6eb; text-align: center;">
-        <div class="lakum-hero__image-wrapper">
-            <img src="heroImage/img-4.webp"
-                 alt="Calendar"
-                 fetchpriority="high"
-                 loading="eager"
-                 decoding="async"
-                 width="1200"
-                 height="800"
-                 class="lakum-hero__image"
-                 style="width: 100%; height: 100%; object-fit: cover; display: block;">
-            <div class="lakum-hero__overlay"></div>
-        </div>
-        <div class="lakum-hero__content">
-            <h1 class="lakum-hero__title"><?php echo t('calendar_heading', 'Event Calendar'); ?></h1>
-            <p class="lakum-hero__subtitle"><?php echo t('calendar_subtitle', 'Explore our upcoming exhibitions, workshops, and cultural programs'); ?></p>
+    <section class="lakum-calendar-hero">
+        <div class="lakum-calendar-hero__content">
+            <h1 class="lakum-calendar-hero__title"><?php echo t('calendar_heading', 'Event Calendar'); ?></h1>
+            <p class="lakum-calendar-hero__subtitle" style="text-align: center;"><?php echo t('calendar_subtitle', 'Explore our upcoming exhibitions, workshops, and cultural programs'); ?></p>
         </div>
     </section>
 
