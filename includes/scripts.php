@@ -25,3 +25,6 @@
     
     <!-- Floating Action Button -->
     <script src="assest/fab-button.js" defer></script>
+
+    <!-- Dynamic Year Footer -->
+    <script src="assest/dynamic-year.js" defer></script>
