@@ -18,57 +18,63 @@ try {
         $lang = 'en';
     }
     
-    // Query with bilingual support - returns appropriate language based on parameter
-    $query = "
-        SELECT 
-            id,
-            author,
-            category,
-            cover_image,
-            created_at,
-            read_time,
-            CASE 
-                WHEN ? = 'ar' THEN COALESCE(NULLIF(title_ar, ''), title_en, title)
-                ELSE COALESCE(title_en, title)
-            END as title,
-            CASE 
-                WHEN ? = 'ar' THEN COALESCE(NULLIF(excerpt_ar, ''), excerpt_en, excerpt)
-                ELSE COALESCE(excerpt_en, excerpt)
-            END as excerpt,
-            CASE 
-                WHEN ? = 'ar' THEN COALESCE(NULLIF(content_ar, ''), content_en, content)
-                ELSE COALESCE(content_en, content)
-            END as content,
-            title_en,
-            excerpt_en,
-            content_en,
-            title_ar,
-            excerpt_ar,
-            content_ar
-        FROM blogs 
-        ORDER BY created_at DESC 
-        LIMIT 100
-    ";
-    
-    $stmt = $conn->prepare($query);
-    if (!$stmt) {
-        throw new Exception('Query preparation failed: ' . $conn->error);
+    // Build query based on language - avoid CASE with placeholders
+    if ($lang === 'ar') {
+        $query = "
+            SELECT 
+                id,
+                author,
+                category,
+                cover_image,
+                created_at,
+                read_time,
+                COALESCE(NULLIF(title_ar, ''), title_en, title) as title,
+                COALESCE(NULLIF(excerpt_ar, ''), excerpt_en, excerpt) as excerpt,
+                COALESCE(NULLIF(content_ar, ''), content_en, content) as content,
+                title_en,
+                excerpt_en,
+                content_en,
+                title_ar,
+                excerpt_ar,
+                content_ar
+            FROM blogs 
+            ORDER BY created_at DESC 
+            LIMIT 100
+        ";
+    } else {
+        $query = "
+            SELECT 
+                id,
+                author,
+                category,
+                cover_image,
+                created_at,
+                read_time,
+                COALESCE(title_en, title) as title,
+                COALESCE(excerpt_en, excerpt) as excerpt,
+                COALESCE(content_en, content) as content,
+                title_en,
+                excerpt_en,
+                content_en,
+                title_ar,
+                excerpt_ar,
+                content_ar
+            FROM blogs 
+            ORDER BY created_at DESC 
+            LIMIT 100
+        ";
     }
     
-    $stmt->bind_param('sss', $lang, $lang, $lang);
+    $result = $conn->query($query);
     
-    if (!$stmt->execute()) {
-        throw new Exception('Query execution failed: ' . $stmt->error);
+    if (!$result) {
+        throw new Exception('Query failed: ' . $conn->error);
     }
-    
-    $result = $stmt->get_result();
     
     $blogs = [];
     while ($row = $result->fetch_assoc()) {
         $blogs[] = $row;
     }
-    
-    $stmt->close();
     
     echo json_encode([
         'success' => true,
