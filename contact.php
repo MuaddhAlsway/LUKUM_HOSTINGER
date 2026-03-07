@@ -94,7 +94,12 @@ require_once 'lang/loader.php';
             color: #fff;
             max-width: 1400px;
             width: 90%;
-            padding: 0 20px
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto
         }
 
         .lakum-hero__title {
