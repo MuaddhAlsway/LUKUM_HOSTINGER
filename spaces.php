@@ -542,7 +542,7 @@ require_once 'api/image-helper.php';
                 // Get language-specific content
                 const name = lang === 'ar' ? (item.name_ar || item.name_en) : (item.name_en || item.name_ar);
                 const description = lang === 'ar' ? (item.description_ar || item.description_en) : (item.description_en || item.description_ar);
-                const priceUnit = lang === 'ar' ? (item.price_unit_ar || item.price_unit) : (item.price_unit || 'SAR');
+                const priceUnit = item.price_unit || 'SAR';
                 const vatNote = lang === 'ar' ? (item.vat_note_ar || item.vat_note) : (item.vat_note || '*(excluding VAT)');
                 const currencyImage = item.currency_image || 'RS/OIP.png';
 
@@ -1515,8 +1515,8 @@ require_once 'api/image-helper.php';
             const displayContent = content || item.content || '';
             
             // Get bilingual price unit and VAT note
-            const priceUnit = lang === 'ar' ? (item.price_unit_ar || '?.?') : (item.price_unit || 'SAR');
-            const vatNote = lang === 'ar' ? (item.vat_note_ar || '*(??? ???? ???????)') : (item.vat_note || '*(excluding VAT)');
+            const priceUnit = item.price_unit || 'SAR';
+            const vatNote = lang === 'ar' ? (item.vat_note_ar || '*(غير شامل الضريبة)') : (item.vat_note || '*(excluding VAT)');
             
             // Get "Book Now" button text based on language
             const bookNowText = lang === 'ar' ? '???? ????' : 'Book Now';
