@@ -13,57 +13,17 @@ try {
     $db = Database::getInstance();
     $conn = $db->getConnection();
     
+    if (!$conn) {
+        throw new Exception('Database connection failed');
+    }
+    
     $lang = $_GET['lang'] ?? 'en';
     if (!in_array($lang, ['en', 'ar'])) {
         $lang = 'en';
     }
     
-    // Build query based on language - avoid CASE with placeholders
-    if ($lang === 'ar') {
-        $query = "
-            SELECT 
-                id,
-                author,
-                category,
-                cover_image,
-                created_at,
-                read_time,
-                COALESCE(NULLIF(title_ar, ''), title_en, title) as title,
-                COALESCE(NULLIF(excerpt_ar, ''), excerpt_en, excerpt) as excerpt,
-                COALESCE(NULLIF(content_ar, ''), content_en, content) as content,
-                title_en,
-                excerpt_en,
-                content_en,
-                title_ar,
-                excerpt_ar,
-                content_ar
-            FROM blogs 
-            ORDER BY created_at DESC 
-            LIMIT 100
-        ";
-    } else {
-        $query = "
-            SELECT 
-                id,
-                author,
-                category,
-                cover_image,
-                created_at,
-                read_time,
-                COALESCE(title_en, title) as title,
-                COALESCE(excerpt_en, excerpt) as excerpt,
-                COALESCE(content_en, content) as content,
-                title_en,
-                excerpt_en,
-                content_en,
-                title_ar,
-                excerpt_ar,
-                content_ar
-            FROM blogs 
-            ORDER BY created_at DESC 
-            LIMIT 100
-        ";
-    }
+    // Simple query - get all blogs with all columns
+    $query = "SELECT * FROM blogs ORDER BY created_at DESC LIMIT 100";
     
     $result = $conn->query($query);
     
@@ -73,6 +33,19 @@ try {
     
     $blogs = [];
     while ($row = $result->fetch_assoc()) {
+        // Process language-specific content
+        if ($lang === 'ar') {
+            // Use Arabic if available, fallback to English
+            $row['title'] = !empty($row['title_ar']) ? $row['title_ar'] : (!empty($row['title_en']) ? $row['title_en'] : $row['title']);
+            $row['excerpt'] = !empty($row['excerpt_ar']) ? $row['excerpt_ar'] : (!empty($row['excerpt_en']) ? $row['excerpt_en'] : $row['excerpt']);
+            $row['content'] = !empty($row['content_ar']) ? $row['content_ar'] : (!empty($row['content_en']) ? $row['content_en'] : $row['content']);
+        } else {
+            // Use English if available, fallback to default
+            $row['title'] = !empty($row['title_en']) ? $row['title_en'] : $row['title'];
+            $row['excerpt'] = !empty($row['excerpt_en']) ? $row['excerpt_en'] : $row['excerpt'];
+            $row['content'] = !empty($row['content_en']) ? $row['content_en'] : $row['content'];
+        }
+        
         $blogs[] = $row;
     }
     
