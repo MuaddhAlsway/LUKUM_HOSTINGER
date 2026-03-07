@@ -823,6 +823,8 @@
     flex-direction: column;
     width: 100%;
     min-width: 300px;
+    overflow: hidden;
+    height: auto;
 }
 
 /* ===== PRICING ACCORDION (using native details/summary) ===== */
@@ -832,6 +834,7 @@
     border-radius: 2px 2px 0 0;
     overflow: hidden;
     flex: 1 1 auto;
+    max-width: 100%;
 }
 
 .pricing-accordion__header {

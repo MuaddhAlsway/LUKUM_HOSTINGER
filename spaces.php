@@ -622,25 +622,42 @@ require_once 'api/image-helper.php';
             });
 
             // Accordion behavior - only one card open at a time
+            let accordionInitialized = false;
+            
             function initAccordion() {
+                if (accordionInitialized) return; // Prevent duplicate initialization
+                
                 const details = document.querySelectorAll('.pricing-accordion');
+                
                 details.forEach(detail => {
+                    // Remove any existing listeners by cloning and replacing
+                    const newDetail = detail.cloneNode(true);
+                    detail.parentNode.replaceChild(newDetail, detail);
+                });
+                
+                // Re-query after cloning
+                const freshDetails = document.querySelectorAll('.pricing-accordion');
+                
+                freshDetails.forEach(detail => {
                     detail.addEventListener('toggle', (e) => {
                         if (e.target.open) {
                             // Close all other details
-                            details.forEach(otherDetail => {
-                                if (otherDetail !== e.target) {
+                            freshDetails.forEach(otherDetail => {
+                                if (otherDetail !== e.target && otherDetail.open) {
                                     otherDetail.open = false;
                                 }
                             });
                         }
                     });
                 });
+                
+                accordionInitialized = true;
             }
 
             // Initialize accordion after pricing loads
             const observer = new MutationObserver(() => {
-                initAccordion();
+                accordionInitialized = false; // Reset flag when DOM changes
+                setTimeout(initAccordion, 100);
             });
 
             if (pricingGrid) {
@@ -1590,12 +1607,12 @@ require_once 'api/image-helper.php';
         document.addEventListener('lakum-content-loaded', (e) => {
             if (e.detail.contentType === 'pricing') {
                 const pricingItems = e.detail.content;
-                const pricingGrid = document.getElementById('pricingGrid');
+                const pricingGridElement = document.getElementById('pricingGrid');
                 
-                if (!pricingGrid || !pricingItems || pricingItems.length === 0) return;
+                if (!pricingGridElement || !pricingItems || pricingItems.length === 0) return;
                 
                 // Clear existing content
-                pricingGrid.innerHTML = '';
+                pricingGridElement.innerHTML = '';
                 
                 // Render pricing items
                 pricingItems.forEach((item) => {
@@ -1618,7 +1635,7 @@ require_once 'api/image-helper.php';
                         </details>
                     `;
                     
-                    pricingGrid.appendChild(wrapper);
+                    pricingGridElement.appendChild(wrapper);
                 });
             }
         });
