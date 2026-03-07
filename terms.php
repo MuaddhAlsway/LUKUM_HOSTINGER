@@ -494,35 +494,6 @@ Compliance with these terms ensures the preservation of Lakum Artspace’s profe
     <div class="fab-button" id="fabButton"><button class="fab-button__trigger" id="fabTrigger" aria-label="Contact options" aria-expanded="false"><i class="ri-mail-line fab-button__icon"></i><i class="ri-close-line fab-button__close"></i></button><div class="fab-button__menu" id="fabMenu" role="menu"><a href="tel:+966920012083" class="fab-button__item" role="menuitem" data-tooltip="Call us"><i class="ri-phone-line"></i></a><a href="https://wa.me/966920012083" target="_blank" class="fab-button__item" role="menuitem" data-tooltip="WhatsApp"><i class="ri-whatsapp-line"></i></a><a href="mailto:info@lakumartspace.com" class="fab-button__item" role="menuitem" data-tooltip="Email"><i class="ri-mail-line"></i></a></div></div>
     <script src="assest/navbar-mobile-toggle.js" defer></script>
     <script>
-        // Mobile menu toggle
-        (function() {
-            const toggle = document.querySelector('.app-header__menu-toggle');
-            const nav = document.querySelector('.app-nav');
-            const header = document.querySelector('.app-header');
-
-            if (toggle && nav) {
-                toggle.addEventListener('click', function() {
-                    toggle.classList.toggle('app-header__menu-toggle--active');
-                    nav.classList.toggle('app-nav--active');
-                    header.classList.toggle('app-header--menu-open');
-                    document.body.style.overflow = nav.classList.contains('app-nav--active') ? 'hidden' : '';
-                });
-
-                // Close menu when clicking nav link
-                const navLinks = document.querySelectorAll('.app-nav__link');
-                navLinks.forEach(link => {
-                    link.addEventListener('click', function() {
-                        toggle.classList.remove('app-header__menu-toggle--active');
-                        nav.classList.remove('app-nav--active');
-                        header.classList.remove('app-header--menu-open');
-                        document.body.style.overflow = '';
-                    });
-                });
-            }
-        })();
-    </script>
-
-    <script>
         // Load legal page content dynamically based on current language
         document.addEventListener('DOMContentLoaded', function() {
             // Get current language
