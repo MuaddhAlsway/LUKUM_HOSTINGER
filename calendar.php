@@ -457,7 +457,7 @@ require_once 'lang/loader.php';
             </div>
 
             <div class="lakum-footer__bottom">
-                <p class="lakum-footer__copyright"><?php echo t('footer_copyright_prefix', '© 2025 - '); ?><span id="year"></span><?php echo t('footer_copyright_suffix', ' LAKUM Artspace. All rights reserved.'); ?></p>
+                <p class="lakum-footer__copyright"><?php echo t('footer_copyright_prefix', 'ï¿½ 2025 - '); ?><span id="year"></span><?php echo t('footer_copyright_suffix', ' LAKUM Artspace. All rights reserved.'); ?></p>
                 <div class="lakum-footer__legal">
                     <a href="terms.php?lang=<?php echo getCurrentLanguage(); ?>" class="lakum-footer__legal-link"><?php echo t('footer_terms', 'Terms & Conditions'); ?></a>
                     <span class="lakum-footer__legal-divider">|</span>
@@ -551,7 +551,9 @@ require_once 'lang/loader.php';
             // Slug is language-independent (always English)
             const slug = event.slug || event.title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
             console.log('Using slug:', slug);
-            const lang = window.LAKUM_LANG || localStorage.getItem('lakum_language') || 'en';
+            // CRITICAL: Only use window.LAKUM_LANG (set from PHP)
+            // Do NOT use localStorage as it contains the previous page's language
+            const lang = window.LAKUM_LANG || 'en';
             const url = `event.php?title=${slug}&lang=${lang}`;
             console.log('Generated URL:', url);
             return url;

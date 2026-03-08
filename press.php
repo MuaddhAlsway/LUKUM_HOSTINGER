@@ -442,7 +442,7 @@ require_once 'api/image-helper.php';
             </div>
 
             <div class="lakum-footer__bottom">
-                <p class="lakum-footer__copyright"><?php echo t('footer_copyright_prefix', '© 2025 - '); ?><span id="year"></span><?php echo t('footer_copyright_suffix', ' LAKUM Artspace. All rights reserved.'); ?></p>
+                <p class="lakum-footer__copyright"><?php echo t('footer_copyright_prefix', 'ï¿½ 2025 - '); ?><span id="year"></span><?php echo t('footer_copyright_suffix', ' LAKUM Artspace. All rights reserved.'); ?></p>
                 <div class="lakum-footer__legal">
                     <a href="terms.php?lang=<?php echo getCurrentLanguage(); ?>" class="lakum-footer__legal-link"><?php echo t('footer_terms', 'Terms & Conditions'); ?></a>
                     <span class="lakum-footer__legal-divider">|</span>
@@ -492,7 +492,9 @@ require_once 'api/image-helper.php';
                 const pressCard = document.createElement('a');
                 
                 // Use clean URL for internal press detail pages
-                const currentLang = lang || window.LAKUM_LANG || localStorage.getItem('lakum_language') || 'en';
+                // CRITICAL: Only use window.LAKUM_LANG (set from PHP)
+                // Do NOT use localStorage as it contains the previous page's language
+                const currentLang = lang || window.LAKUM_LANG || 'en';
                 const slug = item.slug || item.id;
                 pressCard.href = `press/${slug}?lang=${currentLang}`;
                 
@@ -714,7 +716,9 @@ require_once 'api/image-helper.php';
                     const pressCard = document.createElement('a');
                     
                     // Use clean URL for internal press detail pages
-                    const lang = window.LAKUM_LANG || localStorage.getItem('lakum_language') || 'en';
+                    // CRITICAL: Only use window.LAKUM_LANG (set from PHP)
+                    // Do NOT use localStorage as it contains the previous page's language
+                    const lang = window.LAKUM_LANG || 'en';
                     const slug = item.slug || item.id;
                     pressCard.href = `press/${slug}?lang=${lang}`;
                     

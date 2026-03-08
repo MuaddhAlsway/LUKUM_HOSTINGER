@@ -84,6 +84,8 @@ body {
     box-shadow: none !important;
     transition: box-shadow var(--transition-normal) !important;
     backdrop-filter: blur(10px) !important;
+    direction: ltr !important;
+    text-align: left !important;
 }
 
 .lakum-header.lakum-header--scrolled {
@@ -92,6 +94,7 @@ body {
 
 .lakum-header__container {
     display: flex !important;
+    flex-direction: row !important;
     align-items: center !important;
     justify-content: space-between !important;
     height: 100% !important;
@@ -133,6 +136,7 @@ body {
 /* ===== DESKTOP NAVIGATION ===== */
 .lakum-nav {
     display: flex !important;
+    flex-direction: row !important;
     align-items: center !important;
     flex: 1 !important;
     justify-content: center !important;
@@ -142,17 +146,19 @@ body {
     min-height: 100% !important;
     position: relative !important;
     z-index: 100 !important;
+    direction: ltr !important;
 }
 
 .lakum-nav__list {
     display: flex !important;
+    flex-direction: row !important;
     align-items: center !important;
     list-style: none !important;
     margin: 0 !important;
     padding: 0 !important;
     gap: var(--spacing-lg) !important;
     color: #1a1a1a !important;
-    
+    direction: ltr !important;
     height: 100% !important;
 }
 
@@ -162,17 +168,26 @@ html[dir="rtl"] {
     text-align: right !important;
 }
 
+html[dir="rtl"] .lakum-header {
+    direction: rtl !important;
+    text-align: right !important;
+}
+
 html[dir="rtl"] .lakum-header__container {
     flex-direction: row-reverse !important;
+    text-align: right !important;
 }
 
 html[dir="rtl"] .lakum-nav {
     flex-direction: row-reverse !important;
-    margin-left: var(--spacing-xl) !important;
-    margin-right: 0 !important;
+    margin-left: 0 !important;
+    margin-right: var(--spacing-xl) !important;
+    direction: rtl !important;
+    text-align: right !important;
 }
 
 html[dir="rtl"] .lakum-nav__list {
+    flex-direction: row-reverse !important;
     direction: rtl !important;
     text-align: right !important;
 }
@@ -181,11 +196,14 @@ html[dir="rtl"] .lakum-nav--mobile {
     left: auto !important;
     right: 0 !important;
     transform: translateX(100%) !important;
+    direction: rtl !important;
+    text-align: right !important;
 }
 
 html[dir="rtl"] .lakum-nav--mobile .lakum-nav__list {
     flex-direction: column !important;
     direction: rtl !important;
+    text-align: right !important;
 }
 
 html[dir="rtl"] .lakum-nav__item {
@@ -201,6 +219,7 @@ html[dir="rtl"] .lakum-nav__link {
 
 html[dir="rtl"] .lakum-language-switcher {
     flex-direction: row-reverse !important;
+    direction: rtl !important;
 }
 
 .lakum-nav__item {
@@ -252,10 +271,12 @@ html[dir="rtl"] .lakum-language-switcher {
 /* ===== LANGUAGE SWITCHER ===== */
 .lakum-language-switcher {
     display: flex !important;
+    flex-direction: row !important;
     align-items: center !important;
     gap: var(--spacing-md) !important;
     flex-shrink: 0 !important;
     z-index: var(--z-toggle) !important;
+    direction: ltr !important;
 }
 
 .lakum-lang-link {
@@ -714,29 +735,17 @@ html[dir="rtl"] .lakum-nav--mobile .lakum-nav__link--active {
     }
 }
 
-/* ===== RTL SUPPORT (Arabic) ===== */
-html[dir="rtl"] {
-    direction: rtl !important;
-}
-
-html[dir="rtl"] .lakum-header__container {
-    flex-direction: row-reverse !important;
-}
-
-html[dir="rtl"] .lakum-nav {
-    margin: 0 var(--spacing-xl) !important;
-}
-
+/* ===== ADDITIONAL RTL SUPPORT (Arabic) ===== */
 html[dir="rtl"] .lakum-nav__link::after {
     left: auto !important;
     right: 0 !important;
 }
 
-html[dir="rtl"] .lakum-language-switcher {
+html[dir="rtl"] .lakum-logo {
     flex-direction: row-reverse !important;
 }
 
-html[dir="rtl"] .lakum-logo {
+html[dir="rtl"] .lakum-header__logo {
     flex-direction: row-reverse !important;
 }
 

@@ -150,6 +150,14 @@ body {
     display: block !important;
     position: relative !important;
     z-index: 10 !important;
+    direction: ltr !important;
+    text-align: left !important;
+}
+
+/* RTL Support for Arabic Footer */
+html[dir="rtl"] .lakum-footer {
+    direction: rtl !important;
+    text-align: right !important;
 }
 
 .lakum-footer__container {
@@ -166,6 +174,14 @@ body {
     padding-bottom: 60px;
     width: 100%;
     overflow-x: hidden;
+    direction: ltr;
+    text-align: left;
+}
+
+/* RTL Support for Arabic Footer */
+html[dir="rtl"] .lakum-footer__content {
+    direction: rtl;
+    text-align: right;
 }
 
 .lakum-footer__brand {
@@ -242,6 +258,11 @@ body {
     transform: translateX(4px);
 }
 
+/* RTL Support for Arabic Footer Links */
+html[dir="rtl"] .lakum-footer__link:hover {
+    transform: translateX(-4px);
+}
+
 .lakum-footer__social-links {
     display: flex;
     gap: 16px;
@@ -277,6 +298,13 @@ body {
     padding: 30px 0;
     text-align: center;
     flex-wrap: wrap;
+    direction: ltr;
+}
+
+/* RTL Support for Arabic Footer Bottom */
+html[dir="rtl"] .lakum-footer__bottom {
+    direction: rtl;
+    text-align: center;
 }
 
 .lakum-footer__copyright {
@@ -295,8 +323,8 @@ body {
 /* Tablet */
 @media (max-width: 1024px) {
     .lakum-footer {
-        padding: 80px 0 40px 0 !important;
-        margin-top: 120px !important;
+        padding: 40px 0 30px 0 !important;
+        margin-top: 60px !important;
     }
 
     .lakum-footer__container {
@@ -473,8 +501,8 @@ body {
     }
 
     .lakum-footer {
-        padding: 80px 0 40px 0 !important;
-        margin-top: 120px !important;
+        padding: 40px 0 30px 0 !important;
+        margin-top: 60px !important;
     }
 
     .lakum-footer__container {
@@ -485,8 +513,8 @@ body {
 
     .lakum-footer__content {
         grid-template-columns: 1fr;
-        gap: 40px;
-        padding-bottom: 40px;
+        gap: 30px;
+        padding-bottom: 30px;
         width: 100%;
     }
 
@@ -546,8 +574,8 @@ body {
     }
 
     .lakum-footer {
-        padding: 80px 0 40px 0 !important;
-        margin-top: 120px !important;
+        padding: 30px 0 20px 0 !important;
+        margin-top: 40px !important;
     }
 
     .lakum-footer__container {
@@ -557,8 +585,8 @@ body {
     }
 
     .lakum-footer__content {
-        gap: 24px;
-        padding-bottom: 24px;
+        gap: 20px;
+        padding-bottom: 20px;
         width: 100%;
     }
 

@@ -1,0 +1,169 @@
+================================================================================
+                    HEADER DIRECTION - VISUAL GUIDE
+================================================================================
+
+ENGLISH VERSION (LTR - Left-to-Right)
+================================================================================
+
+Desktop View:
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ [LOGO]  [HOME] [ABOUT] [SPACES] [EXHIBITIONS] [CALENDAR] [BLOG] [PRESS]  [EN|AR] │
+│  LEFT                                                                    RIGHT  │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+Mobile View:
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ [☰]  [LOGO]                                                          [EN|AR] │
+│ LEFT                                                                    RIGHT  │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+Mobile Menu (slides from LEFT):
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ [MENU SLIDES FROM LEFT]                                                     │
+│ ┌──────────────────────────────────────────────────────────────────────────┐ │
+│ │ HOME                                                                     │ │
+│ │ ABOUT                                                                    │ │
+│ │ SPACES                                                                   │ │
+│ │ EXHIBITIONS                                                              │ │
+│ │ CALENDAR                                                                 │ │
+│ │ BLOG                                                                     │ │
+│ │ PRESS                                                                    │ │
+│ │ CONTACT                                                                  │ │
+│ │ SHOP                                                                     │ │
+│ └──────────────────────────────────────────────────────────────────────────┘ │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+================================================================================
+
+ARABIC VERSION (RTL - Right-to-Left)
+================================================================================
+
+Desktop View:
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ [EN|AR]  [اتصل] [صحافة] [مدونة] [تقويم] [معارض] [مساحات] [حول] [الرئيسية]  [LOGO] │
+│  LEFT                                                                    RIGHT  │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+Mobile View:
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ [EN|AR]                                                          [LOGO]  [☰] │
+│ LEFT                                                                    RIGHT  │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+Mobile Menu (slides from RIGHT):
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                                                    [MENU SLIDES FROM RIGHT]   │
+│                                                  ┌──────────────────────────┐ │
+│                                                  │                    الرئيسية│ │
+│                                                  │                      حول│ │
+│                                                  │                   مساحات│ │
+│                                                  │                   معارض│ │
+│                                                  │                   تقويم│ │
+│                                                  │                   مدونة│ │
+│                                                  │                  صحافة│ │
+│                                                  │                   اتصل│ │
+│                                                  │                   متجر│ │
+│                                                  └──────────────────────────┘ │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+================================================================================
+
+KEY DIFFERENCES
+================================================================================
+
+PROPERTY              ENGLISH (LTR)           ARABIC (RTL)
+─────────────────────────────────────────────────────────────────────────────
+direction             ltr                     rtl
+text-align            left                    right
+flex-direction        row                     row-reverse
+Logo Position         LEFT                    RIGHT
+Nav Position          CENTER                  CENTER (reversed order)
+Language Switcher     RIGHT                   LEFT
+Mobile Menu Slide     FROM LEFT               FROM RIGHT
+Nav Item Order        L→R                     R→L
+Hover Transform       translateX(4px)         translateX(-4px)
+
+================================================================================
+
+CSS RULES APPLIED
+================================================================================
+
+ENGLISH (Default - No html[dir="rtl"] selector):
+  .lakum-header { direction: ltr; text-align: left; }
+  .lakum-header__container { flex-direction: row; }
+  .lakum-nav { flex-direction: row; margin: 0 var(--spacing-xl); }
+  .lakum-nav__list { flex-direction: row; }
+  .lakum-language-switcher { flex-direction: row; }
+
+ARABIC (With html[dir="rtl"] selector):
+  html[dir="rtl"] .lakum-header { direction: rtl; text-align: right; }
+  html[dir="rtl"] .lakum-header__container { flex-direction: row-reverse; }
+  html[dir="rtl"] .lakum-nav { flex-direction: row-reverse; margin-right: var(--spacing-xl); }
+  html[dir="rtl"] .lakum-nav__list { flex-direction: row-reverse; }
+  html[dir="rtl"] .lakum-language-switcher { flex-direction: row-reverse; }
+
+================================================================================
+
+TESTING CHECKLIST
+================================================================================
+
+ENGLISH VERSION (LTR):
+  ✓ Logo appears on LEFT side
+  ✓ Navigation items flow LEFT-TO-RIGHT
+  ✓ Language switcher on RIGHT side
+  ✓ Mobile menu slides from LEFT
+  ✓ All text aligns to LEFT
+  ✓ Hover effects move RIGHT (translateX positive)
+
+ARABIC VERSION (RTL):
+  ✓ Logo appears on RIGHT side
+  ✓ Navigation items flow RIGHT-TO-LEFT
+  ✓ Language switcher on LEFT side
+  ✓ Mobile menu slides from RIGHT
+  ✓ All text aligns to RIGHT
+  ✓ Hover effects move LEFT (translateX negative)
+
+RESPONSIVE:
+  ✓ Desktop (> 1024px): Full navigation visible
+  ✓ Tablet (768px - 1024px): Mobile menu visible
+  ✓ Mobile (< 768px): Mobile menu visible
+  ✓ Small Mobile (< 480px): Optimized layout
+
+================================================================================
+
+PAGES AFFECTED
+================================================================================
+
+All pages now properly support LTR/RTL:
+  • index.php (Home)
+  • about.php (About)
+  • spaces.php (Spaces)
+  • exhibitions.php (Exhibitions)
+  • calendar.php (Calendar)
+  • blog.php (Blog)
+  • press.php (Press)
+  • contact.php (Contact)
+  • shop.php (Shop)
+  • privacy.php (Privacy)
+  • terms.php (Terms)
+  • blogPageDetails.php (Blog Details)
+  • pressPageDetails.php (Press Details)
+  • event.php (Event Details)
+
+================================================================================
+
+DEPLOYMENT STATUS
+================================================================================
+
+Files Modified:
+  ✓ lakum-header-unified.css
+  ✓ lakum-components.css
+
+Files NOT Modified (no changes needed):
+  • All PHP files (header detection already working)
+  • All page files (using getLanguageAttributes())
+  • lang/loader.php (already sets dir attribute correctly)
+
+Ready for Deployment: YES ✓
+
+================================================================================
