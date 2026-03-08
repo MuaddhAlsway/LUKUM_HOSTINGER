@@ -84,8 +84,6 @@ body {
     box-shadow: none !important;
     transition: box-shadow var(--transition-normal) !important;
     backdrop-filter: blur(10px) !important;
-    direction: ltr !important;
-    text-align: left !important;
 }
 
 .lakum-header.lakum-header--scrolled {
@@ -146,7 +144,6 @@ body {
     min-height: 100% !important;
     position: relative !important;
     z-index: 100 !important;
-    direction: ltr !important;
 }
 
 .lakum-nav__list {
@@ -158,7 +155,6 @@ body {
     padding: 0 !important;
     gap: var(--spacing-lg) !important;
     color: #1a1a1a !important;
-    direction: ltr !important;
     height: 100% !important;
 }
 
@@ -166,6 +162,29 @@ body {
 html[dir="rtl"] {
     direction: rtl !important;
     text-align: right !important;
+}
+
+/* LTR Support for English - Default */
+html[dir="ltr"],
+html:not([dir]) {
+    direction: ltr !important;
+    text-align: left !important;
+}
+
+html[dir="ltr"] .lakum-header,
+html:not([dir]) .lakum-header {
+    direction: ltr !important;
+    text-align: left !important;
+}
+
+html[dir="ltr"] .lakum-nav,
+html:not([dir]) .lakum-nav {
+    direction: ltr !important;
+}
+
+html[dir="ltr"] .lakum-nav__list,
+html:not([dir]) .lakum-nav__list {
+    direction: ltr !important;
 }
 
 html[dir="rtl"] .lakum-header {
