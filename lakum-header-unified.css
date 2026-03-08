@@ -211,20 +211,6 @@ html[dir="rtl"] .lakum-nav__list {
     text-align: right !important;
 }
 
-html[dir="rtl"] .lakum-nav {
-    flex-direction: row-reverse !important;
-    margin-left: 0 !important;
-    margin-right: var(--spacing-xl) !important;
-    direction: rtl !important;
-    text-align: right !important;
-}
-
-html[dir="rtl"] .lakum-nav__list {
-    flex-direction: row-reverse !important;
-    direction: rtl !important;
-    text-align: right !important;
-}
-
 html[dir="rtl"] .lakum-nav--mobile {
     left: auto !important;
     right: 0 !important;
@@ -831,4 +817,32 @@ html[dir="rtl"] .lakum-header__logo {
         --header-text: #f6f6eb !important;
         --header-border: #333 !important;
     }
+}
+
+
+/* ===== FINAL CRITICAL RTL OVERRIDE (MUST BE AT END) ===== */
+/* This ensures RTL is applied regardless of any other CSS */
+
+html[dir="rtl"] .lakum-header__container {
+    flex-direction: row-reverse !important;
+}
+
+html[dir="rtl"] .lakum-nav {
+    flex-direction: row-reverse !important;
+}
+
+html[dir="rtl"] .lakum-nav__list {
+    flex-direction: row-reverse !important;
+}
+
+html[dir="rtl"] .lakum-header__logo {
+    order: 3 !important;
+}
+
+html[dir="rtl"] .lakum-nav {
+    order: 2 !important;
+}
+
+html[dir="rtl"] .lakum-language-switcher {
+    order: 1 !important;
 }
