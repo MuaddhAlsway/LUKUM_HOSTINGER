@@ -205,12 +205,6 @@ html[dir="rtl"] .lakum-nav {
     text-align: right !important;
 }
 
-html[dir="rtl"] .lakum-nav__list {
-    flex-direction: row-reverse !important;
-    direction: rtl !important;
-    text-align: right !important;
-}
-
 html[dir="rtl"] .lakum-nav--mobile {
     left: auto !important;
     right: 0 !important;
