@@ -4,22 +4,32 @@
  */
 
 const LanguageManager = {
-    // Current language state
-    currentLanguage: localStorage.getItem('language') || 'en',
+    // Current language state - read from HTML element first (set by PHP)
+    currentLanguage: document.documentElement.lang || localStorage.getItem('language') || 'en',
     
     /**
      * Initialize LanguageManager
-     * Sets up language from localStorage or URL parameter
+     * Sets up language from HTML element (PHP), URL parameter, or localStorage
      */
     init() {
-        // Check URL parameter first
+        // 1️⃣ PRIORITY: HTML element dir attribute (set by PHP from URL parameter)
+        const htmlDir = document.documentElement.dir;
+        const htmlLang = document.documentElement.lang;
+        
+        if (htmlLang && ['en', 'ar'].includes(htmlLang)) {
+            this.currentLanguage = htmlLang;
+            localStorage.setItem('language', htmlLang);
+            return; // PHP already set it correctly, don't override
+        }
+        
+        // 2️⃣ Check URL parameter
         const urlParams = new URLSearchParams(window.location.search);
         const urlLang = urlParams.get('lang');
         
         if (urlLang && ['en', 'ar'].includes(urlLang)) {
             this.setLanguage(urlLang);
         } else {
-            // Use stored language or default to English
+            // 3️⃣ Use stored language or default to English
             this.applyLanguage(this.currentLanguage);
         }
         
