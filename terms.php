@@ -480,7 +480,7 @@ Compliance with these terms ensures the preservation of Lakum Artspace’s profe
             </div>
 
             <div class="lakum-footer__bottom">
-                <p class="lakum-footer__copyright"><?php echo t('footer_copyright_prefix', '� 2025 - '); ?><span id="year"></span><?php echo t('footer_copyright_suffix', ' LAKUM Artspace. All rights reserved.'); ?></p>
+                <p class="lakum-footer__copyright"><?php echo t('footer_copyright_prefix', '� 2025 - '); ?><span id="year"></span><?php echo t('footer_copyright_suffix', ' LAKUM Artspace. All rights reserved.'); ?></p>
                 <div class="lakum-footer__legal">
                     <a href="terms.php<?php echo isset($_GET['lang']) ? '?lang=' . htmlspecialchars($_GET['lang']) : ''; ?>" class="lakum-footer__legal-link"><?php echo t('footer_terms', 'Terms & Conditions'); ?></a>
                     <span class="lakum-footer__legal-divider">|</span>
@@ -580,19 +580,49 @@ Compliance with these terms ensures the preservation of Lakum Artspace’s profe
         // NOW call the function after it's defined
         document.addEventListener('DOMContentLoaded', function() {
             loadLegalPageContent();
+            
+            // Intercept language switcher clicks
+            const langLinks = document.querySelectorAll('.lakum-language-switcher a');
+            langLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Get the target language from the href
+                    const href = this.getAttribute('href');
+                    const url = new URL(href, window.location.origin);
+                    const targetLang = url.searchParams.get('lang');
+                    
+                    if (targetLang && ['en', 'ar'].includes(targetLang)) {
+                        console.log('Language switcher clicked, switching to:', targetLang);
+                        
+                        // Update localStorage
+                        localStorage.setItem('lakum_language', targetLang);
+                        
+                        // Update window variable
+                        window.LAKUM_LANG = targetLang;
+                        
+                        // Update URL without reloading
+                        const newUrl = window.location.pathname + '?lang=' + targetLang;
+                        window.history.pushState({lang: targetLang}, '', newUrl);
+                        
+                        // Reload content
+                        loadLegalPageContent();
+                    }
+                });
+            });
         });
 
-        // Watch for language changes via URL parameter
+        // Watch for language changes via URL parameter (back/forward buttons)
         window.addEventListener('popstate', function() {
             loadLegalPageContent();
         });
 
-        // Listen for language changes via storage event (when language switcher is used)
+        // Listen for language changes via storage event (when language switcher is used in another tab)
         window.addEventListener('storage', (e) => {
             if (e.key === 'lakum_language' && e.newValue) {
                 console.log('Language changed to:', e.newValue);
-                // Reload page with new language parameter
-                window.location.href = window.location.pathname + '?lang=' + e.newValue;
+                window.LAKUM_LANG = e.newValue;
+                loadLegalPageContent();
             }
         });
     </script>
