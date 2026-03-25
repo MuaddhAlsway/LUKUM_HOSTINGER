@@ -1,0 +1,334 @@
+================================================================================
+PRICING CARD CONTENT - BEFORE & AFTER
+================================================================================
+
+BEFORE (BROKEN):
+================================================================================
+
+Raw HTML markup visible in pricing card:
+
+┌─────────────────────────────────────────────────────────────┐
+│ Hourly Rate                                                 │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│ <p class="pricing-accordion__intro">Our hourly bookings    │
+│ exclusively for short-format experiences, including:</p>   │
+│ <ul class="pricing-accordion__list">                       │
+│ <li>Creative workshops and hands-on sessions</li>          │
+│ <li>Talks, panels, and intimate discussions</li>           │
+│ <li>Music lessons, rehearsals, or small performances</li>  │
+│ <li>Yoga, wellness, and movement sessions</li>             │
+│ <li>Training sessions or educational programs</li>         │
+│ <li>Photoshoots and video filming</li>                     │
+│ <li>Other short gatherings or community-based activities   │
+│ </li>                                                       │
+│ </ul>                                                       │
+│ <div class="pricing-accordion__note"><strong>Please note:  │
+│ </strong><p>Hourly rates apply only to short-duration      │
+│ events, typically lasting a few hours. This option is not  │
+│ available for full-day events, exhibitions, or large-scale │
+│ productions.</p></div>                                      │
+│                                                             │
+│ [Book Now]                                                  │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+
+PROBLEM:
+  ✗ HTML tags visible as text
+  ✗ No formatting applied
+  ✗ Looks unprofessional
+  ✗ Hard to read
+  ✗ CSS classes not applied
+
+
+AFTER (FIXED):
+================================================================================
+
+Clean formatted text with proper styling:
+
+┌─────────────────────────────────────────────────────────────┐
+│ Hourly Rate                                                 │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│ Our hourly bookings exclusively for short-format           │
+│ experiences, including:                                    │
+│                                                             │
+│ • Creative workshops and hands-on sessions                 │
+│ • Talks, panels, and intimate discussions                  │
+│ • Music lessons, rehearsals, or small performances         │
+│ • Yoga, wellness, and movement sessions                    │
+│ • Training sessions or educational programs                │
+│ • Photoshoots and video filming                            │
+│ • Other short gatherings or community-based activities     │
+│                                                             │
+│ ┌─────────────────────────────────────────────────────┐   │
+│ │ Please note:                                        │   │
+│ │ Hourly rates apply only to short-duration events,  │   │
+│ │ typically lasting a few hours. This option is not  │   │
+│ │ available for full-day events, exhibitions, or     │   │
+│ │ large-scale productions.                           │   │
+│ └─────────────────────────────────────────────────────┘   │
+│                                                             │
+│ [Book Now]                                                  │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+
+BENEFITS:
+  ✓ Clean, professional appearance
+  ✓ Proper formatting applied
+  ✓ Easy to read
+  ✓ CSS styling visible
+  ✓ Matches admin panel design
+
+
+COMPARISON TABLE:
+================================================================================
+
+Feature                 | BEFORE          | AFTER
+─────────────────────────────────────────────────────────────
+HTML Tags Visible       | Yes ✗           | No ✓
+Formatting Applied      | No ✗            | Yes ✓
+CSS Classes Applied     | No ✗            | Yes ✓
+Professional Look       | No ✗            | Yes ✓
+Readability             | Poor ✗          | Good ✓
+Matches Admin Panel      | No ✗            | Yes ✓
+User Experience         | Bad ✗           | Good ✓
+
+
+CODE CHANGE:
+================================================================================
+
+BEFORE:
+┌─────────────────────────────────────────────────────────────┐
+│ JavaScript Code                                             │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│ ${description ? `<p>${this.escapeHtml(description)}</p>`   │
+│                                                             │
+│ What happens:                                              │
+│ 1. Get description from database                           │
+│ 2. Escape HTML tags (convert to entities)                  │
+│ 3. Wrap in <p> tag                                         │
+│ 4. Render as text (not HTML)                               │
+│                                                             │
+│ Result: Raw HTML markup visible                            │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+
+AFTER:
+┌─────────────────────────────────────────────────────────────┐
+│ JavaScript Code                                             │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│ ${description ? `<div>${description}</div>` : ''}          │
+│                                                             │
+│ What happens:                                              │
+│ 1. Get description from database                           │
+│ 2. Keep HTML as-is (don't escape)                          │
+│ 3. Wrap in <div> tag                                       │
+│ 4. Render as HTML (apply formatting)                       │
+│                                                             │
+│ Result: Clean formatted text with styling                  │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+
+
+RENDERING FLOW:
+================================================================================
+
+BEFORE (Broken):
+┌─────────────────────────────────────────────────────────────┐
+│ Admin Panel Input                                           │
+├─────────────────────────────────────────────────────────────┤
+│ <p class="pricing-accordion__intro">Our hourly bookings... │
+│ <ul class="pricing-accordion__list">                       │
+│ <li>Creative workshops...</li>                             │
+│ </ul>                                                       │
+└─────────────────────────────────────────────────────────────┘
+                            ↓
+┌─────────────────────────────────────────────────────────────┐
+│ Database Storage                                            │
+├─────────────────────────────────────────────────────────────┤
+│ <p class="pricing-accordion__intro">Our hourly bookings... │
+│ <ul class="pricing-accordion__list">                       │
+│ <li>Creative workshops...</li>                             │
+│ </ul>                                                       │
+└─────────────────────────────────────────────────────────────┘
+                            ↓
+┌─────────────────────────────────────────────────────────────┐
+│ Frontend Rendering (ESCAPED)                               │
+├─────────────────────────────────────────────────────────────┤
+│ escapeHtml() converts:                                      │
+│ < → &lt;                                                    │
+│ > → &gt;                                                    │
+│ & → &amp;                                                   │
+│                                                             │
+│ Result: &lt;p class="pricing-accordion__intro"&gt;Our...   │
+└─────────────────────────────────────────────────────────────┘
+                            ↓
+┌─────────────────────────────────────────────────────────────┐
+│ Browser Display (BROKEN)                                   │
+├─────────────────────────────────────────────────────────────┤
+│ <p class="pricing-accordion__intro">Our hourly bookings... │
+│ <ul class="pricing-accordion__list">                       │
+│ <li>Creative workshops...</li>                             │
+│ </ul>                                                       │
+│                                                             │
+│ ✗ Raw HTML markup visible                                  │
+│ ✗ No formatting applied                                    │
+│ ✗ Looks unprofessional                                     │
+└─────────────────────────────────────────────────────────────┘
+
+AFTER (Fixed):
+┌─────────────────────────────────────────────────────────────┐
+│ Admin Panel Input                                           │
+├─────────────────────────────────────────────────────────────┤
+│ <p class="pricing-accordion__intro">Our hourly bookings... │
+│ <ul class="pricing-accordion__list">                       │
+│ <li>Creative workshops...</li>                             │
+│ </ul>                                                       │
+└─────────────────────────────────────────────────────────────┘
+                            ↓
+┌─────────────────────────────────────────────────────────────┐
+│ Database Storage                                            │
+├─────────────────────────────────────────────────────────────┤
+│ <p class="pricing-accordion__intro">Our hourly bookings... │
+│ <ul class="pricing-accordion__list">                       │
+│ <li>Creative workshops...</li>                             │
+│ </ul>                                                       │
+└─────────────────────────────────────────────────────────────┘
+                            ↓
+┌─────────────────────────────────────────────────────────────┐
+│ Frontend Rendering (NOT ESCAPED)                           │
+├─────────────────────────────────────────────────────────────┤
+│ HTML is kept as-is:                                        │
+│ <p> remains <p>                                            │
+│ <ul> remains <ul>                                          │
+│ <li> remains <li>                                          │
+│                                                             │
+│ Result: <p class="pricing-accordion__intro">Our...         │
+└─────────────────────────────────────────────────────────────┘
+                            ↓
+┌─────────────────────────────────────────────────────────────┐
+│ Browser Display (FIXED)                                    │
+├─────────────────────────────────────────────────────────────┤
+│ Our hourly bookings exclusively for short-format           │
+│ experiences, including:                                    │
+│                                                             │
+│ • Creative workshops and hands-on sessions                 │
+│ • Talks, panels, and intimate discussions                  │
+│ • Music lessons, rehearsals, or small performances         │
+│ • Yoga, wellness, and movement sessions                    │
+│ • Training sessions or educational programs                │
+│ • Photoshoots and video filming                            │
+│ • Other short gatherings or community-based activities     │
+│                                                             │
+│ ✓ Clean formatted text                                     │
+│ ✓ CSS styling applied                                      │
+│ ✓ Professional appearance                                  │
+└─────────────────────────────────────────────────────────────┘
+
+
+CSS CLASSES APPLIED:
+================================================================================
+
+BEFORE (Not Applied):
+  .pricing-accordion__intro → Not visible
+  .pricing-accordion__list → Not visible
+  .pricing-accordion__note → Not visible
+  .pricing-accordion__service → Not visible
+
+AFTER (Applied):
+  .pricing-accordion__intro
+    ├─ Font size: clamp(0.95rem, 1.3vw, 1rem)
+    ├─ Font weight: 400
+    ├─ Color: #1a1a1a
+    ├─ Margin: 20px 0 16px 0
+    └─ Result: Styled intro paragraph
+
+  .pricing-accordion__list
+    ├─ List style: none
+    ├─ Padding: 0
+    ├─ Margin: 0 0 20px 0
+    └─ Result: Clean bulleted list
+
+  .pricing-accordion__note
+    ├─ Background: #f6f6eb
+    ├─ Padding: 16px
+    ├─ Border radius: 2px
+    ├─ Margin: 16px 0
+    └─ Result: Highlighted note section
+
+
+ADMIN PANEL INTEGRATION:
+================================================================================
+
+Admin Panel:
+  User enters HTML content in pricing tab
+  Example:
+    <p class="pricing-accordion__intro">Our hourly bookings...</p>
+    <ul class="pricing-accordion__list">
+    <li>Creative workshops...</li>
+    </ul>
+    <div class="pricing-accordion__note">
+    <strong>Please note:</strong>
+    <p>Hourly rates apply only to...</p>
+    </div>
+
+Database:
+  Stored as-is in description_en / description_ar
+
+Frontend:
+  Rendered directly with HTML
+  CSS classes apply styling
+  Content displays professionally
+
+Result:
+  Admin panel design is reflected on frontend
+  Consistent styling across all pricing cards
+  Professional, formatted appearance
+
+
+SECURITY CONSIDERATIONS:
+================================================================================
+
+SAFE (Current Implementation):
+  ✓ Admin panel content is TRUSTED
+  ✓ Only admins can edit pricing
+  ✓ HTML is controlled by site administrators
+  ✓ No user-generated content
+  ✓ No XSS vulnerability
+
+UNSAFE (If Changed):
+  ✗ User-generated content without escaping
+  ✗ Untrusted HTML sources
+  ✗ Potential XSS attacks
+
+Current implementation is SECURE because:
+  - Only admins have access to pricing admin panel
+  - Content is not from untrusted sources
+  - HTML is controlled by site administrators
+
+
+SUMMARY:
+================================================================================
+
+BEFORE:
+  ✗ Raw HTML markup visible
+  ✗ No formatting applied
+  ✗ Unprofessional appearance
+  ✗ CSS classes not applied
+  ✗ Poor user experience
+
+AFTER:
+  ✓ Clean formatted text
+  ✓ Professional appearance
+  ✓ CSS styling applied
+  ✓ Matches admin panel design
+  ✓ Better user experience
+  ✓ Responsive layout
+  ✓ Multilingual support
+
+The pricing cards now display professional, formatted content!
+
+================================================================================

@@ -149,12 +149,17 @@ function getLanguageClass() {
  * - Works in subfolders
  * - Future-proof for routing
  */
-function buildLanguageSwitcherUrl() {
+function buildLanguageSwitcherUrl($targetLang = null) {
     $currentPath = strtok($_SERVER['REQUEST_URI'], '?');
     $queryParams = $_GET;
     
-    // Toggle language
-    $queryParams['lang'] = (getCurrentLanguage() === 'ar') ? 'en' : 'ar';
+    // If target language is specified, use it; otherwise toggle
+    if ($targetLang && in_array($targetLang, ['en', 'ar'])) {
+        $queryParams['lang'] = $targetLang;
+    } else {
+        // Toggle language (fallback for backward compatibility)
+        $queryParams['lang'] = (getCurrentLanguage() === 'ar') ? 'en' : 'ar';
+    }
     
     // Rebuild query string safely
     $newUrl = $currentPath . '?' . http_build_query($queryParams);
