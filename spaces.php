@@ -595,7 +595,7 @@ require_once 'api/image-helper.php';
                             <span class="pricing-accordion__icon"></span>
                         </summary>
                         <div class="pricing-accordion__content">
-                            ${description ? `<p>${this.escapeHtml(description)}</p>` : ''}
+                            ${description ? `<div>${description}</div>` : ''}
                             ${item.content ? `<div>${item.content}</div>` : ''}
                         </div>
                     </details>
