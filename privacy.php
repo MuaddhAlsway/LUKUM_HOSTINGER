@@ -506,9 +506,12 @@ require_once 'lang/loader.php';
             return (lang === 'ar' || lang === 'en') ? lang : 'en';
         }
 
-        // 2. Add ?lang= to every internal <a> tag on the page
+        // 2. Add ?lang= to every internal <a> tag on the page (skip language switcher)
         function updateLinksWithLang(lang) {
             document.querySelectorAll('a[href]').forEach(function(link) {
+                // Skip language switcher buttons — they already have correct hrefs from PHP
+                if (link.closest('.lakum-language-switcher')) return;
+
                 var href = link.getAttribute('href');
                 if (!href || href.startsWith('http') || href.startsWith('#') ||
                     href.startsWith('javascript') || href.startsWith('mailto') ||
