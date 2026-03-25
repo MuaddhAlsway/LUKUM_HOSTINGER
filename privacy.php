@@ -492,402 +492,121 @@ require_once 'lang/loader.php';
     <!-- Expandable Floating Contact Button -->
     <div class="fab-button" id="fabButton"><button class="fab-button__trigger" id="fabTrigger" aria-label="Contact options" aria-expanded="false"><i class="ri-mail-line fab-button__icon"></i><i class="ri-close-line fab-button__close"></i></button><div class="fab-button__menu" id="fabMenu" role="menu"><a href="tel:+966920012083" class="fab-button__item" role="menuitem" data-tooltip="Call us"><i class="ri-phone-line"></i></a><a href="https://wa.me/966920012083" target="_blank" class="fab-button__item" role="menuitem" data-tooltip="WhatsApp"><i class="ri-whatsapp-line"></i></a><a href="mailto:info@lakumartspace.com" class="fab-button__item" role="menuitem" data-tooltip="Email"><i class="ri-mail-line"></i></a></div></div>
     <script src="assest/navbar-mobile-toggle.js" defer></script>
-    <script>
-        // Load legal page content dynamically based on current language
-        document.addEventListener('DOMContentLoaded', function() {
-            // Get current language
-            const urlParams = new URLSearchParams(window.location.search);
-            const lang = urlParams.get('lang') || localStorage.getItem('lakum_language') || 'en';
-            
-            // Set page direction based on language
-            if (lang === 'ar') {
-                document.documentElement.dir = 'rtl';
-                document.documentElement.lang = 'ar';
-            } else {
-                document.documentElement.dir = 'ltr';
-                document.documentElement.lang = 'en';
-            }
-        });
-    </script>
 
     <!-- Global Scripts (Centralized) -->
     <?php include('includes/scripts.php'); ?>
 
     <script>
-        // ===== PRIVACY PAGE LANGUAGE SWITCHER =====
-        // Clean, minimal solution for multilingual content
-        
-        // 1. Get language from URL parameter
-        function getLangFromURL() {
-            const params = new URLSearchParams(window.location.search);
-            const lang = params.get('lang');
+        // ===== PRIVACY PAGE: LANGUAGE SWITCHER =====
+        // Single clean implementation. No duplicates.
+
+        // 1. Read lang from URL (?lang=en or ?lang=ar). Default: 'en'
+        function getCurrentLang() {
+            var lang = new URLSearchParams(window.location.search).get('lang');
             return (lang === 'ar' || lang === 'en') ? lang : 'en';
         }
-        
-        // 2. Fetch content from API
-        async function fetchPrivacyContent(lang) {
+
+        // 2. Add ?lang= to every internal <a> tag on the page
+        function updateLinksWithLang(lang) {
+            document.querySelectorAll('a[href]').forEach(function(link) {
+                var href = link.getAttribute('href');
+                if (!href || href.startsWith('http') || href.startsWith('#') ||
+                    href.startsWith('javascript') || href.startsWith('mailto') ||
+                    href.startsWith('tel') || href.indexOf('wa.me') !== -1) return;
+                try {
+                    var url = new URL(href, window.location.origin);
+                    url.searchParams.set('lang', lang);
+                    link.setAttribute('href', url.pathname + '?' + url.searchParams.toString());
+                } catch(e) {}
+            });
+        }
+
+        // 3. Fetch page content from API
+        async function fetchContent(lang) {
             try {
-                const response = await fetch(`api/get_legal_page.php?page_key=privacy&lang=${lang}`);
-                const data = await response.json();
+                var res = await fetch('api/get_legal_page.php?page_key=privacy&lang=' + lang);
+                var data = await res.json();
                 return data.success ? data.data : null;
-            } catch (error) {
-                console.error('Error fetching privacy content:', error);
+            } catch(e) {
+                console.error('API fetch failed:', e);
                 return null;
             }
         }
-        
-        // 3. Footer translations cache
-        let footerTranslationsCache = {};
-        
-        // 4. Fetch footer translations
-        async function fetchFooterTranslations(lang) {
-            if (footerTranslationsCache[lang]) {
-                return footerTranslationsCache[lang];
-            }
-            
-            try {
-                const response = await fetch(`lang/${lang}/footer.json`);
-                if (!response.ok) throw new Error('Failed to fetch footer translations');
-                const data = await response.json();
-                footerTranslationsCache[lang] = data;
-                return data;
-            } catch (error) {
-                console.error('Error fetching footer translations:', error);
-                return null;
-            }
-        }
-        
-        // 5. Update footer text based on language
-        async function updateFooterLanguage(lang) {
-            const translations = await fetchFooterTranslations(lang);
-            if (!translations) {
-                console.warn('No translations found for language:', lang);
-                return;
-            }
-            
-            console.log('Updating footer for language:', lang, translations);
-            
-            // Update footer tagline
-            const tagline = document.querySelector('.lakum-footer__tagline');
-            if (tagline) {
-                tagline.textContent = translations.footer_tagline || translations.tagline || 'Where Encounters Shape Culture';
-                console.log('Updated tagline to:', tagline.textContent);
-            }
-            
-            // Update footer navigation titles
-            const navTitles = document.querySelectorAll('.lakum-footer__nav-title');
-            console.log('Found nav titles:', navTitles.length);
-            if (navTitles.length >= 3) {
-                navTitles[0].textContent = translations.footer_navigate || translations.navigate || 'Navigate';
-                navTitles[1].textContent = translations.footer_explore || translations.explore || 'Explore';
-                navTitles[2].textContent = translations.footer_connect || translations.connect || 'Connect';
-                console.log('Updated nav titles');
-            }
-            
-            // Update footer links
-            const footerLinks = document.querySelectorAll('.lakum-footer__link');
-            console.log('Found footer links:', footerLinks.length);
-            footerLinks.forEach(link => {
-                const href = link.getAttribute('href');
-                const text = link.textContent.trim();
-                
-                // Match by href or current text
-                if (href === 'index.php' || text === 'Home') link.textContent = translations.home || 'Home';
-                else if (href === 'about.php' || text === 'About') link.textContent = translations.about || 'About';
-                else if (href === 'spaces.php' || text === 'Spaces') link.textContent = translations.spaces || 'Spaces';
-                else if (href === 'exhibitions.php' || text === 'Exhibitions') link.textContent = translations.exhibitions || 'Exhibitions';
-                else if (href === 'calendar.php' || text === 'Calendar') link.textContent = translations.calendar || 'Calendar';
-                else if (href === 'blog.php' || text === 'Blog') link.textContent = translations.blog || 'Blog';
-                else if (href === 'press.php' || text === 'Press') link.textContent = translations.press || 'Press';
-                else if (href === 'contact.php' || text === 'Contact') link.textContent = translations.contact_us || 'Contact';
-            });
-            
-            // Update legal links
-            const legalLinks = document.querySelectorAll('.lakum-footer__legal-link');
-            console.log('Found legal links:', legalLinks.length);
-            legalLinks.forEach(link => {
-                const href = link.getAttribute('href');
-                if (href.includes('terms.php')) {
-                    link.textContent = translations.footer_terms || translations.terms || 'Terms & Conditions';
-                } else if (href.includes('privacy.php')) {
-                    link.textContent = translations.footer_privacy || translations.privacy || 'Privacy Policy';
-                }
-            });
-            
-            // Update copyright year
-            const yearSpan = document.getElementById('year');
-            if (yearSpan) {
-                yearSpan.textContent = new Date().getFullYear();
-            }
-        }
-        
-        // 6. Update page content
-        function updatePageContent(content, lang) {
+
+        // 4. Render fetched content into the page
+        function renderContent(content, lang) {
             if (!content) return;
-            
-            console.log('Updating page content for language:', lang);
-            
-            // Update content
-            const contentDiv = document.getElementById('privacy-content');
-            if (contentDiv) {
-                contentDiv.innerHTML = content.content || '';
-            }
-            
-            // Update title
-            const titleDiv = document.getElementById('legal-page-title');
-            if (titleDiv) {
-                titleDiv.textContent = content.title || 'Privacy Policy';
-            }
-            
-            // Update date
-            const dateDiv = document.getElementById('legal-page-date');
-            if (dateDiv && content.last_updated) {
-                const date = new Date(content.last_updated);
-                dateDiv.textContent = date.toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
+
+            var contentDiv = document.getElementById('privacy-content');
+            if (contentDiv) contentDiv.innerHTML = content.content || '';
+
+            var titleEl = document.getElementById('legal-page-title');
+            if (titleEl) titleEl.textContent = content.title || 'Privacy Policy';
+
+            var dateEl = document.getElementById('legal-page-date');
+            if (dateEl && content.last_updated) {
+                dateEl.textContent = new Date(content.last_updated).toLocaleDateString('en-US', {
+                    year: 'numeric', month: 'long', day: 'numeric'
                 });
             }
-            
-            // Update page direction
+
             document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
             document.documentElement.lang = lang;
-            
-            // Update active button state
-            updateButtonState(lang);
-            
-            // Update footer language - CRITICAL
-            console.log('Calling updateFooterLanguage for:', lang);
-            updateFooterLanguage(lang);
         }
-        
-        // 6. Update language button active state
-        function updateButtonState(lang) {
-            const buttons = document.querySelectorAll('.lakum-language-switcher a');
-            buttons.forEach(btn => {
-                btn.classList.remove('lakum-lang-link--active');
-                if (lang === 'en' && btn.textContent.includes('EN')) {
-                    btn.classList.add('lakum-lang-link--active');
-                } else if (lang === 'ar' && btn.textContent.includes('AR')) {
-                    btn.classList.add('lakum-lang-link--active');
-                }
-            });
-        }
-        
-        // 7. Fix language switcher URLs (critical fix for privacy.php)
-        function fixLanguageSwitcherUrls() {
-            const buttons = document.querySelectorAll('.lakum-language-switcher a');
-            buttons.forEach(btn => {
-                if (btn.textContent.includes('EN')) {
-                    btn.href = window.location.pathname + '?lang=en';
-                } else if (btn.textContent.includes('AR')) {
-                    btn.href = window.location.pathname + '?lang=ar';
-                }
-            });
-        }
-        
-        // 8. Preserve language parameter in all links
-        function preserveLanguageInLinks(lang) {
-            // Update header navigation links
-            const navLinks = document.querySelectorAll('.lakum-nav__link, .lakum-nav--mobile .lakum-nav__link');
-            navLinks.forEach(link => {
-                const href = link.getAttribute('href');
-                if (href && !href.includes('?lang=')) {
-                    link.href = href + '?lang=' + lang;
-                }
-            });
-            
-            // Update footer links
-            const footerLinks = document.querySelectorAll('.lakum-footer__link');
-            footerLinks.forEach(link => {
-                const href = link.getAttribute('href');
-                if (href && !href.includes('?lang=')) {
-                    link.href = href + '?lang=' + lang;
-                }
-            });
-            
-            // Update legal links
-            const legalLinks = document.querySelectorAll('.lakum-footer__legal-link');
-            legalLinks.forEach(link => {
-                const href = link.getAttribute('href');
-                if (href && !href.includes('?lang=')) {
-                    link.href = href + '?lang=' + lang;
-                }
-            });
-        }
-        
-        // 9. Load content on page load
-        async function initPage() {
-            const lang = getLangFromURL();
-            fixLanguageSwitcherUrls();
-            preserveLanguageInLinks(lang);
-            const content = await fetchPrivacyContent(lang);
-            updatePageContent(content, lang);
-        }
-        
-        // 10. Handle language button clicks
-        function setupLanguageSwitcher() {
-            const buttons = document.querySelectorAll('.lakum-language-switcher a');
-            buttons.forEach(btn => {
-                btn.addEventListener('click', async (e) => {
-                    e.preventDefault();
-                    
-                    // Determine target language from button text
-                    const targetLang = btn.textContent.includes('EN') ? 'en' : 'ar';
-                    
-                    // Update URL
-                    const newUrl = window.location.pathname + '?lang=' + targetLang;
-                    window.history.pushState({lang: targetLang}, '', newUrl);
-                    
-                    // Save to localStorage
-                    localStorage.setItem('lakum_language', targetLang);
-                    
-                    // Fetch and update content
-                    const content = await fetchPrivacyContent(targetLang);
-                    updatePageContent(content, targetLang);
+
+        // 5. Update footer text using footer.json translations
+        async function updateFooter(lang) {
+            try {
+                var res = await fetch('lang/' + lang + '/footer.json');
+                if (!res.ok) return;
+                var t = await res.json();
+
+                var tagline = document.querySelector('.lakum-footer__tagline');
+                if (tagline) tagline.textContent = t.footer_tagline || t.tagline || '';
+
+                var navTitles = document.querySelectorAll('.lakum-footer__nav-title');
+                if (navTitles[0]) navTitles[0].textContent = t.footer_navigate || t.navigate || '';
+                if (navTitles[1]) navTitles[1].textContent = t.footer_explore || t.explore || '';
+                if (navTitles[2]) navTitles[2].textContent = t.footer_connect || t.connect || '';
+
+                document.querySelectorAll('.lakum-footer__legal-link').forEach(function(link) {
+                    var href = link.getAttribute('href') || '';
+                    if (href.indexOf('terms.php') !== -1) {
+                        link.textContent = t.footer_terms || t.terms || '';
+                    } else if (href.indexOf('privacy.php') !== -1) {
+                        link.textContent = t.footer_privacy || t.privacy || '';
+                    }
                 });
-            });
+            } catch(e) {
+                console.error('Footer translation fetch failed:', e);
+            }
         }
-        
-        // 11. Initialize on page load
-        document.addEventListener('DOMContentLoaded', () => {
-            initPage();
-            setupLanguageSwitcher();
-        });
-        
-        // 12. Handle back/forward buttons
-        window.addEventListener('popstate', async () => {
-            const lang = getLangFromURL();
-            const content = await fetchPrivacyContent(lang);
-            updatePageContent(content, lang);
-        });
+
+        // 6. Main init: runs on page load
+        async function initPage() {
+            var lang = getCurrentLang();
+
+            // Set direction immediately
+            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+            document.documentElement.lang = lang;
+
+            // Update year
+            var yearEl = document.getElementById('year');
+            if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+            // Fetch and render API content
+            var content = await fetchContent(lang);
+            renderContent(content, lang);
+
+            // Update all links to include ?lang=
+            updateLinksWithLang(lang);
+
+            // Update footer translations
+            await updateFooter(lang);
+        }
+
+        document.addEventListener('DOMContentLoaded', initPage);
     </script>
-
-<script>
-    // Translation strings for JavaScript
-    const translations = {
-
-<script>
-    // Translation strings for JavaScript
-    const translations = {
-        nav_home: "<?php echo t('home', 'Home'); ?>",
-        nav_about: "<?php echo t('about', 'About'); ?>",
-        nav_spaces: "<?php echo t('spaces', 'Spaces'); ?>",
-        nav_exhibitions: "<?php echo t('exhibitions', 'Exhibitions'); ?>",
-        nav_calendar: "<?php echo t('calendar', 'Calendar'); ?>",
-        nav_blog: "<?php echo t('blog', 'Blog'); ?>",
-        nav_press: "<?php echo t('press', 'Press'); ?>",
-        nav_contact: "<?php echo t('contact_us', 'Contact'); ?>",
-        nav_shop: "<?php echo t('shop', 'Shop'); ?>",
-        footer_tagline: "<?php echo t('footer_tagline', 'Where Encounters Shape Culture'); ?>",
-        footer_navigate: "<?php echo t('footer_navigate', 'Navigate'); ?>",
-        footer_explore: "<?php echo t('footer_explore', 'Explore'); ?>",
-        footer_connect: "<?php echo t('footer_connect', 'Connect'); ?>",
-        footer_copyright: "<?php echo t('footer_copyright', '� 2026 LAKUM Artspace. All rights reserved.'); ?>",
-        footer_terms: "<?php echo t('footer_terms', 'Terms & Conditions'); ?>",
-        footer_privacy: "<?php echo t('footer_privacy', 'Privacy Policy'); ?>"
-    };
-
-    // Update navbar and footer text when language changes
-    function updateNavbarFooterLanguage() {
-        // Navbar links
-        const navLinks = {
-            'home': translations.nav_home || 'Home',
-            'about': translations.nav_about || 'About',
-            'spaces': translations.nav_spaces || 'Spaces',
-            'exhibitions': translations.nav_exhibitions || 'Exhibitions',
-            'calendar': translations.nav_calendar || 'Calendar',
-            'blog': translations.nav_blog || 'Blog',
-            'press': translations.nav_press || 'Press',
-            'contact_us': translations.nav_contact || 'Contact',
-            'shop': translations.nav_shop || 'Shop'
-        };
-
-        // Update navbar
-        const navItems = document.querySelectorAll('.app-nav__link');
-        navItems.forEach(link => {
-            const href = link.getAttribute('href');
-            if (href === 'index.php') link.textContent = navLinks.home;
-            else if (href === 'about.php') link.textContent = navLinks.about;
-            else if (href === 'spaces.php') link.textContent = navLinks.spaces;
-            else if (href === 'exhibitions.php') link.textContent = navLinks.exhibitions;
-            else if (href === 'calendar.php') link.textContent = navLinks.calendar;
-            else if (href === 'blog.php') link.textContent = navLinks.blog;
-            else if (href === 'press.php') link.textContent = navLinks.press;
-            else if (href === 'contact.php') link.textContent = navLinks.contact_us;
-            else if (href === 'shop.php') link.textContent = navLinks.shop;
-        });
-
-        // Update footer tagline
-        const footerTagline = document.querySelector('.lakum-footer__tagline');
-        if (footerTagline) {
-            footerTagline.textContent = translations.footer_tagline || 'Where Encounters Shape Culture';
-        }
-
-        // Update footer navigation titles
-        const footerNavTitles = document.querySelectorAll('.lakum-footer__nav-title');
-        if (footerNavTitles.length >= 3) {
-            footerNavTitles[0].textContent = translations.footer_navigate || 'Navigate';
-            footerNavTitles[1].textContent = translations.footer_explore || 'Explore';
-            footerNavTitles[2].textContent = translations.footer_connect || 'Connect';
-        }
-
-        // Update footer links
-        const footerLinks = document.querySelectorAll('.lakum-footer__link');
-        footerLinks.forEach(link => {
-            const href = link.getAttribute('href');
-            if (href === 'index.php') link.textContent = navLinks.home;
-            else if (href === 'about.php') link.textContent = navLinks.about;
-            else if (href === 'spaces.php') link.textContent = navLinks.spaces;
-            else if (href === 'exhibitions.php') link.textContent = navLinks.exhibitions;
-            else if (href === 'calendar.php') link.textContent = navLinks.calendar;
-            else if (href === 'blog.php') link.textContent = navLinks.blog;
-            else if (href === 'press.php') link.textContent = navLinks.press;
-            else if (href === 'contact.php') link.textContent = navLinks.contact_us;
-        });
-
-        // Update footer bottom
-        
-
-        const footerTermsLink = document.querySelector('.lakum-footer__legal-link:first-child');
-        if (footerTermsLink) {
-            footerTermsLink.textContent = translations.footer_terms || 'Terms & Conditions';
-        }
-
-        const footerPrivacyLink = document.querySelector('.lakum-footer__legal-link:last-child');
-        if (footerPrivacyLink) {
-            footerPrivacyLink.textContent = translations.footer_privacy || 'Privacy Policy';
-        }
-    }
-
-    // Listen for language changes
-    document.addEventListener('lakum-language-changed', (e) => {
-        const lang = e.detail?.lang || document.documentElement.lang;
-        console.log('Language changed event detected, new language:', lang);
-        
-        // Reload the entire page content based on new language
-        loadLegalPageContent();
-        
-        // Also reload translations for the new language
-        fetch(`api/get-translations.php?lang=${lang}`)
-            .then(r => r.json())
-            .then(data => {
-                if (data.success && data.translations) {
-                    // Update translations object
-                    Object.assign(translations, data.translations);
-                    // Update navbar and footer
-                    updateNavbarFooterLanguage();
-                }
-            })
-            .catch(err => console.log('Language update skipped'));
-    });
-
-
-
-    // Call on page load
-    updateNavbarFooterLanguage();
-</script>
 </body>
 
 </html>
