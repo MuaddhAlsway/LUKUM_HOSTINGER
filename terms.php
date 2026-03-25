@@ -521,6 +521,21 @@ Compliance with these terms ensures the preservation of Lakum Artspace’s profe
         // Load legal page content dynamically based on current language
         let currentLang = 'en';
 
+        // Update language switcher active state
+        function updateLanguageSwitcherState(lang) {
+            const langLinks = document.querySelectorAll('.lakum-language-switcher a');
+            langLinks.forEach(link => {
+                link.classList.remove('lakum-lang-link--active');
+                const href = link.getAttribute('href');
+                const url = new URL(href, window.location.origin);
+                const linkLang = url.searchParams.get('lang');
+                
+                if (linkLang === lang) {
+                    link.classList.add('lakum-lang-link--active');
+                }
+            });
+        }
+
         // Define function FIRST before calling it
         async function loadLegalPageContent() {
             try {
@@ -528,6 +543,9 @@ Compliance with these terms ensures the preservation of Lakum Artspace’s profe
                 const lang = window.LAKUM_LANG || new URLSearchParams(window.location.search).get('lang') || localStorage.getItem('lakum_language') || 'en';
                 
                 console.log('Loading terms content for language:', lang);
+                
+                // Update language switcher active state
+                updateLanguageSwitcherState(lang);
                 
                 // Fetch content from API
                 const response = await fetch(`api/get_legal_page.php?page_key=terms&lang=${lang}`);
@@ -605,6 +623,9 @@ Compliance with these terms ensures the preservation of Lakum Artspace’s profe
                         const newUrl = window.location.pathname + '?lang=' + targetLang;
                         window.history.pushState({lang: targetLang}, '', newUrl);
                         
+                        // Update active state immediately
+                        updateLanguageSwitcherState(targetLang);
+                        
                         // Reload content
                         loadLegalPageContent();
                     }
@@ -614,6 +635,10 @@ Compliance with these terms ensures the preservation of Lakum Artspace’s profe
 
         // Watch for language changes via URL parameter (back/forward buttons)
         window.addEventListener('popstate', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const lang = urlParams.get('lang') || 'en';
+            window.LAKUM_LANG = lang;
+            updateLanguageSwitcherState(lang);
             loadLegalPageContent();
         });
 
@@ -622,6 +647,7 @@ Compliance with these terms ensures the preservation of Lakum Artspace’s profe
             if (e.key === 'lakum_language' && e.newValue) {
                 console.log('Language changed to:', e.newValue);
                 window.LAKUM_LANG = e.newValue;
+                updateLanguageSwitcherState(e.newValue);
                 loadLegalPageContent();
             }
         });
