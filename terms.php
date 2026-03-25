@@ -515,141 +515,121 @@ Compliance with these terms ensures the preservation of Lakum Artspace’s profe
     <?php include('includes/scripts.php'); ?>
 
     <script>
-        // Set current language from PHP (respects URL parameter ?lang=en or ?lang=ar)
-        window.LAKUM_LANG = '<?php echo getCurrentLanguage(); ?>';
+        // ===== TERMS PAGE LANGUAGE SWITCHER =====
+        // Clean, minimal solution for multilingual content
         
-        // Load legal page content dynamically based on current language
-        let currentLang = 'en';
-
-        // Update language switcher active state
-        function updateLanguageSwitcherState(lang) {
-            const langLinks = document.querySelectorAll('.lakum-language-switcher a');
-            langLinks.forEach(link => {
-                link.classList.remove('lakum-lang-link--active');
-                const href = link.getAttribute('href');
-                const url = new URL(href, window.location.origin);
-                const linkLang = url.searchParams.get('lang');
-                
-                if (linkLang === lang) {
-                    link.classList.add('lakum-lang-link--active');
+        // 1. Get language from URL parameter
+        function getLangFromURL() {
+            const params = new URLSearchParams(window.location.search);
+            const lang = params.get('lang');
+            return (lang === 'ar' || lang === 'en') ? lang : 'en';
+        }
+        
+        // 2. Fetch content from API
+        async function fetchTermsContent(lang) {
+            try {
+                const response = await fetch(`api/get_legal_page.php?page_key=terms&lang=${lang}`);
+                const data = await response.json();
+                return data.success ? data.data : null;
+            } catch (error) {
+                console.error('Error fetching terms content:', error);
+                return null;
+            }
+        }
+        
+        // 3. Update page content
+        function updatePageContent(content, lang) {
+            if (!content) return;
+            
+            // Update content
+            const contentDiv = document.getElementById('terms-content');
+            if (contentDiv) {
+                contentDiv.innerHTML = content.content || '';
+            }
+            
+            // Update title
+            const titleDiv = document.getElementById('legal-page-title');
+            if (titleDiv) {
+                titleDiv.textContent = content.title || 'Terms & Conditions';
+            }
+            
+            // Update date
+            const dateDiv = document.getElementById('legal-page-date');
+            if (dateDiv && content.last_updated) {
+                const date = new Date(content.last_updated);
+                dateDiv.textContent = date.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+            }
+            
+            // Update page direction
+            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+            document.documentElement.lang = lang;
+            
+            // Update active button state
+            updateButtonState(lang);
+        }
+        
+        // 4. Update language button active state
+        function updateButtonState(lang) {
+            const buttons = document.querySelectorAll('.lakum-language-switcher a');
+            buttons.forEach(btn => {
+                btn.classList.remove('lakum-lang-link--active');
+                const href = btn.getAttribute('href');
+                if (href.includes(`lang=${lang}`)) {
+                    btn.classList.add('lakum-lang-link--active');
                 }
             });
         }
-
-        // Define function FIRST before calling it
-        async function loadLegalPageContent() {
-            try {
-                // Get current language - use window.LAKUM_LANG set by PHP, then URL parameter, then localStorage
-                const lang = window.LAKUM_LANG || new URLSearchParams(window.location.search).get('lang') || localStorage.getItem('lakum_language') || 'en';
-                
-                console.log('Loading terms content for language:', lang);
-                
-                // Update language switcher active state
-                updateLanguageSwitcherState(lang);
-                
-                // Fetch content from API
-                const response = await fetch(`api/get_legal_page.php?page_key=terms&lang=${lang}`);
-                const data = await response.json();
-                
-                if (data.success && data.data) {
-                    const contentDiv = document.getElementById('terms-content');
-                    const titleDiv = document.getElementById('legal-page-title');
-                    const dateDiv = document.getElementById('legal-page-date');
-                    
-                    if (contentDiv) {
-                        // Update content with fetched data - don't include title in content since it's in header
-                        contentDiv.innerHTML = data.data.content || '';
-                        console.log('Terms content loaded successfully for language:', lang);
-                    }
-                    
-                    // Update title
-                    if (titleDiv) {
-                        titleDiv.textContent = data.data.title || 'Terms & Conditions';
-                    }
-                    
-                    // Update date if available
-                    if (dateDiv && data.data.last_updated) {
-                        const updateDate = new Date(data.data.last_updated);
-                        const formattedDate = updateDate.toLocaleDateString('en-US', {
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric'
-                        });
-                        dateDiv.textContent = formattedDate;
-                    }
-                    
-                    // Update page direction based on language
-                    if (lang === 'ar') {
-                        document.documentElement.dir = 'rtl';
-                        document.documentElement.lang = 'ar';
-                    } else {
-                        document.documentElement.dir = 'ltr';
-                        document.documentElement.lang = 'en';
-                    }
-                } else {
-                    console.log('No terms content found in database, using default content');
-                }
-            } catch (error) {
-                console.error('Error loading terms content:', error);
-                // Keep default content if API fails
-            }
+        
+        // 5. Load content on page load
+        async function initPage() {
+            const lang = getLangFromURL();
+            const content = await fetchTermsContent(lang);
+            updatePageContent(content, lang);
         }
-
-        // NOW call the function after it's defined
-        document.addEventListener('DOMContentLoaded', function() {
-            loadLegalPageContent();
-            
-            // Intercept language switcher clicks
-            const langLinks = document.querySelectorAll('.lakum-language-switcher a');
-            langLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
+        
+        // 6. Handle language button clicks
+        function setupLanguageSwitcher() {
+            const buttons = document.querySelectorAll('.lakum-language-switcher a');
+            buttons.forEach(btn => {
+                btn.addEventListener('click', async (e) => {
                     e.preventDefault();
                     
-                    // Get the target language from the href
-                    const href = this.getAttribute('href');
+                    // Extract language from href
+                    const href = btn.getAttribute('href');
                     const url = new URL(href, window.location.origin);
                     const targetLang = url.searchParams.get('lang');
                     
-                    if (targetLang && ['en', 'ar'].includes(targetLang)) {
-                        console.log('Language switcher clicked, switching to:', targetLang);
-                        
-                        // Update localStorage
-                        localStorage.setItem('lakum_language', targetLang);
-                        
-                        // Update window variable
-                        window.LAKUM_LANG = targetLang;
-                        
-                        // Update URL without reloading
-                        const newUrl = window.location.pathname + '?lang=' + targetLang;
-                        window.history.pushState({lang: targetLang}, '', newUrl);
-                        
-                        // Update active state immediately
-                        updateLanguageSwitcherState(targetLang);
-                        
-                        // Reload content
-                        loadLegalPageContent();
-                    }
+                    if (!targetLang || !['en', 'ar'].includes(targetLang)) return;
+                    
+                    // Update URL
+                    const newUrl = window.location.pathname + '?lang=' + targetLang;
+                    window.history.pushState({lang: targetLang}, '', newUrl);
+                    
+                    // Save to localStorage
+                    localStorage.setItem('lakum_language', targetLang);
+                    
+                    // Fetch and update content
+                    const content = await fetchTermsContent(targetLang);
+                    updatePageContent(content, targetLang);
                 });
             });
+        }
+        
+        // 7. Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            initPage();
+            setupLanguageSwitcher();
         });
-
-        // Watch for language changes via URL parameter (back/forward buttons)
-        window.addEventListener('popstate', function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const lang = urlParams.get('lang') || 'en';
-            window.LAKUM_LANG = lang;
-            updateLanguageSwitcherState(lang);
-            loadLegalPageContent();
-        });
-
-        // Listen for language changes via storage event (when language switcher is used in another tab)
-        window.addEventListener('storage', (e) => {
-            if (e.key === 'lakum_language' && e.newValue) {
-                console.log('Language changed to:', e.newValue);
-                window.LAKUM_LANG = e.newValue;
-                updateLanguageSwitcherState(e.newValue);
-                loadLegalPageContent();
-            }
+        
+        // 8. Handle back/forward buttons
+        window.addEventListener('popstate', async () => {
+            const lang = getLangFromURL();
+            const content = await fetchTermsContent(lang);
+            updatePageContent(content, lang);
         });
     </script>
 
