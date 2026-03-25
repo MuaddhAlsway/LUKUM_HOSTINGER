@@ -537,7 +537,70 @@ Compliance with these terms ensures the preservation of Lakum Artspace’s profe
             }
         }
         
-        // 3. Update page content
+        // 3. Fetch footer translations
+        async function fetchFooterTranslations(lang) {
+            try {
+                const response = await fetch(`lang/${lang}/footer.json`);
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                console.error('Error fetching footer translations:', error);
+                return null;
+            }
+        }
+        
+        // 4. Update footer text based on language
+        async function updateFooterLanguage(lang) {
+            const translations = await fetchFooterTranslations(lang);
+            if (!translations) return;
+            
+            // Update footer tagline
+            const tagline = document.querySelector('.lakum-footer__tagline');
+            if (tagline && translations.footer_tagline) {
+                tagline.textContent = translations.footer_tagline;
+            }
+            
+            // Update footer navigation titles
+            const navTitles = document.querySelectorAll('.lakum-footer__nav-title');
+            if (navTitles.length >= 3) {
+                if (translations.footer_navigate) navTitles[0].textContent = translations.footer_navigate;
+                if (translations.footer_explore) navTitles[1].textContent = translations.footer_explore;
+                if (translations.footer_connect) navTitles[2].textContent = translations.footer_connect;
+            }
+            
+            // Update footer links
+            const footerLinks = document.querySelectorAll('.lakum-footer__link');
+            footerLinks.forEach(link => {
+                const href = link.getAttribute('href');
+                if (href === 'index.php' && translations.home) link.textContent = translations.home;
+                else if (href === 'about.php' && translations.about) link.textContent = translations.about;
+                else if (href === 'spaces.php' && translations.spaces) link.textContent = translations.spaces;
+                else if (href === 'exhibitions.php' && translations.exhibitions) link.textContent = translations.exhibitions;
+                else if (href === 'calendar.php' && translations.calendar) link.textContent = translations.calendar;
+                else if (href === 'blog.php' && translations.blog) link.textContent = translations.blog;
+                else if (href === 'press.php' && translations.press) link.textContent = translations.press;
+                else if (href === 'contact.php' && translations.contact_us) link.textContent = translations.contact_us;
+            });
+            
+            // Update legal links
+            const legalLinks = document.querySelectorAll('.lakum-footer__legal-link');
+            legalLinks.forEach(link => {
+                const href = link.getAttribute('href');
+                if (href.includes('terms.php') && translations.footer_terms) {
+                    link.textContent = translations.footer_terms;
+                } else if (href.includes('privacy.php') && translations.footer_privacy) {
+                    link.textContent = translations.footer_privacy;
+                }
+            });
+            
+            // Update copyright year
+            const yearSpan = document.getElementById('year');
+            if (yearSpan) {
+                yearSpan.textContent = new Date().getFullYear();
+            }
+        }
+        
+        // 5. Update page content
         function updatePageContent(content, lang) {
             if (!content) return;
             
@@ -570,9 +633,12 @@ Compliance with these terms ensures the preservation of Lakum Artspace’s profe
             
             // Update active button state
             updateButtonState(lang);
+            
+            // Update footer language
+            updateFooterLanguage(lang);
         }
         
-        // 4. Update language button active state
+        // 6. Update language button active state
         function updateButtonState(lang) {
             const buttons = document.querySelectorAll('.lakum-language-switcher a');
             buttons.forEach(btn => {
@@ -585,7 +651,7 @@ Compliance with these terms ensures the preservation of Lakum Artspace’s profe
             });
         }
         
-        // 5. Fix language switcher URLs (critical fix for terms.php)
+        // 7. Fix language switcher URLs (critical fix for terms.php)
         function fixLanguageSwitcherUrls() {
             const buttons = document.querySelectorAll('.lakum-language-switcher a');
             buttons.forEach(btn => {
@@ -597,7 +663,7 @@ Compliance with these terms ensures the preservation of Lakum Artspace’s profe
             });
         }
         
-        // 6. Load content on page load
+        // 8. Load content on page load
         async function initPage() {
             const lang = getLangFromURL();
             fixLanguageSwitcherUrls();
@@ -605,7 +671,7 @@ Compliance with these terms ensures the preservation of Lakum Artspace’s profe
             updatePageContent(content, lang);
         }
         
-        // 7. Handle language button clicks
+        // 9. Handle language button clicks
         function setupLanguageSwitcher() {
             const buttons = document.querySelectorAll('.lakum-language-switcher a');
             buttons.forEach(btn => {
@@ -629,13 +695,13 @@ Compliance with these terms ensures the preservation of Lakum Artspace’s profe
             });
         }
         
-        // 8. Initialize on page load
+        // 10. Initialize on page load
         document.addEventListener('DOMContentLoaded', () => {
             initPage();
             setupLanguageSwitcher();
         });
         
-        // 9. Handle back/forward buttons
+        // 11. Handle back/forward buttons
         window.addEventListener('popstate', async () => {
             const lang = getLangFromURL();
             const content = await fetchTermsContent(lang);
