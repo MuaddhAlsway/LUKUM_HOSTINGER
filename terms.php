@@ -577,33 +577,43 @@ Compliance with these terms ensures the preservation of Lakum Artspace’s profe
             const buttons = document.querySelectorAll('.lakum-language-switcher a');
             buttons.forEach(btn => {
                 btn.classList.remove('lakum-lang-link--active');
-                const href = btn.getAttribute('href');
-                if (href.includes(`lang=${lang}`)) {
+                if (lang === 'en' && btn.textContent.includes('EN')) {
+                    btn.classList.add('lakum-lang-link--active');
+                } else if (lang === 'ar' && btn.textContent.includes('AR')) {
                     btn.classList.add('lakum-lang-link--active');
                 }
             });
         }
         
-        // 5. Load content on page load
+        // 5. Fix language switcher URLs (critical fix for terms.php)
+        function fixLanguageSwitcherUrls() {
+            const buttons = document.querySelectorAll('.lakum-language-switcher a');
+            buttons.forEach(btn => {
+                if (btn.textContent.includes('EN')) {
+                    btn.href = window.location.pathname + '?lang=en';
+                } else if (btn.textContent.includes('AR')) {
+                    btn.href = window.location.pathname + '?lang=ar';
+                }
+            });
+        }
+        
+        // 6. Load content on page load
         async function initPage() {
             const lang = getLangFromURL();
+            fixLanguageSwitcherUrls();
             const content = await fetchTermsContent(lang);
             updatePageContent(content, lang);
         }
         
-        // 6. Handle language button clicks
+        // 7. Handle language button clicks
         function setupLanguageSwitcher() {
             const buttons = document.querySelectorAll('.lakum-language-switcher a');
             buttons.forEach(btn => {
                 btn.addEventListener('click', async (e) => {
                     e.preventDefault();
                     
-                    // Extract language from href
-                    const href = btn.getAttribute('href');
-                    const url = new URL(href, window.location.origin);
-                    const targetLang = url.searchParams.get('lang');
-                    
-                    if (!targetLang || !['en', 'ar'].includes(targetLang)) return;
+                    // Determine target language from button text
+                    const targetLang = btn.textContent.includes('EN') ? 'en' : 'ar';
                     
                     // Update URL
                     const newUrl = window.location.pathname + '?lang=' + targetLang;
@@ -619,13 +629,13 @@ Compliance with these terms ensures the preservation of Lakum Artspace’s profe
             });
         }
         
-        // 7. Initialize on page load
+        // 8. Initialize on page load
         document.addEventListener('DOMContentLoaded', () => {
             initPage();
             setupLanguageSwitcher();
         });
         
-        // 8. Handle back/forward buttons
+        // 9. Handle back/forward buttons
         window.addEventListener('popstate', async () => {
             const lang = getLangFromURL();
             const content = await fetchTermsContent(lang);

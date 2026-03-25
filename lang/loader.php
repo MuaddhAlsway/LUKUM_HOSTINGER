@@ -153,7 +153,7 @@ function buildLanguageSwitcherUrl($targetLang = null) {
     $currentPath = strtok($_SERVER['REQUEST_URI'], '?');
     $queryParams = $_GET;
     
-    // If target language is specified, use it; otherwise toggle
+    // CRITICAL: Always set the target language explicitly
     if ($targetLang && in_array($targetLang, ['en', 'ar'])) {
         $queryParams['lang'] = $targetLang;
     } else {
