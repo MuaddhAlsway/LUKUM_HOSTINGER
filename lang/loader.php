@@ -35,20 +35,10 @@ if (session_status() === PHP_SESSION_NONE) {
  * - Future-proof for pagination, filters, routing
  */
 function getCurrentLanguage() {
-    // 1️⃣ URL PARAMETER IS PRIMARY AUTHORITY
+    // URL parameter is the only source of truth
     if (isset($_GET['lang']) && in_array($_GET['lang'], ['en', 'ar'])) {
-        $lang = $_GET['lang'];
-        $_SESSION['lang'] = $lang;
-        return $lang;
+        return $_GET['lang'];
     }
-    
-    // 2️⃣ SESSION FALLBACK (remembers last valid selection)
-    if (isset($_SESSION['lang']) && in_array($_SESSION['lang'], ['en', 'ar'])) {
-        return $_SESSION['lang'];
-    }
-    
-    // 3️⃣ DEFAULT TO ENGLISH
-    $_SESSION['lang'] = 'en';
     return 'en';
 }
 

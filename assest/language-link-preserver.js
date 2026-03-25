@@ -16,6 +16,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const links = document.querySelectorAll('a[href]');
     
     links.forEach(link => {
+        // Skip language switcher — PHP sets correct target lang on these
+        if (link.closest('.lakum-language-switcher')) return;
+
         const href = link.getAttribute('href');
         
         // Skip external links, anchors, and special links
