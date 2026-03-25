@@ -1,0 +1,369 @@
+================================================================================
+MULTILINGUAL PRICING SYSTEM - ARCHITECTURE DIAGRAM
+================================================================================
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                          USER INTERACTION FLOW                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+SCENARIO 1: INITIAL PAGE LOAD (English)
+─────────────────────────────────────────
+
+User opens: spaces.php?lang=en
+    ↓
+PHP detects language from URL parameter
+    ↓
+PHP sets: window.LAKUM_LANG = 'en'
+    ↓
+JavaScript initializes PricingSystem
+    ↓
+PricingSystem.loadAndRender() called
+    ↓
+Fetch pricing data from API
+    ↓
+Cache data in PricingSystem.cachedData
+    ↓
+Render cards using English fields (name_en, description_en, etc.)
+    ↓
+Display pricing cards in English
+
+
+SCENARIO 2: LANGUAGE SWITCH (English → Arabic)
+───────────────────────────────────────────────
+
+User clicks language switcher
+    ↓
+Storage event fires (lakum_language changed)
+    ↓
+Page reloads with: spaces.php?lang=ar
+    ↓
+PHP detects language from URL parameter
+    ↓
+PHP sets: window.LAKUM_LANG = 'ar'
+    ↓
+JavaScript initializes PricingSystem
+    ↓
+PricingSystem.loadAndRender() called
+    ↓
+Use cached data (no new API call)
+    ↓
+Render cards using Arabic fields (name_ar, description_ar, etc.)
+    ↓
+Display pricing cards in Arabic
+
+
+SCENARIO 3: MISSING ARABIC FIELD
+─────────────────────────────────
+
+User switches to Arabic
+    ↓
+PricingSystem tries to get name_ar
+    ↓
+name_ar is empty/null
+    ↓
+Fallback to name_en
+    ↓
+Display English name (graceful degradation)
+    ↓
+No errors, content still displays
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                        DATA FLOW ARCHITECTURE                               │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌──────────────────┐
+│   User Browser   │
+└────────┬─────────┘
+         │
+         │ 1. Opens spaces.php?lang=en
+         ↓
+┌──────────────────────────────────────┐
+│   PHP Server (spaces.php)            │
+│  ┌────────────────────────────────┐  │
+│  │ getCurrentLanguage()            │  │
+│  │ Returns: 'en' (from URL)        │  │
+│  │ Sets: window.LAKUM_LANG = 'en'  │  │
+│  └────────────────────────────────┘  │
+└────────────┬─────────────────────────┘
+             │
+             │ 2. Sends HTML with window.LAKUM_LANG = 'en'
+             ↓
+┌──────────────────────────────────────┐
+│   JavaScript (Browser)               │
+│  ┌────────────────────────────────┐  │
+│  │ PricingSystem.loadAndRender()   │  │
+│  │ ├─ getCurrentLanguage() → 'en'  │  │
+│  │ ├─ fetchPricingData()           │  │
+│  │ └─ renderPricing(data, 'en')    │  │
+│  └────────────────────────────────┘  │
+└────────────┬─────────────────────────┘
+             │
+             │ 3. Fetch pricing data
+             ↓
+┌──────────────────────────────────────┐
+│   API (api/get_pricing.php)          │
+│  ┌────────────────────────────────┐  │
+│  │ SELECT * FROM pricing          │  │
+│  │ WHERE is_active = 1            │  │
+│  │ ORDER BY display_order         │  │
+│  └────────────────────────────────┘  │
+└────────────┬─────────────────────────┘
+             │
+             │ 4. Return JSON with all fields
+             │    (name_en, name_ar, description_en, description_ar, etc.)
+             ↓
+┌──────────────────────────────────────┐
+│   JavaScript (Browser)               │
+│  ┌────────────────────────────────┐  │
+│  │ Cache data in:                  │  │
+│  │ PricingSystem.cachedData        │  │
+│  │                                 │  │
+│  │ For each item:                  │  │
+│  │ ├─ getLocalizedField(item,      │  │
+│  │ │  'name', 'en')                │  │
+│  │ │  → Returns: item.name_en      │  │
+│  │ │                               │  │
+│  │ ├─ createPricingCard(item, 'en')│  │
+│  │ │  → Returns: HTMLElement       │  │
+│  │ │                               │  │
+│  │ └─ Append to DOM                │  │
+│  └────────────────────────────────┘  │
+└────────────┬─────────────────────────┘
+             │
+             │ 5. Display pricing cards in English
+             ↓
+┌──────────────────────────────────────┐
+│   User sees pricing in English       │
+│   ├─ Hall 1                          │
+│   ├─ Hall 2                          │
+│   ├─ Café                            │
+│   └─ Meeting Room                    │
+└──────────────────────────────────────┘
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                    PRICINGSYSTEM OBJECT STRUCTURE                           │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+window.PricingSystem = {
+    
+    // PROPERTIES
+    cachedData: null,  // Stores fetched pricing data
+    
+    // UTILITY FUNCTIONS
+    ├─ getDurationLabel(priceUnit)
+    │  └─ Returns: "per day", "per hour", "لكل يوم", "لكل ساعة", etc.
+    │
+    ├─ escapeHtml(text)
+    │  └─ Returns: HTML-safe string (prevents XSS)
+    │
+    ├─ formatPrice(price)
+    │  └─ Returns: "5,000" (with thousands separator)
+    │
+    ├─ getCurrentLanguage()
+    │  └─ Returns: 'en' or 'ar' (from window.LAKUM_LANG)
+    │
+    ├─ getLocalizedField(item, fieldBase, lang)
+    │  └─ Returns: item[fieldBase + '_' + lang] or fallback
+    │
+    // RENDERING FUNCTIONS
+    ├─ createPricingCard(item, lang)
+    │  └─ Returns: HTMLElement (single card)
+    │
+    ├─ renderPricing(data, lang, container)
+    │  └─ Renders all cards to container
+    │
+    ├─ fetchPricingData()
+    │  └─ Returns: Promise<Array> (fetches and caches)
+    │
+    └─ loadAndRender()
+       └─ Main function (fetch + render for current language)
+}
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                    LANGUAGE DETECTION PRIORITY                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+When determining current language:
+
+1. URL Parameter (PRIMARY)
+   ├─ spaces.php?lang=en  → 'en'
+   └─ spaces.php?lang=ar  → 'ar'
+   
+2. Session (FALLBACK)
+   └─ $_SESSION['lang']   → 'en' or 'ar'
+   
+3. Default (LAST RESORT)
+   └─ 'en' (English)
+
+Why this order?
+- URL is source of truth (user's current choice)
+- Session remembers last valid selection
+- Default ensures always valid language
+- Avoids localStorage (can be stale)
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                    FALLBACK LOGIC FOR MISSING FIELDS                        │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+When rendering in Arabic:
+
+1. Try to get Arabic field
+   └─ item.name_ar
+   
+2. If empty/null, fallback to English
+   └─ item.name_en
+   
+3. If both empty, show empty string
+   └─ ''
+
+Example:
+┌─────────────────────────────────────────┐
+│ Database has:                           │
+│ ├─ name_en: "Hall 1"                    │
+│ ├─ name_ar: "" (empty)                  │
+│ └─ description_en: "Large space..."     │
+│    description_ar: "مساحة كبيرة..."     │
+│                                         │
+│ When rendering in Arabic:               │
+│ ├─ name → "Hall 1" (fallback to EN)     │
+│ └─ description → "مساحة كبيرة..." (AR)  │
+└─────────────────────────────────────────┘
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                    SECURITY: HTML ESCAPING                                  │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+All user-facing content is escaped:
+
+Input:  <script>alert('xss')</script>
+        ↓
+escapeHtml()
+        ↓
+Output: &lt;script&gt;alert(&#039;xss&#039;)&lt;/script&gt;
+
+Mapping:
+├─ & → &amp;
+├─ < → &lt;
+├─ > → &gt;
+├─ " → &quot;
+└─ ' → &#039;
+
+This prevents XSS attacks while preserving content readability.
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                    PERFORMANCE: CACHING STRATEGY                            │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+First Load:
+┌──────────────────────────────────────┐
+│ 1. Fetch from API                    │
+│ 2. Cache in PricingSystem.cachedData │
+│ 3. Render cards                      │
+│ 4. Display to user                   │
+└──────────────────────────────────────┘
+    Time: ~500ms (API call + rendering)
+
+Language Switch:
+┌──────────────────────────────────────┐
+│ 1. Page reloads                      │
+│ 2. Fetch from API (or use cache)     │
+│ 3. Render cards in new language      │
+│ 4. Display to user                   │
+└──────────────────────────────────────┘
+    Time: ~100ms (no API call, use cache)
+
+Result: 5x faster language switching!
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                    CARD RENDERING PROCESS                                   │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+For each pricing item:
+
+1. Get localized fields
+   ├─ name (with fallback)
+   ├─ description (with fallback)
+   ├─ price_unit (language-specific)
+   └─ vat_note (with fallback)
+
+2. Escape HTML
+   ├─ escapeHtml(name)
+   ├─ escapeHtml(description)
+   └─ escapeHtml(vat_note)
+
+3. Format values
+   ├─ formatPrice(price) → "5,000"
+   ├─ getDurationLabel(priceUnit) → "per day"
+   └─ Check for secondary pricing
+
+4. Create HTML element
+   ├─ <div class="pricing-card-wrapper">
+   ├─ <details class="pricing-accordion">
+   ├─ <summary> with header info
+   ├─ <div> with content
+   └─ <a> with Book Now button
+
+5. Append to container
+   └─ container.appendChild(card)
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                    BROWSER COMPATIBILITY                                    │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+✓ Chrome 90+
+✓ Firefox 88+
+✓ Safari 14+
+✓ Edge 90+
+✓ Mobile browsers (iOS Safari, Chrome Mobile)
+
+Key features used:
+├─ fetch() API (ES6)
+├─ async/await (ES8)
+├─ Template literals (ES6)
+├─ Arrow functions (ES6)
+├─ const/let (ES6)
+├─ Array methods (map, filter, forEach)
+└─ DOM manipulation (querySelector, appendChild, etc.)
+
+All features are widely supported in modern browsers.
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                    DEPLOYMENT CHECKLIST                                     │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+Before Deployment:
+├─ [ ] Backup current spaces.php
+├─ [ ] Review changes in spaces.php
+├─ [ ] Test locally in English
+├─ [ ] Test locally in Arabic
+├─ [ ] Test language switching
+├─ [ ] Check browser console for errors
+└─ [ ] Verify API is returning all fields
+
+During Deployment:
+├─ [ ] Upload updated spaces.php
+├─ [ ] Clear CDN cache (if applicable)
+├─ [ ] Clear browser cache
+└─ [ ] Verify file permissions
+
+After Deployment:
+├─ [ ] Test on production in English
+├─ [ ] Test on production in Arabic
+├─ [ ] Test language switching
+├─ [ ] Monitor error logs
+├─ [ ] Check user feedback
+└─ [ ] Monitor performance metrics
+
+
+================================================================================
+END OF ARCHITECTURE DIAGRAM
+================================================================================

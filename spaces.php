@@ -479,123 +479,40 @@ require_once 'api/image-helper.php';
     </section>
 
     <script>
-        // Global function to get duration label from price unit
-        // This must be global so all pricing loading functions can access it
-        window.getDurationLabel = function(priceUnit) {
-            // Extract duration from price unit (e.g., "SAR/day" -> "day", "ريال سعودي / ساعة" -> "hour")
-            if (!priceUnit) return '';
+        // ============================================================
+        // PRICING SYSTEM - Multilingual Support
+        // ============================================================
+        
+        /**
+         * Global pricing utilities
+         */
+        window.PricingSystem = {
+            // Cache for pricing data
+            cachedData: null,
             
-            // English: SAR/day, SAR/hour, SAR
-            if (priceUnit.includes('/day')) return 'per day';
-            if (priceUnit.includes('/hour')) return 'per hour';
-            if (priceUnit === 'SAR' || priceUnit === 'ريال سعودي') return '';
-            
-            // Arabic: ريال سعودي / يوم, ريال سعودي / ساعة
-            if (priceUnit.includes('يوم')) return 'لكل يوم';
-            if (priceUnit.includes('ساعة')) return 'لكل ساعة';
-            
-            return '';
-        };
-
-        // Fetch and render pricing based on current language
-        (function() {
-            const pricingGrid = document.getElementById('pricingGrid');
-            
-            if (!pricingGrid) return;
-
-            // Get current language - use window.LAKUM_LANG set by PHP
-            function getCurrentLang() {
-                // CRITICAL: Only use window.LAKUM_LANG (set from PHP)
-                // Do NOT use localStorage as it contains the previous page's language
-                return window.LAKUM_LANG || 'en';
-            }
-
-            // Load and render pricing
-            function loadPricing() {
-                const currentLang = getCurrentLang();
+            /**
+             * Get duration label from price unit
+             * Supports both English and Arabic price units
+             */
+            getDurationLabel: function(priceUnit) {
+                if (!priceUnit) return '';
                 
-                fetch('api/get_pricing.php')
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log('Pricing API Response:', data);
-                        console.log('Number of pricing items:', data.data ? data.data.length : 0);
-                        
-                        if (!data.success || !data.data || data.data.length === 0) {
-                            console.warn('No pricing data available');
-                            return;
-                        }
-
-                        // Clear existing content
-                        pricingGrid.innerHTML = '';
-
-                        // Render each pricing item
-                        data.data.forEach((item, index) => {
-                            console.log(`Rendering card ${index + 1}:`, item.name_en);
-                            const pricingCard = createPricingCard(item, currentLang, index + 1);
-                            pricingGrid.appendChild(pricingCard);
-                        });
-                        
-                        console.log('Total cards rendered:', pricingGrid.children.length);
-                    })
-                    .catch(error => {
-                        console.error('Error fetching pricing:', error);
-                        pricingGrid.innerHTML = '<p>Unable to load pricing information. Please try again later.</p>';
-                    });
-            }
-
-            // Create pricing card element
-            // Note: getDurationLabel is now global (defined above)
-
-            function createPricingCard(item, lang, index) {
-                const wrapper = document.createElement('div');
-                wrapper.className = 'pricing-card-wrapper';
-                wrapper.setAttribute('data-pricing-id', item.id);
-
-                // Get language-specific content
-                const name = lang === 'ar' ? (item.name_ar || item.name_en) : (item.name_en || item.name_ar);
-                const description = lang === 'ar' ? (item.description_ar || item.description_en) : (item.description_en || item.description_ar);
-                const priceUnit = item.price_unit || 'SAR';
-                const vatNote = lang === 'ar' ? (item.vat_note_ar || item.vat_note) : (item.vat_note || '*(excluding VAT)');
-                const currencyImage = item.currency_image || 'RS/OIP.png';
-
-                // Parse price_sec for secondary pricing (e.g., "Hall 1: 1,000 SAR/hour")
-                const hasSecondaryPrice = item.price_sec && item.price_sec.trim() !== '';
+                // English: SAR/day, SAR/hour, SAR
+                if (priceUnit.includes('/day')) return 'per day';
+                if (priceUnit.includes('/hour')) return 'per hour';
+                if (priceUnit === 'SAR' || priceUnit === 'ريال سعودي') return '';
                 
-                // Create the card HTML
-                wrapper.innerHTML = `
-                    <details class="pricing-accordion">
-                        <summary class="pricing-accordion__header">
-                            <div class="pricing-accordion__info">
-                                <h3 class="pricing-accordion__name">${escapeHtml(name)}</h3>
-                                <div class="pricing-accordion__price${hasSecondaryPrice ? ' pricing-accordion__price--multi' : ''}">
-                                    ${hasSecondaryPrice ? 
-                                        `<div>${escapeHtml(item.price_sec)}</div>` :
-                                        `<span class="pricing-accordion__amount">${formatPrice(item.price)}</span>
-                                         <div class="pricing-accordion__currency-wrapper">
-                                             ${currencyImage ? `<img src="${currencyImage}" alt="Currency" class="pricing-accordion__currency-image" loading="lazy">` : ''}
-                                             <span class="pricing-accordion__currency">${getDurationLabel(priceUnit)}</span>
-                                         </div>`
-                                    }
-                                </div>
-                                <span class="pricing-accordion__vat">${escapeHtml(vatNote)}</span>
-                            </div>
-                            <span class="pricing-accordion__icon"></span>
-                        </summary>
-                        <div class="pricing-accordion__content">
-                            ${description ? `<p>${escapeHtml(description)}</p>` : ''}
-                            ${item.content ? `<div>${item.content}</div>` : ''}
-                        </div>
-                    </details>
-                    <div class="pricing-button-fixed">
-                        <a href="#form" class="lakum-btn lakum-btn--primary">${lang === 'ar' ? 'احجز الآن' : 'Book Now'}</a>
-                    </div>
-                `;
-
-                return wrapper;
-            }
-
-            // Utility function to escape HTML
-            function escapeHtml(text) {
+                // Arabic: ريال سعودي / يوم, ريال سعودي / ساعة
+                if (priceUnit.includes('يوم')) return 'لكل يوم';
+                if (priceUnit.includes('ساعة')) return 'لكل ساعة';
+                
+                return '';
+            },
+            
+            /**
+             * Escape HTML to prevent XSS
+             */
+            escapeHtml: function(text) {
                 if (!text) return '';
                 const map = {
                     '&': '&amp;',
@@ -605,25 +522,183 @@ require_once 'api/image-helper.php';
                     "'": '&#039;'
                 };
                 return text.replace(/[&<>"']/g, m => map[m]);
-            }
-
-            // Format price with thousands separator
-            function formatPrice(price) {
+            },
+            
+            /**
+             * Format price with thousands separator
+             */
+            formatPrice: function(price) {
                 if (!price) return '0';
                 return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            },
+            
+            /**
+             * Get current language from PHP-set variable
+             * CRITICAL: Only use window.LAKUM_LANG (set from PHP)
+             * Do NOT use localStorage as it may contain stale data
+             */
+            getCurrentLanguage: function() {
+                return window.LAKUM_LANG || 'en';
+            },
+            
+            /**
+             * Get language-specific field value with fallback
+             * If requested language field is empty, falls back to other language
+             */
+            getLocalizedField: function(item, fieldBase, lang) {
+                const fieldName = lang === 'ar' ? fieldBase + '_ar' : fieldBase + '_en';
+                const fallbackName = lang === 'ar' ? fieldBase + '_en' : fieldBase + '_ar';
+                
+                return item[fieldName] || item[fallbackName] || '';
+            },
+            
+            /**
+             * Create a pricing card element
+             * @param {Object} item - Pricing item from API
+             * @param {String} lang - Current language ('en' or 'ar')
+             * @returns {HTMLElement} - Pricing card wrapper
+             */
+            createPricingCard: function(item, lang) {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'pricing-card-wrapper';
+                wrapper.setAttribute('data-pricing-id', item.id);
+                wrapper.setAttribute('data-lang', lang);
+
+                // Get language-specific content with fallback
+                const name = this.getLocalizedField(item, 'name', lang);
+                const description = this.getLocalizedField(item, 'description', lang);
+                const priceUnit = lang === 'ar' ? (item.price_unit_ar || item.price_unit) : item.price_unit;
+                const vatNote = this.getLocalizedField(item, 'vat_note', lang);
+                const currencyImage = item.currency_image || 'RS/OIP.png';
+
+                // Check for secondary pricing
+                const hasSecondaryPrice = item.price_sec && item.price_sec.trim() !== '';
+                
+                // Build card HTML
+                wrapper.innerHTML = `
+                    <details class="pricing-accordion">
+                        <summary class="pricing-accordion__header">
+                            <div class="pricing-accordion__info">
+                                <h3 class="pricing-accordion__name">${this.escapeHtml(name)}</h3>
+                                <div class="pricing-accordion__price${hasSecondaryPrice ? ' pricing-accordion__price--multi' : ''}">
+                                    ${hasSecondaryPrice ? 
+                                        `<div>${this.escapeHtml(item.price_sec)}</div>` :
+                                        `<span class="pricing-accordion__amount">${this.formatPrice(item.price)}</span>
+                                         <div class="pricing-accordion__currency-wrapper">
+                                             ${currencyImage ? `<img src="${currencyImage}" alt="Currency" class="pricing-accordion__currency-image" loading="lazy">` : ''}
+                                             <span class="pricing-accordion__currency">${this.getDurationLabel(priceUnit)}</span>
+                                         </div>`
+                                    }
+                                </div>
+                                <span class="pricing-accordion__vat">${this.escapeHtml(vatNote)}</span>
+                            </div>
+                            <span class="pricing-accordion__icon"></span>
+                        </summary>
+                        <div class="pricing-accordion__content">
+                            ${description ? `<p>${this.escapeHtml(description)}</p>` : ''}
+                            ${item.content ? `<div>${item.content}</div>` : ''}
+                        </div>
+                    </details>
+                    <div class="pricing-button-fixed">
+                        <a href="#form" class="lakum-btn lakum-btn--primary">${lang === 'ar' ? 'احجز الآن' : 'Book Now'}</a>
+                    </div>
+                `;
+
+                return wrapper;
+            },
+            
+            /**
+             * Render pricing cards for a given language
+             * @param {Array} data - Pricing data from API
+             * @param {String} lang - Target language
+             * @param {HTMLElement} container - Container to render into
+             */
+            renderPricing: function(data, lang, container) {
+                if (!container) return;
+                
+                // Clear existing content
+                container.innerHTML = '';
+                
+                if (!data || data.length === 0) {
+                    container.innerHTML = '<p>No pricing data available</p>';
+                    return;
+                }
+                
+                // Render each card
+                data.forEach((item) => {
+                    const card = this.createPricingCard(item, lang);
+                    container.appendChild(card);
+                });
+                
+                console.log(`Rendered ${data.length} pricing cards for language: ${lang}`);
+            },
+            
+            /**
+             * Fetch pricing data from API
+             * @returns {Promise<Array>} - Pricing data
+             */
+            fetchPricingData: async function() {
+                try {
+                    const response = await fetch('api/get_pricing.php');
+                    const data = await response.json();
+                    
+                    if (!data.success || !data.data) {
+                        console.error('Pricing API error:', data.message);
+                        return null;
+                    }
+                    
+                    // Cache the data
+                    this.cachedData = data.data;
+                    return data.data;
+                } catch (error) {
+                    console.error('Error fetching pricing:', error);
+                    return null;
+                }
+            },
+            
+            /**
+             * Load and render pricing for current language
+             */
+            loadAndRender: async function() {
+                const container = document.getElementById('pricingGrid');
+                if (!container) return;
+                
+                const lang = this.getCurrentLanguage();
+                console.log('Loading pricing for language:', lang);
+                
+                // Use cached data if available, otherwise fetch
+                let data = this.cachedData;
+                if (!data) {
+                    data = await this.fetchPricingData();
+                }
+                
+                if (!data) {
+                    container.innerHTML = '<p>Unable to load pricing information. Please try again later.</p>';
+                    return;
+                }
+                
+                // Render pricing for current language
+                this.renderPricing(data, lang, container);
+            }
+        };
+
+        // Initialize pricing on page load
+        (function() {
+            const pricingGrid = document.getElementById('pricingGrid');
+            if (!pricingGrid) return;
+
+            // Load pricing when DOM is ready
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', () => {
+                    window.PricingSystem.loadAndRender();
+                });
+            } else {
+                window.PricingSystem.loadAndRender();
             }
 
-            // Initial load
-            loadPricing();
-
-            // Listen for language changes
-            window.addEventListener('storage', (e) => {
-                if (e.key === 'lakum_language' && e.newValue) {
-                    loadPricing();
-                }
-            });
-
-            // Accordion behavior is now handled by global event delegation below
+            // Listen for page reloads after language change
+            // (The page reloads via window.location.href in the storage event listener above)
+            // This ensures pricing renders with the new language on page load
         })();
     </script>
 
