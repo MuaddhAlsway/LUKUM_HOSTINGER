@@ -5,17 +5,17 @@
  */
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Get current language from URL only — URL is the single source of truth
+    // Get current language from URL or localStorage
     const urlParams = new URLSearchParams(window.location.search);
-    const currentLang = urlParams.get('lang') || 'en';
+    const currentLang = urlParams.get('lang') || localStorage.getItem('lakum_language') || 'en';
+    
+    // Save language to localStorage for persistence
+    localStorage.setItem('lakum_language', currentLang);
     
     // Find all internal links and add language parameter
     const links = document.querySelectorAll('a[href]');
     
     links.forEach(link => {
-        // Skip language switcher buttons — PHP already sets their correct target lang
-        if (link.closest('.lakum-language-switcher')) return;
-
         const href = link.getAttribute('href');
         
         // Skip external links, anchors, and special links
@@ -30,8 +30,13 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Only process PHP files and root paths
         if (href.includes('.php') || href === '/' || href === './') {
+            // Parse the URL
             const url = new URL(href, window.location.origin);
+            
+            // Add or update lang parameter
             url.searchParams.set('lang', currentLang);
+            
+            // Update the link
             link.setAttribute('href', url.pathname + url.search);
         }
     });
