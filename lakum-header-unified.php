@@ -9,6 +9,7 @@
 $currentLang = getCurrentLanguage();
 $isArabic = isArabic();
 $htmlDir = $isArabic ? 'rtl' : 'ltr';
+$langParam = '?lang=' . $currentLang;
 ?>
 <!-- ========================================
      LAKUM ARTSPACE - Unified Header Structure
@@ -46,31 +47,31 @@ $htmlDir = $isArabic ? 'rtl' : 'ltr';
         <nav class="lakum-nav" role="navigation" aria-label="<?php echo t('main_navigation', 'Main navigation'); ?>">
             <ul class="lakum-nav__list">
                 <li class="lakum-nav__item">
-                    <a href="index.php" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'index.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('home', 'Home'); ?></a>
+                    <a href="index.php<?php echo $langParam; ?>" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'index.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('home', 'Home'); ?></a>
                 </li>
                 <li class="lakum-nav__item">
-                    <a href="about.php" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'about.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('about', 'About'); ?></a>
+                    <a href="about.php<?php echo $langParam; ?>" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'about.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('about', 'About'); ?></a>
                 </li>
                 <li class="lakum-nav__item">
-                    <a href="spaces.php" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'spaces.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('spaces', 'Spaces'); ?></a>
+                    <a href="spaces.php<?php echo $langParam; ?>" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'spaces.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('spaces', 'Spaces'); ?></a>
                 </li>
                 <li class="lakum-nav__item">
-                    <a href="exhibitions.php" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'exhibitions.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('exhibitions', 'Exhibitions'); ?></a>
+                    <a href="exhibitions.php<?php echo $langParam; ?>" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'exhibitions.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('exhibitions', 'Exhibitions'); ?></a>
                 </li>
                 <li class="lakum-nav__item">
-                    <a href="calendar.php" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'calendar.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('calendar', 'Calendar'); ?></a>
+                    <a href="calendar.php<?php echo $langParam; ?>" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'calendar.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('calendar', 'Calendar'); ?></a>
                 </li>
                 <li class="lakum-nav__item">
-                    <a href="blog.php" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'blog.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('blog', 'Blog'); ?></a>
+                    <a href="blog.php<?php echo $langParam; ?>" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'blog.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('blog', 'Blog'); ?></a>
                 </li>
                 <li class="lakum-nav__item">
-                    <a href="press.php" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'press.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('press', 'Press'); ?></a>
+                    <a href="press.php<?php echo $langParam; ?>" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'press.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('press', 'Press'); ?></a>
                 </li>
                 <li class="lakum-nav__item">
-                    <a href="contact.php" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'contact.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('contact_us', 'Contact'); ?></a>
+                    <a href="contact.php<?php echo $langParam; ?>" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'contact.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('contact_us', 'Contact'); ?></a>
                 </li>
                 <li class="lakum-nav__item">
-                    <a href="shop.php" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'shop.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('shop', 'Shop'); ?></a>
+                    <a href="shop.php<?php echo $langParam; ?>" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'shop.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('shop', 'Shop'); ?></a>
                 </li>
             </ul>
         </nav>
@@ -101,31 +102,31 @@ $htmlDir = $isArabic ? 'rtl' : 'ltr';
 <nav class="lakum-nav--mobile" id="lakum-nav-mobile" role="navigation" aria-label="<?php echo t('mobile_navigation', 'Mobile navigation'); ?>">
     <ul class="lakum-nav__list">
         <li class="lakum-nav__item">
-            <a href="index.php" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'index.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('home', 'Home'); ?></a>
+            <a href="index.php<?php echo $langParam; ?>" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'index.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('home', 'Home'); ?></a>
         </li>
         <li class="lakum-nav__item">
-            <a href="about.php" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'about.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('about', 'About'); ?></a>
+            <a href="about.php<?php echo $langParam; ?>" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'about.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('about', 'About'); ?></a>
         </li>
         <li class="lakum-nav__item">
-            <a href="spaces.php" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'spaces.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('spaces', 'Spaces'); ?></a>
+            <a href="spaces.php<?php echo $langParam; ?>" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'spaces.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('spaces', 'Spaces'); ?></a>
         </li>
         <li class="lakum-nav__item">
-            <a href="exhibitions.php" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'exhibitions.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('exhibitions', 'Exhibitions'); ?></a>
+            <a href="exhibitions.php<?php echo $langParam; ?>" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'exhibitions.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('exhibitions', 'Exhibitions'); ?></a>
         </li>
         <li class="lakum-nav__item">
-            <a href="calendar.php" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'calendar.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('calendar', 'Calendar'); ?></a>
+            <a href="calendar.php<?php echo $langParam; ?>" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'calendar.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('calendar', 'Calendar'); ?></a>
         </li>
         <li class="lakum-nav__item">
-            <a href="blog.php" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'blog.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('blog', 'Blog'); ?></a>
+            <a href="blog.php<?php echo $langParam; ?>" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'blog.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('blog', 'Blog'); ?></a>
         </li>
         <li class="lakum-nav__item">
-            <a href="press.php" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'press.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('press', 'Press'); ?></a>
+            <a href="press.php<?php echo $langParam; ?>" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'press.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('press', 'Press'); ?></a>
         </li>
         <li class="lakum-nav__item">
-            <a href="contact.php" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'contact.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('contact_us', 'Contact'); ?></a>
+            <a href="contact.php<?php echo $langParam; ?>" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'contact.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('contact_us', 'Contact'); ?></a>
         </li>
         <li class="lakum-nav__item">
-            <a href="shop.php" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'shop.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('shop', 'Shop'); ?></a>
+            <a href="shop.php<?php echo $langParam; ?>" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'shop.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('shop', 'Shop'); ?></a>
         </li>
     </ul>
 </nav>

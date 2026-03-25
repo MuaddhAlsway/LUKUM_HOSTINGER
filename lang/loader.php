@@ -150,21 +150,17 @@ function getLanguageClass() {
  * - Future-proof for routing
  */
 function buildLanguageSwitcherUrl($targetLang = null) {
-    $currentPath = strtok($_SERVER['REQUEST_URI'], '?');
-    $queryParams = $_GET;
+    // Use SCRIPT_NAME to get the actual current page path reliably
+    $currentPath = $_SERVER['SCRIPT_NAME'];
     
-    // CRITICAL: Always set the target language explicitly
+    // Determine target language
     if ($targetLang && in_array($targetLang, ['en', 'ar'])) {
-        $queryParams['lang'] = $targetLang;
+        $lang = $targetLang;
     } else {
-        // Toggle language (fallback for backward compatibility)
-        $queryParams['lang'] = (getCurrentLanguage() === 'ar') ? 'en' : 'ar';
+        $lang = (getCurrentLanguage() === 'ar') ? 'en' : 'ar';
     }
     
-    // Rebuild query string safely
-    $newUrl = $currentPath . '?' . http_build_query($queryParams);
-    
-    return htmlspecialchars($newUrl);
+    return htmlspecialchars($currentPath . '?lang=' . $lang);
 }
 
 // ============ PAGE DETECTION ============
