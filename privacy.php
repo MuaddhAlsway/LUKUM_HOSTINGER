@@ -536,11 +536,20 @@ require_once 'lang/loader.php';
             }
         }
         
-        // 3. Fetch footer translations
+        // 3. Footer translations cache
+        let footerTranslationsCache = {};
+        
+        // 4. Fetch footer translations
         async function fetchFooterTranslations(lang) {
+            if (footerTranslationsCache[lang]) {
+                return footerTranslationsCache[lang];
+            }
+            
             try {
                 const response = await fetch(`lang/${lang}/footer.json`);
+                if (!response.ok) throw new Error('Failed to fetch footer translations');
                 const data = await response.json();
+                footerTranslationsCache[lang] = data;
                 return data;
             } catch (error) {
                 console.error('Error fetching footer translations:', error);
@@ -548,47 +557,60 @@ require_once 'lang/loader.php';
             }
         }
         
-        // 4. Update footer text based on language
+        // 5. Update footer text based on language
         async function updateFooterLanguage(lang) {
             const translations = await fetchFooterTranslations(lang);
-            if (!translations) return;
+            if (!translations) {
+                console.warn('No translations found for language:', lang);
+                return;
+            }
+            
+            console.log('Updating footer for language:', lang, translations);
             
             // Update footer tagline
             const tagline = document.querySelector('.lakum-footer__tagline');
-            if (tagline && translations.footer_tagline) {
-                tagline.textContent = translations.footer_tagline;
+            if (tagline) {
+                tagline.textContent = translations.footer_tagline || translations.tagline || 'Where Encounters Shape Culture';
+                console.log('Updated tagline to:', tagline.textContent);
             }
             
             // Update footer navigation titles
             const navTitles = document.querySelectorAll('.lakum-footer__nav-title');
+            console.log('Found nav titles:', navTitles.length);
             if (navTitles.length >= 3) {
-                if (translations.footer_navigate) navTitles[0].textContent = translations.footer_navigate;
-                if (translations.footer_explore) navTitles[1].textContent = translations.footer_explore;
-                if (translations.footer_connect) navTitles[2].textContent = translations.footer_connect;
+                navTitles[0].textContent = translations.footer_navigate || translations.navigate || 'Navigate';
+                navTitles[1].textContent = translations.footer_explore || translations.explore || 'Explore';
+                navTitles[2].textContent = translations.footer_connect || translations.connect || 'Connect';
+                console.log('Updated nav titles');
             }
             
             // Update footer links
             const footerLinks = document.querySelectorAll('.lakum-footer__link');
+            console.log('Found footer links:', footerLinks.length);
             footerLinks.forEach(link => {
                 const href = link.getAttribute('href');
-                if (href === 'index.php' && translations.home) link.textContent = translations.home;
-                else if (href === 'about.php' && translations.about) link.textContent = translations.about;
-                else if (href === 'spaces.php' && translations.spaces) link.textContent = translations.spaces;
-                else if (href === 'exhibitions.php' && translations.exhibitions) link.textContent = translations.exhibitions;
-                else if (href === 'calendar.php' && translations.calendar) link.textContent = translations.calendar;
-                else if (href === 'blog.php' && translations.blog) link.textContent = translations.blog;
-                else if (href === 'press.php' && translations.press) link.textContent = translations.press;
-                else if (href === 'contact.php' && translations.contact_us) link.textContent = translations.contact_us;
+                const text = link.textContent.trim();
+                
+                // Match by href or current text
+                if (href === 'index.php' || text === 'Home') link.textContent = translations.home || 'Home';
+                else if (href === 'about.php' || text === 'About') link.textContent = translations.about || 'About';
+                else if (href === 'spaces.php' || text === 'Spaces') link.textContent = translations.spaces || 'Spaces';
+                else if (href === 'exhibitions.php' || text === 'Exhibitions') link.textContent = translations.exhibitions || 'Exhibitions';
+                else if (href === 'calendar.php' || text === 'Calendar') link.textContent = translations.calendar || 'Calendar';
+                else if (href === 'blog.php' || text === 'Blog') link.textContent = translations.blog || 'Blog';
+                else if (href === 'press.php' || text === 'Press') link.textContent = translations.press || 'Press';
+                else if (href === 'contact.php' || text === 'Contact') link.textContent = translations.contact_us || 'Contact';
             });
             
             // Update legal links
             const legalLinks = document.querySelectorAll('.lakum-footer__legal-link');
+            console.log('Found legal links:', legalLinks.length);
             legalLinks.forEach(link => {
                 const href = link.getAttribute('href');
-                if (href.includes('terms.php') && translations.footer_terms) {
-                    link.textContent = translations.footer_terms;
-                } else if (href.includes('privacy.php') && translations.footer_privacy) {
-                    link.textContent = translations.footer_privacy;
+                if (href.includes('terms.php')) {
+                    link.textContent = translations.footer_terms || translations.terms || 'Terms & Conditions';
+                } else if (href.includes('privacy.php')) {
+                    link.textContent = translations.footer_privacy || translations.privacy || 'Privacy Policy';
                 }
             });
             
@@ -599,9 +621,11 @@ require_once 'lang/loader.php';
             }
         }
         
-        // 5. Update page content
+        // 6. Update page content
         function updatePageContent(content, lang) {
             if (!content) return;
+            
+            console.log('Updating page content for language:', lang);
             
             // Update content
             const contentDiv = document.getElementById('privacy-content');
@@ -633,7 +657,8 @@ require_once 'lang/loader.php';
             // Update active button state
             updateButtonState(lang);
             
-            // Update footer language
+            // Update footer language - CRITICAL
+            console.log('Calling updateFooterLanguage for:', lang);
             updateFooterLanguage(lang);
         }
         
