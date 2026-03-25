@@ -688,15 +688,46 @@ Compliance with these terms ensures the preservation of Lakum Artspace’s profe
             });
         }
         
-        // 8. Load content on page load
+        // 8. Preserve language parameter in all links
+        function preserveLanguageInLinks(lang) {
+            // Update header navigation links
+            const navLinks = document.querySelectorAll('.lakum-nav__link, .lakum-nav--mobile .lakum-nav__link');
+            navLinks.forEach(link => {
+                const href = link.getAttribute('href');
+                if (href && !href.includes('?lang=')) {
+                    link.href = href + '?lang=' + lang;
+                }
+            });
+            
+            // Update footer links
+            const footerLinks = document.querySelectorAll('.lakum-footer__link');
+            footerLinks.forEach(link => {
+                const href = link.getAttribute('href');
+                if (href && !href.includes('?lang=')) {
+                    link.href = href + '?lang=' + lang;
+                }
+            });
+            
+            // Update legal links
+            const legalLinks = document.querySelectorAll('.lakum-footer__legal-link');
+            legalLinks.forEach(link => {
+                const href = link.getAttribute('href');
+                if (href && !href.includes('?lang=')) {
+                    link.href = href + '?lang=' + lang;
+                }
+            });
+        }
+        
+        // 9. Load content on page load
         async function initPage() {
             const lang = getLangFromURL();
             fixLanguageSwitcherUrls();
+            preserveLanguageInLinks(lang);
             const content = await fetchTermsContent(lang);
             updatePageContent(content, lang);
         }
         
-        // 9. Handle language button clicks
+        // 10. Handle language button clicks
         function setupLanguageSwitcher() {
             const buttons = document.querySelectorAll('.lakum-language-switcher a');
             buttons.forEach(btn => {
@@ -720,13 +751,13 @@ Compliance with these terms ensures the preservation of Lakum Artspace’s profe
             });
         }
         
-        // 10. Initialize on page load
+        // 11. Initialize on page load
         document.addEventListener('DOMContentLoaded', () => {
             initPage();
             setupLanguageSwitcher();
         });
         
-        // 11. Handle back/forward buttons
+        // 12. Handle back/forward buttons
         window.addEventListener('popstate', async () => {
             const lang = getLangFromURL();
             const content = await fetchTermsContent(lang);
