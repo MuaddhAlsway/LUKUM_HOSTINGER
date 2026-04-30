@@ -53,13 +53,13 @@ $langParam = '?lang=' . $currentLang;
                     <a href="about.php<?php echo $langParam; ?>" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'about.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('about', 'About'); ?></a>
                 </li>
                 <li class="lakum-nav__item">
-                    <a href="spaces.php<?php echo $langParam; ?>" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'spaces.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('spaces', 'Spaces'); ?></a>
+                    <a href="spaces.php<?php echo $langParam; ?>" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'spaces.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('spaces', 'Exhibitions'); ?></a>
                 </li>
                 <li class="lakum-nav__item">
-                    <a href="exhibitions.php<?php echo $langParam; ?>" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'exhibitions.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('exhibitions', 'Exhibitions'); ?></a>
+                    <a href="exhibitions.php<?php echo $langParam; ?>" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'exhibitions.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('exhibitions', 'Events'); ?></a>
                 </li>
                 <li class="lakum-nav__item">
-                    <a href="calendar.php<?php echo $langParam; ?>" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'calendar.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('calendar', 'Calendar'); ?></a>
+                    <a href="calendar.php<?php echo $langParam; ?>" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'calendar.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('calendar', 'Venue Hire'); ?></a>
                 </li>
                 <li class="lakum-nav__item">
                     <a href="blog.php<?php echo $langParam; ?>" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'blog.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('blog', 'Blog'); ?></a>
@@ -108,13 +108,13 @@ $langParam = '?lang=' . $currentLang;
             <a href="about.php<?php echo $langParam; ?>" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'about.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('about', 'About'); ?></a>
         </li>
         <li class="lakum-nav__item">
-            <a href="spaces.php<?php echo $langParam; ?>" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'spaces.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('spaces', 'Spaces'); ?></a>
+            <a href="spaces.php<?php echo $langParam; ?>" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'spaces.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('spaces', 'Exhibitions'); ?></a>
         </li>
         <li class="lakum-nav__item">
-            <a href="exhibitions.php<?php echo $langParam; ?>" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'exhibitions.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('exhibitions', 'Exhibitions'); ?></a>
+            <a href="exhibitions.php<?php echo $langParam; ?>" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'exhibitions.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('exhibitions', 'Events'); ?></a>
         </li>
         <li class="lakum-nav__item">
-            <a href="calendar.php<?php echo $langParam; ?>" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'calendar.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('calendar', 'Calendar'); ?></a>
+            <a href="calendar.php<?php echo $langParam; ?>" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'calendar.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('calendar', 'Venue Hire'); ?></a>
         </li>
         <li class="lakum-nav__item">
             <a href="blog.php<?php echo $langParam; ?>" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'blog.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('blog', 'Blog'); ?></a>
