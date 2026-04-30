@@ -1,5 +1,6 @@
 <?php
 require_once 'lang/loader.php';
+require_once 'includes/hero-settings.php';
 ?><!DOCTYPE html>
 <html <?php echo getLanguageAttributes(); ?>>
 
@@ -305,10 +306,7 @@ require_once 'lang/loader.php';
 
     <!-- Hero Section -->
     <section class="lakum-contact-hero">
-        <div class="lakum-hero__image-wrapper">
-            <img src="heroImage/img-3.webp" alt="Contact Us" class="lakum-hero__image" loading="eager" fetchpriority="high" decoding="async" style="width: 100%; height: 100%; object-fit: cover; display: block;">
-            <div class="lakum-hero__overlay"></div>
-        </div>
+        <?php renderHero('contact', 'Contact Us'); ?>
         <div class="lakum-hero__content">
             <h1 class="lakum-contact-hero__title"><?php echo t('hero_title', 'Get In Touch'); ?></h1>
             <p class="lakum-contact-hero__subtitle"><?php echo t('hero_subtitle', 'Have a question or want to collaborate? We\'d love to hear from you. Reach out and let\'s create something amazing together.'); ?></p>
@@ -490,7 +488,7 @@ require_once 'lang/loader.php';
             </div>
 
             <div class="lakum-footer__bottom">
-                <p class="lakum-footer__copyright"><?php echo t('footer_copyright_prefix', '© 2025 - '); ?><span id="year"></span><?php echo t('footer_copyright_suffix', ' LAKUM Artspace. All rights reserved.'); ?></p>
+                <p class="lakum-footer__copyright"><?php echo t('footer_copyright_prefix', 'ï¿½ 2025 - '); ?><span id="year"></span><?php echo t('footer_copyright_suffix', ' LAKUM Artspace. All rights reserved.'); ?></p>
                 <div class="lakum-footer__legal">
                     <a href="terms.php" class="lakum-footer__legal-link"><?php echo t('footer_terms', 'Terms & Conditions'); ?></a>
                     <span class="lakum-footer__legal-divider">|</span>

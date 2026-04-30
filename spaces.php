@@ -1,6 +1,7 @@
 <?php
 require_once 'lang/loader.php';
 require_once 'api/image-helper.php';
+require_once 'includes/hero-settings.php';
 ?><!DOCTYPE html>
 <html <?php echo getLanguageAttributes(); ?>>
 
@@ -309,10 +310,7 @@ require_once 'api/image-helper.php';
 
     <!-- Hero Section -->
     <section class="lakum-hero">
-        <div class="lakum-hero__image-wrapper">
-            <img src="heroImage/img-3.webp" alt="LAKUM Spaces" class="lakum-hero__image" loading="eager" fetchpriority="high" decoding="async" style="width: 100%; height: 100%; object-fit: cover; display: block;">
-            <div class="lakum-hero__overlay"></div>
-        </div>
+        <?php renderHero('spaces', 'LAKUM Spaces'); ?>
         <div class="lakum-hero__content">
             <h1 class="lakum-hero__title"><?php echo t('spaces_hero_title', 'Discover Our Dynamic'); ?> <span><?php echo t('spaces_hero_subtitle', ''); ?></span></h1>
             <ul class="lakum-spaces-hero__tags">

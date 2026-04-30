@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hero Manager - LAKUM</title>
+    <link rel="icon" href="../assest/favicon.png" type="image/png">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="admin-style.css">
+    <style>
+        .page-tabs {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 32px;
+        }
+        .page-tab {
+            padding: 8px 20px;
+            border: 1px solid var(--border-color);
+            background: var(--card-bg);
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 400;
+            color: var(--text-secondary);
+            transition: all 0.2s;
+        }
+        .page-tab:hover { background: #f0f0e8; }
+        .page-tab.active {
+            background: var(--text-primary);
+            color: white;
+            border-color: var(--text-primary);
+        }
+        .hero-editor {
+            display: none;
+        }
+        .hero-editor.active {
+            display: block;
+        }
+        .hero-preview {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/5;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 24px;
+            background: #1a1a1a;
+        }
+        .hero-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .hero-preview__overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.35);
+        }
+        .hero-preview__text {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        .hero-preview__text h2 {
+            font-size: 28px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+        .hero-preview__text p {
+            font-size: 14px;
+            opacity: 0.85;
+        }
+        .upload-zone {
+            border: 2px dashed var(--border-color);
+            border-radius: 8px;
+            padding: 32px;
+            text-align: center;
+            cursor: pointer;
+            transition: border-color 0.2s;
+            margin-bottom: 24px;
+            background: #fafaf5;
+        }
+        .upload-zone:hover { border-color: var(--text-primary); }
+        .upload-zone i { font-size: 32px; color: var(--text-muted); margin-bottom: 8px; display: block; }
+        .upload-zone p { color: var(--text-muted); font-size: 13px; margin: 0; }
+        .upload-zone input[type="file"] { display: none; }
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 14px;
+            background: white;
+            color: var(--text-primary);
+            font-family: inherit;
+        }
+        .form-group textarea { resize: vertical; min-height: 70px; }
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--text-primary);
+        }
+        .btn-save {
+            background: var(--text-primary);
+            color: white;
+            border: none;
+            padding: 12px 32px;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: opacity 0.2s;
+        }
+        .btn-save:hover { opacity: 0.85; }
+        .upload-progress {
+            display: none;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            background: #f0f0e8;
+            border-radius: 4px;
+            margin-bottom: 16px;
+            font-size: 13px;
+        }
+        .upload-progress.show { display: flex; }
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            padding: 12px 20px;
+            border-radius: 4px;
+            font-size: 14px;
+            color: white;
+            z-index: 9999;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s;
+            pointer-events: none;
+        }
+        .toast.show { opacity: 1; transform: translateY(0); }
+        .toast.success { background: var(--accent-green); }
+        .toast.error { background: var(--accent-red); }
+        .section-label {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border-color);
+        }
+    </style>
+</head>
+<body>
+<div class="admin-container">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="logo">
+            <h3 style="font-size:24px;font-weight:300;letter-spacing:2px;margin:0;">LAKUM</h3>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item"><i class="ri-dashboard-line"></i><span>Dashboard</span></a>
+            <a href="hero-manager.html" class="nav-item active"><i class="ri-image-line"></i><span>Hero Manager</span></a>
+            <a href="events.html" class="nav-item"><i class="ri-calendar-event-line"></i><span>Events</span></a>
+            <a href="blogs.html" class="nav-item"><i class="ri-article-line"></i><span>Blogs</span></a>
+            <a href="press.html" class="nav-item"><i class="ri-newspaper-line"></i><span>Press</span></a>
+            <a href="pricing.html" class="nav-item"><i class="ri-price-tag-3-line"></i><span>Pricing</span></a>
+            <a href="legal-pages.html" class="nav-item"><i class="ri-file-text-line"></i><span>Legal Pages</span></a>
+            <a href="settings.html" class="nav-item"><i class="ri-settings-3-line"></i><span>Settings</span></a>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="#" class="logout-btn"><i class="ri-logout-box-line"></i><span>Logout</span></a>
+        </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="main-content">
+        <header>
+            <h1><i class="ri-image-line"></i> Hero Manager</h1>
+            <p style="color:var(--text-muted);font-size:14px;margin-top:4px;">Customize the hero image and text for each page</p>
+        </header>
+
+        <!-- Page Tabs -->
+        <div class="page-tabs">
+            <button class="page-tab active" data-page="index">Home</button>
+            <button class="page-tab" data-page="blog">Blog</button>
+            <button class="page-tab" data-page="spaces">Spaces</button>
+            <button class="page-tab" data-page="exhibitions">Exhibitions</button>
+            <button class="page-tab" data-page="contact">Contact</button>
+            <button class="page-tab" data-page="shop">Shop</button>
+        </div>
+
+        <!-- Editors (one per page) -->
+        <div id="editors"></div>
+    </main>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const pages = [
+    { key: 'index',       label: 'Home' },
+    { key: 'blog',        label: 'Blog' },
+    { key: 'spaces',      label: 'Spaces' },
+    { key: 'exhibitions', label: 'Exhibitions' },
+    { key: 'contact',     label: 'Contact' },
+    { key: 'shop',        label: 'Shop' },
+];
+
+let settings = {};
+
+// ── Build editor HTML ────────────────────────────────────────────────────────
+function buildEditors() {
+    const container = document.getElementById('editors');
+    container.innerHTML = pages.map(p => `
+        <div class="hero-editor card ${p.key === 'index' ? 'active' : ''}" id="editor-${p.key}">
+
+            <!-- Live Preview -->
+            <div class="section-label">Preview</div>
+            <div class="hero-preview" id="preview-${p.key}">
+                <img id="preview-img-${p.key}" src="../${getImage(p.key)}" alt="Hero">
+                <div class="hero-preview__overlay"></div>
+                <div class="hero-preview__text">
+                    <h2 id="preview-title-${p.key}">${getField(p.key, 'title_en') || p.label}</h2>
+                    <p id="preview-sub-${p.key}">${getField(p.key, 'subtitle_en') || ''}</p>
+                </div>
+            </div>
+
+            <!-- Upload -->
+            <div class="section-label">Hero Image</div>
+            <div class="upload-zone" id="zone-${p.key}" onclick="document.getElementById('file-${p.key}').click()">
+                <i class="ri-upload-cloud-2-line"></i>
+                <p>Click to upload a new hero image</p>
+                <p style="margin-top:4px;font-size:11px;">JPG, PNG, WebP — max 10MB</p>
+                <input type="file" id="file-${p.key}" accept="image/*" onchange="uploadImage('${p.key}', this)">
+            </div>
+            <div class="upload-progress" id="progress-${p.key}">
+                <i class="ri-loader-4-line"></i> Uploading...
+            </div>
+
+            <!-- Text Fields -->
+            <div class="section-label">Text Content</div>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Title (English)</label>
+                    <input type="text" id="title_en-${p.key}" value="${getField(p.key, 'title_en')}"
+                        oninput="updatePreview('${p.key}')" placeholder="e.g. Welcome to LAKUM">
+                </div>
+                <div class="form-group">
+                    <label>Title (Arabic)</label>
+                    <input type="text" id="title_ar-${p.key}" value="${getField(p.key, 'title_ar')}"
+                        dir="rtl" placeholder="العنوان بالعربية">
+                </div>
+                <div class="form-group">
+                    <label>Subtitle (English)</label>
+                    <textarea id="subtitle_en-${p.key}" oninput="updatePreview('${p.key}')"
+                        placeholder="Short description...">${getField(p.key, 'subtitle_en')}</textarea>
+                </div>
+                <div class="form-group">
+                    <label>Subtitle (Arabic)</label>
+                    <textarea id="subtitle_ar-${p.key}" dir="rtl"
+                        placeholder="وصف قصير...">${getField(p.key, 'subtitle_ar')}</textarea>
+                </div>
+            </div>
+
+            <button class="btn-save" onclick="saveText('${p.key}')">
+                <i class="ri-save-line"></i> Save Changes
+            </button>
+        </div>
+    `).join('');
+}
+
+function getImage(page) {
+    return settings[page]?.image || 'heroImage/img-4.webp';
+}
+function getField(page, field) {
+    return settings[page]?.[field] || '';
+}
+
+// ── Tab switching ────────────────────────────────────────────────────────────
+document.querySelectorAll('.page-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+        document.querySelectorAll('.page-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.hero-editor').forEach(e => e.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById('editor-' + tab.dataset.page)?.classList.add('active');
+    });
+});
+
+// ── Live preview update ──────────────────────────────────────────────────────
+function updatePreview(page) {
+    const title = document.getElementById(`title_en-${page}`)?.value;
+    const sub   = document.getElementById(`subtitle_en-${page}`)?.value;
+    if (title !== undefined) document.getElementById(`preview-title-${page}`).textContent = title;
+    if (sub   !== undefined) document.getElementById(`preview-sub-${page}`).textContent   = sub;
+}
+
+// ── Upload image ─────────────────────────────────────────────────────────────
+async function uploadImage(page, input) {
+    if (!input.files[0]) return;
+    const progress = document.getElementById(`progress-${page}`);
+    progress.classList.add('show');
+
+    const formData = new FormData();
+    formData.append('hero_image', input.files[0]);
+    formData.append('page', page);
+
+    try {
+        const res = await fetch('../api/save_hero_settings.php', { method: 'POST', body: formData });
+        const data = await res.json();
+        if (data.success) {
+            document.getElementById(`preview-img-${page}`).src = '../' + data.image + '?t=' + Date.now();
+            if (!settings[page]) settings[page] = {};
+            settings[page].image = data.image;
+            showToast('Image uploaded successfully', 'success');
+        } else {
+            showToast(data.message || 'Upload failed', 'error');
+        }
+    } catch (e) {
+        showToast('Upload failed', 'error');
+    } finally {
+        progress.classList.remove('show');
+        input.value = '';
+    }
+}
+
+// ── Save text ────────────────────────────────────────────────────────────────
+async function saveText(page) {
+    const payload = {
+        page,
+        title_en:    document.getElementById(`title_en-${page}`)?.value    || '',
+        title_ar:    document.getElementById(`title_ar-${page}`)?.value    || '',
+        subtitle_en: document.getElementById(`subtitle_en-${page}`)?.value || '',
+        subtitle_ar: document.getElementById(`subtitle_ar-${page}`)?.value || '',
+    };
+
+    try {
+        const res = await fetch('../api/save_hero_settings.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        showToast(data.success ? 'Saved successfully' : (data.message || 'Save failed'), data.success ? 'success' : 'error');
+    } catch (e) {
+        showToast('Save failed', 'error');
+    }
+}
+
+// ── Toast ────────────────────────────────────────────────────────────────────
+function showToast(msg, type = 'success') {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.className = `toast ${type} show`;
+    setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ── Init ─────────────────────────────────────────────────────────────────────
+async function init() {
+    try {
+        const res = await fetch('../api/get_hero_settings.php');
+        const data = await res.json();
+        if (data.success) settings = data.data;
+    } catch (e) { /* use defaults */ }
+    buildEditors();
+
+    // Re-attach tab listeners after DOM rebuild
+    document.querySelectorAll('.page-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            document.querySelectorAll('.page-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.hero-editor').forEach(e => e.classList.remove('active'));
+            tab.classList.add('active');
+            document.getElementById('editor-' + tab.dataset.page)?.classList.add('active');
+        });
+    });
+}
+
+init();
+</script>
+</body>
+</html>

@@ -1,6 +1,7 @@
 <?php
 require_once 'lang/loader.php';
 require_once 'api/image-helper.php';
+require_once 'includes/hero-settings.php';
 ?><!DOCTYPE html>
 <html <?php echo getLanguageAttributes(); ?>>
 <head>
@@ -170,18 +171,7 @@ require_once 'api/image-helper.php';
 
     <!-- Hero Section -->
     <section class="lakum-hero" style="aspect-ratio: 16/9">
-        <div class="lakum-hero__image-wrapper">
-            <img src="heroImage/img-4.webp"
-                 alt="Exhibitions"
-                 fetchpriority="high"
-                 loading="eager"
-                 decoding="async"
-                 width="1200"
-                 height="800"
-                 class="lakum-hero__image"
-                 style="width: 100%; height: 100%; object-fit: cover; display: block;">
-            <div class="lakum-hero__overlay"></div>
-        </div>
+        <?php renderHero('exhibitions', 'Exhibitions'); ?>
     </section>
 
     <!-- Upcoming Section -->

@@ -1,6 +1,7 @@
 <?php
 require_once 'lang/loader.php';
 require_once 'api/image-helper.php';
+require_once 'includes/hero-settings.php';
 ?><!DOCTYPE html>
 <html <?php echo getLanguageAttributes(); ?>>
 
@@ -344,17 +345,7 @@ require_once 'api/image-helper.php';
     <!-- Hero Section -->
     <section class="lakum-hero lakum-blog-hero" style="aspect-ratio: 16/9">
         <div class="lakum-hero__image-wrapper">
-            <img src="heroImage/img-4.webp"
-                 alt="Blog"
-                 fetchpriority="high"
-                 loading="eager"
-                 decoding="async"
-                 width="1200"
-                 height="800"
-                 class="lakum-hero__image"
-                 style="width: 100%; height: 100%; object-fit: cover; display: block;">
-            <div class="lakum-hero__overlay"></div>
-        </div>
+            <?php renderHero('blog', 'Blog'); ?>
         <div class="lakum-hero__content">
             <h1 class="lakum-hero__title"><?php echo t('blog_hero_title', 'Stories & Insights'); ?></h1>
             <p class="lakum-hero__subtitle"><?php echo t('blog_hero_subtitle', 'Explore the world of art, culture, and creativity through our curated collection of articles, interviews, and behind-the-scenes stories'); ?></p>
