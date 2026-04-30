@@ -348,8 +348,8 @@ require_once 'includes/hero-settings.php';
             <?php renderHero('blog', 'Blog'); ?>
         </div>
         <div class="lakum-hero__content">
-            <h1 class="lakum-hero__title"><?php echo t('blog_hero_title', 'Stories & Insights'); ?></h1>
-            <p class="lakum-hero__subtitle"><?php echo t('blog_hero_subtitle', 'Explore the world of art, culture, and creativity through our curated collection of articles, interviews, and behind-the-scenes stories'); ?></p>
+            <h1 class="lakum-hero__title"><?php echo getHeroTitle('blog', 'blog_hero_title', 'Stories & Insights'); ?></h1>
+            <p class="lakum-hero__subtitle"><?php echo getHeroSubtitle('blog', 'blog_hero_subtitle', 'Explore the world of art, culture, and creativity through our curated collection of articles, interviews, and behind-the-scenes stories'); ?></p>
         </div>
     </section>
 

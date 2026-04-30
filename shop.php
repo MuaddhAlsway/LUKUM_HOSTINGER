@@ -297,7 +297,7 @@ require_once 'includes/hero-settings.php';
     <section class="lakum-hero">
         <?php renderHero('shop', 'LAKUM Shop'); ?>
         <div class="lakum-hero__content">
-            <h1 class="lakum-hero__title"><?php echo t('hero_title', 'Discover Lakum Concept Shop'); ?></h1>
+            <h1 class="lakum-hero__title"><?php echo getHeroTitle('shop', 'hero_title', 'Discover Lakum Concept Shop'); ?></h1>
             <p class="lakum-hero__subtitle">
                 <a href="https://souvenirs.sa/ar/category/oyajz" class="lakum-btn lakum-btn--primary" target="_blank" rel="noopener noreferrer" data-link-type="shop">
                     <?php echo t('hero_button', 'Explore Shop'); ?>

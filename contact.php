@@ -308,8 +308,8 @@ require_once 'includes/hero-settings.php';
     <section class="lakum-contact-hero">
         <?php renderHero('contact', 'Contact Us'); ?>
         <div class="lakum-hero__content">
-            <h1 class="lakum-contact-hero__title"><?php echo t('hero_title', 'Get In Touch'); ?></h1>
-            <p class="lakum-contact-hero__subtitle"><?php echo t('hero_subtitle', 'Have a question or want to collaborate? We\'d love to hear from you. Reach out and let\'s create something amazing together.'); ?></p>
+            <h1 class="lakum-contact-hero__title"><?php echo getHeroTitle('contact', 'hero_title', 'Get In Touch'); ?></h1>
+            <p class="lakum-contact-hero__subtitle"><?php echo getHeroSubtitle('contact', 'hero_subtitle', "Have a question or want to collaborate? We'd love to hear from you. Reach out and let's create something amazing together."); ?></p>
         </div>
     </section>
 

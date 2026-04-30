@@ -3,40 +3,73 @@
  * Hero Settings Helper
  * Loads hero image and text for a given page from data/hero_settings.json
  */
+
+$_heroSettingsCache = null;
+
 function getHeroSettings($page) {
+    global $_heroSettingsCache;
+
     $defaults = [
         'image'       => 'heroImage/img-4.webp',
         'title_en'    => '',
         'title_ar'    => '',
         'subtitle_en' => '',
         'subtitle_ar' => '',
+        'tags_en'     => '',
+        'tags_ar'     => '',
     ];
 
-    $file = __DIR__ . '/../data/hero_settings.json';
-    if (file_exists($file)) {
-        $all = json_decode(file_get_contents($file), true);
-        if ($all && isset($all[$page])) {
-            $defaults = array_merge($defaults, $all[$page]);
+    if ($_heroSettingsCache === null) {
+        $file = __DIR__ . '/../data/hero_settings.json';
+        $_heroSettingsCache = [];
+        if (file_exists($file)) {
+            $all = json_decode(file_get_contents($file), true);
+            if ($all) $_heroSettingsCache = $all;
         }
+    }
+
+    if (isset($_heroSettingsCache[$page])) {
+        $defaults = array_merge($defaults, $_heroSettingsCache[$page]);
     }
     return $defaults;
 }
 
 /**
- * Render the hero image wrapper HTML
+ * Get hero title for a page — saved setting wins over translation fallback
+ */
+function getHeroTitle($page, $translationKey, $fallback = '') {
+    $h    = getHeroSettings($page);
+    $lang = function_exists('getCurrentLanguage') ? getCurrentLanguage() : 'en';
+    $key  = ($lang === 'ar') ? 'title_ar' : 'title_en';
+    $saved = trim($h[$key] ?? '');
+    if ($saved !== '') return htmlspecialchars($saved);
+    // Fall back to translation system
+    return function_exists('t') ? t($translationKey, $fallback) : htmlspecialchars($fallback);
+}
+
+/**
+ * Get hero subtitle for a page — saved setting wins over translation fallback
+ */
+function getHeroSubtitle($page, $translationKey, $fallback = '') {
+    $h    = getHeroSettings($page);
+    $lang = function_exists('getCurrentLanguage') ? getCurrentLanguage() : 'en';
+    $key  = ($lang === 'ar') ? 'subtitle_ar' : 'subtitle_en';
+    $saved = trim($h[$key] ?? '');
+    if ($saved !== '') return htmlspecialchars($saved);
+    return function_exists('t') ? t($translationKey, $fallback) : htmlspecialchars($fallback);
+}
+
+/**
+ * Render the hero image wrapper HTML (image + overlay only)
  */
 function renderHero($page, $altText = 'LAKUM Artspace') {
     $h    = getHeroSettings($page);
     $lang = function_exists('getCurrentLanguage') ? getCurrentLanguage() : 'en';
     $isAr = ($lang === 'ar');
 
-    $image    = htmlspecialchars($h['image']);
-    $titleKey = $isAr ? 'title_ar' : 'title_en';
-    $subKey   = $isAr ? 'subtitle_ar' : 'subtitle_en';
-    $tagsKey  = $isAr ? 'tags_ar' : 'tags_en';
-    $title    = htmlspecialchars($h[$titleKey] ?? '');
-    $subtitle = htmlspecialchars($h[$subKey] ?? '');
-    $tagsRaw  = $h[$tagsKey] ?? '';
+    $image   = htmlspecialchars($h['image']);
+    $tagsKey = $isAr ? 'tags_ar' : 'tags_en';
+    $tagsRaw = $h[$tagsKey] ?? '';
 
     echo '<div class="lakum-hero__image-wrapper">';
     echo '<img src="' . $image . '" alt="' . htmlspecialchars($altText) . '" class="lakum-hero__image"';
@@ -44,13 +77,11 @@ function renderHero($page, $altText = 'LAKUM Artspace') {
     echo ' style="width:100%;height:100%;object-fit:cover;display:block;">';
     echo '<div class="lakum-hero__overlay"></div>';
 
-    // Spaces page: render tags instead of subtitle
+    // Spaces: inject tags via JS after DOM ready
     if ($page === 'spaces' && $tagsRaw) {
-        $tags = array_filter(array_map('trim', explode(',', $tagsRaw)));
+        $tags = array_values(array_filter(array_map('trim', explode(',', $tagsRaw))));
         if (!empty($tags)) {
-            // Inject tags into the existing .lakum-spaces-hero__tags list via data attribute
-            // We output a script that replaces the tag list after DOM ready
-            $tagsJson = json_encode(array_values($tags));
+            $tagsJson = json_encode($tags, JSON_UNESCAPED_UNICODE);
             echo '<script>document.addEventListener("DOMContentLoaded",function(){';
             echo 'var list=document.querySelector(".lakum-spaces-hero__tags");';
             echo 'if(list){var tags=' . $tagsJson . ';';

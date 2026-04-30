@@ -349,8 +349,8 @@ margin: 0 auto;}
             <?php renderHero('index', 'LAKUM Artspace'); ?>
         </div>
         <div class="lakum-hero__content">
-            <h1 class="lakum-hero__title"><?php echo t('hero_title', 'Where Encounters Shape Culture'); ?></h1>
-            <p class="lakum-hero__subtitle"><?php echo t('hero_subtitle', 'A living space for art, connection, and cultural exchange in the heart of Riyadh'); ?></p>
+            <h1 class="lakum-hero__title"><?php echo getHeroTitle('index', 'hero_title', 'Where Encounters Shape Culture'); ?></h1>
+            <p class="lakum-hero__subtitle"><?php echo getHeroSubtitle('index', 'hero_subtitle', 'A living space for art, connection, and cultural exchange in the heart of Riyadh'); ?></p>
         </div>
     </section>
 

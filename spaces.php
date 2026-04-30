@@ -312,7 +312,7 @@ require_once 'includes/hero-settings.php';
     <section class="lakum-hero">
         <?php renderHero('spaces', 'LAKUM Spaces'); ?>
         <div class="lakum-hero__content">
-            <h1 class="lakum-hero__title"><?php echo t('spaces_hero_title', 'Discover Our Dynamic'); ?> <span><?php echo t('spaces_hero_subtitle', ''); ?></span></h1>
+            <h1 class="lakum-hero__title"><?php echo getHeroTitle('spaces', 'spaces_hero_title', 'Discover Our Dynamic'); ?></h1>
             <ul class="lakum-spaces-hero__tags">
                 <li class="lakum-spaces-hero__tag"><?php echo t('spaces_tag_art', 'Art'); ?></li>
                 <li class="lakum-spaces-hero__tag"><?php echo t('spaces_tag_gallery', 'Gallery'); ?></li>
