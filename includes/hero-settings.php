@@ -33,20 +33,32 @@ function renderHero($page, $altText = 'LAKUM Artspace') {
     $image    = htmlspecialchars($h['image']);
     $titleKey = $isAr ? 'title_ar' : 'title_en';
     $subKey   = $isAr ? 'subtitle_ar' : 'subtitle_en';
-    $title    = htmlspecialchars($h[$titleKey]);
-    $subtitle = htmlspecialchars($h[$subKey]);
+    $tagsKey  = $isAr ? 'tags_ar' : 'tags_en';
+    $title    = htmlspecialchars($h[$titleKey] ?? '');
+    $subtitle = htmlspecialchars($h[$subKey] ?? '');
+    $tagsRaw  = $h[$tagsKey] ?? '';
 
     echo '<div class="lakum-hero__image-wrapper">';
     echo '<img src="' . $image . '" alt="' . htmlspecialchars($altText) . '" class="lakum-hero__image"';
     echo ' fetchpriority="high" loading="eager" decoding="async" width="1200" height="800"';
     echo ' style="width:100%;height:100%;object-fit:cover;display:block;">';
     echo '<div class="lakum-hero__overlay"></div>';
-    if ($title || $subtitle) {
-        echo '<div class="lakum-hero__content" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;text-align:center;padding:20px;">';
-        if ($title)    echo '<h1 style="font-size:clamp(24px,4vw,52px);font-weight:300;letter-spacing:3px;margin-bottom:12px;">' . $title . '</h1>';
-        if ($subtitle) echo '<p style="font-size:clamp(13px,1.5vw,18px);opacity:0.85;max-width:600px;">' . $subtitle . '</p>';
-        echo '</div>';
+
+    // Spaces page: render tags instead of subtitle
+    if ($page === 'spaces' && $tagsRaw) {
+        $tags = array_filter(array_map('trim', explode(',', $tagsRaw)));
+        if (!empty($tags)) {
+            // Inject tags into the existing .lakum-spaces-hero__tags list via data attribute
+            // We output a script that replaces the tag list after DOM ready
+            $tagsJson = json_encode(array_values($tags));
+            echo '<script>document.addEventListener("DOMContentLoaded",function(){';
+            echo 'var list=document.querySelector(".lakum-spaces-hero__tags");';
+            echo 'if(list){var tags=' . $tagsJson . ';';
+            echo 'list.innerHTML=tags.map(function(t){return\'<li class="lakum-spaces-hero__tag">\'+t+\'</li>\';}).join("");}';
+            echo '});</script>';
+        }
     }
+
     echo '</div>';
 }
 ?>

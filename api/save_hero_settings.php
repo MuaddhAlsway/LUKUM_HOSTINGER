@@ -86,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!isset($settings[$page])) $settings[$page] = [];
 
     // Only update text fields — image is handled separately
-    foreach (['title_en', 'title_ar', 'subtitle_en', 'subtitle_ar'] as $field) {
+    foreach (['title_en', 'title_ar', 'subtitle_en', 'subtitle_ar', 'tags_en', 'tags_ar'] as $field) {
         if (isset($data[$field])) {
             $settings[$page][$field] = trim($data[$field]);
         }

@@ -255,6 +255,8 @@ const pageDefaults = {
         title_ar:    'اكتشف مساحتنا الديناميكية',
         subtitle_en: '',
         subtitle_ar: '',
+        tags_en:     'Art, Gallery, Hub, Library, Shop, Café',
+        tags_ar:     'فن, معرض, مركز, مكتبة, متجر, مقهى',
     },
     exhibitions: {
         image:       'heroImage/img-4.webp',
@@ -323,6 +325,7 @@ function buildEditors() {
                     <input type="text" id="title_ar-${p.key}" value="${getField(p.key, 'title_ar')}"
                         dir="rtl" placeholder="العنوان بالعربية">
                 </div>
+                ${p.key !== 'spaces' ? `
                 <div class="form-group">
                     <label>Subtitle (English)</label>
                     <textarea id="subtitle_en-${p.key}" oninput="updatePreview('${p.key}')"
@@ -332,7 +335,17 @@ function buildEditors() {
                     <label>Subtitle (Arabic)</label>
                     <textarea id="subtitle_ar-${p.key}" dir="rtl"
                         placeholder="وصف قصير...">${getField(p.key, 'subtitle_ar')}</textarea>
+                </div>` : `
+                <div class="form-group">
+                    <label>Tags (English) <span style="font-weight:300;text-transform:none;letter-spacing:0">— comma separated</span></label>
+                    <input type="text" id="tags_en-spaces" value="${getField('spaces', 'tags_en')}"
+                        placeholder="Art, Gallery, Hub, Library, Shop, Café">
                 </div>
+                <div class="form-group">
+                    <label>Tags (Arabic) <span style="font-weight:300;text-transform:none;letter-spacing:0">— comma separated</span></label>
+                    <input type="text" id="tags_ar-spaces" value="${getField('spaces', 'tags_ar')}"
+                        dir="rtl" placeholder="فن, معرض, مركز, مكتبة, متجر, مقهى">
+                </div>`}
             </div>
 
             <button class="btn-save" onclick="saveText('${p.key}')">
@@ -407,6 +420,10 @@ async function saveText(page) {
         subtitle_en: document.getElementById(`subtitle_en-${page}`)?.value || '',
         subtitle_ar: document.getElementById(`subtitle_ar-${page}`)?.value || '',
     };
+    if (page === 'spaces') {
+        payload.tags_en = document.getElementById('tags_en-spaces')?.value || '';
+        payload.tags_ar = document.getElementById('tags_ar-spaces')?.value || '';
+    }
 
     try {
         const res = await fetch('../api/save_hero_settings.php', {
