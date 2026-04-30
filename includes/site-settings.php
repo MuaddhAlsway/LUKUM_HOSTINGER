@@ -34,16 +34,16 @@ function ss($page, $key, $tKey = '', $fallback = '') {
     $all  = _loadSiteSettings();
     $lang = function_exists('getCurrentLanguage') ? getCurrentLanguage() : 'en';
 
-    // Try saved setting
-    $saved = trim($all[$page][$key] ?? '');
-    if ($saved !== '') return htmlspecialchars($saved, ENT_QUOTES, 'UTF-8');
-
-    // Try Arabic variant if language is AR and key ends in _en
+    // Auto-switch to Arabic key when language is AR and key ends in _en
     if ($lang === 'ar' && substr($key, -3) === '_en') {
-        $arKey = substr($key, 0, -3) . '_ar';
+        $arKey  = substr($key, 0, -3) . '_ar';
         $savedAr = trim($all[$page][$arKey] ?? '');
         if ($savedAr !== '') return htmlspecialchars($savedAr, ENT_QUOTES, 'UTF-8');
     }
+
+    // Try the requested key
+    $saved = trim($all[$page][$key] ?? '');
+    if ($saved !== '') return htmlspecialchars($saved, ENT_QUOTES, 'UTF-8');
 
     // Fall back to translation system
     if ($tKey && function_exists('t')) return t($tKey, $fallback);

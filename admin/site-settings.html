@@ -66,7 +66,6 @@
             <button class="page-tab active" data-page="home">Home</button>
             <button class="page-tab" data-page="about">About</button>
             <button class="page-tab" data-page="spaces">Spaces</button>
-            <button class="page-tab" data-page="contact">Contact</button>
             <button class="page-tab" data-page="shop">Shop</button>
         </div>
         <div id="editors"></div>
@@ -212,11 +211,6 @@ function buildEditors() {
   document.getElementById('editors').innerHTML = `
     <!-- HOME -->
     <div class="page-editor active" id="editor-home">
-      ${block('ri-home-line','Hero Section',
-        imgWidget('home','hero_image','Hero Image') +
-        field('home','hero_title_en','Title (English)') + field('home','hero_title_ar','Title (Arabic)','input','rtl') +
-        field('home','hero_subtitle_en','Subtitle (English)','textarea') + field('home','hero_subtitle_ar','Subtitle (Arabic)','textarea','rtl'),
-        'home','hero')}
       ${block('ri-megaphone-line','CTA Section 1 — "Driven by Soul"',
         field('home','cta1_title_en','Title (English)') + field('home','cta1_title_ar','Title (Arabic)','input','rtl') +
         field('home','cta1_desc_en','Description (English)','textarea') + field('home','cta1_desc_ar','Description (Arabic)','textarea','rtl'),
@@ -231,7 +225,6 @@ function buildEditors() {
     <!-- ABOUT -->
     <div class="page-editor" id="editor-about">
       ${block('ri-information-line','About Section',
-        imgWidget('about','hero_image','Hero Image') +
         field('about','about_heading_en','Heading (English)') + field('about','about_heading_ar','Heading (Arabic)','input','rtl') +
         field('about','about_intro_en','Intro Paragraph (English)','textarea') + field('about','about_intro_ar','Intro Paragraph (Arabic)','textarea','rtl') +
         field('about','about_belief_en','Belief Paragraph (English)','textarea') + field('about','about_belief_ar','Belief Paragraph (Arabic)','textarea','rtl') +
@@ -255,11 +248,6 @@ function buildEditors() {
 
     <!-- SPACES -->
     <div class="page-editor" id="editor-spaces">
-      ${block('ri-image-line','Hero Section',
-        imgWidget('spaces','hero_image','Hero Image') +
-        field('spaces','hero_title_en','Title (English)') + field('spaces','hero_title_ar','Title (Arabic)','input','rtl') +
-        field('spaces','hero_tags_en','Tags (English, comma separated)') + field('spaces','hero_tags_ar','Tags (Arabic, comma separated)','input','rtl'),
-        'spaces','hero')}
       ${block('ri-building-line','Venue Introduction',
         field('spaces','venue_title_en','Section Title (English)') + field('spaces','venue_title_ar','Section Title (Arabic)','input','rtl') +
         field('spaces','venue_p1_en','Paragraph 1 (English)','textarea') + field('spaces','venue_p1_ar','Paragraph 1 (Arabic)','textarea','rtl') +
@@ -284,32 +272,9 @@ function buildEditors() {
         'spaces','booking')}
     </div>
 
-    <!-- CONTACT -->
-    <div class="page-editor" id="editor-contact">
-      ${block('ri-image-line','Hero Section',
-        imgWidget('contact','hero_image','Hero Image') +
-        field('contact','hero_title_en','Title (English)') + field('contact','hero_title_ar','Title (Arabic)','input','rtl') +
-        field('contact','hero_subtitle_en','Subtitle (English)','textarea') + field('contact','hero_subtitle_ar','Subtitle (Arabic)','textarea','rtl'),
-        'contact','hero')}
-      ${block('ri-map-pin-line','Contact Information',
-        field('contact','address_en','Address (English)') + field('contact','address_ar','Address (Arabic)','input','rtl') +
-        field('contact','city_en','City (English)') + field('contact','city_ar','City (Arabic)','input','rtl') +
-        field('contact','phone','Phone Number') + field('contact','email','Email Address') +
-        field('contact','hours_weekday_en','Weekday Hours (EN)') + field('contact','hours_weekday_ar','Weekday Hours (AR)','input','rtl') +
-        field('contact','hours_weekend_en','Weekend Hours (EN)') + field('contact','hours_weekend_ar','Weekend Hours (AR)','input','rtl'),
-        'contact','info')}
-      ${block('ri-share-line','Social Media Links',
-        field('contact','instagram_url','Instagram URL') + field('contact','twitter_url','Twitter/X URL'),
-        'contact','social')}
-      ${block('ri-map-2-line','Google Maps Embed',
-        fieldFull('contact','map_embed','Google Maps Embed URL (src from iframe)','textarea'),
-        'contact','map')}
-    </div>
-
     <!-- SHOP -->
     <div class="page-editor" id="editor-shop">
-      ${block('ri-store-line','Hero Section',
-        imgWidget('shop','hero_image','Hero Image') +
+      ${block('ri-store-line','Shop',
         field('shop','hero_title_en','Title (English)') + field('shop','hero_title_ar','Title (Arabic)','input','rtl') +
         fieldFull('shop','shop_link','Shop External URL'),
         'shop','hero')}
