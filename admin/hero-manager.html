@@ -233,6 +233,52 @@ const pages = [
     { key: 'shop',        label: 'Shop' },
 ];
 
+// Default content matching exactly what each page currently shows
+const pageDefaults = {
+    index: {
+        image:       'heroImage/img-4.webp',
+        title_en:    'Where Encounters Shape Culture',
+        title_ar:    'حيث تصوغ اللقاءات ملامح الثقافة',
+        subtitle_en: 'A living space for art, connection, and cultural exchange in the heart of Riyadh',
+        subtitle_ar: 'مساحة نابضة للفن والحوار والتبادل الثقافي في قلب الرياض',
+    },
+    blog: {
+        image:       'heroImage/img-4.webp',
+        title_en:    'Stories & Insights',
+        title_ar:    'القصص والرؤى',
+        subtitle_en: 'Explore the world of art, culture, and creativity through our curated collection of articles, interviews, and behind-the-scenes stories',
+        subtitle_ar: 'استكشف عالم الفن والثقافة والإبداع من خلال مجموعتنا المختارة من المقالات والمقابلات والقصص من وراء الكواليس',
+    },
+    spaces: {
+        image:       'heroImage/img-3.webp',
+        title_en:    'Discover Our Dynamic',
+        title_ar:    'اكتشف مساحتنا الديناميكية',
+        subtitle_en: '',
+        subtitle_ar: '',
+    },
+    exhibitions: {
+        image:       'heroImage/img-4.webp',
+        title_en:    '',
+        title_ar:    '',
+        subtitle_en: '',
+        subtitle_ar: '',
+    },
+    contact: {
+        image:       'heroImage/img-3.webp',
+        title_en:    'Get In Touch',
+        title_ar:    'تواصل معنا',
+        subtitle_en: "Have a question or want to collaborate? We'd love to hear from you. Reach out and let's create something amazing together.",
+        subtitle_ar: 'هل لديك سؤال أو تريد التعاون؟ نود أن نسمع منك. تواصل معنا ودعنا ننشئ شيئاً رائعاً معاً.',
+    },
+    shop: {
+        image:       'heroImage/img-4.webp',
+        title_en:    'Discover Lakum Concept Shop',
+        title_ar:    'استكشف متجر لكم الفني',
+        subtitle_en: '',
+        subtitle_ar: '',
+    },
+};
+
 let settings = {};
 
 // ── Build editor HTML ────────────────────────────────────────────────────────
@@ -297,10 +343,12 @@ function buildEditors() {
 }
 
 function getImage(page) {
-    return settings[page]?.image || 'heroImage/img-4.webp';
+    return settings[page]?.image || pageDefaults[page]?.image || 'heroImage/img-4.webp';
 }
 function getField(page, field) {
-    return settings[page]?.[field] || '';
+    // Saved settings take priority, then fall back to page defaults
+    if (settings[page]?.[field] !== undefined && settings[page][field] !== '') return settings[page][field];
+    return pageDefaults[page]?.[field] || '';
 }
 
 // ── Tab switching ────────────────────────────────────────────────────────────
