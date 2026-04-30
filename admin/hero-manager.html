@@ -313,6 +313,7 @@ function buildEditors() {
             </div>
 
             <!-- Text Fields -->
+            ${p.key === 'exhibitions' ? '' : `
             <div class="section-label">Text Content</div>
             <div class="form-grid">
                 <div class="form-group">
@@ -323,9 +324,19 @@ function buildEditors() {
                 <div class="form-group">
                     <label>Title (Arabic)</label>
                     <input type="text" id="title_ar-${p.key}" value="${getField(p.key, 'title_ar')}"
-                        dir="rtl" placeholder="العنوان بالعربية">
+                        dir="rtl" oninput="updatePreview('${p.key}')" placeholder="العنوان بالعربية">
                 </div>
-                ${p.key !== 'spaces' ? `
+                ${p.key === 'spaces' ? `
+                <div class="form-group">
+                    <label>Tags (English) <span style="font-weight:300;text-transform:none;letter-spacing:0">— comma separated</span></label>
+                    <input type="text" id="tags_en-spaces" value="${getField('spaces', 'tags_en')}"
+                        oninput="updatePreview('spaces')" placeholder="Art, Gallery, Hub, Library, Shop, Café">
+                </div>
+                <div class="form-group">
+                    <label>Tags (Arabic) <span style="font-weight:300;text-transform:none;letter-spacing:0">— comma separated</span></label>
+                    <input type="text" id="tags_ar-spaces" value="${getField('spaces', 'tags_ar')}"
+                        dir="rtl" placeholder="فن, معرض, مركز, مكتبة, متجر, مقهى">
+                </div>` : `
                 <div class="form-group">
                     <label>Subtitle (English)</label>
                     <textarea id="subtitle_en-${p.key}" oninput="updatePreview('${p.key}')"
@@ -333,24 +344,13 @@ function buildEditors() {
                 </div>
                 <div class="form-group">
                     <label>Subtitle (Arabic)</label>
-                    <textarea id="subtitle_ar-${p.key}" dir="rtl"
+                    <textarea id="subtitle_ar-${p.key}" dir="rtl" oninput="updatePreview('${p.key}')"
                         placeholder="وصف قصير...">${getField(p.key, 'subtitle_ar')}</textarea>
-                </div>` : `
-                <div class="form-group">
-                    <label>Tags (English) <span style="font-weight:300;text-transform:none;letter-spacing:0">— comma separated</span></label>
-                    <input type="text" id="tags_en-spaces" value="${getField('spaces', 'tags_en')}"
-                        placeholder="Art, Gallery, Hub, Library, Shop, Café">
-                </div>
-                <div class="form-group">
-                    <label>Tags (Arabic) <span style="font-weight:300;text-transform:none;letter-spacing:0">— comma separated</span></label>
-                    <input type="text" id="tags_ar-spaces" value="${getField('spaces', 'tags_ar')}"
-                        dir="rtl" placeholder="فن, معرض, مركز, مكتبة, متجر, مقهى">
                 </div>`}
             </div>
-
             <button class="btn-save" onclick="saveText('${p.key}')">
                 <i class="ri-save-line"></i> Save Changes
-            </button>
+            </button>`}
         </div>
     `).join('');
 }
@@ -376,10 +376,17 @@ document.querySelectorAll('.page-tab').forEach(tab => {
 
 // ── Live preview update ──────────────────────────────────────────────────────
 function updatePreview(page) {
-    const title = document.getElementById(`title_en-${page}`)?.value;
-    const sub   = document.getElementById(`subtitle_en-${page}`)?.value;
-    if (title !== undefined) document.getElementById(`preview-title-${page}`).textContent = title;
-    if (sub   !== undefined) document.getElementById(`preview-sub-${page}`).textContent   = sub;
+    const titleEl = document.getElementById(`preview-title-${page}`);
+    const subEl   = document.getElementById(`preview-sub-${page}`);
+    const title   = document.getElementById(`title_en-${page}`)?.value;
+    const sub     = document.getElementById(`subtitle_en-${page}`)?.value;
+    const tags    = document.getElementById(`tags_en-${page}`)?.value;
+
+    if (titleEl && title !== undefined) titleEl.textContent = title;
+    if (subEl) {
+        if (sub !== undefined)  subEl.textContent = sub;
+        if (tags !== undefined) subEl.textContent = tags; // spaces: show tags in preview sub line
+    }
 }
 
 // ── Upload image ─────────────────────────────────────────────────────────────
