@@ -8,334 +8,388 @@
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
     <link rel="stylesheet" href="admin-style.css">
     <style>
-        /* ── Tabs ── */
-        .page-tabs { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:28px; }
-        .page-tab {
-            padding:8px 20px; border:1px solid var(--border-color);
-            background:var(--card-bg); border-radius:4px; cursor:pointer;
-            font-size:13px; color:var(--text-secondary); transition:all .2s;
-        }
-        .page-tab:hover { background:#f0f0e8; }
-        .page-tab.active { background:var(--text-primary); color:#fff; border-color:var(--text-primary); }
-
-        /* ── Editor panels ── */
-        .page-editor { display:none; }
-        .page-editor.active { display:block; }
-
-        /* ── Hero preview ── */
-        .hero-preview {
-            position:relative; width:100%; aspect-ratio:16/5;
-            border-radius:8px; overflow:hidden; margin-bottom:24px; background:#1a1a1a;
-        }
-        .hero-preview img { width:100%; height:100%; object-fit:cover; display:block; }
-        .hero-preview__overlay { position:absolute; inset:0; background:rgba(0,0,0,.38); }
-        .hero-preview__text {
-            position:absolute; inset:0; display:flex; flex-direction:column;
-            align-items:center; justify-content:center; color:#fff; text-align:center; padding:20px;
-        }
-        .hero-preview__text h2 { font-size:26px; font-weight:300; letter-spacing:2px; margin-bottom:6px; }
-        .hero-preview__text p  { font-size:13px; opacity:.85; max-width:560px; }
-
-        /* ── Upload zone ── */
-        .upload-zone {
-            border:2px dashed var(--border-color); border-radius:8px; padding:28px;
-            text-align:center; cursor:pointer; transition:border-color .2s;
-            margin-bottom:24px; background:#fafaf5;
-        }
-        .upload-zone:hover { border-color:var(--text-primary); }
-        .upload-zone i { font-size:30px; color:var(--text-muted); margin-bottom:6px; display:block; }
-        .upload-zone p { color:var(--text-muted); font-size:13px; margin:0; }
-        .upload-zone input[type="file"] { display:none; }
-        .upload-progress { display:none; align-items:center; gap:10px; padding:12px 16px; background:#f0f0e8; border-radius:4px; margin-bottom:16px; font-size:13px; }
-        .upload-progress.show { display:flex; }
-
-        /* ── Form ── */
-        .section-label {
-            font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:1px;
-            color:var(--text-muted); margin-bottom:12px; padding-bottom:8px;
-            border-bottom:1px solid var(--border-color);
-        }
-        .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:24px; }
-        .form-group label { display:block; font-size:12px; font-weight:500; color:var(--text-secondary); margin-bottom:6px; text-transform:uppercase; letter-spacing:.5px; }
-        .form-group input, .form-group textarea {
-            width:100%; padding:10px 14px; border:1px solid var(--border-color);
-            border-radius:4px; font-size:14px; background:#fff; color:var(--text-primary); font-family:inherit;
-        }
-        .form-group textarea { resize:vertical; min-height:72px; }
-        .form-group input:focus, .form-group textarea:focus { outline:none; border-color:var(--text-primary); }
-        .form-group.full { grid-column:1/-1; }
-
-        /* ── Buttons ── */
-        .btn-save {
-            background:var(--text-primary); color:#fff; border:none;
-            padding:12px 32px; border-radius:4px; font-size:14px; cursor:pointer;
-            display:inline-flex; align-items:center; gap:8px; transition:opacity .2s;
-        }
-        .btn-save:hover { opacity:.85; }
-
-        /* ── Toast ── */
-        .toast {
-            position:fixed; bottom:24px; right:24px; padding:12px 20px;
-            border-radius:4px; font-size:14px; color:#fff; z-index:9999;
-            opacity:0; transform:translateY(10px); transition:all .3s; pointer-events:none;
-        }
-        .toast.show { opacity:1; transform:translateY(0); }
-        .toast.success { background:var(--accent-green); }
-        .toast.error   { background:var(--accent-red); }
-
-        /* ── Info note ── */
-        .info-note {
-            background:#f0f0e8; border-left:3px solid var(--text-muted);
-            padding:12px 16px; border-radius:4px; font-size:13px;
-            color:var(--text-secondary); margin-bottom:24px;
-        }
+        .page-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px}
+        .page-tab{padding:8px 20px;border:1px solid var(--border-color);background:var(--card-bg);border-radius:4px;cursor:pointer;font-size:13px;color:var(--text-secondary);transition:all .2s}
+        .page-tab:hover{background:#f0f0e8}
+        .page-tab.active{background:var(--text-primary);color:#fff;border-color:var(--text-primary)}
+        .page-editor{display:none}
+        .page-editor.active{display:block}
+        .section-block{background:#fff;border:1px solid var(--border-color);border-radius:8px;padding:24px;margin-bottom:20px}
+        .section-block__title{font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border-color);display:flex;align-items:center;gap:8px}
+        .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+        .form-grid.single{grid-template-columns:1fr}
+        .form-group label{display:block;font-size:11px;font-weight:600;color:var(--text-secondary);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px}
+        .form-group input,.form-group textarea,.form-group select{width:100%;padding:9px 12px;border:1px solid var(--border-color);border-radius:4px;font-size:13px;background:#fff;color:var(--text-primary);font-family:inherit}
+        .form-group textarea{resize:vertical;min-height:80px}
+        .form-group input:focus,.form-group textarea:focus,.form-group select:focus{outline:none;border-color:var(--text-primary)}
+        .form-group.full{grid-column:1/-1}
+        .img-upload-row{display:flex;align-items:center;gap:16px;padding:12px;background:#fafaf5;border:1px dashed var(--border-color);border-radius:6px;cursor:pointer;transition:border-color .2s}
+        .img-upload-row:hover{border-color:var(--text-primary)}
+        .img-upload-row img{width:80px;height:56px;object-fit:cover;border-radius:4px;border:1px solid var(--border-color)}
+        .img-upload-row .upload-info{flex:1}
+        .img-upload-row .upload-info p{font-size:13px;color:var(--text-secondary);margin:0}
+        .img-upload-row .upload-info small{font-size:11px;color:var(--text-muted)}
+        .img-upload-row input[type=file]{display:none}
+        .btn-save{background:var(--text-primary);color:#fff;border:none;padding:11px 28px;border-radius:4px;font-size:13px;cursor:pointer;display:inline-flex;align-items:center;gap:7px;transition:opacity .2s;margin-top:4px}
+        .btn-save:hover{opacity:.85}
+        .toast{position:fixed;bottom:24px;right:24px;padding:12px 20px;border-radius:4px;font-size:14px;color:#fff;z-index:9999;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none}
+        .toast.show{opacity:1;transform:translateY(0)}
+        .toast.success{background:var(--accent-green)}
+        .toast.error{background:var(--accent-red)}
+        .uploading-badge{display:none;font-size:11px;color:var(--text-muted);margin-left:8px}
+        .uploading-badge.show{display:inline}
     </style>
 </head>
 <body>
 <div class="admin-container">
-
-    <!-- ── Sidebar ── -->
     <aside class="sidebar">
-        <div class="logo">
-            <h3 style="font-size:24px;font-weight:300;letter-spacing:2px;margin:0;">LAKUM</h3>
-        </div>
+        <div class="logo"><h3 style="font-size:24px;font-weight:300;letter-spacing:2px;margin:0">LAKUM</h3></div>
         <nav class="sidebar-nav">
-            <a href="dashboard.html"    class="nav-item"><i class="ri-dashboard-line"></i><span>Dashboard</span></a>
+            <a href="dashboard.html" class="nav-item"><i class="ri-dashboard-line"></i><span>Dashboard</span></a>
             <a href="hero-manager.html" class="nav-item"><i class="ri-image-line"></i><span>Hero Manager</span></a>
             <a href="site-settings.html" class="nav-item active"><i class="ri-global-line"></i><span>Site Settings</span></a>
-            <a href="events.html"       class="nav-item"><i class="ri-calendar-event-line"></i><span>Events</span></a>
-            <a href="blogs.html"        class="nav-item"><i class="ri-article-line"></i><span>Blogs</span></a>
-            <a href="press.html"        class="nav-item"><i class="ri-newspaper-line"></i><span>Press</span></a>
-            <a href="pricing.html"      class="nav-item"><i class="ri-price-tag-3-line"></i><span>Pricing</span></a>
-            <a href="legal-pages.html"  class="nav-item"><i class="ri-file-text-line"></i><span>Legal Pages</span></a>
-            <a href="settings.html"     class="nav-item"><i class="ri-settings-3-line"></i><span>Settings</span></a>
+            <a href="events.html" class="nav-item"><i class="ri-calendar-event-line"></i><span>Events</span></a>
+            <a href="blogs.html" class="nav-item"><i class="ri-article-line"></i><span>Blogs</span></a>
+            <a href="press.html" class="nav-item"><i class="ri-newspaper-line"></i><span>Press</span></a>
+            <a href="pricing.html" class="nav-item"><i class="ri-price-tag-3-line"></i><span>Pricing</span></a>
+            <a href="legal-pages.html" class="nav-item"><i class="ri-file-text-line"></i><span>Legal Pages</span></a>
+            <a href="settings.html" class="nav-item"><i class="ri-settings-3-line"></i><span>Settings</span></a>
         </nav>
-        <div class="sidebar-footer">
-            <a href="login.html" class="logout-btn"><i class="ri-logout-box-line"></i><span>Logout</span></a>
-        </div>
+        <div class="sidebar-footer"><a href="login.html" class="logout-btn"><i class="ri-logout-box-line"></i><span>Logout</span></a></div>
     </aside>
-
-    <!-- ── Main ── -->
     <main class="main-content">
         <header>
             <h1><i class="ri-global-line"></i> Site Settings</h1>
-            <p style="color:var(--text-muted);font-size:14px;margin-top:4px;">Customize content for every page — hero image, titles, and text</p>
+            <p style="color:var(--text-muted);font-size:14px;margin-top:4px">Customize all page content — text, images, and links</p>
         </header>
-
-        <!-- Page tabs -->
         <div class="page-tabs" id="pageTabs">
             <button class="page-tab active" data-page="home">Home</button>
-            <button class="page-tab" data-page="blog">Blog</button>
+            <button class="page-tab" data-page="about">About</button>
             <button class="page-tab" data-page="spaces">Spaces</button>
-            <button class="page-tab" data-page="exhibitions">Exhibitions</button>
             <button class="page-tab" data-page="contact">Contact</button>
             <button class="page-tab" data-page="shop">Shop</button>
         </div>
-
         <div id="editors"></div>
     </main>
 </div>
-
 <div class="toast" id="toast"></div>
 
 <script>
-// ── Page config ──────────────────────────────────────────────────────────────
-const pages = [
-    { key:'home',        label:'Home',        hasSubtitle:true,  hasTags:false },
-    { key:'blog',        label:'Blog',        hasSubtitle:true,  hasTags:false },
-    { key:'spaces',      label:'Spaces',      hasSubtitle:false, hasTags:true  },
-    { key:'exhibitions', label:'Exhibitions', hasSubtitle:false, hasTags:false, imageOnly:true },
-    { key:'contact',     label:'Contact',     hasSubtitle:true,  hasTags:false },
-    { key:'shop',        label:'Shop',        hasSubtitle:false, hasTags:false },
-];
+// ── Defaults matching exact page content ─────────────────────────────────────
+const DEFAULTS = {
+  home: {
+    hero_image: 'heroImage/img-4.webp',
+    hero_title_en: 'Where Encounters Shape Culture',
+    hero_title_ar: 'حيث تصوغ اللقاءات ملامح الثقافة',
+    hero_subtitle_en: 'A living space for art, connection, and cultural exchange in the heart of Riyadh',
+    hero_subtitle_ar: 'مساحة نابضة للفن والحوار والتبادل الثقافي في قلب الرياض',
+    cta1_title_en: 'Driven by Soul, Made by Hands',
+    cta1_title_ar: 'بروحٍ تُلهم، وبأيدٍ تُبدع',
+    cta1_desc_en: 'Explore our diverse spaces and discover how LAKUM can bring your artistic vision to life',
+    cta1_desc_ar: 'استكشف مساحاتنا المتنوعة مصممة لتحول رؤيتك الفنية إلى واقعٍ ملموس',
+    cta2_image: 'heroImage/img-4.webp',
+    cta2_title_en: 'Create Your Own Event',
+    cta2_title_ar: 'أنشئ حدثك المميز',
+    cta2_desc_en: 'Transform your vision into reality with our versatile spaces and comprehensive support services',
+    cta2_desc_ar: 'حول رؤيتك إلى واقع مع مساحاتنا المتعددة الاستخدامات وخدمات الدعم الشاملة',
+  },
+  about: {
+    hero_image: 'heroImage/img-4.webp',
+    about_heading_en: 'About Us',
+    about_heading_ar: 'عن لكم',
+    about_intro_en: 'Lakum Artspace is more than a gallery. It is a living space for connection. Rooted in Riyadh and reaching beyond, Lakum Artspace has evolved into a multidisciplinary platform where artists, thinkers, makers, and audiences come together.',
+    about_intro_ar: 'أكثر من مساحة عرض فنية؛ هي مساحة تنبض بالحياة والتواصل.',
+    about_belief_en: 'We believe art is not only seen but shared, not only displayed but lived.',
+    about_belief_ar: 'نؤمن بأن الفن لغة مرئية ومسموعة وملموسة تبنى قبل أن تعرض.',
+    about_exchange_en: 'As a dynamic space for cultural exchange, Lakum Artspace embraces the unexpected.',
+    about_exchange_ar: 'كل لقاء في لكم هو دعوة للمشاهدة والمشاركة والمساهمة في الحوار الثقافي.',
+    about_closing_en: 'For those who seek meaning through connection, this is the new face of Lakum Artspace.',
+    about_closing_ar: 'لأولئك الذين يبحثون عن المعنى من خلال التواصل، هذا هو الوجه الجديد للكم للفنون.',
+    about_image: 'heroImage/img-4.webp',
+    workshops_heading_en: 'Workshops & Seminars',
+    workshops_heading_ar: 'ورش العمل والندوات',
+    workshops_desc1_en: 'We offer a diverse range of workshops, seminars, and educational programs designed to inspire creativity and foster artistic growth.',
+    workshops_desc1_ar: 'نقدّم مجموعة متنوعة من الورشة والندوات والبرامج التعليمية المصممة لإلهام الإبداع.',
+    workshops_desc2_en: 'Whether you\'re looking to develop new skills, explore different artistic mediums, or connect with fellow creatives.',
+    workshops_desc2_ar: 'سواء كنت تتطلع إلى تطوير مهارات جديدة أو استكشاف وسائط فنية مختلفة.',
+    workshops_image: 'heroImage/img-4.webp',
+    stat1_number: '50+', stat1_label_en: 'Exhibitions & Workshops', stat1_label_ar: 'المعارض وورش العمل',
+    stat2_number: '200+', stat2_label_en: 'Art Pieces', stat2_label_ar: 'القطع الفنية',
+    stat3_number: '30+', stat3_label_en: 'Artist & Instructor', stat3_label_ar: 'الفنان والمدرب',
+    stat4_number: '5000+', stat4_label_en: 'Participants & Visitors', stat4_label_ar: 'المشاركون والزوار',
+  },
+  spaces: {
+    hero_image: 'heroImage/img-3.webp',
+    hero_title_en: 'Discover Our Dynamic',
+    hero_title_ar: 'اكتشف مساحتنا الديناميكية',
+    hero_tags_en: 'Art, Gallery, Hub, Library, Shop, Café',
+    hero_tags_ar: 'فن, معرض, مركز, مكتبة, متجر, مقهى',
+    venue_title_en: 'LAKUM VENUE', venue_title_ar: 'مكان لكم',
+    venue_p1_en: 'Lakum Artspace offers a versatile and elegantly designed venue, thoughtfully created to accommodate a wide range of events.',
+    venue_p1_ar: 'قدم لكم للفنون مكاناً متعدد الاستخدامات ومصمماً بأناقة.',
+    venue_p2_en: 'To complement every occasion, Lakum offers a suite of additional services designed to ensure a seamless and memorable experience.',
+    venue_p2_ar: 'لتكمل كل مناسبة، توفر لكم مجموعة من الخدمات الإضافية.',
+    facilities_title_en: 'Our Facilities', facilities_title_ar: 'مرافقنا',
+    hall1_image: 'HADAFCompany/Hall1.png', hall1_name_en: 'Hall 1', hall1_name_ar: 'القاعة 1',
+    hall2_image: 'HADAFCompany/Hall2.png', hall2_name_en: 'Hall 2', hall2_name_ar: 'القاعة 2',
+    hall3_image: 'HADAFCompany/Hall3.png', hall3_name_en: 'Café', hall3_name_ar: 'كافيه',
+    hall4_image: 'HADAFCompany/Hall4.png', hall4_name_en: 'Meeting Room', hall4_name_ar: 'غرفة الاجتماعات',
+    floor_title_en: 'Our Floor Maps with Measurements', floor_title_ar: 'خرائط الطوابق مع القياسات',
+    ground_floor_title_en: 'LAKUM ARTSPACE | GROUND FLOOR MAP', ground_floor_title_ar: 'لاكوم آرتسبيس | خريطة الطابق الأرضي',
+    floor_plan1: 'assest/floor-plan-1.png', floor_plan1_3d: 'assest/floor-plan3d-1.jpg',
+    mezzanine_title_en: 'LAKUM ARTSPACE | MEZZANINE FLOOR MAP', mezzanine_title_ar: 'لاكوم آرتسبيس | خريطة الطابق الأول',
+    floor_plan2: 'assest/floor-plan-2.png', floor_plan2_3d: 'assest/floor-plan3d-2.jpg',
+    booking_title_en: 'Book Your Space', booking_title_ar: 'احجز مساحتك',
+    booking_text_en: 'Ready to host your next event at LAKUM? Click below to fill out our booking form.',
+    booking_text_ar: 'هل أنت مستعد لاستضافة حدثك التالي في لاكوم؟',
+    booking_link: 'https://form.typeform.com/to/d6ltE0yW',
+  },
+  contact: {
+    hero_image: 'heroImage/img-3.webp',
+    hero_title_en: 'Get In Touch', hero_title_ar: 'تواصل معنا',
+    hero_subtitle_en: "Have a question or want to collaborate? We'd love to hear from you.",
+    hero_subtitle_ar: 'هل لديك سؤال أو تريد التعاون؟ نود أن نسمع منك.',
+    address_en: 'Al Urubah Branch Rd, Umm Al Hamam Al Gharbi', address_ar: 'طريق فرع العروبة، أم الحمام الغربي',
+    city_en: 'Riyadh 12328, Saudi Arabia', city_ar: 'الرياض 12328، المملكة العربية السعودية',
+    phone: '+966 920 012 083',
+    email: 'info@lakumartspace.com',
+    hours_weekday_en: 'Sunday - Thursday: 10:00 AM - 10:00 PM', hours_weekday_ar: 'الأحد - الخميس: 10:00 صباحاً - 10:00 مساءً',
+    hours_weekend_en: 'Friday - Saturday: 2:00 PM - 11:00 PM', hours_weekend_ar: 'الجمعة - السبت: 2:00 مساءً - 11:00 مساءً',
+    instagram_url: 'https://www.instagram.com/lakumartspace/',
+    twitter_url: 'https://x.com/Lakumartspace',
+    map_embed: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3624.9!2d46.6437815!3d24.7007377!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e2f1d7057b45f57:0x96059bc262d04422!2sLakum%20Artspace!5e0!3m2!1sen!2ssa!4v1702000000000',
+  },
+  shop: {
+    hero_image: 'heroImage/img-4.webp',
+    hero_title_en: 'Discover Lakum Concept Shop', hero_title_ar: 'استكشف متجر لكم الفني',
+    shop_link: 'https://souvenirs.sa/ar/category/oyajz',
+  },
+};
 
-let settings = {};
+let saved = {};
 
-// ── Helpers ──────────────────────────────────────────────────────────────────
-function get(page, field) {
-    return settings[page]?.[field] ?? '';
+function g(page, key) {
+  return saved[page]?.[key] ?? DEFAULTS[page]?.[key] ?? '';
+}
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+// ── Image upload widget ───────────────────────────────────────────────────────
+function imgWidget(page, key, label) {
+  const src = g(page, key);
+  const id = `img-${page}-${key}`;
+  return `
+  <div class="form-group full">
+    <label>${label}</label>
+    <div class="img-upload-row" onclick="document.getElementById('${id}').click()">
+      <img id="prev-${page}-${key}" src="../${esc(src)}" alt="${label}" onerror="this.src='../heroImage/img-4.webp'">
+      <div class="upload-info">
+        <p>Click to upload a new image</p>
+        <small>JPG, PNG, WebP — max 10MB</small>
+        <span class="uploading-badge" id="badge-${page}-${key}">Uploading...</span>
+      </div>
+      <input type="file" id="${id}" accept="image/*" onchange="uploadImg('${page}','${key}',this)">
+    </div>
+  </div>`;
 }
 
-function esc(str) {
-    return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+// ── Text field helpers ────────────────────────────────────────────────────────
+function field(page, key, label, type='input', dir='ltr') {
+  const val = esc(g(page, key));
+  if (type === 'textarea') return `<div class="form-group"><label>${label}</label><textarea id="f-${page}-${key}" dir="${dir}">${val}</textarea></div>`;
+  return `<div class="form-group"><label>${label}</label><input type="text" id="f-${page}-${key}" value="${val}" dir="${dir}"></div>`;
+}
+function fieldFull(page, key, label, type='input', dir='ltr') {
+  const val = esc(g(page, key));
+  if (type === 'textarea') return `<div class="form-group full"><label>${label}</label><textarea id="f-${page}-${key}" dir="${dir}">${val}</textarea></div>`;
+  return `<div class="form-group full"><label>${label}</label><input type="text" id="f-${page}-${key}" value="${val}" dir="${dir}"></div>`;
+}
+function block(icon, title, content, page, saveKey) {
+  return `<div class="section-block"><div class="section-block__title"><i class="${icon}"></i>${title}</div><div class="form-grid">${content}</div><button class="btn-save" onclick="save('${page}','${saveKey}')"><i class="ri-save-line"></i> Save</button></div>`;
 }
 
-// ── Build all editors ────────────────────────────────────────────────────────
+// ── Build editors ─────────────────────────────────────────────────────────────
 function buildEditors() {
-    document.getElementById('editors').innerHTML = pages.map((p, i) => {
-        const active = i === 0 ? 'active' : '';
-        const img    = get(p.key, 'hero_image') || 'heroImage/img-4.webp';
-        const title  = esc(get(p.key, 'title_en'));
-        const sub    = esc(get(p.key, 'subtitle_en'));
+  document.getElementById('editors').innerHTML = `
+    <!-- HOME -->
+    <div class="page-editor active" id="editor-home">
+      ${block('ri-home-line','Hero Section',
+        imgWidget('home','hero_image','Hero Image') +
+        field('home','hero_title_en','Title (English)') + field('home','hero_title_ar','Title (Arabic)','input','rtl') +
+        field('home','hero_subtitle_en','Subtitle (English)','textarea') + field('home','hero_subtitle_ar','Subtitle (Arabic)','textarea','rtl'),
+        'home','hero')}
+      ${block('ri-megaphone-line','CTA Section 1 — "Driven by Soul"',
+        field('home','cta1_title_en','Title (English)') + field('home','cta1_title_ar','Title (Arabic)','input','rtl') +
+        field('home','cta1_desc_en','Description (English)','textarea') + field('home','cta1_desc_ar','Description (Arabic)','textarea','rtl'),
+        'home','cta1')}
+      ${block('ri-calendar-event-line','CTA Section 2 — "Create Your Event"',
+        imgWidget('home','cta2_image','Background Image') +
+        field('home','cta2_title_en','Title (English)') + field('home','cta2_title_ar','Title (Arabic)','input','rtl') +
+        field('home','cta2_desc_en','Description (English)','textarea') + field('home','cta2_desc_ar','Description (Arabic)','textarea','rtl'),
+        'home','cta2')}
+    </div>
 
-        return `
-        <div class="page-editor card ${active}" id="editor-${p.key}">
+    <!-- ABOUT -->
+    <div class="page-editor" id="editor-about">
+      ${block('ri-information-line','About Section',
+        imgWidget('about','hero_image','Hero Image') +
+        field('about','about_heading_en','Heading (English)') + field('about','about_heading_ar','Heading (Arabic)','input','rtl') +
+        field('about','about_intro_en','Intro Paragraph (English)','textarea') + field('about','about_intro_ar','Intro Paragraph (Arabic)','textarea','rtl') +
+        field('about','about_belief_en','Belief Paragraph (English)','textarea') + field('about','about_belief_ar','Belief Paragraph (Arabic)','textarea','rtl') +
+        field('about','about_exchange_en','Exchange Paragraph (English)','textarea') + field('about','about_exchange_ar','Exchange Paragraph (Arabic)','textarea','rtl') +
+        field('about','about_closing_en','Closing Paragraph (English)','textarea') + field('about','about_closing_ar','Closing Paragraph (Arabic)','textarea','rtl') +
+        imgWidget('about','about_image','About Section Image'),
+        'about','about')}
+      ${block('ri-tools-line','Workshops Section',
+        imgWidget('about','workshops_image','Workshops Image') +
+        field('about','workshops_heading_en','Heading (English)') + field('about','workshops_heading_ar','Heading (Arabic)','input','rtl') +
+        field('about','workshops_desc1_en','Description 1 (English)','textarea') + field('about','workshops_desc1_ar','Description 1 (Arabic)','textarea','rtl') +
+        field('about','workshops_desc2_en','Description 2 (English)','textarea') + field('about','workshops_desc2_ar','Description 2 (Arabic)','textarea','rtl'),
+        'about','workshops')}
+      ${block('ri-bar-chart-line','Stats Section',
+        field('about','stat1_number','Stat 1 Number') + field('about','stat1_label_en','Stat 1 Label (EN)') +
+        field('about','stat2_number','Stat 2 Number') + field('about','stat2_label_en','Stat 2 Label (EN)') +
+        field('about','stat3_number','Stat 3 Number') + field('about','stat3_label_en','Stat 3 Label (EN)') +
+        field('about','stat4_number','Stat 4 Number') + field('about','stat4_label_en','Stat 4 Label (EN)'),
+        'about','stats')}
+    </div>
 
-            <!-- Preview -->
-            <div class="section-label">Hero Preview</div>
-            <div class="hero-preview">
-                <img id="prev-img-${p.key}" src="../${img}" alt="Hero">
-                <div class="hero-preview__overlay"></div>
-                <div class="hero-preview__text">
-                    <h2 id="prev-title-${p.key}">${title || p.label}</h2>
-                    <p  id="prev-sub-${p.key}">${sub}</p>
-                </div>
-            </div>
+    <!-- SPACES -->
+    <div class="page-editor" id="editor-spaces">
+      ${block('ri-image-line','Hero Section',
+        imgWidget('spaces','hero_image','Hero Image') +
+        field('spaces','hero_title_en','Title (English)') + field('spaces','hero_title_ar','Title (Arabic)','input','rtl') +
+        field('spaces','hero_tags_en','Tags (English, comma separated)') + field('spaces','hero_tags_ar','Tags (Arabic, comma separated)','input','rtl'),
+        'spaces','hero')}
+      ${block('ri-building-line','Venue Introduction',
+        field('spaces','venue_title_en','Section Title (English)') + field('spaces','venue_title_ar','Section Title (Arabic)','input','rtl') +
+        field('spaces','venue_p1_en','Paragraph 1 (English)','textarea') + field('spaces','venue_p1_ar','Paragraph 1 (Arabic)','textarea','rtl') +
+        field('spaces','venue_p2_en','Paragraph 2 (English)','textarea') + field('spaces','venue_p2_ar','Paragraph 2 (Arabic)','textarea','rtl'),
+        'spaces','venue')}
+      ${block('ri-layout-grid-line','Facilities — Images & Names',
+        imgWidget('spaces','hall1_image','Hall 1 Image') + field('spaces','hall1_name_en','Hall 1 Name (EN)') + field('spaces','hall1_name_ar','Hall 1 Name (AR)','input','rtl') +
+        imgWidget('spaces','hall2_image','Hall 2 Image') + field('spaces','hall2_name_en','Hall 2 Name (EN)') + field('spaces','hall2_name_ar','Hall 2 Name (AR)','input','rtl') +
+        imgWidget('spaces','hall3_image','Café Image') + field('spaces','hall3_name_en','Café Name (EN)') + field('spaces','hall3_name_ar','Café Name (AR)','input','rtl') +
+        imgWidget('spaces','hall4_image','Meeting Room Image') + field('spaces','hall4_name_en','Meeting Room Name (EN)') + field('spaces','hall4_name_ar','Meeting Room Name (AR)','input','rtl'),
+        'spaces','facilities')}
+      ${block('ri-map-2-line','Floor Maps',
+        field('spaces','ground_floor_title_en','Ground Floor Title (EN)') + field('spaces','ground_floor_title_ar','Ground Floor Title (AR)','input','rtl') +
+        imgWidget('spaces','floor_plan1','Ground Floor Plan (2D)') + imgWidget('spaces','floor_plan1_3d','Ground Floor Plan (3D)') +
+        field('spaces','mezzanine_title_en','Mezzanine Title (EN)') + field('spaces','mezzanine_title_ar','Mezzanine Title (AR)','input','rtl') +
+        imgWidget('spaces','floor_plan2','Mezzanine Floor Plan (2D)') + imgWidget('spaces','floor_plan2_3d','Mezzanine Floor Plan (3D)'),
+        'spaces','floors')}
+      ${block('ri-calendar-check-line','Booking Section',
+        field('spaces','booking_title_en','Title (English)') + field('spaces','booking_title_ar','Title (Arabic)','input','rtl') +
+        field('spaces','booking_text_en','Description (English)','textarea') + field('spaces','booking_text_ar','Description (Arabic)','textarea','rtl') +
+        fieldFull('spaces','booking_link','Booking Form URL'),
+        'spaces','booking')}
+    </div>
 
-            <!-- Image upload -->
-            <div class="section-label">Hero Image</div>
-            <div class="upload-zone" onclick="document.getElementById('file-${p.key}').click()">
-                <i class="ri-upload-cloud-2-line"></i>
-                <p>Click to upload a new hero image</p>
-                <p style="margin-top:4px;font-size:11px;">JPG, PNG, WebP — max 10MB</p>
-                <input type="file" id="file-${p.key}" accept="image/*" onchange="uploadImage('${p.key}',this)">
-            </div>
-            <div class="upload-progress" id="prog-${p.key}">
-                <i class="ri-loader-4-line"></i> Uploading...
-            </div>
+    <!-- CONTACT -->
+    <div class="page-editor" id="editor-contact">
+      ${block('ri-image-line','Hero Section',
+        imgWidget('contact','hero_image','Hero Image') +
+        field('contact','hero_title_en','Title (English)') + field('contact','hero_title_ar','Title (Arabic)','input','rtl') +
+        field('contact','hero_subtitle_en','Subtitle (English)','textarea') + field('contact','hero_subtitle_ar','Subtitle (Arabic)','textarea','rtl'),
+        'contact','hero')}
+      ${block('ri-map-pin-line','Contact Information',
+        field('contact','address_en','Address (English)') + field('contact','address_ar','Address (Arabic)','input','rtl') +
+        field('contact','city_en','City (English)') + field('contact','city_ar','City (Arabic)','input','rtl') +
+        field('contact','phone','Phone Number') + field('contact','email','Email Address') +
+        field('contact','hours_weekday_en','Weekday Hours (EN)') + field('contact','hours_weekday_ar','Weekday Hours (AR)','input','rtl') +
+        field('contact','hours_weekend_en','Weekend Hours (EN)') + field('contact','hours_weekend_ar','Weekend Hours (AR)','input','rtl'),
+        'contact','info')}
+      ${block('ri-share-line','Social Media Links',
+        field('contact','instagram_url','Instagram URL') + field('contact','twitter_url','Twitter/X URL'),
+        'contact','social')}
+      ${block('ri-map-2-line','Google Maps Embed',
+        fieldFull('contact','map_embed','Google Maps Embed URL (src from iframe)','textarea'),
+        'contact','map')}
+    </div>
 
-            ${p.imageOnly ? `
-            <div class="info-note"><i class="ri-information-line"></i> This page uses a full-width image hero with no text overlay.</div>
-            ` : `
-            <!-- Text content -->
-            <div class="section-label">Text Content</div>
-            <div class="form-grid">
-                <div class="form-group">
-                    <label>Title (English)</label>
-                    <input type="text" id="title_en-${p.key}"
-                        value="${esc(get(p.key,'title_en'))}"
-                        oninput="livePreview('${p.key}')"
-                        placeholder="Page title in English">
-                </div>
-                <div class="form-group">
-                    <label>Title (Arabic)</label>
-                    <input type="text" id="title_ar-${p.key}"
-                        value="${esc(get(p.key,'title_ar'))}"
-                        dir="rtl" placeholder="العنوان بالعربية">
-                </div>
-                ${p.hasSubtitle ? `
-                <div class="form-group">
-                    <label>Subtitle (English)</label>
-                    <textarea id="subtitle_en-${p.key}"
-                        oninput="livePreview('${p.key}')"
-                        placeholder="Short description...">${esc(get(p.key,'subtitle_en'))}</textarea>
-                </div>
-                <div class="form-group">
-                    <label>Subtitle (Arabic)</label>
-                    <textarea id="subtitle_ar-${p.key}" dir="rtl"
-                        placeholder="وصف قصير...">${esc(get(p.key,'subtitle_ar'))}</textarea>
-                </div>` : ''}
-                ${p.hasTags ? `
-                <div class="form-group">
-                    <label>Tags (English) <span style="font-weight:300;text-transform:none;letter-spacing:0">— comma separated</span></label>
-                    <input type="text" id="tags_en-${p.key}"
-                        value="${esc(get(p.key,'tags_en'))}"
-                        oninput="livePreview('${p.key}')"
-                        placeholder="Art, Gallery, Hub, Library, Shop, Café">
-                </div>
-                <div class="form-group">
-                    <label>Tags (Arabic) <span style="font-weight:300;text-transform:none;letter-spacing:0">— comma separated</span></label>
-                    <input type="text" id="tags_ar-${p.key}"
-                        value="${esc(get(p.key,'tags_ar'))}"
-                        dir="rtl" placeholder="فن, معرض, مركز, مكتبة, متجر, مقهى">
-                </div>` : ''}
-            </div>
-            <button class="btn-save" onclick="saveText('${p.key}')">
-                <i class="ri-save-line"></i> Save Changes
-            </button>`}
-        </div>`;
-    }).join('');
+    <!-- SHOP -->
+    <div class="page-editor" id="editor-shop">
+      ${block('ri-store-line','Hero Section',
+        imgWidget('shop','hero_image','Hero Image') +
+        field('shop','hero_title_en','Title (English)') + field('shop','hero_title_ar','Title (Arabic)','input','rtl') +
+        fieldFull('shop','shop_link','Shop External URL'),
+        'shop','hero')}
+    </div>
+  `;
 
-    // Tab listeners
-    document.querySelectorAll('.page-tab').forEach(tab => {
-        tab.addEventListener('click', () => {
-            document.querySelectorAll('.page-tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.page-editor').forEach(e => e.classList.remove('active'));
-            tab.classList.add('active');
-            document.getElementById('editor-' + tab.dataset.page)?.classList.add('active');
-        });
+  // Tab switching
+  document.querySelectorAll('.page-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.page-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.page-editor').forEach(e => e.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('editor-' + tab.dataset.page)?.classList.add('active');
     });
+  });
 }
 
-// ── Live preview ─────────────────────────────────────────────────────────────
-function livePreview(page) {
-    const titleEl = document.getElementById(`prev-title-${page}`);
-    const subEl   = document.getElementById(`prev-sub-${page}`);
-    const title   = document.getElementById(`title_en-${page}`)?.value;
-    const sub     = document.getElementById(`subtitle_en-${page}`)?.value;
-    const tags    = document.getElementById(`tags_en-${page}`)?.value;
-    if (titleEl && title !== undefined) titleEl.textContent = title;
-    if (subEl) {
-        if (sub  !== undefined) subEl.textContent = sub;
-        if (tags !== undefined) subEl.textContent = tags;
-    }
+// ── Collect all fields for a page+section ────────────────────────────────────
+function collectFields(page, sectionKey) {
+  const payload = { page, section: sectionKey };
+  // Collect all inputs/textareas whose id starts with f-{page}-
+  document.querySelectorAll(`[id^="f-${page}-"]`).forEach(el => {
+    const key = el.id.replace(`f-${page}-`, '');
+    payload[key] = el.value;
+  });
+  return payload;
 }
 
-// ── Upload image ─────────────────────────────────────────────────────────────
-async function uploadImage(page, input) {
-    if (!input.files[0]) return;
-    const prog = document.getElementById(`prog-${page}`);
-    prog.classList.add('show');
-
-    const fd = new FormData();
-    fd.append('hero_image', input.files[0]);
-    fd.append('page', page);
-
-    try {
-        const res  = await fetch('../api/save_site_settings.php', { method:'POST', body:fd });
-        const data = await res.json();
-        if (data.success) {
-            document.getElementById(`prev-img-${page}`).src = '../' + data.image + '?t=' + Date.now();
-            if (!settings[page]) settings[page] = {};
-            settings[page].hero_image = data.image;
-            toast('Image uploaded', 'success');
-        } else {
-            toast(data.message || 'Upload failed', 'error');
-        }
-    } catch { toast('Upload failed', 'error'); }
-    finally  { prog.classList.remove('show'); input.value = ''; }
-}
-
-// ── Save text ────────────────────────────────────────────────────────────────
-async function saveText(page) {
-    const payload = { page };
-    const fields = ['title_en','title_ar','subtitle_en','subtitle_ar','tags_en','tags_ar'];
-    fields.forEach(f => {
-        const el = document.getElementById(`${f}-${page}`);
-        if (el) payload[f] = el.value;
+// ── Save text fields ──────────────────────────────────────────────────────────
+async function save(page, sectionKey) {
+  const payload = collectFields(page, sectionKey);
+  try {
+    const res  = await fetch('../api/save_site_settings.php', {
+      method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload)
     });
-
-    try {
-        const res  = await fetch('../api/save_site_settings.php', {
-            method:'POST',
-            headers:{'Content-Type':'application/json'},
-            body:JSON.stringify(payload)
-        });
-        const data = await res.json();
-        toast(data.success ? 'Saved successfully' : (data.message || 'Save failed'), data.success ? 'success' : 'error');
-        if (data.success && !settings[page]) settings[page] = {};
-        if (data.success) Object.assign(settings[page] || (settings[page]={}), payload);
-    } catch { toast('Save failed','error'); }
+    const data = await res.json();
+    toast(data.success ? 'Saved' : (data.message||'Error'), data.success ? 'success' : 'error');
+    if (data.success) { if (!saved[page]) saved[page]={}; Object.assign(saved[page], payload); }
+  } catch { toast('Save failed','error'); }
 }
 
-// ── Toast ────────────────────────────────────────────────────────────────────
+// ── Upload image ──────────────────────────────────────────────────────────────
+async function uploadImg(page, key, input) {
+  if (!input.files[0]) return;
+  const badge = document.getElementById(`badge-${page}-${key}`);
+  if (badge) badge.classList.add('show');
+  const fd = new FormData();
+  fd.append('image', input.files[0]);
+  fd.append('page', page);
+  fd.append('key', key);
+  try {
+    const res  = await fetch('../api/save_site_settings.php', { method:'POST', body:fd });
+    const data = await res.json();
+    if (data.success) {
+      const prev = document.getElementById(`prev-${page}-${key}`);
+      if (prev) prev.src = '../' + data.image + '?t=' + Date.now();
+      if (!saved[page]) saved[page]={};
+      saved[page][key] = data.image;
+      toast('Image uploaded','success');
+    } else { toast(data.message||'Upload failed','error'); }
+  } catch { toast('Upload failed','error'); }
+  finally { if (badge) badge.classList.remove('show'); input.value=''; }
+}
+
+// ── Toast ─────────────────────────────────────────────────────────────────────
 function toast(msg, type='success') {
-    const el = document.getElementById('toast');
-    el.textContent = msg;
-    el.className = `toast ${type} show`;
-    setTimeout(() => el.classList.remove('show'), 3000);
+  const el = document.getElementById('toast');
+  el.textContent = msg; el.className = `toast ${type} show`;
+  setTimeout(() => el.classList.remove('show'), 3000);
 }
 
-// ── Init ─────────────────────────────────────────────────────────────────────
+// ── Init ──────────────────────────────────────────────────────────────────────
 async function init() {
-    try {
-        const res  = await fetch('../api/get_site_settings.php');
-        const data = await res.json();
-        if (data.success) settings = data.data;
-    } catch { /* use defaults */ }
-    buildEditors();
+  try {
+    const res  = await fetch('../api/get_site_settings.php');
+    const data = await res.json();
+    if (data.success) saved = data.data;
+  } catch {}
+  buildEditors();
 }
-
 init();
 </script>
 </body>
