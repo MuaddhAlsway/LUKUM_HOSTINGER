@@ -1,14 +1,14 @@
 {
   "nav_home": "Home",
   "nav_about": "About",
-  "nav_exhibitions": "Exhibitions",
+  "nav_exhibitions": "Events",
   "nav_events": "Events",
   "nav_blog": "Blog",
   "nav_press": "Press",
   "nav_contact": "Contact",
   "nav_shop": "Shop",
-  "nav_spaces": "Spaces",
-  "nav_calendar": "Calendar",
+  "nav_spaces": "Exhibitions",
+  "nav_calendar": "Venue Hire",
   
   "btn_learn_more": "Learn More",
   "btn_view_all": "View All",

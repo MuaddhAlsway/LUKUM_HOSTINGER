@@ -9,7 +9,7 @@
 
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
-header('Cache-Control: public, max-age=86400'); // Cache for 24 hours
+header('Cache-Control: no-cache, no-store, must-revalidate'); // No caching
 
 // Get language parameter
 $lang = isset($_GET['lang']) ? $_GET['lang'] : 'en';
