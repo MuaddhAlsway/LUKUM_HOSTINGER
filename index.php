@@ -2,6 +2,7 @@
 require_once 'lang/loader.php';
 require_once 'api/image-helper.php';
 require_once 'includes/hero-settings.php';
+require_once 'includes/site-settings.php';
 ?><!DOCTYPE html>
 <html <?php echo getLanguageAttributes(); ?>>
 <head>
@@ -400,8 +401,8 @@ margin: 0 auto;}
     <section class="lakum-cta lakum-cta--primary">
         <div class="lakum-container">
             <div class="lakum-cta__content">
-                <h2 class="lakum-cta__title"><?php echo t('cta_title', 'Driven by Soul, Made by Hands'); ?></h2>
-                <p class="lakum-cta__text"><?php echo t('cta_description', 'Explore our diverse spaces and discover how LAKUM can bring your artistic vision to life'); ?></p>
+                <h2 class="lakum-cta__title"><?php echo ss('home','cta1_title_en','cta_title','Driven by Soul, Made by Hands'); ?></h2>
+                <p class="lakum-cta__text"><?php echo ss('home','cta1_desc_en','cta_description','Explore our diverse spaces and discover how LAKUM can bring your artistic vision to life'); ?></p>
                 <a href="spaces.php" class="lakum-btn lakum-btn--primary"><?php echo t('discover_more', 'Discover More'); ?></a>
             </div>
         </div>
@@ -423,11 +424,11 @@ margin: 0 auto;}
     </section>
 
     <section class="lakum-cta lakum-cta--dark">
-        <div class="lakum-cta__background" style="background-image: url('heroImage/img-4.webp');"></div>
+        <div class="lakum-cta__background" style="background-image: url('<?php echo ssRaw('home','cta2_image','heroImage/img-4.webp'); ?>');"></div>
         <div class="lakum-container">
             <div class="lakum-cta__content">
-                <h2 class="lakum-cta__title"><?php echo t('create_event', 'Create Your Own Event'); ?></h2>
-                <p class="lakum-cta__text"><?php echo t('create_event_description', 'Transform your vision into reality with our versatile spaces and comprehensive support services'); ?></p>
+                <h2 class="lakum-cta__title"><?php echo ss('home','cta2_title_en','create_event','Create Your Own Event'); ?></h2>
+                <p class="lakum-cta__text"><?php echo ss('home','cta2_desc_en','create_event_description','Transform your vision into reality with our versatile spaces and comprehensive support services'); ?></p>
                 <a href="spaces.php#form" class="lakum-btn lakum-btn--primary"><?php echo t('get_started', 'Get Started'); ?></a>
             </div>
         </div>

@@ -2,6 +2,7 @@
 require_once 'lang/loader.php';
 require_once 'api/image-helper.php';
 require_once 'includes/hero-settings.php';
+require_once 'includes/site-settings.php';
 ?><!DOCTYPE html>
 <html <?php echo getLanguageAttributes(); ?>>
 <head>
@@ -299,7 +300,7 @@ require_once 'includes/hero-settings.php';
         <div class="lakum-hero__content">
             <h1 class="lakum-hero__title"><?php echo getHeroTitle('shop', 'hero_title', 'Discover Lakum Concept Shop'); ?></h1>
             <p class="lakum-hero__subtitle">
-                <a href="https://souvenirs.sa/ar/category/oyajz" class="lakum-btn lakum-btn--primary" target="_blank" rel="noopener noreferrer" data-link-type="shop">
+                <a href="<?php echo ssRaw('shop','shop_link','https://souvenirs.sa/ar/category/oyajz'); ?>" class="lakum-btn lakum-btn--primary" target="_blank" rel="noopener noreferrer" data-link-type="shop">
                     <?php echo t('hero_button', 'Explore Shop'); ?>
                     <i class="ri-arrow-right-line"></i>
                 </a>

@@ -2,6 +2,7 @@
 require_once 'lang/loader.php';
 require_once 'api/image-helper.php';
 require_once 'includes/hero-settings.php';
+require_once 'includes/site-settings.php';
 ?><!DOCTYPE html>
 <html <?php echo getLanguageAttributes(); ?>>
 
@@ -329,9 +330,9 @@ require_once 'includes/hero-settings.php';
         <div class="lakum-container">
             <h2 class="lakum-spaces-intro__title"><?php echo t('spaces_venue_title', 'LAKUM VENUE'); ?></h2>
             <div class="lakum-spaces-intro__content">
-                <p><?php echo t('spaces_intro_p1', 'Lakum Artspace offers a versatile and elegantly designed venue, thoughtfully created to accommodate a wide range of events, from art exhibitions and product launches to private celebrations, talks, and cultural programs. The space unfolds across several distinctive areas, each with its own atmosphere and flexibility: Hall 1, a spacious gallery ideal for large-scale installations or receptions; Hall 2, perfectly suited for intimate showcases, creative workshops, and panel discussions; and the Mezzanine Floor, home to a welcoming Caf�, a curated Library, and the Lakum Shop, a retail corner that encourages relaxed breaks, quiet exploration, and moments of discovery.'); ?></p>
+                <p><?php echo ss('spaces','venue_p1_en','spaces_intro_p1','Lakum Artspace offers a versatile and elegantly designed venue, thoughtfully created to accommodate a wide range of events.'); ?></p>
 
-                <p><?php echo t('spaces_intro_p2', 'To complement every occasion, Lakum offers a suite of additional services designed to ensure a seamless and memorable experience. These include valet parking, assisted catering, professional security, and access to trusted photographers and videographers to capture each moment. The venue can also accommodate live music performances, adding an artistic and atmospheric touch to any gathering. Fully equipped with an in-house sound system, projectors, and a curated catalogue of furniture available for rental, Lakum allows every event to be tailored to its unique atmosphere and design vision.'); ?></p>
+                <p><?php echo ss('spaces','venue_p2_en','spaces_intro_p2','To complement every occasion, Lakum offers a suite of additional services designed to ensure a seamless and memorable experience.'); ?></p>
             </div>
         </div>
     </section>
@@ -343,27 +344,27 @@ require_once 'includes/hero-settings.php';
             <div class="lakum-spaces-facilities__grid">
                 <div class="lakum-facility-card" onclick="openFacilityPopup('hall1')">
                     <div class="lakum-facility-card__image">
-                        <?php echo ImageHelper::render('HADAFCompany/Hall1.png', 'Hall 1', 'gallery'); ?>
+                        <?php echo ImageHelper::render(ssRaw('spaces','hall1_image','HADAFCompany/Hall1.png'), 'Hall 1', 'gallery'); ?>
                     </div>
-                    <h3 class="lakum-facility-card__name"><?php echo t('spaces_hall1', 'Hall 1'); ?></h3>
+                    <h3 class="lakum-facility-card__name"><?php echo ss('spaces','hall1_name_en','spaces_hall1','Hall 1'); ?></h3>
                 </div>
                 <div class="lakum-facility-card" onclick="openFacilityPopup('hall2')">
                     <div class="lakum-facility-card__image">
-                        <?php echo ImageHelper::render('HADAFCompany/Hall2.png', 'Hall 2', 'gallery'); ?>
+                        <?php echo ImageHelper::render(ssRaw('spaces','hall2_image','HADAFCompany/Hall2.png'), 'Hall 2', 'gallery'); ?>
                     </div>
-                    <h3 class="lakum-facility-card__name"><?php echo t('spaces_hall2', 'Hall 2'); ?></h3>
+                    <h3 class="lakum-facility-card__name"><?php echo ss('spaces','hall2_name_en','spaces_hall2','Hall 2'); ?></h3>
                 </div>
                 <div class="lakum-facility-card" onclick="openFacilityPopup('cafe')">
                     <div class="lakum-facility-card__image">
-                        <?php echo ImageHelper::render('HADAFCompany/Hall3.png', 'Café', 'gallery'); ?>
+                        <?php echo ImageHelper::render(ssRaw('spaces','hall3_image','HADAFCompany/Hall3.png'), 'Café', 'gallery'); ?>
                     </div>
-                    <h3 class="lakum-facility-card__name"><?php echo t('spaces_cafe', 'Café'); ?></h3>
+                    <h3 class="lakum-facility-card__name"><?php echo ss('spaces','hall3_name_en','spaces_cafe','Café'); ?></h3>
                 </div>
                 <div class="lakum-facility-card" onclick="openFacilityPopup('meeting')">
                     <div class="lakum-facility-card__image">
-                        <?php echo ImageHelper::render('HADAFCompany/Hall4.png', 'Meeting Room', 'gallery'); ?>
+                        <?php echo ImageHelper::render(ssRaw('spaces','hall4_image','HADAFCompany/Hall4.png'), 'Meeting Room', 'gallery'); ?>
                     </div>
-                    <h3 class="lakum-facility-card__name"><?php echo t('spaces_meeting_room', 'Meeting Room'); ?></h3>
+                    <h3 class="lakum-facility-card__name"><?php echo ss('spaces','hall4_name_en','spaces_meeting_room','Meeting Room'); ?></h3>
                 </div>
             </div>
         </div>
@@ -426,26 +427,26 @@ require_once 'includes/hero-settings.php';
             <div class="lakum-spaces-floor__grid">
                 <!-- Ground Floor Row -->
                 <div class="lakum-spaces-floor__row">
-                    <h3 class="lakum-spaces-floor__row-title"><?php echo t('spaces_ground_floor', 'LAKUM ARTSPACE | GROUND FLOOR MAP'); ?></h3>
+                    <h3 class="lakum-spaces-floor__row-title"><?php echo ss('spaces','ground_floor_title_en','spaces_ground_floor','LAKUM ARTSPACE | GROUND FLOOR MAP'); ?></h3>
                     <div class="lakum-spaces-floor__images">
                         <div class="lakum-spaces-floor__image">
-                            <img src="assest/floor-plan-1.png" alt="Ground Floor Map">
+                            <img src="<?php echo ssRaw('spaces','floor_plan1','assest/floor-plan-1.png'); ?>" alt="Ground Floor Map">
                         </div>
                         <div class="lakum-spaces-floor__image">
-                            <img src="assest/floor-plan3d-1.jpg" alt="Ground Floor Map">
+                            <img src="<?php echo ssRaw('spaces','floor_plan1_3d','assest/floor-plan3d-1.jpg'); ?>" alt="Ground Floor Map">
                         </div>
                     </div>
                 </div>
 
                 <!-- Mezzanine Floor Row -->
                 <div class="lakum-spaces-floor__row">
-                    <h3 class="lakum-spaces-floor__row-title"><?php echo t('spaces_mezzanine_floor', 'LAKUM ARTSPACE | MEZZANINE FLOOR MAP'); ?></h3>
+                    <h3 class="lakum-spaces-floor__row-title"><?php echo ss('spaces','mezzanine_title_en','spaces_mezzanine_floor','LAKUM ARTSPACE | MEZZANINE FLOOR MAP'); ?></h3>
                     <div class="lakum-spaces-floor__images">
                         <div class="lakum-spaces-floor__image">
-                            <img src="assest/floor-plan-2.png" alt="Mezzanine Floor Map">
+                            <img src="<?php echo ssRaw('spaces','floor_plan2','assest/floor-plan-2.png'); ?>" alt="Mezzanine Floor Map">
                         </div>
                         <div class="lakum-spaces-floor__image">
-                            <img src="assest/floor-plan3d-2.jpg" alt="Mezzanine Floor Map">
+                            <img src="<?php echo ssRaw('spaces','floor_plan2_3d','assest/floor-plan3d-2.jpg'); ?>" alt="Mezzanine Floor Map">
                         </div>
                     </div>
                 </div>
@@ -790,9 +791,9 @@ require_once 'includes/hero-settings.php';
     <section class="lakum-spaces-booking" id="form">
         <div class="lakum-container">
             <div class="lakum-spaces-booking__content">
-                <h2 class="lakum-spaces-booking__title"><?php echo t('spaces_booking_title', 'Book Your Space'); ?></h2>
-                <p class="lakum-spaces-booking__text"><?php echo t('spaces_booking_text', 'Ready to host your next event at LAKUM? Click below to fill out our booking form and our team will get back to you shortly.'); ?></p>
-                <a href="https://form.typeform.com/to/d6ltE0yW" target="_blank" class="lakum-btn lakum-btn--primary lakum-btn--large" data-link-type="booking">
+                <h2 class="lakum-spaces-booking__title"><?php echo ss('spaces','booking_title_en','spaces_booking_title','Book Your Space'); ?></h2>
+                <p class="lakum-spaces-booking__text"><?php echo ss('spaces','booking_text_en','spaces_booking_text','Ready to host your next event at LAKUM? Click below to fill out our booking form and our team will get back to you shortly.'); ?></p>
+                <a href="<?php echo ssRaw('spaces','booking_link','https://form.typeform.com/to/d6ltE0yW'); ?>" target="_blank" class="lakum-btn lakum-btn--primary lakum-btn--large" data-link-type="booking">
                     <i class="ri-external-link-line"></i> <?php echo t('spaces_open_booking_form', 'Open Booking Form'); ?></a>
             </div>
         </div>

@@ -1,6 +1,7 @@
 <?php
 require_once 'lang/loader.php';
 require_once 'includes/hero-settings.php';
+require_once 'includes/site-settings.php';
 ?><!DOCTYPE html>
 <html <?php echo getLanguageAttributes(); ?>>
 
@@ -328,7 +329,7 @@ require_once 'includes/hero-settings.php';
                             </div>
                             <div class="lakum-contact-item__content">
                                 <h3 class="lakum-contact-item__title"><?php echo t('contact_visit_title', 'Visit Us'); ?></h3>
-                                <p class="lakum-contact-item__text"><?php echo t('contact_visit_address', 'Al Urubah Branch Rd, Umm Al Hamam Al Gharbi'); ?><br><?php echo t('contact_visit_city', 'Riyadh 12328, Saudi Arabia'); ?></p>
+                                <p class="lakum-contact-item__text"><?php echo ss('contact','address_en','contact_visit_address','Al Urubah Branch Rd, Umm Al Hamam Al Gharbi'); ?><br><?php echo ss('contact','city_en','contact_visit_city','Riyadh 12328, Saudi Arabia'); ?></p>
                             </div>
                         </div>
 
@@ -338,7 +339,7 @@ require_once 'includes/hero-settings.php';
                             </div>
                             <div class="lakum-contact-item__content">
                                 <h3 class="lakum-contact-item__title"><?php echo t('contact_call_title', 'Call Us'); ?></h3>
-                                <p class="lakum-contact-item__text"><a href="tel:+966920012083"><?php echo t('contact_call_number', '+966 920 012 083'); ?></a></p>
+                                <p class="lakum-contact-item__text"><a href="tel:<?php echo ssRaw('contact','phone','+966920012083'); ?>"><?php echo ss('contact','phone','contact_call_number','+966 920 012 083'); ?></a></p>
                             </div>
                         </div>
 
@@ -348,7 +349,7 @@ require_once 'includes/hero-settings.php';
                             </div>
                             <div class="lakum-contact-item__content">
                                 <h3 class="lakum-contact-item__title"><?php echo t('contact_email_title', 'Email Us'); ?></h3>
-                                <p class="lakum-contact-item__text"><a href="mailto:info@lakumartspace.com"><?php echo t('contact_email_address', 'info@lakumartspace.com'); ?></a></p>
+                                <p class="lakum-contact-item__text"><a href="mailto:<?php echo ssRaw('contact','email','info@lakumartspace.com'); ?>"><?php echo ss('contact','email','contact_email_address','info@lakumartspace.com'); ?></a></p>
                             </div>
                         </div>
 
@@ -358,7 +359,7 @@ require_once 'includes/hero-settings.php';
                             </div>
                             <div class="lakum-contact-item__content">
                                 <h3 class="lakum-contact-item__title"><?php echo t('contact_hours_title', 'Opening Hours'); ?></h3>
-                                <p class="lakum-contact-item__text"><?php echo t('contact_hours_weekday', 'Sunday - Thursday: 10:00 AM - 10:00 PM'); ?><br><?php echo t('contact_hours_weekend', 'Friday - Saturday: 2:00 PM - 11:00 PM'); ?></p>
+                                <p class="lakum-contact-item__text"><?php echo ss('contact','hours_weekday_en','contact_hours_weekday','Sunday - Thursday: 10:00 AM - 10:00 PM'); ?><br><?php echo ss('contact','hours_weekend_en','contact_hours_weekend','Friday - Saturday: 2:00 PM - 11:00 PM'); ?></p>
                             </div>
                         </div>
                     </div>
@@ -366,8 +367,8 @@ require_once 'includes/hero-settings.php';
                     <div class="lakum-contact-social">
                         <h3 class="lakum-contact-social__title"><?php echo t('contact_connect_title', 'Connect'); ?></h3>
                         <div class="lakum-contact-social__links">
-                            <a href="https://www.instagram.com/lakumartspace/" target="_blank" class="lakum-contact-social__link"><i class="ri-instagram-fill"></i></a>
-                            <a href="https://x.com/Lakumartspace" target="_blank" class="lakum-contact-social__link"><i class="ri-twitter-x-fill"></i></a>
+                            <a href="<?php echo ssRaw('contact','instagram_url','https://www.instagram.com/lakumartspace/'); ?>" target="_blank" class="lakum-contact-social__link"><i class="ri-instagram-fill"></i></a>
+                            <a href="<?php echo ssRaw('contact','twitter_url','https://x.com/Lakumartspace'); ?>" target="_blank" class="lakum-contact-social__link"><i class="ri-twitter-x-fill"></i></a>
                         </div>
                     </div>
                 </div>
@@ -435,7 +436,7 @@ require_once 'includes/hero-settings.php';
     <section class="lakum-contact-map">
         <div class="lakum-container">
             <div class="lakum-contact-map__wrapper">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3624.9!2d46.6437815!3d24.7007377!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e2f1d7057b45f57:0x96059bc262d04422!2sLakum%20Artspace!5e0!3m2!1sen!2ssa!4v1702000000000" class="lakum-contact-map__iframe"
+                <iframe src="<?php echo ssRaw('contact','map_embed','https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3624.9!2d46.6437815!3d24.7007377!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e2f1d7057b45f57:0x96059bc262d04422!2sLakum%20Artspace!5e0!3m2!1sen!2ssa!4v1702000000000'); ?>" class="lakum-contact-map__iframe"
                     allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
                 </iframe>
             </div>
