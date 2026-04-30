@@ -347,6 +347,7 @@ margin: 0 auto;}
     <section class="lakum-hero" style="aspect-ratio: 16/9">
         <div class="lakum-hero__image-wrapper">
             <?php renderHero('index', 'LAKUM Artspace'); ?>
+        </div>
         <div class="lakum-hero__content">
             <h1 class="lakum-hero__title"><?php echo t('hero_title', 'Where Encounters Shape Culture'); ?></h1>
             <p class="lakum-hero__subtitle"><?php echo t('hero_subtitle', 'A living space for art, connection, and cultural exchange in the heart of Riyadh'); ?></p>
