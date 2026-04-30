@@ -373,19 +373,23 @@ require_once 'includes/site-settings.php';
     <!-- LAKUM ArtSpaces Gallery -->
     <section class="lakum-gallery-section">
         <div class="lakum-container">
-            <h2 class="lakum-gallery-section__title"><?php echo t('spaces_gallery_title', 'LAKUM ArtSpaces Gallery'); ?></h2>
+            <h2 class="lakum-gallery-section__title"><?php echo ss('spaces','gallery_title_en','spaces_gallery_title','LAKUM ArtSpaces Gallery'); ?></h2>
         </div>
         <div class="lakum-gallery-carousel" id="galleryCarousel">
             <div class="lakum-gallery-track" id="galleryTrack">
                 <?php
-                $galleryImages = [
+                $defaultGalleryImages = [
                     'gallery/img28.jpg', 'gallery/img30.jpg', 'gallery/img34.jpg', 'gallery/img38.jpg',
                     'gallery/img40.jpg', 'gallery/img44.jpg', 'gallery/img46.jpg', 'gallery/img50.jpg',
                     'gallery/img52.jpg', 'gallery/img56.jpg', 'gallery/img58.jpg', 'gallery/img6.jpg',
                     'gallery/img62.jpg', 'gallery/img64.jpg', 'gallery/img68.jpg', 'gallery/img70.jpg',
                     'gallery/img8.jpg'
                 ];
-                
+                // Build gallery images — saved settings override defaults per slot
+                $galleryImages = [];
+                foreach ($defaultGalleryImages as $i => $default) {
+                    $galleryImages[] = ssRaw('spaces', 'gallery_img_' . ($i + 1), $default);
+                }
                 // Display images twice for infinite carousel effect
                 foreach (array_merge($galleryImages, $galleryImages) as $image) {
                     echo '<div class="lakum-gallery-item">';

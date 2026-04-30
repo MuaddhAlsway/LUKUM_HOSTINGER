@@ -142,6 +142,16 @@ const DEFAULTS = {
     booking_text_en: 'Ready to host your next event at LAKUM? Click below to fill out our booking form.',
     booking_text_ar: 'هل أنت مستعد لاستضافة حدثك التالي في لاكوم؟',
     booking_link: 'https://form.typeform.com/to/d6ltE0yW',
+    gallery_title_en: 'LAKUM ArtSpaces Gallery', gallery_title_ar: 'معرض مساحة فن لكم',
+    gallery_img_1: 'gallery/img28.jpg', gallery_img_2: 'gallery/img30.jpg',
+    gallery_img_3: 'gallery/img34.jpg', gallery_img_4: 'gallery/img38.jpg',
+    gallery_img_5: 'gallery/img40.jpg', gallery_img_6: 'gallery/img44.jpg',
+    gallery_img_7: 'gallery/img46.jpg', gallery_img_8: 'gallery/img50.jpg',
+    gallery_img_9: 'gallery/img52.jpg', gallery_img_10: 'gallery/img56.jpg',
+    gallery_img_11: 'gallery/img58.jpg', gallery_img_12: 'gallery/img6.jpg',
+    gallery_img_13: 'gallery/img62.jpg', gallery_img_14: 'gallery/img64.jpg',
+    gallery_img_15: 'gallery/img68.jpg', gallery_img_16: 'gallery/img70.jpg',
+    gallery_img_17: 'gallery/img8.jpg',
   },
   contact: {
     hero_image: 'heroImage/img-3.webp',
@@ -265,6 +275,18 @@ function buildEditors() {
         field('spaces','mezzanine_title_en','Mezzanine Title (EN)') + field('spaces','mezzanine_title_ar','Mezzanine Title (AR)','input','rtl') +
         imgWidget('spaces','floor_plan2','Mezzanine Floor Plan (2D)') + imgWidget('spaces','floor_plan2_3d','Mezzanine Floor Plan (3D)'),
         'spaces','floors')}
+      ${block('ri-image-2-line','Gallery — LAKUM ArtSpaces',
+        field('spaces','gallery_title_en','Section Title (English)') + field('spaces','gallery_title_ar','Section Title (Arabic)','input','rtl') +
+        imgWidget('spaces','gallery_img_1','Gallery Image 1') + imgWidget('spaces','gallery_img_2','Gallery Image 2') +
+        imgWidget('spaces','gallery_img_3','Gallery Image 3') + imgWidget('spaces','gallery_img_4','Gallery Image 4') +
+        imgWidget('spaces','gallery_img_5','Gallery Image 5') + imgWidget('spaces','gallery_img_6','Gallery Image 6') +
+        imgWidget('spaces','gallery_img_7','Gallery Image 7') + imgWidget('spaces','gallery_img_8','Gallery Image 8') +
+        imgWidget('spaces','gallery_img_9','Gallery Image 9') + imgWidget('spaces','gallery_img_10','Gallery Image 10') +
+        imgWidget('spaces','gallery_img_11','Gallery Image 11') + imgWidget('spaces','gallery_img_12','Gallery Image 12') +
+        imgWidget('spaces','gallery_img_13','Gallery Image 13') + imgWidget('spaces','gallery_img_14','Gallery Image 14') +
+        imgWidget('spaces','gallery_img_15','Gallery Image 15') + imgWidget('spaces','gallery_img_16','Gallery Image 16') +
+        imgWidget('spaces','gallery_img_17','Gallery Image 17'),
+        'spaces','gallery')}
       ${block('ri-calendar-check-line','Booking Section',
         field('spaces','booking_title_en','Title (English)') + field('spaces','booking_title_ar','Title (Arabic)','input','rtl') +
         field('spaces','booking_text_en','Description (English)','textarea') + field('spaces','booking_text_ar','Description (Arabic)','textarea','rtl') +
