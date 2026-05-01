@@ -409,9 +409,9 @@ require_once 'includes/site-settings.php';
                                 <select id="subject" name="subject" class="lakum-form__select" required>
                                     <option value=""><?php echo t('form_subject_placeholder', 'Select a subject'); ?></option>
                                     <option value="general"><?php echo t('form_subject_general', 'General Inquiry'); ?></option>
-                                    <option value="exhibition"><?php echo t('form_subject_exhibition', 'Exhibition Booking'); ?></option>
-                                    <option value="workshop"><?php echo t('form_subject_workshop', 'Workshop Information'); ?></option>
-                                    <option value="venue"><?php echo t('form_subject_venue', 'Venue Rental'); ?></option>
+                                    <option value="exhibition"><?php echo t('form_subject_exhibition', 'Exhibitions'); ?></option>
+                                    <option value="workshop"><?php echo t('form_subject_workshop', 'Workshop/Event Information'); ?></option>
+                                    <option value="venue"><?php echo t('form_subject_venue', 'Venue Hire'); ?></option>
                                     <option value="collaboration"><?php echo t('form_subject_collaboration', 'Collaboration'); ?></option>
                                     <option value="other"><?php echo t('form_subject_other', 'Other'); ?></option>
                                 </select>
