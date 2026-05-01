@@ -328,7 +328,7 @@ require_once 'includes/site-settings.php';
     <!-- Venue Introduction -->
     <section class="lakum-spaces-intro">
         <div class="lakum-container">
-            <h2 class="lakum-spaces-intro__title"><?php echo t('spaces_venue_title', 'LAKUM VENUE'); ?></h2>
+            <h2 class="lakum-spaces-intro__title"><?php echo ss('spaces','venue_title_en','spaces_venue_title','LAKUM VENUE'); ?></h2>
             <div class="lakum-spaces-intro__content">
                 <p><?php echo ss('spaces','venue_p1_en','spaces_intro_p1','Lakum Artspace offers a versatile and elegantly designed venue, thoughtfully created to accommodate a wide range of events.'); ?></p>
 
