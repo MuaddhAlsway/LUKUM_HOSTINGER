@@ -120,9 +120,9 @@
   
   "home": "Home",
   "about": "About",
-  "spaces": "Spaces",
-  "exhibitions": "Exhibitions",
-  "calendar": "Calendar",
+  "spaces": "Exhibitions",
+  "exhibitions": "Events",
+  "calendar": "Venue Hire",
   "blog": "Blog",
   "press": "Press",
   "contact_us": "Contact",
