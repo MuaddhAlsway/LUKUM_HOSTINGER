@@ -228,8 +228,7 @@ require_once 'lang/loader.php';
         }
     </script>
 
-    <link rel="stylesheet" href="calendar.css">
-<script src="assest/static-json-translator.js?v=1.0.0" defer></script></head>
+</head>
 
 <body class="<?php echo getLanguageClass(); ?>">
     <div class="lakum-page-loader" id="pageLoader">

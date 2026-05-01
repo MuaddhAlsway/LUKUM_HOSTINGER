@@ -23,71 +23,47 @@ require_once 'includes/site-settings.php';
 
     <!-- Inline Critical CSS for Instant LCP -->
     <style>
-        /* Critical CSS - Inline for instant rendering */
+        /* =============================================
+           INDEX.PHP - Page-specific styles only
+           Base resets and body styles are handled by
+           lakum-header-unified.css and critical-inline.css
+           ============================================= */
 
-        *,
-        *::before,
-        *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0
-        }
-
-        html {
-            font-size: 16px;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
-            background: #f6f6eb;
-            color: #1a1a1a;
-            overflow-x: hidden;
-            line-height: 1.6
-        }
-        
-        * {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
-        }
-
+        /* Hero Section */
         .lakum-hero {
-            position: relative; /* keep hero in its context */
-  z-index: 1;         /* lower than header/nav */
-
+            position: relative;
+            z-index: 1;
             width: 100%;
-            height: 85vh;
-           
+            height: 65vh;
+            min-height: 450px;
+            max-height: 650px;
+            overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
             background: #1a1a1a;
-            contain: layout style paint
+            contain: layout style paint;
         }
-
         .lakum-hero__image-wrapper {
             position: absolute;
             inset: 0;
             z-index: 1;
-            overflow: hidden
+            overflow: hidden;
         }
-
         .lakum-hero__image {
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
             will-change: transform;
-            transform: translateZ(0)
+            transform: translateZ(0);
         }
-
         .lakum-hero__overlay {
             position: absolute;
             inset: 0;
-            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.65) 100%);
-            z-index: 2
+            background: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.65) 100%);
+            z-index: 2;
         }
-
         .lakum-hero__content {
             position: relative;
             z-index: 3;
@@ -95,38 +71,171 @@ require_once 'includes/site-settings.php';
             color: #fff;
             max-width: 1400px;
             width: 90%;
-            padding: 0 20px
+            padding: 0 20px;
         }
-
         .lakum-hero__title {
             font-size: clamp(2.5rem, 6vw, 4.5rem);
-            font-weight: 300;
+            font-weight: 500;
+            letter-spacing: -0.02em;
             line-height: 1.2;
-            margin: 0 0 20px 0;
-            color: #fff;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3)
+            margin: 0 0 var(--spacing-lg, 1.5rem) 0;
+            animation: fadeInUp 0.8s ease-out;
+            color: #ffffff;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            font-family: 'Greta Arabic', 'Greta Text Arabic', -apple-system, BlinkMacSystemFont, sans-serif !important;
         }
-
         .lakum-hero__subtitle {
             font-size: clamp(1.1rem, 2vw, 1.4rem);
             font-weight: 300;
             line-height: 1.6;
             color: #fff;
-            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3)
+            text-align: center;
+            text-shadow: 0 2px 6px rgba(0,0,0,0.3);
         }
 
-        @media(max-width:768px) {
-            .lakum-hero {
-                height: 60vh;
-                min-height: 450px
-            }
+        /* Page Sections */
+        .lakum-section { padding: 80px 0; }
+        .lakum-section--upcoming { background: #f6f6eb; padding: 60px 0; }
+        .lakum-section--exhibitions { background: #f6f6eb; padding: 80px 0; }
+        .lakum-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 clamp(20px, 5vw, 60px);
         }
 
-        @media(max-width:480px) {
-            .lakum-hero {
-                height: 50vh;
-                min-height: 400px
-            }
+        /* Section Headers */
+        .lakum-section-header { margin-bottom: 60px; text-align: center; }
+        .lakum-section-header__title { font-size: 2.5rem; font-weight: 300; color: #1a1a1a; margin-bottom: 15px; }
+        .lakum-section-header__subtitle { font-size: 1.1rem; color: #666; text-align: center; }
+
+        /* Featured Banner */
+        .lakum-featured-banner { padding: 0; background: #edecdf; }
+        .lakum-featured-banner__content { display: grid; grid-template-columns: 1fr 1fr; gap: 0; align-items: stretch; width: 100vw; margin-left: calc(-50vw + 50%); }
+        .lakum-featured-banner__image { width: 100%; height: 450px; overflow: hidden; border-radius: 0; }
+        .lakum-featured-banner__image img { width: 100%; height: 100%; display: block; border-radius: 0; box-shadow: none; object-fit: cover; }
+        .lakum-featured-banner__text { padding: 60px; display: flex; flex-direction: column; justify-content: center; }
+        .lakum-featured-banner__date { font-size: 0.85rem; color: #999; text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 15px; }
+        .lakum-featured-banner__title { font-size: 2rem; font-weight: 300; margin-bottom: 20px; color: #1a1a1a; }
+        .lakum-featured-banner__description { font-size: 1.05rem; line-height: 1.8; color: #555; margin-bottom: 25px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-clamp: 2; word-break: break-word; }
+
+        /* Event Grids */
+        .lakum-upcoming-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: var(--spacing-2xl, 3rem);
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .lakum-event-card { background: white; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); transition: transform 0.3s ease; width: 100%; height: 485.56px; display: flex; flex-direction: column; }
+        .lakum-event-card:hover { transform: translateY(-8px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+        .lakum-event-card__image { position: relative; width: 100%; height: 320px; overflow: hidden; background: #edecdf; }
+        .lakum-event-card__image img { width: 100%; height: 100%; object-fit: cover; }
+        .lakum-event-card__date { position: absolute; top: var(--spacing-lg, 1.5rem); left: var(--spacing-lg, 1.5rem); background: rgba(246,246,235,0.95); backdrop-filter: blur(10px); padding: var(--spacing-md, 1rem) var(--spacing-lg, 1.5rem); border-radius: var(--radius-sm, 2px); display: flex; flex-direction: column; align-items: center; gap: 4px; }
+        .lakum-event-card__date-month { font-size: 0.85rem; font-weight: 500; letter-spacing: 0.5px; text-transform: uppercase; color: #525252; }
+        .lakum-event-card__date-day { font-size: 2rem; font-weight: 300; color: #1a1a1a; line-height: 1; }
+        .lakum-event-card__content { padding: 20px; flex: 1; display: flex; flex-direction: column; }
+        .lakum-event-card__title { font-size: 1.3rem; font-weight: 500; margin-bottom: 8px; color: #1a1a1a; }
+        .lakum-event-card__time { font-size: 0.9rem; color: #ff6b35; margin-bottom: 12px; }
+        .lakum-event-card__link { font-size: 0.9rem; color: #1a1a1a; text-decoration: none; font-weight: 500; }
+
+        /* CTA Sections */
+        .lakum-cta { padding: 80px 0; text-align: center; }
+        .lakum-cta--primary { background: linear-gradient(135deg, #edecdf 0%, #f6f6eb 100%); }
+        .lakum-cta--primary .lakum-cta__title { color: #1a1a1a; }
+        .lakum-cta--primary .lakum-cta__text { color: #555; }
+        .lakum-cta--dark { position: relative; color: white; overflow: hidden; }
+        .lakum-cta__background { position: absolute; inset: 0; z-index: 0; background-size: cover; background-position: center; background-attachment: fixed; }
+        .lakum-cta__background::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.4) 100%); z-index: 1; }
+        .lakum-cta__content { position: relative; z-index: 2; text-align: center; color: white; }
+        .lakum-cta__title { font-size: 2.5rem; font-weight: 300; margin-bottom: 20px; color: white; }
+        .lakum-cta__text { font-size: 1.1rem; margin-bottom: 30px; line-height: 1.6; color: white; text-align: center; max-width: 600px; margin-left: auto; margin-right: auto; }
+
+        /* Section Divider */
+        .lakum-section-divider { display: flex; align-items: center; gap: 20px; margin-bottom: 60px; }
+        .lakum-section-divider__line { flex: 1; height: 1px; background: #d1d1d1; }
+        .lakum-section-divider__title { font-size: 2.5rem; font-weight: 300; color: #1a1a1a; white-space: nowrap; }
+
+        /* Exhibition Grid */
+        .lakum-exhibition-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: var(--spacing-2xl, 3rem);
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Skeleton Loader */
+        .lakum-skeleton-card { background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%); background-size: 200% 100%; animation: loading 1.5s infinite; height: 350px; border-radius: 8px; }
+        @keyframes loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .lakum-section-cta { display: flex; justify-content: center; margin-top: 40px; }
+
+        /* Buttons */
+        .lakum-btn {
+            background: #000 !important;
+            color: white !important;
+            border: none !important;
+            padding: 16px 40px !important;
+            display: inline-block !important;
+            width: auto !important;
+            min-width: auto !important;
+            max-width: none !important;
+            flex: none !important;
+            margin: 0 !important;
+            font-size: 1rem !important;
+            font-weight: 500 !important;
+            text-decoration: none !important;
+            cursor: pointer !important;
+            transition: all 0.3s ease !important;
+        }
+        .lakum-btn:hover { background: #333 !important; transform: translateY(-2px) !important; }
+        .lakum-btn--primary {
+            background: #000 !important;
+            color: white !important;
+            padding: 16px 40px !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            width: fit-content !important;
+            border: none !important;
+            margin: 0 !important;
+            font-size: 1rem !important;
+            font-weight: 500 !important;
+            text-decoration: none !important;
+            cursor: pointer !important;
+            transition: all 0.3s ease !important;
+        }
+        .lakum-btn--primary:hover { background: #333 !important; transform: translateY(-2px) !important; }
+        .lakum-btn--outline {
+            background: #000 !important;
+            color: white !important;
+            border: 1px solid #000 !important;
+            padding: 16px 40px !important;
+            display: inline-block !important;
+            width: auto !important;
+            min-width: auto !important;
+            max-width: none !important;
+            flex: none !important;
+            margin: 0 !important;
+            font-size: 1rem !important;
+            font-weight: 500 !important;
+            text-decoration: none !important;
+            cursor: pointer !important;
+            transition: all 0.3s ease !important;
+        }
+        .lakum-btn--outline:hover { background: #333 !important; transform: translateY(-2px) !important; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .lakum-hero { height: 55vh; min-height: 400px; }
+            .lakum-featured-banner__content { grid-template-columns: 1fr; gap: 30px; }
+            .lakum-cta__title { font-size: 2rem; }
+            .lakum-section-divider { flex-direction: column; gap: 15px; }
+            .lakum-section-divider__line { display: none; }
+        }
+        @media (max-width: 480px) {
+            .lakum-hero { height: 45vh; min-height: 350px; }
         }
     </style>
 
@@ -171,169 +280,7 @@ require_once 'includes/site-settings.php';
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="format-detection" content="telephone=no">
     
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0;  }
-        html { font-size: 16px; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-        body {  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f6f6eb; color: #1a1a1a; overflow-x: hidden; line-height: 1.6; }
-        
-        .lakum-hero { width: 100%; height: 65vh; min-height: 450px; max-height: 650px; overflow: hidden; position: relative; display: flex; align-items: center; justify-content: center; background: #1a1a1a; }
-        .lakum-hero__image-wrapper { position: absolute; inset: 0; overflow: hidden; }
-        .lakum-hero__image { width: 100%; height: 100%; object-fit: cover; display: block; }
-        .lakum-hero__overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.65) 100%); }
-        .lakum-hero__content { position: relative; text-align: center; color: #fff; max-width: 1400px; width: 90%; padding: 0 20px; }
-        .lakum-hero__title { 
-    font-size: clamp(2.5rem, 6vw, 4.5rem);
-    font-weight: 500;
-    letter-spacing: -0.02em;
-    line-height: 1.2;
-    margin: 0 0 var(--spacing-lg) 0;
-    animation: fadeInUp 0.8s ease-out;
-    color: #ffffff;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    font-family: 'Greta Arabic', 'Greta Text Arabic', -apple-system, BlinkMacSystemFont, sans-serif !important;
-}
-        .lakum-hero__subtitle { font-size: clamp(1.1rem, 2vw, 1.4rem); font-weight: 300; line-height: 1.6; color: #fff; text-align: center; }
-        
-        .lakum-section { padding: 80px 0; }
-        .lakum-section--upcoming { background: #f6f6eb; padding: 60px 0; }
-        .lakum-section--exhibitions { background: #f6f6eb; padding: 80px 0; }
-        .lakum-container {  
-    max-width: 1600px;
-    margin: 0 auto;
-    padding: 0 clamp(20px, 5vw, 60px); }
-        
-        .lakum-section-header { margin-bottom: 60px; text-align: center; }
-        .lakum-section-header__title { font-size: 2.5rem; font-weight: 300; color: #1a1a1a; margin-bottom: 15px; }
-        .lakum-section-header__subtitle { font-size: 1.1rem; color: #666; text-align: center; }
-        
-        .lakum-featured-banner { padding: 0; background: #edecdf; }
-        .lakum-featured-banner__content { display: grid; grid-template-columns: 1fr 1fr; gap: 0; align-items: stretch; width: 100vw; margin-left: calc(-50vw + 50%); }
-        .lakum-featured-banner__image { width: 100%; height: 450px; overflow: hidden; border-radius: 0; }
-        .lakum-featured-banner__image img { width: 100%; height: 100%; display: block; border-radius: 0; box-shadow: none; object-fit: cover; }
-        .lakum-featured-banner__text { padding: 60px; display: flex; flex-direction: column; justify-content: center; }
-        .lakum-featured-banner__date { font-size: 0.85rem; color: #999; text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 15px; }
-        .lakum-featured-banner__title { font-size: 2rem; font-weight: 300; margin-bottom: 20px; color: #1a1a1a; }
-        .lakum-featured-banner__description { font-size: 1.05rem; line-height: 1.8; color: #555; margin-bottom: 25px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-clamp: 2; word-break: break-word; }
-        
-        .lakum-upcoming-grid {          display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: var(--spacing-2xl);
-    max-width: 1400px;
-    margin: 0 auto;}
-        .lakum-event-card { background: white; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); transition: transform 0.3s ease; width: 100%; height: 485.56px; display: flex; flex-direction: column; }
-        .lakum-event-card:hover { transform: translateY(-8px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
-        .lakum-event-card__image {  position: relative;width: 100%;height: 320px;overflow: hidden;background: #edecdf; }
-        .lakum-event-card__image img { width: 100%; height: 100%; object-fit: cover; }
-        .lakum-event-card__date { position: absolute; top: var(--spacing-lg); left: var(--spacing-lg); background: rgba(246, 246, 235, 0.95); backdrop-filter: blur(10px); padding: var(--spacing-md) var(--spacing-lg); border-radius: var(--radius-sm); display: flex; flex-direction: column; align-items: center; gap: 4px; }
-        .lakum-event-card__date-month { font-size: 0.85rem; font-weight: 500; letter-spacing: 0.5px; text-transform: uppercase; color: #525252; }
-        .lakum-event-card__date-day { font-size: 2rem; font-weight: 300; color: #1a1a1a; line-height: 1; }
-        .lakum-event-card__content { padding: 20px; flex: 1; display: flex; flex-direction: column; }
-        .lakum-event-card__title { font-size: 1.3rem; font-weight: 500; margin-bottom: 8px; color: #1a1a1a; }
-        .lakum-event-card__time { font-size: 0.9rem; color: #ff6b35; margin-bottom: 12px; }
-        .lakum-event-card__link { font-size: 0.9rem; color: #1a1a1a; text-decoration: none; font-weight: 500; }
-        
-        .lakum-cta { padding: 80px 0; text-align: center; }
-        .lakum-cta--primary { background: linear-gradient(135deg, #edecdf 0%, #f6f6eb 100%); }
-        .lakum-cta--primary .lakum-cta__title { color: #1a1a1a; }
-        .lakum-cta--primary .lakum-cta__text { color: #555; }
-        .lakum-cta--dark { position: relative; color: white; overflow: hidden; }
-        .lakum-cta__background { position: absolute; inset: 0; z-index: 0; background-image: url('heroImage/img-4.webp'); background-size: cover; background-position: center; background-attachment: fixed; }
-        .lakum-cta__background::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.4) 100%); z-index: 1; }
-        .lakum-cta__content { position: relative; z-index: 2; text-align: center; color: white; }
-        .lakum-cta__title { font-size: 2.5rem; font-weight: 300; margin-bottom: 20px; color: white; }
-        .lakum-cta__text { font-size: 1.1rem; margin-bottom: 30px; line-height: 1.6; color: white; text-align: center; max-width: 600px; margin-left: auto; margin-right: auto; }
-        
-        .lakum-section-divider { display: flex; align-items: center; gap: 20px; margin-bottom: 60px; }
-        .lakum-section-divider__line { flex: 1; height: 1px; background: #d1d1d1; }
-        .lakum-section-divider__title { font-size: 2.5rem; font-weight: 300; color: #1a1a1a; white-space: nowrap; }
-        
-        .lakum-exhibition-grid {      display: grid;
-
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-
-gap: var(--spacing-2xl);
-
-max-width: 1400px;
-
-margin: 0 auto;}
-        .lakum-skeleton-card { background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%); background-size: 200% 100%; animation: loading 1.5s infinite; height: 350px; border-radius: 8px; }
-        @keyframes loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
-        
-        .lakum-section-cta { display: flex; justify-content: center; margin-top: 40px; }
-        
-        @media (max-width: 768px) {
-            .lakum-hero { height: 55vh; min-height: 400px; }
-            .lakum-featured-banner__content { grid-template-columns: 1fr; gap: 30px; }
-            .lakum-cta__title { font-size: 2rem; }
-            .lakum-section-divider { flex-direction: column; gap: 15px; }
-            .lakum-section-divider__line { display: none; }
-        }
-        @media (max-width: 480px) {
-            .lakum-hero { height: 45vh; min-height: 350px; }
-        }
-        .lakum-btn { 
-            background: #000 !important; 
-            color: white !important; 
-            border: none !important; 
-            padding: 16px 40px !important; 
-            display: inline-block !important; 
-            width: auto !important;
-            min-width: auto !important;
-            max-width: none !important;
-            flex: none !important;
-            margin: 0 !important;
-            font-size: 1rem !important;
-            font-weight: 500 !important;
-            text-decoration: none !important;
-            cursor: pointer !important;
-            transition: all 0.3s ease !important;
-        }
-        .lakum-btn:hover { 
-            background: #333 !important; 
-            transform: translateY(-2px) !important;
-        }
-        .lakum-btn--primary { 
-            background: #000 !important; 
-            color: white !important; 
-            padding: 16px 40px !important; 
-            display: inline-flex !important; 
-            align-items: center !important;
-            justify-content: center !important;
-            width: fit-content !important;
-            border: none !important;
-            margin: 0 !important;
-            font-size: 1rem !important;
-            font-weight: 500 !important;
-            text-decoration: none !important;
-            cursor: pointer !important;
-            transition: all 0.3s ease !important;
-        }
-        .lakum-btn--primary:hover { 
-            background: #333 !important; 
-            transform: translateY(-2px) !important;
-        }
-        .lakum-btn--outline { 
-            background: #000 !important; 
-            color: white !important; 
-            border: 1px solid #000 !important; 
-            padding: 16px 40px !important; 
-            display: inline-block !important; 
-            width: auto !important;
-            min-width: auto !important;
-            max-width: none !important;
-            flex: none !important;
-            margin: 0 !important;
-            font-size: 1rem !important;
-            font-weight: 500 !important;
-            text-decoration: none !important;
-            cursor: pointer !important;
-            transition: all 0.3s ease !important;
-        }
-        .lakum-btn--outline:hover { 
-            background: #333 !important; 
-            transform: translateY(-2px) !important;
-        }
-    </style>
+    
 </head>
 <body class="<?php echo getLanguageClass(); ?>">
     <div class="lakum-page-loader" id="pageLoader">
