@@ -55,23 +55,29 @@ try {
     }
 
     $email          = $row['email'];
-
-    // muaddhalsway@gmail.com is an authorized owner email but not the DB admin account.
-    // Always apply the password change to the actual admin account in the DB.
-    $adminDbEmail   = 'info@lakumartspace.com';
     $hashedPassword = password_hash($newPassword, PASSWORD_BCRYPT);
 
-    // Update admin password using the DB admin email
-    $upd = $db->prepare("UPDATE admins SET password = ? WHERE email = ?");
-    $upd->bind_param('ss', $hashedPassword, $adminDbEmail);
+    // Try by id=1 first (most reliable — doesn't depend on email value in DB)
+    $upd = $db->prepare("UPDATE admins SET password = ? WHERE id = 1");
+    $upd->bind_param('s', $hashedPassword);
     $upd->execute();
 
     if ($upd->affected_rows === 0) {
         $upd->close();
-        echo json_encode(['success' => false, 'message' => 'Admin account not found.']);
-        exit;
+        // Fallback: update the first admin row regardless of id or email
+        $upd2 = $db->prepare("UPDATE admins SET password = ? LIMIT 1");
+        $upd2->bind_param('s', $hashedPassword);
+        $upd2->execute();
+
+        if ($upd2->affected_rows === 0) {
+            $upd2->close();
+            echo json_encode(['success' => false, 'message' => 'Admin account not found. Please contact support.']);
+            exit;
+        }
+        $upd2->close();
+    } else {
+        $upd->close();
     }
-    $upd->close();
 
     // Mark token as used
     $mark = $db->prepare("UPDATE password_resets SET used = 1 WHERE token = ?");
