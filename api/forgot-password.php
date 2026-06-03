@@ -23,7 +23,7 @@ define('FP_SMTP_PASS', 'dqjgzyselkakvjsc');
 define('ADMIN_EMAIL',  'info@lakumartspace.com');
 // ─────────────────────────────────────────────────────────────────────────────
 
-function sendResetEmail($resetLink) {
+function sendResetEmail($resetLink, $toEmail) {
     $socket = fsockopen('tcp://' . FP_SMTP_HOST, FP_SMTP_PORT, $errno, $errstr, 30);
     if (!$socket) throw new Exception("SMTP connect failed: $errstr ($errno)");
 
@@ -48,7 +48,7 @@ function sendResetEmail($resetLink) {
     if (strpos($r, '235') === false) { fclose($socket); throw new Exception('SMTP auth failed'); }
 
     $send('MAIL FROM:<' . FP_SMTP_USER . '>');
-    $send('RCPT TO:<' . ADMIN_EMAIL . '>');
+    $send('RCPT TO:<' . $toEmail . '>');
     $send('DATA');
 
     $subject  = 'Reset Your LAKUM Artspace Admin Password';
@@ -87,7 +87,7 @@ function sendResetEmail($resetLink) {
 
     $msg  = 'Date: ' . date('r') . "\r\n";
     $msg .= 'From: LAKUM Artspace <' . FP_SMTP_USER . ">\r\n";
-    $msg .= 'To: Admin <' . ADMIN_EMAIL . ">\r\n";
+    $msg .= 'To: Admin <' . $toEmail . ">\r\n";
     $msg .= 'Subject: =?UTF-8?B?' . base64_encode($subject) . "?=\r\n";
     $msg .= 'MIME-Version: 1.0' . "\r\n";
     $msg .= 'Content-Type: text/html; charset=UTF-8' . "\r\n";
@@ -111,8 +111,9 @@ try {
         exit;
     }
 
-    // Only the admin email is allowed
-    if (strtolower($email) !== strtolower(ADMIN_EMAIL)) {
+    // Only authorized emails are allowed
+    $allowedEmails = ['info@lakumartspace.com', 'muaddhaslway@gmail.com'];
+    if (!in_array(strtolower($email), $allowedEmails)) {
         // Security: return same response to avoid revealing valid emails
         echo json_encode(['success' => true, 'message' => 'If this email is registered, you will receive a reset link shortly.']);
         exit;
@@ -151,7 +152,7 @@ try {
     $siteUrl   = rtrim(SITE_URL, '/');
     $resetLink = $siteUrl . '/admin/reset-password.html?token=' . $token;
 
-    sendResetEmail($resetLink);
+    sendResetEmail($resetLink, $email);
 
     echo json_encode(['success' => true, 'message' => 'If this email is registered, you will receive a reset link shortly.']);
 
