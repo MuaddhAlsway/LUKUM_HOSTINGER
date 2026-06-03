@@ -112,7 +112,7 @@ try {
     }
 
     // Only authorized emails are allowed
-    $allowedEmails = ['info@lakumartspace.com', 'muaddhaslway@gmail.com'];
+    $allowedEmails = ['info@lakumartspace.com', 'muaddhalsway@gmail.com'];
     if (!in_array(strtolower($email), $allowedEmails)) {
         // Security: return same response to avoid revealing valid emails
         echo json_encode(['success' => true, 'message' => 'If this email is registered, you will receive a reset link shortly.']);
