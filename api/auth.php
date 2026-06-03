@@ -30,11 +30,18 @@ class Auth {
         // Always look up by the actual admin account email in the DB
         $lookupEmail = 'info@lakumartspace.com';
 
-        // Check if admin exists
+        // Check if admin exists — try by email first, fallback to id=1
         $stmt = $this->db->prepare('SELECT id, email, password, name, role FROM admins WHERE email = ? LIMIT 1');
         $stmt->bind_param('s', $lookupEmail);
         $stmt->execute();
         $result = $stmt->get_result();
+
+        // Fallback: if no row found by email, grab the first admin row
+        if ($result->num_rows === 0) {
+            $stmt2 = $this->db->prepare('SELECT id, email, password, name, role FROM admins ORDER BY id ASC LIMIT 1');
+            $stmt2->execute();
+            $result = $stmt2->get_result();
+        }
 
         if ($result->num_rows === 0) {
             return ['success' => false, 'message' => 'Invalid email or password'];
