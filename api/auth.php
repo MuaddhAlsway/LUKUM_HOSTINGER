@@ -22,9 +22,17 @@ class Auth {
             return ['success' => false, 'message' => 'Email and password are required'];
         }
 
+        // Map owner email to the actual admin DB email
+        $authorizedEmails = ['info@lakumartspace.com', 'muaddhalsway@gmail.com'];
+        if (!in_array(strtolower($email), $authorizedEmails)) {
+            return ['success' => false, 'message' => 'Invalid email or password'];
+        }
+        // Always look up by the actual admin account email in the DB
+        $lookupEmail = 'info@lakumartspace.com';
+
         // Check if admin exists
         $stmt = $this->db->prepare('SELECT id, email, password, name, role FROM admins WHERE email = ? LIMIT 1');
-        $stmt->bind_param('s', $email);
+        $stmt->bind_param('s', $lookupEmail);
         $stmt->execute();
         $result = $stmt->get_result();
 
