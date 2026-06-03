@@ -521,6 +521,90 @@ require_once 'includes/site-settings.php';
     <!-- Global Scripts (Centralized) -->
     <?php include('includes/scripts.php'); ?>
 
+    <!-- Contact Form Submission -->
+    <script>
+    (function () {
+        const form = document.getElementById('contactForm');
+        if (!form) return;
+
+        // Inject feedback styles once
+        const style = document.createElement('style');
+        style.textContent = `
+            .lakum-form-feedback {
+                display: none;
+                padding: 16px 20px;
+                border-radius: 6px;
+                margin-top: 16px;
+                font-size: 14px;
+                line-height: 1.5;
+            }
+            .lakum-form-feedback--success {
+                display: block;
+                background: #e6f4ea;
+                border: 1px solid #4caf50;
+                color: #2e7d32;
+            }
+            .lakum-form-feedback--error {
+                display: block;
+                background: #fdecea;
+                border: 1px solid #f44336;
+                color: #c62828;
+            }
+            .lakum-btn--loading {
+                opacity: 0.7;
+                pointer-events: none;
+                cursor: not-allowed;
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Create feedback element
+        const feedback = document.createElement('div');
+        feedback.className = 'lakum-form-feedback';
+        feedback.setAttribute('role', 'alert');
+        form.appendChild(feedback);
+
+        form.addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const btn = form.querySelector('[type="submit"]');
+            const originalText = btn.innerHTML;
+
+            // Show loading state
+            btn.classList.add('lakum-btn--loading');
+            btn.innerHTML = '<span>Sending...</span>';
+            feedback.className = 'lakum-form-feedback';
+            feedback.textContent = '';
+
+            try {
+                const data = new FormData(form);
+                const response = await fetch('api/submit-contact.php', {
+                    method: 'POST',
+                    body: data
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    feedback.className = 'lakum-form-feedback lakum-form-feedback--success';
+                    feedback.textContent = '✓ Your message has been sent! We\'ll get back to you soon.';
+                    form.reset();
+                } else {
+                    feedback.className = 'lakum-form-feedback lakum-form-feedback--error';
+                    feedback.textContent = result.message || 'Something went wrong. Please try again.';
+                }
+            } catch (err) {
+                feedback.className = 'lakum-form-feedback lakum-form-feedback--error';
+                feedback.textContent = 'Network error. Please check your connection and try again.';
+            } finally {
+                btn.classList.remove('lakum-btn--loading');
+                btn.innerHTML = originalText;
+                feedback.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        });
+    })();
+    </script>
+
     </body>
 
 <script>
