@@ -55,11 +55,15 @@ try {
     }
 
     $email          = $row['email'];
+
+    // muaddhalsway@gmail.com is an authorized owner email but not the DB admin account.
+    // Always apply the password change to the actual admin account in the DB.
+    $adminDbEmail   = 'info@lakumartspace.com';
     $hashedPassword = password_hash($newPassword, PASSWORD_BCRYPT);
 
-    // Update admin password
+    // Update admin password using the DB admin email
     $upd = $db->prepare("UPDATE admins SET password = ? WHERE email = ?");
-    $upd->bind_param('ss', $hashedPassword, $email);
+    $upd->bind_param('ss', $hashedPassword, $adminDbEmail);
     $upd->execute();
 
     if ($upd->affected_rows === 0) {
