@@ -1,7 +1,7 @@
 <?php
 /**
  * LAKUM Artspace - Submit Contact Message API
- * Saves contact form submissions to database and sends email via Gmail SMTP
+ * Saves contact form submissions to database and sends email via PHPMailer + Gmail SMTP
  */
 
 header('Content-Type: application/json');
@@ -19,97 +19,55 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-// ─── Gmail SMTP Configuration ────────────────────────────────────────────────
-define('SMTP_HOST',     'smtp.gmail.com');
-define('SMTP_PORT',     587);
-define('SMTP_USER',     'info@lakumartspace.com');   // Gmail address
-define('SMTP_PASS',     'dqjgzyselkakvjsc');          // App password (no spaces)
-define('SMTP_FROM',     'info@lakumartspace.com');
-define('SMTP_FROM_NAME','LAKUM Artspace');
-define('ADMIN_EMAIL',   'info@lakumartspace.com');
+// ─── Load PHPMailer ───────────────────────────────────────────────────────────
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+require_once __DIR__ . '/PHPMailer/Exception.php';
+require_once __DIR__ . '/PHPMailer/PHPMailer.php';
+require_once __DIR__ . '/PHPMailer/SMTP.php';
+
+// ─── Gmail SMTP Configuration ─────────────────────────────────────────────────
+define('GMAIL_USER',  'info@lakumartspace.com');
+define('GMAIL_PASS',  'dqjgzyselkakvjsc');        // Gmail app password (no spaces)
+define('ADMIN_TO',    'info@lakumartspace.com');
 // ─────────────────────────────────────────────────────────────────────────────
 
 /**
- * Send email via Gmail SMTP using raw socket (no library needed)
+ * Send an HTML email via PHPMailer + Gmail SMTP
  */
-function sendSmtpMail($to, $toName, $subject, $htmlBody, $replyTo = '') {
-    $host     = SMTP_HOST;
-    $port     = SMTP_PORT;
-    $user     = SMTP_USER;
-    $pass     = SMTP_PASS;
-    $from     = SMTP_FROM;
-    $fromName = SMTP_FROM_NAME;
+function sendMail($toEmail, $toName, $subject, $htmlBody, $replyToEmail = '') {
+    $mail = new PHPMailer(true); // true = throw exceptions
 
-    // Connect
-    $socket = fsockopen('tcp://' . $host, $port, $errno, $errstr, 30);
-    if (!$socket) {
-        throw new Exception("SMTP connect failed: $errstr ($errno)");
+    // Server settings
+    $mail->isSMTP();
+    $mail->Host       = 'smtp.gmail.com';
+    $mail->SMTPAuth   = true;
+    $mail->Username   = GMAIL_USER;
+    $mail->Password   = GMAIL_PASS;
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+    $mail->Port       = 587;
+    $mail->CharSet    = 'UTF-8';
+
+    // Sender
+    $mail->setFrom(GMAIL_USER, 'LAKUM Artspace');
+
+    // Reply-to (so admin can reply directly to visitor)
+    if (!empty($replyToEmail)) {
+        $mail->addReplyTo($replyToEmail);
     }
 
-    $boundary = md5(uniqid(time()));
+    // Recipient
+    $mail->addAddress($toEmail, $toName);
 
-    $read = function() use ($socket) {
-        $response = '';
-        while ($str = fgets($socket, 515)) {
-            $response .= $str;
-            if (substr($str, 3, 1) === ' ') break;
-        }
-        return $response;
-    };
+    // Content
+    $mail->isHTML(true);
+    $mail->Subject = $subject;
+    $mail->Body    = $htmlBody;
+    $mail->AltBody = strip_tags($htmlBody); // Plain text fallback
 
-    $send = function($cmd) use ($socket, $read) {
-        fputs($socket, $cmd . "\r\n");
-        return $read();
-    };
-
-    // SMTP handshake
-    $read(); // 220 greeting
-    $send('EHLO ' . gethostname());
-    $send('STARTTLS');
-
-    // Upgrade to TLS
-    stream_socket_enable_crypto($socket, true, STREAM_CRYPTO_METHOD_TLS_CLIENT);
-
-    $send('EHLO ' . gethostname());
-
-    // Auth
-    $send('AUTH LOGIN');
-    $send(base64_encode($user));
-    $r = $send(base64_encode($pass));
-
-    if (strpos($r, '235') === false) {
-        fclose($socket);
-        throw new Exception('SMTP authentication failed. Check your app password.');
-    }
-
-    // Envelope
-    $send('MAIL FROM:<' . $from . '>');
-    $send('RCPT TO:<' . $to . '>');
-    $send('DATA');
-
-    // Build message headers
-    $headers  = 'Date: ' . date('r') . "\r\n";
-    $headers .= 'From: =?UTF-8?B?' . base64_encode($fromName) . '?= <' . $from . ">\r\n";
-    $headers .= 'To: =?UTF-8?B?' . base64_encode($toName) . '?= <' . $to . ">\r\n";
-    if ($replyTo) {
-        $headers .= 'Reply-To: ' . $replyTo . "\r\n";
-    }
-    $headers .= 'Subject: =?UTF-8?B?' . base64_encode($subject) . "?=\r\n";
-    $headers .= 'MIME-Version: 1.0' . "\r\n";
-    $headers .= 'Content-Type: text/html; charset=UTF-8' . "\r\n";
-    $headers .= 'Content-Transfer-Encoding: base64' . "\r\n";
-    $headers .= "\r\n";
-    $headers .= chunk_split(base64_encode($htmlBody));
-    $headers .= "\r\n.";
-
-    $r = $send($headers);
-    $send('QUIT');
-    fclose($socket);
-
-    if (strpos($r, '250') === false) {
-        throw new Exception('SMTP message send failed: ' . $r);
-    }
-
+    $mail->send();
     return true;
 }
 
@@ -120,47 +78,53 @@ try {
         exit;
     }
 
-    $name    = htmlspecialchars(trim($_POST['name']),    ENT_QUOTES, 'UTF-8');
-    $email   = filter_var(trim($_POST['email']),         FILTER_SANITIZE_EMAIL);
+    $name    = htmlspecialchars(trim($_POST['name']),        ENT_QUOTES, 'UTF-8');
+    $email   = filter_var(trim($_POST['email']),             FILTER_SANITIZE_EMAIL);
     $phone   = htmlspecialchars(trim($_POST['phone'] ?? ''), ENT_QUOTES, 'UTF-8');
-    $subject = htmlspecialchars(trim($_POST['subject']), ENT_QUOTES, 'UTF-8');
-    $message = htmlspecialchars(trim($_POST['message']), ENT_QUOTES, 'UTF-8');
+    $subject = htmlspecialchars(trim($_POST['subject']),     ENT_QUOTES, 'UTF-8');
+    $message = htmlspecialchars(trim($_POST['message']),     ENT_QUOTES, 'UTF-8');
 
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         echo json_encode(['success' => false, 'message' => 'Invalid email address']);
         exit;
     }
 
-    // ── Save to database ──────────────────────────────────────────────────────
+    // ── Save to database (non-fatal) ──────────────────────────────────────────
     $messageId = null;
     try {
         require_once __DIR__ . '/config.php';
-        $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-        if (!$conn->connect_error) {
-            $conn->set_charset('utf8mb4');
-            $result = $conn->query("SHOW TABLES LIKE 'contact_messages'");
-            if ($result && $result->num_rows > 0) {
-                $stmt = $conn->prepare(
-                    'INSERT INTO contact_messages (name, email, phone, subject, message, status) VALUES (?, ?, ?, ?, ?, ?)'
-                );
-                if ($stmt) {
-                    $status = 'new';
-                    $stmt->bind_param('ssssss', $name, $email, $phone, $subject, $message, $status);
-                    $stmt->execute();
-                    $messageId = $stmt->insert_id;
-                    $stmt->close();
-                }
+        $db = Database::getInstance()->getConnection();
+        if ($db) {
+            // Create table if it doesn't exist
+            $db->query("CREATE TABLE IF NOT EXISTS contact_messages (
+                id         INT AUTO_INCREMENT PRIMARY KEY,
+                name       VARCHAR(255) NOT NULL,
+                email      VARCHAR(255) NOT NULL,
+                phone      VARCHAR(50)  DEFAULT '',
+                subject    VARCHAR(255) NOT NULL,
+                message    TEXT         NOT NULL,
+                status     VARCHAR(20)  DEFAULT 'new',
+                created_at DATETIME     DEFAULT CURRENT_TIMESTAMP
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+
+            $stmt = $db->prepare(
+                'INSERT INTO contact_messages (name, email, phone, subject, message, status) VALUES (?, ?, ?, ?, ?, ?)'
+            );
+            if ($stmt) {
+                $status = 'new';
+                $stmt->bind_param('ssssss', $name, $email, $phone, $subject, $message, $status);
+                $stmt->execute();
+                $messageId = $db->insert_id;
+                $stmt->close();
             }
-            $conn->close();
         }
     } catch (Exception $dbEx) {
-        // DB save failure is non-fatal; email will still be sent
         error_log('Contact DB error: ' . $dbEx->getMessage());
     }
 
     // ── Admin notification email ──────────────────────────────────────────────
     $adminSubject = 'New Contact Form Message: ' . $subject;
-    $adminBody = '
+    $adminBody    = '
     <!DOCTYPE html>
     <html>
     <head><meta charset="UTF-8"></head>
@@ -171,16 +135,28 @@ try {
         </div>
         <div style="padding:30px 24px;">
           <table style="width:100%;border-collapse:collapse;">
-            <tr><td style="padding:10px 0;border-bottom:1px solid #eee;width:30%;color:#888;font-size:13px;">Name</td>
-                <td style="padding:10px 0;border-bottom:1px solid #eee;color:#1a1a1a;font-weight:600;">' . $name . '</td></tr>
-            <tr><td style="padding:10px 0;border-bottom:1px solid #eee;color:#888;font-size:13px;">Email</td>
-                <td style="padding:10px 0;border-bottom:1px solid #eee;"><a href="mailto:' . $email . '" style="color:#1a1a1a;">' . $email . '</a></td></tr>
-            <tr><td style="padding:10px 0;border-bottom:1px solid #eee;color:#888;font-size:13px;">Phone</td>
-                <td style="padding:10px 0;border-bottom:1px solid #eee;color:#1a1a1a;">' . ($phone ?: 'Not provided') . '</td></tr>
-            <tr><td style="padding:10px 0;border-bottom:1px solid #eee;color:#888;font-size:13px;">Subject</td>
-                <td style="padding:10px 0;border-bottom:1px solid #eee;color:#1a1a1a;">' . $subject . '</td></tr>
-            <tr><td style="padding:10px 0;vertical-align:top;color:#888;font-size:13px;">Message</td>
-                <td style="padding:10px 0;color:#1a1a1a;line-height:1.7;">' . nl2br($message) . '</td></tr>
+            <tr>
+              <td style="padding:10px 0;border-bottom:1px solid #eee;width:30%;color:#888;font-size:13px;">Name</td>
+              <td style="padding:10px 0;border-bottom:1px solid #eee;color:#1a1a1a;font-weight:600;">' . $name . '</td>
+            </tr>
+            <tr>
+              <td style="padding:10px 0;border-bottom:1px solid #eee;color:#888;font-size:13px;">Email</td>
+              <td style="padding:10px 0;border-bottom:1px solid #eee;">
+                <a href="mailto:' . $email . '" style="color:#1a1a1a;">' . $email . '</a>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:10px 0;border-bottom:1px solid #eee;color:#888;font-size:13px;">Phone</td>
+              <td style="padding:10px 0;border-bottom:1px solid #eee;color:#1a1a1a;">' . ($phone ?: 'Not provided') . '</td>
+            </tr>
+            <tr>
+              <td style="padding:10px 0;border-bottom:1px solid #eee;color:#888;font-size:13px;">Subject</td>
+              <td style="padding:10px 0;border-bottom:1px solid #eee;color:#1a1a1a;">' . $subject . '</td>
+            </tr>
+            <tr>
+              <td style="padding:10px 0;vertical-align:top;color:#888;font-size:13px;">Message</td>
+              <td style="padding:10px 0;color:#1a1a1a;line-height:1.7;">' . nl2br($message) . '</td>
+            </tr>
           </table>
           ' . ($messageId ? '<p style="margin-top:20px;color:#888;font-size:12px;">Message ID: #' . $messageId . '</p>' : '') . '
         </div>
@@ -191,11 +167,12 @@ try {
     </body>
     </html>';
 
-    sendSmtpMail(ADMIN_EMAIL, 'LAKUM Artspace', $adminSubject, $adminBody, $email);
+    // Send to admin — reply-to is the visitor's email so admin can reply directly
+    sendMail(ADMIN_TO, 'LAKUM Artspace', $adminSubject, $adminBody, $email);
 
-    // ── Confirmation email to client ──────────────────────────────────────────
+    // ── Confirmation email to visitor ─────────────────────────────────────────
     $clientSubject = 'We received your message — LAKUM Artspace';
-    $clientBody = '
+    $clientBody    = '
     <!DOCTYPE html>
     <html>
     <head><meta charset="UTF-8"></head>
@@ -222,7 +199,7 @@ try {
     </body>
     </html>';
 
-    sendSmtpMail($email, $name, $clientSubject, $clientBody);
+    sendMail($email, $name, $clientSubject, $clientBody);
 
     echo json_encode([
         'success' => true,
@@ -235,7 +212,8 @@ try {
     http_response_code(500);
     echo json_encode([
         'success' => false,
-        'message' => 'Failed to send message. Please try again or email us directly at info@lakumartspace.com'
+        'message' => 'Failed to send message. Please try again or email us directly at info@lakumartspace.com',
+        'debug'   => $e->getMessage() // remove this line after confirming it works
     ]);
 }
 ?>
