@@ -1,6 +1,6 @@
 <?php
 require_once 'lang/loader.php';
-require_once 'api/image-helper.php';
+if (file_exists('api/image-helper.php')) { require_once 'api/image-helper.php'; }
 
 // Get title from query parameter (rewritten by .htaccess)
 $title = $_GET['title'] ?? null;
@@ -62,6 +62,31 @@ if (!$title) {
 
     <!-- Page-specific styles -->
     <link rel="stylesheet" href="press.css">
+    <style>
+        .press-section {
+            padding: 60px 0;
+            background: #f6f6eb;
+        }
+        .press-container {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        .press-content {
+            background: #fff;
+            border-radius: 4px;
+            padding: 48px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+            font-size: 16px;
+            line-height: 1.8;
+            color: #333;
+        }
+        .press-content p { margin-bottom: 16px; }
+        .press-content h2, .press-content h3 { margin: 28px 0 12px; color: #1a1a1a; }
+        @media (max-width: 600px) {
+            .press-content { padding: 28px 20px; }
+        }
+    </style>
     <script src="assest/static-json-translator.js?v=1.0.0" defer></script>
 </head>
 
