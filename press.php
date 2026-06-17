@@ -1,6 +1,6 @@
 <?php
 require_once 'lang/loader.php';
-require_once 'api/image-helper.php';
+if (file_exists('api/image-helper.php')) { require_once 'api/image-helper.php'; }
 ?><!DOCTYPE html>
 <html <?php echo getLanguageAttributes(); ?>>
 
@@ -524,7 +524,11 @@ require_once 'api/image-helper.php';
 
                 pressCard.innerHTML = `
                     <div class="lakum-press-card__image">
-                        <img src="${item.cover_image || 'assest/img-4.png'}" alt="${source}" loading="eager" decoding="async">
+                        <img src="${item.cover_image || 'assest/img-4.webp'}" 
+                             alt="${source}" 
+                             loading="eager" 
+                             decoding="async"
+                             onerror="this.onerror=null;this.src='assest/img-4.webp';">
                     </div>
                     <div class="lakum-press-card__content" ${contentDir}>
                         <span class="lakum-press-card__source">${source}</span>

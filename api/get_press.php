@@ -128,6 +128,39 @@ try {
     
     $press = [];
     while ($row = $result->fetch_assoc()) {
+        // ── Fix image path ────────────────────────────────────────────────────
+        // DB stores: "uploads/press/filename.jpg"
+        // Files live at: "uploads/uploads/press/filename.jpg"
+        // This normalizer handles all known path variants safely.
+        if (!empty($row['cover_image'])) {
+            $img = $row['cover_image'];
+
+            // Already an absolute URL — leave it alone
+            if (strpos($img, 'http://') === 0 || strpos($img, 'https://') === 0) {
+                // keep as-is
+            }
+            // Already has the correct double-uploads prefix
+            elseif (strpos($img, 'uploads/uploads/press/') === 0) {
+                // keep as-is
+            }
+            // Has single uploads/press/ prefix → add the extra uploads/
+            elseif (strpos($img, 'uploads/press/') === 0) {
+                $img = 'uploads/' . $img;
+            }
+            // Has assest/press-uploads/ prefix → normalise
+            elseif (strpos($img, 'assest/press-uploads/') === 0) {
+                $filename = basename($img);
+                $img = 'uploads/uploads/press/' . $filename;
+            }
+            // Bare filename only
+            elseif (strpos($img, '/') === false) {
+                $img = 'uploads/uploads/press/' . $img;
+            }
+
+            $row['cover_image'] = $img;
+        }
+        // ─────────────────────────────────────────────────────────────────────
+
         $press[] = $row;
     }
     
