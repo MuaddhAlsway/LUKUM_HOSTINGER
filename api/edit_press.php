@@ -59,7 +59,12 @@ try {
     
     $cover_image = $existing['cover_image'];
     
-    // Handle image upload if provided
+    // Handle image path from JSON (uploaded separately via upload_press_image.php)
+    if (!empty($data['cover_image'])) {
+        $cover_image = $data['cover_image'];
+    }
+    
+    // Handle direct file upload (multipart/form-data) — takes precedence over JSON path
     if (isset($_FILES['cover_image']) && $_FILES['cover_image']['error'] === UPLOAD_ERR_OK) {
         $upload_dir = __DIR__ . '/../assest/press-uploads/';
         
