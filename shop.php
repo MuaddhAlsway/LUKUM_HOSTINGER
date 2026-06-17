@@ -100,7 +100,7 @@ require_once 'includes/site-settings.php';
         }
 
         .lakum-hero__title {
-            font-size: clamp(1.75rem, 7vw, 4.5rem);
+            font-size: clamp(2.5rem, 8vw, 5rem);
             font-weight: 300;
             line-height: 1.2;
             margin: 0 0 20px 0;
