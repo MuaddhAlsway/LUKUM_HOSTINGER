@@ -135,7 +135,7 @@ function getLanguageClass() {
  * - Pagination parameters are preserved
  * - Filter parameters are preserved
  * - Search parameters are preserved
- * - Dynamic IDs are preserved
+ * - Dynamic IDs are preserved (like event titles)
  * - Works in subfolders
  * - Future-proof for routing
  */
@@ -150,7 +150,16 @@ function buildLanguageSwitcherUrl($targetLang = null) {
         $lang = (getCurrentLanguage() === 'ar') ? 'en' : 'ar';
     }
     
-    return htmlspecialchars($currentPath . '?lang=' . $lang);
+    // Get all current query parameters
+    $params = $_GET;
+    
+    // Update the lang parameter
+    $params['lang'] = $lang;
+    
+    // Build the query string, preserving all parameters
+    $queryString = http_build_query($params);
+    
+    return htmlspecialchars($currentPath . '?' . $queryString);
 }
 
 // ============ PAGE DETECTION ============
