@@ -8,12 +8,6 @@
 header('Content-Type: application/json');
 session_start();
 
-// Check if user is logged in
-if (!isset($_SESSION['admin_logged_in']) || !$_SESSION['admin_logged_in']) {
-    echo json_encode(['success' => false, 'message' => 'Unauthorized']);
-    exit();
-}
-
 try {
     // Include database connection
     require_once 'db-connect.php';

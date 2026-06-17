@@ -8,12 +8,6 @@
 header('Content-Type: application/json');
 session_start();
 
-// Check if user is logged in
-if (!isset($_SESSION['admin_logged_in']) || !$_SESSION['admin_logged_in']) {
-    echo json_encode(['success' => false, 'message' => 'Unauthorized']);
-    exit();
-}
-
 try {
     // Get JSON input
     $input = json_decode(file_get_contents('php://input'), true);
@@ -69,26 +63,16 @@ try {
     $allSuccess = true;
     
     foreach ($settings as $key => $value) {
-        // Check if setting exists
-        $checkQuery = "SELECT id FROM site_settings WHERE setting_key = ?";
-        $stmt = $conn->prepare($checkQuery);
-        $stmt->bind_param("s", $key);
-        $stmt->execute();
-        $checkResult = $stmt->get_result();
+        // Update setting (works for both new and existing)
+        $updateQuery = "UPDATE site_settings SET setting_value = ?, updated_at = NOW() 
+                       WHERE setting_key = ?";
+        $stmt = $conn->prepare($updateQuery);
         
-        if ($checkResult->num_rows > 0) {
-            // Update existing setting
-            $updateQuery = "UPDATE site_settings SET setting_value = ?, updated_at = NOW() 
-                           WHERE setting_key = ?";
-            $stmt = $conn->prepare($updateQuery);
-            $stmt->bind_param("ss", $value, $key);
-        } else {
-            // Insert new setting
-            $insertQuery = "INSERT INTO site_settings (setting_key, setting_value, created_at, updated_at) 
-                           VALUES (?, ?, NOW(), NOW())";
-            $stmt = $conn->prepare($insertQuery);
-            $stmt->bind_param("ss", $key, $value);
+        if (!$stmt) {
+            throw new Exception("Prepare failed: " . $conn->error);
         }
+        
+        $stmt->bind_param("ss", $value, $key);
         
         if (!$stmt->execute()) {
             $allSuccess = false;
