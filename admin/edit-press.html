@@ -420,7 +420,7 @@
                 uploadFormData.append('file', coverInput.files[0]);
                 
                 try {
-                    const uploadResponse = await fetch('../api/upload_cover_image.php', {
+                    const uploadResponse = await fetch('../api/upload_press_image.php', {
                         method: 'POST',
                         body: uploadFormData
                     });

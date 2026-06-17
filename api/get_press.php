@@ -152,6 +152,11 @@ try {
                 $filename = basename($img);
                 $img = 'uploads/uploads/press/' . $filename;
             }
+            // Has assest/blog-uploads/ prefix → was saved to wrong folder, normalise
+            elseif (strpos($img, 'assest/blog-uploads/') === 0) {
+                $filename = basename($img);
+                $img = 'uploads/uploads/press/' . $filename;
+            }
             // Bare filename only
             elseif (strpos($img, '/') === false) {
                 $img = 'uploads/uploads/press/' . $img;

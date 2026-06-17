@@ -252,7 +252,7 @@
             uploadFormData.append('file', file);
             
             try {
-                const uploadResponse = await fetch(getApiUrl('upload_cover_image.php'), {
+                const uploadResponse = await fetch(getApiUrl('upload_press_image.php'), {
                     method: 'POST',
                     body: uploadFormData
                 });
