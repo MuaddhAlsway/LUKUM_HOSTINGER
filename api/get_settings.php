@@ -9,8 +9,17 @@ header('Content-Type: application/json');
 session_start();
 
 try {
-    // Include database connection
-    require_once 'db-connect.php';
+    // Include database configuration
+    require_once 'config.php';
+    
+    // Get database connection
+    $db = Database::getInstance();
+    $conn = $db->getConnection();
+    
+    if (!$conn || !$db->isConnected()) {
+        echo json_encode(['success' => false, 'message' => 'Database connection failed']);
+        exit();
+    }
     
     // Auto-create table if it doesn't exist
     $createTableQuery = "CREATE TABLE IF NOT EXISTS `site_settings` (
@@ -59,6 +68,3 @@ try {
         'message' => 'Error retrieving settings: ' . $e->getMessage()
     ]);
 }
-
-$conn->close();
-?>
