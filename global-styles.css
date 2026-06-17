@@ -1025,7 +1025,7 @@ img.loaded {
 
 /* Lakum specific hero title */
 .lakum-hero__title {
-    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-size: clamp(2.5rem, 8vw, 5rem);
     font-weight: 500;
     line-height: 1.2;
     margin: 0 0 20px 0;
@@ -1472,7 +1472,6 @@ body {
 @media (max-width: 768px) {
     /* Reduce hero height on tablet */
     .lakum-hero { height: 70vh; min-height: 500px; }
-    .lakum-hero__title { font-size: clamp(1.75rem, 5vw, 2.5rem); }
     .lakum-hero__subtitle { font-size: clamp(0.95rem, 1.5vw, 1.1rem); }
     
     /* Optimize featured banner for tablet */
