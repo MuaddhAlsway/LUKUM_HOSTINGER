@@ -1,11 +1,44 @@
 <?php
 /**
  * Site Settings Helper
- * Reads from data/site_settings.json — saved via admin/site-settings.html
- * Falls back to t() translation system if no saved value exists.
+ * Priority order:
+ * 1. Database (site_settings table) - for dynamic settings like booking_link, shop_link
+ * 2. JSON file (data/site_settings.json) - for page content settings
+ * 3. Translation system t() - for fallback
+ * 4. Hardcoded default - final fallback
  */
 
 $_siteSettingsCache = null;
+$_dbSettingsCache = null;
+
+function _loadDatabaseSettings() {
+    global $_dbSettingsCache;
+    if ($_dbSettingsCache === null) {
+        $_dbSettingsCache = [];
+        try {
+            // Try to load from database
+            require_once __DIR__ . '/../api/config.php';
+            $db = Database::getInstance();
+            
+            if ($db && $db->isConnected()) {
+                $conn = $db->getConnection();
+                $query = "SELECT setting_key, setting_value FROM site_settings 
+                          WHERE setting_key IN ('booking_link', 'shop_link')";
+                $result = $conn->query($query);
+                
+                if ($result && $result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        $_dbSettingsCache[$row['setting_key']] = $row['setting_value'];
+                    }
+                }
+            }
+        } catch (Exception $e) {
+            // Database not available, fall back to JSON
+            error_log('Database settings unavailable: ' . $e->getMessage());
+        }
+    }
+    return $_dbSettingsCache;
+}
 
 function _loadSiteSettings() {
     global $_siteSettingsCache;
@@ -53,8 +86,22 @@ function ss($page, $key, $tKey = '', $fallback = '') {
 
 /**
  * Get a raw (unescaped) site setting — use only for URLs/src attributes.
+ * Priority:
+ * 1. Database (for booking_link, shop_link)
+ * 2. JSON file
+ * 3. Fallback
  */
 function ssRaw($page, $key, $fallback = '') {
+    // Check database FIRST for critical dynamic settings
+    if ($key === 'booking_link' || $key === 'shop_link') {
+        $dbSettings = _loadDatabaseSettings();
+        $dbValue = trim($dbSettings[$key] ?? '');
+        if ($dbValue !== '') {
+            return $dbValue;
+        }
+    }
+    
+    // Fall back to JSON file
     $all   = _loadSiteSettings();
     $saved = trim($all[$page][$key] ?? '');
     return $saved !== '' ? $saved : $fallback;
