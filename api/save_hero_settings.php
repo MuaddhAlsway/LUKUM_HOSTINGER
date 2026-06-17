@@ -5,7 +5,7 @@ header('Cache-Control: no-cache, no-store, must-revalidate');
 $settingsFile = '../data/hero_settings.json';
 $heroImageDir = '../heroImage/';
 
-$validPages = ['index', 'blog', 'spaces', 'exhibitions', 'contact', 'shop'];
+$validPages = ['index', 'about', 'blog', 'spaces', 'exhibitions', 'contact', 'shop'];
 
 // ── Handle image upload ──────────────────────────────────────────────────────
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['hero_image'])) {
