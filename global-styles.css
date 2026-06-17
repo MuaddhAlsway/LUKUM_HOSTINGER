@@ -1557,7 +1557,6 @@ body {
 /* ===== ULTRA-AGGRESSIVE MOBILE (< 360px) ===== */
 @media (max-width: 360px) {
     .lakum-hero { height: 55vh; min-height: 320px; }
-    .lakum-hero__title { font-size: 1.1rem; }
     .lakum-hero__subtitle { font-size: 0.8rem; }
     .lakum-featured-banner__image { height: 180px; }
     .lakum-featured-banner__title { font-size: 1.1rem; }
