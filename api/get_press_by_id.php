@@ -121,14 +121,16 @@ try {
     if (!empty($press['cover_image'])) {
         $img = $press['cover_image'];
         if (strpos($img, 'http://') !== 0 && strpos($img, 'https://') !== 0) {
-            if (strpos($img, 'uploads/uploads/press/') === 0) {
-                // already correct
+            if (strpos($img, 'assest/press-uploads/') === 0) {
+                // correct — keep as-is
+            } elseif (strpos($img, 'uploads/uploads/press/') === 0) {
+                $img = 'assest/press-uploads/' . basename($img);
             } elseif (strpos($img, 'uploads/press/') === 0) {
-                $img = 'uploads/' . $img;
-            } elseif (strpos($img, 'assest/press-uploads/') === 0 || strpos($img, 'assest/blog-uploads/') === 0) {
-                $img = 'uploads/uploads/press/' . basename($img);
+                $img = 'assest/press-uploads/' . basename($img);
+            } elseif (strpos($img, 'assest/blog-uploads/') === 0) {
+                $img = 'assest/press-uploads/' . basename($img);
             } elseif (strpos($img, '/') === false) {
-                $img = 'uploads/uploads/press/' . $img;
+                $img = 'assest/press-uploads/' . $img;
             }
         }
         $press['cover_image'] = $img;

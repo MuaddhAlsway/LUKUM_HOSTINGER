@@ -34,8 +34,8 @@ try {
         throw new Exception('File size exceeds 5 MB limit');
     }
 
-    // Save to uploads/uploads/press/ — this is where press images live
-    $upload_dir = __DIR__ . '/../uploads/uploads/press/';
+    // Save to assest/press-uploads/ — accessible folder on the server
+    $upload_dir = __DIR__ . '/../assest/press-uploads/';
     if (!is_dir($upload_dir)) {
         if (!mkdir($upload_dir, 0755, true)) {
             throw new Exception('Failed to create upload directory');
@@ -49,8 +49,8 @@ try {
         throw new Exception('Failed to move uploaded file');
     }
 
-    // Return the correct relative path (matches what get_press.php normalizer expects)
-    $relative_path = 'uploads/uploads/press/' . $filename;
+    // Return the path — normalizer in get_press.php handles display
+    $relative_path = 'assest/press-uploads/' . $filename;
 
     echo json_encode([
         'success'  => true,
