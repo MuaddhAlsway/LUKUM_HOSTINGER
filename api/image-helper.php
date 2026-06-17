@@ -70,11 +70,10 @@ class ImageHelper {
         $fetchPriorityAttr = $config['fetchpriority'] ? 'fetchpriority="high"' : '';
         
         $html .= sprintf(
-            '<img src="%s" alt="%s" width="%d" height="%d" %s %s %s style="aspect-ratio: %s">',
+            '<img src="%s" alt="%s" width="%d" %s %s %s style="aspect-ratio: %s">',
             htmlspecialchars($fallbackSrc),
             htmlspecialchars($alt),
             $config['width'],
-            $config['height'],
             $lazyAttr,
             $decodingAttr,
             $fetchPriorityAttr,
@@ -225,11 +224,10 @@ class ImageHelper {
      */
     private static function fallbackImage($imagePath, $alt, $config) {
         return sprintf(
-            '<img src="%s" alt="%s" width="%d" height="%d" style="aspect-ratio: %s">',
+            '<img src="%s" alt="%s" width="%d" style="aspect-ratio: %s">',
             htmlspecialchars($imagePath),
             htmlspecialchars($alt),
             $config['width'],
-            $config['height'],
             $config['aspectRatio']
         );
     }
