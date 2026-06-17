@@ -117,9 +117,24 @@ try {
     $press['excerpt'] = ($lang === 'ar' && $press['excerpt_ar']) ? $press['excerpt_ar'] : $press['excerpt_en'];
     $press['slug'] = ($lang === 'ar' && $press['slug_ar']) ? $press['slug_ar'] : $press['slug_en'];
     
-    // Keep image paths as relative - let frontend handle URL construction
-    // This ensures compatibility across different environments (local, staging, production)
-    
+    // ── Fix image path (same normalizer as get_press.php) ────────────────────
+    if (!empty($press['cover_image'])) {
+        $img = $press['cover_image'];
+        if (strpos($img, 'http://') !== 0 && strpos($img, 'https://') !== 0) {
+            if (strpos($img, 'uploads/uploads/press/') === 0) {
+                // already correct
+            } elseif (strpos($img, 'uploads/press/') === 0) {
+                $img = 'uploads/' . $img;
+            } elseif (strpos($img, 'assest/press-uploads/') === 0 || strpos($img, 'assest/blog-uploads/') === 0) {
+                $img = 'uploads/uploads/press/' . basename($img);
+            } elseif (strpos($img, '/') === false) {
+                $img = 'uploads/uploads/press/' . $img;
+            }
+        }
+        $press['cover_image'] = $img;
+    }
+    // ─────────────────────────────────────────────────────────────────────────
+
     echo json_encode(['success' => true, 'data' => $press, 'language' => $lang, 'source' => 'database']);
     
 } catch (Exception $e) {
