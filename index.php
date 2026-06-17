@@ -10,7 +10,10 @@ require_once 'includes/site-settings.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo t('page_title', 'LAKUM Artspace - Cultural Hub in Riyadh | Art Exhibitions & Events'); ?></title>
     
-    <link rel="icon" href="assest/favicon.png" type="image/png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assest/logo/right_section.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assest/logo/right_section.png">
+    <link rel="apple-touch-icon" href="assest/logo/right_section.png">
+    <meta name="msapplication-TileImage" content="assest/logo/right_section.png">
     
     <!-- Preload LCP image (hero) - Mobile-first with responsive variants -->
     <link rel="preload" as="image" 
