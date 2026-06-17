@@ -13,20 +13,20 @@
                 <nav class="lakum-footer__nav">
                     <h4 class="lakum-footer__nav-title"><?php echo t('footer_navigate', 'Navigate'); ?></h4>
                     <ul class="lakum-footer__nav-list">
-                        <li><a href="/" class="lakum-footer__link"><?php echo t('home', 'Home'); ?></a></li>
-                        <li><a href="/about" class="lakum-footer__link"><?php echo t('about', 'About'); ?></a></li>
-                        <li><a href="/spaces" class="lakum-footer__link"><?php echo t('spaces', 'Spaces'); ?></a></li>
-                        <li><a href="/exhibitions" class="lakum-footer__link"><?php echo t('exhibitions', 'Exhibitions'); ?></a></li>
+                        <li><a href="/?lang=<?php echo getCurrentLanguage(); ?>" class="lakum-footer__link"><?php echo t('home', 'Home'); ?></a></li>
+                        <li><a href="/about?lang=<?php echo getCurrentLanguage(); ?>" class="lakum-footer__link"><?php echo t('about', 'About'); ?></a></li>
+                        <li><a href="/spaces?lang=<?php echo getCurrentLanguage(); ?>" class="lakum-footer__link"><?php echo t('spaces', 'Spaces'); ?></a></li>
+                        <li><a href="/exhibitions?lang=<?php echo getCurrentLanguage(); ?>" class="lakum-footer__link"><?php echo t('exhibitions', 'Exhibitions'); ?></a></li>
                     </ul>
                 </nav>
 
                 <nav class="lakum-footer__nav">
                     <h4 class="lakum-footer__nav-title"><?php echo t('footer_explore', 'Explore'); ?></h4>
                     <ul class="lakum-footer__nav-list">
-                        <li><a href="/calendar" class="lakum-footer__link"><?php echo t('calendar', 'Calendar'); ?></a></li>
-                        <li><a href="/blog" class="lakum-footer__link"><?php echo t('blog', 'Blog'); ?></a></li>
-                        <li><a href="/press" class="lakum-footer__link"><?php echo t('press', 'Press'); ?></a></li>
-                        <li><a href="/contact" class="lakum-footer__link"><?php echo t('contact_us', 'Contact'); ?></a></li>
+                        <li><a href="/calendar?lang=<?php echo getCurrentLanguage(); ?>" class="lakum-footer__link"><?php echo t('calendar', 'Calendar'); ?></a></li>
+                        <li><a href="/blog?lang=<?php echo getCurrentLanguage(); ?>" class="lakum-footer__link"><?php echo t('blog', 'Blog'); ?></a></li>
+                        <li><a href="/press?lang=<?php echo getCurrentLanguage(); ?>" class="lakum-footer__link"><?php echo t('press', 'Press'); ?></a></li>
+                        <li><a href="/contact?lang=<?php echo getCurrentLanguage(); ?>" class="lakum-footer__link"><?php echo t('contact_us', 'Contact'); ?></a></li>
                     </ul>
                 </nav>
 

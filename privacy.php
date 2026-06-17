@@ -448,20 +448,20 @@ require_once 'lang/loader.php';
                 <nav class="lakum-footer__nav">
                     <h4 class="lakum-footer__nav-title">Navigate</h4>
                     <ul class="lakum-footer__nav-list">
-                        <li><a href="index.php" class="lakum-footer__link">Home</a></li>
-                        <li><a href="about.php" class="lakum-footer__link">About</a></li>
-                        <li><a href="spaces.php" class="lakum-footer__link">Spaces</a></li>
-                        <li><a href="exhibitions.php" class="lakum-footer__link">Exhibitions</a></li>
+                        <li><a href="index.php?lang=<?php echo getCurrentLanguage(); ?>" class="lakum-footer__link">Home</a></li>
+                        <li><a href="about.php?lang=<?php echo getCurrentLanguage(); ?>" class="lakum-footer__link">About</a></li>
+                        <li><a href="spaces.php?lang=<?php echo getCurrentLanguage(); ?>" class="lakum-footer__link">Spaces</a></li>
+                        <li><a href="exhibitions.php?lang=<?php echo getCurrentLanguage(); ?>" class="lakum-footer__link">Exhibitions</a></li>
                     </ul>
                 </nav>
 
                 <nav class="lakum-footer__nav">
                     <h4 class="lakum-footer__nav-title">Explore</h4>
                     <ul class="lakum-footer__nav-list">
-                        <li><a href="calendar.php" class="lakum-footer__link">Calendar</a></li>
-                        <li><a href="blog.php" class="lakum-footer__link">Blog</a></li>
-                        <li><a href="press.php" class="lakum-footer__link">Press</a></li>
-                        <li><a href="contact.php" class="lakum-footer__link">Contact</a></li>
+                        <li><a href="calendar.php?lang=<?php echo getCurrentLanguage(); ?>" class="lakum-footer__link">Calendar</a></li>
+                        <li><a href="blog.php?lang=<?php echo getCurrentLanguage(); ?>" class="lakum-footer__link">Blog</a></li>
+                        <li><a href="press.php?lang=<?php echo getCurrentLanguage(); ?>" class="lakum-footer__link">Press</a></li>
+                        <li><a href="contact.php?lang=<?php echo getCurrentLanguage(); ?>" class="lakum-footer__link">Contact</a></li>
                     </ul>
                 </nav>
 
@@ -481,9 +481,9 @@ require_once 'lang/loader.php';
             <div class="lakum-footer__bottom">
                 <p class="lakum-footer__copyright"><?php echo t('footer_copyright_prefix', '� 2025 - '); ?><span id="year"></span><?php echo t('footer_copyright_suffix', ' LAKUM Artspace. All rights reserved.'); ?></p>
                 <div class="lakum-footer__legal">
-                    <a href="terms.php<?php echo isset($_GET['lang']) ? '?lang=' . htmlspecialchars($_GET['lang']) : ''; ?>" class="lakum-footer__legal-link"><?php echo t('footer_terms', 'Terms & Conditions'); ?></a>
+                    <a href="terms.php?lang=<?php echo getCurrentLanguage(); ?>" class="lakum-footer__legal-link"><?php echo t('footer_terms', 'Terms & Conditions'); ?></a>
                     <span class="lakum-footer__legal-divider">|</span>
-                    <a href="privacy.php<?php echo isset($_GET['lang']) ? '?lang=' . htmlspecialchars($_GET['lang']) : ''; ?>" class="lakum-footer__legal-link"><?php echo t('footer_privacy', 'Privacy Policy'); ?></a>
+                    <a href="privacy.php?lang=<?php echo getCurrentLanguage(); ?>" class="lakum-footer__legal-link"><?php echo t('footer_privacy', 'Privacy Policy'); ?></a>
                 </div>
             </div>
         </div>
