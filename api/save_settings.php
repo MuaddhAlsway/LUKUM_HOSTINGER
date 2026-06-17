@@ -72,19 +72,24 @@ try {
     $allSuccess = true;
     
     foreach ($settings as $key => $value) {
-        // Update setting (works for both new and existing)
-        $updateQuery = "UPDATE site_settings SET setting_value = ?, updated_at = NOW() 
-                       WHERE setting_key = ?";
-        $stmt = $conn->prepare($updateQuery);
+        // Use INSERT ... ON DUPLICATE KEY UPDATE for more reliable upsert
+        $upsertQuery = "INSERT INTO site_settings (setting_key, setting_value, updated_at) 
+                        VALUES (?, ?, NOW())
+                        ON DUPLICATE KEY UPDATE 
+                        setting_value = VALUES(setting_value),
+                        updated_at = NOW()";
+        
+        $stmt = $conn->prepare($upsertQuery);
         
         if (!$stmt) {
             throw new Exception("Prepare failed: " . $conn->error);
         }
         
-        $stmt->bind_param("ss", $value, $key);
+        $stmt->bind_param("ss", $key, $value);
         
         if (!$stmt->execute()) {
             $allSuccess = false;
+            error_log("Failed to upsert setting $key: " . $conn->error);
             break;
         }
         $stmt->close();

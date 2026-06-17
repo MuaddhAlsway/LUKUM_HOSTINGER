@@ -220,12 +220,18 @@
 
                 if (result.success) {
                     alert('Settings saved successfully!');
+                    // Reload settings from database to verify they were saved
+                    await loadSettings();
                 } else {
                     alert('Error: ' + result.message);
+                    // Reload settings to revert to last saved values
+                    await loadSettings();
                 }
             } catch (error) {
                 console.error('Error saving settings:', error);
                 alert('Error saving settings: ' + error.message);
+                // Reload settings to revert to last saved values
+                await loadSettings();
             }
         }
 
