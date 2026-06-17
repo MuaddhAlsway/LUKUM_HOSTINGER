@@ -490,12 +490,17 @@ if (file_exists('api/image-helper.php')) { require_once 'api/image-helper.php'; 
             pressItems.forEach(item => {
                 const pressCard = document.createElement('a');
                 
-                // Use clean URL for internal press detail pages
-                // CRITICAL: Only use window.LAKUM_LANG (set from PHP)
-                // Do NOT use localStorage as it contains the previous page's language
+                // Press cards link to the external source article
+                // Fall back to internal detail page only if no external URL
                 const currentLang = lang || window.LAKUM_LANG || 'en';
-                const slug = item.slug || item.id;
-                pressCard.href = `press/${slug}?lang=${currentLang}`;
+                if (item.url && item.url.startsWith('http')) {
+                    pressCard.href = item.url;
+                    pressCard.target = '_blank';
+                    pressCard.rel = 'noopener noreferrer';
+                } else {
+                    const slug = item.slug || item.id;
+                    pressCard.href = `press/${slug}?lang=${currentLang}`;
+                }
                 
                 pressCard.className = 'lakum-press-card';
                 pressCard.setAttribute('data-press-id', item.id);
@@ -718,12 +723,16 @@ if (file_exists('api/image-helper.php')) { require_once 'api/image-helper.php'; 
                 pressReleases.forEach((item) => {
                     const pressCard = document.createElement('a');
                     
-                    // Use clean URL for internal press detail pages
-                    // CRITICAL: Only use window.LAKUM_LANG (set from PHP)
-                    // Do NOT use localStorage as it contains the previous page's language
+                    // Press cards link to the external source article
                     const lang = window.LAKUM_LANG || 'en';
-                    const slug = item.slug || item.id;
-                    pressCard.href = `press/${slug}?lang=${lang}`;
+                    if (item.url && item.url.startsWith('http')) {
+                        pressCard.href = item.url;
+                        pressCard.target = '_blank';
+                        pressCard.rel = 'noopener noreferrer';
+                    } else {
+                        const slug = item.slug || item.id;
+                        pressCard.href = `press/${slug}?lang=${lang}`;
+                    }
                     
                     pressCard.className = 'lakum-press-card';
                     pressCard.setAttribute('data-press-id', item.id);
