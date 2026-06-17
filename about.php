@@ -1,7 +1,8 @@
 <?php
 require_once 'lang/loader.php';
-require_once 'api/image-helper.php';
+if (file_exists('api/image-helper.php')) { require_once 'api/image-helper.php'; }
 require_once 'includes/site-settings.php';
+require_once 'includes/hero-settings.php';
 ?><!DOCTYPE html>
 <html <?php echo getLanguageAttributes(); ?>>
 <head>
@@ -775,17 +776,10 @@ html[lang="ar"] .lakum-event-card__date {
     <?php include('lakum-header-unified.php'); ?>
 
     <section class="lakum-hero" style="aspect-ratio: 16/9">
-        <div class="lakum-hero__image-wrapper">
-            <img src="heroImage/img-4.webp"
-                 alt="About LAKUM Artspace"
-                 fetchpriority="high"
-                 loading="eager"
-                 decoding="async"
-                 width="1200"
-                 height="800"
-                 class="lakum-hero__image"
-                 style="width: 100%; height: 100%; object-fit: cover; display: block;">
-            <div class="lakum-hero__overlay"></div>
+        <?php renderHero('about', 'About LAKUM Artspace'); ?>
+        <div class="lakum-hero__content">
+            <h1 class="lakum-hero__title"><?php echo getHeroTitle('about', 'about_hero_title', 'About LAKUM Artspace'); ?></h1>
+            <p class="lakum-hero__subtitle"><?php echo getHeroSubtitle('about', 'about_hero_subtitle', 'A living space for art, connection, and cultural exchange in the heart of Riyadh'); ?></p>
         </div>
     </section>
 
