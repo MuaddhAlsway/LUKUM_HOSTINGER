@@ -380,8 +380,8 @@ if (file_exists('api/image-helper.php')) { require_once 'api/image-helper.php'; 
     <!-- Hero Section -->
     <section class="lakum-press-hero">
         <div class="lakum-container">
-            <h1 class="lakum-press-hero__title"><?php echo t('press_heading', 'Press & Media'); ?></h1>
-            <p class="lakum-press-hero__subtitle"><?php echo t('press_subtitle', 'Read about LAKUM Artspace in the news'); ?></p>
+            <h1 class="lakum-press-hero__title"><?php echo t('press_hero_title', 'Press & Media'); ?></h1>
+            <p class="lakum-press-hero__subtitle"><?php echo t('press_hero_subtitle', 'Read about LAKUM Artspace in the news'); ?></p>
         </div>
     </section>
 
