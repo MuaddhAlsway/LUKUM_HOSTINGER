@@ -373,8 +373,6 @@ html[lang="ar"] .lakum-workshops-section__description {
 .lakum-about-section__image {
     position: relative;
     width: 100%;
-    
-    min-height: 550px;
 }
 
 @media (max-width: 1024px) {
