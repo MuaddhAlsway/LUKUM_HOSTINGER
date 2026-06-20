@@ -458,10 +458,10 @@ require_once 'includes/site-settings.php';
         </div>
     </section>
 
-    <!-- Past Exhibitions Gallery -->
+    <!-- Past Events Gallery -->
     <section class="lakum-spaces-exhibitions">
         <div class="lakum-container">
-            <h2 class="lakum-spaces-exhibitions__title"><?php echo t('spaces_past_exhibitions', 'Past Exhibitions'); ?></h2>
+            <h2 class="lakum-spaces-exhibitions__title"><?php echo t('spaces_past_events', 'Past Events'); ?></h2>
         </div>
         <div class="lakum-spaces-exhibitions__carousel" id="pastExhibitionsCarousel">
             <div class="lakum-spaces-exhibitions__track" id="pastExhibitionsTrack">
@@ -939,8 +939,8 @@ require_once 'includes/site-settings.php';
             }
         }
 
-        // Load Past Exhibitions Dynamically
-        async function loadPastExhibitions() {
+        // Load Past Events Dynamically
+        async function loadPastEvents() {
             try {
                 // Use language from PHP (respects URL parameter ?lang=en or ?lang=ar)
                 // Falls back to LanguageManager if window.LAKUM_LANG not set
@@ -969,7 +969,7 @@ require_once 'includes/site-settings.php';
                 track.innerHTML = '';
 
                 if (pastEvents.length === 0) {
-                    track.innerHTML = '<p style="text-align: center; padding: 40px; color: #999; grid-column: 1/-1;">No past exhibitions</p>';
+                    track.innerHTML = '<p style="text-align: center; padding: 40px; color: #999; grid-column: 1/-1;">No past events</p>';
                     return;
                 }
 
@@ -1004,11 +1004,11 @@ require_once 'includes/site-settings.php';
                 });
 
             } catch (error) {
-                console.error('Error loading past exhibitions:', error);
+                console.error('Error loading past events:', error);
             }
         }
 
-        // Load past exhibitions when page loads
+        // Load past events when page loads
         function initSpacesPage() {
             // LanguageManager is guaranteed to be ready by now
             // because it's loaded with defer and this runs on DOMContentLoaded
@@ -1016,7 +1016,7 @@ require_once 'includes/site-settings.php';
                 console.error('LanguageManager failed to load');
                 return;
             }
-            loadPastExhibitions();
+            loadPastEvents();
         }
         
         // Wait for LanguageManager to be fully initialized
@@ -1179,7 +1179,7 @@ require_once 'includes/site-settings.php';
         // Each card expands independently based on its content
         // This allows users to open multiple cards simultaneously for comparison
 
-        // Translate Past Exhibitions if needed
+        // Translate Past Events if needed
         if (typeof translationHelper !== 'undefined' && translationHelper.needsTranslation()) {
             const exhibitions = [{
                 "id": "27",
@@ -1235,7 +1235,7 @@ require_once 'includes/site-settings.php';
             }
         }
 
-        // ===== PAST EXHIBITIONS CAROUSEL (Like Gallery, No Auto-Scroll) =====
+        // ===== PAST EVENTS CAROUSEL (Like Gallery, No Auto-Scroll) =====
         (function() {
             const carousel = document.getElementById('pastExhibitionsCarousel');
             const track = document.getElementById('pastExhibitionsTrack');
