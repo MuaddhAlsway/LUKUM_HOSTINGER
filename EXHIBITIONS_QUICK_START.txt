@@ -1,0 +1,133 @@
+═══════════════════════════════════════════════════════════════════════════════
+  EXHIBITIONS FEATURE - QUICK START GUIDE
+═══════════════════════════════════════════════════════════════════════════════
+
+WHAT'S NEW:
+✅ New "Exhibitions" tab in Admin Dashboard
+✅ Add/Edit/Delete exhibitions just like events
+✅ Exhibitions displayed as "Past Events" on spaces.php
+✅ Bilingual support (English & Arabic)
+✅ Multi-day exhibition support
+
+═══════════════════════════════════════════════════════════════════════════════
+STEP-BY-STEP SETUP
+═══════════════════════════════════════════════════════════════════════════════
+
+1. CREATE DATABASE TABLE (ONE TIME ONLY)
+   ───────────────────────────────────────
+   📍 Visit: http://localhost/api/create_exhibitions_table.php
+   
+   Expected response:
+   {"success": true, "message": "Exhibitions table created successfully"}
+
+
+2. ACCESS ADMIN PANEL
+   ───────────────────────────────────────
+   📍 Go to: http://localhost/admin/dashboard.html
+   📍 Look for "Exhibitions" in left sidebar (between Site Settings and Events)
+   📍 Click "Exhibitions" tab
+
+
+3. ADD YOUR FIRST EXHIBITION
+   ───────────────────────────────────────
+   📍 Click "Add Exhibition" button
+   
+   Fill in:
+   • Exhibition Title (English) - REQUIRED
+   • Exhibition Date - REQUIRED
+   • Location - REQUIRED
+   • Cover Image (optional)
+   • Arabic translation (optional)
+   
+   Then click "Create Exhibition"
+
+
+4. VIEW ON WEBSITE
+   ───────────────────────────────────────
+   📍 Visit: http://localhost/spaces.php
+   📍 Scroll down to "Past Events" section
+   📍 Your exhibition should appear in the carousel (if date is in the past)
+
+
+═══════════════════════════════════════════════════════════════════════════════
+ADMIN FEATURES
+═══════════════════════════════════════════════════════════════════════════════
+
+Exhibitions Management Page shows:
+  • List of all exhibitions
+  • Date, Location, Status (Upcoming/Past)
+  • Filter buttons (All / Upcoming / Past)
+  • Edit & Delete buttons
+  • Click any row to see full details
+
+
+═══════════════════════════════════════════════════════════════════════════════
+KEY FIELDS
+═══════════════════════════════════════════════════════════════════════════════
+
+Exhibition Title (EN)  ← REQUIRED
+Exhibition Date        ← REQUIRED  (use past dates for immediate display)
+Location              ← REQUIRED  (Hall 1, Hall 2, Café, Meeting Room, or custom)
+
+Optional Fields:
+• Exhibition Title (AR)
+• Description (EN/AR)
+• Cover Image
+• Time fields
+• Multi-day exhibition (toggle to set end date)
+
+═══════════════════════════════════════════════════════════════════════════════
+FILES CREATED
+═══════════════════════════════════════════════════════════════════════════════
+
+Admin Interface:
+  /admin/add-exhibition.html      ← Add new exhibition form
+  /admin/edit-exhibition.html     ← Edit existing exhibition
+  /admin/exhibitions.html         ← Manage all exhibitions
+
+API Endpoints:
+  /api/create_exhibitions_table.php  ← Create DB table (run first!)
+  /api/add_exhibition.php             ← Add exhibition
+  /api/get_exhibitions.php            ← Fetch all exhibitions
+  /api/get_exhibition.php             ← Fetch single exhibition
+  /api/edit_exhibition.php            ← Update exhibition
+  /api/delete_exhibition.php          ← Delete exhibition
+
+Updated Files:
+  /admin/dashboard.html           ← Added Exhibitions to sidebar
+  /spaces.php                     ← Exhibitions now in "Past Events"
+
+═══════════════════════════════════════════════════════════════════════════════
+TIPS & TRICKS
+═══════════════════════════════════════════════════════════════════════════════
+
+✓ Use PAST dates to have exhibitions show immediately on spaces.php
+✓ Add Arabic title/description for full bilingual support
+✓ Click modal to see full details before editing/deleting
+✓ Multi-day exhibitions: Toggle "Multi-Day Exhibition" to set end date
+✓ Same location format as events (Hall 1, Hall 2, etc.)
+
+═══════════════════════════════════════════════════════════════════════════════
+TROUBLESHOOTING
+═══════════════════════════════════════════════════════════════════════════════
+
+❌ "Database connection failed"
+→ Make sure XAMPP is running and Apache/MySQL are started
+
+❌ Exhibitions don't appear on spaces.php
+→ Make sure you used a PAST date for exhibition_date
+→ Check browser console (F12) for fetch errors
+
+❌ Table already exists error
+→ That's OK! Just means the table was already created
+→ You can add exhibitions normally
+
+❌ Images not uploading
+→ Check /uploads/ folder exists and is writable
+→ Check PHP file upload limits
+
+═══════════════════════════════════════════════════════════════════════════════
+
+For detailed documentation, see: EXHIBITIONS_IMPLEMENTATION.md
+
+═══════════════════════════════════════════════════════════════════════════════

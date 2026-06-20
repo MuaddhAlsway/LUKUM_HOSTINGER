@@ -939,66 +939,100 @@ require_once 'includes/site-settings.php';
             }
         }
 
-        // Load Past Events Dynamically
+        // Load Past Events & Exhibitions Dynamically
         async function loadPastEvents() {
             try {
-                // Use language from PHP (respects URL parameter ?lang=en or ?lang=ar)
-                // Falls back to LanguageManager if window.LAKUM_LANG not set
                 const lang = window.LAKUM_LANG || LanguageManager.getLanguage() || 'en';
-                const response = await fetch(`api/get_events.php?type=all&limit=1000&lang=${lang}`);
-                const data = await response.json();
                 
-                if (!data.success || !data.data || !Array.isArray(data.data)) {
-                    console.error('Failed to load exhibitions');
-                    return;
+                // Fetch both events and exhibitions
+                const eventsResponse = await fetch(`api/get_events.php?type=all&limit=1000&lang=${lang}`);
+                const eventsData = await eventsResponse.json();
+                
+                const exhibitionsResponse = await fetch(`api/get_exhibitions.php?type=all&limit=1000&lang=${lang}`);
+                const exhibitionsData = await exhibitionsResponse.json();
+                
+                let allPastItems = [];
+                
+                // Process events
+                if (eventsData.success && eventsData.data && Array.isArray(eventsData.data)) {
+                    const now = new Date();
+                    now.setHours(0, 0, 0, 0);
+                    
+                    const pastEvents = eventsData.data.filter(e => {
+                        const eventDate = new Date(e.event_date);
+                        eventDate.setHours(0, 0, 0, 0);
+                        return eventDate < now;
+                    });
+                    
+                    // Mark as event type
+                    pastEvents.forEach(e => e.type = 'event');
+                    allPastItems = allPastItems.concat(pastEvents);
                 }
-
-                const now = new Date();
-                now.setHours(0, 0, 0, 0);
                 
-                // Filter past events and sort by date (newest first)
-                const pastEvents = data.data.filter(e => {
-                    const eventDate = new Date(e.event_date);
-                    eventDate.setHours(0, 0, 0, 0);
-                    return eventDate < now;
-                }).sort((a, b) => new Date(b.event_date) - new Date(a.event_date));
+                // Process exhibitions
+                if (exhibitionsData.success && exhibitionsData.data && Array.isArray(exhibitionsData.data)) {
+                    const now = new Date();
+                    now.setHours(0, 0, 0, 0);
+                    
+                    const pastExhibitions = exhibitionsData.data.filter(e => {
+                        const exhibitionDate = new Date(e.exhibition_date);
+                        exhibitionDate.setHours(0, 0, 0, 0);
+                        return exhibitionDate < now;
+                    });
+                    
+                    // Mark as exhibition type and map fields
+                    pastExhibitions.forEach(e => {
+                        e.type = 'exhibition';
+                        e.event_date = e.exhibition_date; // Normalize date field
+                        e.event_time = e.exhibition_time;
+                        e.event_end_time = e.exhibition_end_time;
+                    });
+                    allPastItems = allPastItems.concat(pastExhibitions);
+                }
+                
+                // Sort by date (newest first)
+                allPastItems.sort((a, b) => new Date(b.event_date) - new Date(a.event_date));
 
                 const track = document.getElementById('pastExhibitionsTrack');
                 if (!track) return;
 
                 track.innerHTML = '';
 
-                if (pastEvents.length === 0) {
+                if (allPastItems.length === 0) {
                     track.innerHTML = '<p style="text-align: center; padding: 40px; color: #999; grid-column: 1/-1;">No past events</p>';
                     return;
                 }
 
-                // Create slides for past events (duplicate for carousel effect)
-                const slidesToShow = Math.min(pastEvents.length, 12);
-                const eventsToDisplay = pastEvents.slice(0, slidesToShow);
+                // Create slides (show up to 12, then duplicate for carousel)
+                const slidesToShow = Math.min(allPastItems.length, 12);
+                const itemsToDisplay = allPastItems.slice(0, slidesToShow);
                 
                 // Add slides twice for infinite carousel effect
-                [...eventsToDisplay, ...eventsToDisplay].forEach(event => {
-                    const eventDate = new Date(event.event_date);
-                    const month = eventDate.toLocaleDateString('en-US', { month: 'short', year: 'numeric' }).toUpperCase();
-                    const slug = event.slug || event.title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
-                    const lang = window.LAKUM_LANG || 'en';
+                [...itemsToDisplay, ...itemsToDisplay].forEach(item => {
+                    const dateField = item.event_date || item.exhibition_date;
+                    const itemDate = new Date(dateField);
+                    const month = itemDate.toLocaleDateString('en-US', { month: 'short', year: 'numeric' }).toUpperCase();
+                    const slug = item.slug || (item.title_en || item.title).toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+                    const langParam = window.LAKUM_LANG || 'en';
+                    const title = item.title_en || item.title || '';
                     
                     const slide = document.createElement('div');
                     slide.className = 'lakum-spaces-exhibition-slide';
-                    slide.setAttribute('data-exhibition-id', event.id);
+                    slide.setAttribute('data-exhibition-id', item.id);
+                    slide.setAttribute('data-type', item.type);
                     slide.style.cursor = 'pointer';
                     slide.innerHTML = `
                         <div class="lakum-spaces-exhibition-slide__image">
-                            <img src="${event.cover_image || 'assest/img-4.png'}" alt="${event.title}" draggable="false" loading="lazy">
+                            <img src="${item.cover_image || 'assest/img-4.png'}" alt="${title}" draggable="false" loading="lazy">
                         </div>
                         <div class="lakum-spaces-exhibition-slide__content">
-                            <h3 class="lakum-spaces-exhibition-slide__title">${event.title}</h3>
+                            <h3 class="lakum-spaces-exhibition-slide__title">${title}</h3>
                             <span class="lakum-spaces-exhibition-slide__date">${month}</span>
                         </div>
                     `;
                     slide.addEventListener('click', () => {
-                        window.location.href = `event.php?title=${slug}&lang=${lang}`;
+                        // Link to event.php for both events and exhibitions
+                        window.location.href = `event.php?title=${slug}&lang=${langParam}`;
                     });
                     track.appendChild(slide);
                 });
