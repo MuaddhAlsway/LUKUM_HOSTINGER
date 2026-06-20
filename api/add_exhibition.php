@@ -11,11 +11,19 @@ $conn = $db->getConnection();
 
 if (!$db->isConnected()) {
     http_response_code(500);
-    die(json_encode(['success' => false, 'message' => 'Database connection failed']));
+    echo json_encode(['success' => false, 'message' => 'Database connection failed']);
+    exit;
 }
 
 // Get JSON input
 $input = json_decode(file_get_contents('php://input'), true);
+
+// Check if JSON decode failed
+if ($input === null && json_last_error() !== JSON_ERROR_NONE) {
+    http_response_code(400);
+    echo json_encode(['success' => false, 'message' => 'Invalid JSON input: ' . json_last_error_msg()]);
+    exit;
+}
 
 // Validate required fields
 $title_en = $input['title_en'] ?? '';
@@ -24,7 +32,8 @@ $location_en = $input['location_en'] ?? '';
 
 if (!$title_en || !$exhibition_date || !$location_en) {
     http_response_code(400);
-    die(json_encode(['success' => false, 'message' => 'Missing required fields']));
+    echo json_encode(['success' => false, 'message' => 'Missing required fields: title_en, exhibition_date, location_en']);
+    exit;
 }
 
 $title_ar = $input['title_ar'] ?? '';
@@ -48,7 +57,8 @@ $stmt = $conn->prepare($sql);
 
 if (!$stmt) {
     http_response_code(500);
-    die(json_encode(['success' => false, 'message' => 'Prepare failed: ' . $conn->error]));
+    echo json_encode(['success' => false, 'message' => 'Database prepare failed: ' . $conn->error]);
+    exit;
 }
 
 $stmt->bind_param(
@@ -61,14 +71,16 @@ $stmt->bind_param(
 if ($stmt->execute()) {
     $exhibition_id = $stmt->insert_id;
     http_response_code(201);
-    die(json_encode([
+    echo json_encode([
         'success' => true,
         'message' => 'Exhibition created successfully',
         'exhibition_id' => $exhibition_id
-    ]));
+    ]);
+    exit;
 } else {
     http_response_code(500);
-    die(json_encode(['success' => false, 'message' => 'Error: ' . $stmt->error]));
+    echo json_encode(['success' => false, 'message' => 'Database execution failed: ' . $stmt->error]);
+    exit;
 }
 
 ?>

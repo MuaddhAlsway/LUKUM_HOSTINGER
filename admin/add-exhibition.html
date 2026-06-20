@@ -244,9 +244,9 @@
 
                             <div class="form-row">
                                 <div class="form-group">
-                                    <label for="exhibition_date">Date *</label>
-                                    <input type="date" id="exhibition_date" name="exhibition_date" required>
-                                    <small>You can select past dates to show historical exhibitions</small>
+                                    <label for="exhibition_date">Date * <span style="color: #c2185b; font-size: 0.9rem;">(Past dates only)</span></label>
+                                    <input type="date" id="exhibition_date" name="exhibition_date" required max="">
+                                    <small style="color: #666;">Select a date in the past for historical exhibitions</small>
                                 </div>
                             </div>
 
@@ -293,6 +293,11 @@
 
                     <script>
                         document.addEventListener('DOMContentLoaded', function() {
+                            // Set max date to today (only allow past dates)
+                            const today = new Date().toISOString().split('T')[0];
+                            const exhibitionDateInput = document.getElementById('exhibition_date');
+                            exhibitionDateInput.max = today;
+
                             const sameDayRadio = document.getElementById('sameDayRadio');
                             const multiDayRadio = document.getElementById('multiDayRadio');
                             const endDateSection = document.getElementById('endDateSection');
@@ -341,7 +346,14 @@
                                                 body: formData
                                             });
                                             
-                                            const uploadResult = await uploadResponse.json();
+                                            const uploadText = await uploadResponse.text();
+                                            console.log('Upload response:', uploadText);
+                                            
+                                            if (!uploadText || uploadText.trim() === '') {
+                                                throw new Error('Image upload returned empty response');
+                                            }
+                                            
+                                            const uploadResult = JSON.parse(uploadText);
                                             if (uploadResult.success) {
                                                 coverImagePath = uploadResult.path;
                                             } else {
@@ -379,13 +391,22 @@
                                             cover_image: coverImagePath
                                         };
 
+                                        console.log('Sending exhibition data:', newExhibition);
+
                                         const response = await fetch('../api/add_exhibition.php', {
                                             method: 'POST',
                                             headers: {'Content-Type': 'application/json'},
                                             body: JSON.stringify(newExhibition)
                                         });
 
-                                        const result = await response.json();
+                                        const responseText = await response.text();
+                                        console.log('API response text:', responseText);
+
+                                        if (!responseText || responseText.trim() === '') {
+                                            throw new Error('API returned empty response');
+                                        }
+
+                                        const result = JSON.parse(responseText);
                                         if (result.success) {
                                             showNotification('Exhibition created successfully!', 'success');
                                             setTimeout(() => {
@@ -396,7 +417,7 @@
                                         }
                                     } catch (error) {
                                         console.error('Error:', error);
-                                        showNotification(error.message, 'error');
+                                        showNotification('Error: ' + error.message, 'error');
                                         submitBtn.disabled = false;
                                         submitBtn.innerHTML = originalBtnText;
                                     }
