@@ -44,7 +44,7 @@
                     <span>Site Settings</span>
                 </a>
 
-                <a href="exhibitions.html" class="nav-item">
+                <a href="exhibitions.html" class="nav-item" onclick="dashboard.showSection('exhibitions'); return false;">
                     <i class="ri-gallery-upload-line"></i>
                     <span>Exhibitions</span>
                 </a>
@@ -200,6 +200,32 @@
                 </div>
             </div>
 
+            <!-- EXHIBITIONS SECTION -->
+            <div id="exhibitionsSection" class="content-section" style="display: none;">
+                <div style="margin-bottom: 20px;">
+                    <a href="add-exhibition.html" class="btn-primary" style="display: inline-block; padding: 10px 20px; background: #1a1a1a; color: white; text-decoration: none; border-radius: 4px;">
+                        <i class="ri-add-line"></i> Add New Exhibition
+                    </a>
+                </div>
+                <div class="recent-events">
+                    <h2>All Exhibitions</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Date</th>
+                                <th>Location</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="allExhibitionsBody">
+                            <tr><td colspan="5" style="text-align: center; padding: 20px;">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
             <!-- BLOGS SECTION -->
             <div id="blogsSection" class="content-section" style="display: none;">
                 <div style="margin-bottom: 20px;">
@@ -297,6 +323,7 @@
                 this.upcomingEvents = [];
                 this.previousEvents = [];
                 this.allEvents = [];
+                this.allExhibitions = [];
                 this.allBlogs = [];
                 this.allPricing = [];
                 this.allPress = [];
@@ -310,12 +337,14 @@
                     allEvents: this.allEvents.length,
                     upcomingEvents: this.upcomingEvents.length,
                     previousEvents: this.previousEvents.length,
+                    allExhibitions: this.allExhibitions.length,
                     allBlogs: this.allBlogs.length,
                     allPricing: this.allPricing.length,
                     allPress: this.allPress.length
                 });
                 this.updateStats();
                 this.renderEvents();
+                this.renderExhibitions();
                 this.renderBlogs();
                 this.renderPricing();
                 this.renderPress();
@@ -334,6 +363,18 @@
                         this.allEvents = allEventsData.data;
                     } else {
                         this.allEvents = [];
+                    }
+
+                    // Load all exhibitions
+                    const exhibitionsRes = await fetch('../api/get_exhibitions.php?type=all&limit=1000', {
+                        cache: 'no-store'
+                    });
+                    const exhibitionsData = await exhibitionsRes.json();
+                    
+                    if (exhibitionsData.success && exhibitionsData.data && exhibitionsData.data.length > 0) {
+                        this.allExhibitions = exhibitionsData.data;
+                    } else {
+                        this.allExhibitions = [];
                     }
 
                     // Load all blogs (allow empty array)
@@ -523,6 +564,35 @@
                 }).join('');
             }
 
+            renderExhibitions() {
+                const tbody = document.getElementById('allExhibitionsBody');
+                
+                if (this.allExhibitions.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 20px;">No exhibitions found</td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = this.allExhibitions.map(exhibition => {
+                    const exhibitionDate = new Date(exhibition.exhibition_date);
+                    const isUpcoming = exhibitionDate >= new Date();
+                    const status = isUpcoming ? 'Upcoming' : 'Past';
+                    const statusClass = isUpcoming ? 'upcoming' : 'past';
+                    
+                    return `
+                        <tr>
+                            <td><strong>${exhibition.title_en}</strong></td>
+                            <td>${exhibitionDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</td>
+                            <td>${exhibition.location_en}</td>
+                            <td><span class="badge ${statusClass}">${status}</span></td>
+                            <td>
+                                <a href="edit-exhibition.html?id=${exhibition.id}" class="btn-small">Edit</a>
+                                <button onclick="dashboard.deleteExhibition(${exhibition.id}, '${exhibition.title_en}')" class="btn-small" style="background: #c2185b; color: white; border: none; cursor: pointer;">Delete</button>
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+            }
+
             renderBlogs() {
                 const tbody = document.getElementById('allBlogsBody');
                 
@@ -617,6 +687,7 @@
                 const titles = {
                     'overview': 'Dashboard',
                     'events': 'Events Management',
+                    'exhibitions': 'Exhibitions Management',
                     'blogs': 'Blogs Management',
                     'pricing': 'Pricing Management',
                     'press': 'Press Releases'
@@ -654,6 +725,30 @@
                 } catch (error) {
                     console.error('Delete error:', error);
                     alert('Error deleting event');
+                }
+            }
+
+            async deleteExhibition(id, title) {
+                if (!confirm(`Delete exhibition "${title}"?`)) return;
+                
+                try {
+                    const response = await fetch('../api/delete_exhibition.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ id: id })
+                    });
+                    
+                    const data = await response.json();
+                    if (data.success) {
+                        alert('Exhibition deleted successfully');
+                        this.allExhibitions = this.allExhibitions.filter(e => e.id !== id);
+                        this.renderExhibitions();
+                    } else {
+                        alert('Error deleting exhibition');
+                    }
+                } catch (error) {
+                    console.error('Delete error:', error);
+                    alert('Error deleting exhibition');
                 }
             }
 
