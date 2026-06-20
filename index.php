@@ -421,6 +421,12 @@ require_once 'includes/site-settings.php';
                         <a href="https://x.com/Lakumartspace" target="_blank" class="lakum-footer__social-link" aria-label="Twitter">
                             <i class="ri-twitter-x-fill"></i>
                         </a>
+                        <a href="https://www.snapchat.com/add/lakumartspace" target="_blank" class="lakum-footer__social-link" aria-label="Snapchat">
+                            <i class="ri-snapchat-line"></i>
+                        </a>
+                        <a href="https://www.tiktok.com/@lakumartspace" target="_blank" class="lakum-footer__social-link" aria-label="TikTok">
+                            <i class="ri-tiktok-fill"></i>
+                        </a>
                     </div>
                 </div>
             </div>
