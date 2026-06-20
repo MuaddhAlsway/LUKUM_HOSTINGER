@@ -121,15 +121,8 @@
 
     <div id="alertContainer"></div>
 
-    <!-- Filter Buttons -->
-    <div style="display: flex; gap: 10px; margin-bottom: 20px;">
-      <button onclick="exhibitionsManagement.filterExhibitions('all')" class="filter-btn active" data-filter="all" style="padding: 10px 20px; border: 2px solid #1a1a1a; background: #1a1a1a; color: white; border-radius: 4px; cursor: pointer; font-weight: 500;">All Exhibitions</button>
-      <button onclick="exhibitionsManagement.filterExhibitions('upcoming')" class="filter-btn" data-filter="upcoming" style="padding: 10px 20px; border: 2px solid #1a1a1a; background: white; color: #1a1a1a; border-radius: 4px; cursor: pointer; font-weight: 500;">Upcoming</button>
-      <button onclick="exhibitionsManagement.filterExhibitions('past')" class="filter-btn" data-filter="past" style="padding: 10px 20px; border: 2px solid #1a1a1a; background: white; color: #1a1a1a; border-radius: 4px; cursor: pointer; font-weight: 500;">Past</button>
-    </div>
-
     <div class="recent-events">
-        <h2>All Exhibitions</h2>
+        <h2>Past Exhibitions</h2>
         <table class="exhibitions-table">
             <thead>
                 <tr>
@@ -161,12 +154,13 @@ class ExhibitionsManagement {
   constructor() {
     this.exhibitions = [];
     this.filteredExhibitions = [];
-    this.currentFilter = 'all';
+    this.currentFilter = 'past';
     this.init();
   }
 
   async init() {
     await this.loadExhibitions();
+    this.filterExhibitions('past');
     this.setupEventListeners();
   }
 
@@ -211,6 +205,7 @@ class ExhibitionsManagement {
       if (data.success) {
         this.showAlert('Exhibition deleted successfully', 'success');
         this.exhibitions = this.exhibitions.filter(e => e.id !== exhibitionId);
+        this.filterExhibitions('past');
         this.render();
       } else {
         this.showAlert('Error deleting exhibition', 'error');
@@ -239,16 +234,9 @@ class ExhibitionsManagement {
 
   filterExhibitions(filter) {
     this.currentFilter = filter;
-    
-    document.querySelectorAll('.filter-btn').forEach(btn => {
-      btn.style.background = btn.dataset.filter === filter ? '#1a1a1a' : 'white';
-      btn.style.color = btn.dataset.filter === filter ? 'white' : '#1a1a1a';
-    });
 
     const now = new Date();
-    if (filter === 'upcoming') {
-      this.filteredExhibitions = this.exhibitions.filter(e => new Date(e.exhibition_date) >= now);
-    } else if (filter === 'past') {
+    if (filter === 'past') {
       this.filteredExhibitions = this.exhibitions.filter(e => new Date(e.exhibition_date) < now);
     } else {
       this.filteredExhibitions = this.exhibitions;
@@ -259,25 +247,22 @@ class ExhibitionsManagement {
 
   render() {
     const tbody = document.getElementById('exhibitionsTableBody');
-    const exhibitionsToDisplay = this.filteredExhibitions.length > 0 ? this.filteredExhibitions : this.exhibitions;
+    const exhibitionsToDisplay = this.filteredExhibitions.length > 0 ? this.filteredExhibitions : [];
     
     if (exhibitionsToDisplay.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 40px;">No exhibitions found</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 40px;">No past exhibitions found</td></tr>';
       return;
     }
 
     tbody.innerHTML = exhibitionsToDisplay.map(exhibition => {
       const exhibitionDate = new Date(exhibition.exhibition_date);
-      const isUpcoming = exhibitionDate >= new Date();
-      const status = isUpcoming ? 'Upcoming' : 'Past';
-      const statusBadge = isUpcoming ? 'upcoming' : 'past';
 
       return `
         <tr onclick="exhibitionsManagement.openModal(${exhibition.id})" style="cursor: pointer;">
           <td><strong>${exhibition.title_en}</strong></td>
           <td>${exhibitionDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</td>
           <td>${exhibition.location_en}</td>
-          <td><span class="badge ${statusBadge}">${status}</span></td>
+          <td><span class="badge past">Past</span></td>
           <td onclick="event.stopPropagation();">
             <div class="action-buttons">
               <a href="edit-exhibition.html?id=${exhibition.id}" class="btn-edit"><i class="ri-edit-line"></i> Edit</a>
@@ -300,9 +285,6 @@ class ExhibitionsManagement {
       month: 'long', 
       day: 'numeric' 
     });
-
-    const isUpcoming = exhibitionDate >= new Date();
-    const status = isUpcoming ? 'Upcoming' : 'Past';
 
     const content = document.getElementById('exhibitionModalContent');
     content.innerHTML = `
@@ -335,7 +317,7 @@ class ExhibitionsManagement {
 
         <div style="margin-bottom: 15px;">
           <label style="font-weight: 600; color: #1a1a1a;">Status</label>
-          <p style="margin: 5px 0; color: #555;">${status}</p>
+          <p style="margin: 5px 0; color: #555;">Past</p>
         </div>
 
         <div style="margin-bottom: 15px;">
