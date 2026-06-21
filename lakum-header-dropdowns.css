@@ -6,20 +6,23 @@
 
 .lakum-nav__item--dropdown {
     position: relative;
+    display: flex;
+    align-items: center;
 }
 
 .lakum-nav__dropdown-toggle {
-    display: none;
+    display: inline-flex;
     background: none;
     border: none;
     cursor: pointer;
     color: #1a1a1a;
-    padding: 0;
+    padding: 0 6px;
     margin-left: 6px;
     font-size: 14px;
     transition: transform 0.3s ease;
     align-items: center;
     justify-content: center;
+    height: 100%;
 }
 
 .lakum-nav__dropdown-toggle i {
@@ -80,15 +83,30 @@
 
 /* ===== MOBILE DROPDOWN MENU ===== */
 
+/* On DESKTOP (> 1024px): Dropdowns appear on hover, toggle always visible */
+@media (min-width: 1025px) {
+    .lakum-nav .lakum-nav__dropdown-toggle {
+        display: inline-flex !important;
+    }
+}
+
+/* On MOBILE (≤ 1024px): Toggle clickable to expand */
 @media (max-width: 1024px) {
     /* Show toggle button on mobile */
     .lakum-nav--mobile .lakum-nav__dropdown-toggle {
-        display: flex;
+        display: inline-flex;
+    }
+    
+    /* Hide toggle on desktop nav (not used on mobile) */
+    .lakum-nav .lakum-nav__dropdown-toggle {
+        display: none !important;
     }
 
     /* Mobile dropdown styling */
     .lakum-nav--mobile .lakum-nav__item--dropdown {
         border-bottom: 1px solid #e8e8e8;
+        flex-direction: column;
+        align-items: flex-start;
     }
 
     .lakum-nav--mobile .lakum-nav__dropdown {
