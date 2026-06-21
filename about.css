@@ -27,6 +27,7 @@
     color: #1a1a1a;
     line-height: 1.2;
     margin: 0;
+    text-align: center;
 }
 
 .lakum-about-section__description {
@@ -102,6 +103,7 @@
     color: #1a1a1a;
     line-height: 1.2;
     margin: 0;
+    text-align: center;
 }
 
 .lakum-workshops-section__description {
@@ -163,11 +165,12 @@
 }
 
 .lakum-tagline-section__spaces {
-    font-size: 0.85rem;
+    font-size: 1.2rem;
     color: #888;
     letter-spacing: 1px;
     text-transform: uppercase;
     margin: 0 0 16px 0;
+    text-align: center;
 }
 
 .lakum-tagline-section__title {
@@ -176,6 +179,7 @@
     color: #1a1a1a;
     margin: 0;
     line-height: 1.2;
+    text-align: center;
 }
 
 /* Responsive - Tablet & Below */
