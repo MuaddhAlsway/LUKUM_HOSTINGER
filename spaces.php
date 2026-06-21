@@ -878,25 +878,25 @@ require_once 'includes/site-settings.php';
             hall1: {
                 name: 'Hall 1',
                 images: [
-                    'assest/HadafCompany/hall1.png'
+                    'HADAFCompany/Hall1.png'
                 ]
             },
             hall2: {
                 name: 'Hall 2',
                 images: [
-                    'assest/HadafCompany/hall2.png'
+                    'HADAFCompany/Hall2.png'
                 ]
             },
             cafe: {
                 name: 'Café',
                 images: [
-                    'assest/HadafCompany/hall3.png'
+                    'HADAFCompany/Hall3.png'
                 ]
             },
             meeting: {
                 name: 'Meeting Room',
                 images: [
-                    'assest/HadafCompany/hall4.png'
+                    'HADAFCompany/Hall4.png'
                 ]
             }
         };
