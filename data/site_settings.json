@@ -1,0 +1,28 @@
+{
+  "home": {
+    "hero_title_en": "",
+    "hero_subtitle_en": "",
+    "cta1_title_en": "",
+    "cta1_subtitle_en": "",
+    "cta2_title_en": "",
+    "cta2_subtitle_en": ""
+  },
+  "about": {
+    "hero_title_en": "",
+    "hero_subtitle_en": "",
+    "about_title_en": "",
+    "about_text_en": ""
+  },
+  "spaces": {
+    "gallery_title_en": "Lakum Artspace Gallery",
+    "gallery_title_ar": "معرض مساحة فن لكم"
+  },
+  "shop": {
+    "hero_title_en": "",
+    "hero_subtitle_en": ""
+  },
+  "contact": {
+    "hero_title_en": "",
+    "hero_subtitle_en": ""
+  }
+}
