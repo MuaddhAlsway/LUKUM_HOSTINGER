@@ -1,6 +1,7 @@
 /**
  * LAKUM ARTSPACE - Dropdown Navigation Handler
- * Handles desktop/mobile dropdown toggle, smooth scrolling, and keyboard accessibility
+ * Handles mobile dropdown toggle, smooth scrolling, and keyboard accessibility
+ * NOW WITH PROPER POSITIONING BELOW NAV ITEMS
  */
 
 (function() {
@@ -62,6 +63,11 @@
 
         // Handle smooth scroll for anchor links
         handleSmoothScroll();
+
+        // Reposition dropdowns on window resize
+        window.addEventListener('resize', debounce(() => {
+            repositionAllDropdowns();
+        }, 100));
     }
 
     /**
@@ -92,11 +98,47 @@
             dropdownItem.classList.add('active');
             event.currentTarget.setAttribute('aria-expanded', 'true');
             console.log('✅ Dropdown opened');
+            
+            // Position dropdown below this item
+            setTimeout(() => {
+                positionDropdown(dropdownItem);
+            }, 10);
         } else {
             dropdownItem.classList.remove('active');
             event.currentTarget.setAttribute('aria-expanded', 'false');
             console.log('✅ Dropdown closed');
         }
+    }
+
+    /**
+     * Position dropdown below the nav item
+     */
+    function positionDropdown(dropdownItem) {
+        const dropdown = dropdownItem.querySelector('.lakum-nav__dropdown');
+        if (!dropdown) return;
+
+        const rect = dropdownItem.getBoundingClientRect();
+        const headerHeight = document.querySelector('.lakum-header')?.offsetHeight || 80;
+        
+        // Position below the nav item
+        const top = rect.bottom + window.scrollY + 5; // 5px gap
+        const left = rect.left + (rect.width / 2) - (dropdown.offsetWidth / 2);
+
+        dropdown.style.position = 'fixed';
+        dropdown.style.top = (top - window.scrollY) + 'px';
+        dropdown.style.left = left + 'px';
+        dropdown.style.right = 'auto';
+
+        console.log('📍 Positioned dropdown at:', { top: top - window.scrollY, left });
+    }
+
+    /**
+     * Reposition all active dropdowns (on window resize)
+     */
+    function repositionAllDropdowns() {
+        document.querySelectorAll('.lakum-nav__item--dropdown.active').forEach(item => {
+            positionDropdown(item);
+        });
     }
 
     /**
@@ -134,7 +176,7 @@
     }
 
     /**
-     * Handle outside click (close dropdowns)
+     * Handle outside click (close dropdowns) - NOW WORKS ON DESKTOP AND MOBILE
      */
     function handleOutsideClick(event) {
         // Check if click is outside any dropdown item
