@@ -1,45 +1,83 @@
 <?php
 /**
- * Delete Exhibition API
+ * Delete Exhibition API - Delete exhibition by ID
  */
 
-require_once 'db.php';
-header('Content-Type: application/json');
+header('Content-Type: application/json; charset=utf-8');
 
-$db = Database::getInstance();
-$conn = $db->getConnection();
+// Database credentials
+$db_host = 'localhost';
+$db_user = 'u812122863_neama';
+$db_pass = 'Nema202610!LakumDB';
+$db_name = 'u812122863_lakum_artspace';
 
-if (!$db->isConnected()) {
+// Connect
+$conn = new mysqli($db_host, $db_user, $db_pass, $db_name);
+
+if ($conn->connect_error) {
     http_response_code(500);
-    die(json_encode(['success' => false, 'message' => 'Database connection failed']));
+    die(json_encode([
+        'success' => false,
+        'message' => 'Database connection failed: ' . $conn->connect_error
+    ]));
 }
 
-$input = json_decode(file_get_contents('php://input'), true);
-$id = (int)($input['id'] ?? 0);
+$conn->set_charset('utf8mb4');
 
-if ($id <= 0) {
+// Get JSON input
+$json_input = file_get_contents('php://input');
+$input = json_decode($json_input, true);
+
+if ($input === null) {
     http_response_code(400);
-    die(json_encode(['success' => false, 'message' => 'Invalid exhibition ID']));
+    die(json_encode([
+        'success' => false,
+        'message' => 'Invalid JSON input'
+    ]));
 }
 
+// Get ID
+$id = isset($input['id']) ? intval($input['id']) : 0;
+
+if (!$id) {
+    http_response_code(400);
+    die(json_encode([
+        'success' => false,
+        'message' => 'Exhibition ID is required'
+    ]));
+}
+
+// Delete exhibition
 $sql = "DELETE FROM exhibitions WHERE id = ?";
 
 $stmt = $conn->prepare($sql);
+
 if (!$stmt) {
     http_response_code(500);
-    die(json_encode(['success' => false, 'message' => 'Prepare failed: ' . $conn->error]));
+    die(json_encode([
+        'success' => false,
+        'message' => 'Prepare failed: ' . $conn->error
+    ]));
 }
 
 $stmt->bind_param('i', $id);
 
 if ($stmt->execute()) {
-    die(json_encode([
+    $stmt->close();
+    
+    http_response_code(200);
+    echo json_encode([
         'success' => true,
         'message' => 'Exhibition deleted successfully'
-    ]));
+    ]);
 } else {
     http_response_code(500);
-    die(json_encode(['success' => false, 'message' => 'Error: ' . $stmt->error]));
+    die(json_encode([
+        'success' => false,
+        'message' => 'Delete failed: ' . $stmt->error
+    ]));
 }
+
+$conn->close();
 
 ?>

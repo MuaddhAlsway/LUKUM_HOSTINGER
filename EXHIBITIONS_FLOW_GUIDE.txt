@@ -1,0 +1,231 @@
+================================================================================
+EXHIBITIONS DATA FLOW - Complete Guide
+================================================================================
+
+YOUR REQUEST:
+  "When I add an exhibition in admin/exhibitions.html, 
+   it should show in Past Events on spaces.php"
+
+CURRENT FLOW:
+  
+  1. Admin adds exhibition:
+     admin/add-exhibition.html 
+     → POST to api/add_exhibition.php
+     → Saved to exhibitions table ✅
+
+  2. Admin views exhibitions:
+     admin/exhibitions.html
+     → GET api/get_exhibitions.php (all exhibitions)
+     → Filter: exhibition_date <= today
+     → Shows in admin table ✅
+
+  3. Frontend displays Past Events:
+     spaces.php
+     → GET api/get_exhibitions.php (all exhibitions)
+     → Filter: exhibition_date <= today
+     → Shows in carousel ✅
+
+THEY USE THE SAME API & SAME FILTER!
+
+================================================================================
+WHY PAST EVENTS MIGHT NOT SHOW:
+================================================================================
+
+1. BROWSER CACHE
+   - Page cached before exhibition was added
+   - Hard refresh: Ctrl+Shift+Delete
+   - Clear cache and reload
+
+2. WRONG DATE SELECTED
+   - Exhibition date must be TODAY or BEFORE
+   - If you selected future date, won't show
+   - Admin form only allows past dates
+
+3. JSON PARSING ERROR
+   - Check browser console (F12)
+   - Look for red errors in Console tab
+
+4. API NOT RETURNING DATA
+   - Check: api/debug_exhibitions.php
+   - Should list all exhibitions in database
+
+5. FILTER NOT WORKING
+   - Check: api/get_exhibitions.php returns data
+   - Verify date format matches filter
+
+================================================================================
+TESTING CHECKLIST:
+================================================================================
+
+✓ STEP 1: Add Exhibition in Admin
+  1. Go to: admin/add-exhibition.html
+  2. Fill form (use TODAY'S DATE)
+  3. Click "Create Exhibition"
+  4. Success message?
+
+✓ STEP 2: Verify in Admin List
+  1. Go to: admin/exhibitions.html
+  2. Hard refresh: Ctrl+Shift+Delete
+  3. Exhibition appears in table?
+
+✓ STEP 3: Verify in Database
+  1. Go to: api/debug_exhibitions.php
+  2. Check "total_exhibitions" count
+  3. Check "past_exhibitions" count
+  4. See your exhibition listed?
+
+✓ STEP 4: Verify API Returns Data
+  1. Go to: api/get_exhibitions.php?type=all
+  2. See JSON array with your exhibition?
+
+✓ STEP 5: Check Frontend
+  1. Go to: spaces.php (frontend)
+  2. Scroll to "Past Events" section
+  3. Hard refresh: Ctrl+Shift+Delete
+  4. Exhibition appears in carousel?
+
+IF ALL ✓: SYSTEM IS WORKING!
+
+================================================================================
+DATA SOURCES:
+================================================================================
+
+Admin Panel (exhibitions.html):
+  ├─ API: api/get_exhibitions.php?type=all
+  ├─ Filters: exhibition_date <= today
+  ├─ Shows: Past exhibitions only
+  └─ Updates: When you refresh page
+
+Frontend (spaces.php):
+  ├─ API: api/get_exhibitions.php?type=all
+  ├─ Filters: exhibition_date <= today
+  ├─ Shows: Past exhibitions in carousel
+  └─ Updates: When you reload page
+
+Database (exhibitions table):
+  └─ API: All APIs read from here
+  └─ Add: add_exhibition.php writes here
+  └─ Edit: edit_exhibition.php writes here
+  └─ Delete: delete_exhibition.php writes here
+
+SINGLE SOURCE OF TRUTH: exhibitions table in database
+
+================================================================================
+EXHIBITION LIFECYCLE:
+================================================================================
+
+1. CREATE
+   User → admin/add-exhibition.html 
+   → api/add_exhibition.php 
+   → exhibitions table (ID assigned)
+
+2. READ (Admin)
+   admin/exhibitions.html 
+   → api/get_exhibitions.php 
+   → exhibitions table
+   → Filter & display in table
+
+3. READ (Frontend)
+   spaces.php 
+   → api/get_exhibitions.php 
+   → exhibitions table
+   → Filter & display in carousel
+
+4. UPDATE
+   admin/edit-exhibition.html 
+   → api/edit_exhibition.php 
+   → exhibitions table
+
+5. DELETE
+   admin/exhibitions.html (Delete button) 
+   → api/delete_exhibition.php 
+   → exhibitions table (record deleted)
+
+EVERYTHING SHARES THE SAME DATABASE TABLE!
+
+================================================================================
+IMPORTANT: DATE FORMAT
+================================================================================
+
+Database format: YYYY-MM-DD (e.g., 2026-06-21)
+JavaScript format: Also YYYY-MM-DD
+
+Filter Logic:
+  - Exhibition date (string): "2026-06-21"
+  - Today (date): new Date().getHours(0,0,0,0)
+  - Compare: date <= today
+  - Result: Shows if date is today or before
+
+Example:
+  Today: 2026-06-21 (midnight)
+  Exhibition 1: 2026-06-21 → SHOW ✓
+  Exhibition 2: 2026-06-20 → SHOW ✓
+  Exhibition 3: 2026-06-22 → DON'T SHOW ✗
+
+================================================================================
+COMMON MISTAKES:
+================================================================================
+
+❌ WRONG: Selecting future date in admin form
+   FIX: Admin form only allows past/today dates
+
+❌ WRONG: Not hard refreshing after adding exhibition
+   FIX: Ctrl+Shift+Delete to clear cache
+
+❌ WRONG: Viewing on mobile (might be different URL)
+   FIX: Make sure you're viewing correct page
+
+❌ WRONG: Different languages (EN vs AR)
+   FIX: Make sure language matches when checking
+
+❌ WRONG: Checking immediately (might need page refresh)
+   FIX: Refresh page after adding exhibition
+
+================================================================================
+IF STILL NOT WORKING:
+================================================================================
+
+1. Check browser console (F12) for red errors
+2. Check Network tab - see api/get_exhibitions.php response?
+3. Check api/debug_exhibitions.php for database contents
+4. Check database directly via phpMyAdmin
+5. Verify database credentials in api/*.php files
+
+If all else fails:
+  - Email screenshot of:
+    - api/debug_exhibitions.php output
+    - Browser console errors (F12)
+    - api/get_exhibitions.php JSON response
+
+================================================================================
+FILES INVOLVED:
+================================================================================
+
+Frontend:
+  - spaces.php (displays Past Events carousel)
+
+Admin:
+  - admin/exhibitions.html (lists past exhibitions)
+  - admin/add-exhibition.html (create new)
+  - admin/edit-exhibition.html (update)
+
+APIs:
+  - api/get_exhibitions.php (get all exhibitions)
+  - api/get_exhibition.php (get single by ID)
+  - api/add_exhibition.php (create)
+  - api/edit_exhibition.php (update)
+  - api/delete_exhibition.php (delete)
+  - api/debug_exhibitions.php (debug/check)
+
+Database:
+  - exhibitions table (stores all data)
+
+================================================================================
+STATUS: ✅ SYSTEM IS COMPLETE
+
+Exhibition added in admin SHOULD automatically appear on spaces.php
+Past Events section after hard refresh.
+
+If not appearing, use DEBUG_GUIDE to identify the issue.
+
+================================================================================
