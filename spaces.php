@@ -431,7 +431,7 @@ require_once 'includes/site-settings.php';
             <div class="lakum-spaces-floor__grid">
                 <!-- Ground Floor Row -->
                 <div class="lakum-spaces-floor__row">
-                    <h3 class="lakum-spaces-floor__row-title"><?php echo ss('spaces','ground_floor_title_en','','Lakum Artspace | GROUND FLOOR MAP'); ?></h3>
+                    <h3 class="lakum-spaces-floor__row-title"><?php echo ss('spaces','ground_floor_title_en','','Lakum Artspace | Ground Floor Map'); ?></h3>
                     <div class="lakum-spaces-floor__images">
                         <div class="lakum-spaces-floor__image">
                             <img src="<?php echo ssRaw('spaces','floor_plan1','assest/floor-plan-1.png'); ?>" alt="Ground Floor Map">
@@ -444,7 +444,7 @@ require_once 'includes/site-settings.php';
 
                 <!-- Mezzanine Floor Row -->
                 <div class="lakum-spaces-floor__row">
-                    <h3 class="lakum-spaces-floor__row-title"><?php echo ss('spaces','mezzanine_title_en','','Lakum Artspace | MEZZANINE FLOOR MAP'); ?></h3>
+                    <h3 class="lakum-spaces-floor__row-title"><?php echo ss('spaces','mezzanine_title_en','','Lakum Artspace | Mezzanine Floor Map'); ?></h3>
                     <div class="lakum-spaces-floor__images">
                         <div class="lakum-spaces-floor__image">
                             <img src="<?php echo ssRaw('spaces','floor_plan2','assest/floor-plan-2.png'); ?>" alt="Mezzanine Floor Map">
