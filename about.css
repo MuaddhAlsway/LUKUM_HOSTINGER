@@ -162,6 +162,10 @@
     padding: 60px 20px;
     background: #ffffff;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .lakum-tagline-section__spaces {
@@ -174,7 +178,7 @@
 }
 
 .lakum-tagline-section__title {
-    font-size: 3rem;
+    font-size: 1.5rem;
     font-weight: 700;
     color: #1a1a1a;
     margin: 0;
