@@ -1,115 +1,132 @@
 /* ========================================
    LAKUM ARTSPACE - DROPDOWN NAVIGATION STYLES
-   NORMAL DROPDOWN - CLEAN & SIMPLE
+   NORMAL DROPDOWN - CLEAN & SIMPLE - FIXED
    ======================================== */
 
-/* Dropdown container needs position: relative */
+/* CRITICAL: Ensure nav doesn't hide dropdowns */
+.lakum-nav {
+    overflow: visible !important;
+}
+
+/* CRITICAL: Ensure nav list doesn't hide dropdowns */
+.lakum-nav__list {
+    overflow: visible !important;
+}
+
+/* Dropdown container needs position: relative and overflow visible */
 .lakum-nav__item--dropdown {
-    position: relative;
-    display: flex;
-    align-items: center;
-    overflow: visible;
+    position: relative !important;
+    display: flex !important;
+    align-items: center !important;
+    overflow: visible !important;
 }
 
 /* Dropdown toggle button */
 .lakum-nav__dropdown-toggle {
-    display: inline-flex;
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: #1a1a1a;
-    padding: 0 6px;
-    margin-left: 6px;
-    font-size: 14px;
-    transition: transform 0.3s ease;
-    align-items: center;
-    justify-content: center;
-    height: auto;
+    display: inline-flex !important;
+    background: none !important;
+    border: none !important;
+    cursor: pointer !important;
+    color: #1a1a1a !important;
+    padding: 0 6px !important;
+    margin-left: 6px !important;
+    font-size: 14px !important;
+    transition: transform 0.3s ease !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: auto !important;
+    z-index: 1001 !important;
 }
 
 .lakum-nav__dropdown-toggle i {
-    display: inline-block;
-    font-style: normal;
+    display: inline-block !important;
+    font-style: normal !important;
 }
 
 /* ===== DROPDOWN MENU - NORMAL DROPDOWN ===== */
 .lakum-nav__dropdown {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    min-width: 200px;
-    width: 200px;
-    background: #f6f6eb;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    list-style: none;
-    margin: 0;
-    margin-top: 8px;
-    padding: 8px 0;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-    z-index: 999;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    pointer-events: none;
+    position: absolute !important;
+    top: 100% !important;
+    left: 0 !important;
+    min-width: 200px !important;
+    width: 200px !important;
+    background: #f6f6eb !important;
+    border: 1px solid #ddd !important;
+    border-radius: 4px !important;
+    list-style: none !important;
+    margin: 0 !important;
+    margin-top: 8px !important;
+    padding: 8px 0 !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    z-index: 1000 !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+    transition: opacity 0.3s ease, visibility 0.3s ease !important;
 }
 
-/* Show dropdown when CLICKED */
+/* Show dropdown when CLICKED - with HIGH SPECIFICITY and !important */
+.lakum-nav__item--dropdown.active > .lakum-nav__dropdown {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+}
+
+/* Alternative: if > child selector doesn't work */
 .lakum-nav__item--dropdown.active .lakum-nav__dropdown {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
 }
 
 /* Arrow rotation on CLICK */
 .lakum-nav__item--dropdown.active .lakum-nav__dropdown-toggle {
-    transform: rotate(180deg);
+    transform: rotate(180deg) !important;
 }
 
 /* Dropdown Links */
 .lakum-nav__dropdown-link {
-    display: block;
-    padding: 12px 20px;
-    color: #1a1a1a;
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 400;
-    letter-spacing: 0.5px;
-    transition: all 0.2s ease;
-    background: #f6f6eb;
+    display: block !important;
+    padding: 12px 20px !important;
+    color: #1a1a1a !important;
+    text-decoration: none !important;
+    font-size: 14px !important;
+    font-weight: 400 !important;
+    letter-spacing: 0.5px !important;
+    transition: all 0.2s ease !important;
+    background: #f6f6eb !important;
 }
 
 .lakum-nav__dropdown-link:hover {
-    background: #e8e8e0;
-    color: #1a1a1a;
-    padding-left: 24px;
+    background: #e8e8e0 !important;
+    color: #1a1a1a !important;
+    padding-left: 24px !important;
 }
 
 /* ===== RTL SUPPORT ===== */
 
 [dir="rtl"] .lakum-nav__item--dropdown {
-    position: relative;
+    position: relative !important;
 }
 
 [dir="rtl"] .lakum-nav__dropdown {
-    left: auto;
-    right: 0;
+    left: auto !important;
+    right: 0 !important;
 }
 
 [dir="rtl"] .lakum-nav__dropdown-link:hover {
-    padding-left: 20px;
-    padding-right: 24px;
+    padding-left: 20px !important;
+    padding-right: 24px !important;
 }
 
 /* ===== ACCESSIBILITY ===== */
 
 .lakum-nav__dropdown-toggle:focus-visible {
-    outline: 2px solid #1a1a1a;
-    outline-offset: 2px;
+    outline: 2px solid #1a1a1a !important;
+    outline-offset: 2px !important;
 }
 
 .lakum-nav__dropdown-link:focus-visible {
-    outline: 2px solid #1a1a1a;
-    outline-offset: -2px;
+    outline: 2px solid #1a1a1a !important;
+    outline-offset: -2px !important;
 }
-
