@@ -27,6 +27,9 @@ require_once 'includes/hero-settings.php';
 <!-- Global Stylesheets (Centralized) -->
 <?php include('includes/stylesheets.php'); ?>
 
+<!-- Page-specific styles -->
+<link rel="stylesheet" href="about.css">
+
 <meta name="title" content="About LAKUM Artspace - Our Story & Mission">
 <meta name="description" content="Learn about LAKUM Artspace, a premier cultural destination in Riyadh dedicated to fostering artistic expression, cultural exchange, and creative innovation.">
 <meta name="keywords" content="about LAKUM, art gallery Riyadh, cultural hub, art exhibitions, creative workshops">
@@ -52,19 +55,6 @@ require_once 'includes/hero-settings.php';
 
     <!-- Global Header Navigation (Unified) -->
     <?php include('lakum-header-unified.php'); ?>
-    
-    <!-- CRITICAL FIX: Ensure dropdown works on this page -->
-    <style>
-        .lakum-nav { overflow: visible !important; }
-        .lakum-nav__list { overflow: visible !important; }
-        .lakum-nav__item--dropdown { overflow: visible !important; position: relative !important; }
-        .lakum-nav__item--dropdown.active > .lakum-nav__dropdown,
-        .lakum-nav__item--dropdown.active .lakum-nav__dropdown {
-            opacity: 1 !important;
-            visibility: visible !important;
-            pointer-events: auto !important;
-        }
-    </style>
 
     <section class="lakum-hero" style="aspect-ratio: 16/9">
         <?php renderHero('about', 'About LAKUM Artspace'); ?>

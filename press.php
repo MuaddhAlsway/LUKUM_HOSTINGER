@@ -132,19 +132,6 @@ if (file_exists('api/image-helper.php')) { require_once 'api/image-helper.php'; 
 
     <!-- Global Header Navigation (Unified) -->
     <?php include('lakum-header-unified.php'); ?>
-    
-    <!-- CRITICAL FIX: Ensure dropdown works on this page -->
-    <style>
-        .lakum-nav { overflow: visible !important; }
-        .lakum-nav__list { overflow: visible !important; }
-        .lakum-nav__item--dropdown { overflow: visible !important; position: relative !important; }
-        .lakum-nav__item--dropdown.active > .lakum-nav__dropdown,
-        .lakum-nav__item--dropdown.active .lakum-nav__dropdown {
-            opacity: 1 !important;
-            visibility: visible !important;
-            pointer-events: auto !important;
-        }
-    </style>
 
     <script>
         // Set current language from PHP (respects URL parameter ?lang=en or ?lang=ar)
