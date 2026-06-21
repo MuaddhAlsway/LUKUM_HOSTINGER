@@ -77,6 +77,11 @@
      * Handle dropdown link click
      */
     function handleDropdownLinkClick(event) {
+        // Prevent event from bubbling to parent nav item
+        event.stopPropagation();
+        event.stopImmediatePropagation();
+        
+        // Close dropdown after navigation
         setTimeout(() => {
             closeAllDropdowns();
         }, 100);
