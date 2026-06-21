@@ -12,10 +12,7 @@
     <link rel="stylesheet" href="lakum-header-unified.css?v=2.3.0">
     
     <!-- Dropdown Navigation Styles -->
-    <link rel="stylesheet" href="lakum-header-dropdowns.css?v=3.5.0">
-    
-    <!-- CRITICAL: Dropdown Override (loads LAST to fix conflicts) -->
-    <link rel="stylesheet" href="lakum-dropdown-override.css?v=1.3.0">
+    <link rel="stylesheet" href="lakum-header-dropdowns.css?v=4.0.0">
     
     <!-- Component Styles -->
     <link rel="stylesheet" href="lakum-components.css?v=2.1.0">

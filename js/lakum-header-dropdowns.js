@@ -1,20 +1,13 @@
 /**
  * LAKUM ARTSPACE - Dropdown Navigation Handler
- * Handles mobile dropdown toggle, smooth scrolling, and keyboard accessibility
- * NOW WITH PROPER POSITIONING BELOW NAV ITEMS
+ * Simple click-based dropdown toggle
  */
 
 (function() {
     'use strict';
 
-    // Configuration
-    const MOBILE_BREAKPOINT = 1024;
-    const SCROLL_OFFSET = 80; // Header height
-
-    // DOM Elements
     let dropdownToggles = null;
     let dropdownItems = null;
-    let mobileNav = null;
 
     /**
      * Initialize dropdown functionality
@@ -22,35 +15,26 @@
     function init() {
         dropdownToggles = document.querySelectorAll('.lakum-nav__dropdown-toggle');
         dropdownItems = document.querySelectorAll('.lakum-nav__item--dropdown');
-        mobileNav = document.getElementById('lakum-nav-mobile');
-
-        console.log('🔍 Dropdown Init:', {
-            togglesFound: dropdownToggles.length,
-            itemsFound: dropdownItems.length,
-            mobileNavFound: !!mobileNav
-        });
 
         if (!dropdownToggles.length) {
             console.warn('⚠️ No dropdown toggles found!');
             return;
         }
 
-        // Attach event listeners
         attachEventListeners();
         console.log('✅ Dropdown listeners attached');
     }
 
     /**
-     * Attach event listeners to dropdown elements
+     * Attach event listeners
      */
     function attachEventListeners() {
-        // Dropdown toggle click handler
+        // Toggle dropdown on click
         dropdownToggles.forEach(toggle => {
             toggle.addEventListener('click', handleToggleClick);
-            toggle.addEventListener('keydown', handleToggleKeydown);
         });
 
-        // Dropdown link click handler (close dropdown after navigation)
+        // Close dropdown when clicking link
         document.querySelectorAll('.lakum-nav__dropdown-link').forEach(link => {
             link.addEventListener('click', handleDropdownLinkClick);
         });
@@ -60,14 +44,6 @@
 
         // Close dropdowns on ESC key
         document.addEventListener('keydown', handleEscapeKey);
-
-        // Handle smooth scroll for anchor links
-        handleSmoothScroll();
-
-        // Reposition dropdowns on window resize
-        window.addEventListener('resize', debounce(() => {
-            repositionAllDropdowns();
-        }, 100));
     }
 
     /**
@@ -78,31 +54,18 @@
         event.stopPropagation();
 
         const dropdownItem = event.currentTarget.closest('.lakum-nav__item--dropdown');
-        if (!dropdownItem) {
-            console.error('❌ Could not find dropdown item parent');
-            return;
-        }
+        if (!dropdownItem) return;
 
         const isActive = dropdownItem.classList.contains('active');
-        
-        console.log('🖱️ Dropdown clicked:', {
-            isCurrentlyActive: isActive,
-            itemElement: dropdownItem.querySelector('.lakum-nav__link')?.textContent.trim()
-        });
-        
+
         // Close all other dropdowns
         closeAllDropdowns();
-        
+
         // Toggle this dropdown
         if (!isActive) {
             dropdownItem.classList.add('active');
             event.currentTarget.setAttribute('aria-expanded', 'true');
             console.log('✅ Dropdown opened');
-            
-            // Position dropdown below this item
-            setTimeout(() => {
-                positionDropdown(dropdownItem);
-            }, 10);
         } else {
             dropdownItem.classList.remove('active');
             event.currentTarget.setAttribute('aria-expanded', 'false');
@@ -111,41 +74,9 @@
     }
 
     /**
-     * Show/hide dropdown (no positioning needed - CSS handles it)
-     */
-    function positionDropdown(dropdownItem) {
-        const dropdown = dropdownItem.querySelector('.lakum-nav__dropdown');
-        if (!dropdown) return;
-
-        // With position: absolute and top: 100%, dropdown appears naturally below item
-        console.log('✅ Dropdown shown (position: absolute, top: 100%)');
-    }
-
-    /**
-     * Reposition all active dropdowns (on window resize)
-     */
-    function repositionAllDropdowns() {
-        document.querySelectorAll('.lakum-nav__item--dropdown.active').forEach(item => {
-            positionDropdown(item);
-        });
-    }
-
-    /**
-     * Handle keyboard navigation on toggle button
-     */
-    function handleToggleKeydown(event) {
-        if (event.key === 'Enter' || event.key === ' ') {
-            event.preventDefault();
-            event.currentTarget.click();
-        }
-    }
-
-    /**
-     * Handle dropdown link click (navigate and close)
+     * Handle dropdown link click
      */
     function handleDropdownLinkClick(event) {
-        // Allow default navigation (href will handle it)
-        // Just close the dropdown after a small delay to allow link to navigate
         setTimeout(() => {
             closeAllDropdowns();
         }, 100);
@@ -165,117 +96,26 @@
     }
 
     /**
-     * Handle outside click (close dropdowns) - NOW WORKS ON DESKTOP AND MOBILE
+     * Handle outside click
      */
     function handleOutsideClick(event) {
-        // Check if click is outside any dropdown item
         const clickedInsideDropdown = Array.from(dropdownItems).some(item => {
             return item.contains(event.target);
         });
 
-        // If clicked outside all dropdowns, close them
         if (!clickedInsideDropdown) {
             closeAllDropdowns();
-            console.log('🔴 Closed dropdown (clicked outside)');
         }
     }
 
     /**
-     * Handle ESC key to close dropdowns
+     * Handle ESC key
      */
     function handleEscapeKey(event) {
         if (event.key === 'Escape') {
             closeAllDropdowns();
         }
     }
-
-    /**
-     * Handle smooth scroll for anchor links
-     * Offset scroll by header height
-     */
-    function handleSmoothScroll() {
-        // Listen for hash changes
-        window.addEventListener('hashchange', smoothScrollToAnchor);
-        
-        // Also handle direct clicks on dropdown links
-        document.querySelectorAll('.lakum-nav__dropdown-link[href*="#"]').forEach(link => {
-            link.addEventListener('click', function(e) {
-                const href = this.getAttribute('href');
-                const hashIndex = href.indexOf('#');
-                if (hashIndex > -1) {
-                    const hash = href.substring(hashIndex);
-                    setTimeout(() => {
-                        scrollToAnchor(hash);
-                    }, 100);
-                }
-            });
-        });
-
-        // Check if page loaded with hash
-        if (window.location.hash) {
-            setTimeout(() => {
-                smoothScrollToAnchor();
-            }, 500);
-        }
-    }
-
-    /**
-     * Smooth scroll to anchor with offset
-     */
-    function smoothScrollToAnchor() {
-        const hash = window.location.hash;
-        if (hash) {
-            scrollToAnchor(hash);
-        }
-    }
-
-    /**
-     * Scroll to specific anchor ID
-     */
-    function scrollToAnchor(hash) {
-        const element = document.querySelector(hash);
-        if (!element) return;
-
-        const elementPosition = element.getBoundingClientRect().top + window.scrollY;
-        const offsetPosition = elementPosition - SCROLL_OFFSET;
-
-        window.scrollTo({
-            top: offsetPosition,
-            behavior: 'smooth'
-        });
-    }
-
-    /**
-     * Handle responsive behavior (close dropdowns when resizing to desktop)
-     */
-    window.addEventListener('resize', debounce(() => {
-        if (window.innerWidth > MOBILE_BREAKPOINT) {
-            closeAllDropdowns();
-        }
-    }, 250));
-
-    /**
-     * Debounce utility
-     */
-    function debounce(func, wait) {
-        let timeout;
-        return function executedFunction(...args) {
-            const later = () => {
-                clearTimeout(timeout);
-                func(...args);
-            };
-            clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
-        };
-    }
-
-    /**
-     * Public API
-     */
-    window.LakumDropdowns = {
-        closeAll: closeAllDropdowns,
-        init: init
-    };
 
     /**
      * Auto-initialize when DOM is ready
