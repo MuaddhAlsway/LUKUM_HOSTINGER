@@ -1,0 +1,114 @@
+================================================================================
+FIX: "Error: API returned empty response" in add-exhibition.html
+================================================================================
+
+PROBLEM:
+  When trying to add a new exhibition via the admin panel, got error:
+  "Error: API returned empty response"
+
+ROOT CAUSE:
+  The add_exhibition.php API was trying to load complex configuration files
+  and if there were any PHP errors, they were suppressed, causing empty response.
+
+SOLUTION APPLIED:
+  Rewrote api/add_exhibition.php to be SIMPLE & ROBUST:
+  ✅ Removed dependency on complex config files
+  ✅ Direct database connection
+  ✅ Proper error handling with clear messages
+  ✅ Auto-creates exhibitions table if missing
+  ✅ Output buffering to prevent stray output
+  ✅ Clear JSON responses for all cases
+
+FILES MODIFIED:
+  • api/add_exhibition.php ← COMPLETELY REWRITTEN
+
+KEY CHANGES:
+  
+  OLD (Broken):
+    - Required db.php → config.php → config.local.php chain
+    - Multiple levels of error suppression
+    - No clear error messages if something failed
+    - Empty response on any error
+  
+  NEW (Fixed):
+    - Direct mysqli connection: new mysqli('localhost', 'root', '', 'lakum_artspace')
+    - Clear error messages for debugging
+    - Auto-creates exhibitions table if missing
+    - Output buffering to catch stray PHP output
+    - Returns clear JSON for all cases (success/error)
+
+HOW TO TEST:
+
+1. Go to: http://localhost/admin/add-exhibition.html
+   (or your Hostinger URL: https://your-site.com/admin/add-exhibition.html)
+
+2. Fill in form:
+   - Exhibition Title (EN): "Test Exhibition"
+   - Location (EN): "Hall 1"
+   - Exhibition Date: Pick any past date
+   - Upload cover image (optional)
+
+3. Click "Create Exhibition"
+
+4. Expected result: 
+   ✅ "Exhibition created successfully!" message
+   ✅ Redirects to exhibitions.html
+
+TROUBLESHOOTING:
+
+If still getting errors:
+
+1. Check database connection:
+   - Database name: lakum_artspace
+   - Host: localhost
+   - User: root
+   - Password: (empty)
+   
+   Open phpMyAdmin and verify you can access the database
+
+2. Check if exhibitions table exists:
+   SELECT * FROM exhibitions;
+   
+   If table doesn't exist, the API will auto-create it
+
+3. Check browser console (F12):
+   - Network tab → look at add_exhibition.php response
+   - Should see JSON: {"success": true, ...}
+
+4. Check server logs:
+   - xampp/apache/logs/error.log
+   - Look for PHP errors
+
+DATABASE CREDENTIALS:
+  These are hardcoded in the new add_exhibition.php:
+  
+  $conn = new mysqli('localhost', 'root', '', 'lakum_artspace');
+  
+  If your credentials are different, edit:
+  - Line 22: 'localhost' → your server
+  - Line 22: 'root' → your username
+  - Line 22: '' → your password
+  - Line 22: 'lakum_artspace' → your database name
+
+EXHIBITIONS TABLE:
+  If it doesn't exist, it will auto-create with these columns:
+  - id (auto-increment)
+  - title_en, title_ar
+  - description_en, description_ar
+  - location_en, location_ar
+  - exhibition_date, exhibition_time, exhibition_end_time, end_date
+  - cover_image
+  - category (always 'exhibition')
+  - is_featured
+  - created_at, updated_at
+
+REVERTING (If needed):
+  Original version backed up as: api/add_exhibition.php.bak
+  (If you need it, let me know and I can restore)
+
+STATUS: ✅ FIXED
+
+The API now returns clear error messages instead of empty responses,
+making it easy to debug any remaining issues.
+
+================================================================================

@@ -1,0 +1,189 @@
+================================================================================
+EXHIBITIONS TABLE - QUICK REFERENCE
+Based on Admin Panel Form Fields
+================================================================================
+
+TABLE NAME: exhibitions
+
+================================================================================
+COLUMNS (Fields)
+================================================================================
+
+ENGLISH CONTENT (Required):
+  • title_en VARCHAR(255) - Exhibition title in English *REQUIRED*
+  • description_en LONGTEXT - Exhibition description in English
+  • location_en VARCHAR(255) - Location (Hall 1, Hall 2, Café, Meeting Room) *REQUIRED*
+
+ARABIC CONTENT (Optional):
+  • title_ar VARCHAR(255) - Exhibition title in Arabic
+  • description_ar LONGTEXT - Exhibition description in Arabic
+  • location_ar VARCHAR(255) - Location in Arabic (القاعة 1, الكافيه, etc.)
+
+DATE & TIME:
+  • exhibition_date DATE - Start date (Past dates only) *REQUIRED*
+  • exhibition_time TIME - Start time (e.g., 10:00:00) Default: 10:00
+  • exhibition_end_time TIME - End time (e.g., 18:00:00) Default: 18:00
+  • end_date DATE - End date for multi-day exhibitions (optional)
+
+MEDIA:
+  • cover_image VARCHAR(500) - Path to cover image (e.g., assest/img-4.png)
+
+METADATA:
+  • category VARCHAR(50) - Type: always 'exhibition' (fixed)
+  • is_featured TINYINT(1) - Featured on homepage (0=no, 1=yes)
+
+AUTO-GENERATED:
+  • id INT - Unique exhibition ID (auto-increment)
+  • created_at TIMESTAMP - Date/time created (auto)
+  • updated_at TIMESTAMP - Date/time last updated (auto)
+
+================================================================================
+LOCATIONS AVAILABLE
+================================================================================
+  • Hall 1
+  • Hall 2
+  • Café
+  • Meeting Room
+  • Custom (user can enter custom location)
+
+================================================================================
+HOW TO USE
+================================================================================
+
+1. Run SQL Script:
+   File: api/EXHIBITIONS_TABLE_FINAL.sql
+   
+   Option A - phpMyAdmin:
+     → Go to phpMyAdmin
+     → Select your database
+     → Click "Import" or "SQL" tab
+     → Paste entire script or upload file
+     → Click "Go"
+   
+   Option B - Command Line:
+     mysql -u username -p database_name < api/EXHIBITIONS_TABLE_FINAL.sql
+
+2. Sample Data Included:
+   The script includes 3 sample exhibitions so you can test immediately
+
+3. Add Exhibition via Admin Panel:
+   → Go to admin/add-exhibition.html
+   → Fill in form fields
+   → Submit → Saves to exhibitions table
+
+================================================================================
+FORM FIELDS MAPPING
+================================================================================
+
+Admin Form Field          →  Database Column
+─────────────────────────────────────────────────────────────────────
+Exhibition Title (EN)     →  title_en *
+Description (EN)          →  description_en
+Location (EN)             →  location_en *
+
+Exhibition Title (AR)     →  title_ar
+Description (AR)          →  description_ar
+Location (AR)             →  location_ar
+
+Exhibition Date           →  exhibition_date *
+Start Time                →  exhibition_time
+End Time                  →  exhibition_end_time
+
+Multi-Day: End Date       →  end_date
+Multi-Day: Start Time     →  end_date_start_time (stored as end_date)
+Multi-Day: End Time       →  end_time (stored as end_date)
+
+Cover Image               →  cover_image
+Category                  →  category (fixed: 'exhibition')
+
+* Required Fields
+================================================================================
+
+EXAMPLE DATA:
+
+id    | title_en                    | location_en | exhibition_date | exhibition_time | cover_image
+──────┼─────────────────────────────┼─────────────┼─────────────────┼─────────────────┼─────────────
+  1   | Contemporary Art Showcase   | Hall 1      | 2025-12-15      | 10:00:00        | assest/img-4.png
+  2   | Digital Art Workshop        | Studio A    | 2025-11-20      | 14:00:00        | assest/img-5.png
+  3   | Artist Talk: Future of Art  | Hall 2      | 2025-10-12      | 15:00:00        | assest/img-6.png
+
+================================================================================
+COMMON QUERIES
+================================================================================
+
+Get all exhibitions (newest first):
+  SELECT * FROM exhibitions ORDER BY exhibition_date DESC;
+
+Get featured exhibitions:
+  SELECT * FROM exhibitions WHERE is_featured = 1;
+
+Get by location:
+  SELECT * FROM exhibitions WHERE location_en = 'Hall 1';
+
+Search by title:
+  SELECT * FROM exhibitions WHERE title_en LIKE '%Contemporary%';
+
+Get exhibitions in date range:
+  SELECT * FROM exhibitions 
+  WHERE exhibition_date BETWEEN '2025-01-01' AND '2025-12-31'
+  ORDER BY exhibition_date ASC;
+
+Count exhibitions:
+  SELECT COUNT(*) as total FROM exhibitions;
+
+================================================================================
+IMPORTANT NOTES
+================================================================================
+
+✓ DO:
+  • Use bilingual content (English & Arabic) for international audience
+  • Always provide exhibition_date (required field)
+  • Use existing locations when possible (Hall 1, Hall 2, Café, Meeting Room)
+  • Set cover_image path (e.g., assest/img-4.png)
+  • Use is_featured = 1 for homepage highlights
+
+✗ DON'T:
+  • Leave title_en or location_en empty
+  • Use future dates (only past dates allowed)
+  • Mix languages in one field
+  • Hardcode image URLs (use assest/folder/image.png format)
+
+================================================================================
+TECHNICAL DETAILS
+================================================================================
+
+Database Engine: InnoDB
+Character Set: utf8mb4 (Supports Arabic, Emoji)
+Collation: utf8mb4_unicode_ci
+
+Indexes:
+  • idx_exhibition_date - Speed up date queries
+  • idx_category - Speed up category filter
+  • idx_is_featured - Speed up featured query
+
+Auto-Increment ID: Starts at 1, increments by 1
+
+Timestamps: 
+  • created_at - Set once at creation, never changes
+  • updated_at - Auto-updates whenever record is modified
+
+================================================================================
+FILE LOCATION
+================================================================================
+
+SQL Script: api/EXHIBITIONS_TABLE_FINAL.sql
+Admin Form: admin/add-exhibition.html
+Frontend Display: exhibitions.php
+API Get: api/get_exhibitions.php
+API Add: api/add_exhibition.php
+
+================================================================================
+STATUS
+================================================================================
+
+✅ Table structure: READY TO USE
+✅ Sample data: INCLUDED
+✅ Admin form: READY (add-exhibition.html)
+✅ API: READY (add_exhibition.php, get_exhibitions.php)
+
+================================================================================
