@@ -14,6 +14,8 @@
   "nav_upcoming_exhibitions": "المعارض القادمة",
   "nav_past_exhibitions": "المعارض السابقة",
   "nav_create_event": "أنشئ فعاليتك",
+  "nav_about_us": "من نحن",
+  "nav_about_space": "عن مساحة لكم",
   "nav_lakum_venue": "مساحة لكم",
   "nav_our_facilities": "المرافق",
   "nav_floor_maps": "خرائط الطوابق",
@@ -21,5 +23,10 @@
   "nav_book_event": "حجز المساحات",
   "nav_upcoming_events": "الفعاليات القادمة",
   "nav_workshops": "ورش العمل",
+  "nav_events_calendar": "تقويم الفعاليات",
+  "nav_lakum_blog": "مدونة لكم",
+  "nav_read_about": "كتبوا عنا",
+  "nav_get_in_touch": "تواصل معنا",
+  "nav_concept_store": "المتجر",
   "_updated": "2026-06-21"
 }

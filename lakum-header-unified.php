@@ -59,9 +59,16 @@ $langParam = '?lang=' . $currentLang;
                     </ul>
                 </li>
 
-                <!-- ABOUT -->
-                <li class="lakum-nav__item">
+                <!-- ABOUT with Dropdown -->
+                <li class="lakum-nav__item lakum-nav__item--dropdown">
                     <a href="about.php<?php echo $langParam; ?>" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'about.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('about', 'About'); ?></a>
+                    <button class="lakum-nav__dropdown-toggle" aria-label="Toggle About submenu" aria-expanded="false">
+                        <i class="ri-arrow-down-s-line"></i>
+                    </button>
+                    <ul class="lakum-nav__dropdown">
+                        <li><a href="about.php<?php echo $langParam; ?>" class="lakum-nav__dropdown-link"><?php echo t('nav_about_us', 'Who We Are'); ?></a></li>
+                        <li><a href="about.php<?php echo $langParam; ?>" class="lakum-nav__dropdown-link"><?php echo t('nav_about_space', 'About Lakum Space'); ?></a></li>
+                    </ul>
                 </li>
 
                 <!-- EXHIBITIONS (SPACES) with Dropdown -->
@@ -91,29 +98,59 @@ $langParam = '?lang=' . $currentLang;
                     </ul>
                 </li>
 
-                <!-- VENUE HIRE -->
-                <li class="lakum-nav__item">
+                <!-- VENUE HIRE with Dropdown -->
+                <li class="lakum-nav__item lakum-nav__item--dropdown">
                     <a href="calendar.php<?php echo $langParam; ?>" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'calendar.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('calendar', 'Venue Hire'); ?></a>
+                    <button class="lakum-nav__dropdown-toggle" aria-label="Toggle Venue Hire submenu" aria-expanded="false">
+                        <i class="ri-arrow-down-s-line"></i>
+                    </button>
+                    <ul class="lakum-nav__dropdown">
+                        <li><a href="calendar.php<?php echo $langParam; ?>" class="lakum-nav__dropdown-link"><?php echo t('nav_events_calendar', 'Events Calendar'); ?></a></li>
+                    </ul>
                 </li>
 
-                <!-- BLOG -->
-                <li class="lakum-nav__item">
+                <!-- BLOG with Dropdown -->
+                <li class="lakum-nav__item lakum-nav__item--dropdown">
                     <a href="blog.php<?php echo $langParam; ?>" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'blog.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('blog', 'Blog'); ?></a>
+                    <button class="lakum-nav__dropdown-toggle" aria-label="Toggle Blog submenu" aria-expanded="false">
+                        <i class="ri-arrow-down-s-line"></i>
+                    </button>
+                    <ul class="lakum-nav__dropdown">
+                        <li><a href="blog.php<?php echo $langParam; ?>" class="lakum-nav__dropdown-link"><?php echo t('nav_lakum_blog', 'Lakum Artspace Blog'); ?></a></li>
+                    </ul>
                 </li>
 
-                <!-- PRESS -->
-                <li class="lakum-nav__item">
+                <!-- PRESS with Dropdown -->
+                <li class="lakum-nav__item lakum-nav__item--dropdown">
                     <a href="press.php<?php echo $langParam; ?>" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'press.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('press', 'Press'); ?></a>
+                    <button class="lakum-nav__dropdown-toggle" aria-label="Toggle Press submenu" aria-expanded="false">
+                        <i class="ri-arrow-down-s-line"></i>
+                    </button>
+                    <ul class="lakum-nav__dropdown">
+                        <li><a href="press.php<?php echo $langParam; ?>" class="lakum-nav__dropdown-link"><?php echo t('nav_read_about', 'Read About Lakum Artspace'); ?></a></li>
+                    </ul>
                 </li>
 
-                <!-- CONTACT -->
-                <li class="lakum-nav__item">
+                <!-- CONTACT with Dropdown -->
+                <li class="lakum-nav__item lakum-nav__item--dropdown">
                     <a href="contact.php<?php echo $langParam; ?>" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'contact.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('contact_us', 'Contact'); ?></a>
+                    <button class="lakum-nav__dropdown-toggle" aria-label="Toggle Contact submenu" aria-expanded="false">
+                        <i class="ri-arrow-down-s-line"></i>
+                    </button>
+                    <ul class="lakum-nav__dropdown">
+                        <li><a href="contact.php<?php echo $langParam; ?>" class="lakum-nav__dropdown-link"><?php echo t('nav_get_in_touch', 'Get in Touch'); ?></a></li>
+                    </ul>
                 </li>
 
-                <!-- SHOP -->
-                <li class="lakum-nav__item">
+                <!-- SHOP with Dropdown -->
+                <li class="lakum-nav__item lakum-nav__item--dropdown">
                     <a href="shop.php<?php echo $langParam; ?>" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'shop.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('shop', 'Shop'); ?></a>
+                    <button class="lakum-nav__dropdown-toggle" aria-label="Toggle Shop submenu" aria-expanded="false">
+                        <i class="ri-arrow-down-s-line"></i>
+                    </button>
+                    <ul class="lakum-nav__dropdown">
+                        <li><a href="shop.php<?php echo $langParam; ?>" class="lakum-nav__dropdown-link"><?php echo t('nav_concept_store', 'Concept Store'); ?></a></li>
+                    </ul>
                 </li>
             </ul>
         </nav>
@@ -156,9 +193,16 @@ $langParam = '?lang=' . $currentLang;
             </ul>
         </li>
 
-        <!-- ABOUT -->
-        <li class="lakum-nav__item">
+        <!-- ABOUT with Dropdown -->
+        <li class="lakum-nav__item lakum-nav__item--dropdown">
             <a href="about.php<?php echo $langParam; ?>" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'about.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('about', 'About'); ?></a>
+            <button class="lakum-nav__dropdown-toggle" aria-label="Toggle About submenu" aria-expanded="false">
+                <i class="ri-arrow-down-s-line"></i>
+            </button>
+            <ul class="lakum-nav__dropdown">
+                <li><a href="about.php<?php echo $langParam; ?>" class="lakum-nav__dropdown-link"><?php echo t('nav_about_us', 'Who We Are'); ?></a></li>
+                <li><a href="about.php<?php echo $langParam; ?>" class="lakum-nav__dropdown-link"><?php echo t('nav_about_space', 'About Lakum Space'); ?></a></li>
+            </ul>
         </li>
 
         <!-- EXHIBITIONS (SPACES) with Dropdown -->
@@ -188,29 +232,59 @@ $langParam = '?lang=' . $currentLang;
             </ul>
         </li>
 
-        <!-- VENUE HIRE -->
-        <li class="lakum-nav__item">
+        <!-- VENUE HIRE with Dropdown -->
+        <li class="lakum-nav__item lakum-nav__item--dropdown">
             <a href="calendar.php<?php echo $langParam; ?>" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'calendar.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('calendar', 'Venue Hire'); ?></a>
+            <button class="lakum-nav__dropdown-toggle" aria-label="Toggle Venue Hire submenu" aria-expanded="false">
+                <i class="ri-arrow-down-s-line"></i>
+            </button>
+            <ul class="lakum-nav__dropdown">
+                <li><a href="calendar.php<?php echo $langParam; ?>" class="lakum-nav__dropdown-link"><?php echo t('nav_events_calendar', 'Events Calendar'); ?></a></li>
+            </ul>
         </li>
 
-        <!-- BLOG -->
-        <li class="lakum-nav__item">
+        <!-- BLOG with Dropdown -->
+        <li class="lakum-nav__item lakum-nav__item--dropdown">
             <a href="blog.php<?php echo $langParam; ?>" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'blog.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('blog', 'Blog'); ?></a>
+            <button class="lakum-nav__dropdown-toggle" aria-label="Toggle Blog submenu" aria-expanded="false">
+                <i class="ri-arrow-down-s-line"></i>
+            </button>
+            <ul class="lakum-nav__dropdown">
+                <li><a href="blog.php<?php echo $langParam; ?>" class="lakum-nav__dropdown-link"><?php echo t('nav_lakum_blog', 'Lakum Artspace Blog'); ?></a></li>
+            </ul>
         </li>
 
-        <!-- PRESS -->
-        <li class="lakum-nav__item">
+        <!-- PRESS with Dropdown -->
+        <li class="lakum-nav__item lakum-nav__item--dropdown">
             <a href="press.php<?php echo $langParam; ?>" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'press.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('press', 'Press'); ?></a>
+            <button class="lakum-nav__dropdown-toggle" aria-label="Toggle Press submenu" aria-expanded="false">
+                <i class="ri-arrow-down-s-line"></i>
+            </button>
+            <ul class="lakum-nav__dropdown">
+                <li><a href="press.php<?php echo $langParam; ?>" class="lakum-nav__dropdown-link"><?php echo t('nav_read_about', 'Read About Lakum Artspace'); ?></a></li>
+            </ul>
         </li>
 
-        <!-- CONTACT -->
-        <li class="lakum-nav__item">
+        <!-- CONTACT with Dropdown -->
+        <li class="lakum-nav__item lakum-nav__item--dropdown">
             <a href="contact.php<?php echo $langParam; ?>" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'contact.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('contact_us', 'Contact'); ?></a>
+            <button class="lakum-nav__dropdown-toggle" aria-label="Toggle Contact submenu" aria-expanded="false">
+                <i class="ri-arrow-down-s-line"></i>
+            </button>
+            <ul class="lakum-nav__dropdown">
+                <li><a href="contact.php<?php echo $langParam; ?>" class="lakum-nav__dropdown-link"><?php echo t('nav_get_in_touch', 'Get in Touch'); ?></a></li>
+            </ul>
         </li>
 
-        <!-- SHOP -->
-        <li class="lakum-nav__item">
+        <!-- SHOP with Dropdown -->
+        <li class="lakum-nav__item lakum-nav__item--dropdown">
             <a href="shop.php<?php echo $langParam; ?>" class="lakum-nav__link <?php echo (basename($_SERVER['PHP_SELF']) === 'shop.php') ? 'lakum-nav__link--active' : ''; ?>"><?php echo t('shop', 'Shop'); ?></a>
+            <button class="lakum-nav__dropdown-toggle" aria-label="Toggle Shop submenu" aria-expanded="false">
+                <i class="ri-arrow-down-s-line"></i>
+            </button>
+            <ul class="lakum-nav__dropdown">
+                <li><a href="shop.php<?php echo $langParam; ?>" class="lakum-nav__dropdown-link"><?php echo t('nav_concept_store', 'Concept Store'); ?></a></li>
+            </ul>
         </li>
     </ul>
 </nav>

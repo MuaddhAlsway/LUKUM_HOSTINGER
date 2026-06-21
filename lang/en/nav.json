@@ -14,6 +14,8 @@
   "nav_upcoming_exhibitions": "Upcoming Exhibitions",
   "nav_past_exhibitions": "Past Exhibitions",
   "nav_create_event": "Create Your Event",
+  "nav_about_us": "Who We Are",
+  "nav_about_space": "About Lakum Space",
   "nav_lakum_venue": "Lakum Artspace Venue",
   "nav_our_facilities": "Our Facilities",
   "nav_floor_maps": "Floor Maps",
@@ -21,5 +23,10 @@
   "nav_book_event": "Book Your Event",
   "nav_upcoming_events": "Upcoming",
   "nav_workshops": "Workshops",
+  "nav_events_calendar": "Events Calendar",
+  "nav_lakum_blog": "Lakum Artspace Blog",
+  "nav_read_about": "Read About Lakum Artspace",
+  "nav_get_in_touch": "Get in Touch",
+  "nav_concept_store": "Concept Store",
   "_updated": "2026-06-21"
 }
