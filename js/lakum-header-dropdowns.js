@@ -112,24 +112,48 @@
 
     /**
      * Position dropdown below the nav item
+     * Handles both LTR (English) and RTL (Arabic) layouts
      */
     function positionDropdown(dropdownItem) {
         const dropdown = dropdownItem.querySelector('.lakum-nav__dropdown');
         if (!dropdown) return;
 
-        const rect = dropdownItem.getBoundingClientRect();
-        const headerHeight = document.querySelector('.lakum-header')?.offsetHeight || 80;
+        const header = document.querySelector('.lakum-header');
+        const headerHeight = header?.offsetHeight || 80;
         
-        // Position below the nav item
-        const top = rect.bottom + window.scrollY + 5; // 5px gap
-        const left = rect.left + (rect.width / 2) - (dropdown.offsetWidth / 2);
+        const rect = dropdownItem.getBoundingClientRect();
+        
+        // Position BELOW the header (not inside nav item)
+        const top = headerHeight + 10; // Below header + 10px gap
+        
+        // Handle both LTR (English) and RTL (Arabic)
+        const isRTL = document.documentElement.dir === 'rtl' || 
+                      document.querySelector('html[dir="rtl"]');
+        
+        let left, right;
+        
+        if (isRTL) {
+            // RTL (Arabic): Position from right side
+            right = window.innerWidth - rect.right;
+            left = 'auto';
+        } else {
+            // LTR (English): Position from left side
+            left = rect.left;
+            right = 'auto';
+        }
 
+        // Apply positioning
         dropdown.style.position = 'fixed';
-        dropdown.style.top = (top - window.scrollY) + 'px';
+        dropdown.style.top = top + 'px';
         dropdown.style.left = left + 'px';
-        dropdown.style.right = 'auto';
+        dropdown.style.right = right + 'px';
 
-        console.log('📍 Positioned dropdown at:', { top: top - window.scrollY, left });
+        console.log('📍 Positioned dropdown:', { 
+            top: top, 
+            left: isRTL ? 'auto' : left,
+            right: isRTL ? right : 'auto',
+            isRTL: !!isRTL
+        });
     }
 
     /**

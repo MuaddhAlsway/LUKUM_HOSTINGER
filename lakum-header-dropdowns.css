@@ -113,8 +113,8 @@
 
 [dir="rtl"] .lakum-nav__dropdown {
     left: auto !important;
-    right: 50% !important;
-    transform: translateX(50%) !important;
+    right: 0 !important;
+    transform: none !important;
 }
 
 [dir="rtl"] .lakum-nav__dropdown-link:hover {
