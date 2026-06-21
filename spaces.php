@@ -370,10 +370,10 @@ require_once 'includes/site-settings.php';
         </div>
     </section>
 
-    <!-- LAKUM ArtSpaces Gallery -->
+    <!-- Lakum Artspace Gallery -->
     <section class="lakum-gallery-section">
         <div class="lakum-container">
-            <h2 class="lakum-gallery-section__title"><?php echo ss('spaces','gallery_title_en','spaces_gallery_title','LAKUM ArtSpaces Gallery'); ?></h2>
+            <h2 class="lakum-gallery-section__title"><?php echo ss('spaces','gallery_title_en','spaces_gallery_title','Lakum Artspace Gallery'); ?></h2>
         </div>
         <div class="lakum-gallery-carousel" id="galleryCarousel">
             <div class="lakum-gallery-track" id="galleryTrack">
