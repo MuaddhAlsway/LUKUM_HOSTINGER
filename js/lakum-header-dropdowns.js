@@ -111,94 +111,14 @@
     }
 
     /**
-     * Position dropdown below the nav item
-     * Handles both LTR (English) and RTL (Arabic) layouts
-     * Uses position: fixed to break out of parent and position relative to viewport
+     * Show/hide dropdown (no positioning needed - CSS handles it)
      */
     function positionDropdown(dropdownItem) {
         const dropdown = dropdownItem.querySelector('.lakum-nav__dropdown');
         if (!dropdown) return;
 
-        const header = document.querySelector('.lakum-header');
-        const headerHeight = header?.offsetHeight || 80;
-        
-        // Get the nav item's position in the viewport
-        const itemRect = dropdownItem.getBoundingClientRect();
-        
-        // Position dropdown BELOW the header (not overlapping header)
-        // Fixed position is relative to viewport, so we use header height directly
-        const dropdownTop = headerHeight + 10; // Below header + 10px gap
-        
-        // Detect language direction for proper alignment
-        const isRTL = document.documentElement.dir === 'rtl' || 
-                      document.querySelector('html[dir="rtl"]');
-        
-        // STEP 1: Clear all old positioning first
-        dropdown.style.removeProperty('top');
-        dropdown.style.removeProperty('left');
-        dropdown.style.removeProperty('right');
-        dropdown.style.removeProperty('width');
-        
-        // STEP 2: Set position: fixed explicitly (should already be in CSS)
-        dropdown.style.position = 'fixed';
-        
-        // STEP 3: Set the vertical position (same for both languages)
-        dropdown.style.top = dropdownTop + 'px';
-        
-        // STEP 4: Set horizontal position based on nav item and language
-        const dropdownWidth = 200; // Same as CSS width
-        
-        if (isRTL) {
-            // ARABIC (RTL): Align dropdown to the RIGHT side of the nav item
-            const rightOffset = window.innerWidth - itemRect.right;
-            dropdown.style.left = 'auto';
-            dropdown.style.right = rightOffset + 'px';
-            
-            console.log('📍 RTL Dropdown positioned:', {
-                top: dropdownTop + 'px',
-                right: rightOffset + 'px',
-                left: 'auto',
-                itemRight: itemRect.right,
-                windowWidth: window.innerWidth,
-                alignment: 'RIGHT (RTL)'
-            });
-        } else {
-            // ENGLISH (LTR): Align dropdown to the LEFT side of the nav item
-            dropdown.style.left = itemRect.left + 'px';
-            dropdown.style.right = 'auto';
-            
-            console.log('📍 LTR Dropdown positioned:', {
-                top: dropdownTop + 'px',
-                left: itemRect.left + 'px',
-                right: 'auto',
-                itemLeft: itemRect.left,
-                alignment: 'LEFT (LTR)'
-            });
-        }
-        
-        // Log complete positioning for debugging
-        console.log('🎯 Dropdown Final Position:', {
-            element: dropdown.className,
-            computed: {
-                top: dropdown.style.top,
-                left: dropdown.style.left,
-                right: dropdown.style.right,
-                position: dropdown.style.position
-            },
-            viewport: {
-                headerHeight: headerHeight,
-                windowWidth: window.innerWidth,
-                windowHeight: window.innerHeight
-            },
-            navItem: {
-                left: itemRect.left,
-                right: itemRect.right,
-                top: itemRect.top,
-                bottom: itemRect.bottom,
-                width: itemRect.width
-            },
-            language: isRTL ? 'Arabic (RTL)' : 'English (LTR)'
-        });
+        // With position: absolute and top: 100%, dropdown appears naturally below item
+        console.log('✅ Dropdown shown (position: absolute, top: 100%)');
     }
 
     /**

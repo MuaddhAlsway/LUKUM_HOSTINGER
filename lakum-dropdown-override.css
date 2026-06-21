@@ -15,7 +15,7 @@
     overflow: visible !important;
 }
 
-/* CRITICAL: Nav items must be static, not relative */
+/* Nav items need position: relative for absolute positioning to work */
 .lakum-nav__item {
     position: static !important;
     display: flex !important;
@@ -24,7 +24,7 @@
 }
 
 .lakum-nav__item--dropdown {
-    position: static !important;
+    position: relative !important;
     display: flex !important;
     align-items: center !important;
     overflow: visible !important;
@@ -51,11 +51,12 @@
     font-style: normal !important;
 }
 
-/* ===== CRITICAL: DROPDOWN MENU - FIXED POSITIONING ===== */
+/* ===== DROPDOWN MENU - NORMAL DROPDOWN (NOT FIXED) ===== */
 .lakum-nav__dropdown {
-    position: fixed !important;
-    /* CRITICAL: top, left, right are set by JavaScript dynamically */
-    /* DO NOT set them here - JavaScript controls them */
+    position: absolute !important;
+    top: 100% !important;
+    left: 0 !important;
+    right: auto !important;
     min-width: 200px !important;
     width: 200px !important;
     background: #f6f6eb !important;
@@ -67,7 +68,7 @@
     opacity: 0 !important;
     visibility: hidden !important;
     transition: opacity 0.3s ease, visibility 0.3s ease !important;
-    z-index: 999999 !important;
+    z-index: 999 !important;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
     pointer-events: none !important;
     display: block !important;
@@ -114,8 +115,8 @@
 }
 
 [dir="rtl"] .lakum-nav__dropdown {
-    /* CRITICAL: left, right are controlled by JavaScript based on item position */
-    /* DO NOT set them here */
+    left: auto !important;
+    right: 0 !important;
 }
 
 [dir="rtl"] .lakum-nav__dropdown-link:hover {
