@@ -45,7 +45,8 @@
 .lakum-nav__dropdown {
     position: absolute !important;
     top: calc(100% + 5px) !important;
-    left: 0 !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
     min-width: 220px !important;
     background: #ffffff !important;
     border: 1px solid #d1d1d1 !important;
@@ -53,35 +54,24 @@
     list-style: none !important;
     margin: 0 !important;
     padding: 8px 0 !important;
-    opacity: 0 !important;
-    visibility: hidden !important;
-    transform: translateY(-10px) !important;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    opacity: 1 !important;
+    visibility: visible !important;
     z-index: 9999 !important;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
-    pointer-events: none !important;
+    pointer-events: auto !important;
     display: block !important;
     width: 220px !important;
 }
 
-/* Show dropdown on hover (desktop) */
-.lakum-nav__item--dropdown:hover .lakum-nav__dropdown {
-    opacity: 1 !important;
-    visibility: visible !important;
-    transform: translateY(0) !important;
-    pointer-events: auto !important;
-}
-
+/* Show dropdown on hover (desktop) - Just rotate arrow */
 .lakum-nav__item--dropdown:hover .lakum-nav__dropdown-toggle {
     transform: rotate(180deg) !important;
 }
 
-/* Show dropdown with active class (fallback) */
+/* Show dropdown with active class (fallback for mobile) */
 .lakum-nav__item--dropdown.active .lakum-nav__dropdown {
-    opacity: 1 !important;
-    visibility: visible !important;
-    transform: translateY(0) !important;
-    pointer-events: auto !important;
+    max-height: 500px !important;
+    padding: 8px 0 !important;
 }
 
 .lakum-nav__item--dropdown.active .lakum-nav__dropdown-toggle {
