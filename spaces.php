@@ -3,6 +3,12 @@ require_once 'lang/loader.php';
 require_once 'api/image-helper.php';
 require_once 'includes/hero-settings.php';
 require_once 'includes/site-settings.php';
+
+// Prevent caching
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+header("Expires: 0");
 ?><!DOCTYPE html>
 <html <?php echo getLanguageAttributes(); ?>>
 
