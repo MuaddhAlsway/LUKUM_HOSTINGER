@@ -16,8 +16,14 @@ try {
     header('Content-Type: application/json; charset=utf-8');
     header('Cache-Control: no-cache, no-store, must-revalidate');
     
+    // Database credentials from config.local.php
+    $db_host = 'localhost';
+    $db_user = 'u812122863_neama';
+    $db_pass = 'Nema202610!LakumDB';
+    $db_name = 'u812122863_lakum_artspace';
+    
     // Simple database connection
-    $conn = new mysqli('localhost', 'root', '', 'lakum_artspace');
+    $conn = new mysqli($db_host, $db_user, $db_pass, $db_name);
     
     // Check connection
     if ($conn->connect_error) {
