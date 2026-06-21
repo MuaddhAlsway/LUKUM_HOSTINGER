@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dropdown Test - Simple Debug</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            padding: 60px 20px 20px;
+            background: #f9f9f9;
+        }
+
+        .test-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: #f6f6eb;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            z-index: 1000;
+        }
+
+        .test-nav {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .test-nav-item {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            overflow: visible;
+        }
+
+        .test-nav-text {
+            padding: 10px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .test-dropdown-toggle {
+            display: inline-flex;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #1a1a1a;
+            padding: 10px;
+            margin-left: 5px;
+            font-size: 14px;
+            transition: transform 0.3s ease;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .test-dropdown-toggle:hover {
+            background: rgba(0,0,0,0.05);
+            border-radius: 4px;
+        }
+
+        /* CRITICAL: Dropdown hidden by default */
+        .test-dropdown {
+            position: absolute !important;
+            top: calc(100% + 5px) !important;
+            left: 50% !important;
+            transform: translateX(-50%) scaleY(0.95) !important;
+            min-width: 200px !important;
+            width: 200px !important;
+            background: #f6f6eb !important;
+            border: 1px solid #ddd !important;
+            border-radius: 4px !important;
+            list-style: none !important;
+            margin: 0 !important;
+            padding: 8px 0 !important;
+            opacity: 0 !important;
+            visibility: hidden !important;
+            transition: all 0.3s ease !important;
+            z-index: 99999 !important;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
+            pointer-events: none !important;
+            display: block !important;
+        }
+
+        /* SHOW DROPDOWN when active */
+        .test-nav-item.active .test-dropdown {
+            opacity: 1 !important;
+            visibility: visible !important;
+            pointer-events: auto !important;
+            transform: translateX(-50%) scaleY(1) !important;
+        }
+
+        /* Rotate arrow when active */
+        .test-nav-item.active .test-dropdown-toggle {
+            transform: rotate(180deg) !important;
+        }
+
+        .test-dropdown-link {
+            display: block;
+            padding: 12px 20px;
+            color: #1a1a1a;
+            text-decoration: none;
+            font-size: 14px;
+            transition: background 0.2s ease;
+        }
+
+        .test-dropdown-link:hover {
+            background: #e8e8e0;
+            padding-left: 24px;
+        }
+
+        .debug-section {
+            margin-top: 40px;
+            padding: 20px;
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+        }
+
+        .debug-section h2 {
+            margin-bottom: 15px;
+            color: #333;
+            font-size: 18px;
+        }
+
+        .debug-code {
+            background: #f5f5f5;
+            padding: 12px;
+            border-radius: 4px;
+            font-family: monospace;
+            overflow-x: auto;
+            margin-bottom: 10px;
+            border-left: 4px solid #007bff;
+        }
+
+        .debug-output {
+            background: #1e1e1e;
+            color: #00ff00;
+            padding: 15px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+            min-height: 100px;
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 10px;
+        }
+
+        .status-check {
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 4px solid #ddd;
+            background: #f9f9f9;
+            border-radius: 4px;
+        }
+
+        .status-check.success {
+            border-left-color: #28a745;
+            background: #d4edda;
+        }
+
+        .status-check.error {
+            border-left-color: #dc3545;
+            background: #f8d7da;
+        }
+
+        .status-check.info {
+            border-left-color: #007bff;
+            background: #d1ecf1;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            border: 1px solid #ddd;
+            background: white;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background: #f0f0f0;
+        }
+
+        button.primary {
+            background: #007bff;
+            color: white;
+            border-color: #007bff;
+        }
+
+        button.primary:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<!-- TEST NAVIGATION -->
+<div class="test-header">
+    <nav class="test-nav">
+        <!-- Dropdown Item 1 -->
+        <div class="test-nav-item">
+            <span class="test-nav-text">Home</span>
+            <button class="test-dropdown-toggle" aria-label="Toggle dropdown">↓</button>
+            <ul class="test-dropdown">
+                <li><a href="#" class="test-dropdown-link">Item 1</a></li>
+                <li><a href="#" class="test-dropdown-link">Item 2</a></li>
+                <li><a href="#" class="test-dropdown-link">Item 3</a></li>
+            </ul>
+        </div>
+
+        <!-- Dropdown Item 2 -->
+        <div class="test-nav-item">
+            <span class="test-nav-text">About</span>
+            <button class="test-dropdown-toggle" aria-label="Toggle dropdown">↓</button>
+            <ul class="test-dropdown">
+                <li><a href="#" class="test-dropdown-link">About Us</a></li>
+                <li><a href="#" class="test-dropdown-link">History</a></li>
+            </ul>
+        </div>
+
+        <!-- Dropdown Item 3 -->
+        <div class="test-nav-item">
+            <span class="test-nav-text">Services</span>
+            <button class="test-dropdown-toggle" aria-label="Toggle dropdown">↓</button>
+            <ul class="test-dropdown">
+                <li><a href="#" class="test-dropdown-link">Service 1</a></li>
+                <li><a href="#" class="test-dropdown-link">Service 2</a></li>
+                <li><a href="#" class="test-dropdown-link">Service 3</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+<!-- DEBUG SECTION -->
+<div class="debug-section">
+    <h2>🧪 Dropdown Test Console</h2>
+    
+    <div>
+        <button class="primary" onclick="testDropdown()">Test: Click First Dropdown</button>
+        <button class="primary" onclick="testCloseAll()">Test: Close All</button>
+        <button class="primary" onclick="checkStatus()">Check Status</button>
+        <button onclick="clearOutput()">Clear Output</button>
+    </div>
+
+    <div class="debug-output" id="output">
+        <div style="color: #ffff00;">Ready for testing...</div>
+    </div>
+</div>
+
+<!-- STATUS SECTION -->
+<div class="debug-section">
+    <h2>📊 Status Checks</h2>
+    <div id="status-container"></div>
+</div>
+
+<script>
+// ===== INITIALIZATION =====
+function init() {
+    log('🔍 Initializing dropdown test...', 'info');
+    
+    const toggles = document.querySelectorAll('.test-dropdown-toggle');
+    const items = document.querySelectorAll('.test-nav-item');
+    
+    log(`✅ Found ${toggles.length} dropdown toggles`, 'success');
+    log(`✅ Found ${items.length} nav items`, 'success');
+
+    // Attach click handlers
+    toggles.forEach((toggle, index) => {
+        toggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            handleToggleClick(toggle);
+        });
+    });
+
+    log('✅ Event listeners attached', 'success');
+
+    // Close on outside click
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.test-nav-item')) {
+            closeAllDropdowns();
+        }
+    });
+
+    // Close on ESC
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            closeAllDropdowns();
+        }
+    });
+
+    checkStatus();
+}
+
+// ===== HANDLERS =====
+function handleToggleClick(toggle) {
+    const item = toggle.closest('.test-nav-item');
+    if (!item) {
+        log('❌ Could not find nav item parent', 'error');
+        return;
+    }
+
+    const isActive = item.classList.contains('active');
+    const name = item.querySelector('.test-nav-text').textContent;
+    
+    log(`🖱️ Clicked: "${name}" (currently ${isActive ? 'OPEN' : 'CLOSED'})`, 'info');
+
+    closeAllDropdowns();
+
+    if (!isActive) {
+        item.classList.add('active');
+        log(`✅ Added .active class to "${name}"`, 'success');
+        log(`✅ Dropdown should now be VISIBLE`, 'success');
+    } else {
+        item.classList.remove('active');
+        log(`✅ Removed .active class from "${name}"`, 'success');
+        log(`✅ Dropdown should now be HIDDEN`, 'success');
+    }
+}
+
+function closeAllDropdowns() {
+    document.querySelectorAll('.test-nav-item.active').forEach(item => {
+        item.classList.remove('active');
+    });
+}
+
+// ===== TESTS =====
+function testDropdown() {
+    log('🧪 Test: Clicking first dropdown...', 'info');
+    const firstToggle = document.querySelector('.test-dropdown-toggle');
+    if (firstToggle) {
+        firstToggle.click();
+    } else {
+        log('❌ Could not find dropdown toggle', 'error');
+    }
+}
+
+function testCloseAll() {
+    log('🧪 Test: Closing all dropdowns...', 'info');
+    closeAllDropdowns();
+    log('✅ All dropdowns closed', 'success');
+}
+
+function checkStatus() {
+    clearStatus();
+    
+    const toggles = document.querySelectorAll('.test-dropdown-toggle');
+    const items = document.querySelectorAll('.test-nav-item');
+    const activeItems = document.querySelectorAll('.test-nav-item.active');
+
+    addStatus('Toggles Found', toggles.length, toggles.length > 0);
+    addStatus('Nav Items Found', items.length, items.length > 0);
+    addStatus('Active Dropdowns', activeItems.length, true);
+    
+    // Check window width
+    const width = window.innerWidth;
+    addStatus('Window Width', width + 'px', width > 1024);
+    
+    // Check CSS is loaded
+    const dropdown = document.querySelector('.test-dropdown');
+    const computedStyle = window.getComputedStyle(dropdown);
+    const defaultOpacity = computedStyle.opacity;
+    addStatus('Default Dropdown Opacity', defaultOpacity, defaultOpacity === '0');
+    
+    // Check active CSS
+    const activeItem = document.querySelector('.test-nav-item.active');
+    if (activeItem) {
+        const activeDropdown = activeItem.querySelector('.test-dropdown');
+        const activeStyle = window.getComputedStyle(activeDropdown);
+        addStatus('Active Dropdown Opacity', activeStyle.opacity, activeStyle.opacity === '1');
+    }
+}
+
+// ===== LOGGING =====
+function log(message, type = 'info') {
+    const output = document.getElementById('output');
+    const line = document.createElement('div');
+    const timestamp = new Date().toLocaleTimeString();
+    
+    let color = '#00ff00';
+    if (type === 'error') color = '#ff0000';
+    if (type === 'info') color = '#00ffff';
+    if (type === 'success') color = '#00ff00';
+    
+    line.style.color = color;
+    line.textContent = `[${timestamp}] ${message}`;
+    
+    output.appendChild(line);
+    output.scrollTop = output.scrollHeight;
+}
+
+function clearOutput() {
+    document.getElementById('output').innerHTML = '';
+    log('Output cleared', 'info');
+}
+
+function addStatus(label, value, isSuccess) {
+    const container = document.getElementById('status-container');
+    const status = document.createElement('div');
+    status.className = `status-check ${isSuccess ? 'success' : 'error'}`;
+    status.innerHTML = `
+        <strong>${label}:</strong> ${value}
+        ${isSuccess ? ' ✅' : ' ❌'}
+    `;
+    container.appendChild(status);
+}
+
+function clearStatus() {
+    document.getElementById('status-container').innerHTML = '';
+}
+
+// Start when page loads
+document.addEventListener('DOMContentLoaded', init);
+window.addEventListener('load', checkStatus);
+</script>
+
+</body>
+</html>
