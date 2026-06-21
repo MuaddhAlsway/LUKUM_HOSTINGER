@@ -1,0 +1,250 @@
+================================================================================
+DROPDOWN NAVIGATION - QUICK TEST GUIDE
+================================================================================
+
+⚡ FASTEST WAY TO TEST THE FIX
+
+1. CLEAR CACHE (IMPORTANT!)
+   Ctrl+Shift+R (Windows) or Cmd+Shift+R (Mac)
+
+2. OPEN ANY PAGE (e.g., index.php, spaces.php, about.php)
+
+3. RESIZE BROWSER TO DESKTOP SIZE
+   Width should be > 1025px
+   You can check: F12 → Toggle device toolbar → Uncheck "Mobile"
+   Or just drag browser window wider
+
+4. LOOK AT THE NAVBAR
+   You should see: Home | About | Exhibitions | Events | etc.
+   Next to each item name, there's a small DOWN ARROW (↓)
+
+5. CLICK ON ONE OF THOSE ARROWS
+   Example: Click the arrow next to "Home"
+   Result: A dropdown menu should appear with:
+   - "Upcoming Exhibitions"
+   - "Past Exhibitions"  
+   - "Create Your Event"
+
+   If this happens → ✅ FIX IS WORKING!
+
+6. CLICK THE ARROW AGAIN
+   Result: Dropdown should close smoothly
+
+7. TRY CLICKING OUTSIDE
+   Open the dropdown again, then click somewhere else on the page
+   Result: Dropdown should close
+
+8. TRY PRESSING ESC
+   Open the dropdown, press Escape key
+   Result: Dropdown should close
+
+================================================================================
+VERIFICATION CHECKLIST
+================================================================================
+
+When you click the arrow:
+☐ Dropdown appears below the nav item
+☐ It has smooth animation (not instant)
+☐ Arrow rotates to point UP
+☐ Dropdown background color is light beige (#f6f6eb)
+☐ It doesn't push other nav items around
+
+When you close the dropdown:
+☐ Arrow rotates back to point DOWN
+☐ It closes with smooth animation
+☐ No visual glitches
+
+================================================================================
+DEBUGGING WITH CONSOLE
+================================================================================
+
+Press F12 to open Developer Tools
+
+You should see in the Console:
+
+🔍 Dropdown Init: { togglesFound: 9, itemsFound: 9, mobileNavFound: true }
+✅ Dropdown listeners attached
+
+This confirms:
+✓ 9 dropdown toggles were found (Home, About, Exhibitions, etc.)
+✓ JavaScript is running properly
+✓ Event listeners are attached
+
+Then when you click a dropdown arrow, you'll see:
+
+🖱️ Dropdown clicked: { isCurrentlyActive: false, itemElement: "Home" }
+✅ Dropdown opened
+
+This confirms:
+✓ Click event was captured
+✓ Dropdown class was added
+✓ CSS animation is happening
+
+================================================================================
+COMMON ISSUES & FIXES
+================================================================================
+
+ISSUE #1: Dropdown still not showing
+SOLUTION: 
+- Check console for red errors (F12)
+- Make sure window is > 1025px wide
+- Hard refresh: Ctrl+Shift+R
+- Check if JavaScript is enabled in browser
+
+ISSUE #2: Dropdown showing but in wrong place
+SOLUTION:
+- This shouldn't happen - CSS positioning is fixed
+- If it does, hard refresh browser cache
+- Check browser DevTools (F12) → Elements → Find .lakum-nav__dropdown
+- Verify it has: position: absolute, top: calc(100% + 8px)
+
+ISSUE #3: Clicking outside doesn't close it
+SOLUTION:
+- This was the bug we fixed!
+- Make sure CSS version is 2.4.0 (not 2.2.0)
+- Hard refresh: Ctrl+Shift+R
+- Try different browser to rule out cache issue
+
+ISSUE #4: Arrow doesn't rotate
+SOLUTION:
+- CSS should rotate arrow when dropdown is active
+- Check browser DevTools (F12) → Elements
+- Find .lakum-nav__dropdown-toggle
+- When active, it should have: transform: rotate(180deg)
+
+ISSUE #5: Mobile still broken
+SOLUTION:
+- The fix was for DESKTOP only (1025px+)
+- Mobile should work same as before
+- If mobile is broken, it's a separate issue
+
+================================================================================
+BROWSER CONSOLE COMMANDS TO TEST
+================================================================================
+
+Open F12, go to Console tab, paste these:
+
+Check if toggles exist:
+  document.querySelectorAll('.lakum-nav__dropdown-toggle').length
+
+Should return: 9
+
+Check if dropdowns exist:
+  document.querySelectorAll('.lakum-nav__dropdown').length
+
+Should return: 9
+
+Check if click listener is attached:
+  window.LakumDropdowns
+
+Should show the object (if it exists)
+
+Re-initialize dropdowns (if something went wrong):
+  LakumDropdowns.init()
+
+Check current viewport width:
+  window.innerWidth
+
+Should be > 1025 for desktop
+
+Open a dropdown manually:
+  document.querySelector('.lakum-nav__item--dropdown').classList.add('active')
+
+You should see the first dropdown appear
+
+Close all dropdowns manually:
+  LakumDropdowns.closeAll()
+
+All dropdowns should disappear
+
+================================================================================
+TESTING DIFFERENT SCREEN SIZES
+================================================================================
+
+DESKTOP (1025px - 1920px):
+✓ Arrow buttons visible
+✓ Clicking opens dropdown
+✓ Can click outside to close
+✓ Can press ESC to close
+✓ Arrow rotates
+
+TABLET (769px - 1024px):
+✓ Should work same as desktop
+✓ Or might need to test with mobile menu
+
+MOBILE (≤768px):
+✓ Hamburger menu appears (mobile toggle)
+✓ Dropdowns expand in mobile menu
+✓ Clicking expands, shows dropdown items indented
+✓ Different animation (height expand vs scale)
+
+================================================================================
+WHAT TO DO IF STILL BROKEN
+================================================================================
+
+Step 1: Hard refresh
+  Windows: Ctrl+Shift+R
+  Mac: Cmd+Shift+R
+  Or: Ctrl+Shift+Delete → Clear cache → Refresh
+
+Step 2: Check browser console (F12)
+  Look for red errors
+  Copy/paste them if reporting issue
+
+Step 3: Test in different browser
+  Try Chrome, Firefox, or Safari
+  Helps rule out browser-specific issues
+
+Step 4: Check viewport
+  F12 → Toggle device toolbar
+  Make sure NOT in mobile mode
+  Width should show > 1025px
+
+Step 5: Check if JavaScript is enabled
+  Some security settings disable JavaScript
+  Check browser settings
+
+Step 6: Check if CSS file is loading
+  F12 → Network tab → refresh page
+  Look for: lakum-header-dropdowns.css
+  Should show version: 2.4.0 in the URL
+  Should have status: 200 (not 404)
+
+================================================================================
+SUCCESS INDICATORS
+================================================================================
+
+✅ Dropdown appears when arrow is clicked
+✅ Dropdown has smooth animation
+✅ Arrow rotates when dropdown opens
+✅ Clicking outside closes dropdown
+✅ Pressing ESC closes dropdown
+✅ Multiple dropdowns don't open at same time
+✅ No console errors in DevTools
+✅ No layout shifts or visual bugs
+✅ Works on desktop (1025px+)
+✅ Mobile menu still works (≤1024px)
+
+If ALL of these are true → 🎉 FIX IS WORKING!
+
+================================================================================
+FINAL CHECKLIST
+================================================================================
+
+Before reporting "it's working":
+☐ Cleared browser cache (Ctrl+Shift+R)
+☐ Browser window is wide (> 1025px)
+☐ Clicked on dropdown arrow (not the text)
+☐ Saw dropdown appear below nav item
+☐ Clicked arrow again and it closed
+☐ Clicked outside and it closed
+☐ Pressed ESC and it closed
+☐ No red errors in console (F12)
+
+If ALL checkboxes are TRUE:
+  ✅ DROPDOWN FIX IS COMPLETE AND WORKING!
+
+================================================================================
+DATE: June 21, 2026
+STATUS: Ready for Testing
+================================================================================

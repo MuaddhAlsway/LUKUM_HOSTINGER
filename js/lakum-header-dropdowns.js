@@ -1,6 +1,6 @@
 /**
  * LAKUM ARTSPACE - Dropdown Navigation Handler
- * Handles mobile dropdown toggle, smooth scrolling, and keyboard accessibility
+ * Handles desktop/mobile dropdown toggle, smooth scrolling, and keyboard accessibility
  */
 
 (function() {
@@ -23,10 +23,20 @@
         dropdownItems = document.querySelectorAll('.lakum-nav__item--dropdown');
         mobileNav = document.getElementById('lakum-nav-mobile');
 
-        if (!dropdownToggles.length) return;
+        console.log('🔍 Dropdown Init:', {
+            togglesFound: dropdownToggles.length,
+            itemsFound: dropdownItems.length,
+            mobileNavFound: !!mobileNav
+        });
+
+        if (!dropdownToggles.length) {
+            console.warn('⚠️ No dropdown toggles found!');
+            return;
+        }
 
         // Attach event listeners
         attachEventListeners();
+        console.log('✅ Dropdown listeners attached');
     }
 
     /**
@@ -62,9 +72,17 @@
         event.stopPropagation();
 
         const dropdownItem = event.currentTarget.closest('.lakum-nav__item--dropdown');
-        if (!dropdownItem) return;
+        if (!dropdownItem) {
+            console.error('❌ Could not find dropdown item parent');
+            return;
+        }
 
         const isActive = dropdownItem.classList.contains('active');
+        
+        console.log('🖱️ Dropdown clicked:', {
+            isCurrentlyActive: isActive,
+            itemElement: dropdownItem.querySelector('.lakum-nav__link')?.textContent.trim()
+        });
         
         // Close all other dropdowns
         closeAllDropdowns();
@@ -73,9 +91,11 @@
         if (!isActive) {
             dropdownItem.classList.add('active');
             event.currentTarget.setAttribute('aria-expanded', 'true');
+            console.log('✅ Dropdown opened');
         } else {
             dropdownItem.classList.remove('active');
             event.currentTarget.setAttribute('aria-expanded', 'false');
+            console.log('✅ Dropdown closed');
         }
     }
 
@@ -117,17 +137,15 @@
      * Handle outside click (close dropdowns)
      */
     function handleOutsideClick(event) {
-        const isMobile = window.innerWidth <= MOBILE_BREAKPOINT;
-        if (!isMobile) return;
+        // Check if click is outside any dropdown item
+        const clickedInsideDropdown = Array.from(dropdownItems).some(item => {
+            return item.contains(event.target);
+        });
 
-        const nav = document.querySelector('.lakum-nav--mobile');
-        const toggle = document.querySelector('.lakum-header__mobile-toggle');
-
-        if (!nav || !toggle) return;
-
-        // If click is outside nav and not on mobile toggle, close dropdowns
-        if (!nav.contains(event.target) && !toggle.contains(event.target)) {
+        // If clicked outside all dropdowns, close them
+        if (!clickedInsideDropdown) {
             closeAllDropdowns();
+            console.log('🔴 Closed dropdown (clicked outside)');
         }
     }
 

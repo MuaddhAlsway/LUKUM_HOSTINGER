@@ -5,10 +5,13 @@
 /* ===== CRITICAL: FORCE NAV ITEM OVERFLOW VISIBLE ===== */
 .lakum-nav {
     overflow: visible !important;
+    z-index: 100 !important;
+    position: relative !important;
 }
 
 .lakum-nav__list {
     overflow: visible !important;
+    position: relative !important;
 }
 
 /* ===== DROPDOWN CONTAINER STYLES ===== */
@@ -44,10 +47,11 @@
 
 .lakum-nav__dropdown {
     position: absolute !important;
-    top: calc(100% + 5px) !important;
+    top: calc(100% + 8px) !important;
     left: 50% !important;
-    transform: translateX(-50%) !important;
+    transform: translateX(-50%) scaleY(0.95) !important;
     min-width: 220px !important;
+    width: 220px !important;
     background: #f6f6eb !important;
     border: none !important;
     border-radius: 2px !important;
@@ -57,11 +61,10 @@
     opacity: 0 !important;
     visibility: hidden !important;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    z-index: 9999 !important;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+    z-index: 99999 !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
     pointer-events: none !important;
     display: block !important;
-    width: 220px !important;
 }
 
 /* Show dropdown when CLICKED (active class) - Desktop */
@@ -69,7 +72,7 @@
     opacity: 1 !important;
     visibility: visible !important;
     pointer-events: auto !important;
-    background: #f6f6eb !important;
+    transform: translateX(-50%) scaleY(1) !important;
 }
 
 /* Arrow rotation on CLICK - no hover effect */
@@ -97,12 +100,15 @@
     padding-left: 24px !important;
 }
 
-/* ===== MOBILE DROPDOWN MENU ===== */
+/* ===== MEDIA QUERIES ===== */
 
-/* On DESKTOP (> 1024px): Dropdowns appear on hover, toggle always visible */
+/* On DESKTOP (> 1024px): Dropdowns appear on click, toggle always visible */
 @media (min-width: 1025px) {
     .lakum-nav .lakum-nav__dropdown-toggle {
         display: inline-flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
     }
 }
 
