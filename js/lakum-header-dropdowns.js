@@ -130,28 +130,35 @@
         const isRTL = document.documentElement.dir === 'rtl' || 
                       document.querySelector('html[dir="rtl"]');
         
-        let left, right;
+        // IMPORTANT: Remove all positional inline styles first to clear conflicts
+        dropdown.style.removeProperty('top');
+        dropdown.style.removeProperty('left');
+        dropdown.style.removeProperty('right');
+        
+        // Now set the correct position
+        dropdown.style.top = top + 'px';
         
         if (isRTL) {
-            // RTL (Arabic): Position from right side
-            right = window.innerWidth - rect.right;
-            left = 'auto';
+            // RTL (Arabic): Position from right side of clicked item
+            const rightOffset = window.innerWidth - rect.right;
+            dropdown.style.left = 'auto';
+            dropdown.style.right = rightOffset + 'px';
         } else {
-            // LTR (English): Position from left side
-            left = rect.left;
-            right = 'auto';
+            // LTR (English): Position from left side of clicked item
+            dropdown.style.left = rect.left + 'px';
+            dropdown.style.right = 'auto';
         }
-
-        // Apply positioning
-        dropdown.style.position = 'fixed';
-        dropdown.style.top = top + 'px';
-        dropdown.style.left = left + 'px';
-        dropdown.style.right = right + 'px';
 
         console.log('📍 Positioned dropdown:', { 
             top: top, 
-            left: isRTL ? 'auto' : left,
-            right: isRTL ? right : 'auto',
+            left: isRTL ? 'auto' : rect.left,
+            right: isRTL ? (window.innerWidth - rect.right) : 'auto',
+            itemRect: {
+                left: rect.left,
+                right: rect.right,
+                top: rect.top,
+                bottom: rect.bottom
+            },
             isRTL: !!isRTL
         });
     }
