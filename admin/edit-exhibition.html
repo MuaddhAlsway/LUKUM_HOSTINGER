@@ -246,6 +246,36 @@
                         <div class="date-validation-msg" id="dateValidation"></div>
                     </div>
 
+                    <!-- Event Video Section (Optional) -->
+                    <div class="form-section">
+                        <h3><i class="ri-video-line"></i> Event Video (Optional)</h3>
+                        <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                            <div class="form-group">
+                                <label for="event_video">Video URL</label>
+                                <input type="url" id="event_video" name="event_video" placeholder="https://www.youtube.com/embed/... or video URL">
+                                <small style="color: #666;">Paste YouTube embed URL, Vimeo URL, or direct video link (MP4, WebM, etc.)</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gallery Images Section (Optional) -->
+                    <div class="form-section">
+                        <h3><i class="ri-gallery-line"></i> Gallery Images (Optional)</h3>
+                        <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                            <div class="form-group">
+                                <label for="gallery_images">Upload Additional Images</label>
+                                <input type="file" id="gallery_images" name="gallery_images" accept="image/*,.jpg,.jpeg,.png,.gif,.webp,.heic,.heif" multiple style="padding: 10px; border: 2px dashed #ccc; border-radius: 4px; width: 100%;">
+                                <small style="color: #666;">Select one or more images to add to the gallery. Recommended: 500x500px or larger</small>
+                            </div>
+                            <div id="currentGalleryPreview" style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 15px;">
+                                <!-- Existing gallery images will be displayed here -->
+                            </div>
+                            <div id="newGalleryPreview" style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 15px;">
+                                <!-- New gallery images will be displayed here -->
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Form Actions -->
                     <div class="form-actions-modern" style="margin-top: 40px; display: flex; gap: 12px;">
                         <button type="submit" class="btn-primary-modern" id="submitBtn" style="display: inline-block; padding: 12px 30px; background: #1a1a1a; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: 500;">
@@ -337,8 +367,33 @@
                             exhibition_date: document.getElementById('exhibition_date').value,
                             exhibition_time: (document.getElementById('exhibition_time').value || '10:00') + ':00',
                             exhibition_end_time: (document.getElementById('exhibition_end_time').value || '18:00') + ':00',
-                            end_date: document.getElementById('end_date').value || null
+                            end_date: document.getElementById('end_date').value || null,
+                            event_video: document.getElementById('event_video').value.trim() || null
                         };
+
+                        // Upload new gallery images if any are selected
+                        const galleryInput = document.getElementById('gallery_images');
+                        if (galleryInput.files && galleryInput.files.length > 0) {
+                            let newGalleryImages = [];
+                            for (let i = 0; i < galleryInput.files.length; i++) {
+                                const file = galleryInput.files[i];
+                                const formData = new FormData();
+                                formData.append('file', file);
+                                
+                                const uploadResponse = await fetch('../api/upload_cover_image.php', {
+                                    method: 'POST',
+                                    body: formData
+                                });
+                                
+                                const uploadResult = await uploadResponse.json();
+                                if (uploadResult.success) {
+                                    newGalleryImages.push(uploadResult.path);
+                                }
+                            }
+                            if (newGalleryImages.length > 0) {
+                                updateData.gallery_images = JSON.stringify(newGalleryImages);
+                            }
+                        }
 
                         if (coverImagePath) {
                             updateData.cover_image = coverImagePath;
@@ -431,6 +486,7 @@
             document.getElementById('exhibition_time').value = (exhibition.exhibition_time || '10:00:00').substring(0, 5);
             document.getElementById('exhibition_end_time').value = (exhibition.exhibition_end_time || '18:00:00').substring(0, 5);
             document.getElementById('end_date').value = exhibition.end_date || '';
+            document.getElementById('event_video').value = exhibition.event_video || '';
             
             if (exhibition.cover_image) {
                 const coverImg = document.getElementById('coverImg');
@@ -440,6 +496,27 @@
                 coverImg.style.display = 'block';
                 placeholder.style.display = 'none';
                 document.getElementById('removeCover').style.display = 'flex';
+            }
+
+            // Display existing gallery images
+            if (exhibition.gallery_images) {
+                try {
+                    const galleryImages = typeof exhibition.gallery_images === 'string' 
+                        ? JSON.parse(exhibition.gallery_images) 
+                        : exhibition.gallery_images;
+                    
+                    if (Array.isArray(galleryImages)) {
+                        const currentGalleryPreview = document.getElementById('currentGalleryPreview');
+                        galleryImages.forEach(imagePath => {
+                            const img = document.createElement('img');
+                            img.src = imagePath;
+                            img.style.cssText = 'width: 100px; height: 100px; object-fit: cover; border-radius: 4px; border: 2px solid #ddd;';
+                            currentGalleryPreview.appendChild(img);
+                        });
+                    }
+                } catch (e) {
+                    console.log('Could not parse gallery images:', e);
+                }
             }
 
             document.getElementById('charCount_en').textContent = (exhibition.description_en || '').length;
@@ -509,6 +586,33 @@
                         if (placeholder) placeholder.style.display = 'flex';
                     });
                 }
+            }
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const galleryInput = document.getElementById('gallery_images');
+            const newGalleryPreview = document.getElementById('newGalleryPreview');
+
+            if (galleryInput) {
+                galleryInput.addEventListener('change', function(e) {
+                    newGalleryPreview.innerHTML = '';
+                    
+                    const files = e.target.files;
+                    for (let i = 0; i < files.length; i++) {
+                        const file = files[i];
+                        const reader = new FileReader();
+                        
+                        reader.onload = function(event) {
+                            const img = document.createElement('img');
+                            img.src = event.target.result;
+                            img.style.cssText = 'width: 100px; height: 100px; object-fit: cover; border-radius: 4px; border: 2px solid #ddd;';
+                            newGalleryPreview.appendChild(img);
+                        };
+                        
+                        reader.readAsDataURL(file);
+                    }
+                });
             }
         });
     </script>

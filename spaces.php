@@ -950,30 +950,11 @@ header("Expires: 0");
             try {
                 const lang = window.LAKUM_LANG || LanguageManager.getLanguage() || 'en';
                 
-                // Fetch both events and exhibitions
-                const eventsResponse = await fetch(`api/get_events.php?type=all&limit=1000&lang=${lang}`);
-                const eventsData = await eventsResponse.json();
-                
+                // Fetch exhibitions only
                 const exhibitionsResponse = await fetch(`api/get_exhibitions.php?type=all&limit=1000&lang=${lang}`);
                 const exhibitionsData = await exhibitionsResponse.json();
                 
                 let allPastItems = [];
-                
-                // Process events
-                if (eventsData.success && eventsData.data && Array.isArray(eventsData.data)) {
-                    const now = new Date();
-                    now.setHours(0, 0, 0, 0);
-                    
-                    const pastEvents = eventsData.data.filter(e => {
-                        const eventDate = new Date(e.event_date);
-                        eventDate.setHours(0, 0, 0, 0);
-                        return eventDate < now;
-                    });
-                    
-                    // Mark as event type
-                    pastEvents.forEach(e => e.type = 'event');
-                    allPastItems = allPastItems.concat(pastEvents);
-                }
                 
                 // Process exhibitions
                 if (exhibitionsData.success && exhibitionsData.data && Array.isArray(exhibitionsData.data)) {
@@ -1005,7 +986,7 @@ header("Expires: 0");
                 track.innerHTML = '';
 
                 if (allPastItems.length === 0) {
-                    track.innerHTML = '<p style="text-align: center; padding: 40px; color: #999; grid-column: 1/-1;">No past events</p>';
+                    track.innerHTML = '<p style="text-align: center; padding: 40px; color: #999; grid-column: 1/-1;">No past exhibitions</p>';
                     return;
                 }
 

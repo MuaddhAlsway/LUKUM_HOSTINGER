@@ -1,0 +1,281 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║                  SQL MIGRATION - VISUAL SUMMARY                           ║
+║          Add Video & Gallery Columns to Exhibitions Table                 ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+
+BEFORE MIGRATION
+════════════════════════════════════════════════════════════════════════════
+
+exhibitions TABLE (Current Columns):
+┌─────────────────────────────┐
+│ id                    (INT) │
+│ title_en           (VARCHAR)│
+│ title_ar           (VARCHAR)│
+│ description_en   (LONGTEXT) │
+│ description_ar   (LONGTEXT) │
+│ location_en        (VARCHAR)│
+│ location_ar        (VARCHAR)│
+│ exhibition_date      (DATE) │
+│ exhibition_time      (TIME) │
+│ exhibition_end_time  (TIME) │
+│ end_date             (DATE) │
+│ cover_image        (VARCHAR)│
+│ category           (VARCHAR)│
+│ is_featured       (TINYINT) │
+│ created_at      (TIMESTAMP) │
+│ updated_at      (TIMESTAMP) │
+└─────────────────────────────┘
+
+
+AFTER MIGRATION
+════════════════════════════════════════════════════════════════════════════
+
+exhibitions TABLE (Updated Columns):
+┌─────────────────────────────┐
+│ id                    (INT) │
+│ title_en           (VARCHAR)│
+│ title_ar           (VARCHAR)│
+│ description_en   (LONGTEXT) │
+│ description_ar   (LONGTEXT) │
+│ location_en        (VARCHAR)│
+│ location_ar        (VARCHAR)│
+│ exhibition_date      (DATE) │
+│ exhibition_time      (TIME) │
+│ exhibition_end_time  (TIME) │
+│ end_date             (DATE) │
+│ cover_image        (VARCHAR)│
+├─────── NEW ───────────────┤
+│ event_video        (VARCHAR)│  ← NEW: Video URL (optional)
+│ gallery_images   (LONGTEXT) │  ← NEW: Gallery images JSON (optional)
+├─────────────────────────────┤
+│ category           (VARCHAR)│
+│ is_featured       (TINYINT) │
+│ created_at      (TIMESTAMP) │
+│ updated_at      (TIMESTAMP) │
+└─────────────────────────────┘
+
+
+SQL COMMANDS EXECUTED
+════════════════════════════════════════════════════════════════════════════
+
+STEP 1: Add event_video Column
+───────────────────────────────────────────────────────────────────────────
+  ALTER TABLE exhibitions 
+    ADD COLUMN `event_video` VARCHAR(500) 
+    AFTER `cover_image`;
+
+  Purpose: Store single video URL (YouTube, Vimeo, or direct file)
+  Size: 500 characters max
+  Example: "https://www.youtube.com/embed/abc123xyz"
+
+
+STEP 2: Add gallery_images Column
+───────────────────────────────────────────────────────────────────────────
+  ALTER TABLE exhibitions 
+    ADD COLUMN `gallery_images` LONGTEXT 
+    AFTER `event_video`;
+
+  Purpose: Store gallery images as JSON array
+  Size: Up to 100+ images per exhibition
+  Example: ["assest/img-1.jpg", "assest/img-2.jpg", "assest/img-3.jpg"]
+
+
+DATA FORMAT EXAMPLES
+════════════════════════════════════════════════════════════════════════════
+
+Exhibition Record (After Migration):
+┌─────────────────────────────────────────────────────────────────────────┐
+│ id: 1                                                                   │
+│ title_en: "Modern Art Exhibition"                                       │
+│ exhibition_date: 2026-06-20                                             │
+│ cover_image: "assest/img-4.png"                                         │
+│ event_video: "https://www.youtube.com/embed/dQw4w9WgXcQ"     ← NEW    │
+│ gallery_images: [                                             ← NEW    │
+│   "assest/gallery/art1.jpg",                                            │
+│   "assest/gallery/art2.jpg",                                            │
+│   "assest/gallery/art3.jpg"                                             │
+│ ]                                                                       │
+└─────────────────────────────────────────────────────────────────────────┘
+
+
+EXECUTION FLOW
+════════════════════════════════════════════════════════════════════════════
+
+You (Run Migration)
+      ↓
+PhpMyAdmin / MySQL CLI
+      ↓
+ALTER TABLE exhibitions ADD COLUMN event_video
+      ↓ (< 1 second)
+ALTER TABLE exhibitions ADD COLUMN gallery_images
+      ↓ (< 1 second)
+✓ Success
+
+
+VERIFICATION FLOW
+════════════════════════════════════════════════════════════════════════════
+
+Run: DESCRIBE exhibitions;
+      ↓
+Get table structure with all 18 columns
+      ↓
+Look for:
+  • event_video (VARCHAR 500)
+  • gallery_images (LONGTEXT)
+      ↓
+✓ Both columns found = Migration successful
+
+
+FORMS UPDATE FLOW
+════════════════════════════════════════════════════════════════════════════
+
+Old Workflow (Before):
+  Add Exhibition Form
+    ├─ Title, Date, Location
+    ├─ Cover Image
+    └─ Submit
+         ↓
+  Only cover image saved
+
+New Workflow (After):
+  Add Exhibition Form
+    ├─ Title, Date, Location
+    ├─ Cover Image
+    ├─ Event Video URL (optional)  ← NEW
+    ├─ Gallery Images (optional)   ← NEW
+    └─ Submit
+         ↓
+  Cover image + video + gallery saved
+
+
+API UPDATE FLOW
+════════════════════════════════════════════════════════════════════════════
+
+Frontend Form
+    ↓
+Gather data: {
+  title_en: "...",
+  cover_image: "...",
+  event_video: "..."        ← NEW
+  gallery_images: JSON str  ← NEW
+}
+    ↓
+Send to api/add_exhibition.php
+    ↓
+INSERT exhibition WITH:
+  - cover_image
+  - event_video            ← NEW
+  - gallery_images         ← NEW
+    ↓
+✓ Saved to database
+
+
+COLUMN SPECIFICATIONS
+════════════════════════════════════════════════════════════════════════════
+
+event_video Column:
+  Type:       VARCHAR(500)
+  Nullable:   YES (NULL if not provided)
+  Default:    NULL
+  Position:   After cover_image
+  Usage:      Single video URL storage
+  Examples:
+    - https://www.youtube.com/embed/video_id
+    - https://vimeo.com/video_id
+    - assest/videos/exhibition.mp4
+
+
+gallery_images Column:
+  Type:       LONGTEXT (up to 4GB)
+  Nullable:   YES (NULL if no gallery)
+  Default:    NULL
+  Position:   After event_video
+  Usage:      JSON array of image paths
+  Format:     ["path1.jpg", "path2.jpg", ...]
+  Examples:
+    - ["assest/img-1.jpg"]
+    - ["assest/img-1.jpg", "assest/img-2.jpg", "assest/img-3.jpg"]
+    - ["assest/gallery/photo1.jpg", "assest/gallery/photo2.jpg", ...]
+
+
+IMPACT ANALYSIS
+════════════════════════════════════════════════════════════════════════════
+
+Database:
+  ✓ Non-destructive (only additions)
+  ✓ No existing data affected
+  ✓ Nullable columns (optional)
+  ✓ No indexes added (minimal performance impact)
+  ✓ Reversible (can drop columns if needed)
+
+Performance:
+  ✓ Negligible impact
+  ✓ New columns are optional
+  ✓ Existing queries unaffected
+  ✓ Schema change: < 1 second
+
+Compatibility:
+  ✓ Backward compatible
+  ✓ Old exhibitions work unchanged
+  ✓ New exhibitions can use new features
+  ✓ Mixed data supported
+
+
+ROLLBACK PROCEDURE (If Needed)
+════════════════════════════════════════════════════════════════════════════
+
+⚠️  CAUTION: Only if you need to UNDO the migration
+
+ALTER TABLE exhibitions DROP COLUMN event_video;
+ALTER TABLE exhibitions DROP COLUMN gallery_images;
+
+⚠️  WARNING: This will delete any saved video URLs and gallery data!
+
+
+TIMELINE
+════════════════════════════════════════════════════════════════════════════
+
+Step 1: Open PhpMyAdmin              1-2 minutes
+Step 2: Copy SQL code                30 seconds
+Step 3: Paste into SQL tab           30 seconds
+Step 4: Execute (Go button)          < 1 second
+Step 5: Verify with DESCRIBE         30 seconds
+        ──────────────────────────────────────
+TOTAL:                               3-4 minutes
+
+
+SUCCESS INDICATORS
+════════════════════════════════════════════════════════════════════════════
+
+✓ Green checkmark after executing SQL
+✓ No error messages
+✓ DESCRIBE exhibitions shows 18 columns (was 16)
+✓ New columns appear at position 12-13
+✓ Both columns show NULL as default
+✓ Admin forms load without console errors
+✓ Can add exhibition with video/gallery
+✓ Can edit exhibition and see existing video/gallery
+✓ Past Events section on spaces.php displays correctly
+
+
+READY TO MIGRATE?
+════════════════════════════════════════════════════════════════════════════
+
+✓ Database backup recommended
+✓ Migration file ready: api/ADD_VIDEO_GALLERY_COLUMNS.sql
+✓ Forms updated: add-exhibition.html, edit-exhibition.html
+✓ APIs updated: add_exhibition.php, edit_exhibition.php
+✓ Documentation complete
+  ├─ QUICK_MIGRATION_STEPS.txt
+  ├─ MIGRATION_VIDEO_GALLERY_GUIDE.md
+  ├─ EXHIBITION_VIDEO_GALLERY_COMPLETE.md
+  └─ SQL_MIGRATION_VISUAL.txt (this file)
+
+STATUS: ✓ READY TO DEPLOY
+
+
+═════════════════════════════════════════════════════════════════════════════
+                    Estimated Time: 3-5 minutes
+                   No data loss • Reversible • Safe
+═════════════════════════════════════════════════════════════════════════════

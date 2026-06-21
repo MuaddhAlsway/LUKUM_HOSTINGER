@@ -56,6 +56,8 @@ try {
     $exhibition_end_time = isset($input['exhibition_end_time']) ? trim($input['exhibition_end_time']) : '18:00:00';
     $end_date = isset($input['end_date']) && !empty($input['end_date']) ? trim($input['end_date']) : null;
     $cover_image = isset($input['cover_image']) ? trim($input['cover_image']) : null;
+    $event_video = isset($input['event_video']) && !empty($input['event_video']) ? trim($input['event_video']) : null;
+    $gallery_images = isset($input['gallery_images']) && !empty($input['gallery_images']) ? trim($input['gallery_images']) : null;
     
     // Validate required fields
     if (!$id) {
@@ -90,25 +92,50 @@ try {
         ]));
     }
     
-    // Build update query
-    if ($cover_image) {
-        $sql = "UPDATE exhibitions SET 
-                title_en = ?, title_ar = ?, 
-                description_en = ?, description_ar = ?,
-                location_en = ?, location_ar = ?, 
-                exhibition_date = ?, exhibition_time = ?,
-                exhibition_end_time = ?, end_date = ?,
-                cover_image = ?
-                WHERE id = ?";
-    } else {
-        $sql = "UPDATE exhibitions SET 
-                title_en = ?, title_ar = ?, 
-                description_en = ?, description_ar = ?,
-                location_en = ?, location_ar = ?, 
-                exhibition_date = ?, exhibition_time = ?,
-                exhibition_end_time = ?, end_date = ?
-                WHERE id = ?";
+    // Build update query - handle all combinations of optional fields
+    $updateFields = [];
+    $bindTypes = '';
+    $bindParams = [];
+    
+    $updateFields[] = 'title_en = ?';
+    $updateFields[] = 'title_ar = ?';
+    $updateFields[] = 'description_en = ?';
+    $updateFields[] = 'description_ar = ?';
+    $updateFields[] = 'location_en = ?';
+    $updateFields[] = 'location_ar = ?';
+    $updateFields[] = 'exhibition_date = ?';
+    $updateFields[] = 'exhibition_time = ?';
+    $updateFields[] = 'exhibition_end_time = ?';
+    $updateFields[] = 'end_date = ?';
+    
+    $bindTypes = 'ssssssssss';
+    $bindParams = [&$title_en, &$title_ar, &$description_en, &$description_ar,
+                   &$location_en, &$location_ar, &$exhibition_date, &$exhibition_time,
+                   &$exhibition_end_time, &$end_date];
+    
+    if ($cover_image !== null) {
+        $updateFields[] = 'cover_image = ?';
+        $bindTypes .= 's';
+        $bindParams[] = &$cover_image;
     }
+    
+    if ($event_video !== null) {
+        $updateFields[] = 'event_video = ?';
+        $bindTypes .= 's';
+        $bindParams[] = &$event_video;
+    }
+    
+    if ($gallery_images !== null) {
+        $updateFields[] = 'gallery_images = ?';
+        $bindTypes .= 's';
+        $bindParams[] = &$gallery_images;
+    }
+    
+    $updateFields[] = 'id = ?';
+    $bindTypes .= 'i';
+    $bindParams[] = &$id;
+    
+    $sql = "UPDATE exhibitions SET " . implode(', ', array_slice($updateFields, 0, -1)) . " WHERE id = ?";
     
     $stmt = $conn->prepare($sql);
     
@@ -120,22 +147,8 @@ try {
         ]));
     }
     
-    // Bind parameters
-    if ($cover_image) {
-        $bind_result = $stmt->bind_param(
-            'ssssssssssi',
-            $title_en, $title_ar, $description_en, $description_ar,
-            $location_en, $location_ar, $exhibition_date, $exhibition_time,
-            $exhibition_end_time, $cover_image, $id
-        );
-    } else {
-        $bind_result = $stmt->bind_param(
-            'sssssssssi',
-            $title_en, $title_ar, $description_en, $description_ar,
-            $location_en, $location_ar, $exhibition_date, $exhibition_time,
-            $exhibition_end_time, $id
-        );
-    }
+    // Bind all parameters
+    $bind_result = call_user_func_array([$stmt, 'bind_param'], array_merge([$bindTypes], $bindParams));
     
     if (!$bind_result) {
         http_response_code(500);

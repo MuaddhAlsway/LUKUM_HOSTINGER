@@ -371,10 +371,32 @@
                                         const exhibition_time = document.getElementById('exhibition_time').value || '10:00';
                                         const exhibition_end_time = document.getElementById('exhibition_end_time').value || '18:00';
                                         const end_date = document.getElementById('end_date').value || null;
+                                        const event_video = document.getElementById('event_video').value.trim() || null;
 
                                         if (!title_en) throw new Error('Exhibition title (English) is required');
                                         if (!exhibition_date) throw new Error('Exhibition date is required');
                                         if (!location_en) throw new Error('Location (English) is required');
+
+                                        // Upload gallery images
+                                        let galleryImages = [];
+                                        const galleryInput = document.getElementById('gallery_images');
+                                        if (galleryInput.files && galleryInput.files.length > 0) {
+                                            for (let i = 0; i < galleryInput.files.length; i++) {
+                                                const file = galleryInput.files[i];
+                                                const formData = new FormData();
+                                                formData.append('file', file);
+                                                
+                                                const uploadResponse = await fetch('../api/upload_cover_image.php', {
+                                                    method: 'POST',
+                                                    body: formData
+                                                });
+                                                
+                                                const uploadResult = await uploadResponse.json();
+                                                if (uploadResult.success) {
+                                                    galleryImages.push(uploadResult.path);
+                                                }
+                                            }
+                                        }
 
                                         const newExhibition = {
                                             title_en: title_en,
@@ -388,7 +410,9 @@
                                             exhibition_end_time: exhibition_end_time + ':00',
                                             end_date: end_date,
                                             category: 'exhibition',
-                                            cover_image: coverImagePath
+                                            cover_image: coverImagePath,
+                                            event_video: event_video,
+                                            gallery_images: galleryImages.length > 0 ? JSON.stringify(galleryImages) : null
                                         };
 
                                         console.log('Sending exhibition data:', newExhibition);
@@ -445,6 +469,33 @@
                     </script>
                     </div>
 
+                    <!-- Event Video Section (Optional) -->
+                    <div class="form-section">
+                        <h3><i class="ri-video-line"></i> Event Video (Optional)</h3>
+                        <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                            <div class="form-group">
+                                <label for="event_video">Video URL</label>
+                                <input type="url" id="event_video" name="event_video" placeholder="https://www.youtube.com/embed/... or video URL">
+                                <small style="color: #666;">Paste YouTube embed URL, Vimeo URL, or direct video link (MP4, WebM, etc.)</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gallery Images Section (Optional) -->
+                    <div class="form-section">
+                        <h3><i class="ri-gallery-line"></i> Gallery Images (Optional)</h3>
+                        <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                            <div class="form-group">
+                                <label for="gallery_images">Upload Multiple Images</label>
+                                <input type="file" id="gallery_images" name="gallery_images" accept="image/*,.jpg,.jpeg,.png,.gif,.webp,.heic,.heif" multiple style="padding: 10px; border: 2px dashed #ccc; border-radius: 4px; width: 100%;">
+                                <small style="color: #666;">Select one or more images for the gallery. Recommended: 500x500px or larger</small>
+                            </div>
+                            <div id="galleryPreview" style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 15px;">
+                                <!-- Gallery images will be displayed here -->
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Submit Button -->
                     <div style="margin-top: 40px; display: flex; gap: 12px;">
                         <button type="submit" id="submitBtn" class="btn-primary" style="display: inline-block; padding: 12px 30px; background: #1a1a1a; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: 500;">
@@ -459,6 +510,34 @@
             </div>
         </main>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const galleryInput = document.getElementById('gallery_images');
+            const galleryPreview = document.getElementById('galleryPreview');
+
+            if (galleryInput) {
+                galleryInput.addEventListener('change', function(e) {
+                    galleryPreview.innerHTML = '';
+                    
+                    const files = e.target.files;
+                    for (let i = 0; i < files.length; i++) {
+                        const file = files[i];
+                        const reader = new FileReader();
+                        
+                        reader.onload = function(event) {
+                            const img = document.createElement('img');
+                            img.src = event.target.result;
+                            img.style.cssText = 'width: 100px; height: 100px; object-fit: cover; border-radius: 4px; border: 2px solid #ddd;';
+                            galleryPreview.appendChild(img);
+                        };
+                        
+                        reader.readAsDataURL(file);
+                    }
+                });
+            }
+        });
+    </script>
 
     <script src="event-form.js"></script>
 </body>

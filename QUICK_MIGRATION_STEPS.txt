@@ -1,0 +1,126 @@
+================================================================================
+QUICK MIGRATION: Add Video & Gallery to Exhibitions Table
+================================================================================
+
+WHAT: Add 2 new columns to exhibitions table
+  • event_video (optional video URL)
+  • gallery_images (optional gallery images as JSON)
+
+FILE TO USE: api/ADD_VIDEO_GALLERY_COLUMNS.sql
+
+================================================================================
+STEP-BY-STEP EXECUTION
+================================================================================
+
+STEP 1: Open PhpMyAdmin
+────────────────────────────────────────────────────────────────────────────
+• Go to: http://localhost/phpmyadmin/
+• Login:
+  - User: root (or your phpmyadmin user)
+  - Password: (leave blank or enter your password)
+
+STEP 2: Select Database
+────────────────────────────────────────────────────────────────────────────
+• In left sidebar, click: u812122863_lakum_artspace
+
+STEP 3: Open SQL Editor
+────────────────────────────────────────────────────────────────────────────
+• Click the "SQL" tab at the top
+
+STEP 4: Copy & Paste SQL
+────────────────────────────────────────────────────────────────────────────
+• Open file: api/ADD_VIDEO_GALLERY_COLUMNS.sql
+• Copy ALL the code (everything from top to bottom)
+• Paste into PhpMyAdmin SQL Query box
+
+STEP 5: Execute
+────────────────────────────────────────────────────────────────────────────
+• Click the "Go" button
+• Wait for green checkmark (success message)
+
+STEP 6: Verify
+────────────────────────────────────────────────────────────────────────────
+• Run this query:
+  DESCRIBE exhibitions;
+• Look for 2 new columns at the bottom:
+  ✓ event_video (VARCHAR 500)
+  ✓ gallery_images (LONGTEXT)
+
+================================================================================
+SQL QUICK REFERENCE
+================================================================================
+
+The migration runs exactly 2 commands:
+
+  ALTER TABLE exhibitions ADD COLUMN `event_video` VARCHAR(500) 
+  AFTER `cover_image`;
+
+  ALTER TABLE exhibitions ADD COLUMN `gallery_images` LONGTEXT 
+  AFTER `event_video`;
+
+That's it! No data loss, no complex changes.
+
+================================================================================
+VERIFICATION QUERIES
+================================================================================
+
+Check column exists:
+  DESCRIBE exhibitions;
+
+Check specific columns:
+  SELECT COLUMN_NAME, COLUMN_TYPE FROM INFORMATION_SCHEMA.COLUMNS 
+  WHERE TABLE_NAME = 'exhibitions' 
+  AND COLUMN_NAME IN ('event_video', 'gallery_images');
+
+View an exhibition:
+  SELECT * FROM exhibitions LIMIT 1;
+
+================================================================================
+AFTER MIGRATION
+================================================================================
+
+✓ Forms are ready to use:
+  - admin/add-exhibition.html (add video + gallery images)
+  - admin/edit-exhibition.html (edit video + gallery images)
+
+✓ Gallery images display as:
+  - JSON array in database: ["path1.jpg", "path2.jpg", ...]
+  - Thumbnails in admin forms
+  - Gallery on spaces.php
+
+✓ Event videos:
+  - Stored as URL in event_video column
+  - Can be YouTube, Vimeo, or direct video file
+
+================================================================================
+TROUBLESHOOTING
+================================================================================
+
+Problem: "Column already exists"
+→ Migration already done! Try adding an exhibition to test.
+
+Problem: "Access denied" error
+→ Check database credentials in database settings
+
+Problem: "Unknown column" error
+→ Make sure you're in the correct database (u812122863_lakum_artspace)
+
+Problem: Nothing happens
+→ Make sure you copied the ENTIRE file, not just one line
+
+================================================================================
+ROLLBACK (UNDO)
+================================================================================
+
+If you need to remove these columns:
+
+  ALTER TABLE exhibitions DROP COLUMN event_video;
+  ALTER TABLE exhibitions DROP COLUMN gallery_images;
+
+⚠️  WARNING: This deletes any saved video URLs and gallery image data!
+
+================================================================================
+EXPECTED TIME: 2-5 minutes
+STATUS: Ready to execute
+DATE: 2026-06-21
+================================================================================

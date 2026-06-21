@@ -61,6 +61,8 @@ try {
     $exhibition_end_time = isset($input['exhibition_end_time']) ? trim($input['exhibition_end_time']) : '18:00:00';
     $end_date = isset($input['end_date']) && !empty($input['end_date']) ? trim($input['end_date']) : null;
     $cover_image = isset($input['cover_image']) ? trim($input['cover_image']) : 'assest/img-4.png';
+    $event_video = isset($input['event_video']) && !empty($input['event_video']) ? trim($input['event_video']) : null;
+    $gallery_images = isset($input['gallery_images']) && !empty($input['gallery_images']) ? trim($input['gallery_images']) : null;
     $category = 'exhibition';
     
     // Validate required fields
@@ -106,6 +108,8 @@ try {
             `exhibition_end_time` TIME,
             `end_date` DATE,
             `cover_image` VARCHAR(500),
+            `event_video` VARCHAR(500),
+            `gallery_images` LONGTEXT,
             `category` VARCHAR(50) DEFAULT 'exhibition',
             `is_featured` TINYINT(1) DEFAULT 0,
             `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -128,8 +132,8 @@ try {
     $sql = "INSERT INTO exhibitions (
         title_en, title_ar, description_en, description_ar,
         location_en, location_ar, exhibition_date, exhibition_time,
-        exhibition_end_time, end_date, cover_image, category
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        exhibition_end_time, end_date, cover_image, event_video, gallery_images, category
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     
     $stmt = $conn->prepare($sql);
     
@@ -143,10 +147,10 @@ try {
     
     // Bind parameters
     $bind_result = $stmt->bind_param(
-        'ssssssssssss',
+        'ssssssssssssss',
         $title_en, $title_ar, $description_en, $description_ar,
         $location_en, $location_ar, $exhibition_date, $exhibition_time,
-        $exhibition_end_time, $end_date, $cover_image, $category
+        $exhibition_end_time, $end_date, $cover_image, $event_video, $gallery_images, $category
     );
     
     if (!$bind_result) {
