@@ -994,8 +994,12 @@ header("Expires: 0");
                 const slidesToShow = Math.min(allPastItems.length, 12);
                 const itemsToDisplay = allPastItems.slice(0, slidesToShow);
                 
-                // Add slides twice for infinite carousel effect
-                [...itemsToDisplay, ...itemsToDisplay].forEach(item => {
+                // Add slides twice for infinite carousel effect (but only if more than 1 item)
+                const slidesToRender = itemsToDisplay.length > 1 
+                    ? [...itemsToDisplay, ...itemsToDisplay]
+                    : itemsToDisplay;
+                
+                slidesToRender.forEach(item => {
                     const dateField = item.event_date || item.exhibition_date;
                     const itemDate = new Date(dateField);
                     const month = itemDate.toLocaleDateString('en-US', { month: 'short', year: 'numeric' }).toUpperCase();
