@@ -297,15 +297,45 @@ require_once 'includes/site-settings.php';
     
     <!-- CRITICAL FIX: Ensure dropdown works on this page -->
     <style>
+        /* BASE OVERRIDES */
         .lakum-nav { overflow: visible !important; }
         .lakum-nav__list { overflow: visible !important; }
         .lakum-nav__item--dropdown { overflow: visible !important; position: relative !important; }
+        
+        /* SHOW DROPDOWN WHEN ACTIVE */
         .lakum-nav__item--dropdown.active > .lakum-nav__dropdown,
         .lakum-nav__item--dropdown.active .lakum-nav__dropdown {
             opacity: 1 !important;
             visibility: visible !important;
             pointer-events: auto !important;
         }
+        
+        /* ULTRA AGGRESSIVE - ENSURE NO ANCESTOR HIDES DROPDOWN */
+        .lakum-nav * { overflow: visible !important; }
+        .lakum-header { overflow: visible !important; }
+        .lakum-header * { overflow: visible !important; }
+        .lakum-header__container { overflow: visible !important; }
+        
+        /* FORCE DROPDOWN TO BE VISIBLE AND ON TOP */
+        .lakum-nav__item--dropdown.active .lakum-nav__dropdown {
+            display: block !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+            pointer-events: auto !important;
+            z-index: 99999 !important;
+            position: absolute !important;
+            top: 100% !important;
+        }
+        
+        /* ENSURE PARENT HAS POSITIONING CONTEXT */
+        .lakum-nav__item--dropdown {
+            position: relative !important;
+            z-index: 1000 !important;
+        }
+        
+        /* BREAK ANY STACKING CONTEXT THAT MIGHT HIDE IT */
+        body { position: relative !important; }
+        .lakum-header { position: fixed !important; z-index: 1000 !important; }
     </style>
 
     <section class="lakum-hero" style="aspect-ratio: 16/9">
