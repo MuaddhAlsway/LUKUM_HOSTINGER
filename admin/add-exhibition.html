@@ -291,8 +291,60 @@
                         <div class="date-validation-msg" id="dateValidation"></div>
                     </div>
 
+                    <!-- Event Video Section (Optional) -->
+                    <div class="form-section">
+                        <h3><i class="ri-video-line"></i> Event Video (Optional)</h3>
+                        <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                            <div class="form-group">
+                                <label for="event_video">Video URL</label>
+                                <input type="url" id="event_video" name="event_video" placeholder="https://www.youtube.com/embed/... or video URL">
+                                <small style="color: #666;">Paste YouTube embed URL, Vimeo URL, or direct video link (MP4, WebM, etc.)</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gallery Images Section (Optional) -->
+                    <div class="form-section">
+                        <h3><i class="ri-gallery-line"></i> Gallery Images (Optional)</h3>
+                        <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                            <div class="form-group">
+                                <label for="gallery_images">Upload Multiple Images</label>
+                                <input type="file" id="gallery_images" name="gallery_images" accept="image/*,.jpg,.jpeg,.png,.gif,.webp,.heic,.heif" multiple style="padding: 10px; border: 2px dashed #ccc; border-radius: 4px; width: 100%;">
+                                <small style="color: #666;">Select one or more images for the gallery. Recommended: 500x500px or larger</small>
+                            </div>
+                            <div id="galleryPreview" style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 15px;">
+                                <!-- Gallery images will be displayed here -->
+                            </div>
+                        </div>
+                    </div>
+
                     <script>
                         document.addEventListener('DOMContentLoaded', function() {
+                            // Gallery preview handler
+                            const galleryInput = document.getElementById('gallery_images');
+                            const galleryPreview = document.getElementById('galleryPreview');
+
+                            if (galleryInput) {
+                                galleryInput.addEventListener('change', function(e) {
+                                    galleryPreview.innerHTML = '';
+                                    
+                                    const files = e.target.files;
+                                    for (let i = 0; i < files.length; i++) {
+                                        const file = files[i];
+                                        const reader = new FileReader();
+                                        
+                                        reader.onload = function(event) {
+                                            const img = document.createElement('img');
+                                            img.src = event.target.result;
+                                            img.style.cssText = 'width: 100px; height: 100px; object-fit: cover; border-radius: 4px; border: 2px solid #ddd;';
+                                            galleryPreview.appendChild(img);
+                                        };
+                                        
+                                        reader.readAsDataURL(file);
+                                    }
+                                });
+                            }
+
                             // Set max date to today (only allow past dates)
                             const today = new Date().toISOString().split('T')[0];
                             const exhibitionDateInput = document.getElementById('exhibition_date');
@@ -467,35 +519,6 @@
                             }
                         });
                     </script>
-                    </div>
-
-                    <!-- Event Video Section (Optional) -->
-                    <div class="form-section">
-                        <h3><i class="ri-video-line"></i> Event Video (Optional)</h3>
-                        <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-                            <div class="form-group">
-                                <label for="event_video">Video URL</label>
-                                <input type="url" id="event_video" name="event_video" placeholder="https://www.youtube.com/embed/... or video URL">
-                                <small style="color: #666;">Paste YouTube embed URL, Vimeo URL, or direct video link (MP4, WebM, etc.)</small>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Gallery Images Section (Optional) -->
-                    <div class="form-section">
-                        <h3><i class="ri-gallery-line"></i> Gallery Images (Optional)</h3>
-                        <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-                            <div class="form-group">
-                                <label for="gallery_images">Upload Multiple Images</label>
-                                <input type="file" id="gallery_images" name="gallery_images" accept="image/*,.jpg,.jpeg,.png,.gif,.webp,.heic,.heif" multiple style="padding: 10px; border: 2px dashed #ccc; border-radius: 4px; width: 100%;">
-                                <small style="color: #666;">Select one or more images for the gallery. Recommended: 500x500px or larger</small>
-                            </div>
-                            <div id="galleryPreview" style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 15px;">
-                                <!-- Gallery images will be displayed here -->
-                            </div>
-                        </div>
-                    </div>
-
                     <!-- Submit Button -->
                     <div style="margin-top: 40px; display: flex; gap: 12px;">
                         <button type="submit" id="submitBtn" class="btn-primary" style="display: inline-block; padding: 12px 30px; background: #1a1a1a; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: 500;">
@@ -510,34 +533,6 @@
             </div>
         </main>
     </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const galleryInput = document.getElementById('gallery_images');
-            const galleryPreview = document.getElementById('galleryPreview');
-
-            if (galleryInput) {
-                galleryInput.addEventListener('change', function(e) {
-                    galleryPreview.innerHTML = '';
-                    
-                    const files = e.target.files;
-                    for (let i = 0; i < files.length; i++) {
-                        const file = files[i];
-                        const reader = new FileReader();
-                        
-                        reader.onload = function(event) {
-                            const img = document.createElement('img');
-                            img.src = event.target.result;
-                            img.style.cssText = 'width: 100px; height: 100px; object-fit: cover; border-radius: 4px; border: 2px solid #ddd;';
-                            galleryPreview.appendChild(img);
-                        };
-                        
-                        reader.readAsDataURL(file);
-                    }
-                });
-            }
-        });
-    </script>
 
     <script src="event-form.js"></script>
 </body>
