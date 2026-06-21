@@ -490,15 +490,47 @@
             document.getElementById('exhibitionId').value = exhibition.id;
             document.getElementById('title_en').value = exhibition.title_en || '';
             document.getElementById('description_en').value = exhibition.description_en || '';
-            document.getElementById('location_en').value = exhibition.location_en || '';
             document.getElementById('title_ar').value = exhibition.title_ar || '';
             document.getElementById('description_ar').value = exhibition.description_ar || '';
-            document.getElementById('location_ar').value = exhibition.location_ar || '';
             document.getElementById('exhibition_date').value = exhibition.exhibition_date || '';
             document.getElementById('exhibition_time').value = (exhibition.exhibition_time || '10:00:00').substring(0, 5);
             document.getElementById('exhibition_end_time').value = (exhibition.exhibition_end_time || '18:00:00').substring(0, 5);
             document.getElementById('end_date').value = exhibition.end_date || '';
             document.getElementById('event_video').value = exhibition.event_video || '';
+            
+            // Handle location fields
+            const location_en = exhibition.location_en || '';
+            const location_ar = exhibition.location_ar || '';
+            
+            // Set location input values directly (works for both select and custom)
+            document.getElementById('location_en').value = location_en;
+            document.getElementById('location_ar').value = location_ar;
+            
+            // Try to set select dropdown if location matches a predefined option
+            const locationSelectEn = document.getElementById('location_select_en');
+            const locationSelectAr = document.getElementById('location_select_ar');
+            
+            if (locationSelectEn) {
+                const options = Array.from(locationSelectEn.options).map(opt => opt.value);
+                if (options.includes(location_en)) {
+                    locationSelectEn.value = location_en;
+                } else if (location_en) {
+                    locationSelectEn.value = 'other';
+                    document.getElementById('location_en').style.display = 'block';
+                    document.getElementById('location_en').value = location_en;
+                }
+            }
+            
+            if (locationSelectAr) {
+                const options = Array.from(locationSelectAr.options).map(opt => opt.value);
+                if (options.includes(location_ar)) {
+                    locationSelectAr.value = location_ar;
+                } else if (location_ar) {
+                    locationSelectAr.value = 'other';
+                    document.getElementById('location_ar').style.display = 'block';
+                    document.getElementById('location_ar').value = location_ar;
+                }
+            }
             
             if (exhibition.cover_image) {
                 const coverImg = document.getElementById('coverImg');
@@ -513,21 +545,32 @@
             // Display existing gallery images
             if (exhibition.gallery_images) {
                 try {
+                    // Clear any existing gallery images first
+                    const currentGalleryPreview = document.getElementById('currentGalleryPreview');
+                    currentGalleryPreview.innerHTML = '';
+                    
                     const galleryImages = typeof exhibition.gallery_images === 'string' 
                         ? JSON.parse(exhibition.gallery_images) 
                         : exhibition.gallery_images;
                     
-                    if (Array.isArray(galleryImages)) {
-                        const currentGalleryPreview = document.getElementById('currentGalleryPreview');
+                    if (Array.isArray(galleryImages) && galleryImages.length > 0) {
                         galleryImages.forEach(imagePath => {
                             const img = document.createElement('img');
                             img.src = imagePath;
-                            img.style.cssText = 'width: 100px; height: 100px; object-fit: cover; border-radius: 4px; border: 2px solid #ddd;';
+                            img.alt = 'Gallery image';
+                            img.style.cssText = 'width: 100px; height: 100px; object-fit: cover; border-radius: 4px; border: 2px solid #ddd; cursor: pointer;';
+                            img.title = imagePath;
+                            
+                            // Add click handler to remove image if needed
+                            img.addEventListener('click', function() {
+                                this.remove();
+                            });
+                            
                             currentGalleryPreview.appendChild(img);
                         });
                     }
                 } catch (e) {
-                    console.log('Could not parse gallery images:', e);
+                    console.error('Could not parse gallery images:', e);
                 }
             }
 
