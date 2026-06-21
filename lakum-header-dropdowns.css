@@ -147,20 +147,34 @@
     .lakum-nav--mobile .lakum-nav__item--dropdown {
         width: 100% !important;
         flex-direction: column !important;
-        position: static !important;
+        position: relative !important;
         overflow: visible !important;
+        display: flex !important;
+        align-items: stretch !important;
     }
     
-    /* Mobile dropdown toggle - stays visible */
+    /* Mobile dropdown wrapper - contains link and dropdown */
+    .lakum-nav--mobile .lakum-nav__item--dropdown > .lakum-nav__link {
+        flex: 1 !important;
+        display: flex !important;
+        align-items: center !important;
+    }
+    
+    /* Mobile dropdown toggle - stays visible on right */
     .lakum-nav--mobile .lakum-nav__dropdown-toggle {
         display: inline-flex !important;
         position: relative !important;
         order: 1 !important;
         margin-left: auto !important;
         padding: 12px !important;
+        flex-shrink: 0 !important;
+        background: transparent !important;
+        border: none !important;
+        cursor: pointer !important;
+        z-index: 1 !important;
     }
     
-    /* Mobile dropdown menu - appears below toggle */
+    /* Mobile dropdown menu - appears BELOW list items */
     .lakum-nav--mobile .lakum-nav__dropdown {
         position: static !important;
         top: auto !important;
@@ -179,7 +193,9 @@
         box-shadow: none !important;
         margin: 0 !important;
         padding: 0 !important;
-        z-index: auto !important;
+        z-index: 0 !important;
+        order: 2 !important;
+        list-style: none !important;
     }
     
     /* Mobile dropdown - show when parent is active */
@@ -198,6 +214,11 @@
         text-align: right !important;
         display: block !important;
         background: rgba(230, 230, 224, 0.95) !important;
+        color: #1a1a1a !important;
+        text-decoration: none !important;
+        font-size: 14px !important;
+        font-weight: 400 !important;
+        transition: all 0.2s ease !important;
     }
     
     .lakum-nav--mobile .lakum-nav__dropdown-link:hover {
