@@ -398,8 +398,9 @@
                         : exhibition.gallery_images;
                     
                     if (Array.isArray(galleryImages) && galleryImages.length > 0) {
-                        galleryImages.forEach(imagePath => {
+                        galleryImages.forEach(originalPath => {
                             // Fix path: if it's relative, prepend ../ to go up from admin folder
+                            let imagePath = originalPath;
                             if (!imagePath.startsWith('http') && !imagePath.startsWith('/')) {
                                 imagePath = '../' + imagePath;
                             }
