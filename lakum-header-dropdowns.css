@@ -233,7 +233,7 @@
         max-height: 0 !important;
         overflow: hidden !important;
         transition: all 0.3s ease !important;
-        background: rgba(220, 220, 214, 0.98) !important;
+        background: #e8e8e0 !important;
         border: none !important;
         box-shadow: none !important;
         border-top: 1px solid rgba(200, 200, 194, 0.5) !important;
@@ -259,7 +259,7 @@
         width: 100% !important;
         text-align: left !important;
         display: block !important;
-        background: transparent !important;
+        background: #e8e8e0 !important;
         color: #1a1a1a !important;
         text-decoration: none !important;
         font-size: 14px !important;
@@ -273,7 +273,7 @@
     }
     
     .lakum-nav--mobile .lakum-nav__item--dropdown .lakum-nav__dropdown-link:hover {
-        background: rgba(200, 200, 194, 0.5) !important;
+        background: #dcdcd4 !important;
         padding-left: 48px !important;
     }
     
