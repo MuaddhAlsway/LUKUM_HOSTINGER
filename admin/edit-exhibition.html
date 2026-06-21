@@ -111,7 +111,7 @@
                                 <i class="ri-close-line"></i>
                             </button>
                         </div>
-                        <input type="file" id="cover_image" name="cover_image" accept="image/*,.jpg,.jpeg,.png,.gif,.webp,.heic,.heif" style="display: none;">
+                        <input type="file" id="cover_image" name="cover_image" accept="image/*" style="display: none;">
                     </div>
 
                     <!-- Exhibition Details -->
@@ -130,12 +130,11 @@
                             <div class="form-group">
                                 <label for="description_en">Description (EN)</label>
                                 <textarea id="description_en" name="description_en" rows="5" placeholder="Describe your exhibition in English..."></textarea>
-                                <div class="char-count"><span id="charCount_en">0</span> characters</div>
                             </div>
 
                             <div class="form-group">
                                 <label for="location_en">Location (EN)</label>
-                                <select id="location_select_en" name="location_select_en" onchange="handleLocationChange(this, 'en'); syncLocationAr()">
+                                <select id="location_select_en" name="location_select_en" onchange="handleLocationChange(this, 'en')">
                                     <option value="">Select location...</option>
                                     <option value="Hall 1">Hall 1</option>
                                     <option value="Hall 2">Hall 2</option>
@@ -159,17 +158,16 @@
                             <div class="form-group">
                                 <label for="description_ar">Description (AR)</label>
                                 <textarea id="description_ar" name="description_ar" rows="5" placeholder="صف معرضك بالعربية..." dir="rtl"></textarea>
-                                <div class="char-count"><span id="charCount_ar">0</span> characters</div>
                             </div>
 
                             <div class="form-group">
                                 <label for="location_ar">Location (AR)</label>
                                 <select id="location_select_ar" name="location_select_ar" onchange="handleLocationChange(this, 'ar')">
                                     <option value="">اختر الموقع...</option>
-                                    <option value="Hall 1" data-en="Hall 1">القاعة 1</option>
-                                    <option value="Hall 2" data-en="Hall 2">القاعة 2</option>
-                                    <option value="Café" data-en="Café">الكافيه</option>
-                                    <option value="Meeting Room" data-en="Meeting Room">غرفة الاجتماعات</option>
+                                    <option value="Hall 1">القاعة 1</option>
+                                    <option value="Hall 2">القاعة 2</option>
+                                    <option value="Café">الكافيه</option>
+                                    <option value="Meeting Room">غرفة الاجتماعات</option>
                                     <option value="other">أخرى (مخصص)</option>
                                 </select>
                                 <input type="text" id="location_ar" name="location_ar" placeholder="أدخل موقع مخصص" style="display: none; margin-top: 10px;" dir="rtl">
@@ -229,21 +227,7 @@
                                     <input type="date" id="end_date" name="end_date">
                                 </div>
                             </div>
-
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="end_date_start_time">Start Time</label>
-                                    <input type="time" id="end_date_start_time" name="end_date_start_time">
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="end_time">End Time</label>
-                                    <input type="time" id="end_time" name="end_time">
-                                </div>
-                            </div>
                         </div>
-
-                        <div class="date-validation-msg" id="dateValidation"></div>
                     </div>
 
                     <!-- Event Video Section (Optional) -->
@@ -253,7 +237,7 @@
                             <div class="form-group">
                                 <label for="event_video">Video URL</label>
                                 <input type="url" id="event_video" name="event_video" placeholder="https://www.youtube.com/embed/... or video URL">
-                                <small style="color: #666;">Paste YouTube embed URL, Vimeo URL, or direct video link (MP4, WebM, etc.)</small>
+                                <small style="color: #666;">Paste YouTube embed URL, Vimeo URL, or direct video link</small>
                             </div>
                         </div>
                     </div>
@@ -264,8 +248,8 @@
                         <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
                             <div class="form-group">
                                 <label for="gallery_images">Upload Additional Images</label>
-                                <input type="file" id="gallery_images" name="gallery_images" accept="image/*,.jpg,.jpeg,.png,.gif,.webp,.heic,.heif" multiple style="padding: 10px; border: 2px dashed #ccc; border-radius: 4px; width: 100%;">
-                                <small style="color: #666;">Select one or more images to add to the gallery. Recommended: 500x500px or larger</small>
+                                <input type="file" id="gallery_images" name="gallery_images" accept="image/*" multiple style="padding: 10px; border: 2px dashed #ccc; border-radius: 4px; width: 100%;">
+                                <small style="color: #666;">Select one or more images to add to the gallery</small>
                             </div>
                             <div id="currentGalleryPreview" style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 15px;">
                                 <!-- Existing gallery images will be displayed here -->
@@ -288,176 +272,45 @@
                 </form>
             </div>
         </main>
+    </div>
+
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const galleryInput = document.getElementById('gallery_images');
-            const newGalleryPreview = document.getElementById('newGalleryPreview');
+        // ================================================================
+        // SIMPLE & CLEAN JAVASCRIPT - NO INFINITE LOOPS
+        // ================================================================
 
-            if (galleryInput) {
-                galleryInput.addEventListener('change', function(e) {
-                    newGalleryPreview.innerHTML = '';
-                    
-                    const files = e.target.files;
-                    for (let i = 0; i < files.length; i++) {
-                        const file = files[i];
-                        const reader = new FileReader();
-                        
-                        reader.onload = function(event) {
-                            const img = document.createElement('img');
-                            img.src = event.target.result;
-                            img.style.cssText = 'width: 100px; height: 100px; object-fit: cover; border-radius: 4px; border: 2px solid #ddd;';
-                            newGalleryPreview.appendChild(img);
-                        };
-                        
-                        reader.readAsDataURL(file);
-                    }
-                });
+        // Handle location change
+        function handleLocationChange(select, lang) {
+            const customInput = document.getElementById('location_' + lang);
+            if (select.value === 'other') {
+                customInput.style.display = 'block';
+                customInput.required = true;
+            } else {
+                customInput.style.display = 'none';
+                customInput.required = false;
+                customInput.value = select.value;
             }
-        });
-    </script>
-
-    <script src="event-form.js"></script>
-</body>
-
-</html>
-            const enValue = locationSelectEn.value;
-            const mapping = {'Hall 1': 'Hall 1', 'Hall 2': 'Hall 2', 'Café': 'Café', 'Meeting Room': 'Meeting Room', 'other': 'other', '': ''};
-            const arValue = mapping[enValue] || enValue;
-            locationSelectAr.value = arValue;
-            handleLocationChange(locationSelectAr, 'ar');
         }
 
-        document.addEventListener('DOMContentLoaded', function() {
-            const selectEn = document.getElementById('location_select_en');
-            const selectAr = document.getElementById('location_select_ar');
-            if (selectEn) handleLocationChange(selectEn, 'en');
-            if (selectAr) handleLocationChange(selectAr, 'ar');
+        // Show notification
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 15px 20px;
+                background: ${type === 'success' ? '#4caf50' : '#f44336'};
+                color: white;
+                border-radius: 4px;
+                z-index: 10000;
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            setTimeout(() => notification.remove(), 3000);
+        }
 
-            // Load exhibition data
-            loadExhibition();
-
-            // Form submission
-            const exhibitionForm = document.getElementById('exhibitionForm');
-            if (exhibitionForm) {
-                exhibitionForm.addEventListener('submit', async (e) => {
-                    e.preventDefault();
-
-                    const submitBtn = document.getElementById('submitBtn');
-                    const originalBtnText = submitBtn.innerHTML;
-                    submitBtn.disabled = true;
-                    submitBtn.innerHTML = '<i class="ri-loader-4-line" style="animation: spin 1s linear infinite;"></i> Updating...';
-
-                    try {
-                        const id = document.getElementById('exhibitionId').value;
-                        let coverImagePath = null;
-                        const fileInput = document.getElementById('cover_image');
-                        
-                        if (fileInput.files && fileInput.files[0]) {
-                            const file = fileInput.files[0];
-                            const formData = new FormData();
-                            formData.append('file', file);
-                            
-                            const uploadResponse = await fetch('../api/upload_cover_image.php', {
-                                method: 'POST',
-                                body: formData
-                            });
-                            
-                            const uploadResult = await uploadResponse.json();
-                            if (uploadResult.success) {
-                                coverImagePath = uploadResult.path;
-                            }
-                        }
-
-                        const updateData = {
-                            id: id,
-                            title_en: document.getElementById('title_en').value.trim(),
-                            description_en: document.getElementById('description_en').value.trim(),
-                            location_en: document.getElementById('location_en').value.trim(),
-                            title_ar: document.getElementById('title_ar').value.trim(),
-                            description_ar: document.getElementById('description_ar').value.trim(),
-                            location_ar: document.getElementById('location_ar').value.trim(),
-                            exhibition_date: document.getElementById('exhibition_date').value,
-                            exhibition_time: (document.getElementById('exhibition_time').value || '10:00') + ':00',
-                            exhibition_end_time: (document.getElementById('exhibition_end_time').value || '18:00') + ':00',
-                            end_date: document.getElementById('end_date').value || null,
-                            event_video: document.getElementById('event_video').value.trim() || null
-                        };
-
-                        // Upload new gallery images if any are selected
-                        const galleryInput = document.getElementById('gallery_images');
-                        if (galleryInput.files && galleryInput.files.length > 0) {
-                            let newGalleryImages = [];
-                            for (let i = 0; i < galleryInput.files.length; i++) {
-                                const file = galleryInput.files[i];
-                                const formData = new FormData();
-                                formData.append('file', file);
-                                
-                                const uploadResponse = await fetch('../api/upload_cover_image.php', {
-                                    method: 'POST',
-                                    body: formData
-                                });
-                                
-                                const uploadResult = await uploadResponse.json();
-                                if (uploadResult.success) {
-                                    newGalleryImages.push(uploadResult.path);
-                                }
-                            }
-                            if (newGalleryImages.length > 0) {
-                                updateData.gallery_images = JSON.stringify(newGalleryImages);
-                            }
-                        }
-
-                        if (coverImagePath) {
-                            updateData.cover_image = coverImagePath;
-                        }
-
-                        const response = await fetch('../api/edit_exhibition.php', {
-                            method: 'POST',
-                            headers: {'Content-Type': 'application/json'},
-                            body: JSON.stringify(updateData)
-                        });
-
-                        const result = await response.json();
-                        if (result.success) {
-                            showNotification('Exhibition updated successfully!', 'success');
-                            setTimeout(() => {
-                                window.location.href = 'exhibitions.html';
-                            }, 1500);
-                        } else {
-                            throw new Error(result.message || 'Failed to update exhibition');
-                        }
-                    } catch (error) {
-                        console.error('Error:', error);
-                        showNotification(error.message, 'error');
-                        submitBtn.disabled = false;
-                        submitBtn.innerHTML = originalBtnText;
-                    }
-                });
-            }
-
-            // Multi-day toggle
-            const sameDayRadio = document.getElementById('sameDayRadio');
-            const multiDayRadio = document.getElementById('multiDayRadio');
-            const endDateSection = document.getElementById('endDateSection');
-            const endDateInput = document.getElementById('end_date');
-            const endDateStartTime = document.getElementById('end_date_start_time');
-            const endTime = document.getElementById('end_time');
-
-            function toggleEndDateSection() {
-                if (multiDayRadio.checked) {
-                    endDateSection.style.display = 'block';
-                } else {
-                    endDateSection.style.display = 'none';
-                    endDateInput.value = '';
-                    endDateStartTime.value = '';
-                    endTime.value = '';
-                }
-            }
-
-            sameDayRadio.addEventListener('change', toggleEndDateSection);
-            multiDayRadio.addEventListener('change', toggleEndDateSection);
-        });
-
+        // Load exhibition when page loads
         async function loadExhibition() {
             const params = new URLSearchParams(window.location.search);
             const id = params.get('id');
@@ -474,7 +327,6 @@
                 
                 if (data.success && data.data) {
                     populateForm(data.data);
-                    checkMultiDay(data.data);
                 } else {
                     alert('Exhibition not found');
                     window.location.href = 'exhibitions.html';
@@ -486,68 +338,55 @@
             }
         }
 
+        // Populate form with data
         function populateForm(exhibition) {
             document.getElementById('exhibitionId').value = exhibition.id;
             document.getElementById('title_en').value = exhibition.title_en || '';
             document.getElementById('description_en').value = exhibition.description_en || '';
             document.getElementById('title_ar').value = exhibition.title_ar || '';
             document.getElementById('description_ar').value = exhibition.description_ar || '';
+            document.getElementById('location_en').value = exhibition.location_en || '';
+            document.getElementById('location_ar').value = exhibition.location_ar || '';
             document.getElementById('exhibition_date').value = exhibition.exhibition_date || '';
             document.getElementById('exhibition_time').value = (exhibition.exhibition_time || '10:00:00').substring(0, 5);
             document.getElementById('exhibition_end_time').value = (exhibition.exhibition_end_time || '18:00:00').substring(0, 5);
             document.getElementById('end_date').value = exhibition.end_date || '';
             document.getElementById('event_video').value = exhibition.event_video || '';
-            
-            // Handle location fields
-            const location_en = exhibition.location_en || '';
-            const location_ar = exhibition.location_ar || '';
-            
-            // Set location input values directly (works for both select and custom)
-            document.getElementById('location_en').value = location_en;
-            document.getElementById('location_ar').value = location_ar;
-            
-            // Try to set select dropdown if location matches a predefined option
+
+            // Handle location selects
             const locationSelectEn = document.getElementById('location_select_en');
             const locationSelectAr = document.getElementById('location_select_ar');
             
-            if (locationSelectEn) {
-                const options = Array.from(locationSelectEn.options).map(opt => opt.value);
-                if (options.includes(location_en)) {
-                    locationSelectEn.value = location_en;
-                } else if (location_en) {
-                    locationSelectEn.value = 'other';
-                    document.getElementById('location_en').style.display = 'block';
-                    document.getElementById('location_en').value = location_en;
-                }
+            const location_en = exhibition.location_en || '';
+            const location_ar = exhibition.location_ar || '';
+            
+            // Set selects
+            locationSelectEn.value = location_en;
+            locationSelectAr.value = location_ar;
+            
+            // Handle custom locations
+            if (![...locationSelectEn.options].map(o => o.value).includes(location_en) && location_en) {
+                locationSelectEn.value = 'other';
+                document.getElementById('location_en').style.display = 'block';
+                document.getElementById('location_en').value = location_en;
             }
             
-            if (locationSelectAr) {
-                const options = Array.from(locationSelectAr.options).map(opt => opt.value);
-                if (options.includes(location_ar)) {
-                    locationSelectAr.value = location_ar;
-                } else if (location_ar) {
-                    locationSelectAr.value = 'other';
-                    document.getElementById('location_ar').style.display = 'block';
-                    document.getElementById('location_ar').value = location_ar;
-                }
-            }
-            
+            // Cover image
             if (exhibition.cover_image) {
                 const coverImg = document.getElementById('coverImg');
                 const coverPreview = document.getElementById('coverPreview');
-                const placeholder = coverPreview.querySelector('.cover-placeholder');
                 coverImg.src = exhibition.cover_image;
                 coverImg.style.display = 'block';
-                placeholder.style.display = 'none';
+                const placeholder = coverPreview.querySelector('.cover-placeholder');
+                if (placeholder) placeholder.style.display = 'none';
                 document.getElementById('removeCover').style.display = 'flex';
             }
 
-            // Display existing gallery images
+            // Gallery images (CLEAR FIRST)
             if (exhibition.gallery_images) {
                 try {
-                    // Clear any existing gallery images first
                     const currentGalleryPreview = document.getElementById('currentGalleryPreview');
-                    currentGalleryPreview.innerHTML = '';
+                    currentGalleryPreview.innerHTML = ''; // CLEAR!
                     
                     const galleryImages = typeof exhibition.gallery_images === 'string' 
                         ? JSON.parse(exhibition.gallery_images) 
@@ -557,120 +396,189 @@
                         galleryImages.forEach(imagePath => {
                             const img = document.createElement('img');
                             img.src = imagePath;
-                            img.alt = 'Gallery image';
-                            img.style.cssText = 'width: 100px; height: 100px; object-fit: cover; border-radius: 4px; border: 2px solid #ddd; cursor: pointer;';
-                            img.title = imagePath;
-                            
-                            // Add click handler to remove image if needed
-                            img.addEventListener('click', function() {
-                                this.remove();
-                            });
-                            
+                            img.style.cssText = 'width: 100px; height: 100px; object-fit: cover; border-radius: 4px; border: 2px solid #ddd;';
                             currentGalleryPreview.appendChild(img);
                         });
                     }
                 } catch (e) {
-                    console.error('Could not parse gallery images:', e);
+                    console.error('Error parsing gallery:', e);
                 }
             }
 
-            document.getElementById('charCount_en').textContent = (exhibition.description_en || '').length;
-            document.getElementById('charCount_ar').textContent = (exhibition.description_ar || '').length;
-        }
-
-        function checkMultiDay(exhibition) {
+            // Multi-day
             if (exhibition.end_date) {
                 document.getElementById('multiDayRadio').checked = true;
                 document.getElementById('endDateSection').style.display = 'block';
             }
         }
 
-        function showNotification(message, type) {
-            const notification = document.createElement('div');
-            notification.className = `notification notification-${type}`;
-            notification.textContent = message;
-            notification.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                padding: 15px 20px;
-                background: ${type === 'success' ? '#4caf50' : '#f44336'};
-                color: white;
-                border-radius: 4px;
-                z-index: 10000;
-            `;
-            document.body.appendChild(notification);
-            setTimeout(() => notification.remove(), 3000);
-        }
-
-        // Cover image upload
+        // Initialize on page load
         document.addEventListener('DOMContentLoaded', function() {
+            // Load exhibition
+            loadExhibition();
+
+            // Cover image upload
             const coverPreview = document.getElementById('coverPreview');
             const coverInput = document.getElementById('cover_image');
             const coverImg = document.getElementById('coverImg');
             const removeCoverBtn = document.getElementById('removeCover');
 
-            if (coverPreview && coverInput) {
+            if (coverPreview) {
                 coverPreview.addEventListener('click', () => {
                     coverInput.click();
                 });
+            }
 
+            if (coverInput) {
                 coverInput.addEventListener('change', (e) => {
                     const file = e.target.files[0];
                     if (file) {
                         const reader = new FileReader();
-                        reader.onload = (e) => {
-                            coverImg.src = e.target.result;
+                        reader.onload = (event) => {
+                            coverImg.src = event.target.result;
                             coverImg.style.display = 'block';
-                            if (removeCoverBtn) removeCoverBtn.style.display = 'flex';
                             const placeholder = coverPreview.querySelector('.cover-placeholder');
                             if (placeholder) placeholder.style.display = 'none';
+                            if (removeCoverBtn) removeCoverBtn.style.display = 'flex';
                         };
                         reader.readAsDataURL(file);
                     }
                 });
-
-                if (removeCoverBtn) {
-                    removeCoverBtn.addEventListener('click', (e) => {
-                        e.stopPropagation();
-                        coverInput.value = '';
-                        coverImg.style.display = 'none';
-                        coverImg.src = '';
-                        removeCoverBtn.style.display = 'none';
-                        const placeholder = coverPreview.querySelector('.cover-placeholder');
-                        if (placeholder) placeholder.style.display = 'flex';
-                    });
-                }
             }
-        });
-    </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
+
+            if (removeCoverBtn) {
+                removeCoverBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    coverInput.value = '';
+                    coverImg.style.display = 'none';
+                    coverImg.src = '';
+                    removeCoverBtn.style.display = 'none';
+                    const placeholder = coverPreview.querySelector('.cover-placeholder');
+                    if (placeholder) placeholder.style.display = 'flex';
+                });
+            }
+
+            // Gallery preview
             const galleryInput = document.getElementById('gallery_images');
             const newGalleryPreview = document.getElementById('newGalleryPreview');
 
             if (galleryInput) {
-                galleryInput.addEventListener('change', function(e) {
+                galleryInput.addEventListener('change', (e) => {
                     newGalleryPreview.innerHTML = '';
-                    
                     const files = e.target.files;
                     for (let i = 0; i < files.length; i++) {
-                        const file = files[i];
                         const reader = new FileReader();
-                        
-                        reader.onload = function(event) {
+                        reader.onload = (event) => {
                             const img = document.createElement('img');
                             img.src = event.target.result;
                             img.style.cssText = 'width: 100px; height: 100px; object-fit: cover; border-radius: 4px; border: 2px solid #ddd;';
                             newGalleryPreview.appendChild(img);
                         };
-                        
-                        reader.readAsDataURL(file);
+                        reader.readAsDataURL(files[i]);
                     }
                 });
             }
-        });
+
+            // Multi-day toggle
+            const sameDayRadio = document.getElementById('sameDayRadio');
+            const multiDayRadio = document.getElementById('multiDayRadio');
+            const endDateSection = document.getElementById('endDateSection');
+
+            function toggleEndDate() {
+                endDateSection.style.display = multiDayRadio.checked ? 'block' : 'none';
+            }
+
+            sameDayRadio.addEventListener('change', toggleEndDate);
+            multiDayRadio.addEventListener('change', toggleEndDate);
+
+            // Form submission
+            const form = document.getElementById('exhibitionForm');
+            if (form) {
+                form.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    
+                    const submitBtn = document.getElementById('submitBtn');
+                    submitBtn.disabled = true;
+                    submitBtn.textContent = '⏳ Updating...';
+
+                    try {
+                        let coverImagePath = null;
+                        
+                        // Upload cover if changed
+                        if (coverInput.files && coverInput.files[0]) {
+                            const formData = new FormData();
+                            formData.append('file', coverInput.files[0]);
+                            const response = await fetch('../api/upload_cover_image.php', {
+                                method: 'POST',
+                                body: formData
+                            });
+                            const result = await response.json();
+                            if (result.success) coverImagePath = result.path;
+                        }
+
+                        // Upload gallery if new
+                        let galleryImages = null;
+                        if (galleryInput.files && galleryInput.files.length > 0) {
+                            const uploaded = [];
+                            for (let i = 0; i < galleryInput.files.length; i++) {
+                                const formData = new FormData();
+                                formData.append('file', galleryInput.files[i]);
+                                const response = await fetch('../api/upload_cover_image.php', {
+                                    method: 'POST',
+                                    body: formData
+                                });
+                                const result = await response.json();
+                                if (result.success) uploaded.push(result.path);
+                            }
+                            if (uploaded.length > 0) galleryImages = JSON.stringify(uploaded);
+                        }
+
+                        // Prepare update data
+                        const updateData = {
+                            id: document.getElementById('exhibitionId').value,
+                            title_en: document.getElementById('title_en').value.trim(),
+                            description_en: document.getElementById('description_en').value.trim(),
+                            location_en: document.getElementById('location_en').value.trim(),
+                            title_ar: document.getElementById('title_ar').value.trim(),
+                            description_ar: document.getElementById('description_ar').value.trim(),
+                            location_ar: document.getElementById('location_ar').value.trim(),
+                            exhibition_date: document.getElementById('exhibition_date').value,
+                            exhibition_time: (document.getElementById('exhibition_time').value || '10:00') + ':00',
+                            exhibition_end_time: (document.getElementById('exhibition_end_time').value || '18:00') + ':00',
+                            end_date: document.getElementById('end_date').value || null,
+                            event_video: document.getElementById('event_video').value.trim() || null
+                        };
+
+                        if (coverImagePath) updateData.cover_image = coverImagePath;
+                        if (galleryImages) updateData.gallery_images = galleryImages;
+
+                        // Send to API
+                        const response = await fetch('../api/edit_exhibition.php', {
+                            method: 'POST',
+                            headers: {'Content-Type': 'application/json'},
+                            body: JSON.stringify(updateData)
+                        });
+
+                        const result = await response.json();
+                        if (result.success) {
+                            showNotification('✓ Exhibition updated!', 'success');
+                            setTimeout(() => {
+                                window.location.href = 'exhibitions.html';
+                            }, 1500);
+                        } else {
+                            throw new Error(result.message || 'Update failed');
+                        }
+                    } catch (error) {
+                        console.error('Error:', error);
+                        showNotification('✗ ' + error.message, 'error');
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = '✓ Update Exhibition';
+                    }
+                });
+            }
+        }, { once: true }); // Only run ONCE!
     </script>
+
     <script src="event-form.js"></script>
 </body>
 
