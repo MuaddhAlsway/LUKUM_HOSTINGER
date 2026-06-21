@@ -15,7 +15,11 @@
   },
   "spaces": {
     "gallery_title_en": "Lakum Artspace Gallery",
-    "gallery_title_ar": "معرض مساحة فن لكم"
+    "gallery_title_ar": "معرض مساحة فن لكم",
+    "floor_maps_title_en": "Lakum Artspace | GROUND FLOOR MAP",
+    "floor_maps_title_ar": "",
+    "mezzanine_title_en": "Lakum Artspace | MEZZANINE FLOOR MAP",
+    "mezzanine_title_ar": ""
   },
   "shop": {
     "hero_title_en": "",
