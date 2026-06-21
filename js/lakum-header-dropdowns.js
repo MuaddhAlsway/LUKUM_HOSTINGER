@@ -61,9 +61,6 @@
         event.preventDefault();
         event.stopPropagation();
 
-        const isMobile = window.innerWidth <= MOBILE_BREAKPOINT;
-        if (!isMobile) return; // Only handle on mobile
-
         const dropdownItem = event.currentTarget.closest('.lakum-nav__item--dropdown');
         if (!dropdownItem) return;
 
@@ -76,6 +73,9 @@
         if (!isActive) {
             dropdownItem.classList.add('active');
             event.currentTarget.setAttribute('aria-expanded', 'true');
+        } else {
+            dropdownItem.classList.remove('active');
+            event.currentTarget.setAttribute('aria-expanded', 'false');
         }
     }
 

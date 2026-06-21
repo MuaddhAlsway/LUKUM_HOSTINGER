@@ -1,0 +1,259 @@
+╔═══════════════════════════════════════════════════════════════════════════════╗
+║           DROPDOWN NAVIGATION - CLICK MODE (Desktop & Mobile)                 ║
+║         Show on Click + Same Background Color as Navigation                   ║
+╚═══════════════════════════════════════════════════════════════════════════════╝
+
+✅ WHAT'S NEW:
+═══════════════════════════════════════════════════════════════════════════════
+✓ Dropdowns appear ONLY when you CLICK on nav item (not visible by default)
+✓ Dropdown background is SAME COLOR as navigation bar (not white)
+✓ Works on DESKTOP and MOBILE
+✓ Click again to CLOSE dropdown
+✓ Click outside to close
+✓ ESC key to close
+
+
+VISUAL LAYOUT - BEFORE CLICKING:
+═══════════════════════════════════════════════════════════════════════════════
+
+┌─────────────────────────────────────────────────────┐
+│ [Logo]        Navigation Bar (beige color)      AR  │
+├─────────────────────────────────────────────────────┤
+│             Home↓  About↓  Exhibitions↓  Events↓    │
+│                                                      │
+│ [Hero Banner / Main Content]                        │
+└─────────────────────────────────────────────────────┘
+
+No dropdowns visible. Just nav items with arrows.
+
+
+VISUAL LAYOUT - AFTER CLICKING "Home":
+═══════════════════════════════════════════════════════════════════════════════
+
+┌─────────────────────────────────────────────────────┐
+│ [Logo]        Navigation Bar (beige color)      AR  │
+├─────────────────────────────────────────────────────┤
+│             Home↑  About↓  Exhibitions↓  Events↓    │ ← Arrow rotates UP
+│  ┌────────────────────────────────────┐             │
+│  │ • Upcoming Exhibitions             │ ← Dropdown  │
+│  │ • Past Exhibitions                 │   same      │
+│  │ • Create Your Event                │   color     │
+│  └────────────────────────────────────┘   as nav    │
+│                                                      │
+│ [Hero Banner / Main Content]                        │
+└─────────────────────────────────────────────────────┘
+
+Dropdown appears BELOW Home item with SAME background color
+
+
+HOW IT WORKS:
+═══════════════════════════════════════════════════════════════════════════════
+
+DESKTOP:
+  1. Click on "Home" arrow
+  2. Dropdown expands below with nav background color
+  3. Arrow rotates 180° (↓ becomes ↑)
+  4. Click item → Navigate to section
+  5. Click "Home" again → Dropdown closes
+  6. Click outside dropdown → Closes
+  7. Press ESC → Closes
+
+MOBILE (Same behavior):
+  1. Tap "Home" arrow
+  2. Dropdown expands with nav background color
+  3. Arrow rotates 180°
+  4. Tap item → Navigate to section
+  5. Tap arrow again → Closes
+  6. Tap outside → Closes
+  7. Press ESC → Closes
+
+
+DROPDOWN STYLING:
+═══════════════════════════════════════════════════════════════════════════════
+
+Background: inherit (same as nav bar)
+              ↓
+              Uses nav background color (usually beige/tan)
+
+Border: None (blends with nav)
+Shadow: None (no floating effect)
+Padding: 12px 20px (comfortable spacing)
+
+Link Color: #1a1a1a (dark text)
+Link Hover: rgba(0, 0, 0, 0.05) (slightly darker background on hover)
+
+Positioning: Below nav item, centered
+Z-index: 9999 (appears above all content)
+
+
+CSS CHANGES MADE:
+═══════════════════════════════════════════════════════════════════════════════
+
+.lakum-nav__dropdown {
+    background: transparent !important;      ← Uses parent background
+    opacity: 0 !important;                   ← Hidden by default
+    visibility: hidden !important;           ← Hidden by default
+    pointer-events: none !important;         ← Not clickable
+}
+
+.lakum-nav__item--dropdown.active .lakum-nav__dropdown {
+    opacity: 1 !important;                   ← Visible when clicked
+    visibility: visible !important;          ← Visible when clicked
+    pointer-events: auto !important;         ← Clickable when visible
+    background: inherit !important;          ← Inherits nav color
+}
+
+
+JAVASCRIPT BEHAVIOR:
+═══════════════════════════════════════════════════════════════════════════════
+
+Event: Click on dropdown toggle (arrow button)
+
+Action:
+  1. Prevent default behavior
+  2. Stop event propagation
+  3. Close all other dropdowns
+  4. Toggle .active class on parent item
+  5. Update aria-expanded attribute
+  6. Dropdown appears/disappears
+
+Click outside:
+  1. Close all open dropdowns
+  2. Remove .active class
+
+ESC key:
+  1. Close all open dropdowns
+  2. Remove .active class
+
+
+USER INTERACTION FLOW:
+═══════════════════════════════════════════════════════════════════════════════
+
+SCENARIO 1: User wants to click "Home"
+  User clicks "Home" arrow
+    ↓
+  .active class added to .lakum-nav__item--dropdown
+    ↓
+  Dropdown becomes visible (opacity: 1, visibility: visible)
+    ↓
+  Arrow rotates 180° (shows expanded state)
+    ↓
+  Dropdown items are clickable
+
+SCENARIO 2: User clicks "About" without closing "Home"
+  User clicks "About" arrow
+    ↓
+  All dropdowns closed (removeClass .active)
+    ↓
+  "Home" dropdown disappears
+    ↓
+  .active class added to About item
+    ↓
+  "About" dropdown appears
+
+SCENARIO 3: User clicks "Home" again to close it
+  User clicks "Home" arrow
+    ↓
+  .active class removed
+    ↓
+  Dropdown becomes hidden
+    ↓
+  Arrow rotates back to normal (180° - 180° = 0°)
+
+
+VISUAL FEEDBACK:
+═══════════════════════════════════════════════════════════════════════════════
+
+Arrow Animation: 0.3s transform rotate
+  • Before click: Home ↓ (arrow points down)
+  • After click: Home ↑ (arrow points up / rotates 180°)
+
+Item Hover: 0.2s all ease
+  • Before hover: Normal background
+  • On hover: Slightly darker (rgba(0, 0, 0, 0.05))
+  • Padding indent: 12px → 24px
+
+Dropdown Show/Hide: 0.3s cubic-bezier
+  • Smooth fade in/out
+  • Smooth visibility change
+  • No jarring transitions
+
+
+BROWSER COMPATIBILITY:
+═══════════════════════════════════════════════════════════════════════════════
+✓ Chrome/Edge 88+
+✓ Firefox 87+
+✓ Safari 14+
+✓ Mobile Safari
+✓ Chrome Mobile
+✓ Samsung Internet
+
+
+TESTING CHECKLIST:
+═══════════════════════════════════════════════════════════════════════════════
+
+DESKTOP:
+  ☐ Clear cache (Ctrl+Shift+Delete)
+  ☐ Hard refresh (Ctrl+Shift+R)
+  ☐ Open website
+  ☐ Look at nav - dropdowns NOT visible
+  ☐ Click "Home" arrow → Dropdown appears BELOW
+  ☐ Dropdown has SAME background color as nav
+  ☐ Arrow is UP (↑)
+  ☐ Click item → Navigate to section
+  ☐ Homepage reloads with section visible
+  ☐ Dropdown closes after clicking item
+  ☐ Click "Home" arrow again → Dropdown closes
+  ☐ Hover on item → Slightly darker background
+  ☐ Click "About" → "Home" closes, "About" opens
+  ☐ Click outside dropdown → Closes
+  ☐ Press ESC → Closes
+
+MOBILE:
+  ☐ Resize browser to mobile (< 1024px)
+  ☐ Tap hamburger menu → Opens
+  ☐ Tap "Home" arrow → Dropdown expands
+  ☐ Tap "Upcoming Exhibitions" → Navigate
+  ☐ All items work correctly
+  ☐ Tap arrow again → Closes
+
+ARABIC:
+  ☐ Click AR button
+  ☐ Everything in Arabic
+  ☐ Dropdown items in Arabic
+  ☐ Right-to-left layout
+  ☐ All features work
+  ☐ Background color matches
+
+
+EXPECTED RESULTS:
+═══════════════════════════════════════════════════════════════════════════════
+
+✓ Homepage loads with no visible dropdowns
+✓ Click nav item arrow → Dropdown appears below
+✓ Dropdown uses nav background color (beige/tan)
+✓ Arrow rotates UP when expanded
+✓ Can click items to navigate
+✓ Can click arrow to close
+✓ Only one dropdown open at a time
+✓ Clicking outside closes dropdown
+✓ ESC key closes dropdown
+✓ Works on desktop, tablet, mobile
+✓ Works in English and Arabic
+
+
+KEY POINTS TO REMEMBER:
+═══════════════════════════════════════════════════════════════════════════════
+✓ Dropdowns HIDDEN by default (not visible)
+✓ Click arrow to SHOW dropdown
+✓ Background is SAME COLOR as nav (not white)
+✓ Click anywhere to HIDE dropdown
+✓ Works on DESKTOP and MOBILE
+✓ One dropdown at a time
+✓ ESC key support
+✓ Full Arabic support
+
+
+═══════════════════════════════════════════════════════════════════════════════
+✅ CLICK MODE ACTIVATED - Test your website now!
+═══════════════════════════════════════════════════════════════════════════════
