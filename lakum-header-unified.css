@@ -497,8 +497,25 @@ html[dir="rtl"] .lakum-nav--mobile .lakum-nav__link--active {
         display: none !important;
     }
 }
-@media (max-width: 1024px) {
-     :root {
+
+/* ===== TABLET BREAKPOINT (821px - 1024px) ===== */
+@media (min-width: 821px) and (max-width: 1024px) {
+    :root {
+        --header-height-desktop: 70px;
+    }
+    
+    body {
+        padding-top: var(--header-height-desktop) !important;
+    }
+    
+    .lakum-header {
+        height: var(--header-height-desktop) !important;
+    }
+}
+
+/* ===== MOBILE & TABLET UNDER 821px (≤ 820px) ===== */
+@media (max-width: 820px) {
+    :root {
         --header-height-desktop: 60px;
     }
     
@@ -514,7 +531,7 @@ html[dir="rtl"] .lakum-nav--mobile .lakum-nav__link--active {
         padding: 0 var(--spacing-md) !important;
     }
     
-    /* Hide desktop nav */
+    /* Hide desktop nav on mobile/tablet */
     .lakum-nav {
         display: none !important;
     }
@@ -589,56 +606,6 @@ html[dir="rtl"] .lakum-nav--mobile .lakum-nav__link--active {
     .lakum-lang-link {
         padding: var(--spacing-xs) var(--spacing-sm) !important;
         font-size: 0.75rem !important;
-    }
-}
-
-/* ===== OPTIMIZED TABLET BREAKPOINT (820px - iPad) - SAME AS MOBILE ===== */
-@media (max-width: 820px) {
-    :root {
-        --header-height-desktop: 60px;
-    }
-    
-    body {
-        padding-top: var(--header-height-desktop) !important;
-    }
-    
-    .lakum-header {
-        height: var(--header-height-desktop) !important;
-    }
-    
-    .lakum-header__container {
-        padding: 0 var(--spacing-md) !important;
-    }
-    
-    /* Hide desktop nav */
-    .lakum-nav {
-        display: none !important;
-    }
-    
-    /* Show mobile toggle */
-    .lakum-header__mobile-toggle {
-        display: flex !important;
-    }
-    
-    /* Show mobile nav */
-    .lakum-nav--mobile {
-        display: flex !important;
-        flex-direction: column !important;
-    }
-    
-    /* Language switcher repositioning */
-    .lakum-language-switcher {
-        gap: var(--spacing-sm) !important;
-    }
-    
-    .lakum-lang-link {
-        padding: var(--spacing-sm) var(--spacing-md) !important;
-        font-size: 0.75rem !important;
-    }
-    
-    .lakum-logo__left,
-    .lakum-logo__right {
-        height: 30px !important;
     }
 }
 

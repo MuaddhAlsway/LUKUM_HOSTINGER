@@ -1,0 +1,136 @@
+================================================================================
+DROPDOWN NAVIGATION FIX - IMMEDIATE ACTIONS REQUIRED
+================================================================================
+
+PROBLEM FIXED:
+- Dropdown navigation was not showing on desktop (≥821px)
+- Root cause: Conflicting media query breakpoints
+
+ROOT CAUSE:
+The CSS had two competing rules for screens between 821px-1024px:
+  1. @media (min-width: 821px) → showed nav
+  2. @media (max-width: 1024px) → hid nav ← THIS ONE WON
+The last rule in the cascade wins, so nav stayed hidden.
+
+================================================================================
+FILES CHANGED:
+================================================================================
+
+1. lakum-header-unified.css (PRIMARY)
+   ✅ Fixed media query breakpoints
+   ✅ Version: 2.1.0 → 2.3.0
+
+2. lakum-header-dropdowns.css
+   ✅ Background color: transparent → #f6f6eb
+   ✅ Link background: inherit → #f6f6eb
+   ✅ Arrow rotation: hover only → click only
+   ✅ Version: 2.1.0 → 2.2.0
+
+3. includes/stylesheets.php
+   ✅ CSS version parameters incremented (cache busting)
+
+================================================================================
+WHAT YOU NEED TO DO:
+================================================================================
+
+STEP 1: DEPLOY TO SERVER
+  git add .
+  git commit -m "Fix: Dropdown navigation not showing on desktop - fix media queries"
+  git push
+
+STEP 2: CLEAR BROWSER CACHE (Users need to do this)
+  Windows/Linux: Ctrl + Shift + Delete
+  Mac: Cmd + Shift + Delete
+  Then reload: F5 or Ctrl+R
+
+STEP 3: IF USING CLOUDFLARE
+  ✅ Go to Cloudflare Dashboard → Purge Cache → Purge Everything
+  ✅ Wait 1 minute for cache to refresh
+
+STEP 4: TEST ON WEBSITE
+  Desktop (≥821px):
+  ✅ Click "Home" → See dropdown with tan background
+  ✅ Click "About", "Exhibitions", etc. → Dropdowns appear
+  ✅ Click outside → Dropdown closes
+  ✅ Press ESC → Dropdown closes
+  ✅ Arrow points DOWN normally, UP when expanded
+
+  Tablet (821-1024px):
+  ✅ Desktop nav shows (NOT mobile hamburger)
+  ✅ Click nav items → dropdowns appear
+
+  Mobile (≤820px):
+  ✅ Mobile hamburger shows (NOT desktop nav)
+  ✅ Same click-based behavior
+
+================================================================================
+EXPECTED BEHAVIOR:
+================================================================================
+
+BEFORE (Broken):
+  Click nav item on desktop → Nothing happens ❌
+
+AFTER (Fixed):
+  Click nav item on desktop → Dropdown shows with tan background ✅
+  Arrow rotates → Dropdown closes on next click ✅
+  Press ESC → Dropdown closes ✅
+  Click outside dropdown → Dropdown closes ✅
+
+================================================================================
+WHY THE FIX WORKS:
+================================================================================
+
+OLD CSS (Broken):
+  @media (min-width: 821px) { .lakum-nav { display: flex; } }
+  @media (max-width: 1024px) { .lakum-nav { display: none; } }
+  
+  Result for 821-1024px: display: none wins ❌
+
+NEW CSS (Fixed):
+  @media (min-width: 821px) { .lakum-nav { display: flex; } }
+  @media (max-width: 820px) { .lakum-nav { display: none; } }
+  
+  Result for 821-1024px: display: flex wins ✅
+  Result for ≤820px: display: none wins ✅
+
+Plus:
+  ✅ Dropdown background changed to #f6f6eb (header color)
+  ✅ Dropdown links now visible with proper background
+  ✅ Arrow rotation changed to click-based (not hover)
+
+================================================================================
+ROLLBACK (If needed):
+================================================================================
+
+If something breaks, revert with:
+  git revert HEAD
+  git push
+
+================================================================================
+VERIFICATION COMMANDS:
+================================================================================
+
+Check CSS version (should be 2.3.0 and 2.2.0):
+  grep 'v=' includes/stylesheets.php | grep dropdown
+  grep 'v=' includes/stylesheets.php | grep header-unified
+
+Check media queries are correct:
+  grep '@media' lakum-header-unified.css | grep 821
+
+================================================================================
+SUPPORT:
+================================================================================
+
+If dropdowns still don't show after hard refresh:
+  1. Check browser console (F12) for CSS errors
+  2. Verify lakum-header-unified.css is actually loading
+  3. Check Cloudflare cache is cleared
+  4. Try incognito/private window
+  5. Check if old CSS file is still being cached somewhere
+
+Documentation:
+  - DROPDOWN_ROOT_CAUSE_FIX.md - Detailed technical analysis
+  - DROPDOWN_FIX_COMPLETE.md - Previous fix summary
+  - DROPDOWN_DISPLAY_GUIDE.txt - User guide
+
+================================================================================
