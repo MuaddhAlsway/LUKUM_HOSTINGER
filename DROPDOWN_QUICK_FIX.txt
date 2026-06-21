@@ -1,0 +1,225 @@
+╔═══════════════════════════════════════════════════════════════════════════════╗
+║                    🔴 DROPDOWN NOT SHOWING - QUICK FIX                        ║
+╚═══════════════════════════════════════════════════════════════════════════════╝
+
+STEP 1: CLEAR BROWSER CACHE & REFRESH
+═══════════════════════════════════════════════════════════════════════════════
+Windows:
+  • Clear cache: Ctrl+Shift+Delete
+  • Hard refresh: Ctrl+Shift+R
+
+Mac:
+  • Clear cache: Cmd+Shift+Delete
+  • Hard refresh: Cmd+Shift+R
+
+Mobile (Chrome):
+  • Settings → Privacy → Clear browsing data
+  • Hard refresh: Cmd+Shift+R
+
+
+STEP 2: TEST DROPDOWNS
+═══════════════════════════════════════════════════════════════════════════════
+Open: dropdown-debug.html
+  → This page tests dropdowns in isolation
+  → If dropdowns work here → problem is with lakum-header-unified.css
+  → If dropdowns DON'T work → problem is with lakum-header-dropdowns.css
+
+Navigate to: /dropdown-debug.html
+Hover over nav items → Should see dropdowns appear
+
+
+STEP 3: VERIFY FILES ARE LOADED
+═══════════════════════════════════════════════════════════════════════════════
+Open DevTools: F12
+Go to: Network tab
+Reload page
+Look for:
+  ✓ lakum-header-unified.css (HTTP 200)
+  ✓ lakum-header-dropdowns.css (HTTP 200)
+  ✓ js/lakum-header-dropdowns.js (HTTP 200)
+
+If any show HTTP 404 → Files not loading → Check file paths
+
+
+STEP 4: CHECK CSS RULES IN BROWSER
+═══════════════════════════════════════════════════════════════════════════════
+Open DevTools: F12
+Right-click dropdown arrow → Inspect
+Look for:
+  .lakum-nav__dropdown-toggle {
+      display: inline-flex !important;  ← Should be here
+  }
+
+If missing or showing "display: none" → CSS not loading
+
+
+STEP 5: CHECK DROPDOWN MENU RULES
+═══════════════════════════════════════════════════════════════════════════════
+Right-click where dropdown should appear → Inspect
+Look for:
+  .lakum-nav__dropdown {
+      opacity: 0;                  ← Hidden initially
+      visibility: hidden;          ← Hidden initially
+      z-index: 9999;              ← Should be high
+      position: absolute;         ← Positioned absolutely
+  }
+
+On hover, should change to:
+  opacity: 1;
+  visibility: visible;
+
+
+STEP 6: CRITICAL FIXES APPLIED
+═══════════════════════════════════════════════════════════════════════════════
+✅ lakum-header-dropdowns.css updated:
+   • Added overflow: visible to .nav and .nav-list
+   • Changed z-index from 1000 to 9999
+   • Added display: block to dropdown
+   • Changed top: 100% to top: calc(100% + 5px) for spacing
+   • Added width: 220px for consistency
+   • Changed dropdown-toggle display to inline-flex (always visible)
+
+✅ lakum-header-unified.php updated:
+   • ALL 9 nav items now have dropdowns
+   • Each item has .lakum-nav__item--dropdown class
+   • Each item has dropdown toggle button with arrow
+   • Each item has dropdown menu with items
+
+✅ Translation files updated:
+   • lang/en/nav.json → 28 keys for all dropdown items
+   • lang/ar/nav.json → 28 keys with Arabic translations
+
+
+STEP 7: MANUAL TEST CHECKLIST
+═══════════════════════════════════════════════════════════════════════════════
+On your website homepage:
+
+DESKTOP (> 1024px):
+  ☐ Look for small ▼ arrow next to "Home"
+  ☐ Look for small ▼ arrow next to "About"
+  ☐ Look for small ▼ arrow next to "Exhibitions"
+  ☐ Look for small ▼ arrow next to "Events"
+  ☐ Look for small ▼ arrow next to "Venue Hire"
+  ☐ Look for small ▼ arrow next to "Blog"
+  ☐ Look for small ▼ arrow next to "Press"
+  ☐ Look for small ▼ arrow next to "Contact"
+  ☐ Look for small ▼ arrow next to "Shop"
+  
+  ☐ Hover over "Home" → Dropdown appears with:
+      • Upcoming Exhibitions
+      • Past Exhibitions
+      • Create Your Event
+  
+  ☐ Hover over "About" → Dropdown appears with:
+      • Who We Are
+      • About Lakum Space
+  
+  ☐ Hover over "Exhibitions" → Dropdown appears with:
+      • Lakum Artspace Venue
+      • Our Facilities
+      • Floor Maps
+      • Space Pricing
+      • Book Your Event
+  
+  ☐ Hover over "Events" → Dropdown appears with:
+      • Upcoming
+      • Workshops
+  
+  ☐ Arrow rotates 180° when dropdown is visible
+  ☐ Click item → Page scrolls to section
+
+MOBILE (≤ 1024px):
+  ☐ Dropdown arrows visible and clickable
+  ☐ Tap arrow → Dropdown expands
+  ☐ Tap item → Navigates and collapses
+  ☐ ESC key → Dropdown closes
+
+ARABIC MODE:
+  ☐ Click AR language button
+  ☐ All text shows in Arabic
+  ☐ All dropdown items show in Arabic
+  ☐ Right-to-left layout applied
+  ☐ Dropdowns position correctly for RTL
+
+
+STEP 8: IF STILL NOT WORKING
+═══════════════════════════════════════════════════════════════════════════════
+1. Check for conflicting CSS:
+   • Search for other "dropdown" CSS in all CSS files
+   • Check if other CSS files override our rules
+   • Use browser DevTools Styles tab to see which rule wins
+
+2. Check for JavaScript errors:
+   • Open DevTools Console
+   • Look for red error messages
+   • Fix any JavaScript errors
+
+3. Check for CSS parse errors:
+   • Open DevTools Console
+   • Look for CSS parsing errors
+   • Verify CSS files are valid
+
+4. Check HTML structure:
+   • Right-click page → View Source
+   • Search for "lakum-nav__dropdown"
+   • Verify dropdown HTML elements exist
+
+5. Last resort - test without cache:
+   • Open in incognito/private window
+   • This bypasses all cached files
+   • If dropdowns work here → browser cache issue
+
+
+FILES THAT MUST LOAD:
+═══════════════════════════════════════════════════════════════════════════════
+✓ includes/stylesheets.php → Links all CSS files
+✓ lakum-header-unified.css → Main header styles
+✓ lakum-header-dropdowns.css → Dropdown-specific styles
+✓ lakum-header-unified.php → Navigation HTML
+✓ js/lakum-header-dropdowns.js → Dropdown JavaScript
+✓ lang/en/nav.json → English translations
+✓ lang/ar/nav.json → Arabic translations
+
+
+EXPECTED BEHAVIOR:
+═══════════════════════════════════════════════════════════════════════════════
+DESKTOP:
+  Home [▼] → Hover → Dropdown appears below → Click item → Navigate
+
+MOBILE:
+  Home [▼] → Tap arrow → Dropdown expands below → Tap item → Navigate
+
+ARABIC:
+  الرئيسية [▼] → Everything in Arabic → RTL layout
+
+
+URLs THAT SHOULD WORK:
+═══════════════════════════════════════════════════════════════════════════════
+index.php?lang=en#upcoming-exhibitions
+index.php?lang=en#past-exhibitions
+index.php?lang=en#create-event
+spaces.php?lang=en#venue-intro
+spaces.php?lang=en#facilities
+spaces.php?lang=en#floor-maps
+spaces.php?lang=en#pricing
+spaces.php?lang=en#booking-form
+exhibitions.php?lang=en#upcoming
+exhibitions.php?lang=en#workshops
+
+Same URLs work with ?lang=ar for Arabic
+
+
+QUICK DEBUG COMMAND:
+═══════════════════════════════════════════════════════════════════════════════
+In DevTools Console, run:
+  document.querySelectorAll('.lakum-nav__dropdown-toggle').length
+
+Result should be: 9 (for 9 dropdown items)
+
+If result is: 0 → HTML not loading or CSS hiding them
+If result is: 9 → HTML is correct, check CSS visibility
+
+
+═══════════════════════════════════════════════════════════════════════════════
+✅ ALL FIXES COMPLETE - Dropdowns should now display!
+═══════════════════════════════════════════════════════════════════════════════

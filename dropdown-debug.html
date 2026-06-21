@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dropdown Debug Test</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css">
+    <link rel="stylesheet" href="lakum-header-dropdowns.css?v=2.1.0">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .instructions {
+            background: #e8f4f8;
+            border-left: 4px solid #0099cc;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .test-section {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+        }
+
+        /* DROPDOWN STYLES - COPY FROM lakum-header-dropdowns.css */
+        .nav {
+            overflow: visible !important;
+        }
+
+        .nav-list {
+            display: flex;
+            overflow: visible !important;
+            list-style: none;
+            gap: 20px;
+            padding: 0;
+        }
+
+        .nav-item {
+            position: relative !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            overflow: visible !important;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #1a1a1a;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .nav-link:hover {
+            background: #f0f0f0;
+            border-radius: 4px;
+        }
+
+        .dropdown-toggle {
+            display: inline-flex !important;
+            background: none !important;
+            border: none !important;
+            cursor: pointer !important;
+            color: #1a1a1a !important;
+            padding: 0 6px !important;
+            margin-left: 6px !important;
+            font-size: 14px !important;
+            transition: transform 0.3s ease !important;
+            align-items: center !important;
+            justify-content: center !important;
+            height: 100% !important;
+        }
+
+        .dropdown-toggle i {
+            display: block !important;
+            font-style: normal !important;
+        }
+
+        .dropdown {
+            position: absolute !important;
+            top: calc(100% + 5px) !important;
+            left: 0 !important;
+            min-width: 220px !important;
+            background: #ffffff !important;
+            border: 1px solid #d1d1d1 !important;
+            border-radius: 2px !important;
+            list-style: none !important;
+            margin: 0 !important;
+            padding: 8px 0 !important;
+            opacity: 0 !important;
+            visibility: hidden !important;
+            transform: translateY(-10px) !important;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+            z-index: 9999 !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+            pointer-events: none !important;
+            display: block !important;
+            width: 220px !important;
+        }
+
+        .nav-item:hover .dropdown {
+            opacity: 1 !important;
+            visibility: visible !important;
+            transform: translateY(0) !important;
+            pointer-events: auto !important;
+        }
+
+        .nav-item:hover .dropdown-toggle {
+            transform: rotate(180deg) !important;
+        }
+
+        .dropdown-link {
+            display: block !important;
+            padding: 12px 20px !important;
+            color: #525252 !important;
+            text-decoration: none !important;
+            font-size: 14px !important;
+            transition: all 0.2s ease !important;
+        }
+
+        .dropdown-link:hover {
+            background: #f6f6eb !important;
+            color: #1a1a1a !important;
+            padding-left: 24px !important;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .status.working {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status.broken {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        code {
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .debug-info {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 20px 0;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Dropdown Navigation Debug Test</h1>
+        
+        <div class="instructions">
+            <strong>✅ How to Test:</strong>
+            <ol style="margin: 10px 0 0 20px;">
+                <li><strong>Desktop:</strong> Hover over any nav item with a dropdown arrow</li>
+                <li><strong>Mobile:</strong> Tap the dropdown arrow to expand</li>
+                <li>The dropdown menu should appear below the item</li>
+                <li>Items should have a light background on hover</li>
+            </ol>
+        </div>
+
+        <div class="test-section">
+            <h2>Test 1: Simple Dropdown Navigation <span class="status working">✓ Testing</span></h2>
+            
+            <nav class="nav">
+                <ul class="nav-list">
+                    <!-- HOME with Dropdown -->
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Home</a>
+                        <button class="dropdown-toggle" aria-label="Toggle menu">
+                            <i class="ri-arrow-down-s-line"></i>
+                        </button>
+                        <ul class="dropdown">
+                            <li><a href="#" class="dropdown-link">Upcoming Exhibitions</a></li>
+                            <li><a href="#" class="dropdown-link">Past Exhibitions</a></li>
+                            <li><a href="#" class="dropdown-link">Create Your Event</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- ABOUT with Dropdown -->
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">About</a>
+                        <button class="dropdown-toggle" aria-label="Toggle menu">
+                            <i class="ri-arrow-down-s-line"></i>
+                        </button>
+                        <ul class="dropdown">
+                            <li><a href="#" class="dropdown-link">Who We Are</a></li>
+                            <li><a href="#" class="dropdown-link">About Lakum Space</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- EXHIBITIONS with Dropdown -->
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Exhibitions</a>
+                        <button class="dropdown-toggle" aria-label="Toggle menu">
+                            <i class="ri-arrow-down-s-line"></i>
+                        </button>
+                        <ul class="dropdown">
+                            <li><a href="#" class="dropdown-link">Lakum Artspace Venue</a></li>
+                            <li><a href="#" class="dropdown-link">Our Facilities</a></li>
+                            <li><a href="#" class="dropdown-link">Floor Maps</a></li>
+                            <li><a href="#" class="dropdown-link">Space Pricing</a></li>
+                            <li><a href="#" class="dropdown-link">Book Your Event</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- EVENTS with Dropdown -->
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Events</a>
+                        <button class="dropdown-toggle" aria-label="Toggle menu">
+                            <i class="ri-arrow-down-s-line"></i>
+                        </button>
+                        <ul class="dropdown">
+                            <li><a href="#" class="dropdown-link">Upcoming</a></li>
+                            <li><a href="#" class="dropdown-link">Workshops</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Blog -->
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Blog</a>
+                    </li>
+
+                    <!-- Contact -->
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Contact</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="debug-info">
+            <strong>🔧 Debug Information:</strong>
+            <div style="margin: 10px 0;">
+                <strong>CSS Rules Applied:</strong>
+                <ul style="margin: 5px 0 0 20px;">
+                    <li><code>.nav-item</code> → position: relative</li>
+                    <li><code>.dropdown</code> → opacity: 0 initially (hidden)</li>
+                    <li><code>.nav-item:hover .dropdown</code> → opacity: 1 (visible on hover)</li>
+                    <li><code>.dropdown-toggle</code> → display: inline-flex (always visible)</li>
+                </ul>
+            </div>
+            <div style="margin: 10px 0;">
+                <strong>Z-Index Hierarchy:</strong>
+                <ul style="margin: 5px 0 0 20px;">
+                    <li>Dropdown: z-index: 9999</li>
+                    <li>Should appear above all other content</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>✅ Expected Results</h2>
+            <ul>
+                <li>✅ All nav items show a <strong>small down arrow</strong> next to the text</li>
+                <li>✅ Arrow appears <strong>before "About"</strong>, <strong>before "Exhibitions"</strong>, <strong>before "Events"</strong></li>
+                <li>✅ <strong>Hover over Home</strong> → Dropdown appears with 3 items</li>
+                <li>✅ <strong>Hover over About</strong> → Dropdown appears with 2 items</li>
+                <li>✅ <strong>Hover over Exhibitions</strong> → Dropdown appears with 5 items</li>
+                <li>✅ <strong>Hover over Events</strong> → Dropdown appears with 2 items</li>
+                <li>✅ Arrow rotates 180° when dropdown is visible</li>
+                <li>✅ Dropdown has white background with border and shadow</li>
+                <li>✅ Items turn light tan (#f6f6eb) on hover</li>
+                <li>✅ Smooth animation when appearing/disappearing</li>
+            </ul>
+        </div>
+
+        <div class="test-section">
+            <h2>🐛 Troubleshooting</h2>
+            <ul>
+                <li><strong>Arrow not visible?</strong> → Check CSS: <code>.dropdown-toggle { display: inline-flex !important; }</code></li>
+                <li><strong>Dropdown doesn't appear?</strong> → Check CSS: <code>.nav-item:hover .dropdown { opacity: 1; }</code></li>
+                <li><strong>Dropdown clipped?</strong> → Check CSS: <code>.nav { overflow: visible !important; }</code></li>
+                <li><strong>Z-index issue?</strong> → Verify: <code>.dropdown { z-index: 9999 !important; }</code></li>
+                <li><strong>Styling not applying?</strong> → Clear cache and hard refresh (Ctrl+Shift+R)</li>
+            </ul>
+        </div>
+
+        <hr style="margin: 30px 0; border: none; border-top: 1px solid #ddd;">
+
+        <h3>📊 Real Site Test</h3>
+        <p>After confirming dropdowns work here, test on your actual website:</p>
+        <ol>
+            <li>Open your website homepage</li>
+            <li>Clear browser cache: <code>Ctrl+Shift+Delete</code></li>
+            <li>Hard refresh: <code>Ctrl+Shift+R</code></li>
+            <li>Look for dropdown arrows next to nav items</li>
+            <li>Hover over items to see dropdowns</li>
+            <li>Click items to navigate with smooth scroll</li>
+        </ol>
+    </div>
+</body>
+</html>
