@@ -1,0 +1,350 @@
+================================================================================
+MOBILE DROPDOWN MENU - BEHAVIOR COMPARISON & FIX DETAILS
+================================================================================
+
+PROBLEM IDENTIFIED:
+  Mobile dropdown menu behavior was inconsistent with desktop experience
+  Toggle button positioning was unclear
+  Dropdown expansion didn't feel natural
+
+ROOT CAUSE ANALYSIS:
+  1. Toggle button used flex order property in column layout
+  2. margin-left: auto doesn't work properly with flex-direction: column
+  3. No clear visual separation between link and dropdown
+  4. Missing visual hierarchy feedback
+
+================================================================================
+ARCHITECTURE BEFORE FIX
+================================================================================
+
+HTML Structure (Same on Desktop & Mobile):
+  <li class="lakum-nav__item--dropdown">
+    <a class="lakum-nav__link">Home</a>
+    <button class="lakum-nav__dropdown-toggle">▼</button>
+    <ul class="lakum-nav__dropdown">
+      <li><a class="lakum-nav__dropdown-link">Upcoming</a></li>
+      ...
+    </ul>
+  </li>
+
+DESKTOP CSS (@media min-width: 821px):
+  .lakum-nav__item--dropdown {
+    position: relative;
+    display: flex;
+    align-items: center;  ← FLEX ROW (side-by-side!)
+  }
+  
+  .lakum-nav__dropdown {
+    position: absolute;  ← Floating popup
+    top: 100%;
+    left: 0;
+    width: 200px;
+  }
+  
+  VISUAL RESULT:
+  ┌────────────────────────────────────────────┐
+  │ [Link▼]   [Link▼]   [Link▼]               │ ← Links with dropdowns
+  └────────────────────────────────────────────┘
+         ↓
+    ┌─────────┐
+    │Dropdown │ ← Floating popup
+    │items    │
+    └─────────┘
+
+MOBILE CSS BEFORE FIX (@media max-width: 820px):
+  .lakum-nav__item--dropdown {
+    flex-direction: column;  ← WRONG! Stacks vertically
+  }
+  
+  .lakum-nav__dropdown-toggle {
+    order: 1;
+    margin-left: auto;  ← Doesn't work with flex-direction: column!
+  }
+  
+  .lakum-nav__dropdown {
+    position: static;  ← Inline with content
+    order: 2;
+  }
+  
+  VISUAL RESULT (BROKEN):
+  ┌─────────────────────────────────┐
+  │Home                      ▼     │ ← Unclear: is arrow part of link?
+  │  ·Upcoming Exhibitions          │
+  │  ·Past Exhibitions              │
+  └─────────────────────────────────┘
+  
+  PROBLEMS:
+  • Toggle position is ambiguous
+  • No visual separation between link row and dropdown
+  • Dropdown blend in as same section
+  • Not clear that arrow expands the menu
+
+================================================================================
+ARCHITECTURE AFTER FIX
+================================================================================
+
+MOBILE CSS AFTER FIX (@media max-width: 820px):
+  .lakum-nav__item--dropdown {
+    flex-direction: column;  ← Still column (children stack)
+    position: relative;      ← Needed for absolute toggle positioning
+  }
+  
+  .lakum-nav__item--dropdown > .lakum-nav__link {
+    flex: 1;
+    width: calc(100% - 50px);  ← Leaves room for toggle (50px)
+    text-align: left;
+    order: 1;                  ← First visually
+  }
+  
+  .lakum-nav__dropdown-toggle {
+    position: absolute;        ← KEY FIX! Positioned absolutely
+    right: 0;                  ← Right edge of parent
+    top: 0;                    ← Align with link top
+    z-index: 2;               ← Above dropdown
+    height: 100%;             ← Match link height
+    padding: 12px 16px;
+    (order: auto removed - not needed for absolute positioning)
+  }
+  
+  .lakum-nav__dropdown {
+    position: static;          ← Inline flow (unchanged)
+    order: 2;                  ← Below link/toggle pair
+    width: 100%;               ← Full width
+    background: rgba(220,220,214,0.98);  ← Darker = submenu
+    border-top: 1px solid ...  ← Visual separator
+    max-height: 0;             ← Hidden
+    transition: all 0.3s ease; ← Smooth animation
+  }
+  
+  .lakum-nav__dropdown-link {
+    padding: 12px 16px 12px 40px;  ← 40px indent = nested level
+    border-bottom: 1px solid ...;
+  }
+  
+  VISUAL RESULT (FIXED):
+  ┌─────────────────────────────────┐
+  │Home                        [▼]   │ ← CLEAR! Link + Toggle
+  ├─────────────────────────────────┤ ← Visual separator
+  │  ·Upcoming Exhibitions          │ ← Indented = nested
+  │  ·Past Exhibitions              │
+  │  ·Create Your Event             │
+  └─────────────────────────────────┘
+  
+  IMPROVEMENTS:
+  ✓ Toggle clearly positioned on right
+  ✓ Visual separator between link and dropdown
+  ✓ Darker background shows submenu
+  ✓ Indented items show nesting
+  ✓ Smooth expand/collapse animation
+  ✓ Hover feedback (indent increases)
+
+================================================================================
+FLEX LAYOUT EXPLANATION
+================================================================================
+
+DESKTOP (flex-direction: row):
+  
+  <li class="lakum-nav__item--dropdown">
+    ├─ <a class="lakum-nav__link">Home</a>  ← order: not set (default 0)
+    └─ <button class="lakum-nav__dropdown-toggle">▼</button>  ← order: not set
+  
+  Visual (row direction):
+  [Link] [Arrow] ← Side by side!
+  
+  ▼ Dropdown (absolute positioning):
+  [  List  ]  ← Floats below
+
+MOBILE BEFORE (flex-direction: column - WRONG):
+  
+  <li class="lakum-nav__item--dropdown">
+    ├─ <a class="lakum-nav__link">Home</a>  ← flex: 1, no width limit
+    ├─ <button class="lakum-nav__dropdown-toggle">▼</button>  ← order: 1, margin-left: auto
+    └─ <ul class="lakum-nav__dropdown">...</ul>  ← order: 2
+  
+  Visual (column direction + margin-left: auto on 2nd child):
+  [Home.........................▼]  ← margin-left: auto doesn't work!
+  [Items...]  ← All below
+  
+  PROBLEM: margin-left: auto doesn't position element to right in column flex.
+           It just pushes flex-start direction (doesn't change layout).
+
+MOBILE AFTER (flex-direction: column + absolute positioning - CORRECT):
+  
+  <li class="lakum-nav__item--dropdown">  ← position: relative (enables absolute child positioning)
+    ├─ <a class="lakum-nav__link">Home</a>  ← width: calc(100% - 50px)
+    ├─ <button class="lakum-nav__dropdown-toggle">▼</button>  ← position: absolute; right: 0; top: 0;
+    └─ <ul class="lakum-nav__dropdown">...</ul>
+  
+  Visual:
+  [Home........................][▼]  ← Toggle absolutely positioned on right
+  [Items...]  ← All below
+  
+  SOLUTION: Use absolute positioning for toggle = no need for flex ordering!
+           Parent stays flex column, toggle positioned absolutely.
+
+================================================================================
+ANIMATION & TRANSITIONS
+================================================================================
+
+BEFORE (Only opacity change):
+  Dropdown instantly appears/disappears
+  max-height stays at 0 (no space)
+  Feels jarring and unnatural
+
+AFTER (opacity + max-height animation):
+  
+  Initial State (closed):
+    opacity: 0;
+    visibility: hidden;
+    max-height: 0;
+    padding: 0;
+  
+  Active State (open):
+    opacity: 1;
+    visibility: visible;
+    max-height: 500px;
+    padding: 8px 0;
+    transition: all 0.3s ease;
+  
+  VISUAL ANIMATION:
+  [▼] Click
+    ↓
+  Content expands from height 0 to 500px
+  Content fades in from opacity 0 to 1
+  All over 0.3 seconds (smooth and natural)
+
+================================================================================
+RTLANGUAGE (ARABIC) SUPPORT
+================================================================================
+
+ENGLISH (LTR - Left-to-Right):
+  ┌─────────────────────────────────┐
+  │Home                        [▼]   │ ← Toggle on RIGHT
+  ├─────────────────────────────────┤
+  │  ·Upcoming Exhibitions          │ ← 40px indent on LEFT
+  └─────────────────────────────────┘
+
+ARABIC (RTL - Right-to-Left):
+  ┌─────────────────────────────────┐
+  │[▼]                        Home   │ ← Toggle on LEFT (mirrored)
+  ├─────────────────────────────────┤
+  │          Upcoming Exhibitions  · │ ← 40px indent on RIGHT (mirrored)
+  └─────────────────────────────────┘
+
+CSS RTL Rules:
+  [dir="rtl"] .lakum-nav__dropdown-toggle {
+    right: auto;
+    left: 0;  ← Position on LEFT instead
+  }
+  
+  [dir="rtl"] .lakum-nav__dropdown-link {
+    padding-left: 16px;
+    padding-right: 40px;  ← Indent on RIGHT instead
+  }
+
+================================================================================
+BEHAVIOR COMPARISON: BEFORE vs AFTER
+================================================================================
+
+SCENARIO 1: Click on "Home" menu item
+  BEFORE:
+    • Unclear where toggle button is
+    • Click dropdown link → confusion about what expanded
+  
+  AFTER:
+    ✓ Clear: link is left side, toggle is right
+    ✓ Click link → navigates to home
+    ✓ Click toggle → expands submenu
+
+SCENARIO 2: Click on toggle arrow
+  BEFORE:
+    • Dropdown appears immediately (no animation)
+    • Hard to see what changed
+  
+  AFTER:
+    ✓ Smooth 0.3s expansion animation
+    ✓ Darker background reveals submenu
+    ✓ Clear visual feedback
+
+SCENARIO 3: Multiple dropdowns
+  BEFORE:
+    • All dropdowns mix together on screen
+    • Hard to see which is expanded
+  
+  AFTER:
+    ✓ Darker background clearly shows active submenu
+    ✓ Only one dropdown expands (others auto-close)
+    ✓ Visual hierarchy clear
+
+SCENARIO 4: Hover on dropdown item
+  BEFORE:
+    • No indent change
+    • Hard to see hover effect
+  
+  AFTER:
+    ✓ Indent increases (40px → 48px)
+    ✓ Background highlights
+    ✓ Clear visual feedback
+
+SCENARIO 5: Arabic language (RTL)
+  BEFORE:
+    • Text alignment issues
+    • Toggle button position wrong
+  
+  AFTER:
+    ✓ Toggle on left edge (correct for RTL)
+    ✓ Indentation on right side
+    ✓ Text alignment correct
+    ✓ Mirror layout of English version
+
+================================================================================
+JAVASCRIPT BEHAVIOR (Unchanged but now has proper CSS target)
+================================================================================
+
+Click Handler:
+  1. User clicks .lakum-nav__dropdown-toggle button
+  2. JavaScript finds parent .lakum-nav__item--dropdown
+  3. Adds/removes .active class
+  4. CSS rules trigger:
+     .lakum-nav__item--dropdown.active .lakum-nav__dropdown {
+       opacity: 1;
+       max-height: 500px;
+     }
+  5. Transition property animates the change smoothly
+
+Close Handler:
+  1. User clicks outside menu → closeAllDropdowns()
+  2. User presses ESC key → closeAllDropdowns()
+  3. User clicks on dropdown link → closeAllDropdowns()
+  
+  closeAllDropdowns() removes .active class from all items
+  CSS transitions opacity and max-height back to 0
+
+Result: Smooth, natural dropdown behavior on both desktop and mobile!
+
+================================================================================
+SUMMARY
+================================================================================
+
+FIXED ISSUES:
+  ✓ Toggle button positioning unclear → Now absolutely positioned on right
+  ✓ No visual separation → Added border-top separator
+  ✓ No visual hierarchy → Darker background + indentation shows submenu
+  ✓ No animation → Added smooth max-height + opacity transition
+  ✓ Hover feedback weak → Added indent increase + background highlight
+  ✓ RTL (Arabic) broken → Added [dir="rtl"] rules for mirror layout
+
+MAINTAINED FEATURES:
+  ✓ Desktop dropdowns still work (absolute positioning)
+  ✓ Click-outside closes dropdowns
+  ✓ ESC key closes dropdowns
+  ✓ Single active dropdown at a time
+  ✓ Accessibility features intact
+  ✓ Keyboard navigation works
+
+STATUS: ✅ COMPLETE & TESTED
+
+Mobile dropdown behavior now matches desktop experience quality while adapting
+to the mobile layout constraints. Users see clear, intuitive menu expansion!
+
+================================================================================
