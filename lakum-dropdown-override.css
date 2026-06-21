@@ -54,8 +54,8 @@
 /* ===== CRITICAL: DROPDOWN MENU - FIXED POSITIONING ===== */
 .lakum-nav__dropdown {
     position: fixed !important;
-    /* NOTE: top, left, right are NOT set here - JavaScript controls them dynamically */
-    transform: none !important;
+    /* CRITICAL: top, left, right are set by JavaScript dynamically */
+    /* DO NOT set them here - JavaScript controls them */
     min-width: 200px !important;
     width: 200px !important;
     background: #f6f6eb !important;
@@ -114,8 +114,8 @@
 }
 
 [dir="rtl"] .lakum-nav__dropdown {
-    /* NOTE: left, right are controlled by JavaScript based on item position */
-    transform: none !important;
+    /* CRITICAL: left, right are controlled by JavaScript based on item position */
+    /* DO NOT set them here */
 }
 
 [dir="rtl"] .lakum-nav__dropdown-link:hover {

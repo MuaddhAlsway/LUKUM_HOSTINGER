@@ -113,6 +113,7 @@
     /**
      * Position dropdown below the nav item
      * Handles both LTR (English) and RTL (Arabic) layouts
+     * Uses position: fixed to break out of parent and position relative to viewport
      */
     function positionDropdown(dropdownItem) {
         const dropdown = dropdownItem.querySelector('.lakum-nav__dropdown');
@@ -121,45 +122,82 @@
         const header = document.querySelector('.lakum-header');
         const headerHeight = header?.offsetHeight || 80;
         
-        const rect = dropdownItem.getBoundingClientRect();
+        // Get the nav item's position in the viewport
+        const itemRect = dropdownItem.getBoundingClientRect();
         
-        // Position BELOW the header (not inside nav item)
-        const top = headerHeight + 10; // Below header + 10px gap
+        // Position dropdown BELOW the header (not overlapping header)
+        // Fixed position is relative to viewport, so we use header height directly
+        const dropdownTop = headerHeight + 10; // Below header + 10px gap
         
-        // Handle both LTR (English) and RTL (Arabic)
+        // Detect language direction for proper alignment
         const isRTL = document.documentElement.dir === 'rtl' || 
                       document.querySelector('html[dir="rtl"]');
         
-        // IMPORTANT: Remove all positional inline styles first to clear conflicts
+        // STEP 1: Clear all old positioning first
         dropdown.style.removeProperty('top');
         dropdown.style.removeProperty('left');
         dropdown.style.removeProperty('right');
+        dropdown.style.removeProperty('width');
         
-        // Now set the correct position
-        dropdown.style.top = top + 'px';
+        // STEP 2: Set position: fixed explicitly (should already be in CSS)
+        dropdown.style.position = 'fixed';
+        
+        // STEP 3: Set the vertical position (same for both languages)
+        dropdown.style.top = dropdownTop + 'px';
+        
+        // STEP 4: Set horizontal position based on nav item and language
+        const dropdownWidth = 200; // Same as CSS width
         
         if (isRTL) {
-            // RTL (Arabic): Position from right side of clicked item
-            const rightOffset = window.innerWidth - rect.right;
+            // ARABIC (RTL): Align dropdown to the RIGHT side of the nav item
+            const rightOffset = window.innerWidth - itemRect.right;
             dropdown.style.left = 'auto';
             dropdown.style.right = rightOffset + 'px';
+            
+            console.log('📍 RTL Dropdown positioned:', {
+                top: dropdownTop + 'px',
+                right: rightOffset + 'px',
+                left: 'auto',
+                itemRight: itemRect.right,
+                windowWidth: window.innerWidth,
+                alignment: 'RIGHT (RTL)'
+            });
         } else {
-            // LTR (English): Position from left side of clicked item
-            dropdown.style.left = rect.left + 'px';
+            // ENGLISH (LTR): Align dropdown to the LEFT side of the nav item
+            dropdown.style.left = itemRect.left + 'px';
             dropdown.style.right = 'auto';
+            
+            console.log('📍 LTR Dropdown positioned:', {
+                top: dropdownTop + 'px',
+                left: itemRect.left + 'px',
+                right: 'auto',
+                itemLeft: itemRect.left,
+                alignment: 'LEFT (LTR)'
+            });
         }
-
-        console.log('📍 Positioned dropdown:', { 
-            top: top, 
-            left: isRTL ? 'auto' : rect.left,
-            right: isRTL ? (window.innerWidth - rect.right) : 'auto',
-            itemRect: {
-                left: rect.left,
-                right: rect.right,
-                top: rect.top,
-                bottom: rect.bottom
+        
+        // Log complete positioning for debugging
+        console.log('🎯 Dropdown Final Position:', {
+            element: dropdown.className,
+            computed: {
+                top: dropdown.style.top,
+                left: dropdown.style.left,
+                right: dropdown.style.right,
+                position: dropdown.style.position
             },
-            isRTL: !!isRTL
+            viewport: {
+                headerHeight: headerHeight,
+                windowWidth: window.innerWidth,
+                windowHeight: window.innerHeight
+            },
+            navItem: {
+                left: itemRect.left,
+                right: itemRect.right,
+                top: itemRect.top,
+                bottom: itemRect.bottom,
+                width: itemRect.width
+            },
+            language: isRTL ? 'Arabic (RTL)' : 'English (LTR)'
         });
     }
 
