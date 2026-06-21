@@ -983,7 +983,7 @@ header("Expires: 0");
                     const pastExhibitions = exhibitionsData.data.filter(e => {
                         const exhibitionDate = new Date(e.exhibition_date);
                         exhibitionDate.setHours(0, 0, 0, 0);
-                        return exhibitionDate < now;
+                        return exhibitionDate <= now;  // Changed from < to <= to include TODAY
                     });
                     
                     // Mark as exhibition type and map fields

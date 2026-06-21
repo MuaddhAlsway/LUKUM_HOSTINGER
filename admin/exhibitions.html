@@ -128,7 +128,7 @@
         // Filter to show only past exhibitions
         function getPastExhibitions() {
             const now = new Date();
-            return allExhibitions.filter(e => new Date(e.exhibition_date) < now);
+            return allExhibitions.filter(e => new Date(e.exhibition_date) <= now);  // Changed from < to <= to include TODAY
         }
 
         // Render exhibitions table
