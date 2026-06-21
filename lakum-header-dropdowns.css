@@ -1,0 +1,209 @@
+/* ========================================
+   LAKUM ARTSPACE - DROPDOWN NAVIGATION STYLES
+   ======================================== */
+
+/* ===== DROPDOWN CONTAINER STYLES ===== */
+
+.lakum-nav__item--dropdown {
+    position: relative;
+}
+
+.lakum-nav__dropdown-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #1a1a1a;
+    padding: 0;
+    margin-left: 6px;
+    font-size: 14px;
+    transition: transform 0.3s ease;
+    align-items: center;
+    justify-content: center;
+}
+
+.lakum-nav__dropdown-toggle i {
+    display: block;
+    font-style: normal;
+}
+
+/* ===== DESKTOP DROPDOWN MENU ===== */
+
+.lakum-nav__dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 220px;
+    background: #ffffff;
+    border: 1px solid #d1d1d1;
+    border-radius: 2px;
+    list-style: none;
+    margin: 0;
+    padding: 8px 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Show dropdown on hover (desktop) */
+.lakum-nav__item--dropdown:hover .lakum-nav__dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.lakum-nav__item--dropdown:hover .lakum-nav__dropdown-toggle {
+    transform: rotate(180deg);
+}
+
+/* Dropdown Links */
+.lakum-nav__dropdown-link {
+    display: block;
+    padding: 12px 20px;
+    color: #525252;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.lakum-nav__dropdown-link:hover {
+    background: #f6f6eb;
+    color: #1a1a1a;
+    padding-left: 24px;
+}
+
+/* ===== MOBILE DROPDOWN MENU ===== */
+
+@media (max-width: 1024px) {
+    /* Show toggle button on mobile */
+    .lakum-nav--mobile .lakum-nav__dropdown-toggle {
+        display: flex;
+    }
+
+    /* Mobile dropdown styling */
+    .lakum-nav--mobile .lakum-nav__item--dropdown {
+        border-bottom: 1px solid #e8e8e8;
+    }
+
+    .lakum-nav--mobile .lakum-nav__dropdown {
+        position: static;
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        max-height: 0;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+        padding: 0;
+        margin: 0;
+    }
+
+    /* Show mobile dropdown when active */
+    .lakum-nav--mobile .lakum-nav__item--dropdown.active .lakum-nav__dropdown {
+        max-height: 500px;
+        padding: 8px 0;
+    }
+
+    .lakum-nav--mobile .lakum-nav__item--dropdown.active .lakum-nav__dropdown-toggle {
+        transform: rotate(180deg);
+    }
+
+    /* Mobile dropdown links - indented */
+    .lakum-nav--mobile .lakum-nav__dropdown-link {
+        padding: 12px 20px 12px 40px;
+        background: #f9f9f9;
+        font-size: 13px;
+    }
+
+    .lakum-nav--mobile .lakum-nav__dropdown-link:hover {
+        background: #f0f0f0;
+        padding-left: 44px;
+    }
+}
+
+/* ===== RTL SUPPORT ===== */
+
+[dir="rtl"] .lakum-nav__dropdown {
+    left: auto;
+    right: 0;
+}
+
+[dir="rtl"] .lakum-nav__dropdown-toggle {
+    margin-left: 0;
+    margin-right: 6px;
+}
+
+[dir="rtl"] .lakum-nav__dropdown-link:hover {
+    padding-left: 20px;
+    padding-right: 24px;
+}
+
+[dir="rtl"] .lakum-nav--mobile .lakum-nav__dropdown-link {
+    padding: 12px 40px 12px 20px;
+}
+
+[dir="rtl"] .lakum-nav--mobile .lakum-nav__dropdown-link:hover {
+    padding-left: 20px;
+    padding-right: 44px;
+}
+
+/* ===== SMOOTH SCROLL BEHAVIOR ===== */
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* ===== ANIMATION FOR DROPDOWN ARROW ===== */
+
+.lakum-nav__dropdown-toggle i {
+    transition: transform 0.3s ease;
+}
+
+/* ===== DROPDOWN ACCESSIBILITY ===== */
+
+.lakum-nav__dropdown-toggle:focus-visible {
+    outline: 2px solid #1a1a1a;
+    outline-offset: 2px;
+}
+
+.lakum-nav__dropdown-link:focus-visible {
+    outline: 2px solid #1a1a1a;
+    outline-offset: -2px;
+}
+
+/* ===== DARK MODE SUPPORT (if needed) ===== */
+
+@media (prefers-color-scheme: dark) {
+    .lakum-nav__dropdown {
+        background: #2d2d2d;
+        border-color: #525252;
+    }
+
+    .lakum-nav__dropdown-link {
+        color: #e0e0e0;
+    }
+
+    .lakum-nav__dropdown-link:hover {
+        background: #3d3d3d;
+        color: #ffffff;
+    }
+}
+
+/* ===== PERFORMANCE OPTIMIZATIONS ===== */
+
+.lakum-nav__dropdown {
+    will-change: opacity, transform;
+    contain: layout style paint;
+}
+
+.lakum-nav__item--dropdown {
+    contain: layout style paint;
+}

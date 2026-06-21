@@ -175,7 +175,7 @@ require_once 'includes/hero-settings.php';
     </section>
 
     <!-- Upcoming Section -->
-    <section class="lakum-exhibitions-upcoming">
+    <section class="lakum-exhibitions-upcoming" id="upcoming">
         <div class="lakum-container">
             <h2 class="lakum-exhibitions-upcoming__title"><?php echo t('exhibitions_upcoming', 'Upcoming'); ?></h2>
             <div class="lakum-exhibitions-upcoming__grid" id="upcomingPreview">
@@ -190,7 +190,7 @@ require_once 'includes/hero-settings.php';
     </section>
 
     <!-- CTA Section -->
-    <section class="lakum-exhibitions-cta" >
+    <section class="lakum-exhibitions-cta" id="workshops">
         <div class="lakum-exhibitions-cta__background" id="upcomingPreview"></div>
         <div class="lakum-container">
             <div class="lakum-exhibitions-cta__content">

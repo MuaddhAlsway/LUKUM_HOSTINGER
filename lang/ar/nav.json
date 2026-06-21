@@ -11,5 +11,15 @@
   "language_en": "English",
   "language_ar": "العربية",
   "toggle_language": "Language: English",
-  "_updated": "2026-05-01"
+  "nav_upcoming_exhibitions": "المعارض القادمة",
+  "nav_past_exhibitions": "المعارض السابقة",
+  "nav_create_event": "أنشئ فعاليتك",
+  "nav_lakum_venue": "مساحة لكم",
+  "nav_our_facilities": "المرافق",
+  "nav_floor_maps": "خرائط الطوابق",
+  "nav_space_pricing": "أسعار تأجير المساحات",
+  "nav_book_event": "حجز المساحات",
+  "nav_upcoming_events": "الفعاليات القادمة",
+  "nav_workshops": "ورش العمل",
+  "_updated": "2026-06-21"
 }

@@ -11,5 +11,15 @@
   "language_en": "English",
   "language_ar": "العربية",
   "toggle_language": "Language: العربية",
-  "_updated": "2026-05-01"
+  "nav_upcoming_exhibitions": "Upcoming Exhibitions",
+  "nav_past_exhibitions": "Past Exhibitions",
+  "nav_create_event": "Create Your Event",
+  "nav_lakum_venue": "Lakum Artspace Venue",
+  "nav_our_facilities": "Our Facilities",
+  "nav_floor_maps": "Floor Maps",
+  "nav_space_pricing": "Space Pricing",
+  "nav_book_event": "Book Your Event",
+  "nav_upcoming_events": "Upcoming",
+  "nav_workshops": "Workshops",
+  "_updated": "2026-06-21"
 }

@@ -11,6 +11,9 @@
     <!-- Unified Header & Navigation Styles (MUST BE FIRST) -->
     <link rel="stylesheet" href="lakum-header-unified.css?v=2.1.0">
     
+    <!-- Dropdown Navigation Styles -->
+    <link rel="stylesheet" href="lakum-header-dropdowns.css?v=2.1.0">
+    
     <!-- Component Styles -->
     <link rel="stylesheet" href="lakum-components.css?v=2.1.0">
     

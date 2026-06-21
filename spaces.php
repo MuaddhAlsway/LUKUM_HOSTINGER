@@ -332,7 +332,7 @@ header("Expires: 0");
     </section>
 
     <!-- Venue Introduction -->
-    <section class="lakum-spaces-intro">
+    <section class="lakum-spaces-intro" id="venue-intro">
         <div class="lakum-container">
             <h2 class="lakum-spaces-intro__title"><?php echo ss('spaces','venue_title_en','spaces_venue_title','LAKUM VENUE'); ?></h2>
             <div class="lakum-spaces-intro__content">
@@ -344,7 +344,7 @@ header("Expires: 0");
     </section>
 
     <!-- Facilities Section -->
-    <section class="lakum-spaces-facilities">
+    <section class="lakum-spaces-facilities" id="facilities">
         <div class="lakum-container">
             <h2 class="lakum-spaces-facilities__title"><?php echo t('spaces_facilities_title', 'Our Facilities'); ?></h2>
             <div class="lakum-spaces-facilities__grid">
@@ -431,7 +431,7 @@ header("Expires: 0");
     </div>
 
     <!-- Floor Map Section -->
-    <section class="lakum-spaces-floor">
+    <section class="lakum-spaces-floor" id="floor-maps">
         <div class="lakum-container">
             <h2 class="lakum-spaces-floor__title"><?php echo t('spaces_floor_title', 'Our Floor Maps with Measurements'); ?></h2>
             <div class="lakum-spaces-floor__grid">
@@ -477,7 +477,7 @@ header("Expires: 0");
     </section>
 
     <!-- Pricing Section -->
-    <section class="lakum-spaces-pricing">
+    <section class="lakum-spaces-pricing" id="pricing">
         <div class="lakum-container">
             <h2 class="lakum-spaces-pricing__title"><?php echo t('spaces_pricing_title', 'Spaces Pricing'); ?></h2>
 
@@ -798,7 +798,7 @@ header("Expires: 0");
     </script>
 
     <!-- Book Your Space Section -->
-    <section class="lakum-spaces-booking" id="form">
+    <section class="lakum-spaces-booking" id="booking-form">
         <div class="lakum-container">
             <div class="lakum-spaces-booking__content">
                 <h2 class="lakum-spaces-booking__title"><?php echo ss('spaces','booking_title_en','spaces_booking_title','Book Your Space'); ?></h2>

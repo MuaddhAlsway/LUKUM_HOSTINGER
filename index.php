@@ -305,7 +305,7 @@ require_once 'includes/site-settings.php';
         </div>
     </section>
 
-    <section class="lakum-section lakum-section--upcoming">
+    <section class="lakum-section lakum-section--upcoming" id="upcoming-exhibitions">
         <div class="lakum-container">
             <div class="lakum-section-header">
                 <h2 class="lakum-section-header__title"><?php echo t('upcoming_exhibitions', 'Upcoming Exhibitions'); ?></h2>
@@ -358,7 +358,7 @@ require_once 'includes/site-settings.php';
         </div>
     </section>
 
-    <section class="lakum-section lakum-section--exhibitions">
+    <section class="lakum-section lakum-section--exhibitions" id="past-exhibitions">
         <div class="lakum-container">
             <div class="lakum-section-divider">
                 <span class="lakum-section-divider__line"></span>
@@ -373,7 +373,7 @@ require_once 'includes/site-settings.php';
         </div>
     </section>
 
-    <section class="lakum-cta lakum-cta--dark">
+    <section class="lakum-cta lakum-cta--dark" id="create-event">
         <div class="lakum-cta__background" style="background-image: url('<?php echo ssRaw('home','cta2_image','heroImage/img-4.webp'); ?>');"></div>
         <div class="lakum-container">
             <div class="lakum-cta__content">
