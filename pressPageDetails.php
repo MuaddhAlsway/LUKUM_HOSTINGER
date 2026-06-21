@@ -32,31 +32,6 @@ if (!$title) {
     <!-- Preload critical fonts -->
     <link rel="preload" href="assest/fonts/GretaArabicAR+LT-Regular.otf" as="font" type="font/otf" crossorigin>
 
-    <!-- Inline Critical CSS -->
-    <style>
-        *,
-        *::before,
-        *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0
-        }
-
-        html {
-            font-size: 16px;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
-            background: #f6f6eb;
-            color: #1a1a1a;
-            overflow-x: hidden;
-            line-height: 1.6
-        }
-    </style>
-
     <!-- Global Stylesheets -->
     <?php include('includes/stylesheets.php'); ?>
 
