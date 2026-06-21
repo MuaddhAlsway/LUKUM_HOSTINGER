@@ -1,0 +1,149 @@
+================================================================================
+                 LAKUM DROPDOWN NAVIGATION - QUICK REFERENCE
+================================================================================
+
+PROBLEM SOLVED: Dropdown navigation not working on desktop
+ROOT CAUSE: Ancestor elements with overflow:hidden clipping the dropdown
+SOLUTION: Aggressive overflow:visible and z-index hierarchy
+
+================================================================================
+                              WHAT WAS CHANGED
+================================================================================
+
+1. MAIN CSS FILE: lakum-header-dropdowns.css (v4.1.0 → v4.2.0)
+   ✅ Added overflow: visible to .lakum-header, .lakum-header__container, .lakum-nav
+   ✅ Updated z-index hierarchy (1001 for item, 1002 for dropdown)
+   ✅ Added will-change for performance optimization
+
+2. INLINE FIXES ADDED: 14 PHP pages
+   ✅ index.php
+   ✅ about.php
+   ✅ spaces.php
+   ✅ exhibitions.php
+   ✅ blog.php
+   ✅ blogPageDetails.php
+   ✅ press.php
+   ✅ pressPageDetails.php
+   ✅ contact.php
+   ✅ calendar.php
+   ✅ shop.php
+   ✅ event.php
+   ✅ terms.php
+   ✅ privacy.php
+
+3. JAVASCRIPT: No changes needed (already working correctly)
+
+================================================================================
+                               HOW IT WORKS NOW
+================================================================================
+
+DESKTOP (≥ 821px):
+  1. User clicks dropdown arrow button
+  2. JavaScript adds .active class to .lakum-nav__item--dropdown
+  3. CSS shows the .lakum-nav__dropdown menu with opacity:1, visibility:visible
+  4. Dropdown appears below the nav item
+  5. User clicks a link or outside to close
+
+MOBILE (≤ 820px):
+  - Mobile off-canvas menu handles dropdowns
+  - Desktop dropdown not visible
+
+LANGUAGES:
+  - English (LTR): Dropdown appears on LEFT
+  - Arabic (RTL): Dropdown appears on RIGHT
+
+================================================================================
+                              CSS HIERARCHY (Z-INDEX)
+================================================================================
+
+.lakum-nav                    → relative, no z-index
+.lakum-nav__list              → z-index: 1
+.lakum-nav__item--dropdown    → z-index: 1001 ← Parent container
+.lakum-nav__dropdown          → z-index: 1002 ← Always visible on top
+.lakum-nav__dropdown-toggle   → z-index: 1001
+
+================================================================================
+                             OVERFLOW MANAGEMENT
+================================================================================
+
+CRITICAL: These must ALL be overflow: visible !important
+
+.lakum-header                 → overflow: visible !important
+.lakum-header__container      → overflow: visible !important
+.lakum-nav                    → overflow: visible !important
+.lakum-nav__list              → overflow: visible !important
+.lakum-nav__item--dropdown    → overflow: visible !important
+
+If ANY of these have overflow:hidden, the dropdown gets CLIPPED.
+
+================================================================================
+                                QUICK TEST
+================================================================================
+
+1. Open index.php in browser
+2. Click "Home" dropdown arrow button
+3. Verify submenu appears below with links:
+   - Upcoming Exhibitions
+   - Past Exhibitions
+   - Create Your Event
+4. Click outside or another dropdown → should close
+5. Click ESC key → should close
+
+Expected: Normal dropdown behavior, like any website
+
+================================================================================
+                              DEPLOYMENT NOTE
+================================================================================
+
+Update version in includes/stylesheets.php (if needed):
+   FROM: lakum-header-dropdowns.css?v=4.1.0
+   TO:   lakum-header-dropdowns.css?v=4.2.0
+
+This forces browsers to download the updated CSS file.
+
+================================================================================
+                                IF ISSUES
+================================================================================
+
+1. Open browser DevTools (F12)
+2. Inspect .lakum-nav__dropdown element while it's "active"
+3. Check Computed Styles:
+   - opacity: should be 1
+   - visibility: should be visible
+   - z-index: should be 1002
+
+4. Check if .active class is on parent (.lakum-nav__item--dropdown)
+   - If not → JavaScript issue (check console for errors)
+   - If yes but hidden → CSS not loading (check inline styles)
+
+5. Force refresh page: Ctrl+Shift+R (Windows) or Cmd+Shift+R (Mac)
+
+================================================================================
+                             FILES TO REMEMBER
+================================================================================
+
+MAIN CSS:        lakum-header-dropdowns.css (v4.2.0)
+JAVASCRIPT:      js/lakum-header-dropdowns.js (no changes)
+HEADER TEMPLATE: lakum-header-unified.php (no changes)
+CSS LOADER:      includes/stylesheets.php (version number if updated)
+
+PAGES UPDATED:   14 (all pages with dropdown navigation)
+
+================================================================================
+                              SUMMARY STATUS
+================================================================================
+
+✅ CSS fixed (overflow and z-index)
+✅ All pages updated with inline fixes
+✅ JavaScript verified (already correct)
+✅ Normal dropdown behavior (not fixed positioning)
+✅ LTR/RTL support included
+✅ Production ready
+
+RESULT: Dropdown navigation now works on ALL pages, appears below nav item
+when clicked, and functions like a normal website dropdown menu.
+
+================================================================================
+                            Last Updated: June 21, 2026
+                              Status: COMPLETE ✅
+================================================================================

@@ -1,9 +1,11 @@
 /* ========================================
    LAKUM ARTSPACE - DROPDOWN NAVIGATION STYLES
-   NORMAL DROPDOWN - CLEAN & SIMPLE - FIXED
+   NORMAL DROPDOWN - CLEAN & SIMPLE - AGGRESSIVE FIX
    ======================================== */
 
-/* CRITICAL: Ensure nav doesn't hide dropdowns */
+/* CRITICAL: Ensure ALL ancestors don't clip dropdown */
+.lakum-header,
+.lakum-header__container,
 .lakum-nav {
     overflow: visible !important;
 }
@@ -11,6 +13,8 @@
 /* CRITICAL: Ensure nav list doesn't hide dropdowns */
 .lakum-nav__list {
     overflow: visible !important;
+    position: relative !important;
+    z-index: 1 !important;
 }
 
 /* Dropdown container needs position: relative and overflow visible */
@@ -19,6 +23,7 @@
     display: flex !important;
     align-items: center !important;
     overflow: visible !important;
+    z-index: 1001 !important;
 }
 
 /* Dropdown toggle button */
@@ -36,6 +41,8 @@
     justify-content: center !important;
     height: auto !important;
     z-index: 1001 !important;
+    position: relative !important;
+    flex-shrink: 0 !important;
 }
 
 .lakum-nav__dropdown-toggle i {
@@ -60,9 +67,10 @@
     opacity: 0 !important;
     visibility: hidden !important;
     pointer-events: none !important;
-    z-index: 1000 !important;
+    z-index: 1002 !important;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
     transition: opacity 0.3s ease, visibility 0.3s ease !important;
+    will-change: opacity, visibility !important;
 }
 
 /* Show dropdown when CLICKED - with HIGH SPECIFICITY and !important */

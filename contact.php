@@ -182,6 +182,19 @@ require_once 'includes/site-settings.php';
 
     <!-- Global Header Navigation (Unified) -->
     <?php include('lakum-header-unified.php'); ?>
+    
+    <!-- CRITICAL FIX: Ensure dropdown works on this page -->
+    <style>
+        .lakum-nav { overflow: visible !important; }
+        .lakum-nav__list { overflow: visible !important; }
+        .lakum-nav__item--dropdown { overflow: visible !important; position: relative !important; }
+        .lakum-nav__item--dropdown.active > .lakum-nav__dropdown,
+        .lakum-nav__item--dropdown.active .lakum-nav__dropdown {
+            opacity: 1 !important;
+            visibility: visible !important;
+            pointer-events: auto !important;
+        }
+    </style>
 
     <script>
         // Intelligent Page Loader - Proper Implementation
