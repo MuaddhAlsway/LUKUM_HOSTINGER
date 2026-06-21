@@ -1,0 +1,185 @@
+================================================================================
+DEBUG GUIDE: "No past exhibitions found" Issue
+================================================================================
+
+STEP 1: Check if data is in database
+
+Open this URL in your browser:
+  https://your-site.com/api/debug_exhibitions.php
+  
+OR locally:
+  http://localhost/api/debug_exhibitions.php
+
+You should see:
+  {
+    "success": true,
+    "today": "2026-06-21",
+    "total_exhibitions": 1,
+    "past_exhibitions": 1,
+    "all_exhibitions": [
+      {
+        "id": 1,
+        "title_en": "Your Exhibition Title",
+        "exhibition_date": "2026-06-21",
+        ...
+      }
+    ]
+  }
+
+WHAT TO LOOK FOR:
+
+✅ GOOD: total_exhibitions = 1 (or more)
+✅ GOOD: past_exhibitions = 1 (or more)
+✅ GOOD: exhibition_date <= today
+
+❌ BAD: total_exhibitions = 0 (not saved)
+❌ BAD: past_exhibitions = 0 (date is in future)
+❌ BAD: exhibition_date > today (future date)
+
+STEP 2: Check if API returns data
+
+Open this URL:
+  https://your-site.com/api/get_exhibitions.php?type=all
+  
+OR locally:
+  http://localhost/api/get_exhibitions.php?type=all
+
+You should see:
+  {
+    "success": true,
+    "data": [
+      {
+        "id": 1,
+        "title_en": "Your Exhibition",
+        "exhibition_date": "2026-06-21",
+        ...
+      }
+    ],
+    "count": 1
+  }
+
+STEP 3: Manually test the filter (in browser console)
+
+Open admin/exhibitions.html → Press F12 → Console tab
+
+Paste this:
+  
+  const now = new Date();
+  now.setHours(0, 0, 0, 0);
+  
+  const testDate = new Date('2026-06-21');
+  testDate.setHours(0, 0, 0, 0);
+  
+  console.log('Today:', now);
+  console.log('Exhibition Date:', testDate);
+  console.log('Is past? (should be true):', testDate <= now);
+
+If "Is past?" shows FALSE, that means the date filter is wrong.
+
+STEP 4: Check browser cache
+
+Hard refresh:
+  1. Ctrl + Shift + Delete (Clear cache)
+  2. Select "Cookies and other site data" + "Cached images and files"
+  3. Click "Clear data"
+  4. Reload page: F5
+
+Or just close and reopen browser in private/incognito mode.
+
+STEP 5: Check browser console for errors
+
+Open admin/exhibitions.html → F12 → Console tab
+
+You should NOT see any red errors. If you see errors, screenshot them.
+
+================================================================================
+FIXES APPLIED:
+================================================================================
+
+1. ✅ Fixed get_exhibitions.php
+   - Now uses direct database connection (not db.php)
+   - Same credentials as add_exhibition.php
+   - Should return exhibitions properly
+
+2. ✅ Fixed exhibitions.html filter
+   - Now properly sets hours to 0:0:0 for both dates
+   - Compares dates correctly (midnight to midnight)
+   - Shows today's exhibitions and past
+
+3. ✅ Fixed spaces.php filter
+   - Same proper date comparison
+   - Shows today's exhibitions and past
+
+================================================================================
+COMMON ISSUES & SOLUTIONS:
+================================================================================
+
+ISSUE 1: "No past exhibitions found" but exhibition exists in database
+
+SOLUTION:
+  - The exhibition date is in the FUTURE
+  - Admin form only allows PAST/TODAY dates
+  - If you selected today, refresh page
+  - Hard clear cache (Ctrl+Shift+Delete)
+
+ISSUE 2: Exhibition doesn't appear in database
+
+SOLUTION:
+  - Check add_exhibition.php response
+  - Go to admin/add-exhibition.html
+  - Fill form
+  - Open browser console (F12)
+  - Check Network tab → add_exhibition.php
+  - Look at Response tab
+  - Should show: {"success": true, "exhibition_id": X}
+
+ISSUE 3: API returns empty data
+
+SOLUTION:
+  - Check database connection
+  - Go to: api/debug_exhibitions.php
+  - Should connect and show exhibitions
+  - If not, check credentials in config.local.php
+
+ISSUE 4: Wrong date showing in admin table
+
+SOLUTION:
+  - The date is stored correctly in database
+  - JavaScript might be parsing it wrong
+  - Check Date parsing in browser console
+  - Try: new Date('2026-06-21')
+
+================================================================================
+DATABASE CREDENTIALS:
+================================================================================
+
+If any PHP file says "Access denied", check:
+
+Host: localhost
+User: u812122863_neama
+Password: Nema202610!LakumDB
+Database: u812122863_lakum_artspace
+
+These are in:
+  - config.local.php
+  - add_exhibition.php (hardcoded)
+  - get_exhibitions.php (hardcoded - JUST UPDATED)
+  - debug_exhibitions.php (hardcoded)
+
+All files now use the SAME credentials.
+
+================================================================================
+TEST CHECKLIST:
+================================================================================
+
+☐ Created exhibition in admin form
+☐ API returned success message
+☐ Exhibition in database (check debug_exhibitions.php)
+☐ Exhibition shows in admin/exhibitions.html table
+☐ Exhibition shows in spaces.php Past Events carousel
+☐ Exhibition shows in exhibitions.php (if there)
+
+If all ☑, issue is FIXED!
+If any ☐, go to that step and debug.
+
+================================================================================

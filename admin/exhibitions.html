@@ -128,7 +128,12 @@
         // Filter to show only past exhibitions
         function getPastExhibitions() {
             const now = new Date();
-            return allExhibitions.filter(e => new Date(e.exhibition_date) <= now);  // Changed from < to <= to include TODAY
+            now.setHours(0, 0, 0, 0);  // Set to midnight to compare dates only
+            return allExhibitions.filter(e => {
+                const exhibitionDate = new Date(e.exhibition_date);
+                exhibitionDate.setHours(0, 0, 0, 0);  // Set to midnight
+                return exhibitionDate <= now;
+            });
         }
 
         // Render exhibitions table
