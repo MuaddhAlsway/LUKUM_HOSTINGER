@@ -1489,8 +1489,8 @@ body {
     .lakum-exhibition-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
     
     /* Reduce event card height */
-    .lakum-event-card { height: auto; }
-    .lakum-event-card__image { height: 220px; }
+    .lakum-event-card { height: 485.56px; }
+    .lakum-event-card__image { height: 320px; }
     
     /* Optimize CTA sections */
     .lakum-cta { padding: 40px 0; }
@@ -1508,12 +1508,12 @@ body {
     
     /* Minimize featured banner */
     .lakum-featured-banner { padding: 0; }
-    .lakum-featured-banner__content { grid-template-columns: 1fr; gap: 15px; }
-    .lakum-featured-banner__image { height: 180px; }
-    .lakum-featured-banner__text { padding: 20px 15px; }
-    .lakum-featured-banner__date { font-size: 0.75rem; }
-    .lakum-featured-banner__title { font-size: 1.25rem; margin-bottom: 10px; }
-    .lakum-featured-banner__description { font-size: 0.9rem; margin-bottom: 15px; }
+    .lakum-featured-banner__content { grid-template-columns: 1fr; gap: 30px; }
+    .lakum-featured-banner__image { height: 280px; }
+    .lakum-featured-banner__text { padding: 30px 20px; }
+    .lakum-featured-banner__date { font-size: 0.85rem; }
+    .lakum-featured-banner__title { font-size: 1.25rem; margin-bottom: 12px; }
+    .lakum-featured-banner__description { font-size: 0.95rem; margin-bottom: 20px; }
     
     /* Aggressive section padding reduction */
     .lakum-section { padding: 30px 0; }
@@ -1526,10 +1526,10 @@ body {
     
     /* Reduce event card */
     .lakum-event-card { height: auto; }
-    .lakum-event-card__image { height: 180px; }
-    .lakum-event-card__content { padding: 15px; }
-    .lakum-event-card__title { font-size: 1.1rem; margin-bottom: 5px; }
-    .lakum-event-card__time { font-size: 0.85rem; margin-bottom: 8px; }
+    .lakum-event-card__image { height: 200px; }
+    .lakum-event-card__content { padding: 16px; }
+    .lakum-event-card__title { font-size: 1.1rem; margin-bottom: 8px; }
+    .lakum-event-card__time { font-size: 0.9rem; margin-bottom: 12px; }
     
     /* Minimize CTA */
     .lakum-cta { padding: 30px 0; }
@@ -1555,11 +1555,11 @@ body {
 
 /* ===== ULTRA-AGGRESSIVE MOBILE (< 360px) ===== */
 @media (max-width: 360px) {
-    .lakum-hero { height: 55vh; min-height: 320px; }
+    .lakum-hero { height: 50vh; min-height: 300px; }
     .lakum-hero__subtitle { font-size: 0.8rem; }
-    .lakum-featured-banner__image { height: 160px; }
+    .lakum-featured-banner__image { height: 250px; }
     .lakum-featured-banner__title { font-size: 1.1rem; }
-    .lakum-event-card__image { height: 160px; }
+    .lakum-event-card__image { height: 180px; }
     .lakum-section { padding: 20px 0; }
     .lakum-cta { padding: 20px 0; }
     .lakum-cta__title { font-size: 1.25rem; }
