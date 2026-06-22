@@ -673,7 +673,7 @@
 }
 
 [dir="rtl"] .lakum-event-card__link {
-    align-self: flex-end;
+    /* align-self: flex-start; */
 }
 
 [dir="rtl"] .lakum-cta__content {
