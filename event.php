@@ -371,6 +371,7 @@ if (!$title) {
             console.log('Event object:', event);
             console.log('Language:', lang);
             console.log('Event video_url:', event.video_url);
+            console.log('Event event_video:', event.event_video);
             
             currentEvent = event;
             currentLanguage = lang;
@@ -429,13 +430,14 @@ if (!$title) {
             const descElement = document.getElementById('event-description');
             descElement.textContent = description || 'No description available';
 
-            // Display video if available
+            // Display video if available - Handle both field names (events table uses video_url, exhibitions table uses event_video)
             console.log('Checking for video_url...');
-            if (event.video_url) {
-                console.log('Video URL found, calling displayVideo with:', event.video_url);
-                displayVideo(event.video_url);
+            const videoUrl = event.video_url || event.event_video;
+            if (videoUrl) {
+                console.log('Video URL found, calling displayVideo with:', videoUrl);
+                displayVideo(videoUrl);
             } else {
-                console.log('No video_url in event object');
+                console.log('No video URL found in event object');
             }
 
             // Load gallery images from database
