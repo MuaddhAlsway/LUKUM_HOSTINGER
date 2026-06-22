@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="lakum-components.css?v=2.1.0">
     
     <!-- Index Page Specific Styles -->
-    <link rel="stylesheet" href="index-styles.css?v=2.5.0">
+    <link rel="stylesheet" href="index-styles.css?v=2.6.0">
     
     <!-- RTL Support -->
     <link rel="stylesheet" href="rtl.css?v=2.1.0">

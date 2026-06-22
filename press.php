@@ -274,7 +274,7 @@ if (file_exists('api/image-helper.php')) { require_once 'api/image-helper.php'; 
     <section class="lakum-press-hero">
         <div class="lakum-container">
             <h1 class="lakum-press-hero__title"><?php echo t('press_hero_title', 'Press & Media'); ?></h1>
-            <p class="lakum-press-hero__subtitle"><?php echo t('press_hero_subtitle', 'Read about LakumArtspace in the news'); ?></p>
+            <p class="lakum-press-hero__subtitle"><?php echo t('press_hero_subtitle', 'Read about Lakum Artspace in the news'); ?></p>
         </div>
     </section>
 

@@ -250,6 +250,7 @@
     height: 320px;
     overflow: hidden;
     background: #edecdf;
+    object-fit: cover;
 }
 
 .lakum-event-card__image img {
