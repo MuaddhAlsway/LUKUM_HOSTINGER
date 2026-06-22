@@ -423,6 +423,11 @@
                                         const exhibition_end_time = document.getElementById('exhibition_end_time').value || '18:00';
                                         const end_date = document.getElementById('end_date').value || null;
                                         const event_video = document.getElementById('event_video').value.trim() || null;
+                                        
+                                        // DEBUG: Log video URL
+                                        console.log('=== EXHIBITION FORM DEBUG ===');
+                                        console.log('event_video value from form:', event_video);
+                                        console.log('event_video element:', document.getElementById('event_video'));
 
                                         if (!title_en) throw new Error('Exhibition title (English) is required');
                                         if (!exhibition_date) throw new Error('Exhibition date is required');

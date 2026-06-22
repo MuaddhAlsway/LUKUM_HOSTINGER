@@ -1,0 +1,220 @@
+════════════════════════════════════════════════════════════════════════════════
+IMMEDIATE ACTION PLAN - DEBUG VIDEO NOT SHOWING
+════════════════════════════════════════════════════════════════════════════════
+
+SITUATION:
+───────────────────────────────────────────────────────────────────────────────
+✓ You add video URL in exhibition admin
+✓ Exhibition appears on spaces.php Past Events
+✗ Video NOT showing on event detail page
+
+
+MOST LIKELY CAUSE (90% probability):
+───────────────────────────────────────────────────────────────────────────────
+
+🔴 BROWSER CACHE
+
+
+IMMEDIATE FIX (Try this FIRST):
+───────────────────────────────────────────────────────────────────────────────
+
+Windows Users:
+  1. Go to event page with video
+  2. Press: Ctrl + Shift + R
+  3. Wait 2 seconds
+  4. Video should appear ✓
+
+Mac Users:
+  1. Go to event page with video
+  2. Press: Cmd + Shift + R
+  3. Wait 2 seconds
+  4. Video should appear ✓
+
+Firefox (All OS):
+  1. Go to event page
+  2. Press: Ctrl + F5
+  3. Wait 2 seconds
+  4. Video should appear ✓
+
+Alternative (Chrome):
+  1. F12 → DevTools
+  2. Right-click refresh button
+  3. Select: "Empty cache and hard refresh"
+  4. Wait for page to load
+  5. Video should appear ✓
+
+
+DID THAT WORK?
+───────────────────────────────────────────────────────────────────────────────
+
+YES → Video appears now? ✓
+     → You're done! Cache was the issue
+
+NO  → Video still not showing? Continue below
+
+
+IF HARD REFRESH DIDN'T WORK:
+───────────────────────────────────────────────────────────────────────────────
+
+Step 1: Check if video is saved in database
+  1. Open phpMyAdmin (usually at localhost/phpmyadmin)
+  2. Click: Databases → u812122863_lakum_artspace (or your database)
+  3. Click: exhibitions table
+  4. Find your exhibition (search by title)
+  5. Look at: event_video column
+  
+  Is there a URL there? (Should look like: https://youtu.be/...)
+  
+  YES → Video IS saved in database (go to Step 2)
+  NO  → Video NOT saved (problem with admin form save)
+
+
+Step 2: Check if API returns the video
+  1. Open new browser tab
+  2. Go to address bar
+  3. Paste: http://localhost/api/get_event_details.php?id=YOUR_EXHIBITION_ID&lang=en
+  4. Replace YOUR_EXHIBITION_ID with your exhibition number (e.g., 54)
+  5. You'll see JSON text
+  6. Press: Ctrl+F (search)
+  7. Search for: "video_url"
+  
+  Is it there?
+  
+  YES → API returns it (go to Step 3)
+  NO  → API not returning it (problem with API)
+
+
+Step 3: Check browser console
+  1. Go to your event page (with video)
+  2. Press: F12 (open DevTools)
+  3. Click: Console tab
+  4. Look for these messages:
+     - "Checking for video_url..."
+     - "Video URL found, calling displayVideo with: https://..."
+  
+  Do you see them?
+  
+  YES → Code is running (video should display)
+  NO  → Code not running (JavaScript issue)
+
+
+Step 4: Check Network tab
+  1. Go to event page
+  2. F12 → Network tab
+  3. Reload page
+  4. Look for: get_event_details.php
+  5. Click on it
+  6. Click: Response tab
+  7. Search: Ctrl+F for "video_url"
+  
+  Is it there?
+  
+  YES → API returning data
+  NO  → API not returning video field
+
+
+WHAT TO DO BASED ON FINDINGS:
+───────────────────────────────────────────────────────────────────────────────
+
+❌ Video NOT in database:
+   Problem: Admin form not saving video
+   Solution: 
+     1. Go to admin form again
+     2. Check: Is video URL in the field? (Maybe lost in the form?)
+     3. Paste video URL again
+     4. Click Create/Update
+     5. Check database again to see if it saved
+
+❌ Video NOT in API response:
+   Problem: API not querying event_video field
+   Solution: This is a code issue I need to fix
+   Action: Tell me this is the issue
+
+❌ Console logs NOT appearing:
+   Problem: event.php JavaScript not running
+   Solution: Browser cache or file not saved
+   Action: Hard refresh again, or tell me
+
+❌ API returning data but network shows 404:
+   Problem: File might be in wrong location
+   Solution: Tell me you're getting 404 on get_event_details.php
+
+✅ Everything checks out:
+   Problem: Unknown (might be hidden off-screen, wrong date filter, etc)
+   Solution: Tell me what you found in each step
+
+
+DETAILED DEBUGGING FLOWCHART:
+───────────────────────────────────────────────────────────────────────────────
+
+Is video URL in exhibition admin form?
+  ├─ NO  → Type it again and save
+  └─ YES → Continue
+
+Did the form submit successfully?
+  ├─ NO  → Check form for validation errors
+  └─ YES → Continue
+
+Is video URL in database?
+  ├─ NO  → Form submission failed, API issue
+  └─ YES → Continue
+
+Is API returning video_url field?
+  ├─ NO  → API query issue
+  └─ YES → Continue
+
+Are console logs appearing?
+  ├─ NO  → JavaScript not running
+  └─ YES → Continue
+
+Is video displaying?
+  ├─ NO  → Might be off-screen, wrong size, or styling issue
+  └─ YES → ✓ SUCCESS
+
+
+INFORMATION TO PROVIDE ME:
+───────────────────────────────────────────────────────────────────────────────
+
+Please tell me:
+
+1. Exhibition ID you're testing (e.g., 54)
+2. Exhibition name
+3. Video URL you pasted (e.g., https://youtu.be/JH3zXmuFARw)
+4. Database check: Is URL in event_video column? (YES/NO)
+5. API check: Does API response contain "video_url"? (YES/NO)
+6. Console logs: Do you see the logs? (YES/NO)
+7. Browser type: Chrome / Firefox / Safari / Edge
+8. Did hard refresh work? (YES/NO)
+
+
+EXPECTED WORKING BEHAVIOR:
+───────────────────────────────────────────────────────────────────────────────
+
+1. Admin: Add video URL → Save ✓
+2. Database: event_video column has URL ✓
+3. API: Returns "video_url": "https://..." ✓
+4. Console: Shows "Video URL found" log ✓
+5. Page: Shows "Event Video" section ✓
+6. Page: Video plays ✓
+
+
+ACTION NOW:
+───────────────────────────────────────────────────────────────────────────────
+
+DO THIS RIGHT NOW (2 minutes):
+
+1. Hard refresh: Ctrl+Shift+R (or Cmd+Shift+R on Mac)
+2. Wait 2 seconds
+3. Does video appear?
+   
+   YES → 🎉 Problem solved! It was cache!
+   
+   NO  → Continue to Step 2...
+
+2. Open phpMyAdmin
+3. Check if video URL is in database
+4. Tell me YES or NO
+
+Based on your answer, I'll know exactly what's wrong.
+
+════════════════════════════════════════════════════════════════════════════════

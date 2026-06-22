@@ -652,6 +652,11 @@
                             end_date: document.getElementById('end_date').value || null,
                             event_video: document.getElementById('event_video').value.trim() || null
                         };
+                        
+                        // DEBUG: Log video URL
+                        console.log('=== EXHIBITION UPDATE DEBUG ===');
+                        console.log('event_video value from form:', updateData.event_video);
+                        console.log('event_video element:', document.getElementById('event_video'));
 
                         if (coverImagePath) updateData.cover_image = coverImagePath;
                         if (galleryImages) updateData.gallery_images = galleryImages;
