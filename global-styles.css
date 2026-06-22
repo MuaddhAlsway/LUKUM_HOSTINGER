@@ -1507,7 +1507,7 @@ body {
     .lakum-hero__content { width: 95%; padding: 0 10px; }
     
     /* Minimize featured banner */
-    .lakum-featured-banner { padding: 0; }
+    .lakum-featured-banner { padding: 0; width: 100vw; margin-left: calc(-50vw + 50%); margin: 0; background: #edecdf; max-height: 450px; }
     .lakum-featured-banner__content { grid-template-columns: 1fr; gap: 30px; }
     .lakum-featured-banner__image { height: 280px; }
     .lakum-featured-banner__text { padding: 30px 20px; }
