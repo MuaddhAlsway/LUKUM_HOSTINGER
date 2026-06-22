@@ -233,12 +233,21 @@
                     <!-- Event Video Section (Optional) -->
                     <div class="form-section">
                         <h3><i class="ri-video-line"></i> Event Video (Optional)</h3>
-                        <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-                            <div class="form-group">
-                                <label for="event_video">Video URL</label>
-                                <input type="url" id="event_video" name="event_video" placeholder="https://www.youtube.com/embed/... or video URL">
-                                <small style="color: #666;">Paste YouTube embed URL, Vimeo URL, or direct video link</small>
+
+                        <div id="videoPreviewSection" style="display: none; margin-bottom: 20px; padding: 15px; background: #f9f9f9; border-radius: 8px;">
+                            <h4 style="margin: 0 0 12px 0; font-size: 0.95rem;">Current Video</h4>
+                            <div id="videoPreview" style="position: relative; width: 100%; max-width: 400px; margin-bottom: 10px;">
+                                <iframe id="videoFrame" width="100%" height="225" style="border-radius: 8px; border: none;" allowfullscreen></iframe>
                             </div>
+                            <button type="button" id="removeVideoBtn" class="btn-danger" style="padding: 8px 16px; background: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;">
+                                <i class="ri-delete-bin-line"></i> Remove Video
+                            </button>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="event_video">Video URL</label>
+                            <input type="url" id="event_video" name="event_video" placeholder="https://www.youtube.com/watch?v=... or https://vimeo.com/...">
+                            <small>Paste a YouTube or Vimeo video URL. Leave empty to remove the video.</small>
                         </div>
                     </div>
 
@@ -353,6 +362,41 @@
             document.getElementById('end_date').value = exhibition.end_date || '';
             document.getElementById('event_video').value = exhibition.event_video || '';
 
+            // Video preview (new - matches event form)
+            if (exhibition.event_video) {
+                const videoPreviewSection = document.getElementById('videoPreviewSection');
+                const videoFrame = document.getElementById('videoFrame');
+                if (videoPreviewSection && videoFrame) {
+                    videoPreviewSection.style.display = 'block';
+                    // Parse video URL and create embed
+                    let embedUrl = '';
+                    const videoUrl = exhibition.event_video;
+                    
+                    if (videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be')) {
+                        let videoId = '';
+                        if (videoUrl.includes('youtube.com/watch')) {
+                            const url = new URL(videoUrl);
+                            videoId = url.searchParams.get('v');
+                        } else if (videoUrl.includes('youtu.be')) {
+                            const match = videoUrl.match(/youtu\.be\/([a-zA-Z0-9_-]+)/);
+                            if (match) videoId = match[1];
+                        }
+                        if (videoId) {
+                            embedUrl = `https://www.youtube.com/embed/${videoId}`;
+                        }
+                    } else if (videoUrl.includes('vimeo.com')) {
+                        const match = videoUrl.match(/vimeo\.com\/(\d+)/);
+                        if (match) {
+                            embedUrl = `https://player.vimeo.com/video/${match[1]}`;
+                        }
+                    }
+                    
+                    if (embedUrl) {
+                        videoFrame.src = embedUrl;
+                    }
+                }
+            }
+
             // Handle location selects
             const locationSelectEn = document.getElementById('location_select_en');
             const locationSelectAr = document.getElementById('location_select_ar');
@@ -426,6 +470,56 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Load exhibition
             loadExhibition();
+
+            // Remove video button handler (new - matches event form)
+            const removeVideoBtn = document.getElementById('removeVideoBtn');
+            const videoInput = document.getElementById('event_video');
+            const videoPreviewSection = document.getElementById('videoPreviewSection');
+            
+            if (removeVideoBtn) {
+                removeVideoBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    videoInput.value = '';
+                    videoPreviewSection.style.display = 'none';
+                });
+            }
+
+            // Video input change handler (new - shows preview when URL is entered)
+            if (videoInput) {
+                videoInput.addEventListener('change', () => {
+                    const videoUrl = videoInput.value.trim();
+                    if (videoUrl) {
+                        const videoFrame = document.getElementById('videoFrame');
+                        let embedUrl = '';
+                        
+                        if (videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be')) {
+                            let videoId = '';
+                            if (videoUrl.includes('youtube.com/watch')) {
+                                const url = new URL(videoUrl);
+                                videoId = url.searchParams.get('v');
+                            } else if (videoUrl.includes('youtu.be')) {
+                                const match = videoUrl.match(/youtu\.be\/([a-zA-Z0-9_-]+)/);
+                                if (match) videoId = match[1];
+                            }
+                            if (videoId) {
+                                embedUrl = `https://www.youtube.com/embed/${videoId}`;
+                            }
+                        } else if (videoUrl.includes('vimeo.com')) {
+                            const match = videoUrl.match(/vimeo\.com\/(\d+)/);
+                            if (match) {
+                                embedUrl = `https://player.vimeo.com/video/${match[1]}`;
+                            }
+                        }
+                        
+                        if (embedUrl) {
+                            videoFrame.src = embedUrl;
+                            videoPreviewSection.style.display = 'block';
+                        }
+                    } else {
+                        videoPreviewSection.style.display = 'none';
+                    }
+                });
+            }
 
             // Cover image upload
             const coverPreview = document.getElementById('coverPreview');

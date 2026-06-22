@@ -1,0 +1,254 @@
+════════════════════════════════════════════════════════════════════════════════
+EXHIBITION #54 "CHEVAL BLANC" - ACTION PLAN
+════════════════════════════════════════════════════════════════════════════════
+
+CURRENT STATE:
+───────────────────────────────────────────────────────────────────────────────
+
+Exhibition ID: 54
+Title: "Cheval Blanc"
+Status: Created ✓
+Database Fields:
+  - title_en: ✓ "Cheval Blanc"
+  - description_en: ✓ "A luxury hospitality event..."
+  - location: ✓ "Hall 1"
+  - exhibition_date: ✓ "2026-03-02"
+  - cover_image: ✓ "assest/blog-uploads/blog-1777620984-69f457f8925ce.webp"
+  - event_video: ✗ NULL (MISSING)
+  - gallery_images: ✗ NULL (MISSING)
+
+
+OBJECTIVE:
+───────────────────────────────────────────────────────────────────────────────
+
+✓ Add video URL to exhibition
+✓ (Optional) Add gallery images
+✓ Verify video displays on event page
+
+
+STEP-BY-STEP INSTRUCTIONS:
+───────────────────────────────────────────────────────────────────────────────
+
+STEP 1: Navigate to Admin Panel
+───────────────────────────
+Browser URL: http://localhost/admin/exhibitions.html
+
+You should see a list of exhibitions
+
+
+STEP 2: Find Exhibition #54
+───────────────────────────
+Look for "Cheval Blanc" in the list
+
+Click the EDIT button (pencil icon / Edit link)
+
+
+STEP 3: Edit Form Opens
+───────────────────────────
+The form will load with all current data:
+  - Title: "Cheval Blanc"
+  - Description: "A luxury hospitality event..."
+  - Location: "Hall 1"
+  - Date: "2026-03-02"
+  - Time: "14:00" → "15:00"
+  - Video URL: (EMPTY) ← THIS IS WHERE WE ADD VIDEO
+
+
+STEP 4: Add Video URL
+───────────────────────────
+Scroll down to find section: "Event Video (Optional)"
+
+Look for input field: "Video URL"
+
+Click in the input field
+
+Paste your video URL:
+  Examples:
+  - https://www.youtube.com/watch?v=dQw4w9WgXcQ
+  - https://vimeo.com/123456789
+  - https://youtu.be/VIDEO_ID
+
+
+STEP 5: (Optional) Add Gallery Images
+───────────────────────────────────────
+Scroll down to: "Gallery Images (Optional)"
+
+Click: "Upload Additional Images"
+
+Select 2-5 images from your computer
+
+Preview will show thumbnail previews
+
+
+STEP 6: Save Changes
+───────────────────────────
+Scroll to bottom of form
+
+Click button: "Update Exhibition"
+
+Button text will change to "⏳ Updating..."
+
+Wait for response...
+
+
+STEP 7: Success Message
+───────────────────────────
+You should see: "✓ Exhibition updated!"
+
+Page will automatically redirect to exhibitions list
+
+Check that "Cheval Blanc" still appears in list ✓
+
+
+STEP 8: Verify Video Displays
+───────────────────────────────
+Open browser: http://localhost/spaces.php
+
+Scroll down to section: "Past Events"
+
+Find card: "Chavel Blanc"
+
+Click on the card
+
+Event detail page should open
+
+Look for section: "Event Video"
+
+Video should be embedded and playable ✓
+
+
+VERIFICATION CHECKLIST:
+───────────────────────────────────────────────────────────────────────────────
+
+Admin Form:
+  ☐ Can open edit form for exhibition #54
+  ☐ Video URL field is visible and empty
+  ☐ Can type/paste video URL
+  ☐ Can click Update button
+  ☐ See "✓ Exhibition updated!" message
+
+Database:
+  ☐ Video URL saved in exhibitions.event_video column
+  ☐ Can see in database:
+    SELECT event_video FROM exhibitions WHERE id = 54;
+
+API Response:
+  ☐ Open event page → F12 → Network → get_event_details.php
+  ☐ Response contains: "video_url": "https://..."
+  ☐ Response contains: "event_video": "https://..."
+
+Frontend Display:
+  ☐ Go to /spaces.php
+  ☐ Click Chavel Blanc
+  ☐ See "Event Video" section
+  ☐ Video is embedded
+  ☐ Video plays ✓
+
+
+WHAT HAPPENS IN BACKGROUND:
+───────────────────────────────────────────────────────────────────────────────
+
+1. Admin → adds video URL → saves form
+
+2. JavaScript calls: api/edit_exhibition.php
+   POST data: { id: 54, event_video: "https://..." }
+
+3. API updates database:
+   UPDATE exhibitions SET event_video = "..." WHERE id = 54
+
+4. Database stores URL in event_video column
+
+5. User goes to spaces.php
+
+6. spaces.php loads exhibitions from api/get_exhibitions.php
+
+7. User clicks exhibition
+
+8. Redirects to: event.php?title=cheval-blanc
+
+9. event.php calls: api/get_event_details.php?title=cheval-blanc
+
+10. API finds exhibition in exhibitions table
+    Returns: video_url AND event_video fields
+
+11. event.php checks: const videoUrl = event.video_url || event.event_video
+
+12. videoUrl = "https://..."
+
+13. Calls: displayVideo(videoUrl)
+
+14. displayVideo parses URL and creates iframe
+
+15. Video embeds in page ✓
+
+
+IF SOMETHING DOESN'T WORK:
+───────────────────────────────────────────────────────────────────────────────
+
+Video URL shows empty in admin form:
+  → Browser cache issue
+  → Solution: Hard refresh (Ctrl+F5 or Cmd+Shift+R)
+
+Save button doesn't work:
+  → Missing required field (Title, Date, Location)
+  → Solution: Verify all required fields have values
+
+Video doesn't show on event page:
+  → Check browser console (F12)
+  → Look for error messages
+  → Check Network tab for API response
+  → Verify database has URL saved
+
+Video shows but doesn't play:
+  → Video URL might be invalid
+  → Solution: Verify URL is correct YouTube/Vimeo link
+  → Try with different video URL
+
+Gallery images not showing:
+  → Same as video - use same troubleshooting steps
+
+
+SUCCESS INDICATORS:
+───────────────────────────────────────────────────────────────────────────────
+
+✓ Exhibition edits successfully
+✓ Video URL saved in admin form
+✓ Video appears on event page
+✓ Video plays in browser
+✓ Works in both English & Arabic
+✓ Mobile view works
+
+
+SYSTEM COMPONENTS:
+───────────────────────────────────────────────────────────────────────────────
+
+Database:
+  Table: exhibitions
+  Column: event_video (stores URL)
+  Status: ✓ Ready
+
+Admin:
+  Form: edit-exhibition.html
+  Field: "Event Video (Optional)"
+  Status: ✓ Ready
+
+API:
+  Endpoints: edit_exhibition.php, get_event_details.php
+  Status: ✓ Ready
+
+Frontend:
+  Files: spaces.php, event.php
+  Functions: displayVideo()
+  Status: ✓ Ready
+
+
+DONE!
+───────────────────────────────────────────────────────────────────────────────
+
+Exhibition #54 is configured and ready to display video.
+
+Time to complete: 2-3 minutes
+
+Result: Video displays on event page for all users ✓
+
+════════════════════════════════════════════════════════════════════════════════

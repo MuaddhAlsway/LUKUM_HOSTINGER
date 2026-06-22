@@ -1,0 +1,75 @@
+════════════════════════════════════════════════════════════════════════════════
+QUICK: ADD VIDEO TO EXHIBITION #54 (Cheval Blanc)
+════════════════════════════════════════════════════════════════════════════════
+
+WHAT TO DO:
+───────────────────────────────────────────────────────────────────────────────
+
+1. Go to: /admin/exhibitions.html
+
+2. Find: "Cheval Blanc" in the list
+
+3. Click: Edit button (pencil icon)
+
+4. Scroll down to: "Event Video (Optional)"
+
+5. Paste your video URL:
+   ├─ YouTube: https://www.youtube.com/watch?v=VIDEO_ID
+   ├─ Vimeo: https://vimeo.com/VIDEO_ID
+   └─ Or: Any other video URL
+
+6. Click: "Update Exhibition"
+
+7. Done! ✓
+
+
+VERIFY IT WORKED:
+───────────────────────────────────────────────────────────────────────────────
+
+1. Go to: /spaces.php
+
+2. Scroll to: "Past Events" section
+
+3. Click: "Cheval Blanc" exhibition
+
+4. Look for: "Event Video" section
+
+5. Video should be playing ✓
+
+
+IF VIDEO DOESN'T SHOW:
+───────────────────────────────────────────────────────────────────────────────
+
+1. Check database:
+   SELECT id, title_en, event_video FROM exhibitions WHERE id = 54;
+   
+   Should show:
+   id=54, title_en="Cheval Blanc", event_video="https://..."
+
+2. Check API response:
+   Go to event page → F12 → Network → get_event_details.php
+   
+   Should have: "video_url": "https://..."
+
+3. Check browser console:
+   F12 → Console
+   
+   Look for: "Video URL found, calling displayVideo"
+   If error: Report the error message
+
+
+SYSTEM WORKING:
+───────────────────────────────────────────────────────────────────────────────
+
+✅ Database: Stores video in exhibitions.event_video column
+✅ API: Returns video_url field when loading exhibition
+✅ Frontend: Displays video on event page
+✅ Both languages: Works in English and Arabic
+
+
+IT'S SIMPLE:
+───────────────────────────────────────────────────────────────────────────────
+
+Admin → Edit Exhibition → Paste URL → Save → Video displays on event page
+
+════════════════════════════════════════════════════════════════════════════════
