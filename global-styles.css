@@ -1489,7 +1489,7 @@ body {
     .lakum-exhibition-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
     
     /* Reduce event card height */
-    .lakum-event-card { height: 485.56px; }
+    .lakum-event-card { height: auto; }
     .lakum-event-card__image { height: 320px; }
     
     /* Optimize CTA sections */
