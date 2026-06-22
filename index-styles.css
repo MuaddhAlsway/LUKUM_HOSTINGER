@@ -136,7 +136,8 @@
 .lakum-featured-banner {
     padding: 0;
     background: #edecdf;
-    width: 100%;
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
     margin: 0;
     contain: layout style paint;
 }
@@ -146,8 +147,7 @@
     grid-template-columns: 1fr 1fr;
     gap: 0;
     align-items: stretch;
-    width: 100vw;
-    margin-left: calc(-50vw + 50%);
+    width: 100%;
 }
 
 .lakum-featured-banner__image {
