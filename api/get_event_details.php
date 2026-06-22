@@ -56,7 +56,7 @@ try {
         $columnResult = $db->getConnection()->query($columnCheckQuery);
         $slugColumnExists = $columnResult && $columnResult->num_rows > 0;
         
-        error_log("DEBUG: Slug column exists: " . ($slugColumnExists ? 'yes' : 'no'));
+        error_log("DEBUG: Slug column exists in events: " . ($slugColumnExists ? 'yes' : 'no'));
         
         if ($slugColumnExists) {
             // Query slug from events table (language-independent)
@@ -70,8 +70,8 @@ try {
                         $eventId = (int)$row['id'];
                         error_log("DEBUG: Found event ID: $eventId for slug: $slugParam");
                     } else {
-                        error_log("DEBUG: No event found for slug: $slugParam");
-                        // Try case-insensitive search
+                        error_log("DEBUG: No event found for slug: $slugParam in events table");
+                        // Try case-insensitive search in events
                         $slugQuery2 = 'SELECT id FROM events WHERE LOWER(slug) = LOWER(?) LIMIT 1';
                         $stmt2 = $db->prepare($slugQuery2);
                         if ($stmt2) {
@@ -106,6 +106,28 @@ try {
                 }
             }
         }
+        
+        // If not found in events table, try exhibitions table by title_en
+        if ($eventId === null) {
+            error_log("DEBUG: Event not found in events table, trying exhibitions table with slug: $slugParam");
+            
+            $exhibitionTitleQuery = '
+                SELECT id FROM exhibitions 
+                WHERE LOWER(REPLACE(REPLACE(REPLACE(title_en, " ", "-"), ".", ""), ",", "")) = ?
+                LIMIT 1
+            ';
+            $exhibitionStmt = $db->prepare($exhibitionTitleQuery);
+            if ($exhibitionStmt) {
+                $exhibitionStmt->bind_param('s', $slugParam);
+                if ($exhibitionStmt->execute()) {
+                    $exhibitionResult = $exhibitionStmt->get_result();
+                    if ($exhibitionRow = $exhibitionResult->fetch_assoc()) {
+                        $eventId = (int)$exhibitionRow['id'];
+                        error_log("DEBUG: Found exhibition ID: $eventId for slug: $slugParam");
+                    }
+                }
+            }
+        }
     }
     
     // If no event found by slug, throw error instead of defaulting to 1
@@ -113,7 +135,7 @@ try {
         if ($isNumeric) {
             $eventId = (int)$eventIdParam;
         } else {
-            throw new Exception("Event not found with slug: $eventIdParam");
+            throw new Exception("Event/Exhibition not found with slug: $eventIdParam");
         }
     }
     
@@ -137,7 +159,8 @@ try {
             COALESCE(e.location_en, "") as location_en,
             COALESCE(e.title_ar, "") as title_ar,
             COALESCE(e.description_ar, "") as description_ar,
-            COALESCE(e.location_ar, "") as location_ar
+            COALESCE(e.location_ar, "") as location_ar,
+            NULL as event_video
         FROM events e
         WHERE e.id = ?
         LIMIT 1
@@ -156,37 +179,104 @@ try {
     $result = $stmt->get_result();
     $event = $result->fetch_assoc();
     
+    // If not found in events table, try exhibitions table
     if (!$event) {
-        throw new Exception('Event not found with ID: ' . $eventId);
+        error_log("DEBUG: Event not found in events table, trying exhibitions table with ID: $eventId");
+        
+        $exhibitionQuery = '
+            SELECT 
+                ex.id,
+                ex.exhibition_date as event_date,
+                ex.exhibition_time as event_time,
+                ex.exhibition_end_time as event_end_time,
+                ex.end_date,
+                ex.cover_image,
+                ex.event_video as video_url,
+                ex.event_video,
+                ex.gallery_images,
+                "exhibition" as category,
+                COALESCE(ex.title_en, ex.title) as title,
+                COALESCE(ex.description_en, ex.description) as description,
+                COALESCE(ex.location_en, ex.location) as location,
+                COALESCE(ex.title_en, "") as title_en,
+                COALESCE(ex.description_en, "") as description_en,
+                COALESCE(ex.location_en, "") as location_en,
+                COALESCE(ex.title_ar, "") as title_ar,
+                COALESCE(ex.description_ar, "") as description_ar,
+                COALESCE(ex.location_ar, "") as location_ar
+            FROM exhibitions ex
+            WHERE ex.id = ?
+            LIMIT 1
+        ';
+        
+        $exhibitionStmt = $db->prepare($exhibitionQuery);
+        if ($exhibitionStmt) {
+            $exhibitionStmt->bind_param('i', $eventId);
+            if ($exhibitionStmt->execute()) {
+                $exhibitionResult = $exhibitionStmt->get_result();
+                $event = $exhibitionResult->fetch_assoc();
+                
+                if ($event) {
+                    error_log("DEBUG: Found exhibition with ID: $eventId");
+                }
+            }
+        }
     }
     
-    // Get gallery images for this event
-    $galleryQuery = 'SELECT id, event_id, image_url FROM event_gallery WHERE event_id = ? ORDER BY display_order ASC';
-    $galleryStmt = $db->prepare($galleryQuery);
-    
-    if (!$galleryStmt) {
-        throw new Exception('Prepare gallery failed: ' . $db->getConnection()->error);
+    if (!$event) {
+        throw new Exception('Event/Exhibition not found with ID: ' . $eventId);
     }
     
-    $galleryStmt->bind_param('i', $eventId);
-    if (!$galleryStmt->execute()) {
-        throw new Exception('Execute gallery failed: ' . $galleryStmt->error);
-    }
-    
-    $galleryResult = $galleryStmt->get_result();
+    // Get gallery images - handle both events (event_gallery table) and exhibitions (gallery_images JSON)
     $gallery = [];
     
-    while ($row = $galleryResult->fetch_assoc()) {
-        $gallery[] = $row;
+    // First, check if this is an exhibition (has gallery_images JSON field)
+    if (isset($event['category']) && $event['category'] === 'exhibition' && isset($event['gallery_images']) && !empty($event['gallery_images'])) {
+        // Parse JSON gallery images from exhibitions table
+        try {
+            $galleryImages = json_decode($event['gallery_images'], true);
+            if (is_array($galleryImages)) {
+                foreach ($galleryImages as $imagePath) {
+                    $gallery[] = [
+                        'id' => 0,
+                        'event_id' => $eventId,
+                        'image_url' => $imagePath
+                    ];
+                }
+                error_log("DEBUG: Loaded " . count($gallery) . " gallery images from exhibition gallery_images JSON");
+            }
+        } catch (Exception $e) {
+            error_log("DEBUG: Error parsing gallery_images JSON: " . $e->getMessage());
+        }
     }
     
-    // If no gallery images, use cover image as fallback
+    // If no gallery from JSON, try event_gallery table (for events and exhibitions without JSON gallery)
+    if (empty($gallery)) {
+        $galleryQuery = 'SELECT id, event_id, image_url FROM event_gallery WHERE event_id = ? ORDER BY display_order ASC';
+        $galleryStmt = $db->prepare($galleryQuery);
+        
+        if ($galleryStmt) {
+            $galleryStmt->bind_param('i', $eventId);
+            if ($galleryStmt->execute()) {
+                $galleryResult = $galleryStmt->get_result();
+                while ($row = $galleryResult->fetch_assoc()) {
+                    $gallery[] = $row;
+                }
+                if (!empty($gallery)) {
+                    error_log("DEBUG: Loaded " . count($gallery) . " gallery images from event_gallery table");
+                }
+            }
+        }
+    }
+    
+    // If no gallery images from JSON or table, use cover image as fallback
     if (empty($gallery) && $event['cover_image']) {
         $gallery[] = [
             'id' => 0,
             'event_id' => $eventId,
             'image_url' => $event['cover_image']
         ];
+        error_log("DEBUG: Using cover image as fallback gallery");
     }
     
     echo json_encode([

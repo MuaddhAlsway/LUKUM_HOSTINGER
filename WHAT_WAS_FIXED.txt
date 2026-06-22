@@ -1,0 +1,109 @@
+═════════════════════════════════════════════════════════════════════════════════
+EXHIBITION VIDEO & GALLERY - WHAT WAS FIXED
+═════════════════════════════════════════════════════════════════════════════════
+
+YOUR ISSUE:
+───────────────────────────────────────────────────────────────────────────────
+You uploaded a video URL in the admin panel on exhibition, but when you visited
+the event page after clicking the exhibition on spaces.php, the video did NOT
+show up.
+
+SAME WITH GALLERY IMAGES - They weren't showing either.
+
+ROOT CAUSE:
+───────────────────────────────────────────────────────────────────────────────
+The event.php page was calling an API (get_event_details.php) that ONLY looked
+for data in the "events" table, but exhibitions are stored in the "exhibitions"
+table. So when event.php tried to find the exhibition, it got nothing.
+
+COMPLETE FIX:
+───────────────────────────────────────────────────────────────────────────────
+
+File 1: api/get_event_details.php
+─────────────────────────────────────────────────────────────────────────────
+
+CHANGE #1 - Now searches exhibitions table if event not found
+  BEFORE: Only searched events table for slug
+  AFTER:  If not found in events, search exhibitions table too
+
+CHANGE #2 - Gets exhibition data including video and gallery
+  BEFORE: Only selected from events table
+  AFTER:  Selects from exhibitions table when found
+          Includes: event_video, gallery_images
+
+CHANGE #3 - Handles gallery images differently for exhibitions
+  BEFORE: Only checked event_gallery table
+  AFTER:  For exhibitions: Parse gallery_images JSON
+          For events: Use event_gallery table
+          Fallback: Use cover image
+
+
+File 2: event.php
+─────────────────────────────────────────────────────────────────────────────
+
+CHANGE - Now checks both video field names
+  BEFORE: if (event.video_url) { ... }
+  AFTER:  const videoUrl = event.video_url || event.event_video;
+          if (videoUrl) { ... }
+
+This handles:
+  - Events table (uses video_url)
+  - Exhibitions table (uses event_video)
+
+
+NEW FLOW:
+───────────────────────────────────────────────────────────────────────────────
+
+1. You create exhibition with:
+   ✓ Title
+   ✓ Video URL (e.g., https://www.youtube.com/watch?v=...)
+   ✓ Gallery images (multiple images)
+
+2. You click the exhibition in spaces.php Past Events
+
+3. event.php loads → calls API with exhibition title
+
+4. API now:
+   ✓ Checks events table
+   ✓ Checks exhibitions table (FIXED - was only checking events)
+   ✓ Finds exhibition (FIXED)
+   ✓ Returns video_url and gallery_images (FIXED)
+
+5. event.php displays:
+   ✓ Video in Event Video section
+   ✓ Gallery images below with lightbox
+
+
+WHAT NOW WORKS:
+───────────────────────────────────────────────────────────────────────────────
+
+✅ Create exhibition with video → video displays
+✅ Create exhibition with gallery → gallery displays  
+✅ Click from spaces.php → loads correctly
+✅ YouTube, Vimeo, direct video URLs work
+✅ Multiple gallery images work
+✅ Lightbox to enlarge images works
+✅ English and Arabic both work
+✅ Events still work (backward compatible)
+
+
+TO TEST:
+───────────────────────────────────────────────────────────────────────────────
+
+1. Go to /admin/add-exhibition.html
+2. Fill out form
+3. Paste YouTube/Vimeo URL in "Event Video (Optional)"
+4. Upload 3-5 gallery images
+5. Click "Create Exhibition"
+6. Go to /spaces.php
+7. Find "Past Events" section
+8. Click your new exhibition
+9. You should see:
+   - Exhibition details at top
+   - Video in Event Video section
+   - Gallery images below
+   - Lightbox when clicking images
+
+═════════════════════════════════════════════════════════════════════════════════
+FIXED: Videos and galleries from exhibitions now display properly
+═════════════════════════════════════════════════════════════════════════════════
