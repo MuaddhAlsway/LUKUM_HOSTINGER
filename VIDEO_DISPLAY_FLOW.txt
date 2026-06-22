@@ -1,0 +1,234 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║              VIDEO DISPLAY FLOW - Complete Architecture                    ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+FLOW 1: SAVING VIDEO TO DATABASE
+═════════════════════════════════
+
+Admin Panel: add-exhibition.html
+    ↓ User enters video URL
+    ↓ Form submission on line ~425
+    ↓ Captures: document.getElementById('event_video').value
+    ↓ Creates JSON: { event_video: "https://youtu.be/...", ... }
+    ↓ Sends POST to ../api/add_exhibition.php
+    │
+    ├─→ api/add_exhibition.php
+    │   ├─ Receives JSON with event_video parameter
+    │   ├─ Validates input
+    │   ├─ Inserts into exhibitions table
+    │   │   SQL: INSERT INTO exhibitions (..., event_video, ...)
+    │   │   Values: (..., "https://youtu.be/...", ...)
+    │   ├─ Returns success response
+    │   └─ Video NOW SAVED IN DATABASE ✅
+    │
+    ↓ User sees success message
+    ↓ Redirected to exhibitions.html
+
+STATUS: Video is now in exhibitions.event_video column
+
+
+FLOW 2: DISPLAYING EXHIBITIONS ON SPACES PAGE
+═══════════════════════════════════════════════
+
+User visits: spaces.php
+    ↓ Page loads, JavaScript initializes
+    ↓ loadPastEvents() function called (line ~842)
+    ↓ Fetches: api/get_exhibitions.php?type=all&limit=1000
+    │
+    ├─→ api/get_exhibitions.php
+    │   ├─ Query: SELECT * FROM exhibitions ORDER BY exhibition_date DESC
+    │   ├─ Returns: All exhibitions with ALL columns (including event_video)
+    │   └─ Response: { success: true, data: [{id:54, title_en:"...", event_video:"https://youtu.be/...", ...}, ...] }
+    │
+    ↓ JavaScript receives exhibition data
+    ↓ Filters for past exhibitions only
+    ↓ Creates carousel slides for each exhibition
+    ↓ For each slide, creates link to: event.php?title=SLUG&lang=en
+    ↓ Carousel displays on page
+    
+STATUS: Exhibitions listed but event_video field NOT used for display (carousel only shows title/image)
+
+
+FLOW 3: CLICKING EXHIBITION → EVENT DETAIL PAGE
+════════════════════════════════════════════════
+
+User clicks: Exhibition slide in carousel
+    ↓ Link: event.php?title=exhibition-slug&lang=en
+    ↓ Page navigates to: event.php
+    ↓ event.php loads
+    ↓ JavaScript: loadEventData() function called (line ~283)
+    ↓ Gets URL params: title="exhibition-slug", lang="en"
+    │
+    ├─→ Determines if title is numeric ID or text slug
+    │   Since title is "exhibition-slug" (text), uses:
+    │   API URL = /api/get_event_details.php?title=exhibition-slug&lang=en
+    │
+    ├─→ api/get_event_details.php receives title parameter
+    │   ├─ Looks up exhibition by slug/title
+    │   ├─ Query (for exhibitions): SELECT ... event_video ... FROM exhibitions WHERE id=?
+    │   │   Fields returned:
+    │   │   - event_video (direct column name)
+    │   │   - video_url (alias: ex.event_video as video_url)
+    │   │   - Plus all other fields
+    │   ├─ Fetches gallery images
+    │   └─ Returns: { success: true, event: {..., event_video: "https://youtu.be/...", video_url: "https://youtu.be/...", ...}, gallery: [...] }
+    │
+    ↓ JavaScript receives API response
+    ↓ displayEvent() function called with event object (line ~402)
+    ↓ displayEvent checks for video URLs (line ~436):
+    │   const videoUrl = event.video_url || event.event_video;
+    │
+    ├─→ IF videoUrl exists:
+    │   ├─ Calls: displayVideo(videoUrl)
+    │   ├─ displayVideo() function processes URL (line ~461):
+    │   │   1. Gets videoSection element: document.getElementById('videoSection')
+    │   │   2. Gets videoFrame element: document.getElementById('event-video')
+    │   │   3. Parses URL (YouTube or Vimeo format)
+    │   │   4. Extracts video ID
+    │   │   5. Generates embed URL: https://www.youtube.com/embed/VIDEO_ID
+    │   │   6. Sets iframe src: videoFrame.src = embedUrl
+    │   │   7. Adds active class: videoSection.classList.add('active')
+    │   └─ CSS rule triggers: .event-section--video.active { display: block !important; }
+    │
+    ├─→ Video section becomes visible ✅
+    └─→ Video plays in embedded iframe ✅
+
+STATUS: Video should be displaying on event page
+
+
+═════════════════════════════════════════════════════════════════════════════
+
+TECHNICAL DETAILS BY FILE
+
+event.php (Main Page)
+━━━━━━━━━━━━━━━━━━━━━
+- HTML: Video section with id="videoSection" and id="event-video" iframe
+- Default: style="display: none;" (hidden by default)
+- CSS: event-detail.css adds .active class to show
+- JavaScript: Calls displayVideo() when video URL detected
+- Logging: Enhanced console.log statements for debugging
+
+api/get_event_details.php (API Endpoint)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+- Accepts: ?id=NUM or ?title=SLUG
+- Returns: Complete event object with all fields
+- For exhibitions: Includes both event_video and video_url fields
+- Response: JSON with event, gallery, source, language
+
+event-detail.css (Styling)
+━━━━━━━━━━━━━━━━━━━━━━━
+- Default: .event-section--video { display: none; }
+- When active: .event-section--video.active { display: block !important; }
+- Padding and background styling
+
+exhibitions table (Database)
+━━━━━━━━━━━━━━━━━━━━━━━━━
+- Column: event_video (VARCHAR 500)
+- Stores: Full video URL (e.g., https://www.youtube.com/watch?v=...)
+- Can be: NULL or filled with URL
+
+
+═════════════════════════════════════════════════════════════════════════════
+
+REQUIRED CONDITIONS FOR VIDEO TO DISPLAY
+
+✅ Exhibition has event_video field filled (not NULL)
+✅ Exhibition date is in the PAST (exhibitions require past dates)
+✅ Video URL format is valid (YouTube or Vimeo)
+✅ Video URL is publicly accessible
+✅ api/get_event_details.php returns event_video field
+✅ event.php receives video URL in event object
+✅ displayVideo() function is called with valid URL
+✅ displayVideo() successfully parses URL and generates embed URL
+✅ displayVideo() successfully adds 'active' class
+✅ event-detail.css is loaded and .active rule is applied
+✅ Browser allows iframe rendering (no CSP violations)
+
+
+═════════════════════════════════════════════════════════════════════════════
+
+DEBUGGING APPROACH
+
+1. Check Console Logs (F12)
+   Look for "=== VIDEO URL CHECK ===" and "=== displayVideo DEBUG ===" sections
+
+2. Verify Database
+   SELECT event_video FROM exhibitions WHERE id=54;
+
+3. Check API Response
+   Visit: /api/get_event_details.php?id=54&lang=en
+   Look for: "event_video" field in response
+
+4. Check CSS
+   Open Inspector (F12), click on video section
+   Look for: "active" class in classList
+   Look for: computed display style = "block"
+
+5. Check Iframe
+   Open Inspector (F12), click on iframe element
+   Look for: src attribute with embed URL
+   Check: https://www.youtube.com/embed/VIDEO_ID
+
+
+═════════════════════════════════════════════════════════════════════════════
+
+EXPECTED CONSOLE OUTPUT (When Working Correctly)
+
+Loading event with title/ID: exhibition-slug Language: en
+Fetching from: /api/get_event_details.php?title=exhibition-slug&lang=en
+API Response: {success: true, event: {...}}
+=== displayEvent called ===
+Event object: {id: 54, ...}
+Event video_url: null
+Event event_video: "https://www.youtube.com/watch?v=..."
+=== VIDEO URL CHECK ===
+video_url: null
+event_video: "https://www.youtube.com/watch?v=JH3zXmuFARw"
+Final videoUrl: "https://www.youtube.com/watch?v=JH3zXmuFARw"
+Video URL found, calling displayVideo with: https://www.youtube.com/watch?v=JH3zXmuFARw
+=== displayVideo DEBUG ===
+videoUrl: https://www.youtube.com/watch?v=JH3zXmuFARw
+videoSection element: <section class="event-section event-section--video">
+videoFrame element: <iframe id="event-video">
+Generated YouTube embed URL: https://www.youtube.com/embed/JH3zXmuFARw?autoplay=0&controls=1
+BEFORE adding active class - classList: ["event-section", "event-section--video"]
+AFTER adding active class - classList: ["event-section", "event-section--video", "active"]
+Video section display style: block
+Video section displayed
+=== displayVideo END ===
+
+
+═════════════════════════════════════════════════════════════════════════════
+
+KEY VARIABLES & THEIR MEANING
+
+videoUrl = event.video_url || event.event_video
+    → The video URL extracted from API response
+    → Should be: "https://www.youtube.com/watch?v=..." OR null
+
+embedUrl = "https://www.youtube.com/embed/VIDEO_ID"
+    → The processed URL used in iframe src
+    → YouTube URLs converted to embed format
+
+videoId = "JH3zXmuFARw"
+    → The extracted video identifier
+    → Used to construct embed URL
+
+videoSection.classList.contains('active')
+    → Determines if video section is shown
+    → Should be: true (when video exists)
+
+videoFrame.src
+    → The iframe src attribute value
+    → Should be: "https://www.youtube.com/embed/VIDEO_ID..."
+
+
+═════════════════════════════════════════════════════════════════════════════
+
+NEXT STEPS
+
+1. Add comprehensive logging (DONE ✅ in event.php)
+2. Test by visiting past exhibition page
+3. Open DevTools Console (F12)
+4. Review logs to identify where display breaks
+5. Fix issue based on log output

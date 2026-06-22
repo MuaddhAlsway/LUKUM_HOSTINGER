@@ -1,0 +1,219 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║            IMMEDIATE ACTION: Debug Why Video Not Showing                    ║
+║                    Step-by-Step Instructions                               ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+YOUR EXACT SITUATION:
+→ Video URL IS being saved to database (exhibitions.event_video)
+→ Video URL IS in the admin form
+→ Video IS NOT showing on event.php when clicking past exhibitions
+
+ACTION STEPS (Do These Now)
+
+STEP 1: Verify Video is Actually in Database
+═══════════════════════════════════════════════
+
+If you have phpMyAdmin or database access:
+
+1. Connect to database: u812122863_lakum_artspace
+2. Run this query:
+   SELECT id, title_en, event_video FROM exhibitions WHERE event_video IS NOT NULL ORDER BY id DESC LIMIT 5;
+
+3. You should see:
+   ┌─────┬──────────────────┬─────────────────────────────────────────┐
+   │ id  │ title_en         │ event_video                             │
+   ├─────┼──────────────────┼─────────────────────────────────────────┤
+   │ 54  │ Cheval Blanc     │ https://www.youtube.com/watch?v=...     │
+   │ ... │ ...              │ ...                                     │
+   └─────┴──────────────────┴─────────────────────────────────────────┘
+
+If EMPTY: Videos not being saved → Need to fix admin form saving
+If HAS DATA: Continue to STEP 2
+
+
+STEP 2: Test API Directly
+═════════════════════════
+
+Without opening browser:
+
+1. Visit in browser: https://yourdomain.com/api/get_event_details.php?id=54&lang=en
+2. You'll see JSON response with all exhibition details
+3. LOOK FOR THESE FIELDS IN THE RESPONSE:
+   
+   Expected to see:
+   {
+     "success": true,
+     "event": {
+       "id": 54,
+       "event_video": "https://www.youtube.com/...",
+       "video_url": "https://www.youtube.com/...",
+       ...
+     }
+   }
+
+4. Check if "event_video" field is present and has a URL
+
+If MISSING: API not returning field → Need to check get_event_details.php
+If PRESENT: Continue to STEP 3
+
+
+STEP 3: Check Browser Console on Event Page
+════════════════════════════════════════════
+
+1. Open browser
+2. Go to Spaces page: https://yourdomain.com/spaces.php
+3. Click on a past exhibition (like "Cheval Blanc" with video)
+4. Press F12 on keyboard (Opens DevTools)
+5. Click "Console" tab at top
+6. Scroll through the console output
+7. Look for these exact lines:
+
+   SECTION A (Should see):
+   ┌─────────────────────────────────────────────────┐
+   │ === VIDEO URL CHECK ===                         │
+   │ event.video_url: null                           │
+   │ event.event_video: "https://youtu.be/..."       │
+   │ Final videoUrl: "https://youtu.be/..."          │
+   │ Video URL found, calling displayVideo...        │
+   └─────────────────────────────────────────────────┘
+
+   SECTION B (Should see):
+   ┌─────────────────────────────────────────────────┐
+   │ === displayVideo DEBUG ===                      │
+   │ videoUrl: https://youtu.be/...                  │
+   │ videoSection element: <section...>              │
+   │ videoFrame element: <iframe...>                 │
+   │ Generated YouTube embed URL: ...                │
+   │ Setting iframe src to: ...                      │
+   │ AFTER adding active class - classList:          │
+   │   ["event-section", "event-section--video",     │
+   │    "active"]                                    │
+   │ Video section display style: block              │
+   │ Video section displayed                         │
+   └─────────────────────────────────────────────────┘
+
+If you see BOTH sections → Everything is working! Look for video on page
+If you see Section A but NOT B → displayVideo() not being called
+If you see NEITHER section → Video URL not detected from API
+
+
+STEP 4: Based on Your Console Output
+════════════════════════════════════
+
+CASE 1: Both sections visible, but video not on page
+─────────────────────────────────────────────────
+ACTION:
+  1. Press F12 again to close DevTools
+  2. Look for "Event Video" section heading on page
+  3. If visible: Video should be below it
+  4. If NOT visible: CSS not working
+  
+TO FIX:
+  1. Open DevTools (F12)
+  2. Click Inspector/Elements tab
+  3. Press Ctrl+F and search: "videoSection"
+  4. Click on the result
+  5. Check if element has class "active" in <section> tag
+  6. Right side should show: event-section--video.active { display: block !important; }
+
+
+CASE 2: Only Section A visible, Section B NOT visible
+──────────────────────────────────────────────────────
+ACTION:
+  1. Check console for error messages (red X icons)
+  2. Look for: "Uncaught ReferenceError: displayVideo is not defined"
+  3. Look for: "Cannot read property 'classList' of null"
+
+TO FIX:
+  1. Check if event-detail.css is loading (Network tab)
+  2. Check if event.php file has displayVideo() function
+  3. Check for JavaScript errors elsewhere
+
+
+CASE 3: No "=== VIDEO URL CHECK ===" section at all
+────────────────────────────────────────────────────
+ACTION:
+  1. Check Network tab (F12 → Network)
+  2. Reload page
+  3. Look for: "get_event_details.php" request
+  4. Click on it, check Response tab
+  5. Look for "event_video" field
+
+TO FIX:
+  1. If field missing from API: edit get_event_details.php
+  2. If API call not made: check loadEventData() function
+  3. If API error: check database connection
+
+
+CASE 4: "event_video: null" in Section A
+─────────────────────────────────────────
+ACTION:
+  1. Check database directly (STEP 1)
+  2. If NULL in database: video wasn't saved
+  
+TO FIX IF DATABASE HAS NULL:
+  1. Edit exhibition in admin panel
+  2. Clear cache (Ctrl+Shift+Delete)
+  3. Add video URL again
+  4. Make sure field is not disabled
+  5. Check browser console while adding
+  6. Look for: "event_video value from form: https://..."
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+QUICK REFERENCE: Console Output Should Show Progress
+
+When everything works:
+✅ Page loads
+✅ You see: "=== VIDEO URL CHECK ===" with video_url
+✅ You see: "=== displayVideo DEBUG ===" 
+✅ You see: "AFTER adding active class - classList includes 'active'"
+✅ You see: "Video section display style: block"
+✅ Video appears on page
+✅ Video plays when clicked
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+DO THIS RIGHT NOW
+
+1. Open browser
+2. Go to Spaces: https://yourdomain.com/spaces.php
+3. Click on past exhibition with video
+4. Open DevTools: Press F12
+5. Click Console tab
+6. Scroll to find "=== VIDEO URL CHECK ===" section
+7. Take screenshot or note what you see
+8. Report findings:
+   - Do you see "VIDEO URL CHECK" section? YES / NO
+   - What does event_video show? (value or null?)
+   - Do you see "displayVideo DEBUG" section? YES / NO
+   - Is video visible on page? YES / NO
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+IF YOU'RE COMPLETELY STUCK
+
+Email/provide screenshot of:
+1. Browser console output (F12 → Console)
+2. Database query result (SELECT event_video FROM exhibitions WHERE id=54)
+3. API response (visit /api/get_event_details.php?id=54&lang=en)
+4. Screenshot of event page (showing if video section visible or not)
+
+This will help identify exactly what's broken.
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+FILES THAT HAVE BEEN UPDATED/CREATED:
+
+✅ event.php - Enhanced with detailed console logging
+✅ TASK17_VIDEO_DISPLAY_FIX.md - Complete fix explanation  
+✅ VIDEO_NOT_SHOWING_DEBUG.md - Debugging guide
+✅ VIDEO_DISPLAY_FLOW.txt - Visual flow diagram
+✅ IMMEDIATE_ACTION_VIDEO_DEBUG.txt - This file
+
+
+All documentation files will help you debug and fix this issue.

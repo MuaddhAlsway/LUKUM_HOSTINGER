@@ -433,6 +433,12 @@ if (!$title) {
             // Display video if available - Handle both field names (events table uses video_url, exhibitions table uses event_video)
             console.log('Checking for video_url...');
             const videoUrl = event.video_url || event.event_video;
+            console.log('=== VIDEO URL CHECK ===');
+            console.log('event.video_url:', event.video_url);
+            console.log('event.event_video:', event.event_video);
+            console.log('Final videoUrl:', videoUrl);
+            console.log('Complete event object:', JSON.stringify(event, null, 2));
+            
             if (videoUrl) {
                 console.log('Video URL found, calling displayVideo with:', videoUrl);
                 displayVideo(videoUrl);
@@ -468,6 +474,7 @@ if (!$title) {
             console.log('videoUrl length:', videoUrl ? videoUrl.length : 'null');
             console.log('videoSection element:', videoSection);
             console.log('videoFrame element:', videoFrame);
+            console.log('videoSection HTML:', videoSection ? videoSection.outerHTML.substring(0, 200) : 'NULL');
             
             if (!videoUrl || videoUrl.trim() === '') {
                 console.log('No video URL provided - hiding section');
@@ -524,10 +531,15 @@ if (!$title) {
                 if (videoFrame) {
                     videoFrame.src = embedUrl;
                     console.log('iframe src set successfully');
+                    console.log('iframe now has src:', videoFrame.src);
                 }
                 if (videoSection) {
+                    console.log('BEFORE adding active class - classList:', Array.from(videoSection.classList));
                     videoSection.classList.add('active');
-                    console.log('Video section active class added');
+                    console.log('AFTER adding active class - classList:', Array.from(videoSection.classList));
+                    console.log('Video section display style:', window.getComputedStyle(videoSection).display);
+                    console.log('Video section hidden attribute:', videoSection.hasAttribute('hidden'));
+                    console.log('Video section style attribute:', videoSection.getAttribute('style'));
                 }
                 console.log('Video section displayed');
             } else {
