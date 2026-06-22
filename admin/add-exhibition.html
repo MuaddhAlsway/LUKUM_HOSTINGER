@@ -95,7 +95,7 @@
             </header>
 
             <div class="modern-form-container">
-                <form enctype="multipart/form-data" id="exhibitionForm">
+                <form enctype="multipart/form-data" id="exhibitionForm" data-no-reset>
 
                     <!-- Cover Image Section -->
                     <div class="cover-upload-section">
@@ -422,12 +422,25 @@
                                         const exhibition_time = document.getElementById('exhibition_time').value || '10:00';
                                         const exhibition_end_time = document.getElementById('exhibition_end_time').value || '18:00';
                                         const end_date = document.getElementById('end_date').value || null;
-                                        const event_video = document.getElementById('event_video').value.trim() || null;
+                                        
+                                        // DEBUG: Get event_video with comprehensive logging
+                                        const eventVideoElement = document.getElementById('event_video');
+                                        console.log('=== VIDEO FIELD DEBUG ===');
+                                        console.log('Element found:', !!eventVideoElement);
+                                        if (eventVideoElement) {
+                                            console.log('Element type:', eventVideoElement.type);
+                                            console.log('Element name:', eventVideoElement.name);
+                                            console.log('Element value:', eventVideoElement.value);
+                                            console.log('Element placeholder:', eventVideoElement.placeholder);
+                                            console.log('Element disabled:', eventVideoElement.disabled);
+                                            console.log('Element readonly:', eventVideoElement.readOnly);
+                                        }
+                                        const event_video = eventVideoElement ? eventVideoElement.value.trim() || null : null;
+                                        console.log('Final event_video:', event_video);
                                         
                                         // DEBUG: Log video URL
                                         console.log('=== EXHIBITION FORM DEBUG ===');
                                         console.log('event_video value from form:', event_video);
-                                        console.log('event_video element:', document.getElementById('event_video'));
 
                                         if (!title_en) throw new Error('Exhibition title (English) is required');
                                         if (!exhibition_date) throw new Error('Exhibition date is required');
@@ -538,7 +551,10 @@
         </main>
     </div>
 
+    <script src="config.js"></script>
+    <script src="form-reset.js"></script>
     <script src="event-form.js"></script>
+    <script src="../assest/popup-notification.js?v=5.0.0" defer></script>
 </body>
 
 </html>

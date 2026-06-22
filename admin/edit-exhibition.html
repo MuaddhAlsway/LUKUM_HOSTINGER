@@ -95,7 +95,7 @@
             </header>
 
             <div class="modern-form-container">
-                <form method="POST" enctype="multipart/form-data" id="exhibitionForm">
+                <form method="POST" enctype="multipart/form-data" id="exhibitionForm" data-no-reset>
                     <input type="hidden" name="id" id="exhibitionId">
 
                     <!-- Cover Image Section -->
@@ -638,6 +638,15 @@
                         }
 
                         // Prepare update data
+                        const eventVideoElement = document.getElementById('event_video');
+                        console.log('=== VIDEO FIELD DEBUG (EDIT) ===');
+                        console.log('Element found:', !!eventVideoElement);
+                        if (eventVideoElement) {
+                            console.log('Element type:', eventVideoElement.type);
+                            console.log('Element value:', eventVideoElement.value);
+                            console.log('Element disabled:', eventVideoElement.disabled);
+                        }
+                        
                         const updateData = {
                             id: document.getElementById('exhibitionId').value,
                             title_en: document.getElementById('title_en').value.trim(),
@@ -650,13 +659,12 @@
                             exhibition_time: (document.getElementById('exhibition_time').value || '10:00') + ':00',
                             exhibition_end_time: (document.getElementById('exhibition_end_time').value || '18:00') + ':00',
                             end_date: document.getElementById('end_date').value || null,
-                            event_video: document.getElementById('event_video').value.trim() || null
+                            event_video: eventVideoElement ? eventVideoElement.value.trim() || null : null
                         };
                         
                         // DEBUG: Log video URL
                         console.log('=== EXHIBITION UPDATE DEBUG ===');
                         console.log('event_video value from form:', updateData.event_video);
-                        console.log('event_video element:', document.getElementById('event_video'));
 
                         if (coverImagePath) updateData.cover_image = coverImagePath;
                         if (galleryImages) updateData.gallery_images = galleryImages;
@@ -688,7 +696,10 @@
         }, { once: true }); // Only run ONCE!
     </script>
 
+    <script src="config.js"></script>
+    <script src="form-reset.js"></script>
     <script src="event-form.js"></script>
+    <script src="../assest/popup-notification.js?v=5.0.0" defer></script>
 </body>
 
 </html>
