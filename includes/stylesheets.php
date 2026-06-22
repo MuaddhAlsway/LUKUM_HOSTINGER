@@ -6,7 +6,7 @@
  */
 ?>
     <!-- Critical CSS - Inline for instant rendering -->
-    <link rel="stylesheet" href="critical-inline.css?v=2.1.0">
+    <link rel="stylesheet" href="critical-inline.css?v=2.5.0">
     
     <!-- Unified Header & Navigation Styles (MUST BE FIRST) -->
     <link rel="stylesheet" href="lakum-header-unified.css?v=2.3.0">
@@ -18,13 +18,13 @@
     <link rel="stylesheet" href="lakum-components.css?v=2.1.0">
     
     <!-- Index Page Specific Styles -->
-    <link rel="stylesheet" href="index-styles.css?v=1.0.0">
+    <link rel="stylesheet" href="index-styles.css?v=2.5.0">
     
     <!-- RTL Support -->
     <link rel="stylesheet" href="rtl.css?v=2.1.0">
     
     <!-- Global Styles (deferred) -->
-    <link rel="preload" href="global-styles.css?v=2.1.0" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="global-styles.css?v=2.5.0" as="style" onload="this.onload=null;this.rel='stylesheet'">
     
     <!-- FAB Button Styles (CRITICAL - must load immediately) -->
     <link rel="stylesheet" href="assest/fab-button.css?v=2.1.0">
