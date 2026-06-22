@@ -1,6 +1,6 @@
 /**
  * LAKUM ARTSPACE - Dropdown Navigation Handler
- * Simple click-based dropdown toggle
+ * Simple click-based dropdown toggle for mobile/tablet
  */
 
 (function() {
@@ -29,32 +29,45 @@
      * Attach event listeners
      */
     function attachEventListeners() {
-        // Toggle dropdown on click
+        // Toggle dropdown on click - CRITICAL: touchend for mobile, click for desktop
         dropdownToggles.forEach(toggle => {
+            // Handle both touch and click events
+            toggle.addEventListener('touchend', handleToggleClick);
             toggle.addEventListener('click', handleToggleClick);
+            
+            // Make sure it's clickable
+            toggle.style.pointerEvents = 'auto';
         });
 
         // Close dropdown when clicking link
         document.querySelectorAll('.lakum-nav__dropdown-link').forEach(link => {
+            link.addEventListener('touchend', handleDropdownLinkClick);
             link.addEventListener('click', handleDropdownLinkClick);
         });
 
         // Close dropdowns on outside click
         document.addEventListener('click', handleOutsideClick);
+        document.addEventListener('touchend', handleOutsideClick);
 
         // Close dropdowns on ESC key
         document.addEventListener('keydown', handleEscapeKey);
     }
 
     /**
-     * Handle dropdown toggle click
+     * Handle dropdown toggle click/touch
      */
     function handleToggleClick(event) {
         event.preventDefault();
         event.stopPropagation();
+        event.stopImmediatePropagation();
 
-        const dropdownItem = event.currentTarget.closest('.lakum-nav__item--dropdown');
-        if (!dropdownItem) return;
+        const toggle = event.currentTarget;
+        const dropdownItem = toggle.closest('.lakum-nav__item--dropdown');
+        
+        if (!dropdownItem) {
+            console.warn('⚠️ Could not find dropdown item parent');
+            return;
+        }
 
         const isActive = dropdownItem.classList.contains('active');
 
@@ -64,17 +77,17 @@
         // Toggle this dropdown
         if (!isActive) {
             dropdownItem.classList.add('active');
-            event.currentTarget.setAttribute('aria-expanded', 'true');
+            toggle.setAttribute('aria-expanded', 'true');
             console.log('✅ Dropdown opened');
         } else {
             dropdownItem.classList.remove('active');
-            event.currentTarget.setAttribute('aria-expanded', 'false');
+            toggle.setAttribute('aria-expanded', 'false');
             console.log('✅ Dropdown closed');
         }
     }
 
     /**
-     * Handle dropdown link click
+     * Handle dropdown link click/touch
      */
     function handleDropdownLinkClick(event) {
         // Prevent event from bubbling to parent nav item
@@ -101,7 +114,7 @@
     }
 
     /**
-     * Handle outside click
+     * Handle outside click/touch
      */
     function handleOutsideClick(event) {
         const clickedInsideDropdown = Array.from(dropdownItems).some(item => {

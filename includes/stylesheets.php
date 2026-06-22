@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="lakum-header-unified.css?v=2.3.0">
     
     <!-- Dropdown Navigation Styles -->
-    <link rel="stylesheet" href="lakum-header-dropdowns.css?v=4.1.0">
+    <link rel="stylesheet" href="lakum-header-dropdowns.css?v=5.0.0">
     
     <!-- Component Styles -->
     <link rel="stylesheet" href="lakum-components.css?v=2.1.0">

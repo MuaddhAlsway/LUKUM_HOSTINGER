@@ -358,4 +358,4 @@ $langParam = '?lang=' . $currentLang;
 <script src="js/lakum-header-init.js" defer></script>
 
 <!-- Dropdown Navigation Handler -->
-<script src="js/lakum-header-dropdowns.js" defer></script>
+<script src="js/lakum-header-dropdowns.js?v=2.0.0" defer></script>
