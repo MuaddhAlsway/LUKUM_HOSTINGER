@@ -7,7 +7,7 @@ if (file_exists('api/image-helper.php')) { require_once 'api/image-helper.php'; 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo t('press_page_title', 'Press & Media | LAKUM Artspace Coverage'); ?></title>
+    <title><?php echo t('press_page_title', 'Press & Media | Lakum Artspace Coverage'); ?></title>
     <link rel="icon" type="image/png" sizes="32x32" href="assest/logo/right_section.png">
     <link rel="icon" type="image/png" sizes="16x16" href="assest/logo/right_section.png">
     <link rel="apple-touch-icon" href="assest/logo/right_section.png">
@@ -55,10 +55,10 @@ if (file_exists('api/image-helper.php')) { require_once 'api/image-helper.php'; 
     <script src="assest/static-json-translator.js?v=1.0.0" defer></script>
 
 
-    <meta name="title" content="Press &amp; Media | LAKUM Artspace Coverage">
-    <meta name="description" content="LAKUM Artspace press coverage, media mentions, and news. Download press kit and view our latest media appearances and cultural impact in Riyadh.">
+    <meta name="title" content="Press &amp; Media | Lakum Artspace Coverage">
+    <meta name="description" content="Lakum Artspace press coverage, media mentions, and news. Download press kit and view our latest media appearances and cultural impact in Riyadh.">
     <meta name="keywords" content="art gallery Riyadh, cultural events Riyadh, art exhibitions Saudi Arabia, event space rental Riyadh, contemporary art gallery, cultural hub Riyadh, art workshops Riyadh, creative space Riyadh">
-    <meta name="author" content="LAKUM Artspace">
+    <meta name="author" content="Lakum Artspace">
     <meta name="language" content="<?php echo isArabic() ? "Arabic" : "English"; ?>">
     <meta name="robots" content="index, follow">
     <meta name="googlebot" content="index, follow">
@@ -73,18 +73,18 @@ if (file_exists('api/image-helper.php')) { require_once 'api/image-helper.php'; 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://lakumartspace.infinityfree.me/press">
-    <meta property="og:title" content="Press &amp; Media | LAKUM Artspace Coverage">
-    <meta property="og:description" content="LAKUM Artspace press coverage, media mentions, and news. Download press kit and view our latest media appearances and cultural impact in Riyadh.">
+    <meta property="og:title" content="Press &amp; Media | Lakum Artspace Coverage">
+    <meta property="og:description" content="Lakum Artspace press coverage, media mentions, and news. Download press kit and view our latest media appearances and cultural impact in Riyadh.">
     <meta property="og:image" content="https://lakumartspace.infinityfree.me/assest/img-4.webp">
-    <meta property="og:site_name" content="LAKUM Artspace">
+    <meta property="og:site_name" content="Lakum Artspace">
     <meta property="og:locale" content="en_US">
     <meta property="og:locale:alternate" content="ar_SA">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://lakumartspace.infinityfree.me/press">
-    <meta name="twitter:title" content="Press &amp; Media | LAKUM Artspace Coverage">
-    <meta name="twitter:description" content="LAKUM Artspace press coverage, media mentions, and news. Download press kit and view our latest media appearances and cultural impact in Riyadh.">
+    <meta name="twitter:title" content="Press &amp; Media | Lakum Artspace Coverage">
+    <meta name="twitter:description" content="Lakum Artspace press coverage, media mentions, and news. Download press kit and view our latest media appearances and cultural impact in Riyadh.">
     <meta name="twitter:image" content="https://lakumartspace.infinityfree.me/assest/img-4.webp">
 
     <!-- Additional SEO -->
@@ -99,7 +99,7 @@ if (file_exists('api/image-helper.php')) { require_once 'api/image-helper.php'; 
         {
             "@context": "https://schema.org",
             "@type": "ArtGallery",
-            "name": "LAKUM Artspace",
+            "name": "Lakum Artspace",
             "alternateName": "لكم آرت سبيس",
             "url": "https://lakumartspace.infinityfree.me",
             "logo": "https://lakumartspace.infinityfree.me/assest/favicon.png",
@@ -274,7 +274,7 @@ if (file_exists('api/image-helper.php')) { require_once 'api/image-helper.php'; 
     <section class="lakum-press-hero">
         <div class="lakum-container">
             <h1 class="lakum-press-hero__title"><?php echo t('press_hero_title', 'Press & Media'); ?></h1>
-            <p class="lakum-press-hero__subtitle"><?php echo t('press_hero_subtitle', 'Read about LAKUM Artspace in the news'); ?></p>
+            <p class="lakum-press-hero__subtitle"><?php echo t('press_hero_subtitle', 'Read about Lakum Artspace in the news'); ?></p>
         </div>
     </section>
 
@@ -340,7 +340,7 @@ if (file_exists('api/image-helper.php')) { require_once 'api/image-helper.php'; 
             </div>
 
             <div class="lakum-footer__bottom">
-                <p class="lakum-footer__copyright"><?php echo t('footer_copyright_prefix', '� 2025 - '); ?><span id="year"></span><?php echo t('footer_copyright_suffix', ' LAKUM Artspace. All rights reserved.'); ?></p>
+                <p class="lakum-footer__copyright"><?php echo t('footer_copyright_prefix', '� 2025 - '); ?><span id="year"></span><?php echo t('footer_copyright_suffix', ' Lakum Artspace. All rights reserved.'); ?></p>
                 <div class="lakum-footer__legal">
                     <a href="terms.php?lang=<?php echo getCurrentLanguage(); ?>" class="lakum-footer__legal-link"><?php echo t('footer_terms', 'Terms & Conditions'); ?></a>
                     <span class="lakum-footer__legal-divider">|</span>
@@ -495,7 +495,7 @@ if (file_exists('api/image-helper.php')) { require_once 'api/image-helper.php'; 
                 "id": "1",
                 "title": "Explore an interactive workshop By The Culture Mocktail at Lakum",
                 "publication": "Time Out Riyadh",
-                "excerpt": "Time Out Riyadh features an interactive workshop hosted by The Culture Mocktail at LAKUM Artspace.",
+                "excerpt": "Time Out Riyadh features an interactive workshop hosted by The Culture Mocktail at Lakum Artspace.",
                 "url": "https:\/\/www.timeoutriyadh.com\/things-to-do\/things-to-do-in-riyadh",
                 "publish_date": "2025-12-16",
                 "logo_path": "uploads\/press\/press_1_1765953905.jpg",
@@ -505,7 +505,7 @@ if (file_exists('api/image-helper.php')) { require_once 'api/image-helper.php'; 
                 "id": "2",
                 "title": "TikTok Creator Hub Awards Women Entrepreneurs in Riyadh (#HerAmbitions)",
                 "publication": "Zawya",
-                "excerpt": "Zawya covers the TikTok MENA Creator Hub awards celebrating women entrepreneurs in Riyadh at LAKUM Artspace.",
+                "excerpt": "Zawya covers the TikTok MENA Creator Hub awards celebrating women entrepreneurs in Riyadh at Lakum Artspace.",
                 "url": "https:\/\/www.zawya.com\/en\/press-release\/events-and-conferences\/tiktok-mena-creator-hub-awards-women-entrepreneurs-in-riyadh-ilt72tyv",
                 "publish_date": "2024-02-28",
                 "logo_path": "uploads\/press\/press_2_1765953905.jpg",
@@ -515,7 +515,7 @@ if (file_exists('api/image-helper.php')) { require_once 'api/image-helper.php'; 
                 "id": "3",
                 "title": "Pre-Ramadan pop-up show in Riyadh's Lakum Artspace",
                 "publication": "KSA Directory",
-                "excerpt": "KSA Directory highlights a special pre-Ramadan pop-up exhibition at LAKUM Artspace.",
+                "excerpt": "KSA Directory highlights a special pre-Ramadan pop-up exhibition at Lakum Artspace.",
                 "url": "https:\/\/www.ksa.directory\/pre-ramadan-pop-up-show-in-riyadh-s-lakum-artspace-consists-of-curated-pop-up-shops\/396\/n",
                 "publish_date": "2023-03-21",
                 "logo_path": "uploads\/press\/press_3_1765953905.svg",
@@ -525,7 +525,7 @@ if (file_exists('api/image-helper.php')) { require_once 'api/image-helper.php'; 
                 "id": "4",
                 "title": "Snap shows power of AR in transforming fashion, beauty in Saudi Arabia",
                 "publication": "Arab News",
-                "excerpt": "Arab News reports on Snap's augmented reality showcase at LAKUM Artspace, demonstrating AR's impact on fashion and beauty.",
+                "excerpt": "Arab News reports on Snap's augmented reality showcase at Lakum Artspace, demonstrating AR's impact on fashion and beauty.",
                 "url": "https:\/\/www.arabnews.com\/node\/2177376\/saudi-arabia",
                 "publish_date": "2022-10-08",
                 "logo_path": "uploads\/press\/press_5_1765953905.png",
@@ -535,7 +535,7 @@ if (file_exists('api/image-helper.php')) { require_once 'api/image-helper.php'; 
                 "id": "5",
                 "title": "Photographer Faisal bin Zarah's exhibition is a love letter to the Kingdom",
                 "publication": "Arab News",
-                "excerpt": "Arab News features photographer Faisal bin Zarah's exhibition at LAKUM Artspace, celebrating Saudi Arabia through photography.",
+                "excerpt": "Arab News features photographer Faisal bin Zarah's exhibition at Lakum Artspace, celebrating Saudi Arabia through photography.",
                 "url": "https:\/\/www.arabnews.com\/node\/2174501\/saudi-arabia",
                 "publish_date": "2022-09-15",
                 "logo_path": "uploads\/press\/press_5_1765953905.png",
@@ -545,7 +545,7 @@ if (file_exists('api/image-helper.php')) { require_once 'api/image-helper.php'; 
                 "id": "6",
                 "title": "Artworks of 20 Saudi women on display to mark International Women's Day",
                 "publication": "Saudi Gazette",
-                "excerpt": "Saudi Gazette covers an exhibition at LAKUM Artspace featuring artworks by 20 Saudi women artists for International Women's Day.",
+                "excerpt": "Saudi Gazette covers an exhibition at Lakum Artspace featuring artworks by 20 Saudi women artists for International Women's Day.",
                 "url": "https:\/\/www.saudigazette.com.sa\/article\/617910\/SAUDI-ARABIA\/Artworks-of-20-Saudi-women-are-on-display-in-Riyadh-to-mark-International-Womens-Day",
                 "publish_date": "2022-03-08",
                 "logo_path": "uploads\/press\/press_6_1765953905.svg",
@@ -555,7 +555,7 @@ if (file_exists('api/image-helper.php')) { require_once 'api/image-helper.php'; 
                 "id": "7",
                 "title": "Ahmed Mater to inaugurate Lakum Artspace with Prognosis: 1979-2019",
                 "publication": "GDN Life",
-                "excerpt": "GDN Life announces the inauguration of LAKUM Artspace with renowned artist Ahmed Mater's exhibition \"Prognosis: 1979-2019\".",
+                "excerpt": "GDN Life announces the inauguration of Lakum Artspace with renowned artist Ahmed Mater's exhibition \"Prognosis: 1979-2019\".",
                 "url": "https:\/\/www.gdnlife.com\/Home\/ArticleDetail?ArticleId=43966&category=6",
                 "publish_date": "2021-11-24",
                 "logo_path": "uploads\/press\/press_7_1765953905.png",
@@ -565,7 +565,7 @@ if (file_exists('api/image-helper.php')) { require_once 'api/image-helper.php'; 
                 "id": "8",
                 "title": "Lakum Artspace to open in December",
                 "publication": "Time Out Riyadh",
-                "excerpt": "Time Out Riyadh announces the upcoming opening of LAKUM Artspace in December 2021.",
+                "excerpt": "Time Out Riyadh announces the upcoming opening of Lakum Artspace in December 2021.",
                 "url": "https:\/\/www.timeoutriyadh.com\/art\/lakum-art-space-to-open-in-december",
                 "publish_date": "2021-10-28",
                 "logo_path": "uploads\/press\/press_8_1765953905.jpg",
@@ -679,7 +679,7 @@ if (file_exists('api/image-helper.php')) { require_once 'api/image-helper.php'; 
         footer_navigate: "<?php echo t('footer_navigate', 'Navigate'); ?>",
         footer_explore: "<?php echo t('footer_explore', 'Explore'); ?>",
         footer_connect: "<?php echo t('footer_connect', 'Connect'); ?>",
-        footer_copyright: "<?php echo t('footer_copyright', '� 2026 LAKUM Artspace. All rights reserved.'); ?>",
+        footer_copyright: "<?php echo t('footer_copyright', '� 2026 Lakum Artspace. All rights reserved.'); ?>",
         footer_terms: "<?php echo t('footer_terms', 'Terms & Conditions'); ?>",
         footer_privacy: "<?php echo t('footer_privacy', 'Privacy Policy'); ?>"
     };
