@@ -9,100 +9,101 @@
     padding: 0 clamp(20px, 5vw, 60px);
 }
 
+/* Page Content */
+.page-content {
+    width: 100% !important;
+    display: block !important;
+}
+
 /* About Section */
 .lakum-about-section {
-    padding: 60px 20px;
-    background: #ffffff;
+    padding: clamp(40px, 5vw, 64px) 0 !important;
+    background: #f6f6eb !important;
+    border-bottom: 1px solid #e0e0e0 !important;
 }
 
 .lakum-about-section__content {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 40px;
+    gap: clamp(48px, 8vw, 96px);
     align-items: center;
 }
 
 .lakum-about-section__text {
     display: flex;
     flex-direction: column;
-    gap: 20px;
 }
 
 .lakum-about-section__title {
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 300;
-    letter-spacing: -0.02em;
-    color: #1a1a1a;
-    margin: 0 0 clamp(32px, 4vw, 48px) 0;
-    line-height: 1.2;
+    font-size: clamp(1.75rem, 4vw, 2.5rem) !important;
+    font-weight: 300 !important;
+    margin-bottom: clamp(20px, 3vw, 30px) !important;
+    color: #1a1a1a !important;
     text-align: center !important;
 }
 
 .lakum-about-section__description {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: clamp(20px, 3vw, 32px) !important;
 }
 
 .lakum-about-text__paragraphs {
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: clamp(20px, 3vw, 32px);
 }
 
 .lakum-about-text__paragraphs p {
-    font-size: 1rem;
-    line-height: 1.6;
-    color: #555;
-    margin: 0;
+    font-weight: 300 !important;
+    line-height: 1.8 !important;
+    color: #525252 !important;
+    margin: 0 !important;
+    text-align: left !important;
+    letter-spacing: 0.3px !important;
 }
 
 .lakum-about-section__image {
+    position: relative;
     width: 100%;
-    height: auto;
-    border-radius: 8px;
-    overflow: hidden;
 }
 
 .lakum-about-section__image img {
-    width: 100%;
-    height: auto;
-    display: block;
-    object-fit: cover;
+    width: 100% !important;
+    height: 100% !important;
+    display: block !important;
+    object-fit: cover !important;
+    border-radius: 8px !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
 }
 
 /* Workshops Section */
 .lakum-workshops-section {
-    padding: 60px 20px;
-    background: #f9f9f9;
+    padding: clamp(40px, 5vw, 64px) 0;
+    background: #ffffff;
 }
 
 .lakum-workshops-section__content {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 40px;
+    gap: clamp(48px, 8vw, 96px);
     align-items: center;
 }
 
 .lakum-workshops-section__image {
+    position: relative;
     width: 100%;
-    height: auto;
-    border-radius: 8px;
-    overflow: hidden;
-    order: -1;
 }
 
 .lakum-workshops-section__image img {
     width: 100%;
-    height: auto;
-    display: block;
+    height: 100%;
     object-fit: cover;
 }
 
 .lakum-workshops-section__text {
     display: flex;
     flex-direction: column;
-    gap: 20px;
 }
 
 .lakum-workshops-section__title {
@@ -116,32 +117,33 @@
 }
 
 .lakum-workshops-section__description {
-    font-size: 1rem;
-    line-height: 1.6;
-    color: #555;
+    font-size: clamp(1rem, 1.5vw, 1.1rem);
+    font-weight: 300;
+    line-height: 1.8;
+    color: #525252;
     margin: 0;
+    text-align: left;
+    letter-spacing: 0.3px;
 }
 
 /* Stats Section */
 .lakum-stats-section {
-    padding: 80px 20px;
-    background: linear-gradient(135deg, #f6f6eb 0%, #fffbf5 100%);
+    padding: clamp(40px, 5vw, 64px) 0;
+    background: #f6f6eb !important;
+    margin: 60px 0 !important;
 }
 
 .lakum-stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 30px;
-    max-width: 1200px;
-    margin: 0 auto;
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) !important;
+    gap: 40px !important;
+    text-align: center !important;
 }
 
 .lakum-stat-card {
-    /* background: #ffffff; */
+    padding: 40px 20px !important;
     border-radius: 8px;
-    padding: 40px 20px;
     text-align: center;
-    /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -156,7 +158,12 @@
     color: #1a1a1a;
     line-height: 1;
     letter-spacing: -0.02em;
-    margin: 0 0 10px 0;
+    margin-bottom: 10px !important;
+    min-height: 1.2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-variant-numeric: tabular-nums;
 }
 
 .lakum-stat-card__label {
@@ -169,9 +176,10 @@
 
 /* Tagline Section */
 .lakum-tagline-section {
-    padding: 60px 20px;
-    background: #ffffff;
-    text-align: center;
+    padding: 80px 0 !important;
+    text-align: center !important;
+    border-bottom: 1px solid #e0e0e0 !important;
+    background: #ffffff !important;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -179,60 +187,250 @@
 }
 
 .lakum-tagline-section__spaces {
-    font-size: clamp(1.75rem, 4vw, 3rem);
-    font-weight: 300;
-    font-style: italic;
-    letter-spacing: -0.01em;
-    color: #8a8a8a;
-    margin: 0 0 clamp(16px, 2vw, 24px) 0;
-    line-height: 1.3;
-    max-width: 1000px;
-    margin-left: auto;
-    margin-right: auto;
+    font-size: clamp(1.75rem, 4vw, 3rem) !important;
+    font-weight: 300 !important;
+    font-style: italic !important;
+    letter-spacing: -0.01em !important;
+    color: #8a8a8a !important;
+    margin: 0 0 clamp(16px, 2vw, 24px) 0 !important;
+    line-height: 1.3 !important;
+    max-width: 1000px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
     text-align: center !important;
 }
 
 .lakum-tagline-section__title {
-    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
-    font-weight: 300;
-    color: #525252;
-    margin: 0;
-    line-height: 1.4;
-    text-align: center;
+    font-size: clamp(1.25rem, 2.5vw, 1.75rem) !important;
+    font-weight: 300 !important;
+    color: #525252 !important;
+    margin: 0 !important;
+    line-height: 1.4 !important;
+    text-align: center !important;
+}
+
+/* Section Styling */
+.lakum-section {
+    padding: 80px 0 !important;
+}
+
+.lakum-section-header {
+    margin-bottom: 60px !important;
+    text-align: center !important;
+}
+
+.lakum-section-header__title {
+    font-size: 2.5rem !important;
+    font-weight: 300 !important;
+    color: #1a1a1a !important;
+    margin-bottom: 15px !important;
+}
+
+/* Event Cards */
+.lakum-event-card {
+    background: #ffffff !important;
+    border-radius: 8px !important;
+    overflow: hidden !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+    transition: transform 0.3s ease !important;
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.lakum-event-card:hover {
+    transform: translateY(-8px) !important;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15) !important;
+}
+
+.lakum-event-card__image {
+    position: relative !important;
+    width: 100% !important;
+    height: 240px !important;
+    overflow: hidden !important;
+    background: #edecdf !important;
+    flex-shrink: 0 !important;
+}
+
+.lakum-event-card__image img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+}
+
+.lakum-event-card__date {
+    position: absolute !important;
+    top: 15px !important;
+    right: 15px !important;
+    background: white !important;
+    padding: 8px 12px !important;
+    border-radius: 4px !important;
+    text-align: center !important;
+    z-index: 10;
+}
+
+.lakum-event-card__date-month {
+    display: block !important;
+    font-size: 0.75rem !important;
+    color: #999 !important;
+    text-transform: uppercase !important;
+}
+
+.lakum-event-card__date-day {
+    display: block !important;
+    font-size: 1.5rem !important;
+    font-weight: 600 !important;
+    color: #1a1a1a !important;
+}
+
+.lakum-event-card__content {
+    padding: 20px !important;
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.lakum-event-card__title {
+    font-size: 1.3rem !important;
+    font-weight: 500 !important;
+    margin-bottom: 8px !important;
+    color: #1a1a1a !important;
+}
+
+.lakum-event-card__time {
+    font-size: 0.9rem !important;
+    color: #ff6b35 !important;
+    margin-bottom: 12px !important;
+}
+
+.lakum-event-card__link {
+    font-size: 0.9rem !important;
+    color: #1a1a1a !important;
+    text-decoration: none !important;
+    font-weight: 500 !important;
+}
+
+/* Buttons */
+.lakum-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: clamp(14px, 2vw, 18px) clamp(36px, 5vw, 48px) !important;
+    font-size: clamp(0.95rem, 1.5vw, 1.05rem) !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.5px !important;
+    text-decoration: none !important;
+    text-transform: capitalize !important;
+    border-radius: 8px !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    cursor: pointer !important;
+    border: none !important;
+}
+
+.lakum-btn--outline {
+    background: #1a1a1a !important;
+    color: #ffffff !important;
+    border: 2px solid #1a1a1a !important;
+}
+
+.lakum-btn--primary {
+    background: #1a1a1a !important;
+    color: #ffffff !important;
+    border: 2px solid #1a1a1a !important;
+}
+
+.lakum-section-cta {
+    display: flex !important;
+    justify-content: center !important;
+    margin-top: 40px !important;
+}
+
+/* RTL Support */
+html[lang="ar"] .lakum-about-section__content {
+    grid-template-columns: 1fr 1fr;
+    direction: rtl;
+}
+
+html[lang="ar"] .lakum-about-section__text {
+    text-align: right;
+}
+
+html[lang="ar"] .lakum-about-text__paragraphs p {
+    text-align: right !important;
+}
+
+html[lang="ar"] .lakum-workshops-section__content {
+    grid-template-columns: 1fr 1fr;
+    direction: rtl;
+}
+
+html[lang="ar"] .lakum-workshops-section__text {
+    text-align: right;
+}
+
+html[lang="ar"] .lakum-workshops-section__description {
+    text-align: right !important;
+}
+
+html[lang="ar"] .lakum-event-card__date {
+    right: auto !important;
+    left: 15px !important;
 }
 
 /* Responsive - Tablet & Below */
-@media (max-width: 768px) {
-    .lakum-about-section__title,
-    .lakum-workshops-section__title {
-        font-size: 2rem;
-    }
-
+@media (max-width: 1024px) {
     .lakum-about-section__content,
     .lakum-workshops-section__content {
         grid-template-columns: 1fr;
-        gap: 30px;
+        gap: clamp(32px, 5vw, 48px);
     }
 
-    .lakum-workshops-section__image {
-        order: 0;
+    .lakum-about-section__title,
+    .lakum-workshops-section__title {
+        font-size: clamp(1.5rem, 3vw, 2rem) !important;
+        margin-bottom: clamp(16px, 2vw, 24px) !important;
     }
 
     .lakum-stats-grid {
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        gap: 20px;
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .lakum-about-section__content,
+    .lakum-workshops-section__content {
+        grid-template-columns: 1fr;
+        gap: clamp(24px, 4vw, 32px);
     }
 
-    .lakum-stat-card {
-        padding: 30px 15px;
+    .lakum-about-section__text {
+        padding: 0 !important;
+        width: 100% !important;
+        height: auto !important;
     }
 
-    .lakum-stat-card__number {
-        font-size: 2rem;
+    .lakum-about-section__image {
+        width: 100% !important;
+        height: auto !important;
     }
 
+    .lakum-workshops-section__text {
+        padding: 0 !important;
+    }
+
+    .lakum-workshops-section__image {
+        width: 100% !important;
+        height: auto !important;
+    }
+
+    .lakum-about-section__title,
+    .lakum-workshops-section__title,
     .lakum-tagline-section__title {
-        font-size: 2rem;
+        font-size: 2rem !important;
+    }
+
+    .lakum-stats-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
     }
 
     .lakum-about-section,
@@ -245,9 +443,25 @@
 
 /* Mobile */
 @media (max-width: 480px) {
-    .lakum-about-section__title,
-    .lakum-workshops-section__title {
-        font-size: 1.5rem;
+    .lakum-about-section__content,
+    .lakum-workshops-section__content {
+        grid-template-columns: 1fr !important;
+        gap: 20px !important;
+    }
+
+    .lakum-about-section__text {
+        width: 100% !important;
+        height: auto !important;
+    }
+
+    .lakum-about-section__image {
+        width: 100% !important;
+        height: auto !important;
+    }
+
+    .lakum-workshops-section__image {
+        width: 100% !important;
+        height: auto !important;
     }
 
     .lakum-about-text__paragraphs p,
@@ -256,8 +470,7 @@
     }
 
     .lakum-stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 15px;
+        grid-template-columns: 1fr !important;
     }
 
     .lakum-stat-card {
@@ -270,6 +483,11 @@
 
     .lakum-stat-card__label {
         font-size: 0.85rem;
+    }
+
+    .lakum-about-section__title,
+    .lakum-workshops-section__title {
+        font-size: 1.5rem !important;
     }
 
     .lakum-tagline-section__title {
