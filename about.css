@@ -2,6 +2,13 @@
    ABOUT PAGE - Specific Styling
    ================================================== */
 
+/* Container */
+.lakum-container {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 clamp(20px, 5vw, 60px);
+}
+
 /* About Section */
 .lakum-about-section {
     padding: 60px 20px;
@@ -22,12 +29,13 @@
 }
 
 .lakum-about-section__title {
-    font-size: 2.5rem;
-    font-weight: 700;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 300;
+    letter-spacing: -0.02em;
     color: #1a1a1a;
+    margin: 0 0 clamp(32px, 4vw, 48px) 0;
     line-height: 1.2;
-    margin: 0;
-    text-align: center;
+    text-align: center !important;
 }
 
 .lakum-about-section__description {
@@ -98,12 +106,13 @@
 }
 
 .lakum-workshops-section__title {
-    font-size: 2.5rem;
-    font-weight: 700;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 300;
+    letter-spacing: -0.02em;
     color: #1a1a1a;
+    margin: 0 0 clamp(32px, 4vw, 48px) 0;
     line-height: 1.2;
-    margin: 0;
-    text-align: center;
+    text-align: center !important;
 }
 
 .lakum-workshops-section__description {
@@ -128,11 +137,11 @@
 }
 
 .lakum-stat-card {
-    background: #ffffff;
+    /* background: #ffffff; */
     border-radius: 8px;
     padding: 40px 20px;
     text-align: center;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
