@@ -669,7 +669,7 @@
 
 [dir="rtl"] .lakum-featured-banner__text {
     text-align: right;
-    align-items: flex-end;
+    align-items: flex-start;
 }
 
 [dir="rtl"] .lakum-event-card__link {
