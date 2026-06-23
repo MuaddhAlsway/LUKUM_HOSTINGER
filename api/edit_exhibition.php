@@ -56,7 +56,8 @@ try {
     $exhibition_end_time = isset($input['exhibition_end_time']) ? trim($input['exhibition_end_time']) : '18:00:00';
     $end_date = isset($input['end_date']) && !empty($input['end_date']) ? trim($input['end_date']) : null;
     $cover_image = isset($input['cover_image']) ? trim($input['cover_image']) : null;
-    $event_video = isset($input['event_video']) && !empty($input['event_video']) ? trim($input['event_video']) : null;
+    // Allow empty string to CLEAR video - important for remove functionality
+    $event_video = isset($input['event_video']) ? trim($input['event_video']) : null;
     $gallery_images = isset($input['gallery_images']) && !empty($input['gallery_images']) ? trim($input['gallery_images']) : null;
     
     // Validate required fields
@@ -119,7 +120,8 @@ try {
         $bindParams[] = &$cover_image;
     }
     
-    if ($event_video !== null) {
+    // Always update event_video - even if empty string (to allow clearing)
+    if (isset($input['event_video'])) {
         $updateFields[] = 'event_video = ?';
         $bindTypes .= 's';
         $bindParams[] = &$event_video;
