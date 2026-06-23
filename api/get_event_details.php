@@ -8,10 +8,11 @@
 header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, OPTIONS');
-header('Cache-Control: no-cache, no-store, must-revalidate');
+header('Cache-Control: no-cache, no-store, must-revalidate, max-age=0');
 header('Pragma: no-cache');
-header('Expires: 0');
+header('Expires: -1');
 header('Date: ' . date('r'));
+header('X-Robots-Tag: noindex, nofollow');
 
 require_once 'config.php';
 require_once 'slug-utils.php';
@@ -472,6 +473,13 @@ try {
     } else {
         error_log("DEBUG: event_video is: " . $event['event_video']);
     }
+    
+    // Add debug info to response
+    $event['__debug__'] = [
+        'loaded_from' => 'exhibitions_table',
+        'event_video_is_null' => $event['event_video'] === null,
+        'event_video_raw' => $event['event_video']
+    ];
     
     echo json_encode([
         'success' => true,
