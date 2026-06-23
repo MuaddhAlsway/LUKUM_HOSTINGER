@@ -44,143 +44,41 @@ try {
     if ($isNumeric) {
         $eventId = (int)$eventIdParam;
     } else {
-        // Try to find event by slug from base table
-        // Normalize slug: lowercase, replace spaces with hyphens, remove special chars
+        // Simple slug search - just look for exhibition by title containing the slug
         $slugParam = strtolower(trim($eventIdParam));
-        $slugParam = preg_replace('/[^a-z0-9-]/', '', $slugParam);
-        $slugParam = preg_replace('/-+/', '-', $slugParam);
-        $slugParam = trim($slugParam, '-');
+        error_log("DEBUG: Searching for slug: '$slugParam'");
         
-        error_log("DEBUG: Looking for slug: '$slugParam' from param: '$eventIdParam'");
-        
-        // Try to extract numeric ID from slug (e.g., "ex-3-ampm" -> 3)
-        if (preg_match('/ex-(\d+)-/', $slugParam, $matches)) {
-            $potentialId = (int)$matches[1];
-            error_log("DEBUG: Extracted potential ID from slug: $potentialId");
-            
-            // Check if this ID exists in exhibitions table
-            $checkExhibition = "SELECT id FROM exhibitions WHERE id = ? LIMIT 1";
-            $checkStmt = $db->prepare($checkExhibition);
-            if ($checkStmt) {
-                $checkStmt->bind_param('i', $potentialId);
-                if ($checkStmt->execute()) {
-                    $checkResult = $checkStmt->get_result();
-                    if ($checkResult->num_rows > 0) {
-                        $eventId = $potentialId;
-                        error_log("DEBUG: ID $eventId found in exhibitions table");
-                    } else {
-                        error_log("DEBUG: ID $potentialId NOT found in exhibitions table");
-                    }
-                }
-                $checkStmt->close();
-            }
-        }
-        
-        // Check if slug column exists in events table
-        $columnCheckQuery = "SHOW COLUMNS FROM events LIKE 'slug'";
-        $columnResult = $db->getConnection()->query($columnCheckQuery);
-        $slugColumnExists = $columnResult && $columnResult->num_rows > 0;
-        
-        error_log("DEBUG: Slug column exists in events: " . ($slugColumnExists ? 'yes' : 'no'));
-        
-        if ($slugColumnExists) {
-            // Query slug from events table (language-independent)
-            $slugQuery = 'SELECT id FROM events WHERE slug = ? LIMIT 1';
-            $stmt = $db->prepare($slugQuery);
-            if ($stmt) {
-                $stmt->bind_param('s', $slugParam);
-                if ($stmt->execute()) {
-                    $result = $stmt->get_result();
-                    if ($row = $result->fetch_assoc()) {
-                        $eventId = (int)$row['id'];
-                        error_log("DEBUG: Found event ID: $eventId for slug: $slugParam");
-                    }
+        // Search exhibitions by title containing slug
+        $query = "SELECT id FROM exhibitions WHERE LOWER(title_en) LIKE ? LIMIT 1";
+        $stmt = $db->prepare($query);
+        if ($stmt) {
+            $searchTerm = "%" . $slugParam . "%";
+            $stmt->bind_param('s', $searchTerm);
+            if ($stmt->execute()) {
+                $result = $stmt->get_result();
+                if ($result->num_rows > 0) {
+                    $row = $result->fetch_assoc();
+                    $eventId = (int)$row['id'];
+                    error_log("DEBUG: Found exhibition ID: $eventId");
+                } else {
+                    error_log("DEBUG: No match found for: $slugParam");
                 }
             }
-        }
-        
-        // If not found in events, try exhibitions table by slug
-        if ($eventId === null) {
-            // Try direct slug match on exhibition title
-            $exhibitionTitleQuery = '
-                SELECT id FROM exhibitions 
-                WHERE LOWER(REPLACE(REPLACE(REPLACE(title_en, " ", "-"), ".", ""), ",", "")) = ?
-                LIMIT 1
-            ';
-            $exhibitionStmt = $db->prepare($exhibitionTitleQuery);
-            if ($exhibitionStmt) {
-                $exhibitionStmt->bind_param('s', $slugParam);
-                if ($exhibitionStmt->execute()) {
-                    $exhibitionResult = $exhibitionStmt->get_result();
-                    if ($exhibitionRow = $exhibitionResult->fetch_assoc()) {
-                        $eventId = (int)$exhibitionRow['id'];
-                        error_log("DEBUG: Found exhibition ID: $eventId for slug: $slugParam");
-                    }
-                }
-                $exhibitionStmt->close();
-            }
-        }
-        
-        // If still not found, try partial title match
-        if ($eventId === null) {
-            error_log("DEBUG: Slug match failed, trying partial title match for: $eventIdParam");
-            $partialQuery = "SELECT id FROM exhibitions WHERE LOWER(title_en) LIKE LOWER(?) LIMIT 1";
-            $partialStmt = $db->prepare($partialQuery);
-            if ($partialStmt) {
-                $searchTerm = "%" . $eventIdParam . "%";
-                $partialStmt->bind_param('s', $searchTerm);
-                if ($partialStmt->execute()) {
-                    $partialResult = $partialStmt->get_result();
-                    if ($partialResult->num_rows > 0) {
-                        $partialRow = $partialResult->fetch_assoc();
-                        $eventId = (int)$partialRow['id'];
-                        error_log("DEBUG: Found exhibition by partial title match: ID $eventId for search: $eventIdParam");
-                    }
-                }
-                $partialStmt->close();
-            }
-        }
-        
-        // If still not found, try partial title search (extract title from slug like "ampm" from "ex-3-ampm")
-        if ($eventId === null && strpos($slugParam, '-') !== false) {
-            $slugParts = explode('-', $slugParam);
-            if (count($slugParts) >= 2) {
-                // Get last part as potential title
-                $titlePart = end($slugParts);
-                error_log("DEBUG: Extracted title part from slug: '$titlePart'");
-                
-                $titlePartQuery = "SELECT id FROM exhibitions WHERE LOWER(title_en) LIKE LOWER(?) LIMIT 1";
-                $titlePartStmt = $db->prepare($titlePartQuery);
-                if ($titlePartStmt) {
-                    $titleSearch = "%" . $titlePart . "%";
-                    $titlePartStmt->bind_param('s', $titleSearch);
-                    if ($titlePartStmt->execute()) {
-                        $titlePartResult = $titlePartStmt->get_result();
-                        if ($titlePartResult->num_rows > 0) {
-                            $titlePartRow = $titlePartResult->fetch_assoc();
-                            $eventId = (int)$titlePartRow['id'];
-                            error_log("DEBUG: Found exhibition by title part match: ID $eventId for search: $titlePart");
-                        }
-                    }
-                    $titlePartStmt->close();
-                }
-            }
+            $stmt->close();
         }
     }
     
-    // If no event found by slug, try to find ANY exhibition as last resort
+    // If not found, get first available exhibition
     if ($eventId === null) {
-        error_log("DEBUG: No event/exhibition found, checking if ANY exhibitions exist as fallback");
-        
+        error_log("DEBUG: Using fallback - first available exhibition");
         $fallbackQuery = "SELECT id FROM exhibitions ORDER BY id ASC LIMIT 1";
         $fallbackResult = $db->getConnection()->query($fallbackQuery);
         
         if ($fallbackResult && $fallbackResult->num_rows > 0) {
             $fallbackRow = $fallbackResult->fetch_assoc();
             $eventId = (int)$fallbackRow['id'];
-            error_log("DEBUG: No match found, using first available exhibition as fallback: ID $eventId");
+            error_log("DEBUG: Fallback ID: $eventId");
         } else {
-            error_log("DEBUG: No exhibitions exist in database at all");
             throw new Exception('No exhibitions found in database');
         }
     }
