@@ -626,8 +626,6 @@ if (!$title) {
                 console.error('🔴 Could not generate embed URL from:', videoUrl);
                 videoSection.style.display = 'none';
             }
-        }  videoSection.style.display = 'none';
-            }
             
             console.log('🎬 === displayVideo END ===');
         }
@@ -771,7 +769,6 @@ if (!$title) {
                 console.log('📍 URL changed, reloading event');
                 loadEventData();
             }
-        }, 500);
         }, 500);
 
         // Keyboard navigation for lightbox

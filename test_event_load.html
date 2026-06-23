@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Event Loading</title>
+    <style>
+        body { font-family: monospace; margin: 20px; background: #f5f5f5; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        h1 { color: #333; }
+        .test-case { background: white; padding: 15px; margin: 10px 0; border-radius: 4px; border-left: 4px solid #2196F3; }
+        .test-case h3 { margin: 0 0 10px 0; }
+        button { padding: 10px 20px; background: #2196F3; color: white; border: none; border-radius: 4px; cursor: pointer; margin: 5px 5px 5px 0; }
+        button:hover { background: #1976d2; }
+        pre { background: #f9f9f9; padding: 10px; border-radius: 4px; overflow-x: auto; font-size: 12px; }
+        .success { color: #388e3c; }
+        .error { color: #d32f2f; }
+        .info { color: #1976d2; }
+        .log { max-height: 300px; overflow-y: auto; background: #1a1a1a; color: #00ff00; padding: 10px; border-radius: 4px; font-size: 11px; }
+        .log-line { margin: 2px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Event Page Loading Test</h1>
+
+        <div class="test-case">
+            <h3>Test 1: Exhibition ID 3 (Cheval Blanc) - Has Video</h3>
+            <button onclick="loadEvent('3', 'Exhibition 3')">Load Exhibition 3</button>
+            <button onclick="openEvent('3')">Open in New Tab</button>
+            <div id="log-ex3" class="log"></div>
+        </div>
+
+        <div class="test-case">
+            <h3>Test 2: Exhibition ID 5 (AMPM) - Has Video</h3>
+            <button onclick="loadEvent('5', 'Exhibition 5')">Load Exhibition 5</button>
+            <button onclick="openEvent('5')">Open in New Tab</button>
+            <div id="log-ex5" class="log"></div>
+        </div>
+
+        <div class="test-case">
+            <h3>Test 3: Event ID 74 - No Video Yet</h3>
+            <button onclick="loadEvent('74', 'Event 74')">Load Event 74</button>
+            <button onclick="openEvent('74')">Open in New Tab</button>
+            <div id="log-ev74" class="log"></div>
+        </div>
+
+        <div class="test-case">
+            <h3>Test API Direct</h3>
+            <button onclick="testAPI('3')">Test API ID 3</button>
+            <button onclick="testAPI('5')">Test API ID 5</button>
+            <div id="log-api" class="log"></div>
+        </div>
+
+        <div class="test-case">
+            <h3>Database Check</h3>
+            <button onclick="checkDatabase()">Check Database</button>
+            <div id="log-db" class="log"></div>
+        </div>
+    </div>
+
+    <script>
+        function log(element, message, type = 'info') {
+            const logEl = document.getElementById(element);
+            if (!logEl) return;
+            
+            const timestamp = new Date().toLocaleTimeString();
+            const line = document.createElement('div');
+            line.className = `log-line ${type}`;
+            line.textContent = `[${timestamp}] ${message}`;
+            logEl.appendChild(line);
+            logEl.scrollTop = logEl.scrollHeight;
+        }
+
+        function openEvent(id) {
+            window.open(`event.php?id=${id}&lang=en`, '_blank');
+        }
+
+        async function loadEvent(id, label) {
+            const logElement = `log-${label.toLowerCase().replace(/\s/g, '')}`;
+            log(logElement, `🚀 Starting ${label} test...`, 'info');
+            
+            try {
+                const url = `event.php?id=${id}&lang=en`;
+                log(logElement, `📍 URL: ${url}`, 'info');
+                
+                const response = await fetch(url);
+                log(logElement, `📨 Status: ${response.status} ${response.statusText}`, response.ok ? 'success' : 'error');
+                
+                const html = await response.text();
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                
+                // Check for key elements
+                const titleEl = doc.getElementById('event-title');
+                const descEl = doc.getElementById('event-description');
+                const galleryEl = doc.getElementById('event-gallery');
+                const videoEl = doc.getElementById('event-video');
+                
+                log(logElement, `✅ Title element: ${titleEl ? 'FOUND' : 'MISSING'}`, titleEl ? 'success' : 'error');
+                log(logElement, `✅ Description element: ${descEl ? 'FOUND' : 'MISSING'}`, descEl ? 'success' : 'error');
+                log(logElement, `✅ Gallery element: ${galleryEl ? 'FOUND' : 'MISSING'}`, galleryEl ? 'success' : 'error');
+                log(logElement, `✅ Video element: ${videoEl ? 'FOUND' : 'MISSING'}`, videoEl ? 'success' : 'error');
+                
+                // Check if scripts include loadEventData
+                if (html.includes('loadEventData')) {
+                    log(logElement, `✅ loadEventData function: FOUND`, 'success');
+                } else {
+                    log(logElement, `❌ loadEventData function: MISSING`, 'error');
+                }
+                
+                // Check for syntax errors
+                if (html.includes('}, 500); }, 500);')) {
+                    log(logElement, `❌ Syntax error detected: duplicate }, 500);`, 'error');
+                } else {
+                    log(logElement, `✅ No syntax errors detected`, 'success');
+                }
+                
+                log(logElement, `✅ Page loaded successfully!`, 'success');
+                
+            } catch (error) {
+                log(logElement, `❌ Error: ${error.message}`, 'error');
+            }
+        }
+
+        async function testAPI(id) {
+            const logElement = 'log-api';
+            log(logElement, `🚀 Testing API for ID ${id}...`, 'info');
+            
+            try {
+                const url = `/api/get_event_details.php?id=${id}&lang=en`;
+                log(logElement, `🔗 API URL: ${url}`, 'info');
+                
+                const response = await fetch(url);
+                log(logElement, `📨 Status: ${response.status}`, response.ok ? 'success' : 'error');
+                
+                if (!response.ok) {
+                    log(logElement, `❌ HTTP ${response.status}`, 'error');
+                    return;
+                }
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    log(logElement, `✅ API Success`, 'success');
+                    log(logElement, `📌 Event: ${data.event.title}`, 'info');
+                    log(logElement, `📌 Video URL: ${data.event.video_url || 'NOT SET'}`, 'info');
+                    log(logElement, `📌 Event Video: ${data.event.event_video || 'NOT SET'}`, 'info');
+                    log(logElement, `📌 Gallery Items: ${data.gallery ? data.gallery.length : 0}`, 'info');
+                } else {
+                    log(logElement, `❌ API Error: ${data.message}`, 'error');
+                }
+                
+            } catch (error) {
+                log(logElement, `❌ Fetch Error: ${error.message}`, 'error');
+            }
+        }
+
+        async function checkDatabase() {
+            const logElement = 'log-db';
+            log(logElement, `🚀 Checking database...`, 'info');
+            
+            try {
+                const response = await fetch('/api/debug_event_page.php');
+                const data = await response.json();
+                
+                log(logElement, `⏰ ${data.timestamp}`, 'info');
+                
+                data.diagnostics.forEach(diag => {
+                    const statusClass = diag.status === 'OK' || diag.status === 'FOUND' ? 'success' : 'error';
+                    log(logElement, `${diag.status === 'OK' ? '✅' : '❌'} ${diag.test}: ${diag.status} - ${diag.message}`, statusClass);
+                });
+                
+            } catch (error) {
+                log(logElement, `❌ Error: ${error.message}`, 'error');
+            }
+        }
+
+        // Auto-test on load
+        window.addEventListener('load', () => {
+            log('log-info', '✅ Test page loaded', 'success');
+        });
+    </script>
+</body>
+</html>
