@@ -438,22 +438,41 @@ if (!$title) {
 
             // Display video if available - Handle both field names (events table uses video_url, exhibitions table uses event_video)
             console.log('=== CHECKING FOR VIDEO ===');
-            console.log('Full event object:', JSON.stringify(event, null, 2));
+            console.log('Full event object:', event);
             console.log('event.video_url:', event.video_url);
             console.log('event.event_video:', event.event_video);
+            console.log('event.category:', event.category);
             
-            const videoUrl = event.video_url || event.event_video;
-            console.log('Final videoUrl variable:', videoUrl);
-            console.log('videoUrl is truthy?', !!videoUrl);
-            console.log('videoUrl length:', videoUrl ? videoUrl.length : 0);
+            // Try both fields, prioritize based on category
+            let videoUrl = null;
             
-            if (videoUrl && videoUrl.trim && videoUrl.trim() !== '') {
+            if (event.category === 'exhibition') {
+                // For exhibitions, prioritize event_video field
+                videoUrl = event.event_video || event.video_url;
+                console.log('📍 This is an EXHIBITION - checking event_video first');
+            } else {
+                // For events, prioritize video_url field
+                videoUrl = event.video_url || event.event_video;
+                console.log('📍 This is an EVENT - checking video_url first');
+            }
+            
+            console.log('Final videoUrl:', videoUrl);
+            console.log('videoUrl type:', typeof videoUrl);
+            
+            // Safely convert to string and trim
+            if (videoUrl) {
+                videoUrl = String(videoUrl).trim();
+                console.log('After trim:', videoUrl);
+                console.log('Length:', videoUrl.length);
+            }
+            
+            // Check if valid URL
+            if (videoUrl && videoUrl !== '' && videoUrl !== 'null' && videoUrl !== 'undefined') {
                 console.log('✅ VIDEO FOUND! Calling displayVideo with:', videoUrl);
                 displayVideo(videoUrl);
             } else {
-                console.log('❌ NO VIDEO URL FOUND - videoUrl is:', videoUrl);
-                console.log('❌ Type:', typeof videoUrl);
-                console.log('❌ Trim result:', videoUrl && videoUrl.trim ? videoUrl.trim() : 'N/A');
+                console.log('❌ No valid video URL found - video section will be hidden');
+                document.getElementById('videoSection').style.display = 'none';
             }
 
             // Load gallery images from database
@@ -476,33 +495,28 @@ if (!$title) {
         // Display video from URL (YouTube or Vimeo)
         function displayVideo(videoUrl) {
             console.log('🎬 === displayVideo CALLED ===');
-            console.log('videoUrl parameter:', videoUrl);
+            console.log('Input videoUrl:', videoUrl);
+            console.log('Type:', typeof videoUrl);
             
             // Get elements
             const videoSection = document.getElementById('videoSection');
             const videoFrame = document.getElementById('event-video');
             
-            console.log('videoSection element found?', !!videoSection);
-            console.log('videoFrame element found?', !!videoFrame);
-            
-            if (!videoSection) {
-                console.error('🔴 CRITICAL: videoSection element not found in DOM!');
+            if (!videoSection || !videoFrame) {
+                console.error('🔴 Video elements not found!');
                 return;
             }
             
-            if (!videoFrame) {
-                console.error('🔴 CRITICAL: videoFrame element not found in DOM!');
-                return;
-            }
+            // Ensure videoUrl is a string
+            videoUrl = String(videoUrl).trim();
             
-            // Validate video URL
-            if (!videoUrl || videoUrl.trim() === '') {
-                console.log('❌ No video URL provided');
+            if (!videoUrl || videoUrl === '' || videoUrl === 'null' || videoUrl === 'undefined') {
+                console.log('❌ No valid video URL provided');
                 videoSection.style.display = 'none';
                 return;
             }
 
-            console.log('✅ Video URL is valid, length:', videoUrl.length);
+            console.log('✅ Processing video URL:', videoUrl);
             let embedUrl = '';
 
             // Handle YouTube URLs
@@ -512,24 +526,25 @@ if (!$title) {
                 
                 try {
                     if (videoUrl.includes('youtube.com/watch')) {
+                        // youtube.com/watch?v=ID
                         const url = new URL(videoUrl);
                         videoId = url.searchParams.get('v');
-                        console.log('🔍 YouTube watch format - extracted videoId:', videoId);
                     } else if (videoUrl.includes('youtu.be')) {
-                        // youtu.be/ID?si=...
+                        // youtu.be/ID or youtu.be/ID?si=...
                         const match = videoUrl.match(/youtu\.be\/([a-zA-Z0-9_-]+)/);
                         if (match) {
                             videoId = match[1];
-                            console.log('🔍 YouTube short URL format - extracted videoId:', videoId);
                         }
+                    }
+                    
+                    if (videoId) {
+                        embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=0&controls=1&rel=0`;
+                        console.log('✅ YouTube ID:', videoId);
+                    } else {
+                        console.error('❌ Could not extract YouTube ID from:', videoUrl);
                     }
                 } catch (e) {
                     console.error('❌ Error parsing YouTube URL:', e);
-                }
-                
-                if (videoId) {
-                    embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=0&controls=1`;
-                    console.log('✅ Generated YouTube embed URL:', embedUrl);
                 }
             }
             // Handle Vimeo URLs
@@ -540,40 +555,36 @@ if (!$title) {
                     if (match) {
                         const videoId = match[1];
                         embedUrl = `https://player.vimeo.com/video/${videoId}`;
-                        console.log('✅ Generated Vimeo embed URL:', embedUrl);
+                        console.log('✅ Vimeo ID:', videoId);
+                    } else {
+                        console.error('❌ Could not extract Vimeo ID from:', videoUrl);
                     }
                 } catch (e) {
                     console.error('❌ Error parsing Vimeo URL:', e);
                 }
             }
+            // If direct embed URL provided
+            else if (videoUrl.includes('/embed/')) {
+                embedUrl = videoUrl;
+                console.log('✅ Direct embed URL detected');
+            }
+            else {
+                console.error('❌ Unsupported video URL format:', videoUrl);
+            }
 
-            console.log('Final embedUrl:', embedUrl);
-            
             if (embedUrl) {
-                console.log('🚀 Setting iframe src...');
+                console.log('🚀 Setting iframe src to:', embedUrl);
                 videoFrame.src = embedUrl;
-                console.log('✅ iframe.src is now:', videoFrame.src);
-                
-                console.log('📍 Making video section visible...');
-                // Force show the section with multiple methods
                 videoSection.style.display = 'block';
                 videoSection.style.visibility = 'visible';
                 videoSection.style.opacity = '1';
-                videoSection.classList.add('active');
-                
-                console.log('✅ Video section classList:', Array.from(videoSection.classList));
-                console.log('✅ Video section display style:', window.getComputedStyle(videoSection).display);
-                console.log('✅ Video section visibility style:', window.getComputedStyle(videoSection).visibility);
-                
-                // Verify iframe has src
-                console.log('✅ iframe src after setting:', videoFrame.src);
-                console.log('✅ iframe width:', videoFrame.style.width);
-                console.log('✅ iframe height:', videoFrame.style.height);
-                
-                console.log('🎉 VIDEO SHOULD NOW BE VISIBLE!');
+                if (videoSection.classList) videoSection.classList.add('active');
+                console.log('✅ Video section now visible');
             } else {
                 console.error('🔴 Could not generate embed URL from:', videoUrl);
                 videoSection.style.display = 'none';
+            }
+        }  videoSection.style.display = 'none';
             }
             
             console.log('🎬 === displayVideo END ===');

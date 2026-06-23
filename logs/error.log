@@ -17776,3 +17776,15 @@ Stack trace:
 [01-Mar-2026 09:54:18 Asia/Riyadh] Database Connection Error: No connection could be made because the target machine actively refused it
 [01-Mar-2026 09:54:18 Asia/Riyadh] Events API Error: Database connection failed: Access denied for user 'u812122863_neama'@'localhost' (using password: YES)
 [01-Mar-2026 09:54:51 Asia/Riyadh] PHP Warning:  mysqli::__construct(): (HY000/2002): No connection could be made because the target machine actively refused it in C:\xampp\htdocs\LUKUM_HOSTINGER\api\add_event_simple.php on line 26
+[23-Jun-2026 13:47:36 Europe/Berlin] PHP Warning:  Undefined array key "REQUEST_METHOD" in C:\xampp\htdocs\LUKUM_HOSTINGER-deployment-hostinger\LUKUM_HOSTINGER-deployment-hostinger\api\config.php on line 312
+[23-Jun-2026 14:47:40 Asia/Riyadh] Database Exception: No connection could be made because the target machine actively refused it
+[23-Jun-2026 14:47:40 Asia/Riyadh] PHP Fatal error:  Uncaught Error: Call to a member function query() on null in C:\xampp\htdocs\LUKUM_HOSTINGER-deployment-hostinger\LUKUM_HOSTINGER-deployment-hostinger\test_api_response.php:18
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\LUKUM_HOSTINGER-deployment-hostinger\LUKUM_HOSTINGER-deployment-hostinger\test_api_response.php on line 18
+[23-Jun-2026 13:48:09 Europe/Berlin] PHP Warning:  Undefined array key "REQUEST_METHOD" in C:\xampp\htdocs\LUKUM_HOSTINGER-deployment-hostinger\LUKUM_HOSTINGER-deployment-hostinger\api\config.php on line 312
+[23-Jun-2026 14:48:13 Asia/Riyadh] Database Exception: No connection could be made because the target machine actively refused it
+[23-Jun-2026 14:48:13 Asia/Riyadh] PHP Fatal error:  Uncaught Error: Call to a member function query() on null in C:\xampp\htdocs\LUKUM_HOSTINGER-deployment-hostinger\LUKUM_HOSTINGER-deployment-hostinger\test_db_direct.php:15
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\LUKUM_HOSTINGER-deployment-hostinger\LUKUM_HOSTINGER-deployment-hostinger\test_db_direct.php on line 15

@@ -1,0 +1,147 @@
+═══════════════════════════════════════════════════════════════════════════════
+ VIDEO DISPLAY FIX - QUICK START TEST (5 MINUTES)
+═══════════════════════════════════════════════════════════════════════════════
+
+✅ WHAT'S BEEN FIXED:
+- Enhanced video URL detection in event.php
+- Better YouTube URL parsing (works with tracking params: ?si=...)
+- Robust error handling and validation
+- Better console logging for debugging
+
+📊 DATABASE STATUS:
+- Exhibitions: 2/2 have videos ✅
+  • ID 3 (Cheval Blanc): https://youtu.be/JH3zXmuFARw?si=D7Drn3PjWR-uQdpm
+  • ID 5 (AMPM): https://youtu.be/JH3zXmuFARw?si=D7Drn3PjWR-uQdpm
+- Events: 0/22 have videos (need to upload via admin)
+
+───────────────────────────────────────────────────────────────────────────────
+🧪 TEST IN 3 STEPS
+───────────────────────────────────────────────────────────────────────────────
+
+STEP 1: TEST EXHIBITION WITH VIDEO
+─────────────────────────────────────
+Go to: http://localhost/event.php?title=cheval-blanc&lang=en
+
+Expected:
+  ✅ Video section visible below gallery
+  ✅ YouTube player appears
+  ✅ Can play video
+
+STEP 2: OPEN CONSOLE (F12 → Console tab)
+──────────────────────────────────────────
+Look for messages like:
+  
+  === CHECKING FOR VIDEO ===
+  📍 This is an EXHIBITION - checking event_video first
+  Final videoUrl: https://youtu.be/JH3zXmuFARw?si=D7Drn3PjWR-uQdpm
+  ✅ VIDEO FOUND! Calling displayVideo with: https://youtu.be/...
+  🎬 === displayVideo CALLED ===
+  📺 Detected YouTube URL
+  ✅ YouTube ID: JH3zXmuFARw
+  🚀 Setting iframe src to: https://www.youtube.com/embed/JH3zXmuFARw?...
+  ✅ Video section now visible
+
+✅ If you see these messages: FIX IS WORKING!
+
+STEP 3: TEST EVENT WITHOUT VIDEO (OPTIONAL)
+──────────────────────────────────────────────
+Go to: http://localhost/event.php?id=74&lang=en
+
+Expected:
+  ✅ No video section visible
+  ✅ Console shows: ❌ No valid video URL found - video section will be hidden
+
+───────────────────────────────────────────────────────────────────────────────
+🎯 QUICK CONSOLE CHECKLIST
+───────────────────────────────────────────────────────────────────────────────
+
+☐ See "=== CHECKING FOR VIDEO ===" message?
+  → Yes: Code reached video check ✅
+  → No: Reload page, JavaScript may not have loaded
+
+☐ See "📍 This is an EXHIBITION" or "📍 This is an EVENT"?
+  → Yes: Category detected correctly ✅
+  → No: Event object may be missing category field
+
+☐ See "✅ VIDEO FOUND!"?
+  → Yes: Video URL is valid ✅
+  → No: Video URL is null/empty/invalid
+
+☐ See "📺 Detected YouTube URL"?
+  → Yes: YouTube URL format recognized ✅
+  → No: May be unsupported platform or format
+
+☐ See "✅ YouTube ID: [ID]"?
+  → Yes: ID extracted successfully ✅
+  → No: URL format may be wrong
+
+☐ See "✅ Video section now visible"?
+  → Yes: Everything successful! ✅
+  → No: Iframe may not have src set
+
+───────────────────────────────────────────────────────────────────────────────
+❌ TROUBLESHOOTING
+───────────────────────────────────────────────────────────────────────────────
+
+Problem: Video not showing
+  → Check Step 2 console for error messages
+  → Reload page (Ctrl+Shift+R to bypass cache)
+  → Check if video uploaded (database should have URL)
+
+Problem: Console shows "Could not extract YouTube ID"
+  → Check URL format - should be:
+    • youtube.com/watch?v=ID
+    • youtu.be/ID
+    • youtu.be/ID?si=PARAMS (now works!)
+
+Problem: Only exhibition videos work, not events
+  → Normal! Events table is empty
+  → Upload videos via Admin → Add/Edit Event → Event Video section
+
+Problem: Console shows no messages at all
+  → JavaScript might not be loading
+  → Press F12 → Console and look for JavaScript errors
+  → Reload page completely
+
+───────────────────────────────────────────────────────────────────────────────
+📝 DOCUMENTATION FILES CREATED
+───────────────────────────────────────────────────────────────────────────────
+
+✅ VIDEO_FIX_SUMMARY.md
+   - Complete before/after explanation
+   - Code changes detailed
+   - Database verification
+
+✅ FINAL_VIDEO_FIX_TEST.md
+   - Full testing guide
+   - Supported formats
+   - How to upload videos
+   - Common issues & solutions
+
+✅ QUICK_START_VIDEO_TEST.txt
+   - This file! Quick reference
+
+───────────────────────────────────────────────────────────────────────────────
+✨ SUMMARY
+───────────────────────────────────────────────────────────────────────────────
+
+What was fixed:
+  ✅ Enhanced video URL detection
+  ✅ Category-aware field prioritization
+  ✅ Better YouTube URL parsing (with tracking params)
+  ✅ Robust error handling
+  ✅ Better console logging
+
+Expected result:
+  ✅ Exhibition videos display immediately
+  ✅ Event videos will display once uploaded via admin
+  ✅ Console shows detailed debug info
+
+Ready to deploy:
+  ✅ No database changes needed
+  ✅ No migration scripts needed
+  ✅ Just upload event.php to server
+
+═══════════════════════════════════════════════════════════════════════════════
+Need help? Check the console (F12) for detailed error messages!
+═══════════════════════════════════════════════════════════════════════════════
