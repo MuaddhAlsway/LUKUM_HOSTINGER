@@ -386,28 +386,6 @@
                 window.location.href = 'events.html';
             }
         }
-                        console.log('No gallery images for this event');
-                    }
-                    console.log('=== FORM POPULATED SUCCESSFULLY ===');
-                } else {
-                    alert('Event not found');
-                    window.location.href = 'events.html';
-                }
-            } catch (error) {
-                console.error('Error loading event:', error);
-                alert('Error: ' + error.message);
-                // Try mock data as fallback
-                const mockEvent = getMockEvent(id);
-                if (mockEvent) {
-                    console.log('Using mock event due to error:', mockEvent);
-                    populateForm(mockEvent);
-                    initMultiDayToggle();
-                } else {
-                    alert('Error loading event: ' + error.message);
-                    window.location.href = 'events.html';
-                }
-            }
-        }
 
         function getMockEvent(id) {
             // Mock events data for testing
@@ -644,101 +622,118 @@
                 console.error('Error setting basic fields:', e);
             }
             
-            console.log('=== POPULATE FORM END ===');
-        }
-            
             // Handle multi-day events
-            const endDateSection = document.getElementById('endDateSection');
-            const endDate = document.getElementById('end_date');
-            
-            if (event.end_date) {
-                console.log('Event has end_date:', event.end_date);
-                document.getElementById('multiDayRadio').checked = true;
-                document.getElementById('sameDayRadio').checked = false;
-                if (endDate) endDate.value = event.end_date;
-                if (endDateSection) endDateSection.style.display = 'block';
-            } else {
-                console.log('Event is same-day only');
-                document.getElementById('sameDayRadio').checked = true;
-                document.getElementById('multiDayRadio').checked = false;
-                if (endDateSection) endDateSection.style.display = 'none';
+            try {
+                const endDateSection = document.getElementById('endDateSection');
+                const endDate = document.getElementById('end_date');
+                
+                if (event.end_date) {
+                    console.log('Event has end_date:', event.end_date);
+                    document.getElementById('multiDayRadio').checked = true;
+                    document.getElementById('sameDayRadio').checked = false;
+                    if (endDate) endDate.value = event.end_date;
+                    if (endDateSection) endDateSection.style.display = 'block';
+                } else {
+                    console.log('Event is same-day only');
+                    document.getElementById('sameDayRadio').checked = true;
+                    document.getElementById('multiDayRadio').checked = false;
+                    if (endDateSection) endDateSection.style.display = 'none';
+                }
+            } catch (e) {
+                console.error('Error handling multi-day events:', e);
             }
             
             // Set location select for English
-            const locationSelectEn = document.getElementById('location_select_en');
-            const locationInputEn = document.getElementById('location_en');
-            if (locationSelectEn && locationInputEn) {
-                const options = Array.from(locationSelectEn.options).map(o => o.value);
-                if (options.includes(locEn)) {
-                    locationSelectEn.value = locEn;
-                    locationInputEn.style.display = 'none';
-                    locationInputEn.value = locEn; // Set to actual value, not empty
-                } else if (locEn) {
-                    locationSelectEn.value = 'other';
-                    locationInputEn.style.display = 'block';
-                    locationInputEn.value = locEn;
-                } else {
-                    locationSelectEn.value = '';
-                    locationInputEn.style.display = 'none';
-                    locationInputEn.value = '';
+            try {
+                const locationSelectEn = document.getElementById('location_select_en');
+                const locationInputEn = document.getElementById('location_en');
+                if (locationSelectEn && locationInputEn) {
+                    const options = Array.from(locationSelectEn.options).map(o => o.value);
+                    if (options.includes(locEn)) {
+                        locationSelectEn.value = locEn;
+                        locationInputEn.style.display = 'none';
+                        locationInputEn.value = locEn;
+                    } else if (locEn) {
+                        locationSelectEn.value = 'other';
+                        locationInputEn.style.display = 'block';
+                        locationInputEn.value = locEn;
+                    } else {
+                        locationSelectEn.value = '';
+                        locationInputEn.style.display = 'none';
+                        locationInputEn.value = '';
+                    }
                 }
+            } catch (e) {
+                console.error('Error setting location English:', e);
             }
             
             // Set location select for Arabic
-            const locationSelectAr = document.getElementById('location_select_ar');
-            const locationInputAr = document.getElementById('location_ar');
-            if (locationSelectAr && locationInputAr) {
-                const options = Array.from(locationSelectAr.options).map(o => o.value);
-                if (options.includes(locAr)) {
-                    locationSelectAr.value = locAr;
-                    locationInputAr.style.display = 'none';
-                    locationInputAr.value = locAr; // Set to actual value, not empty
-                } else if (locAr) {
-                    locationSelectAr.value = 'other';
-                    locationInputAr.style.display = 'block';
-                    locationInputAr.value = locAr;
-                } else {
-                    locationSelectAr.value = '';
-                    locationInputAr.style.display = 'none';
-                    locationInputAr.value = '';
+            try {
+                const locationSelectAr = document.getElementById('location_select_ar');
+                const locationInputAr = document.getElementById('location_ar');
+                if (locationSelectAr && locationInputAr) {
+                    const options = Array.from(locationSelectAr.options).map(o => o.value);
+                    if (options.includes(locAr)) {
+                        locationSelectAr.value = locAr;
+                        locationInputAr.style.display = 'none';
+                        locationInputAr.value = locAr;
+                    } else if (locAr) {
+                        locationSelectAr.value = 'other';
+                        locationInputAr.style.display = 'block';
+                        locationInputAr.value = locAr;
+                    } else {
+                        locationSelectAr.value = '';
+                        locationInputAr.style.display = 'none';
+                        locationInputAr.value = '';
+                    }
                 }
+            } catch (e) {
+                console.error('Error setting location Arabic:', e);
             }
             
             // Fix image path - use absolute URL
-            console.log('Cover image value:', event.cover_image);
-            if (event.cover_image && event.cover_image.trim()) {
-                const coverImg = document.getElementById('coverImg');
-                if (coverImg) {
-                    let imagePath = event.cover_image;
-                    
-                    // Convert to absolute URL
-                    if (!imagePath.startsWith('http')) {
-                        imagePath = '../' + imagePath;
+            try {
+                console.log('Cover image value:', event.cover_image);
+                if (event.cover_image && event.cover_image.trim()) {
+                    const coverImg = document.getElementById('coverImg');
+                    if (coverImg) {
+                        let imagePath = event.cover_image;
+                        
+                        // Convert to absolute URL
+                        if (!imagePath.startsWith('http')) {
+                            imagePath = '../' + imagePath;
+                        }
+                        
+                        console.log('✅ Setting cover image:', imagePath);
+                        coverImg.src = imagePath;
+                        coverImg.style.display = 'block';
+                        const placeholder = document.querySelector('.cover-placeholder');
+                        if (placeholder) placeholder.style.display = 'none';
+                        const removeCover = document.getElementById('removeCover');
+                        if (removeCover) removeCover.style.display = 'flex';
+                    } else {
+                        console.warn('⚠️ coverImg element not found');
                     }
-                    
-                    console.log('✅ Setting cover image:', imagePath);
-                    coverImg.src = imagePath;
-                    coverImg.style.display = 'block';
-                    const placeholder = document.querySelector('.cover-placeholder');
-                    if (placeholder) placeholder.style.display = 'none';
-                    const removeCover = document.getElementById('removeCover');
-                    if (removeCover) removeCover.style.display = 'flex';
                 } else {
-                    console.warn('⚠️ coverImg element not found');
+                    console.log('❌ No cover image in event data');
+                    const placeholder = document.querySelector('.cover-placeholder');
+                    if (placeholder) placeholder.style.display = 'block';
                 }
-            } else {
-                console.log('❌ No cover image in event data');
-                const placeholder = document.querySelector('.cover-placeholder');
-                if (placeholder) placeholder.style.display = 'block';
+            } catch (e) {
+                console.error('Error setting cover image:', e);
             }
             
             // Handle video preview
-            if (event.video_url) {
-                console.log('Setting video URL:', event.video_url);
-                displayVideoPreview(event.video_url);
+            try {
+                if (event.video_url) {
+                    console.log('Setting video URL:', event.video_url);
+                    displayVideoPreview(event.video_url);
+                }
+            } catch (e) {
+                console.error('Error setting video preview:', e);
             }
             
-            console.log('Form population complete');
+            console.log('=== POPULATE FORM END ===');
         }
 
         function handleLocationChange(select, lang) {
