@@ -89,7 +89,7 @@ try {
         }
         
         $stmt->bind_param(
-            'ssssssssssii',
+            'ssssssssssis',
             $title_en,
             $description_en,
             $location_en,
@@ -119,7 +119,7 @@ try {
         }
         
         $stmt->bind_param(
-            'sssssssssii',
+            'sssssssssis',
             $title_en,
             $description_en,
             $location_en,
