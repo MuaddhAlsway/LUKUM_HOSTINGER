@@ -142,6 +142,7 @@ try {
     // Get event details with translation support
     // Query without translations table (fallback - using bilingual columns)
     // Note: events table has video_url, exhibitions table has event_video
+    // We return BOTH fields for compatibility
     $eventQuery = '
         SELECT 
             e.id,
@@ -150,8 +151,8 @@ try {
             e.event_end_time,
             e.end_date,
             e.cover_image,
-            e.video_url,
-            e.video_url as event_video,
+            COALESCE(e.video_url, "") as video_url,
+            COALESCE(e.video_url, "") as event_video,
             e.category,
             COALESCE(e.title_en, e.title) as title,
             COALESCE(e.description_en, e.description) as description,
@@ -192,8 +193,8 @@ try {
                 ex.exhibition_end_time as event_end_time,
                 ex.end_date,
                 ex.cover_image,
-                ex.event_video as video_url,
-                ex.event_video,
+                COALESCE(ex.event_video, "") as video_url,
+                COALESCE(ex.event_video, "") as event_video,
                 ex.gallery_images,
                 "exhibition" as category,
                 COALESCE(ex.title_en, ex.title) as title,

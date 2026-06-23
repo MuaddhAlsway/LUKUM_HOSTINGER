@@ -480,33 +480,23 @@ if (!$title) {
 
             // Display video if available - Handle both field names (events table uses video_url, exhibitions table uses event_video)
             console.log('=== CHECKING FOR VIDEO ===');
-            console.log('Full event object:', event);
             console.log('event.video_url:', event.video_url);
             console.log('event.event_video:', event.event_video);
             console.log('event.category:', event.category);
             
-            // Try both fields, prioritize based on category
+            // Try ALL possible video fields in order of priority
             let videoUrl = null;
             
-            if (event.category === 'exhibition') {
-                // For exhibitions, prioritize event_video field
-                videoUrl = event.event_video || event.video_url;
-                console.log('📍 This is an EXHIBITION - checking event_video first');
-            } else {
-                // For events, prioritize video_url field
-                videoUrl = event.video_url || event.event_video;
-                console.log('📍 This is an EVENT - checking video_url first');
+            // Check both fields with fallback
+            if (event.event_video && String(event.event_video).trim() && String(event.event_video).trim() !== 'null') {
+                videoUrl = String(event.event_video).trim();
+                console.log('✅ Found video in event_video field:', videoUrl);
+            } else if (event.video_url && String(event.video_url).trim() && String(event.video_url).trim() !== 'null') {
+                videoUrl = String(event.video_url).trim();
+                console.log('✅ Found video in video_url field:', videoUrl);
             }
             
             console.log('Final videoUrl:', videoUrl);
-            console.log('videoUrl type:', typeof videoUrl);
-            
-            // Safely convert to string and trim
-            if (videoUrl) {
-                videoUrl = String(videoUrl).trim();
-                console.log('After trim:', videoUrl);
-                console.log('Length:', videoUrl.length);
-            }
             
             // Check if valid URL
             if (videoUrl && videoUrl !== '' && videoUrl !== 'null' && videoUrl !== 'undefined') {
@@ -514,7 +504,10 @@ if (!$title) {
                 displayVideo(videoUrl);
             } else {
                 console.log('❌ No valid video URL found - video section will be hidden');
-                document.getElementById('videoSection').style.display = 'none';
+                const videoSection = document.getElementById('videoSection');
+                if (videoSection) {
+                    videoSection.style.display = 'none';
+                }
             }
 
             // Load gallery images from database

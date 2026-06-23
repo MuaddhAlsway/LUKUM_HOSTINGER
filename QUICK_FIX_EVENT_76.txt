@@ -1,0 +1,57 @@
+═══════════════════════════════════════════════════════════════════════════════
+ QUICK FIX - EVENT 76 (AMPM) - ADD VIDEO NOW
+═══════════════════════════════════════════════════════════════════════════════
+
+⚡ 3 CLICKS TO COMPLETE:
+
+CLICK 1 - Check Table:
+  Visit: http://localhost/api/check_event_76.php
+  Note: Which table has ID 76?
+
+CLICK 2 - Add Video:
+  Visit: http://localhost/api/add_video_to_ampm.php
+  Expected: {"success": true, ...}
+
+CLICK 3 - Verify:
+  Visit: http://localhost/event.php?id=76&lang=en
+  Expected: Video plays below gallery ✅
+
+═══════════════════════════════════════════════════════════════════════════════
+
+✅ WHAT THIS DOES:
+
+BEFORE: Event 76 has NO video
+  video_url: null
+  event_video: null
+
+AFTER: Event 76 has YouTube video
+  video_url: https://youtu.be/JH3zXmuFARw?si=D7Drn3PjWR-uQdpm
+  Video displays on page ✅
+
+═══════════════════════════════════════════════════════════════════════════════
+
+🎯 COMPLETE VERIFICATION:
+
+Visit: http://localhost/event.php?id=76&lang=en
+
+Check these appear:
+  ☐ Title: "AMPM"
+  ☐ Description visible
+  ☐ Location: "Hall 1"
+  ☐ Cover image loads
+  ☐ Gallery images
+  ☐ VIDEO SECTION with player ← This is new!
+
+Open F12 Console:
+  ☐ See: "✅ VIDEO FOUND!"
+  ☐ See: "📺 Detected YouTube URL"
+  ☐ See: "✅ Video section now visible"
+  ☐ No red errors
+
+═══════════════════════════════════════════════════════════════════════════════
+
+✨ SUCCESS = All above ✅
+
+🚀 Ready to deploy to Hostinger!
+
+═══════════════════════════════════════════════════════════════════════════════
