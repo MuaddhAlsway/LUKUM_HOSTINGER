@@ -100,7 +100,46 @@ try {
         if ($isNumeric) {
             $eventId = (int)$eventIdParam;
         } else {
-            throw new Exception("Event/Exhibition not found with slug: $eventIdParam");
+            // Last resort: try to find ANY exhibition/event with similar title
+            // This handles cases where slug matching fails
+            error_log("DEBUG: Slug not found, trying fuzzy match for: $eventIdParam");
+            
+            // Try partial match on exhibitions
+            $fuzzyQuery = "SELECT id FROM exhibitions WHERE title_en LIKE ? LIMIT 1";
+            $fuzzyStmt = $db->prepare($fuzzyQuery);
+            if ($fuzzyStmt) {
+                $searchTerm = "%" . $eventIdParam . "%";
+                $fuzzyStmt->bind_param('s', $searchTerm);
+                if ($fuzzyStmt->execute()) {
+                    $fuzzyResult = $fuzzyStmt->get_result();
+                    if ($fuzzyRow = $fuzzyResult->fetch_assoc()) {
+                        $eventId = (int)$fuzzyRow['id'];
+                        error_log("DEBUG: Found exhibition via fuzzy match: $eventId");
+                    }
+                }
+            }
+            
+            // If still not found, try events table with fuzzy match
+            if ($eventId === null) {
+                $fuzzyEventQuery = "SELECT id FROM events WHERE title LIKE ? LIMIT 1";
+                $fuzzyEventStmt = $db->prepare($fuzzyEventQuery);
+                if ($fuzzyEventStmt) {
+                    $searchTerm = "%" . $eventIdParam . "%";
+                    $fuzzyEventStmt->bind_param('s', $searchTerm);
+                    if ($fuzzyEventStmt->execute()) {
+                        $fuzzyEventResult = $fuzzyEventStmt->get_result();
+                        if ($fuzzyEventRow = $fuzzyEventResult->fetch_assoc()) {
+                            $eventId = (int)$fuzzyEventRow['id'];
+                            error_log("DEBUG: Found event via fuzzy match: $eventId");
+                        }
+                    }
+                }
+            }
+            
+            // If still not found, return error
+            if ($eventId === null) {
+                throw new Exception("Event/Exhibition not found with slug: $eventIdParam (tried: exact match, fuzzy match)");
+            }
         }
     }
     
