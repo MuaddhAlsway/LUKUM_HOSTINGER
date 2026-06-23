@@ -493,77 +493,21 @@
             // Load exhibition
             loadExhibition();
 
-            // Remove video button handler - SUBMIT FORM IMMEDIATELY when removed
+            // Remove video button handler - Just clear the field, let user click Update
             const removeVideoBtn = document.getElementById('removeVideoBtn');
             const videoInput = document.getElementById('event_video');
             const videoPreviewSection = document.getElementById('videoPreviewSection');
             
             if (removeVideoBtn) {
-                removeVideoBtn.addEventListener('click', async (e) => {
+                removeVideoBtn.addEventListener('click', (e) => {
                     e.preventDefault();
                     
                     // Clear the video field
                     videoInput.value = '';
                     videoPreviewSection.style.display = 'none';
                     
-                    // Show loading state
-                    removeVideoBtn.disabled = true;
-                    removeVideoBtn.innerHTML = '<i class="ri-loader-4-line"></i> Removing...';
-                    
-                    try {
-                        // Get all form data
-                        const form = document.getElementById('exhibitionForm');
-                        const formData = new FormData(form);
-                        
-                        // Convert FormData to JSON, ensuring event_video is explicitly empty
-                        const jsonData = {
-                            id: formData.get('id'),
-                            title_en: formData.get('title_en'),
-                            title_ar: formData.get('title_ar'),
-                            description_en: formData.get('description_en'),
-                            description_ar: formData.get('description_ar'),
-                            location_en: formData.get('location_en'),
-                            location_ar: formData.get('location_ar'),
-                            exhibition_date: formData.get('exhibition_date'),
-                            exhibition_time: formData.get('exhibition_time'),
-                            exhibition_end_time: formData.get('exhibition_end_time'),
-                            end_date: formData.get('end_date'),
-                            event_video: ''  // EXPLICITLY SET TO EMPTY STRING
-                        };
-                        
-                        console.log('Sending removal request:', jsonData);
-                        
-                        const response = await fetch('../api/edit_exhibition.php', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify(jsonData)
-                        });
-                        
-                        const result = await response.json();
-                        console.log('Server response:', result);
-                        
-                        if (result.success) {
-                            showNotification('✅ Video removed successfully!', 'success');
-                            removeVideoBtn.innerHTML = '<i class="ri-delete-bin-line"></i> Remove Video';
-                            removeVideoBtn.disabled = false;
-                            
-                            // Reload the form to confirm changes
-                            setTimeout(() => {
-                                location.reload();
-                            }, 1500);
-                        } else {
-                            showNotification('❌ Error: ' + result.message, 'error');
-                            removeVideoBtn.innerHTML = '<i class="ri-delete-bin-line"></i> Remove Video';
-                            removeVideoBtn.disabled = false;
-                        }
-                    } catch (error) {
-                        console.error('Error removing video:', error);
-                        showNotification('❌ Network error: ' + error.message, 'error');
-                        removeVideoBtn.innerHTML = '<i class="ri-delete-bin-line"></i> Remove Video';
-                        removeVideoBtn.disabled = false;
-                    }
+                    // Focus on the Update button to guide user
+                    showNotification('✅ Video cleared! Click "Update Exhibition" to save.', 'success');
                 });
             }
 
