@@ -95,6 +95,7 @@ try {
     
     echo json_encode([
         'success' => true,
+        'data' => $event,
         'event' => $event,
         'gallery' => [],
         'source' => 'database'

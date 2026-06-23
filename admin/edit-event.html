@@ -313,22 +313,28 @@
             const lang = params.get('lang') || 'en';
             
             console.log('=== EDIT EVENT PAGE LOADED ===');
-            console.log('Event ID:', id);
+            console.log('Event ID from URL:', id);
             console.log('Language:', lang);
             
             if (!id) {
-                alert('No event ID provided');
+                alert('❌ No event ID provided in URL');
+                console.error('No event ID in URL');
                 window.location.href = 'events.html';
                 return;
             }
 
             try {
-                // Try to fetch event details with gallery from API (with language parameter)
-                const response = await fetch(`../api/get_event_details_simple.php?id=${id}&lang=${lang}`);
-                const data = await response.json();
+                console.log('Fetching event details for ID:', id);
+                // Try to fetch event details from API
+                const apiUrl = `../api/get_event_details_simple.php?id=${id}&lang=${lang}`;
+                console.log('API URL:', apiUrl);
                 
-                console.log('Event API Response:', data);
-                console.log('Response status:', response.status);
+                const response = await fetch(apiUrl);
+                console.log('API Response status:', response.status);
+                console.log('API Response ok:', response.ok);
+                
+                const data = await response.json();
+                console.log('API Response data:', data);
                 
                 let event = null;
                 let gallery = [];
@@ -336,21 +342,24 @@
                 if (data.success && data.data) {
                     event = data.data;
                     gallery = data.gallery || [];
-                    console.log('Loaded event from database:', event);
-                } else {
-                    console.warn('API returned error or no event:', data.message || data.error);
-                    alert('Error loading event: ' + (data.error || data.message || 'Unknown error'));
-                    // Try to load from mock data as fallback
-                    event = getMockEvent(id);
-                    if (event) {
-                        console.log('Using mock event data:', event);
+                    console.log('✅ Loaded event from database:', event);
+                } else if (response.ok) {
+                    // Even if success=false, try to use the data if it has event info
+                    if (data.data || data.event) {
+                        event = data.data || data.event;
+                        gallery = data.gallery || [];
+                        console.log('✅ Loaded event from response (success=false):', event);
+                    } else {
+                        console.warn('⚠️ API returned:', data);
+                        alert('Error loading event: ' + (data.error || data.message || 'Unknown error'));
                     }
+                } else {
+                    console.error('❌ API request failed:', response.status, data);
+                    alert('❌ Error loading event (HTTP ' + response.status + '): ' + (data.error || data.message || 'Unknown error'));
                 }
                 
                 if (event) {
-                    console.log('Loading event:', event);
-                    console.log('Form element exists:', !!document.getElementById('eventForm'));
-                    console.log('Title field exists:', !!document.getElementById('title_en'));
+                    console.log('✅ Populating form with event data');
                     populateForm(event);
                     // Reinitialize multi-day toggle after form is populated
                     initMultiDayToggle();
@@ -358,6 +367,20 @@
                         console.log('Gallery images found:', gallery.length);
                         displayExistingGallery(gallery);
                     } else {
+                        console.log('No gallery images');
+                    }
+                } else {
+                    console.error('❌ No event data to display');
+                    alert('❌ Could not load event data');
+                    window.location.href = 'events.html';
+                }
+                
+            } catch (error) {
+                console.error('❌ Error in loadEvent():', error);
+                alert('❌ Error loading event: ' + error.message);
+                window.location.href = 'events.html';
+            }
+        }
                         console.log('No gallery images for this event');
                     }
                     console.log('=== FORM POPULATED SUCCESSFULLY ===');
