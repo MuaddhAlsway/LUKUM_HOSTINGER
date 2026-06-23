@@ -705,21 +705,31 @@
             }
             
             // Fix image path - use absolute URL
-            if (event.cover_image) {
+            console.log('Cover image value:', event.cover_image);
+            if (event.cover_image && event.cover_image.trim()) {
                 const coverImg = document.getElementById('coverImg');
-                let imagePath = event.cover_image;
-                
-                // Convert to absolute URL
-                if (!imagePath.startsWith('http')) {
-                    imagePath = '../' + imagePath;
+                if (coverImg) {
+                    let imagePath = event.cover_image;
+                    
+                    // Convert to absolute URL
+                    if (!imagePath.startsWith('http')) {
+                        imagePath = '../' + imagePath;
+                    }
+                    
+                    console.log('✅ Setting cover image:', imagePath);
+                    coverImg.src = imagePath;
+                    coverImg.style.display = 'block';
+                    const placeholder = document.querySelector('.cover-placeholder');
+                    if (placeholder) placeholder.style.display = 'none';
+                    const removeCover = document.getElementById('removeCover');
+                    if (removeCover) removeCover.style.display = 'flex';
+                } else {
+                    console.warn('⚠️ coverImg element not found');
                 }
-                
-                console.log('Setting cover image:', imagePath);
-                coverImg.src = imagePath;
-                coverImg.style.display = 'block';
+            } else {
+                console.log('❌ No cover image in event data');
                 const placeholder = document.querySelector('.cover-placeholder');
-                if (placeholder) placeholder.style.display = 'none';
-                document.getElementById('removeCover').style.display = 'flex';
+                if (placeholder) placeholder.style.display = 'block';
             }
             
             // Handle video preview
