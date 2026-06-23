@@ -437,19 +437,23 @@ if (!$title) {
             descElement.textContent = description || 'No description available';
 
             // Display video if available - Handle both field names (events table uses video_url, exhibitions table uses event_video)
-            console.log('Checking for video_url...');
-            const videoUrl = event.video_url || event.event_video;
-            console.log('=== VIDEO URL CHECK ===');
+            console.log('=== CHECKING FOR VIDEO ===');
+            console.log('Full event object:', JSON.stringify(event, null, 2));
             console.log('event.video_url:', event.video_url);
             console.log('event.event_video:', event.event_video);
-            console.log('Final videoUrl:', videoUrl);
-            console.log('Complete event object:', JSON.stringify(event, null, 2));
             
-            if (videoUrl) {
-                console.log('Video URL found, calling displayVideo with:', videoUrl);
+            const videoUrl = event.video_url || event.event_video;
+            console.log('Final videoUrl variable:', videoUrl);
+            console.log('videoUrl is truthy?', !!videoUrl);
+            console.log('videoUrl length:', videoUrl ? videoUrl.length : 0);
+            
+            if (videoUrl && videoUrl.trim && videoUrl.trim() !== '') {
+                console.log('✅ VIDEO FOUND! Calling displayVideo with:', videoUrl);
                 displayVideo(videoUrl);
             } else {
-                console.log('No video URL found in event object');
+                console.log('❌ NO VIDEO URL FOUND - videoUrl is:', videoUrl);
+                console.log('❌ Type:', typeof videoUrl);
+                console.log('❌ Trim result:', videoUrl && videoUrl.trim ? videoUrl.trim() : 'N/A');
             }
 
             // Load gallery images from database
@@ -471,100 +475,108 @@ if (!$title) {
 
         // Display video from URL (YouTube or Vimeo)
         function displayVideo(videoUrl) {
+            console.log('🎬 === displayVideo CALLED ===');
+            console.log('videoUrl parameter:', videoUrl);
+            
+            // Get elements
             const videoSection = document.getElementById('videoSection');
             const videoFrame = document.getElementById('event-video');
             
-            console.log('=== displayVideo DEBUG ===');
-            console.log('videoUrl:', videoUrl);
-            console.log('videoUrl type:', typeof videoUrl);
-            console.log('videoUrl length:', videoUrl ? videoUrl.length : 'null');
-            console.log('videoSection element:', videoSection);
-            console.log('videoFrame element:', videoFrame);
+            console.log('videoSection element found?', !!videoSection);
+            console.log('videoFrame element found?', !!videoFrame);
             
+            if (!videoSection) {
+                console.error('🔴 CRITICAL: videoSection element not found in DOM!');
+                return;
+            }
+            
+            if (!videoFrame) {
+                console.error('🔴 CRITICAL: videoFrame element not found in DOM!');
+                return;
+            }
+            
+            // Validate video URL
             if (!videoUrl || videoUrl.trim() === '') {
-                console.log('No video URL provided - hiding section');
-                if (videoSection) {
-                    videoSection.classList.remove('active');
-                    videoSection.style.display = 'none';
-                }
+                console.log('❌ No video URL provided');
+                videoSection.style.display = 'none';
                 return;
             }
 
+            console.log('✅ Video URL is valid, length:', videoUrl.length);
             let embedUrl = '';
 
             // Handle YouTube URLs
             if (videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be')) {
+                console.log('📺 Detected YouTube URL');
                 let videoId = '';
                 
                 try {
                     if (videoUrl.includes('youtube.com/watch')) {
                         const url = new URL(videoUrl);
                         videoId = url.searchParams.get('v');
-                        console.log('YouTube watch URL - videoId:', videoId);
+                        console.log('🔍 YouTube watch format - extracted videoId:', videoId);
                     } else if (videoUrl.includes('youtu.be')) {
-                        // Extract video ID from youtu.be short URL
-                        // Handle both formats: youtu.be/ID and youtu.be/ID?param=value
+                        // youtu.be/ID?si=...
                         const match = videoUrl.match(/youtu\.be\/([a-zA-Z0-9_-]+)/);
                         if (match) {
                             videoId = match[1];
-                            console.log('YouTube short URL - videoId:', videoId);
+                            console.log('🔍 YouTube short URL format - extracted videoId:', videoId);
                         }
                     }
                 } catch (e) {
-                    console.error('Error parsing YouTube URL:', e);
+                    console.error('❌ Error parsing YouTube URL:', e);
                 }
                 
                 if (videoId) {
                     embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=0&controls=1`;
-                    console.log('Generated YouTube embed URL:', embedUrl);
+                    console.log('✅ Generated YouTube embed URL:', embedUrl);
                 }
             }
             // Handle Vimeo URLs
             else if (videoUrl.includes('vimeo.com')) {
+                console.log('🎥 Detected Vimeo URL');
                 try {
                     const match = videoUrl.match(/vimeo\.com\/(\d+)/);
                     if (match) {
                         const videoId = match[1];
                         embedUrl = `https://player.vimeo.com/video/${videoId}`;
-                        console.log('Generated Vimeo embed URL:', embedUrl);
+                        console.log('✅ Generated Vimeo embed URL:', embedUrl);
                     }
                 } catch (e) {
-                    console.error('Error parsing Vimeo URL:', e);
+                    console.error('❌ Error parsing Vimeo URL:', e);
                 }
             }
 
             console.log('Final embedUrl:', embedUrl);
             
             if (embedUrl) {
-                console.log('Setting iframe src to:', embedUrl);
-                if (videoFrame) {
-                    videoFrame.src = embedUrl;
-                    console.log('✅ iframe src set successfully to:', videoFrame.src);
-                } else {
-                    console.error('❌ videoFrame element not found!');
-                }
+                console.log('🚀 Setting iframe src...');
+                videoFrame.src = embedUrl;
+                console.log('✅ iframe.src is now:', videoFrame.src);
                 
-                if (videoSection) {
-                    console.log('BEFORE adding active class - classList:', Array.from(videoSection.classList));
-                    console.log('BEFORE style:', videoSection.getAttribute('style'));
-                    
-                    // Remove inline style that hides the section
-                    videoSection.style.display = 'block';
-                    videoSection.classList.add('active');
-                    
-                    console.log('✅ AFTER adding active class - classList:', Array.from(videoSection.classList));
-                    console.log('AFTER computed style:', window.getComputedStyle(videoSection).display);
-                } else {
-                    console.error('❌ videoSection element not found!');
-                }
+                console.log('📍 Making video section visible...');
+                // Force show the section with multiple methods
+                videoSection.style.display = 'block';
+                videoSection.style.visibility = 'visible';
+                videoSection.style.opacity = '1';
+                videoSection.classList.add('active');
+                
+                console.log('✅ Video section classList:', Array.from(videoSection.classList));
+                console.log('✅ Video section display style:', window.getComputedStyle(videoSection).display);
+                console.log('✅ Video section visibility style:', window.getComputedStyle(videoSection).visibility);
+                
+                // Verify iframe has src
+                console.log('✅ iframe src after setting:', videoFrame.src);
+                console.log('✅ iframe width:', videoFrame.style.width);
+                console.log('✅ iframe height:', videoFrame.style.height);
+                
+                console.log('🎉 VIDEO SHOULD NOW BE VISIBLE!');
             } else {
-                console.log('❌ No embed URL could be generated from:', videoUrl);
-                if (videoSection) {
-                    videoSection.classList.remove('active');
-                    videoSection.style.display = 'none';
-                }
+                console.error('🔴 Could not generate embed URL from:', videoUrl);
+                videoSection.style.display = 'none';
             }
-            console.log('=== displayVideo END ===');
+            
+            console.log('🎬 === displayVideo END ===');
         }
 
         // Format event date and time from database
