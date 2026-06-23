@@ -20,6 +20,11 @@ try {
     // Accept both 'id', 'slug', and 'title' parameters
     $eventIdParam = $_GET['id'] ?? $_GET['slug'] ?? $_GET['title'] ?? 1;
     
+    // Log incoming request
+    error_log("=== GET_EVENT_DETAILS REQUEST ===");
+    error_log("Raw GET params: " . json_encode($_GET));
+    error_log("eventIdParam: '$eventIdParam'");
+    
     // Get current language from URL parameter or session
     $lang = $_GET['lang'] ?? $_SESSION['language'] ?? 'en';
     if (!in_array($lang, ['en', 'ar'])) {
@@ -39,10 +44,19 @@ try {
     $eventId = null;
     $isNumeric = is_numeric($eventIdParam);
     
-    if ($isNumeric) {
+    error_log("DEBUG: eventIdParam = '$eventIdParam', isNumeric = " . ($isNumeric ? 'true' : 'false'));
+    
+    // First, try to extract ID from get_exhibitions.php slug format: "ex-{id}-{title}"
+    if (preg_match('/^ex-(\d+)-/', $eventIdParam, $matches)) {
+        $eventId = (int)$matches[1];
+        $isNumeric = true;  // Treat extracted ID as numeric
+        error_log("DEBUG: Extracted ID from 'ex-{id}-title' format: $eventId");
+    } elseif ($isNumeric) {
+        // Direct numeric ID (from ?id= parameter)
         $eventId = (int)$eventIdParam;
+        error_log("DEBUG: Using direct numeric ID: $eventId");
     } else {
-        // Try to find event by slug from base table
+        // Not a direct ID and not an ex- prefixed slug, so search by title/slug
         // Normalize slug: lowercase, replace spaces with hyphens, remove special chars
         $slugParam = strtolower(trim($eventIdParam));
         $slugParam = preg_replace('/[^a-z0-9-]/', '', $slugParam);
@@ -230,6 +244,8 @@ try {
         $tableCheckQuery = "SHOW TABLES LIKE 'exhibitions'";
         $tableResult = $db->getConnection()->query($tableCheckQuery);
         
+        error_log("DEBUG: Exhibition table check - found: " . ($tableResult && $tableResult->num_rows > 0 ? 'yes' : 'no'));
+        
         if ($tableResult && $tableResult->num_rows > 0) {
             $exhibitionQuery = '
                 SELECT
@@ -257,6 +273,8 @@ try {
                 LIMIT 1
             ';
             
+            error_log("DEBUG: Running exhibition query for ID $eventId");
+            
             $exhibitionStmt = $db->prepare($exhibitionQuery);
             if ($exhibitionStmt) {
                 $exhibitionStmt->bind_param('i', $eventId);
@@ -266,6 +284,8 @@ try {
                     
                     if ($event) {
                         error_log("DEBUG: FOUND in exhibitions table with ID: $eventId");
+                    } else {
+                        error_log("DEBUG: Query executed but no rows returned");
                     }
                 } else {
                     error_log("DEBUG: Exhibition query execute failed: " . $exhibitionStmt->error);
