@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>API Direct Test</title>
+    <style>
+        body { font-family: monospace; margin: 20px; background: #f5f5f5; }
+        pre { background: white; padding: 15px; border-radius: 4px; overflow-x: auto; }
+        .error { color: #d32f2f; }
+        .success { color: #388e3c; }
+        .info { color: #1976d2; }
+        h1 { color: #333; }
+        button { padding: 10px 20px; margin: 10px 0; background: #1976d2; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #1565c0; }
+    </style>
+</head>
+<body>
+    <h1>LAKUM API Direct Test</h1>
+    
+    <h2>Test Exhibition 3 (Cheval Blanc)</h2>
+    <button onclick="testAPI('3')">Test ID 3</button>
+    <button onclick="testAPI('cheval-blanc')">Test Slug</button>
+    <pre id="result3"></pre>
+
+    <h2>Test Exhibition 5 (AMPM)</h2>
+    <button onclick="testAPI('5')">Test ID 5</button>
+    <button onclick="testAPI('ampm')">Test Slug</button>
+    <pre id="result5"></pre>
+
+    <h2>Test Event 74</h2>
+    <button onclick="testAPI('74')">Test ID 74</button>
+    <pre id="result74"></pre>
+
+    <script>
+        async function testAPI(param) {
+            const resultId = 'result' + (param === 'cheval-blanc' ? '3' : param === 'ampm' ? '5' : param);
+            const resultElement = document.getElementById(resultId);
+            
+            try {
+                resultElement.innerHTML = '<span class="info">⏳ Loading...</span>';
+                
+                // Determine if numeric or slug
+                const isNumeric = !isNaN(param);
+                const url = isNumeric 
+                    ? `/api/get_event_details.php?id=${param}&lang=en`
+                    : `/api/get_event_details.php?title=${encodeURIComponent(param)}&lang=en`;
+                
+                console.log('Fetching:', url);
+                const response = await fetch(url);
+                
+                if (!response.ok) {
+                    resultElement.innerHTML = `<span class="error">❌ HTTP ${response.status}: ${response.statusText}</span>`;
+                    return;
+                }
+                
+                const data = await response.json();
+                
+                if (data.success && data.event) {
+                    const output = `<span class="success">✅ SUCCESS</span>
+Event: ${data.event.title}
+Video URL: ${data.event.video_url || 'NOT SET'}
+Event Video: ${data.event.event_video || 'NOT SET'}
+Category: ${data.event.category || 'N/A'}
+Cover Image: ${data.event.cover_image ? 'YES' : 'NO'}
+Gallery Items: ${data.gallery ? data.gallery.length : 0}
+
+Full Response:
+${JSON.stringify(data, null, 2)}`;
+                    resultElement.innerHTML = output;
+                } else {
+                    resultElement.innerHTML = `<span class="error">❌ API Error:</span>
+${data.message || 'Unknown error'}
+
+Response:
+${JSON.stringify(data, null, 2)}`;
+                }
+            } catch (error) {
+                resultElement.innerHTML = `<span class="error">❌ Fetch Error:</span>
+${error.message}
+
+Make sure you're accessing this from http://localhost or the API is on the same domain.`;
+                console.error('Error:', error);
+            }
+        }
+    </script>
+</body>
+</html>

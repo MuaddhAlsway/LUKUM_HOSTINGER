@@ -289,6 +289,9 @@ if (!$title) {
         async function loadEventData() {
             const params = new URLSearchParams(window.location.search);
             
+            console.log('🚀 loadEventData started');
+            console.log('Current URL:', window.location.href);
+            
             // Support multiple URL formats:
             // 1. /dior-exhibition (rewritten to /event.php?title=dior-exhibition)
             // 2. /event.php?title=dior-exhibition
@@ -296,6 +299,9 @@ if (!$title) {
             // 4. /dior-exhibition?lang=en (clean URL - title from .htaccess rewrite)
             let eventTitleParam = window.LAKUM_EVENT_TITLE || params.get('title') || params.get('id') || '1';
             let lang = window.LAKUM_LANG || params.get('lang');
+            
+            console.log('📍 eventTitleParam:', eventTitleParam);
+            console.log('📍 lang initial:', lang);
             
             // If no lang in URL, get from localStorage or default to 'en'
             if (!lang) {
@@ -308,7 +314,7 @@ if (!$title) {
             
             currentLanguage = lang;
 
-            console.log('Loading event with title/ID:', eventTitleParam, 'Language:', lang);
+            console.log('✅ Loading event with title/ID:', eventTitleParam, 'Language:', lang);
 
             try {
                 // Try to fetch from API (supports both numeric ID and slug/title)
@@ -318,43 +324,70 @@ if (!$title) {
                 // Determine if it's numeric (ID) or text (slug/title)
                 if (!isNaN(eventTitleParam) && eventTitleParam.trim() !== '') {
                     apiUrl += `&id=${eventTitleParam}`;
+                    console.log('📱 Detected numeric ID format');
                 } else {
                     apiUrl += `&title=${encodeURIComponent(eventTitleParam)}`;
+                    console.log('📱 Detected slug/title format');
                 }
                 
-                console.log('Fetching from:', apiUrl);
+                console.log('🔗 API URL:', apiUrl);
+                
                 let response = await fetch(apiUrl);
+                console.log('📨 API Response status:', response.status, response.statusText);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
                 
                 let data = await response.json();
-                console.log('API Response:', data);
+                console.log('📦 API Response data:', data);
 
                 // If event not found and ID was default (1), try to get first available event
                 if (!data.success && eventTitleParam === '1') {
-                    console.log('Event not found, fetching first available event...');
+                    console.log('⚠️ Event not found, fetching first available event...');
                     const lang = (typeof LanguageManager !== 'undefined') ? LanguageManager.getLanguage() : 'en';
                     response = await fetch(`/api/get_events.php?lang=${lang}`);
                     const eventsData = await response.json();
                     
                     if (eventsData.success && eventsData.data && eventsData.data.length > 0) {
                         const firstEventId = eventsData.data[0].id;
-                        console.log('Found first event ID:', firstEventId);
+                        console.log('✅ Found first event ID:', firstEventId);
                         response = await fetch(`/api/get_event_details.php?id=${firstEventId}&lang=${lang}`);
                         data = await response.json();
                     }
                 }
 
                 if (data.success && data.event) {
-                    console.log('Loaded from database:', data.event);
+                    console.log('✅ Loaded from database:', data.event);
                     displayEvent(data.event, data.gallery, lang);
                 } else {
-                    throw new Error(data.message || 'Failed to load event');
+                    throw new Error(data.message || 'API returned success=false');
                 }
             } catch (error) {
-                console.error('Error loading event from API:', error);
+                console.error('❌ Error loading event from API:', error);
+                console.error('Error details:', error.message, error.stack);
+                
+                // Hide loader even on error
+                const pageLoader = document.getElementById('pageLoader');
+                if (pageLoader) {
+                    pageLoader.style.display = 'none';
+                    pageLoader.style.visibility = 'hidden';
+                    console.log('🔴 Error: Loader hidden');
+                }
+                
                 // Show error message instead of falling back to mock data
                 const descElement = document.getElementById('event-description');
-                descElement.textContent = 'Error loading event: ' + error.message;
-                document.getElementById('event-title').textContent = 'Event Not Found';
+                if (descElement) {
+                    descElement.textContent = 'Error loading event: ' + error.message;
+                    descElement.style.color = '#d32f2f';
+                    descElement.style.padding = '20px';
+                    descElement.style.border = '1px solid #d32f2f';
+                }
+                
+                const titleElement = document.getElementById('event-title');
+                if (titleElement) {
+                    titleElement.textContent = 'Event Not Found';
+                }
             }
         }
 
@@ -378,6 +411,15 @@ if (!$title) {
             console.log('Language:', lang);
             console.log('Event video_url:', event.video_url);
             console.log('Event event_video:', event.event_video);
+            
+            // Hide the page loader
+            const pageLoader = document.getElementById('pageLoader');
+            if (pageLoader) {
+                pageLoader.style.display = 'none';
+                pageLoader.style.visibility = 'hidden';
+                pageLoader.style.opacity = '0';
+                console.log('✅ Page loader hidden');
+            }
             
             currentEvent = event;
             currentLanguage = lang;
@@ -694,18 +736,25 @@ if (!$title) {
 
         // Load event data on page load
         function initEventPage() {
-            console.log('Initializing event page...');
+            console.log('🎬 Initializing event page...');
             loadEventData();
         }
         
-        window.addEventListener('DOMContentLoaded', initEventPage);
+        // Handle both cases: if script loads before DOM is ready OR after
+        if (document.readyState === 'loading') {
+            window.addEventListener('DOMContentLoaded', initEventPage);
+            console.log('📍 Document still loading, waiting for DOMContentLoaded');
+        } else {
+            console.log('📍 Document already loaded, initializing immediately');
+            initEventPage();
+        }
         
         // Listen for URL changes (when user clicks different event links)
         window.addEventListener('popstate', loadEventData);
         
         // Listen for language changes - reload event data with new language
         document.addEventListener('lakum-language-changed', (e) => {
-            console.log('Language changed to:', e.detail?.lang);
+            console.log('🌍 Language changed to:', e.detail?.lang);
             loadEventData();
         });
         
@@ -719,8 +768,10 @@ if (!$title) {
             if (currentEventTitle !== lastEventId || currentLanguage !== lastLanguage) {
                 lastEventId = currentEventTitle;
                 lastLanguage = currentLanguage;
+                console.log('📍 URL changed, reloading event');
                 loadEventData();
             }
+        }, 500);
         }, 500);
 
         // Keyboard navigation for lightbox
