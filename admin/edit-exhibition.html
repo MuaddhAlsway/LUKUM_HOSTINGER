@@ -734,7 +734,8 @@
                             exhibition_time: (document.getElementById('exhibition_time').value || '10:00') + ':00',
                             exhibition_end_time: (document.getElementById('exhibition_end_time').value || '18:00') + ':00',
                             end_date: document.getElementById('end_date').value || null,
-                            event_video: eventVideoElement ? eventVideoElement.value.trim() || null : null
+                            event_video: eventVideoElement ? (eventVideoElement.value.trim() || null) : null,
+                            video_url: eventVideoElement ? (eventVideoElement.value.trim() || null) : null
                         };
                         
                         // DEBUG: Log video URL

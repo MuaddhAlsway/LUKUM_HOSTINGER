@@ -66,19 +66,36 @@ try {
     $conn = $db->getConnection();
     $conn->set_charset('utf8mb4');
     
+    // Use prepared statements for safety
     // Delete gallery images first
-    $query = "DELETE FROM event_gallery WHERE event_id = $event_id";
-    if (!$conn->query($query)) {
-        throw new Exception('Delete gallery failed: ' . $conn->error);
+    $gallery_query = "DELETE FROM event_gallery WHERE event_id = ?";
+    $gallery_stmt = $conn->prepare($gallery_query);
+    if (!$gallery_stmt) {
+        throw new Exception('Prepare gallery delete failed: ' . $conn->error);
     }
+    $gallery_stmt->bind_param('i', $event_id);
+    if (!$gallery_stmt->execute()) {
+        throw new Exception('Delete gallery failed: ' . $gallery_stmt->error);
+    }
+    $gallery_stmt->close();
     
     // Delete event
-    $query = "DELETE FROM events WHERE id = $event_id";
-    if (!$conn->query($query)) {
-        throw new Exception('Delete event failed: ' . $conn->error);
+    $event_query = "DELETE FROM events WHERE id = ?";
+    $event_stmt = $conn->prepare($event_query);
+    if (!$event_stmt) {
+        throw new Exception('Prepare event delete failed: ' . $conn->error);
     }
+    $event_stmt->bind_param('i', $event_id);
+    if (!$event_stmt->execute()) {
+        throw new Exception('Delete event failed: ' . $event_stmt->error);
+    }
+    $event_stmt->close();
     
-    $affectedRows = $conn->affected_rows;
+    $affectedRows = $event_stmt->affected_rows;
+    
+    if ($affectedRows === 0) {
+        throw new Exception('Event not found or already deleted');
+    }
     
     http_response_code(200);
     echo json_encode([

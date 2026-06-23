@@ -1,6 +1,6 @@
 <?php
 /**
- * Remove video from exhibition - Simple dedicated endpoint
+ * Remove video from exhibition - Update both event_video and video_url fields
  */
 
 header('Content-Type: application/json; charset=utf-8');
@@ -28,7 +28,7 @@ if (!$exhibition_id) {
     die(json_encode(['success' => false, 'error' => 'Exhibition ID required']));
 }
 
-// Direct SQL - set event_video to NULL
+// Update exhibitions table - set event_video to NULL
 $sql = "UPDATE exhibitions SET event_video = NULL WHERE id = ?";
 $stmt = $conn->prepare($sql);
 
@@ -44,7 +44,19 @@ if (!$stmt->execute()) {
     die(json_encode(['success' => false, 'error' => 'Execute failed: ' . $stmt->error]));
 }
 
-// Verify it was removed
+$stmt->close();
+
+// Also update events table video_url if exists (for cross-table consistency)
+$events_sql = "UPDATE events SET video_url = NULL WHERE id = ?";
+$events_stmt = $conn->prepare($events_sql);
+
+if ($events_stmt) {
+    $events_stmt->bind_param('i', $exhibition_id);
+    $events_stmt->execute();
+    $events_stmt->close();
+}
+
+// Verify deletion from exhibitions
 $verify_sql = "SELECT event_video FROM exhibitions WHERE id = ?";
 $verify_stmt = $conn->prepare($verify_sql);
 $verify_stmt->bind_param('i', $exhibition_id);
@@ -61,7 +73,6 @@ echo json_encode([
     'is_null' => is_null($verify_row['event_video'])
 ]);
 
-$stmt->close();
 $verify_stmt->close();
 $conn->close();
 ?>

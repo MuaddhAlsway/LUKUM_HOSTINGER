@@ -184,6 +184,15 @@ try {
         }
         $verify_stmt->close();
         
+        // Also update events table with video_url for consistency
+        $events_update = "UPDATE events SET video_url = ? WHERE id = ?";
+        $events_stmt = $conn->prepare($events_update);
+        if ($events_stmt) {
+            $events_stmt->bind_param('si', $event_video, $id);
+            $events_stmt->execute();
+            $events_stmt->close();
+        }
+        
         $stmt->close();
         ob_end_clean();
         
