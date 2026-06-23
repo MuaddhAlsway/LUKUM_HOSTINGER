@@ -1,109 +1,111 @@
 <?php
-require_once __DIR__ . '/config.php';
 /**
- * LAKUM Artspace - Get Event Details API (Simple)
+ * SIMPLIFIED Get Event Details API - Debug Version
  */
 
-header('Content-Type: application/json');
+header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
 
+error_reporting(E_ALL);
+ini_set('display_errors', 0);
+ini_set('log_errors', 1);
+
 try {
-    $event_id = (int)($_GET['id'] ?? 0);
-    $lang = $_GET['lang'] ?? 'en';
+    require_once 'config.php';
     
-    if (!$event_id) {
-        http_response_code(400);
-        echo json_encode(['success' => false, 'error' => 'Event ID is required']);
-        exit;
+    $eventId = isset($_GET['id']) ? (int)$_GET['id'] : 1;
+    error_log("SIMPLE API: Requested ID = $eventId");
+    
+    $db = Database::getInstance();
+    
+    if (!$db->isConnected()) {
+        throw new Exception('Database not connected');
     }
     
-    $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+    error_log("SIMPLE API: Database connected");
     
-    if ($conn->connect_error) {
-        http_response_code(500);
-        echo json_encode(['success' => false, 'error' => 'DB Error: ' . $conn->connect_error]);
-        exit;
+    // Check exhibitions table first
+    $exhibitionQuery = "SELECT id, title_en, description_en, location_en, exhibition_date, event_video, gallery_images FROM exhibitions WHERE id = ? LIMIT 1";
+    $exhibitionStmt = $db->prepare($exhibitionQuery);
+    
+    if (!$exhibitionStmt) {
+        error_log("SIMPLE API: Exhibition prepare failed: " . $db->getConnection()->error);
+        throw new Exception('Prepare failed: ' . $db->getConnection()->error);
     }
     
-    // Check if event_translations table exists
-    $tableCheckQuery = "SHOW TABLES LIKE 'event_translations'";
-    $tableCheckResult = $conn->query($tableCheckQuery);
-    $translationsTableExists = $tableCheckResult && $tableCheckResult->num_rows > 0;
+    $exhibitionStmt->bind_param('i', $eventId);
     
-    // Get event with translations if table exists
-    if ($translationsTableExists) {
-        $query = "
-            SELECT 
-                e.*,
-                COALESCE(et_en.title, e.title) as title_en,
-                COALESCE(et_en.description, e.description) as description_en,
-                COALESCE(et_en.location, e.location) as location_en,
-                COALESCE(et_ar.title, '') as title_ar,
-                COALESCE(et_ar.description, '') as description_ar,
-                COALESCE(et_ar.location, '') as location_ar
-            FROM events e
-            LEFT JOIN event_translations et_en ON e.id = et_en.event_id AND et_en.language = 'en'
-            LEFT JOIN event_translations et_ar ON e.id = et_ar.event_id AND et_ar.language = 'ar'
-            WHERE e.id = $event_id
-        ";
+    if (!$exhibitionStmt->execute()) {
+        error_log("SIMPLE API: Exhibition execute failed: " . $exhibitionStmt->error);
+        throw new Exception('Execute failed: ' . $exhibitionStmt->error);
+    }
+    
+    $exhibitionResult = $exhibitionStmt->get_result();
+    $event = $exhibitionResult->fetch_assoc();
+    
+    if ($event) {
+        error_log("SIMPLE API: Found in exhibitions table");
+        
+        // Format exhibition data like events
+        $event = array(
+            'id' => $event['id'],
+            'title' => $event['title_en'],
+            'description' => $event['description_en'],
+            'location' => $event['location_en'],
+            'event_date' => $event['exhibition_date'],
+            'video_url' => $event['event_video'],
+            'event_video' => $event['event_video'],
+            'gallery_images' => $event['gallery_images'],
+            'category' => 'exhibition'
+        );
     } else {
-        // Fallback: just get from events table
-        $query = "SELECT * FROM events WHERE id = $event_id";
-    }
-    
-    $result = $conn->query($query);
-    
-    if (!$result) {
-        http_response_code(500);
-        echo json_encode(['success' => false, 'error' => 'Query failed: ' . $conn->error]);
-        exit;
-    }
-    
-    if ($result->num_rows === 0) {
-        http_response_code(404);
-        echo json_encode(['success' => false, 'error' => 'Event not found']);
-        exit;
-    }
-    
-    $event = $result->fetch_assoc();
-    
-    // Debug: log what we got
-    error_log('EVENT_DETAILS: ' . json_encode([
-        'event_id' => $event_id,
-        'has_title_ar' => !empty($event['title_ar']),
-        'has_description_ar' => !empty($event['description_ar']),
-        'has_location_ar' => !empty($event['location_ar']),
-        'translations_table_exists' => $translationsTableExists
-    ]));
-    
-    // Get gallery images
-    $galleryQuery = "SELECT * FROM event_gallery WHERE event_id = $event_id ORDER BY display_order";
-    $galleryResult = $conn->query($galleryQuery);
-    
-    $gallery = [];
-    if ($galleryResult) {
-        while ($row = $galleryResult->fetch_assoc()) {
-            $gallery[] = $row;
+        error_log("SIMPLE API: Not in exhibitions, checking events table");
+        
+        // Check events table
+        $eventQuery = "SELECT id, title, description, location, event_date, video_url FROM events WHERE id = ? LIMIT 1";
+        $eventStmt = $db->prepare($eventQuery);
+        
+        if (!$eventStmt) {
+            error_log("SIMPLE API: Event prepare failed: " . $db->getConnection()->error);
+            throw new Exception('Prepare failed: ' . $db->getConnection()->error);
         }
+        
+        $eventStmt->bind_param('i', $eventId);
+        
+        if (!$eventStmt->execute()) {
+            error_log("SIMPLE API: Event execute failed: " . $eventStmt->error);
+            throw new Exception('Execute failed: ' . $eventStmt->error);
+        }
+        
+        $eventResult = $eventStmt->get_result();
+        $event = $eventResult->fetch_assoc();
+        
+        if (!$event) {
+            error_log("SIMPLE API: Not found in either table");
+            throw new Exception('Event/Exhibition not found with ID: ' . $eventId);
+        }
+        
+        error_log("SIMPLE API: Found in events table");
+        
+        // Add video_url as event_video for consistency
+        $event['event_video'] = $event['video_url'];
     }
     
-    error_log('GALLERY_COUNT: ' . count($gallery));
+    error_log("SIMPLE API: Returning event: " . json_encode($event));
     
-    $conn->close();
-    
-    http_response_code(200);
     echo json_encode([
         'success' => true,
-        'data' => $event,
-        'gallery' => $gallery,
-        'translations_table_exists' => $translationsTableExists
+        'event' => $event,
+        'gallery' => [],
+        'source' => 'database'
     ]);
     
 } catch (Exception $e) {
-    http_response_code(500);
-    echo json_encode(['success' => false, 'error' => $e->getMessage()]);
+    error_log('SIMPLE API Error: ' . $e->getMessage());
+    http_response_code(400);
+    echo json_encode([
+        'success' => false,
+        'message' => $e->getMessage()
+    ]);
 }
 ?>
-
-
-

@@ -1,84 +1,81 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>API Direct Test</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Test Tool</title>
     <style>
-        body { font-family: monospace; margin: 20px; background: #f5f5f5; }
-        pre { background: white; padding: 15px; border-radius: 4px; overflow-x: auto; }
-        .error { color: #d32f2f; }
-        .success { color: #388e3c; }
-        .info { color: #1976d2; }
-        h1 { color: #333; }
-        button { padding: 10px 20px; margin: 10px 0; background: #1976d2; color: white; border: none; border-radius: 4px; cursor: pointer; }
-        button:hover { background: #1565c0; }
+        body { font-family: sans-serif; margin: 20px; }
+        .section { margin: 20px 0; padding: 15px; border: 1px solid #ccc; }
+        button { padding: 10px 20px; background: #007bff; color: white; border: none; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        pre { background: #f5f5f5; padding: 10px; overflow-x: auto; }
+        .error { color: red; }
+        .success { color: green; }
     </style>
 </head>
 <body>
-    <h1>LAKUM API Direct Test</h1>
+    <h1>LAKUM API Test Tool</h1>
     
-    <h2>Test Exhibition 3 (Cheval Blanc)</h2>
-    <button onclick="testAPI('3')">Test ID 3</button>
-    <button onclick="testAPI('cheval-blanc')">Test Slug</button>
-    <pre id="result3"></pre>
-
-    <h2>Test Exhibition 5 (AMPM)</h2>
-    <button onclick="testAPI('5')">Test ID 5</button>
-    <button onclick="testAPI('ampm')">Test Slug</button>
-    <pre id="result5"></pre>
-
-    <h2>Test Event 74</h2>
-    <button onclick="testAPI('74')">Test ID 74</button>
-    <pre id="result74"></pre>
+    <div class="section">
+        <h2>Step 1: Check Database</h2>
+        <button onclick="checkDatabase()">Check Database Status</button>
+        <pre id="dbResult"></pre>
+    </div>
+    
+    <div class="section">
+        <h2>Step 2: Test API with ID</h2>
+        <input type="number" id="testId" placeholder="Enter Exhibition/Event ID" value="1">
+        <button onclick="testAPI()">Test API</button>
+        <pre id="apiResult"></pre>
+    </div>
+    
+    <div class="section">
+        <h2>Step 3: Direct Query Test</h2>
+        <button onclick="checkDirectAPI()">Check Debug API</button>
+        <pre id="debugResult"></pre>
+    </div>
 
     <script>
-        async function testAPI(param) {
-            const resultId = 'result' + (param === 'cheval-blanc' ? '3' : param === 'ampm' ? '5' : param);
-            const resultElement = document.getElementById(resultId);
-            
+        async function checkDatabase() {
             try {
-                resultElement.innerHTML = '<span class="info">⏳ Loading...</span>';
-                
-                // Determine if numeric or slug
-                const isNumeric = !isNaN(param);
-                const url = isNumeric 
-                    ? `/api/get_event_details.php?id=${param}&lang=en`
-                    : `/api/get_event_details.php?title=${encodeURIComponent(param)}&lang=en`;
-                
-                console.log('Fetching:', url);
-                const response = await fetch(url);
-                
-                if (!response.ok) {
-                    resultElement.innerHTML = `<span class="error">❌ HTTP ${response.status}: ${response.statusText}</span>`;
-                    return;
-                }
-                
+                const response = await fetch('/api/debug_api_error.php');
                 const data = await response.json();
+                document.getElementById('dbResult').textContent = JSON.stringify(data, null, 2);
+            } catch (e) {
+                document.getElementById('dbResult').innerHTML = `<span class="error">Error: ${e.message}</span>`;
+            }
+        }
+        
+        async function testAPI() {
+            const id = document.getElementById('testId').value;
+            try {
+                const response = await fetch(`/api/get_event_details.php?id=${id}&lang=en`);
+                const text = await response.text();
                 
-                if (data.success && data.event) {
-                    const output = `<span class="success">✅ SUCCESS</span>
-Event: ${data.event.title}
-Video URL: ${data.event.video_url || 'NOT SET'}
-Event Video: ${data.event.event_video || 'NOT SET'}
-Category: ${data.event.category || 'N/A'}
-Cover Image: ${data.event.cover_image ? 'YES' : 'NO'}
-Gallery Items: ${data.gallery ? data.gallery.length : 0}
-
-Full Response:
-${JSON.stringify(data, null, 2)}`;
-                    resultElement.innerHTML = output;
-                } else {
-                    resultElement.innerHTML = `<span class="error">❌ API Error:</span>
-${data.message || 'Unknown error'}
-
-Response:
-${JSON.stringify(data, null, 2)}`;
+                try {
+                    const data = JSON.parse(text);
+                    const resultDiv = document.getElementById('apiResult');
+                    if (data.success) {
+                        resultDiv.innerHTML = `<span class="success">SUCCESS</span>\n${JSON.stringify(data, null, 2)}`;
+                    } else {
+                        resultDiv.innerHTML = `<span class="error">FAILED</span>\n${JSON.stringify(data, null, 2)}`;
+                    }
+                } catch (e) {
+                    document.getElementById('apiResult').innerHTML = `<span class="error">Invalid JSON Response:</span>\n${text}`;
                 }
-            } catch (error) {
-                resultElement.innerHTML = `<span class="error">❌ Fetch Error:</span>
-${error.message}
-
-Make sure you're accessing this from http://localhost or the API is on the same domain.`;
-                console.error('Error:', error);
+            } catch (e) {
+                document.getElementById('apiResult').innerHTML = `<span class="error">Error: ${e.message}</span>`;
+            }
+        }
+        
+        async function checkDirectAPI() {
+            try {
+                const response = await fetch('/api/debug_api_error.php');
+                const data = await response.json();
+                document.getElementById('debugResult').textContent = JSON.stringify(data, null, 2);
+            } catch (e) {
+                document.getElementById('debugResult').innerHTML = `<span class="error">Error: ${e.message}</span>`;
             }
         }
     </script>

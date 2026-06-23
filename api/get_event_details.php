@@ -116,43 +116,55 @@ try {
         // Try exhibitions table FIRST for numeric IDs
         error_log("DEBUG: Checking exhibitions table first for ID $eventId");
         
-        $exhibitionQuery = '
-            SELECT 
-                ex.id,
-                ex.exhibition_date as event_date,
-                ex.exhibition_time as event_time,
-                ex.exhibition_end_time as event_end_time,
-                ex.end_date,
-                ex.cover_image,
-                COALESCE(ex.event_video, "") as video_url,
-                COALESCE(ex.event_video, "") as event_video,
-                ex.gallery_images,
-                "exhibition" as category,
-                COALESCE(ex.title_en, ex.title) as title,
-                COALESCE(ex.description_en, ex.description) as description,
-                COALESCE(ex.location_en, ex.location) as location,
-                COALESCE(ex.title_en, "") as title_en,
-                COALESCE(ex.description_en, "") as description_en,
-                COALESCE(ex.location_en, "") as location_en,
-                COALESCE(ex.title_ar, "") as title_ar,
-                COALESCE(ex.description_ar, "") as description_ar,
-                COALESCE(ex.location_ar, "") as location_ar
-            FROM exhibitions ex
-            WHERE ex.id = ?
-            LIMIT 1
-        ';
+        // Check if exhibitions table exists first
+        $tableCheckQuery = "SHOW TABLES LIKE 'exhibitions'";
+        $tableResult = $db->getConnection()->query($tableCheckQuery);
         
-        $exhibitionStmt = $db->prepare($exhibitionQuery);
-        if ($exhibitionStmt) {
-            $exhibitionStmt->bind_param('i', $eventId);
-            if ($exhibitionStmt->execute()) {
-                $exhibitionResult = $exhibitionStmt->get_result();
-                $event = $exhibitionResult->fetch_assoc();
-                
-                if ($event) {
-                    error_log("DEBUG: FOUND in exhibitions table with ID: $eventId");
+        if ($tableResult && $tableResult->num_rows > 0) {
+            $exhibitionQuery = '
+                SELECT 
+                    ex.id,
+                    ex.exhibition_date as event_date,
+                    ex.exhibition_time as event_time,
+                    ex.exhibition_end_time as event_end_time,
+                    ex.end_date,
+                    ex.cover_image,
+                    COALESCE(ex.event_video, "") as video_url,
+                    COALESCE(ex.event_video, "") as event_video,
+                    COALESCE(ex.gallery_images, "") as gallery_images,
+                    "exhibition" as category,
+                    COALESCE(ex.title_en, "") as title,
+                    COALESCE(ex.description_en, "") as description,
+                    COALESCE(ex.location_en, "") as location,
+                    COALESCE(ex.title_en, "") as title_en,
+                    COALESCE(ex.description_en, "") as description_en,
+                    COALESCE(ex.location_en, "") as location_en,
+                    COALESCE(ex.title_ar, "") as title_ar,
+                    COALESCE(ex.description_ar, "") as description_ar,
+                    COALESCE(ex.location_ar, "") as location_ar
+                FROM exhibitions ex
+                WHERE ex.id = ?
+                LIMIT 1
+            ';
+            
+            $exhibitionStmt = $db->prepare($exhibitionQuery);
+            if ($exhibitionStmt) {
+                $exhibitionStmt->bind_param('i', $eventId);
+                if ($exhibitionStmt->execute()) {
+                    $exhibitionResult = $exhibitionStmt->get_result();
+                    $event = $exhibitionResult->fetch_assoc();
+                    
+                    if ($event) {
+                        error_log("DEBUG: FOUND in exhibitions table with ID: $eventId");
+                    }
+                } else {
+                    error_log("DEBUG: Exhibition query execute failed: " . $exhibitionStmt->error);
                 }
+            } else {
+                error_log("DEBUG: Exhibition query prepare failed");
             }
+        } else {
+            error_log("DEBUG: Exhibitions table does not exist");
         }
     }
     
@@ -273,8 +285,12 @@ try {
     }
     
     if (!$event) {
+        error_log("DEBUG: Event not found with ID: $eventId - Throwing exception");
         throw new Exception('Event/Exhibition not found with ID: ' . $eventId);
     }
+    
+    // Log what we found
+    error_log("DEBUG: Successfully loaded event: ID=$eventId, Title=" . $event['title']);
     
     // Get gallery images - handle both events (event_gallery table) and exhibitions (gallery_images JSON)
     $gallery = [];

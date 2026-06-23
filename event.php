@@ -336,7 +336,17 @@ if (!$title) {
                 console.log('📨 API Response status:', response.status, response.statusText);
                 
                 if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                    // Try to get the error message from response
+                    let errorText = await response.text();
+                    console.error('🔴 API Error Response:', errorText);
+                    
+                    // Try to parse as JSON for better error message
+                    try {
+                        const errorData = JSON.parse(errorText);
+                        throw new Error(`HTTP ${response.status}: ${errorData.message || response.statusText}`);
+                    } catch (parseError) {
+                        throw new Error(`HTTP ${response.status}: ${response.statusText} - ${errorText.substring(0, 100)}`);
+                    }
                 }
                 
                 let data = await response.json();
@@ -378,10 +388,12 @@ if (!$title) {
                 // Show error message instead of falling back to mock data
                 const descElement = document.getElementById('event-description');
                 if (descElement) {
-                    descElement.textContent = 'Error loading event: ' + error.message;
+                    descElement.innerHTML = `<div style="color: #d32f2f; padding: 20px; border: 1px solid #d32f2f; border-radius: 4px;">
+                        <strong>Error loading event:</strong><br>
+                        ${error.message}<br>
+                        <small style="display: block; margin-top: 10px;">Check browser console (F12) for more details</small>
+                    </div>`;
                     descElement.style.color = '#d32f2f';
-                    descElement.style.padding = '20px';
-                    descElement.style.border = '1px solid #d32f2f';
                 }
                 
                 const titleElement = document.getElementById('event-title');
