@@ -17788,3 +17788,15 @@ Stack trace:
 Stack trace:
 #0 {main}
   thrown in C:\xampp\htdocs\LUKUM_HOSTINGER-deployment-hostinger\LUKUM_HOSTINGER-deployment-hostinger\test_db_direct.php on line 15
+[23-Jun-2026 15:14:20 Europe/Berlin] PHP Warning:  Undefined array key "REQUEST_METHOD" in C:\xampp\htdocs\LUKUM_HOSTINGER-deployment-hostinger\LUKUM_HOSTINGER-deployment-hostinger\api\config.php on line 312
+[23-Jun-2026 16:14:24 Asia/Riyadh] Database Exception: No connection could be made because the target machine actively refused it
+[23-Jun-2026 16:14:24 Asia/Riyadh] PHP Fatal error:  Uncaught Error: Call to a member function query() on null in C:\xampp\htdocs\LUKUM_HOSTINGER-deployment-hostinger\LUKUM_HOSTINGER-deployment-hostinger\check_exhibitions_temp.php:4
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\LUKUM_HOSTINGER-deployment-hostinger\LUKUM_HOSTINGER-deployment-hostinger\check_exhibitions_temp.php on line 4
+[23-Jun-2026 15:15:27 Europe/Berlin] PHP Warning:  Undefined array key "REQUEST_METHOD" in C:\xampp\htdocs\LUKUM_HOSTINGER-deployment-hostinger\LUKUM_HOSTINGER-deployment-hostinger\api\config.php on line 312
+[23-Jun-2026 16:15:31 Asia/Riyadh] Database Exception: No connection could be made because the target machine actively refused it
+[23-Jun-2026 16:15:31 Asia/Riyadh] PHP Fatal error:  Uncaught Error: Call to a member function query() on null in C:\xampp\htdocs\LUKUM_HOSTINGER-deployment-hostinger\LUKUM_HOSTINGER-deployment-hostinger\check_exhibitions_temp.php:4
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\LUKUM_HOSTINGER-deployment-hostinger\LUKUM_HOSTINGER-deployment-hostinger\check_exhibitions_temp.php on line 4
