@@ -114,7 +114,7 @@ if (!$title) {
     </section>
 
     <!-- Event Video Section -->
-    <section class="event-section event-section--video" id="videoSection" style="display: none; background: #ffffff; padding: 80px 0;">
+    <section class="event-section event-section--video" id="videoSection">
         <div class="event-container" style="max-width: 1400px; margin: 0 auto; padding: 0 20px;">
             <h2 class="event-section__title" style="font-size: 2.5rem; font-weight: 300; color: #1a1a1a; margin-bottom: 50px; text-align: center;"><?php echo t('event_video', 'Event Video'); ?></h2>
             <div class="event-video-wrapper" id="event-video-wrapper" style="position: relative; width: 100%; height: 700px; overflow: hidden; border-radius: 4px; background: #000;">
@@ -196,14 +196,20 @@ if (!$title) {
                 </nav>
 
                 <div class="lakum-footer__social">
-                    <h4 class="lakum-footer__nav-title">Connect</h4>
+                    <h4 class="lakum-footer__nav-title"><?php echo t('footer_connect', 'Connect'); ?></h4>
                     <div class="lakum-footer__social-links">
                         <a href="https://www.instagram.com/lakumartspace/" target="_blank" class="lakum-footer__social-link" aria-label="Instagram">
-                        <i class="ri-instagram-fill"></i>
-                    </a>
+                            <i class="ri-instagram-fill"></i>
+                        </a>
                         <a href="https://x.com/Lakumartspace" target="_blank" class="lakum-footer__social-link" aria-label="Twitter">
-                        <i class="ri-twitter-x-fill"></i>
-                    </a>
+                            <i class="ri-twitter-x-fill"></i>
+                        </a>
+                        <a href="https://www.snapchat.com/@lakumartspace" target="_blank" class="lakum-footer__social-link" aria-label="Snapchat">
+                            <i class="ri-snapchat-line"></i>
+                        </a>
+                        <a href="https://www.tiktok.com/@lakumartspace" target="_blank" class="lakum-footer__social-link" aria-label="TikTok">
+                            <i class="ri-tiktok-fill"></i>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -474,11 +480,13 @@ if (!$title) {
             console.log('videoUrl length:', videoUrl ? videoUrl.length : 'null');
             console.log('videoSection element:', videoSection);
             console.log('videoFrame element:', videoFrame);
-            console.log('videoSection HTML:', videoSection ? videoSection.outerHTML.substring(0, 200) : 'NULL');
             
             if (!videoUrl || videoUrl.trim() === '') {
                 console.log('No video URL provided - hiding section');
-                if (videoSection) videoSection.classList.remove('active');
+                if (videoSection) {
+                    videoSection.classList.remove('active');
+                    videoSection.style.display = 'none';
+                }
                 return;
             }
 
@@ -495,6 +503,7 @@ if (!$title) {
                         console.log('YouTube watch URL - videoId:', videoId);
                     } else if (videoUrl.includes('youtu.be')) {
                         // Extract video ID from youtu.be short URL
+                        // Handle both formats: youtu.be/ID and youtu.be/ID?param=value
                         const match = videoUrl.match(/youtu\.be\/([a-zA-Z0-9_-]+)/);
                         if (match) {
                             videoId = match[1];
@@ -530,21 +539,30 @@ if (!$title) {
                 console.log('Setting iframe src to:', embedUrl);
                 if (videoFrame) {
                     videoFrame.src = embedUrl;
-                    console.log('iframe src set successfully');
-                    console.log('iframe now has src:', videoFrame.src);
+                    console.log('✅ iframe src set successfully to:', videoFrame.src);
+                } else {
+                    console.error('❌ videoFrame element not found!');
                 }
+                
                 if (videoSection) {
                     console.log('BEFORE adding active class - classList:', Array.from(videoSection.classList));
+                    console.log('BEFORE style:', videoSection.getAttribute('style'));
+                    
+                    // Remove inline style that hides the section
+                    videoSection.style.display = 'block';
                     videoSection.classList.add('active');
-                    console.log('AFTER adding active class - classList:', Array.from(videoSection.classList));
-                    console.log('Video section display style:', window.getComputedStyle(videoSection).display);
-                    console.log('Video section hidden attribute:', videoSection.hasAttribute('hidden'));
-                    console.log('Video section style attribute:', videoSection.getAttribute('style'));
+                    
+                    console.log('✅ AFTER adding active class - classList:', Array.from(videoSection.classList));
+                    console.log('AFTER computed style:', window.getComputedStyle(videoSection).display);
+                } else {
+                    console.error('❌ videoSection element not found!');
                 }
-                console.log('Video section displayed');
             } else {
-                console.log('No embed URL generated from:', videoUrl);
-                if (videoSection) videoSection.classList.remove('active');
+                console.log('❌ No embed URL could be generated from:', videoUrl);
+                if (videoSection) {
+                    videoSection.classList.remove('active');
+                    videoSection.style.display = 'none';
+                }
             }
             console.log('=== displayVideo END ===');
         }
