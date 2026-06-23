@@ -544,6 +544,10 @@
                 return;
             }
             
+            // Declare location variables at function scope so they're available for later use
+            let locEn = '';
+            let locAr = '';
+            
             // Scroll to top to ensure form is visible
             window.scrollTo(0, 0);
             try {
@@ -569,7 +573,7 @@
             try {
                 const titleEn = event.title_en || event.title || '';
                 const descEn = event.description_en || event.description || '';
-                const locEn = event.location_en || event.location || '';
+                locEn = event.location_en || event.location || '';
                 
                 console.log('Setting English fields:', { titleEn, descEn, locEn });
                 
@@ -586,7 +590,7 @@
             try {
                 const titleAr = event.title_ar || '';
                 const descAr = event.description_ar || '';
-                const locAr = event.location_ar || '';
+                locAr = event.location_ar || '';
                 
                 console.log('Setting Arabic fields:', { titleAr, descAr, locAr });
                 
