@@ -195,13 +195,8 @@ require_once 'includes/hero-settings.php';
         };
 
         const getEventUrl = (event) => {
-            // CRITICAL: Only use window.LAKUM_LANG (set from PHP)
-            // Do NOT use localStorage as it contains the previous page's language
-            const lang = window.LAKUM_LANG || 'en';
-            // Use slug-based URL instead of ID
-            // Slug is language-independent (always English)
-            const slug = event.slug || event.title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
-            return `event.php?title=${slug}&lang=${lang}`;
+            // Link to admin events management page
+            return `admin/events.html?id=${event.id}`;
         };
 
         function displayFeaturedEvent(event) {
@@ -289,7 +284,7 @@ require_once 'includes/hero-settings.php';
         function loadUpcomingEvents(excludeId = null) {
             const lang = LanguageManager.getLanguage();
             const timestamp = new Date().getTime();
-            fetch(`api/get_exhibitions.php?type=upcoming&limit=7&lang=${lang}&t=${timestamp}`, {
+            fetch(`api/get_events.php?type=upcoming&limit=7&lang=${lang}&t=${timestamp}`, {
                 cache: 'no-store'
             })
                 .then(r => r.json())
@@ -317,7 +312,7 @@ require_once 'includes/hero-settings.php';
         function loadPreviousExhibitions() {
             const lang = LanguageManager.getLanguage();
             const timestamp = new Date().getTime();
-            fetch(`api/get_exhibitions.php?type=past&limit=8&lang=${lang}&t=${timestamp}`, {
+            fetch(`api/get_events.php?type=past&limit=8&lang=${lang}&t=${timestamp}`, {
                 cache: 'no-store'
             })
                 .then(r => r.json())
