@@ -1,0 +1,133 @@
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  QUICK TEST: VIDEO DISPLAY FIX
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+WHAT WAS FIXED:
+- API now returns video fields consistently for both events and exhibitions
+- event.php can display videos from both upcoming events AND past exhibitions
+
+STEP 1: CLEAR BROWSER CACHE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Do: Ctrl+Shift+Delete → Clear "All time" → Delete
+
+STEP 2: TEST WITH UPCOMING EVENT (video_url field)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. Admin Panel → Events → Add Event
+2. Title: "Test Event"
+3. Date: Any future date
+4. Location: "LAKUM"
+5. Event Video: https://youtu.be/dQw4w9WgXcQ
+6. Click Create
+7. Check console for: "event_video value from form: https://youtu.be/..."
+
+VERIFY IN DATABASE (Optional):
+- phpMyAdmin → events table
+- Find your event → Check video_url column has URL
+
+CHECK API RESPONSE:
+- Browser: /api/get_event_details.php?title=test-event&lang=en
+- Should show: "video_url": "https://youtu.be/..." AND "event_video": "https://youtu.be/..."
+
+VIEW EVENT PAGE:
+- Go to Calendar or Upcoming Events
+- Click your test event
+- F12 → Console
+- Look for: "VIDEO URL CHECK" section
+- Should show both fields with URL
+- Scroll down → "Event Video" section should be visible with embedded player
+
+STEP 3: TEST WITH PAST EXHIBITION (event_video field)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. Admin Panel → Exhibitions → Add Exhibition
+2. Title: "Test Exhibition"
+3. Date: Any PAST date (e.g., yesterday)
+4. Location: "LAKUM"
+5. Event Video: https://youtu.be/dQw4w9WgXcQ
+6. Click Create
+7. Check console for: "event_video value from form: https://youtu.be/..."
+
+VERIFY IN DATABASE (Optional):
+- phpMyAdmin → exhibitions table
+- Find your exhibition → Check event_video column has URL
+
+CHECK API RESPONSE:
+- Browser: /api/get_event_details.php?title=test-exhibition&lang=en
+- Should show: "video_url": "https://youtu.be/..." AND "event_video": "https://youtu.be/..."
+
+VIEW EVENT PAGE:
+- Go to Spaces page
+- Click your test exhibition
+- F12 → Console
+- Look for: "VIDEO URL CHECK" section
+- Should show both fields with URL
+- Scroll down → "Event Video" section should be visible with embedded player
+
+STEP 4: VERIFY BOTH WORK SIDE-BY-SIDE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. Create one upcoming event with video
+2. Create one past exhibition with video
+3. Visit both pages
+4. Both should show "Event Video" section
+5. Both should have embedded YouTube player
+
+EXPECTED CONSOLE OUTPUT:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅ API Response: {success: true, event: {video_url: "...", event_video: "..."}, ...}
+
+✅ === VIDEO URL CHECK ===
+   event.video_url: "https://youtu.be/dQw4w9WgXcQ"
+   event.event_video: "https://youtu.be/dQw4w9WgXcQ"
+   Final videoUrl: "https://youtu.be/dQw4w9WgXcQ"
+
+✅ Video URL found, calling displayVideo with: https://youtu.be/dQw4w9WgXcQ
+
+✅ Generated YouTube embed URL: https://www.youtube.com/embed/dQw4w9WgXcQ
+
+✅ AFTER adding active class - classList: ["event-section", "event-section--video", "active"]
+
+TROUBLESHOOTING:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+❌ Video not showing?
+1. Check database has URL saved (SELECT event_video FROM exhibitions WHERE id=X)
+2. Check API returns URL (/api/get_event_details.php?id=X&lang=en)
+3. Check console for errors
+4. Hard refresh page (Ctrl+F5)
+5. Check if videoUrl is null in "VIDEO URL CHECK"
+
+❌ Console shows "No video URL found in event object"?
+1. Your form didn't capture the video URL
+2. Check admin form has event_video field visible
+3. Try submitting form again with URL
+
+❌ Video field empty in database?
+1. Form submission failed
+2. Check browser console for JavaScript errors
+3. Check network tab for failed API calls
+4. Try adding video again
+
+WHAT FILES WERE CHANGED:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅ api/get_event_details.php
+   - Line ~152: Changed events query to include "e.video_url as event_video"
+   - Now returns BOTH video_url and event_video fields consistently
+
+NO OTHER FILES CHANGED - Already working correctly:
+- event.php (already checks both fields)
+- event-detail.css (already has video section styling)
+- add-event.html (already captures video_url)
+- add-exhibition.html (already captures event_video)
+- All gallery, lightbox, and display logic already correct
+
+SUCCESS CRITERIA:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅ Event with video shows "Event Video" section on event page
+✅ Exhibition with video shows "Event Video" section on event page
+✅ Video embedded YouTube/Vimeo player is displayed
+✅ Both upcoming events AND past exhibitions work
+✅ Console shows no errors in displayVideo function
+✅ Active class is added to video section
+✅ Video section becomes visible when active class applied
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+If all tests pass ✅ → System is working perfectly!
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

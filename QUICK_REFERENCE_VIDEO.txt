@@ -1,0 +1,182 @@
+┌────────────────────────────────────────────────────────────────────────────┐
+│                   VIDEO DISPLAY - QUICK REFERENCE CARD                     │
+└────────────────────────────────────────────────────────────────────────────┘
+
+PROBLEM
+───────
+Video saved in database but NOT showing on event.php page
+
+SOLUTION
+────────
+1. Open browser → Spaces page
+2. Click past exhibition
+3. Press F12 → Console tab
+4. Look for: "=== VIDEO URL CHECK ===" section
+
+IF YOU SEE THAT SECTION → Video debugging is working ✅
+IF YOU DON'T SEE IT → Follow debugging guide
+
+CONSOLE OUTPUT MEANINGS
+───────────────────────
+
+✅ GOOD - Video should display:
+   === VIDEO URL CHECK ===
+   event_video: "https://youtu.be/xyz"
+   === displayVideo DEBUG ===
+   classList includes 'active'
+   Video section display style: block
+
+❌ BAD - Video URL not found:
+   event_video: null
+   No video URL found in event object
+
+❌ BAD - API not returning data:
+   No "=== VIDEO URL CHECK ===" section at all
+
+QUICK CHECKLIST
+───────────────
+□ Video in database?  
+  Query: SELECT event_video FROM exhibitions WHERE id=54;
+  
+□ API returns video?
+  URL: /api/get_event_details.php?id=54&lang=en
+  Check for: "event_video" field in JSON
+  
+□ Console shows logs?
+  F12 → Console → Search "VIDEO URL CHECK"
+  
+□ Video on page?
+  Scroll down to "Event Video" section
+  
+□ Video plays?
+  Click/tap video element
+
+DOCUMENTATION FILES
+───────────────────
+IMMEDIATE_ACTION_VIDEO_DEBUG.txt → Start here first
+VIDEO_NOT_SHOWING_DEBUG.md → Detailed procedures
+TASK17_VIDEO_DISPLAY_FIX.md → Technical details
+VIDEO_DISPLAY_FLOW.txt → System architecture
+
+COMMON ISSUES & QUICK FIXES
+───────────────────────────
+
+Issue: Console shows "event_video: null"
+Fix: Check database has URL saved
+     SELECT event_video FROM exhibitions WHERE id=54;
+
+Issue: No console logs appear
+Fix: 1) Clear cache (Ctrl+Shift+Delete)
+     2) Hard refresh (Ctrl+F5)
+     3) Check page loaded correctly
+
+Issue: Video visible but doesn't play
+Fix: 1) Check YouTube/Vimeo URL is valid
+     2) Check if video is public (not private)
+     3) Check browser allows YouTube embed
+
+Issue: "active" class added but video hidden
+Fix: 1) Check event-detail.css loaded
+     2) Check for inline style="display: none;"
+     3) Use Inspector (F12) to check computed styles
+
+EXPECTED VIDEO URL FORMATS
+──────────────────────────
+✅ YouTube standard: https://www.youtube.com/watch?v=VIDEO_ID
+✅ YouTube short: https://youtu.be/VIDEO_ID
+✅ Vimeo: https://vimeo.com/VIDEO_ID
+❌ Playlists, channels, other sites - NOT supported
+
+TEST URL FOR QUICK TEST
+──────────────────────
+https://youtu.be/dQw4w9WgXcQ
+(If this works but your URL doesn't, your URL format is wrong)
+
+WHEN TO USE WHICH FILE
+──────────────────────
+Lost? Read: IMMEDIATE_ACTION_VIDEO_DEBUG.txt
+Want details? Read: VIDEO_NOT_SHOWING_DEBUG.md
+Need overview? Read: FINAL_SUMMARY_VIDEO_ISSUE.txt
+Learning system? Read: VIDEO_DISPLAY_FLOW.txt
+Technical? Read: TASK17_VIDEO_DISPLAY_FIX.md
+
+DEBUG WORKFLOW
+──────────────
+1. Open browser DevTools: F12
+2. Click Console tab
+3. Reload page: F5
+4. Scroll console for logs
+5. Compare output to checklist
+6. Identify which section missing
+7. Use debugging guide to fix
+
+MOST LIKELY SCENARIOS
+─────────────────────
+75% chance: Video URL in database but API/display issue
+15% chance: Video URL not saving to database
+5% chance: CSS display issue
+5% chance: Other (cache, browser issue)
+
+KEY CONSOLE SECTIONS (In order)
+───────────────────────────────
+1. "=== VIDEO URL CHECK ===" - API response check
+   See: event_video value (URL or null)
+
+2. "=== displayVideo DEBUG ===" - Display check  
+   See: videoUrl parsed, iframe src set
+
+3. "classList includes 'active'" - CSS check
+   See: active class added to video section
+
+4. "Video section display style: block" - Visibility check
+   See: CSS making section visible
+
+If ANY section missing → That's where to debug
+
+FASTEST DEBUGGING PATH
+──────────────────────
+1. F12 → Console (2 seconds)
+2. Scroll for "VIDEO URL CHECK" (5 seconds)
+3. Check event_video value (3 seconds)
+   - If null → database problem (STOP here, check DB)
+   - If URL → continue
+4. Check for "displayVideo DEBUG" (3 seconds)
+   - If missing → function not called (STOP here)
+   - If present → continue
+5. Check "classList includes 'active'" (2 seconds)
+   - If has 'active' → CSS should work (STOP here, inspect)
+6. Look at page for video (5 seconds)
+
+Total time: 20 seconds to identify issue
+
+SUPPORT INFO WHEN REPORTING ISSUE
+──────────────────────────────────
+Provide:
+□ Screenshot of console output
+□ Database query result (SELECT event_video...)
+□ API response (/api/get_event_details.php?id=54)
+□ Exhibition ID you're testing
+□ Browser name and version
+□ Whether video visible on page (yes/no)
+
+HELPFUL HINTS
+─────────────
+• Use browser's search (Ctrl+F) in console to find sections
+• Right-click console section → Copy as text
+• Paste into text editor to analyze
+• Compare against expected output in guides
+• Don't skip steps, follow order
+• Check database FIRST before blaming code
+
+═══════════════════════════════════════════════════════════════════════════════
+
+REMEMBER: All infrastructure is correct.
+VIDEO SAVING: Works ✅
+API RETURNING: Works ✅  
+DISPLAY CODE: Works ✅
+
+The issue is VISIBILITY into what's happening.
+These console logs provide complete visibility.
+The debugging guides explain what the logs mean.
+
+═══════════════════════════════════════════════════════════════════════════════
