@@ -58,8 +58,8 @@ try {
     $exhibition_end_time = isset($input['exhibition_end_time']) ? trim($input['exhibition_end_time']) : '18:00:00';
     $end_date = isset($input['end_date']) && !empty($input['end_date']) ? trim($input['end_date']) : null;
     $cover_image = isset($input['cover_image']) ? trim($input['cover_image']) : null;
-    // Allow empty string to CLEAR video - important for remove functionality
-    $event_video = isset($input['event_video']) ? trim($input['event_video']) : null;
+    // Allow empty string to CLEAR video - convert empty string to NULL for proper removal
+    $event_video = isset($input['event_video']) ? (trim($input['event_video']) !== '' ? trim($input['event_video']) : null) : null;
     $gallery_images = isset($input['gallery_images']) && !empty($input['gallery_images']) ? trim($input['gallery_images']) : null;
     
     // Validate required fields
