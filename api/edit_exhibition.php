@@ -35,6 +35,8 @@ try {
     $json_input = file_get_contents('php://input');
     $input = json_decode($json_input, true);
     
+    error_log('EDIT_EXHIBITION: Received input: ' . json_encode($input));
+    
     if ($input === null) {
         http_response_code(400);
         die(json_encode([
@@ -122,9 +124,12 @@ try {
     
     // Always update event_video - even if empty string (to allow clearing)
     if (isset($input['event_video'])) {
+        error_log('EDIT_EXHIBITION: Setting event_video to: "' . $event_video . '"');
         $updateFields[] = 'event_video = ?';
         $bindTypes .= 's';
         $bindParams[] = &$event_video;
+    } else {
+        error_log('EDIT_EXHIBITION: event_video not in input');
     }
     
     if ($gallery_images !== null) {
