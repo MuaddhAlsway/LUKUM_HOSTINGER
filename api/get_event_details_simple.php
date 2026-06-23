@@ -59,6 +59,8 @@ try {
     $selectSQL = implode(', ', $selectFields);
     error_log("Select SQL: " . $selectSQL);
     
+    $event = null;
+    
     // Try exhibitions table first
     $exhibitionResult = $db->getConnection()->query(
         "SELECT id, title_en, title_ar, description_en, description_ar, location_en, location_ar, 
@@ -130,18 +132,79 @@ try {
             'end_date' => $event['end_date'] ?? '',
             'video_url' => $event['video_url'] ?? '',
             'event_video' => $event['video_url'] ?? '',
-            'cover_image' => $event['cover_image'] ?? ''
+            'cover_image' => $event['cover_image'] ?? '',
+            'gallery_images' => null,
+            'category' => 'event'
         ];
     }
     
     error_log("Returning event: " . json_encode($event));
     error_log("=== GET_EVENT_DETAILS_SIMPLE END ===");
     
+    // Get gallery images
+    $gallery = [];
+    
+    // First, check if this is an exhibition with JSON gallery_images
+    if (isset($event['category']) && $event['category'] === 'exhibition' && isset($event['gallery_images']) && !empty($event['gallery_images'])) {
+        error_log("Attempting to parse gallery_images JSON from exhibition");
+        try {
+            $galleryImages = json_decode($event['gallery_images'], true);
+            if (is_array($galleryImages)) {
+                foreach ($galleryImages as $imagePath) {
+                    $gallery[] = [
+                        'id' => 0,
+                        'event_id' => $eventId,
+                        'image_url' => $imagePath
+                    ];
+                }
+                error_log("Loaded " . count($gallery) . " gallery images from exhibition gallery_images JSON");
+            }
+        } catch (Exception $e) {
+            error_log("Error parsing gallery_images JSON: " . $e->getMessage());
+        }
+    }
+    
+    // If no gallery from JSON, try event_gallery table
+    if (empty($gallery)) {
+        error_log("Querying event_gallery table for event ID: $eventId");
+        $galleryQuery = 'SELECT id, event_id, image_url FROM event_gallery WHERE event_id = ? ORDER BY display_order ASC';
+        $galleryStmt = $db->prepare($galleryQuery);
+        
+        if ($galleryStmt) {
+            $galleryStmt->bind_param('i', $eventId);
+            if ($galleryStmt->execute()) {
+                $galleryResult = $galleryStmt->get_result();
+                while ($row = $galleryResult->fetch_assoc()) {
+                    $gallery[] = $row;
+                }
+                if (!empty($gallery)) {
+                    error_log("Loaded " . count($gallery) . " gallery images from event_gallery table");
+                }
+            } else {
+                error_log("Gallery query execution failed: " . $galleryStmt->error);
+            }
+        } else {
+            error_log("Gallery query prepare failed");
+        }
+    }
+    
+    // If still no gallery, use cover image as fallback
+    if (empty($gallery) && isset($event['cover_image']) && !empty($event['cover_image'])) {
+        error_log("Using cover image as gallery fallback");
+        $gallery[] = [
+            'id' => 0,
+            'event_id' => $eventId,
+            'image_url' => $event['cover_image']
+        ];
+    }
+    
+    error_log("Total gallery images found: " . count($gallery));
+    
     echo json_encode([
         'success' => true,
         'data' => $event,
         'event' => $event,
-        'gallery' => [],
+        'gallery' => $gallery,
         'source' => 'database'
     ]);
     
