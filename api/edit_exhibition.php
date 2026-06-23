@@ -58,8 +58,15 @@ try {
     $exhibition_end_time = isset($input['exhibition_end_time']) ? trim($input['exhibition_end_time']) : '18:00:00';
     $end_date = isset($input['end_date']) && !empty($input['end_date']) ? trim($input['end_date']) : null;
     $cover_image = isset($input['cover_image']) ? trim($input['cover_image']) : null;
-    // Allow empty string to CLEAR video - convert empty string to NULL for proper removal
-    $event_video = isset($input['event_video']) ? (trim($input['event_video']) !== '' ? trim($input['event_video']) : null) : null;
+    
+    // Handle event_video - convert empty string to NULL for proper removal
+    $event_video = null;
+    if (isset($input['event_video'])) {
+        $video_trimmed = trim($input['event_video']);
+        $event_video = ($video_trimmed !== '') ? $video_trimmed : null;
+        error_log('EDIT_EXHIBITION: event_video input: "' . $video_trimmed . '" -> converted to: ' . var_export($event_video, true));
+    }
+    
     $gallery_images = isset($input['gallery_images']) && !empty($input['gallery_images']) ? trim($input['gallery_images']) : null;
     
     // Validate required fields
@@ -95,54 +102,63 @@ try {
         ]));
     }
     
-    // Build update query - handle all combinations of optional fields
-    $updateFields = [];
-    $bindTypes = '';
-    $bindParams = [];
+    // Build SQL with proper NULL handling for video
+    $sql = "UPDATE exhibitions SET 
+        title_en = ?,
+        title_ar = ?,
+        description_en = ?,
+        description_ar = ?,
+        location_en = ?,
+        location_ar = ?,
+        exhibition_date = ?,
+        exhibition_time = ?,
+        exhibition_end_time = ?,
+        end_date = ?,
+        event_video = ";
     
-    $updateFields[] = 'title_en = ?';
-    $updateFields[] = 'title_ar = ?';
-    $updateFields[] = 'description_en = ?';
-    $updateFields[] = 'description_ar = ?';
-    $updateFields[] = 'location_en = ?';
-    $updateFields[] = 'location_ar = ?';
-    $updateFields[] = 'exhibition_date = ?';
-    $updateFields[] = 'exhibition_time = ?';
-    $updateFields[] = 'exhibition_end_time = ?';
-    $updateFields[] = 'end_date = ?';
+    // Handle video NULL vs string
+    if ($event_video === null) {
+        $sql .= "NULL";
+    } else {
+        $sql .= "?";
+    }
     
+    // Add optional fields
     $bindTypes = 'ssssssssss';
-    $bindParams = [&$title_en, &$title_ar, &$description_en, &$description_ar,
-                   &$location_en, &$location_ar, &$exhibition_date, &$exhibition_time,
-                   &$exhibition_end_time, &$end_date];
+    $bindParams = [
+        &$title_en, &$title_ar, &$description_en, &$description_ar,
+        &$location_en, &$location_ar, &$exhibition_date, &$exhibition_time,
+        &$exhibition_end_time, &$end_date
+    ];
     
+    // Add event_video to binding if it's not NULL
+    if ($event_video !== null) {
+        $bindTypes .= 's';
+        $bindParams[] = &$event_video;
+    }
+    
+    // Add optional cover_image
     if ($cover_image !== null) {
-        $updateFields[] = 'cover_image = ?';
+        $sql .= ", cover_image = ?";
         $bindTypes .= 's';
         $bindParams[] = &$cover_image;
     }
     
-    // Always update event_video - even if empty string (to allow clearing)
-    if (isset($input['event_video'])) {
-        error_log('EDIT_EXHIBITION: Setting event_video to: "' . $event_video . '"');
-        $updateFields[] = 'event_video = ?';
-        $bindTypes .= 's';
-        $bindParams[] = &$event_video;
-    } else {
-        error_log('EDIT_EXHIBITION: event_video not in input');
-    }
-    
+    // Add optional gallery_images
     if ($gallery_images !== null) {
-        $updateFields[] = 'gallery_images = ?';
+        $sql .= ", gallery_images = ?";
         $bindTypes .= 's';
         $bindParams[] = &$gallery_images;
     }
     
-    $updateFields[] = 'id = ?';
+    // WHERE clause
+    $sql .= " WHERE id = ?";
     $bindTypes .= 'i';
     $bindParams[] = &$id;
     
-    $sql = "UPDATE exhibitions SET " . implode(', ', array_slice($updateFields, 0, -1)) . " WHERE id = ?";
+    error_log('EDIT_EXHIBITION: SQL Query: ' . $sql);
+    error_log('EDIT_EXHIBITION: Bind Types: ' . $bindTypes);
+    error_log('EDIT_EXHIBITION: event_video value being bound: ' . var_export($event_video, true));
     
     $stmt = $conn->prepare($sql);
     
@@ -168,6 +184,16 @@ try {
     // Execute statement
     if ($stmt->execute()) {
         $stmt->close();
+        
+        // Verify the update by querying the database
+        $verify_sql = "SELECT event_video FROM exhibitions WHERE id = ?";
+        $verify_stmt = $conn->prepare($verify_sql);
+        $verify_stmt->bind_param('i', $id);
+        $verify_stmt->execute();
+        $verify_result = $verify_stmt->get_result();
+        $verify_row = $verify_result->fetch_assoc();
+        error_log('EDIT_EXHIBITION: After update, event_video in DB is: ' . var_export($verify_row['event_video'], true));
+        $verify_stmt->close();
         
         // Clear output buffer
         ob_end_clean();

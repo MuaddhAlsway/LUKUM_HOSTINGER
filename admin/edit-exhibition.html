@@ -363,16 +363,23 @@
             document.getElementById('exhibition_end_time').value = (exhibition.exhibition_end_time || '18:00:00').substring(0, 5);
             document.getElementById('end_date').value = exhibition.end_date || '';
             document.getElementById('event_video').value = exhibition.event_video || '';
+            
+            console.log('=== POPULATE FORM VIDEO ===');
+            console.log('event_video value:', exhibition.event_video);
+            console.log('event_video is falsy?', !exhibition.event_video);
+            console.log('event_video type:', typeof exhibition.event_video);
 
-            // Video preview (new - matches event form)
-            if (exhibition.event_video) {
-                const videoPreviewSection = document.getElementById('videoPreviewSection');
-                const videoFrame = document.getElementById('videoFrame');
+            // Video preview
+            const videoPreviewSection = document.getElementById('videoPreviewSection');
+            const videoFrame = document.getElementById('videoFrame');
+            
+            if (exhibition.event_video && String(exhibition.event_video).trim() && String(exhibition.event_video) !== 'null') {
+                console.log('✅ Showing video preview');
                 if (videoPreviewSection && videoFrame) {
                     videoPreviewSection.style.display = 'block';
                     // Parse video URL and create embed
                     let embedUrl = '';
-                    const videoUrl = exhibition.event_video;
+                    const videoUrl = String(exhibition.event_video).trim();
                     
                     if (videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be')) {
                         let videoId = '';
@@ -396,6 +403,11 @@
                     if (embedUrl) {
                         videoFrame.src = embedUrl;
                     }
+                }
+            } else {
+                console.log('❌ Hiding video preview - no valid video URL');
+                if (videoPreviewSection) {
+                    videoPreviewSection.style.display = 'none';
                 }
             }
 
