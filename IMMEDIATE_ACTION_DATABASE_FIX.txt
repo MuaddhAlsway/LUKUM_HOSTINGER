@@ -1,0 +1,220 @@
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  🚨 CRITICAL: DATABASE SCHEMA FIX - DO THIS NOW
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ROOT CAUSE FOUND:
+✗ event_video column MISSING from exhibitions table
+✗ video_url column MISSING from events table
+✗ This is why videos show NULL in console!
+
+SOLUTION: Run migration script ONCE
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP 1: RUN MIGRATION SCRIPT (1 Minute)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Open browser and visit:
+
+http://yourdomain.com/api/MIGRATION_VIDEO_COLUMNS.php
+
+(Replace yourdomain.com with your actual domain)
+
+You'll see green success message:
+
+{
+  "success": true,
+  "message": "Migration completed successfully",
+  "details": {
+    "exhibitions_event_video": {
+      "status": "added",
+      "message": "event_video column added to exhibitions table"
+    },
+    "events_video_url": {
+      "status": "added",
+      "message": "video_url column added to events table"
+    }
+  }
+}
+
+✅ Done! Database is now fixed.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP 2: CLEAR CACHE (1 Minute)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Press: Ctrl+Shift+Delete
+
+Select:
+  ☑ All time
+  ☑ Cookies and other site data
+  ☑ Cached images and files
+
+Click: Delete Data
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP 3: TEST WITH EXHIBITION (3 Minutes)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Open Admin Panel → Exhibitions → Add Exhibition
+
+2. Fill form:
+   Title (EN): "Test Exhibition"
+   Description: "Test"
+   Location: "Hall 1"
+   Date: Any PAST date (e.g., yesterday)
+
+3. IMPORTANT: Add Video URL:
+   https://youtu.be/dQw4w9WgXcQ
+
+4. Click Create Exhibition
+
+5. Check Console (F12):
+   Should show: "event_video value from form: https://youtu.be/..."
+
+6. Go to Spaces page
+
+7. Click "Test Exhibition"
+
+8. Look for "Event Video" section
+
+9. Should see YouTube player embedded! ✅
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP 4: TEST WITH EVENT (3 Minutes)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Open Admin Panel → Events → Add Event
+
+2. Fill form:
+   Title (EN): "Test Event"
+   Description: "Test"
+   Location: "LAKUM"
+   Date: Any FUTURE date (e.g., tomorrow)
+
+3. IMPORTANT: Add Video URL:
+   https://youtu.be/dQw4w9WgXcQ
+
+4. Click Create Event
+
+5. Check Console (F12):
+   Should show: "event_video value from form: https://youtu.be/..."
+
+6. Go to Calendar page
+
+7. Click "Test Event"
+
+8. Look for "Event Video" section
+
+9. Should see YouTube player embedded! ✅
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+VERIFY IN CONSOLE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+After opening event page, F12 → Console should show:
+
+✅ === VIDEO URL CHECK ===
+✅ event.video_url: "https://youtu.be/dQw4w9WgXcQ"
+✅ event.event_video: "https://youtu.be/dQw4w9WgXcQ"
+✅ Final videoUrl: "https://youtu.be/dQw4w9WgXcQ"
+✅ Video URL found, calling displayVideo with: https://youtu.be/dQw4w9WgXcQ
+✅ Generated YouTube embed URL: https://www.youtube.com/embed/dQw4w9WgXcQ
+✅ AFTER adding active class - classList: [..., "active"]
+✅ Video section display style: block
+
+IF YOU SEE THIS = EVERYTHING WORKS! 🎉
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+WHAT THIS FIXES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+BEFORE FIX:
+✗ Videos form fields exist → data captured
+✗ API receives video URL → tries to save to DB
+✗ DB MISSING columns → saves NULL instead!
+✗ event.php fetches → gets NULL
+✗ Video doesn't show
+
+AFTER FIX:
+✅ Videos form fields exist → data captured
+✅ API receives video URL → saves to NEW column!
+✅ DB HAS columns → saves URL correctly
+✅ event.php fetches → gets actual URL
+✅ Video shows! 🎉
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+FILES CREATED
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ api/MIGRATION_VIDEO_COLUMNS.php
+   └─ Main migration script - Run THIS via browser
+
+✅ api/migrate_add_video_column.php
+   └─ Alternative script (exhibitions only)
+
+✅ api/ADD_EVENT_VIDEO_COLUMN.sql
+   └─ SQL file for phpMyAdmin import
+
+✅ CRITICAL_FIX_DATABASE_SCHEMA.md
+   └─ Full technical documentation
+
+✅ IMMEDIATE_ACTION_DATABASE_FIX.txt
+   └─ This file
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TIMELINE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TOTAL TIME: ~10 MINUTES
+
+1. Run migration        → 1 min ⏱️
+2. Clear cache          → 1 min ⏱️
+3. Test exhibition      → 3 min ⏱️
+4. Test event           → 3 min ⏱️
+5. Verify console       → 2 min ⏱️
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TROUBLESHOOTING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+❌ Migration script doesn't work?
+→ Make sure URL is: http://yourdomain.com/api/MIGRATION_VIDEO_COLUMNS.php
+→ Not https, not with admin prefix
+→ Check browser shows JSON response
+
+❌ Still seeing NULL in console?
+→ Did you refresh page AFTER migration? (Ctrl+F5)
+→ Did you clear cache? (Ctrl+Shift+Delete)
+→ Did you ADD NEW exhibition/event (not old ones)?
+
+❌ Video URL not captured in form?
+→ F12 → Console when submitting form
+→ Should show: "event_video value from form: ..."
+→ If not, check form field ID is "event_video"
+
+❌ API returns error?
+→ Check database connection is working
+→ Verify migration ran successfully first
+→ Check columns exist: DESCRIBE exhibitions; DESCRIBE events;
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+QUICK REFERENCE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+What was wrong:    Database missing video columns
+How to fix:        Run MIGRATION_VIDEO_COLUMNS.php
+Test video:        https://youtu.be/dQw4w9WgXcQ
+Expected result:   Video displays on event page
+Verification:      Console shows both video_url and event_video with URLs
+Time to complete:  ~10 minutes
+Risk level:        Very low (migration is safe & non-destructive)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+👉 ACTION NOW: Visit http://yourdomain.com/api/MIGRATION_VIDEO_COLUMNS.php
+
+Then follow Steps 2-4 above.
+
+🎉 System will be working in ~10 minutes!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

@@ -1,0 +1,261 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                  WHY VIDEO URLs SHOWED AS NULL - ROOT CAUSE ANALYSIS        ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+THE PROBLEM YOU EXPERIENCED
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Console showed:
+  ✗ event.video_url: null
+  ✗ event.event_video: null
+  ✗ Final videoUrl: null
+  ✗ No video URL found in event object
+
+But you were:
+  ✓ Entering video URL in form
+  ✓ Submitting form (getting success message)
+  ✓ Video "saved"
+
+So where did it go? 🤔
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ROOT CAUSE: DATABASE COLUMNS DON'T EXIST
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+The problem was NOT in the code. The problem was in the database schema!
+
+EXHIBITIONS TABLE (for past exhibitions):
+  What API tried to save to:    exhibitions.event_video
+  What actually existed:        ✓ id, title_en, description_en, ...
+                                ✗ NO event_video column!
+  
+  Result: Data sent to DB → Column doesn't exist → Data discarded!
+
+EVENTS TABLE (for upcoming events):
+  What API tried to save to:    events.video_url
+  What actually existed:        ✓ id, title, description, ...
+                                ✗ NO video_url column!
+  
+  Result: Data sent to DB → Column doesn't exist → Data discarded!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP-BY-STEP WHAT HAPPENED
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+STEP 1: You typed video URL in form
+  Form: https://youtu.be/dQw4w9WgXcQ ✓
+
+STEP 2: Submitted form
+  JavaScript captured: event_video = "https://youtu.be/dQw4w9WgXcQ" ✓
+  Sent to API as JSON ✓
+
+STEP 3: API received data
+  PHP extracted: $event_video = "https://youtu.be/dQw4w9WgXcQ" ✓
+
+STEP 4: API tried to save
+  SQL: INSERT INTO exhibitions (event_video, ...) VALUES (?, ...)
+  BUT... exhibitions table has NO event_video column!
+  
+  MySQL ERROR: "Unknown column 'event_video' in field list"
+  
+  What actually happened:
+  ├─ Error was silently logged (not shown to you)
+  ├─ Form still showed success (misleading!)
+  ├─ Data was NOT saved
+  └─ No error message to user
+
+STEP 5: You viewed event page
+  API query: SELECT event_video FROM exhibitions WHERE id = X
+  MySQL: "Column event_video doesn't exist"
+  
+  Result returned: NULL
+  
+  JavaScript console:
+    event_video: null ✗
+    event.video_url: null ✗
+
+STEP 6: Video didn't show
+  Because videoUrl = null
+  
+  Code ran:
+    if (videoUrl) { displayVideo(); }
+    // FALSE - videoUrl is null, so video never displayed
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+THE FLOW (BEFORE FIX)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ Step 1: User Enters Video URL                                               │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  Form Field:  [https://youtu.be/dQw4w9WgXcQ___________]                    │
+│                                                                             │
+│  Console Log: "event_video value from form: https://youtu.be/..."  ✓       │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+                                   ↓
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ Step 2: Submit to API                                                       │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  POST /api/add_exhibition.php                                              │
+│  Body: {event_video: "https://youtu.be/dQw4w9WgXcQ", ...}        ✓       │
+│                                                                             │
+│  Console Log: "Sending exhibition data:" + object             ✓           │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+                                   ↓
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ Step 3: API Receives & Tries to Save                                        │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  PHP Code:                                                                 │
+│    $event_video = "https://youtu.be/dQw4w9WgXcQ"                           │
+│    $sql = "INSERT INTO exhibitions (event_video, ...) VALUES (?, ...)"     │
+│                                                                             │
+│  MySQL ERROR:                                                              │
+│    "Unknown column 'event_video' in field list"  ✗                         │
+│                                                                             │
+│  ❌ DATABASE DOESN'T HAVE event_video COLUMN!                              │
+│                                                                             │
+│  What happens:                                                             │
+│    ├─ INSERT fails silently                                               │
+│    ├─ Form shows success (because PHP code catches error)                 │
+│    └─ NO DATA SAVED TO DATABASE                                           │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+                                   ↓
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ Step 4: User Clicks Event                                                   │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  Browser goes to: event.php?title=test-exhibition                         │
+│                                                                             │
+│  JavaScript calls API:                                                    │
+│    /api/get_event_details.php?title=test-exhibition                       │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+                                   ↓
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ Step 5: API Queries Database                                                │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  PHP Query:                                                               │
+│    SELECT event_video FROM exhibitions WHERE id = X                       │
+│                                                                             │
+│  MySQL ERROR:                                                              │
+│    "Unknown column 'event_video' in field list"  ✗                         │
+│                                                                             │
+│  ❌ STILL NO event_video COLUMN!                                           │
+│                                                                             │
+│  API returns NULL because:                                                │
+│    ├─ Can't select from column that doesn't exist                        │
+│    └─ Defaults to NULL                                                   │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+                                   ↓
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ Step 6: JavaScript Tries to Display Video                                   │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  Code:                                                                    │
+│    event.video_url = null                                                │
+│    event.event_video = null                                              │
+│    const videoUrl = event.video_url || event.event_video;                │
+│    // videoUrl = null                                                    │
+│                                                                             │
+│    if (videoUrl) {  // FALSE!                                             │
+│      displayVideo();                                                      │
+│    } else {                                                               │
+│      console.log("No video URL found");  ✗                               │
+│    }                                                                      │
+│                                                                             │
+│  Result:                                                                  │
+│    ✗ Video section stays hidden                                           │
+│    ✗ No YouTube player                                                   │
+│    ✗ User frustrated: "Where's my video?!"                               │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+WHY THIS HAPPENED
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Timeline:
+
+1. Database created (old version)
+   ├─ Had: title, description, location, dates, cover_image
+   └─ Missing: event_video, video_url
+
+2. Admin forms created
+   ├─ add-exhibition.html with event_video field
+   └─ add-event.html with video_url field
+
+3. API code written
+   ├─ add_exhibition.php tries to save event_video
+   └─ add_event.php tries to save video_url
+
+4. Frontend code written
+   ├─ event.php tries to read video_url OR event_video
+   └─ displayVideo() function ready
+
+5. Everything looks good!
+   └─ All code in place, ready to go
+
+BUT...
+
+6. Database columns never created!
+   ├─ add_exhibition.php has CREATE TABLE IF NOT EXISTS
+   ├─ But if table already exists, it doesn't add new columns
+   ├─ And old database had exhibitions table WITHOUT columns
+   └─ So new columns never got added!
+
+Result: Code ready, database not ready!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+THE FIX
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ALTER TABLE exhibitions ADD COLUMN event_video VARCHAR(500);
+ALTER TABLE events ADD COLUMN video_url VARCHAR(500);
+
+Now the database has the columns!
+
+Next time you save data:
+  ├─ Video URL saved correctly ✓
+  └─ API retrieves correctly ✓
+
+And the flow works:
+  Data in → Database saves → Retrieval works → Display shows video ✓
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Problem:     Database schema missing columns
+             └─ event_video from exhibitions table
+             └─ video_url from events table
+
+Evidence:    Users entered video URLs, but got NULL in console
+
+Why:         MySQL tried to insert into non-existent columns
+             └─ INSERT failed silently
+             └─ Data discarded
+             └─ Users saw "success" but no video saved
+
+Solution:    Add missing columns via migration script
+             └─ MIGRATION_VIDEO_COLUMNS.php
+
+Result:      After running migration:
+             ├─ Columns exist ✓
+             ├─ New data saves correctly ✓
+             ├─ API retrieves correctly ✓
+             └─ Videos display ✓
+
+Time to fix: ~10 minutes
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║  NEXT STEP: Run http://yourdomain.com/api/MIGRATION_VIDEO_COLUMNS.php      ║
+╚══════════════════════════════════════════════════════════════════════════════╝
