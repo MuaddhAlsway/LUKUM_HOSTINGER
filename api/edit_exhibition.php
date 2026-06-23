@@ -59,12 +59,12 @@ try {
     $end_date = isset($input['end_date']) && !empty($input['end_date']) ? trim($input['end_date']) : null;
     $cover_image = isset($input['cover_image']) ? trim($input['cover_image']) : null;
     
-    // Handle event_video - convert empty string to NULL for proper removal
+    // Handle event_video - convert empty string to NULL
     $event_video = null;
     if (isset($input['event_video'])) {
         $video_trimmed = trim($input['event_video']);
         $event_video = ($video_trimmed !== '') ? $video_trimmed : null;
-        error_log('EDIT_EXHIBITION: event_video input: "' . $video_trimmed . '" -> converted to: ' . var_export($event_video, true));
+        error_log('EDIT_EXHIBITION: event_video input: "' . $video_trimmed . '" -> will be set to: ' . ($event_video === null ? 'NULL' : $event_video));
     }
     
     $gallery_images = isset($input['gallery_images']) && !empty($input['gallery_images']) ? trim($input['gallery_images']) : null;
@@ -102,7 +102,7 @@ try {
         ]));
     }
     
-    // Build SQL with proper NULL handling for video
+    // Build UPDATE query - always include event_video
     $sql = "UPDATE exhibitions SET 
         title_en = ?,
         title_ar = ?,
@@ -114,28 +114,14 @@ try {
         exhibition_time = ?,
         exhibition_end_time = ?,
         end_date = ?,
-        event_video = ";
+        event_video = ?";
     
-    // Handle video NULL vs string
-    if ($event_video === null) {
-        $sql .= "NULL";
-    } else {
-        $sql .= "?";
-    }
-    
-    // Add optional fields
-    $bindTypes = 'ssssssssss';
+    $bindTypes = 'sssssssssss';  // 11 string parameters
     $bindParams = [
         &$title_en, &$title_ar, &$description_en, &$description_ar,
         &$location_en, &$location_ar, &$exhibition_date, &$exhibition_time,
-        &$exhibition_end_time, &$end_date
+        &$exhibition_end_time, &$end_date, &$event_video
     ];
-    
-    // Add event_video to binding if it's not NULL
-    if ($event_video !== null) {
-        $bindTypes .= 's';
-        $bindParams[] = &$event_video;
-    }
     
     // Add optional cover_image
     if ($cover_image !== null) {
@@ -156,9 +142,9 @@ try {
     $bindTypes .= 'i';
     $bindParams[] = &$id;
     
-    error_log('EDIT_EXHIBITION: SQL Query: ' . $sql);
-    error_log('EDIT_EXHIBITION: Bind Types: ' . $bindTypes);
-    error_log('EDIT_EXHIBITION: event_video value being bound: ' . var_export($event_video, true));
+    error_log('EDIT_EXHIBITION: SQL: ' . $sql);
+    error_log('EDIT_EXHIBITION: Bind types: ' . $bindTypes);
+    error_log('EDIT_EXHIBITION: event_video value: ' . var_export($event_video, true));
     
     $stmt = $conn->prepare($sql);
     
@@ -170,7 +156,7 @@ try {
         ]));
     }
     
-    // Bind all parameters
+    // Bind parameters
     $bind_result = call_user_func_array([$stmt, 'bind_param'], array_merge([$bindTypes], $bindParams));
     
     if (!$bind_result) {
@@ -181,24 +167,26 @@ try {
         ]));
     }
     
-    // Execute statement
+    // Execute
     if ($stmt->execute()) {
-        $stmt->close();
+        error_log('EDIT_EXHIBITION: Update executed successfully for ID ' . $id);
         
-        // Verify the update by querying the database
-        $verify_sql = "SELECT event_video FROM exhibitions WHERE id = ?";
+        // Verify the update
+        $verify_sql = "SELECT id, event_video FROM exhibitions WHERE id = ?";
         $verify_stmt = $conn->prepare($verify_sql);
         $verify_stmt->bind_param('i', $id);
         $verify_stmt->execute();
         $verify_result = $verify_stmt->get_result();
         $verify_row = $verify_result->fetch_assoc();
-        error_log('EDIT_EXHIBITION: After update, event_video in DB is: ' . var_export($verify_row['event_video'], true));
+        
+        if ($verify_row) {
+            error_log('EDIT_EXHIBITION: VERIFIED - event_video in DB is now: ' . var_export($verify_row['event_video'], true));
+        }
         $verify_stmt->close();
         
-        // Clear output buffer
+        $stmt->close();
         ob_end_clean();
         
-        // Return success
         http_response_code(200);
         echo json_encode([
             'success' => true,
