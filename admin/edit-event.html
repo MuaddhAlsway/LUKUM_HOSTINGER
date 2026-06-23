@@ -339,23 +339,28 @@
                 let event = null;
                 let gallery = [];
                 
-                if (data.success && data.data) {
-                    event = data.data;
-                    gallery = data.gallery || [];
-                    console.log('✅ Loaded event from database:', event);
-                } else if (response.ok) {
-                    // Even if success=false, try to use the data if it has event info
-                    if (data.data || data.event) {
-                        event = data.data || data.event;
-                        gallery = data.gallery || [];
-                        console.log('✅ Loaded event from response (success=false):', event);
-                    } else {
-                        console.warn('⚠️ API returned:', data);
-                        alert('Error loading event: ' + (data.error || data.message || 'Unknown error'));
+                // Try multiple possible response structures
+                if (data.success) {
+                    if (data.data) {
+                        event = data.data;
+                        console.log('✅ Using data.data');
+                    } else if (data.event) {
+                        event = data.event;
+                        console.log('✅ Using data.event');
                     }
-                } else {
-                    console.error('❌ API request failed:', response.status, data);
-                    alert('❌ Error loading event (HTTP ' + response.status + '): ' + (data.error || data.message || 'Unknown error'));
+                    gallery = data.gallery || [];
+                } else if (data.event) {
+                    // Even if not marked success, use event data if present
+                    event = data.event;
+                    gallery = data.gallery || [];
+                    console.log('✅ Found event even though success=false');
+                }
+                
+                console.log('Final event object:', event);
+                
+                if (!event) {
+                    console.error('❌ No event data found in response:', data);
+                    throw new Error(data.error || data.message || 'No event data in response');
                 }
                 
                 if (event) {
@@ -553,42 +558,94 @@
         }
 
         function populateForm(event) {
-            console.log('Populating form with event:', event);
+            console.log('=== POPULATE FORM START ===');
+            console.log('Event object:', event);
+            
+            if (!event) {
+                console.error('❌ Event is null/undefined!');
+                return;
+            }
             
             // Scroll to top to ensure form is visible
             window.scrollTo(0, 0);
-            document.querySelector('.main-content').scrollTop = 0;
+            try {
+                document.querySelector('.main-content').scrollTop = 0;
+            } catch (e) {
+                console.warn('Could not scroll main content');
+            }
             
-            document.getElementById('eventId').value = event.id;
+            try {
+                // Set event ID
+                const eventIdField = document.getElementById('eventId');
+                if (eventIdField) {
+                    eventIdField.value = event.id || '';
+                    console.log('✅ Set eventId:', event.id);
+                } else {
+                    console.warn('⚠️ eventId field not found');
+                }
+            } catch (e) {
+                console.error('Error setting eventId:', e);
+            }
             
-            // Populate English fields - use title_en as primary, fallback to title
-            const titleEn = event.title_en || event.title || '';
-            const descEn = event.description_en || event.description || '';
-            const locEn = event.location_en || event.location || '';
+            // Populate English fields
+            try {
+                const titleEn = event.title_en || event.title || '';
+                const descEn = event.description_en || event.description || '';
+                const locEn = event.location_en || event.location || '';
+                
+                console.log('Setting English fields:', { titleEn, descEn, locEn });
+                
+                document.getElementById('title_en').value = titleEn;
+                console.log('✅ Set title_en');
+                
+                document.getElementById('description_en').value = descEn;
+                console.log('✅ Set description_en');
+            } catch (e) {
+                console.error('Error setting English fields:', e);
+            }
             
-            document.getElementById('title_en').value = titleEn;
-            document.getElementById('description_en').value = descEn;
+            // Populate Arabic fields
+            try {
+                const titleAr = event.title_ar || '';
+                const descAr = event.description_ar || '';
+                const locAr = event.location_ar || '';
+                
+                console.log('Setting Arabic fields:', { titleAr, descAr, locAr });
+                
+                document.getElementById('title_ar').value = titleAr;
+                console.log('✅ Set title_ar');
+                
+                document.getElementById('description_ar').value = descAr;
+                console.log('✅ Set description_ar');
+            } catch (e) {
+                console.error('Error setting Arabic fields:', e);
+            }
             
-            // Populate Arabic fields - these should come from database
-            // IMPORTANT: Use title_ar, description_ar, location_ar from API response
-            const titleAr = event.title_ar || '';
-            const descAr = event.description_ar || '';
-            const locAr = event.location_ar || '';
+            // Populate base event fields
+            try {
+                const eventDateField = document.getElementById('event_date');
+                if (eventDateField && event.event_date) {
+                    eventDateField.value = event.event_date;
+                    console.log('✅ Set event_date:', event.event_date);
+                }
+                
+                const eventTimeField = document.getElementById('event_time');
+                if (eventTimeField && event.event_time) {
+                    eventTimeField.value = event.event_time;
+                    console.log('✅ Set event_time:', event.event_time);
+                }
+                
+                const videoField = document.getElementById('video_url');
+                if (videoField) {
+                    videoField.value = event.video_url || '';
+                    console.log('✅ Set video_url:', event.video_url || '(empty)');
+                }
+            } catch (e) {
+                console.error('Error setting basic fields:', e);
+            }
             
-            console.log('Arabic data from API:', { titleAr, descAr, locAr });
-            
-            document.getElementById('title_ar').value = titleAr;
-            document.getElementById('description_ar').value = descAr;
-            
-            console.log('Arabic fields populated:');
-            console.log('title_ar value:', document.getElementById('title_ar').value);
-            console.log('description_ar value:', document.getElementById('description_ar').value);
-            
-            // Populate base fields
-            document.getElementById('event_date').value = event.event_date || '';
-            document.getElementById('event_time').value = event.event_time || '';
-            document.getElementById('event_end_time').value = event.event_end_time || '';
-            document.getElementById('video_url').value = event.video_url || '';
+            console.log('=== POPULATE FORM END ===');
+        }
             
             // Handle multi-day events
             const endDateSection = document.getElementById('endDateSection');

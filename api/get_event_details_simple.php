@@ -25,7 +25,7 @@ try {
     error_log("SIMPLE API: Database connected");
     
     // Check exhibitions table first
-    $exhibitionQuery = "SELECT id, title_en, description_en, location_en, exhibition_date, event_video, gallery_images FROM exhibitions WHERE id = ? LIMIT 1";
+    $exhibitionQuery = "SELECT id, title_en, title_ar, description_en, description_ar, location_en, location_ar, exhibition_date, exhibition_time, exhibition_end_time, end_date, event_video, gallery_images FROM exhibitions WHERE id = ? LIMIT 1";
     $exhibitionStmt = $db->prepare($exhibitionQuery);
     
     if (!$exhibitionStmt) {
@@ -50,9 +50,18 @@ try {
         $event = array(
             'id' => $event['id'],
             'title' => $event['title_en'],
+            'title_en' => $event['title_en'],
+            'title_ar' => $event['title_ar'],
             'description' => $event['description_en'],
+            'description_en' => $event['description_en'],
+            'description_ar' => $event['description_ar'],
             'location' => $event['location_en'],
+            'location_en' => $event['location_en'],
+            'location_ar' => $event['location_ar'],
             'event_date' => $event['exhibition_date'],
+            'event_time' => $event['exhibition_time'],
+            'event_end_time' => $event['exhibition_end_time'],
+            'end_date' => $event['end_date'],
             'video_url' => $event['event_video'],
             'event_video' => $event['event_video'],
             'gallery_images' => $event['gallery_images'],
@@ -62,7 +71,7 @@ try {
         error_log("SIMPLE API: Not in exhibitions, checking events table");
         
         // Check events table
-        $eventQuery = "SELECT id, title, description, location, event_date, video_url FROM events WHERE id = ? LIMIT 1";
+        $eventQuery = "SELECT id, title, title_en, title_ar, description, description_en, description_ar, location, location_en, location_ar, event_date, event_time, event_end_time, end_date, video_url FROM events WHERE id = ? LIMIT 1";
         $eventStmt = $db->prepare($eventQuery);
         
         if (!$eventStmt) {
@@ -87,8 +96,25 @@ try {
         
         error_log("SIMPLE API: Found in events table");
         
-        // Add video_url as event_video for consistency
-        $event['event_video'] = $event['video_url'];
+        // Normalize event data - ensure all expected fields exist
+        $event = array(
+            'id' => $event['id'],
+            'title' => $event['title_en'] ?? $event['title'] ?? '',
+            'title_en' => $event['title_en'] ?? $event['title'] ?? '',
+            'title_ar' => $event['title_ar'] ?? '',
+            'description' => $event['description_en'] ?? $event['description'] ?? '',
+            'description_en' => $event['description_en'] ?? $event['description'] ?? '',
+            'description_ar' => $event['description_ar'] ?? '',
+            'location' => $event['location_en'] ?? $event['location'] ?? '',
+            'location_en' => $event['location_en'] ?? $event['location'] ?? '',
+            'location_ar' => $event['location_ar'] ?? '',
+            'event_date' => $event['event_date'] ?? '',
+            'event_time' => $event['event_time'] ?? '',
+            'event_end_time' => $event['event_end_time'] ?? '',
+            'end_date' => $event['end_date'] ?? '',
+            'video_url' => $event['video_url'] ?? '',
+            'event_video' => $event['video_url'] ?? ''
+        );
     }
     
     error_log("SIMPLE API: Returning event: " . json_encode($event));
