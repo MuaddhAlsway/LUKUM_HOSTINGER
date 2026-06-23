@@ -463,23 +463,6 @@ try {
     // DEBUG: Log the video value being returned
     error_log("DEBUG: RETURNING event_video: " . var_export($event['event_video'], true));
     error_log("DEBUG: RETURNING video_url: " . var_export($event['video_url'], true));
-    error_log("DEBUG: Full event object keys: " . implode(', ', array_keys($event)));
-    
-    // Ensure NULL values are properly encoded as null (not empty string or 'null' string)
-    if ($event['event_video'] === null) {
-        error_log("DEBUG: event_video is NULL - will be encoded as null");
-    } elseif ($event['event_video'] === '') {
-        error_log("DEBUG: event_video is EMPTY_STRING");
-    } else {
-        error_log("DEBUG: event_video is: " . $event['event_video']);
-    }
-    
-    // Add debug info to response
-    $event['__debug__'] = [
-        'loaded_from' => 'exhibitions_table',
-        'event_video_is_null' => $event['event_video'] === null,
-        'event_video_raw' => $event['event_video']
-    ];
     
     echo json_encode([
         'success' => true,

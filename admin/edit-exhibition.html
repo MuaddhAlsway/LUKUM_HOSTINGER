@@ -374,12 +374,12 @@
             const videoFrame = document.getElementById('videoFrame');
             
             console.log('=== VIDEO CHECK ===');
-            console.log('event.event_video:', event.event_video);
-            console.log('event.video_url:', event.video_url);
-            console.log('typeof event.event_video:', typeof event.event_video);
-            console.log('event.event_video === null?', event.event_video === null);
-            console.log('event.event_video === ""?', event.event_video === "");
-            console.log('event.event_video?.toString():', event.event_video?.toString?.());
+            console.log('exhibition.event_video:', exhibition.event_video);
+            console.log('exhibition.video_url:', exhibition.video_url);
+            console.log('typeof exhibition.event_video:', typeof exhibition.event_video);
+            console.log('exhibition.event_video === null?', exhibition.event_video === null);
+            console.log('exhibition.event_video === ""?', exhibition.event_video === "");
+            console.log('exhibition.event_video?.toString():', exhibition.event_video?.toString?.());
             
             if (exhibition.event_video && String(exhibition.event_video).trim() && String(exhibition.event_video) !== 'null') {
                 console.log('✅ Showing video preview');
@@ -430,11 +430,18 @@
             locationSelectEn.value = location_en;
             locationSelectAr.value = location_ar;
             
-            // Handle custom locations
+            // Handle custom locations for English
             if (![...locationSelectEn.options].map(o => o.value).includes(location_en) && location_en) {
                 locationSelectEn.value = 'other';
                 document.getElementById('location_en').style.display = 'block';
                 document.getElementById('location_en').value = location_en;
+            }
+            
+            // Handle custom locations for Arabic
+            if (![...locationSelectAr.options].map(o => o.value).includes(location_ar) && location_ar) {
+                locationSelectAr.value = 'other';
+                document.getElementById('location_ar').style.display = 'block';
+                document.getElementById('location_ar').value = location_ar;
             }
             
             // Cover image
