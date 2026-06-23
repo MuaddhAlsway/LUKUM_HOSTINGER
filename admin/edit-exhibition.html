@@ -493,21 +493,62 @@
             // Load exhibition
             loadExhibition();
 
-            // Remove video button handler - Just clear the field, let user click Update
+            // Remove video button handler
             const removeVideoBtn = document.getElementById('removeVideoBtn');
             const videoInput = document.getElementById('event_video');
             const videoPreviewSection = document.getElementById('videoPreviewSection');
             
             if (removeVideoBtn) {
-                removeVideoBtn.addEventListener('click', (e) => {
+                removeVideoBtn.addEventListener('click', async (e) => {
                     e.preventDefault();
                     
-                    // Clear the video field
-                    videoInput.value = '';
-                    videoPreviewSection.style.display = 'none';
+                    const exhibitionId = document.getElementById('exhibitionId').value;
                     
-                    // Focus on the Update button to guide user
-                    showNotification('✅ Video cleared! Click "Update Exhibition" to save.', 'success');
+                    if (!exhibitionId) {
+                        showNotification('❌ Exhibition ID not found', 'error');
+                        return;
+                    }
+                    
+                    // Show loading state
+                    removeVideoBtn.disabled = true;
+                    removeVideoBtn.innerHTML = '<i class="ri-loader-4-line"></i> Removing...';
+                    
+                    try {
+                        // Call dedicated remove video endpoint
+                        const response = await fetch('../api/remove_exhibition_video.php', {
+                            method: 'POST',
+                            headers: {'Content-Type': 'application/json'},
+                            body: JSON.stringify({ id: exhibitionId })
+                        });
+                        
+                        const result = await response.json();
+                        console.log('Remove video response:', result);
+                        
+                        if (result.success) {
+                            showNotification('✅ Video removed successfully!', 'success');
+                            
+                            // Clear the form field
+                            videoInput.value = '';
+                            videoPreviewSection.style.display = 'none';
+                            
+                            removeVideoBtn.innerHTML = '<i class="ri-delete-bin-line"></i> Remove Video';
+                            removeVideoBtn.disabled = false;
+                            
+                            // Reload to confirm
+                            setTimeout(() => {
+                                location.reload();
+                            }, 1500);
+                        } else {
+                            showNotification('❌ Error: ' + (result.error || result.message), 'error');
+                            removeVideoBtn.innerHTML = '<i class="ri-delete-bin-line"></i> Remove Video';
+                            removeVideoBtn.disabled = false;
+                        }
+                    } catch (error) {
+                        console.error('Error removing video:', error);
+                        showNotification('❌ Network error', 'error');
+                        removeVideoBtn.innerHTML = '<i class="ri-delete-bin-line"></i> Remove Video';
+                        removeVideoBtn.disabled = false;
+                    }
                 });
             }
 
