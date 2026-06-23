@@ -69,48 +69,13 @@ try {
                     if ($row = $result->fetch_assoc()) {
                         $eventId = (int)$row['id'];
                         error_log("DEBUG: Found event ID: $eventId for slug: $slugParam");
-                    } else {
-                        error_log("DEBUG: No event found for slug: $slugParam in events table");
-                        // Try case-insensitive search in events
-                        $slugQuery2 = 'SELECT id FROM events WHERE LOWER(slug) = LOWER(?) LIMIT 1';
-                        $stmt2 = $db->prepare($slugQuery2);
-                        if ($stmt2) {
-                            $stmt2->bind_param('s', $slugParam);
-                            if ($stmt2->execute()) {
-                                $result2 = $stmt2->get_result();
-                                if ($row2 = $result2->fetch_assoc()) {
-                                    $eventId = (int)$row2['id'];
-                                    error_log("DEBUG: Found event ID (case-insensitive): $eventId for slug: $slugParam");
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        } else {
-            // Fallback: search by title if slug column doesn't exist yet
-            $titleQuery = '
-                SELECT id FROM events 
-                WHERE LOWER(REPLACE(REPLACE(REPLACE(title, " ", "-"), ".", ""), ",", "")) = ?
-                LIMIT 1
-            ';
-            $stmt = $db->prepare($titleQuery);
-            if ($stmt) {
-                $stmt->bind_param('s', $slugParam);
-                if ($stmt->execute()) {
-                    $result = $stmt->get_result();
-                    if ($row = $result->fetch_assoc()) {
-                        $eventId = (int)$row['id'];
-                        error_log("DEBUG: Found event ID (title fallback): $eventId for slug: $slugParam");
                     }
                 }
             }
         }
         
-        // If not found in events table, try exhibitions table by title_en
+        // If not found in events, try exhibitions table by slug
         if ($eventId === null) {
-            error_log("DEBUG: Event not found in events table, trying exhibitions table with slug: $slugParam");
-            
             $exhibitionTitleQuery = '
                 SELECT id FROM exhibitions 
                 WHERE LOWER(REPLACE(REPLACE(REPLACE(title_en, " ", "-"), ".", ""), ",", "")) = ?
@@ -143,47 +108,13 @@ try {
     // Query without translations table (fallback - using bilingual columns)
     // Note: events table has video_url, exhibitions table has event_video
     // We return BOTH fields for compatibility
-    $eventQuery = '
-        SELECT 
-            e.id,
-            e.event_date,
-            e.event_time,
-            e.event_end_time,
-            e.end_date,
-            e.cover_image,
-            COALESCE(e.video_url, "") as video_url,
-            COALESCE(e.video_url, "") as event_video,
-            e.category,
-            COALESCE(e.title_en, e.title) as title,
-            COALESCE(e.description_en, e.description) as description,
-            COALESCE(e.location_en, e.location) as location,
-            COALESCE(e.title_en, "") as title_en,
-            COALESCE(e.description_en, "") as description_en,
-            COALESCE(e.location_en, "") as location_en,
-            COALESCE(e.title_ar, "") as title_ar,
-            COALESCE(e.description_ar, "") as description_ar,
-            COALESCE(e.location_ar, "") as location_ar
-        FROM events e
-        WHERE e.id = ?
-        LIMIT 1
-    ';
     
-    $stmt = $db->prepare($eventQuery);
-    if (!$stmt) {
-        throw new Exception('Prepare failed: ' . $db->getConnection()->error);
-    }
+    // FIRST: Check exhibitions table (for newly added exhibitions)
+    $event = null;
     
-    $stmt->bind_param('i', $eventId);
-    if (!$stmt->execute()) {
-        throw new Exception('Execute failed: ' . $stmt->error);
-    }
-    
-    $result = $stmt->get_result();
-    $event = $result->fetch_assoc();
-    
-    // If not found in events table, try exhibitions table
-    if (!$event) {
-        error_log("DEBUG: Event not found in events table, trying exhibitions table with ID: $eventId");
+    if ($isNumeric) {
+        // Try exhibitions table FIRST for numeric IDs
+        error_log("DEBUG: Checking exhibitions table first for ID $eventId");
         
         $exhibitionQuery = '
             SELECT 
@@ -219,7 +150,123 @@ try {
                 $event = $exhibitionResult->fetch_assoc();
                 
                 if ($event) {
-                    error_log("DEBUG: Found exhibition with ID: $eventId");
+                    error_log("DEBUG: FOUND in exhibitions table with ID: $eventId");
+                }
+            }
+        }
+    }
+    
+    // If not found in exhibitions, check events table
+    if (!$event) {
+        error_log("DEBUG: ID $eventId not found in exhibitions, checking events table");
+        
+        $eventQuery = '
+            SELECT 
+                e.id,
+                e.event_date,
+                e.event_time,
+                e.event_end_time,
+                e.end_date,
+                e.cover_image,
+                COALESCE(e.video_url, "") as video_url,
+                COALESCE(e.video_url, "") as event_video,
+                e.category,
+                COALESCE(e.title_en, e.title) as title,
+                COALESCE(e.description_en, e.description) as description,
+                COALESCE(e.location_en, e.location) as location,
+                COALESCE(e.title_en, "") as title_en,
+                COALESCE(e.description_en, "") as description_en,
+                COALESCE(e.location_en, "") as location_en,
+                COALESCE(e.title_ar, "") as title_ar,
+                COALESCE(e.description_ar, "") as description_ar,
+                COALESCE(e.location_ar, "") as location_ar
+            FROM events e
+            WHERE e.id = ?
+            LIMIT 1
+        ';
+        
+        $stmt = $db->prepare($eventQuery);
+        if (!$stmt) {
+            throw new Exception('Prepare failed: ' . $db->getConnection()->error);
+        }
+        
+        $stmt->bind_param('i', $eventId);
+        if (!$stmt->execute()) {
+            throw new Exception('Execute failed: ' . $stmt->error);
+        }
+        
+        $result = $stmt->get_result();
+        $event = $result->fetch_assoc();
+        
+        if ($event) {
+            error_log("DEBUG: FOUND in events table with ID: $eventId");
+        }
+    }
+    
+    // Try slug-based lookup if numeric lookup failed and it's not numeric
+    if (!$event && !$isNumeric) {
+        error_log("DEBUG: Trying slug-based lookup for: $eventIdParam");
+        
+        // Normalize slug: lowercase, replace spaces with hyphens, remove special chars
+        $slugParam = strtolower(trim($eventIdParam));
+        $slugParam = preg_replace('/[^a-z0-9-]/', '', $slugParam);
+        $slugParam = preg_replace('/-+/', '-', $slugParam);
+        $slugParam = trim($slugParam, '-');
+        
+        error_log("DEBUG: Looking for slug: '$slugParam' from param: '$eventIdParam'");
+        
+        // Check if slug column exists in events table
+        $columnCheckQuery = "SHOW COLUMNS FROM events LIKE 'slug'";
+        $columnResult = $db->getConnection()->query($columnCheckQuery);
+        $slugColumnExists = $columnResult && $columnResult->num_rows > 0;
+        
+        error_log("DEBUG: Slug column exists in events: " . ($slugColumnExists ? 'yes' : 'no'));
+        
+        if ($slugColumnExists) {
+            // Query slug from events table (language-independent)
+            $slugQuery = 'SELECT id FROM events WHERE slug = ? LIMIT 1';
+            $stmt = $db->prepare($slugQuery);
+            if ($stmt) {
+                $stmt->bind_param('s', $slugParam);
+                if ($stmt->execute()) {
+                    $result = $stmt->get_result();
+                    if ($row = $result->fetch_assoc()) {
+                        $eventId = (int)$row['id'];
+                        error_log("DEBUG: Found event ID: $eventId for slug: $slugParam");
+                        
+                        // Now fetch the full event data
+                        $eventQuery = '
+                            SELECT 
+                                e.id,
+                                e.event_date,
+                                e.event_time,
+                                e.event_end_time,
+                                e.end_date,
+                                e.cover_image,
+                                COALESCE(e.video_url, "") as video_url,
+                                COALESCE(e.video_url, "") as event_video,
+                                e.category,
+                                COALESCE(e.title_en, e.title) as title,
+                                COALESCE(e.description_en, e.description) as description,
+                                COALESCE(e.location_en, e.location) as location,
+                                COALESCE(e.title_en, "") as title_en,
+                                COALESCE(e.description_en, "") as description_en,
+                                COALESCE(e.location_en, "") as location_en,
+                                COALESCE(e.title_ar, "") as title_ar,
+                                COALESCE(e.description_ar, "") as description_ar,
+                                COALESCE(e.location_ar, "") as location_ar
+                            FROM events e
+                            WHERE e.id = ?
+                            LIMIT 1
+                        ';
+                        $eventStmt = $db->prepare($eventQuery);
+                        if ($eventStmt) {
+                            $eventStmt->bind_param('i', $eventId);
+                            if ($eventStmt->execute()) {
+                                $event = $eventStmt->get_result()->fetch_assoc();
+                            }
+                        }
+                    }
                 }
             }
         }
