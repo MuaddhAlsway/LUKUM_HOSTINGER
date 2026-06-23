@@ -409,24 +409,29 @@
             const existingGalleryDiv = document.getElementById('existingGallery');
             const existingGalleryPreview = document.getElementById('existingGalleryPreview');
             
-            if (gallery && gallery.length > 0) {
-                existingGalleryDiv.style.display = 'block';
-                existingGalleryPreview.innerHTML = gallery.map((img, index) => {
-                    // Fix image path - use absolute URL
-                    let imagePath = img.image_url;
-                    if (!imagePath.startsWith('http') && !imagePath.startsWith('/')) {
-                        imagePath = '../' + imagePath;
-                    }
-                    return `
-                    <div class="gallery-item" data-image-id="${img.id}" style="position: relative; display: inline-block; margin: 10px; border-radius: 8px; overflow: hidden;">
-                        <img src="${imagePath}" alt="Gallery image" style="width: 150px; height: 150px; object-fit: cover; border-radius: 8px;" onerror="if(this.dataset.errored)return;this.dataset.errored=1;this.src='../heroImage/img-4.webp'">
-                        ${img.id > 0 ? `<button type="button" onclick="removeGalleryImage(${img.id})" style="position: absolute; top: 5px; right: 5px; background: rgba(0,0,0,0.7); color: white; border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer; display: flex; align-items: center; justify-content: center;">
-                            <i class="ri-close-line"></i>
-                        </button>` : ''}
-                    </div>
-                `;
-                }).join('');
+            if (!gallery || gallery.length === 0) {
+                return;
             }
+            
+            existingGalleryDiv.style.display = 'block';
+            let html = '';
+            
+            gallery.forEach((img, index) => {
+                // Fix image path - use absolute URL
+                let imagePath = img.image_url;
+                if (!imagePath.startsWith('http') && !imagePath.startsWith('/')) {
+                    imagePath = '../' + imagePath;
+                }
+                
+                let removeBtn = '';
+                if (img.id > 0) {
+                    removeBtn = '<button type="button" onclick="removeGalleryImage(' + img.id + ')" style="position: absolute; top: 5px; right: 5px; background: rgba(0,0,0,0.7); color: white; border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer; display: flex; align-items: center; justify-content: center;"><i class="ri-close-line"></i></button>';
+                }
+                
+                html += '<div class="gallery-item" data-image-id="' + img.id + '" style="position: relative; display: inline-block; margin: 10px; border-radius: 8px; overflow: hidden;"><img src="' + imagePath + '" alt="Gallery image" style="width: 150px; height: 150px; object-fit: cover; border-radius: 8px;" onerror="if(this.dataset.errored)return;this.dataset.errored=1;this.src=\'../heroImage/img-4.webp\'">' + removeBtn + '</div>';
+            });
+            
+            existingGalleryPreview.innerHTML = html;
         }
 
         function removeGalleryImage(imageId) {
