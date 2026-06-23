@@ -331,7 +331,9 @@
             }
 
             try {
-                const response = await fetch(`../api/get_exhibition.php?id=${id}`);
+                // Add cache-busting parameter to ensure fresh data
+                const timestamp = new Date().getTime();
+                const response = await fetch(`../api/get_exhibition.php?id=${id}&v=${timestamp}`);
                 const data = await response.json();
                 
                 if (data.success && data.data) {
