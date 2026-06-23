@@ -54,7 +54,7 @@ try {
         error_log("DEBUG: Looking for slug: '$slugParam' from param: '$eventIdParam'");
         
         // Try to extract numeric ID from slug (e.g., "ex-3-ampm" -> 3)
-        if (preg_match('/-(\d+)-/', '-' . $slugParam . '-', $matches)) {
+        if (preg_match('/ex-(\d+)-/', $slugParam, $matches)) {
             $potentialId = (int)$matches[1];
             error_log("DEBUG: Extracted potential ID from slug: $potentialId");
             
@@ -68,6 +68,8 @@ try {
                     if ($checkResult->num_rows > 0) {
                         $eventId = $potentialId;
                         error_log("DEBUG: ID $eventId found in exhibitions table");
+                    } else {
+                        error_log("DEBUG: ID $potentialId NOT found in exhibitions table");
                     }
                 }
                 $checkStmt->close();
@@ -138,135 +140,52 @@ try {
                 $partialStmt->close();
             }
         }
-    }
-    
-    // If no event found by slug, throw error instead of defaulting to 1
-    if ($eventId === null) {
-        if ($isNumeric) {
-            $eventId = (int)$eventIdParam;
-        } else {
-            // Last resort: try to find ANY exhibition/event with similar title
-            // This handles cases where slug matching fails
-            error_log("DEBUG: Slug not found, trying fuzzy match for: $eventIdParam");
-            
-            // Approach 1: Try case-insensitive partial match on exhibitions
-            $fuzzyQuery = "SELECT id FROM exhibitions WHERE LOWER(title_en) LIKE LOWER(?) LIMIT 1";
-            $fuzzyStmt = $db->prepare($fuzzyQuery);
-            if ($fuzzyStmt) {
-                $searchTerm = "%" . $eventIdParam . "%";
-                $fuzzyStmt->bind_param('s', $searchTerm);
-                if ($fuzzyStmt->execute()) {
-                    $fuzzyResult = $fuzzyStmt->get_result();
-                    if ($fuzzyRow = $fuzzyResult->fetch_assoc()) {
-                        $eventId = (int)$fuzzyRow['id'];
-                        error_log("DEBUG: Found exhibition via SQL LOWER fuzzy match: $eventId");
-                    }
-                }
-            }
-            
-            // Approach 2: If SQL LOWER didn't work, try PHP-based matching
-            if ($eventId === null) {
-                error_log("DEBUG: SQL LOWER didn't find match, trying PHP-based matching");
+        
+        // If still not found, try partial title search (extract title from slug like "ampm" from "ex-3-ampm")
+        if ($eventId === null && strpos($slugParam, '-') !== false) {
+            $slugParts = explode('-', $slugParam);
+            if (count($slugParts) >= 2) {
+                // Get last part as potential title
+                $titlePart = end($slugParts);
+                error_log("DEBUG: Extracted title part from slug: '$titlePart'");
                 
-                // Get all exhibitions and match in PHP
-                $allExhibitionsQuery = "SELECT id, title_en FROM exhibitions";
-                $allExhibitionsResult = $db->getConnection()->query($allExhibitionsQuery);
-                
-                if ($allExhibitionsResult) {
-                    $searchTermLower = strtolower($eventIdParam);
-                    
-                    while ($exRow = $allExhibitionsResult->fetch_assoc()) {
-                        $titleLower = strtolower($exRow['title_en']);
-                        
-                        // Check if search term is contained in title
-                        if (strpos($titleLower, $searchTermLower) !== false) {
-                            $eventId = (int)$exRow['id'];
-                            error_log("DEBUG: Found exhibition via PHP strpos fuzzy match: $eventId (searched for '$searchTermLower' in '" . $exRow['title_en'] . "')");
-                            break;
+                $titlePartQuery = "SELECT id FROM exhibitions WHERE LOWER(title_en) LIKE LOWER(?) LIMIT 1";
+                $titlePartStmt = $db->prepare($titlePartQuery);
+                if ($titlePartStmt) {
+                    $titleSearch = "%" . $titlePart . "%";
+                    $titlePartStmt->bind_param('s', $titleSearch);
+                    if ($titlePartStmt->execute()) {
+                        $titlePartResult = $titlePartStmt->get_result();
+                        if ($titlePartResult->num_rows > 0) {
+                            $titlePartRow = $titlePartResult->fetch_assoc();
+                            $eventId = (int)$titlePartRow['id'];
+                            error_log("DEBUG: Found exhibition by title part match: ID $eventId for search: $titlePart");
                         }
                     }
+                    $titlePartStmt->close();
                 }
-            }
-            
-            // Approach 3: If still not found, try events table
-            if ($eventId === null) {
-                error_log("DEBUG: No match in exhibitions, trying events table");
-                
-                $eventsQuery = "SELECT id, title FROM events WHERE LOWER(title) LIKE LOWER(?) LIMIT 1";
-                $eventsStmt = $db->prepare($eventsQuery);
-                if ($eventsStmt) {
-                    $searchTerm = "%" . $eventIdParam . "%";
-                    $eventsStmt->bind_param('s', $searchTerm);
-                    if ($eventsStmt->execute()) {
-                        $eventsResult = $eventsStmt->get_result();
-                        if ($eventsRow = $eventsResult->fetch_assoc()) {
-                            $eventId = (int)$eventsRow['id'];
-                            error_log("DEBUG: Found event via SQL LOWER fuzzy match: $eventId");
-                        }
-                    }
-                }
-            }
-            
-            // Approach 4: PHP-based matching for events
-            if ($eventId === null) {
-                error_log("DEBUG: SQL LOWER didn't find event match, trying PHP-based matching on events");
-                
-                $allEventsQuery = "SELECT id, title FROM events";
-                $allEventsResult = $db->getConnection()->query($allEventsQuery);
-                
-                if ($allEventsResult) {
-                    $searchTermLower = strtolower($eventIdParam);
-                    
-                    while ($evRow = $allEventsResult->fetch_assoc()) {
-                        $titleLower = strtolower($evRow['title']);
-                        
-                        if (strpos($titleLower, $searchTermLower) !== false) {
-                            $eventId = (int)$evRow['id'];
-                            error_log("DEBUG: Found event via PHP strpos fuzzy match: $eventId");
-                            break;
-                        }
-                    }
-                }
-            }
-            
-            // Approach 5: Last attempt - return first available exhibition
-            if ($eventId === null) {
-                error_log("DEBUG: No fuzzy match found for '$eventIdParam', trying fallback - first available");
-                
-                $fallbackQuery = "SELECT id FROM exhibitions ORDER BY id DESC LIMIT 1";
-                $fallbackResult = $db->getConnection()->query($fallbackQuery);
-                
-                if ($fallbackResult && $fallbackResult->num_rows > 0) {
-                    $fallbackRow = $fallbackResult->fetch_assoc();
-                    $eventId = (int)$fallbackRow['id'];
-                    error_log("DEBUG: Using fallback - returning most recent exhibition: $eventId");
-                } else {
-                    // If no exhibitions at all, try events table
-                    $fallbackEventsQuery = "SELECT id FROM events ORDER BY id DESC LIMIT 1";
-                    $fallbackEventsResult = $db->getConnection()->query($fallbackEventsQuery);
-                    
-                    if ($fallbackEventsResult && $fallbackEventsResult->num_rows > 0) {
-                        $fallbackEventsRow = $fallbackEventsResult->fetch_assoc();
-                        $eventId = (int)$fallbackEventsRow['id'];
-                        error_log("DEBUG: Using fallback - returning most recent event: $eventId");
-                    }
-                }
-            }
-            
-            // If still not found, return error
-            if ($eventId === null) {
-                throw new Exception("Event/Exhibition not found with slug: $eventIdParam (tried: exact match, SQL case-insensitive LIKE, PHP strpos, fallback)");
             }
         }
     }
     
-    // Get event details with translation support
-    // Query without translations table (fallback - using bilingual columns)
-    // Note: events table has video_url, exhibitions table has event_video
-    // We return BOTH fields for compatibility
+    // If no event found by slug, try to find ANY exhibition as last resort
+    if ($eventId === null) {
+        error_log("DEBUG: No event/exhibition found, checking if ANY exhibitions exist as fallback");
+        
+        $fallbackQuery = "SELECT id FROM exhibitions ORDER BY id ASC LIMIT 1";
+        $fallbackResult = $db->getConnection()->query($fallbackQuery);
+        
+        if ($fallbackResult && $fallbackResult->num_rows > 0) {
+            $fallbackRow = $fallbackResult->fetch_assoc();
+            $eventId = (int)$fallbackRow['id'];
+            error_log("DEBUG: No match found, using first available exhibition as fallback: ID $eventId");
+        } else {
+            error_log("DEBUG: No exhibitions exist in database at all");
+            throw new Exception('No exhibitions found in database');
+        }
+    }
     
-    // FIRST: Check exhibitions table (for newly added exhibitions)
-    $event = null;
+    // Get event details with translation support
     
     if ($isNumeric) {
         // Try exhibitions table FIRST for numeric IDs
