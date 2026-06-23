@@ -1,0 +1,193 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║              FINAL VIDEO DIAGNOSTIC - RUN THIS TO FIX THE ISSUE             ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+Enhanced logging has been added to event.php. Now we can see EXACTLY what's happening.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP 1: CLEAR EVERYTHING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Clear browser cache:
+   Ctrl+Shift+Delete → All time → Delete all
+
+2. Hard refresh page:
+   Ctrl+F5 (or Cmd+Shift+R on Mac)
+
+3. Close all browser tabs to this site
+
+4. Reopen browser fresh
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP 2: OPEN F12 CONSOLE BEFORE VISITING PAGE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Press F12 to open Developer Tools
+2. Click "Console" tab
+3. Keep console open
+4. NOW go to an event page
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP 3: LOOK FOR THESE CONSOLE LOGS (in order)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Section 1: displayEvent is called
+  Look for: "=== displayEvent called ==="
+  Should show: Event object data
+
+Section 2: Video check happens
+  Look for: "=== CHECKING FOR VIDEO ==="
+  Should show:
+    ✅ Full event object
+    ✅ event.video_url: "https://youtu.be/..."
+    ✅ event.event_video: "https://youtu.be/..."
+    ✅ Final videoUrl variable: "https://youtu.be/..."
+    ✅ videoUrl is truthy? true
+    ✅ VIDEO FOUND! Calling displayVideo with: ...
+
+Section 3: displayVideo function executes
+  Look for: "🎬 === displayVideo CALLED ==="
+  Should show:
+    ✅ videoUrl parameter: "https://youtu.be/..."
+    ✅ videoSection element found? true
+    ✅ videoFrame element found? true
+    ✅ Detected YouTube URL
+    ✅ Generated YouTube embed URL: https://www.youtube.com/embed/...
+    ✅ Setting iframe src...
+    ✅ iframe.src is now: https://www.youtube.com/embed/...
+    ✅ Making video section visible...
+    ✅ VIDEO SHOULD NOW BE VISIBLE!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+IF YOU SEE ALL ✅ ABOVE BUT NO VIDEO SHOWS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+This means the code is working but CSS might be hiding it.
+
+DO THIS:
+
+1. In console, paste this:
+   ```
+   document.getElementById('videoSection').style.cssText = 'display: block !important; visibility: visible !important; opacity: 1 !important;'
+   ```
+
+2. Press Enter
+
+3. DOES VIDEO APPEAR?
+   ✅ YES → CSS issue, we'll fix it
+   ❌ NO → JavaScript not setting iframe src correctly
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+IF YOU DON'T SEE "=== CHECKING FOR VIDEO ==="
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+This means the video check code is NOT RUNNING.
+
+Possible causes:
+1. Page didn't reload properly → Hard refresh again (Ctrl+F5)
+2. Browser cached old version → Clear cache again
+3. JavaScript error earlier → Look for red error messages in console
+4. displayEvent not called → Look for "=== displayEvent called ===" first
+
+DO THIS:
+
+1. Copy entire console output
+2. Look for ANY RED ERROR MESSAGES
+3. Report those errors to us
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+IF YOU SEE "❌ NO VIDEO URL FOUND"
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+The API is NOT returning video URLs.
+
+DO THIS:
+
+1. In console, type:
+   ```
+   fetch('/api/DEBUG_DATABASE_VIDEO.php').then(r => r.json()).then(d => console.log(d))
+   ```
+
+2. Press Enter
+
+3. Look for:
+   "exhibitions_count": X
+   "exhibitions": [ ... ]
+   
+4. Check if any exhibition has "event_video" with a URL value
+
+5. Copy this output and send it to us
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+WHAT TO REPORT IF VIDEO STILL NOT SHOWING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Send us:
+
+1. Event URL you're testing:
+   _________________________________
+
+2. Complete console output (F12 → Console → Right-click → Save as):
+   _________________________________
+
+3. Screenshot of console with logs
+
+4. Screenshot of event page
+
+5. Which log section you got to:
+   □ "=== displayEvent called ===" (found)
+   □ "=== CHECKING FOR VIDEO ===" (found)
+   □ "🎬 === displayVideo CALLED ===" (found)
+   □ None of the above (not found)
+
+6. Did console show force display made video appear?
+   □ YES (CSS issue)
+   □ NO (iframe issue)
+   □ Didn't try
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TESTING A SPECIFIC EVENT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+To test with known data:
+
+1. Open: /api/DEBUG_DATABASE_VIDEO.php
+   Look for exhibition or event with video_url value
+
+2. Note its ID number
+
+3. Open: /api/get_event_details.php?id=THAT_ID&lang=en
+   Check if API returns both "video_url" and "event_video"
+
+4. Open event page for that ID:
+   /event.php?id=THAT_ID
+   
+5. Open F12 console
+6. Check for logs as described above
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+WHAT WAS FIXED TODAY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ Removed inline style="display: none" from video section
+✅ Added explicit display: block in JavaScript
+✅ Added comprehensive console logging
+✅ Added multiple methods to force visibility
+✅ Fixed YouTube URL parsing
+✅ Added error detection for missing elements
+✅ Added iframe src verification
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+👉 NEXT ACTION:
+
+1. Clear cache completely
+2. Hard refresh (Ctrl+F5)
+3. Open F12 before going to event page
+4. Go to event with video
+5. Check console for all the ✅ messages
+6. If not working, report what you see in console
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                   Run this diagnostic and report findings!                   ║
+╚══════════════════════════════════════════════════════════════════════════════╝
