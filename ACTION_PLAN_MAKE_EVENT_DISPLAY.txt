@@ -1,0 +1,220 @@
+═══════════════════════════════════════════════════════════════════════════════
+ ACTION PLAN - MAKE EVENT PAGE DISPLAY DATA WITH VIDEO
+═══════════════════════════════════════════════════════════════════════════════
+
+📊 CURRENT STATE:
+────────────────────────────────────────────────────────────────────────────
+Event ID 76 (AMPM):
+  ✅ Title: "AMPM"
+  ✅ Description: "An everyday luxury lifestyle brand..."
+  ✅ Location: "Hall 1"
+  ✅ Date: 2024-12-19
+  ✅ Cover image: assest/blog-uploads/blog-1777623107-69f46043b67c8.webp
+  ❌ Video: NULL (missing - needs to be added)
+  ? Gallery: (needs verification)
+
+───────────────────────────────────────────────────────────────────────────
+⚡ STEP 1 - TEST CURRENT PAGE (2 MINUTES)
+───────────────────────────────────────────────────────────────────────────
+
+1. VISIT:
+   http://localhost/event.php?id=76&lang=en
+
+2. CHECK WHAT DISPLAYS:
+   ☐ Title "AMPM" visible?
+   ☐ Description visible?
+   ☐ Location "Hall 1" visible?
+   ☐ Date visible?
+   ☐ Cover image loaded?
+   ☐ Gallery visible?
+   ☐ Video section? (should NOT show - correct)
+
+3. OPEN F12 CONSOLE:
+   ☐ See "🎬 Initializing event page..."?
+   ☐ See "✅ Page loader hidden"?
+   ☐ See any red errors?
+
+IF ALL ✅: Page is working correctly! Go to STEP 2
+IF ANY ❌: Check console errors and report them
+
+───────────────────────────────────────────────────────────────────────────
+📹 STEP 2 - ADD VIDEO TO AMPM (30 SECONDS)
+───────────────────────────────────────────────────────────────────────────
+
+OPTION A - Using API Script (Easiest):
+  1. Visit: http://localhost/api/add_video_to_ampm.php
+  2. Should see: {"success": true, "message": "Video added..."}
+  3. Done! Video is now in database
+
+OPTION B - Using Admin Form:
+  1. Go to: Admin Dashboard → Exhibitions
+  2. Find: AMPM (ID 76)
+  3. Click: Edit
+  4. Find: Event Video section
+  5. Paste: https://youtu.be/JH3zXmuFARw?si=D7Drn3PjWR-uQdpm
+  6. Click: Preview (should show video)
+  7. Click: Save
+
+OPTION C - Using Database:
+  1. Open database tool (phpMyAdmin, etc)
+  2. Run this query:
+     UPDATE exhibitions 
+     SET event_video = 'https://youtu.be/JH3zXmuFARw?si=D7Drn3PjWR-uQdpm'
+     WHERE id = 76 LIMIT 1;
+  3. Done!
+
+───────────────────────────────────────────────────────────────────────────
+✅ STEP 3 - VERIFY VIDEO DISPLAYS (30 SECONDS)
+───────────────────────────────────────────────────────────────────────────
+
+1. CLEAR CACHE:
+   Ctrl+Shift+R (Windows/Linux)
+   Cmd+Shift+R (Mac)
+
+2. RELOAD PAGE:
+   http://localhost/event.php?id=76&lang=en
+
+3. CHECK FOR VIDEO:
+   ✅ Should see: Video section below gallery
+   ✅ Should see: YouTube player with video
+   ✅ Should see: "Event Video" heading
+
+4. OPEN F12 CONSOLE:
+   ✅ Should see: "✅ VIDEO FOUND!"
+   ✅ Should see: "📺 Detected YouTube URL"
+   ✅ Should see: "✅ Video section now visible"
+
+IF YES: SUCCESS! Page now displays with video! 🎉
+
+───────────────────────────────────────────────────────────────────────────
+🎯 COMPLETE CHECKLIST
+───────────────────────────────────────────────────────────────────────────
+
+Page Elements:
+  ☐ Title displays
+  ☐ Description displays
+  ☐ Location displays
+  ☐ Date/time displays
+  ☐ Cover image loads
+  ☐ Gallery images visible (if exist)
+
+Video Elements:
+  ☐ Video section appears
+  ☐ YouTube player visible
+  ☐ "Event Video" heading shows
+  ☐ Can play/pause video
+
+Console (F12):
+  ☐ No red error messages
+  ☐ See success messages
+  ☐ See "✅ VIDEO FOUND!"
+  ☐ Page loads quickly (no "Loading...")
+
+Browser:
+  ☐ Works on Chrome
+  ☐ Works on Firefox
+  ☐ Works on mobile
+  ☐ Works on Safari
+
+Database:
+  ☐ Exhibition ID 76 has video_url
+  ☐ Video URL is valid
+  ☐ API returns video field
+
+───────────────────────────────────────────────────────────────────────────
+🚀 STEP 4 - DEPLOY TO HOSTINGER
+───────────────────────────────────────────────────────────────────────────
+
+Once verified locally, deploy:
+
+1. BACKUP:
+   cp event.php event.php.backup
+
+2. UPLOAD to Hostinger:
+   - Upload fixed event.php
+   - (Database already has video from step 2)
+
+3. CLEAR CACHE:
+   - Browser cache
+   - CDN cache (Hostinger)
+   - Any proxy cache
+
+4. TEST LIVE:
+   https://yourdomain.com/event.php?id=76&lang=en
+
+5. VERIFY:
+   Same checks as local testing
+
+───────────────────────────────────────────────────────────────────────────
+📋 SUMMARY
+───────────────────────────────────────────────────────────────────────────
+
+What's Working:
+  ✅ Page loads without errors
+  ✅ Content displays (title, description, location)
+  ✅ Images load
+  ✅ Gallery displays
+  ✅ JavaScript fully functional
+  ✅ Console logging shows success
+
+What Needs Action:
+  → Add video URL to exhibition ID 76
+
+Expected Final Result:
+  ✅ Event page fully functional
+  ✅ All content displays
+  ✅ Video plays below gallery
+  ✅ Works on all devices
+  ✅ Ready for production
+
+───────────────────────────────────────────────────────────────────────────
+💡 TROUBLESHOOTING
+───────────────────────────────────────────────────────────────────────────
+
+If video doesn't appear after upload:
+  1. Reload page with cache clear: Ctrl+Shift+R
+  2. Check F12 console for "✅ VIDEO FOUND!" message
+  3. If not found:
+     - Check if UPDATE query succeeded
+     - Verify video URL is valid
+     - Run: http://localhost/api/debug_event_page.php
+
+If page still shows "Loading...":
+  1. Check F12 Console
+  2. Look for red error messages
+  3. Share error output
+  4. Test with: http://localhost/test_event_load.html
+
+If gallery images missing:
+  1. Check if gallery_images column populated
+  2. Or check event_gallery table for ID 76
+  3. Verify image paths exist
+
+───────────────────────────────────────────────────────────────────────────
+🎉 SUCCESS LOOKS LIKE THIS
+───────────────────────────────────────────────────────────────────────────
+
+Browser shows:
+  - Hero image (cover image)
+  - Title: "AMPM"
+  - Subtitle: Date, location
+  - "About This Event" section with description
+  - Gallery section with images
+  - Video section with YouTube player
+  - All in beautiful responsive layout
+
+Console shows:
+  🎬 Initializing event page...
+  🚀 loadEventData started
+  ✅ Page loader hidden
+  ✅ Loaded from database
+  === CHECKING FOR VIDEO ===
+  ✅ VIDEO FOUND!
+  🚀 Setting iframe src to: https://www.youtube.com/embed/...
+  ✅ Video section now visible
+
+Status: ✅ COMPLETE SUCCESS!
+
+═══════════════════════════════════════════════════════════════════════════════
+Ready? Go to STEP 1 now! 🚀
+═══════════════════════════════════════════════════════════════════════════════
