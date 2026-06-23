@@ -330,9 +330,13 @@ if (!$title) {
                     console.log('📱 Detected slug/title format');
                 }
                 
+                // Add cache-busting parameter
+                const timestamp = new Date().getTime();
+                apiUrl += `&t=${timestamp}`;
+                
                 console.log('🔗 API URL:', apiUrl);
                 
-                let response = await fetch(apiUrl);
+                let response = await fetch(apiUrl, { cache: 'no-store' });
                 console.log('📨 API Response status:', response.status, response.statusText);
                 
                 if (!response.ok) {

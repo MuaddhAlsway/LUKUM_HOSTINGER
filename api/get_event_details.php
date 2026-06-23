@@ -11,6 +11,7 @@ header('Access-Control-Allow-Methods: GET, OPTIONS');
 header('Cache-Control: no-cache, no-store, must-revalidate');
 header('Pragma: no-cache');
 header('Expires: 0');
+header('Date: ' . date('r'));
 
 require_once 'config.php';
 require_once 'slug-utils.php';
@@ -258,6 +259,8 @@ try {
                 LIMIT 1
             ';
             
+            error_log("DEBUG: Querying exhibitions table for ID: $eventId");
+            
             $exhibitionStmt = $db->prepare($exhibitionQuery);
             if ($exhibitionStmt) {
                 $exhibitionStmt->bind_param('i', $eventId);
@@ -267,6 +270,7 @@ try {
                     
                     if ($event) {
                         error_log("DEBUG: FOUND in exhibitions table with ID: $eventId");
+                        error_log("DEBUG: Raw event_video from DB: " . var_export($event['event_video'], true));
                     }
                 } else {
                     error_log("DEBUG: Exhibition query execute failed: " . $exhibitionStmt->error);
@@ -453,6 +457,20 @@ try {
             'image_url' => $event['cover_image']
         ];
         error_log("DEBUG: Using cover image as fallback gallery");
+    }
+    
+    // DEBUG: Log the video value being returned
+    error_log("DEBUG: RETURNING event_video: " . var_export($event['event_video'], true));
+    error_log("DEBUG: RETURNING video_url: " . var_export($event['video_url'], true));
+    error_log("DEBUG: Full event object keys: " . implode(', ', array_keys($event)));
+    
+    // Ensure NULL values are properly encoded as null (not empty string or 'null' string)
+    if ($event['event_video'] === null) {
+        error_log("DEBUG: event_video is NULL - will be encoded as null");
+    } elseif ($event['event_video'] === '') {
+        error_log("DEBUG: event_video is EMPTY_STRING");
+    } else {
+        error_log("DEBUG: event_video is: " . $event['event_video']);
     }
     
     echo json_encode([

@@ -39,7 +39,7 @@ if (!in_array($lang, ['en', 'ar'])) {
 
 $today = date('Y-m-d');
 
-// Build SQL query with bilingual support
+// Build SQL query with bilingual support and slug generation
 $sql = "SELECT 
     id,
     exhibition_date,
@@ -67,7 +67,8 @@ $sql = "SELECT
     title_ar,
     description_ar,
     location_ar,
-    is_featured
+    is_featured,
+    LOWER(CONCAT('ex-', id, '-', REPLACE(LOWER(title_en), ' ', '-'))) as slug
 FROM exhibitions
 WHERE 1=1";
 
