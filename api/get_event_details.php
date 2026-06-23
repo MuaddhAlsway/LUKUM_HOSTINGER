@@ -53,6 +53,27 @@ try {
         
         error_log("DEBUG: Looking for slug: '$slugParam' from param: '$eventIdParam'");
         
+        // Try to extract numeric ID from slug (e.g., "ex-3-ampm" -> 3)
+        if (preg_match('/-(\d+)-/', '-' . $slugParam . '-', $matches)) {
+            $potentialId = (int)$matches[1];
+            error_log("DEBUG: Extracted potential ID from slug: $potentialId");
+            
+            // Check if this ID exists in exhibitions table
+            $checkExhibition = "SELECT id FROM exhibitions WHERE id = ? LIMIT 1";
+            $checkStmt = $db->prepare($checkExhibition);
+            if ($checkStmt) {
+                $checkStmt->bind_param('i', $potentialId);
+                if ($checkStmt->execute()) {
+                    $checkResult = $checkStmt->get_result();
+                    if ($checkResult->num_rows > 0) {
+                        $eventId = $potentialId;
+                        error_log("DEBUG: ID $eventId found in exhibitions table");
+                    }
+                }
+                $checkStmt->close();
+            }
+        }
+        
         // Check if slug column exists in events table
         $columnCheckQuery = "SHOW COLUMNS FROM events LIKE 'slug'";
         $columnResult = $db->getConnection()->query($columnCheckQuery);
@@ -78,6 +99,7 @@ try {
         
         // If not found in events, try exhibitions table by slug
         if ($eventId === null) {
+            // Try direct slug match on exhibition title
             $exhibitionTitleQuery = '
                 SELECT id FROM exhibitions 
                 WHERE LOWER(REPLACE(REPLACE(REPLACE(title_en, " ", "-"), ".", ""), ",", "")) = ?
@@ -93,6 +115,27 @@ try {
                         error_log("DEBUG: Found exhibition ID: $eventId for slug: $slugParam");
                     }
                 }
+                $exhibitionStmt->close();
+            }
+        }
+        
+        // If still not found, try partial title match
+        if ($eventId === null) {
+            error_log("DEBUG: Slug match failed, trying partial title match for: $eventIdParam");
+            $partialQuery = "SELECT id FROM exhibitions WHERE LOWER(title_en) LIKE LOWER(?) LIMIT 1";
+            $partialStmt = $db->prepare($partialQuery);
+            if ($partialStmt) {
+                $searchTerm = "%" . $eventIdParam . "%";
+                $partialStmt->bind_param('s', $searchTerm);
+                if ($partialStmt->execute()) {
+                    $partialResult = $partialStmt->get_result();
+                    if ($partialResult->num_rows > 0) {
+                        $partialRow = $partialResult->fetch_assoc();
+                        $eventId = (int)$partialRow['id'];
+                        error_log("DEBUG: Found exhibition by partial title match: ID $eventId for search: $eventIdParam");
+                    }
+                }
+                $partialStmt->close();
             }
         }
     }
