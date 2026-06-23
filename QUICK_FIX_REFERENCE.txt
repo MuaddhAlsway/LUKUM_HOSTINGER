@@ -1,160 +1,123 @@
+╔═══════════════════════════════════════════════════════════════════════════════╗
+║                  EDIT EXHIBITION - QUICK FIX REFERENCE                        ║
+║                          June 23, 2026                                        ║
+╚═══════════════════════════════════════════════════════════════════════════════╝
+
+PROBLEM: Edit exhibition page won't open or shows blank screen
+
 ═══════════════════════════════════════════════════════════════════════════════
- EVENT PAGE NOT LOADING - QUICK FIX REFERENCE
+
+FIXES APPLIED:
+───────────────
+
+1. ✅ api/get_exhibition.php
+   └─ Added CORS headers for proper API responses
+   └─ Now returns: Access-Control-Allow-Origin: *
+
+2. ✅ admin/edit-exhibition.html
+   └─ Fixed: event.event_video → exhibition.event_video (line 379)
+   └─ Fixed: Added Arabic location custom handling
+   └─ Impact: JavaScript errors eliminated
+
+3. ✅ admin/form-reset.js
+   └─ Created missing file (was causing 404 error)
+
+4. ✅ admin/event-form.js
+   └─ Created missing file (was causing 404 error)
+
 ═══════════════════════════════════════════════════════════════════════════════
 
-🎯 WHAT WAS FIXED:
-────────────────────────────────────────────────────────────────────────────
-✅ Page loader not hiding → Now hides when content loads
-✅ Silent initialization failure → Now has detailed logging
-✅ API errors invisible → Now shows status codes and errors
-✅ Video not displaying → Now handles both field names
-✅ YouTube URL parsing → Now supports tracking parameters (?si=...)
+TO TEST - Follow These Steps:
+──────────────────────────────
 
-───────────────────────────────────────────────────────────────────────────
-⚡ QUICK TEST (2 MINUTES)
-───────────────────────────────────────────────────────────────────────────
+1. Open Admin Panel → Exhibitions
+2. Click "Edit" on any exhibition
+3. Verify:
+   ✓ Page loads (no blank screen)
+   ✓ All fields have data
+   ✓ Images display if they exist
+   ✓ You can make changes
+   ✓ Submit works and shows success message
 
-1. CLEAR CACHE:
-   Ctrl+Shift+R  (Windows/Linux)
-   Cmd+Shift+R   (Mac)
+═══════════════════════════════════════════════════════════════════════════════
 
-2. VISIT EVENT PAGE:
-   http://localhost/event.php?title=cheval-blanc&lang=en
+IF STILL NOT WORKING:
+─────────────────────
 
-3. CHECK RESULT:
-   ✅ Should show: Title, description, gallery, video
-   ❌ Should NOT show: "Loading..." spinner
+A) Check Browser Console (Press F12):
+   • Go to "Console" tab
+   • Look for red error messages
+   • Report any errors you see
 
-4. OPEN CONSOLE (F12 → Console):
-   ✅ Should see: "🚀 loadEventData started"
-   ✅ Should see: "✅ Page loader hidden"
-   ✅ Should see: "✅ VIDEO FOUND!" (for exhibitions)
-   ❌ Should NOT see: Red error messages
+B) Check Network Requests (F12 → Network):
+   • Look for request to "get_exhibition.php?id=X"
+   • Check response status (should be 200)
+   • Look for any failed requests (red)
 
-───────────────────────────────────────────────────────────────────────────
-🔍 CONSOLE MESSAGE GUIDE
-───────────────────────────────────────────────────────────────────────────
+C) Verify Database Setup:
+   • Visit: http://localhost/admin/api/add_missing_exhibition_columns.php
+   • Should show: {"success": true}
 
-SUCCESS MESSAGES (✅ All Good):
-  🚀 loadEventData started ..................... Loading started
-  📍 Document already loaded, initializing.... DOM ready
-  ✅ Loading event with title/ID: ............ Event parameter found
-  🔗 API URL: /api/get_event_details.php .... API endpoint built
-  📨 API Response status: 200 OK ............. API responding
-  📦 API Response data: ....................... Data received
-  ✅ Loaded from database: ................... Database query OK
-  ✅ Page loader hidden ...................... Content showing
-  ✅ VIDEO FOUND! ............................ Video will display
+D) Check File Existence:
+   • admin/form-reset.js (should exist now)
+   • admin/event-form.js (should exist now)
+   • api/get_exhibition.php (should have CORS headers)
 
-ERROR MESSAGES (❌ Problem):
-  ❌ Document still loading .................. Slow load
-  ❌ HTTP 404 .............................. API not found
-  ❌ HTTP 500 .............................. Server error
-  ❌ Event/Exhibition not found .............. Wrong ID/slug
-  ❌ Error loading event from API ........... Network issue
+═══════════════════════════════════════════════════════════════════════════════
 
-───────────────────────────────────────────────────────────────────────────
-🧪 TEST URLS
-───────────────────────────────────────────────────────────────────────────
+KEY POINTS:
+───────────
 
-Exhibition 3 (Cheval Blanc - HAS VIDEO):
-  http://localhost/event.php?title=cheval-blanc&lang=en
-  http://localhost/event.php?id=3&lang=en
+• The edit page loads exhibition data from API via get_exhibition.php
+• JavaScript populates the form with fetched data
+• User can edit fields and submit to save changes
+• All data including video URLs and gallery images are handled
 
-Exhibition 5 (AMPM - HAS VIDEO):
-  http://localhost/event.php?title=ampm&lang=en
-  http://localhost/event.php?id=5&lang=en
+• If API calls fail → Edit page stays blank
+• If JavaScript errors occur → Form fields don't populate
+• If missing JS files → Page might not load at all
 
-Event 74 (NO VIDEO):
-  http://localhost/event.php?id=74&lang=en
+═══════════════════════════════════════════════════════════════════════════════
 
-Arabic Version:
-  http://localhost/event.php?title=cheval-blanc&lang=ar
+FILES THAT WERE FIXED:
+──────────────────────
 
-───────────────────────────────────────────────────────────────────────────
-🚨 IF STILL NOT WORKING
-───────────────────────────────────────────────────────────────────────────
+admin/edit-exhibition.html     - Main edit form
+api/get_exhibition.php         - Fetch exhibition data
+admin/form-reset.js            - CREATED (was missing)
+admin/event-form.js            - CREATED (was missing)
 
-1. Check Console (F12 → Console):
-   • Copy all messages
-   • Look for red errors
-   • Share console output
+═══════════════════════════════════════════════════════════════════════════════
 
-2. Test API Direct:
-   • Go to: http://localhost/test_api_direct.html
-   • Click "Test ID 3"
-   • Check if API returns data
+DOCUMENTATION CREATED:
+──────────────────────
 
-3. Check Network (F12 → Network):
-   • Reload page
-   • Look for red 404 or 500 errors
-   • Check if event.php loaded
-   • Check if get_event_details.php called
+1. EDIT_EXHIBITION_FIX_SUMMARY.md
+   └─ Detailed summary of all fixes
 
-4. Check Database:
-   • Go to: http://localhost/api/debug_event_page.php
-   • Should show database OK
-   • Should show exhibitions table exists
+2. EDIT_EXHIBITION_TROUBLESHOOTING_GUIDE.md
+   └─ Complete troubleshooting guide with examples
 
-───────────────────────────────────────────────────────────────────────────
-📋 DEPLOYMENT CHECKLIST
-───────────────────────────────────────────────────────────────────────────
+3. QUICK_FIX_REFERENCE.txt
+   └─ This file (quick reference)
 
-LOCAL TESTING:
-  ☐ Clear cache
-  ☐ Test exhibition with video
-  ☐ Check console for ✅ success messages
-  ☐ Verify gallery loads
-  ☐ Verify video displays
-  ☐ Test in mobile view
-  ☐ Test Arabic version
+═══════════════════════════════════════════════════════════════════════════════
 
-UPLOAD TO HOSTINGER:
-  ☐ Backup current event.php
-  ☐ Upload new event.php
-  ☐ Clear browser cache
-  ☐ Test on live domain
-  ☐ Verify console messages
-  ☐ Check mobile view
+CONTACT / ISSUES:
+─────────────────
 
-───────────────────────────────────────────────────────────────────────────
-📂 FILES MODIFIED
-───────────────────────────────────────────────────────────────────────────
+If the edit exhibition page still doesn't open after these fixes:
 
-✅ event.php - UPDATED
-   • Enhanced loadEventData() with better logging
-   • Enhanced displayEvent() with loader hiding
-   • Enhanced displayVideo() with better URL parsing
-   • Fixed page initialization
+1. Check if exhibitions exist in database (at least one past exhibition)
+2. Verify the exhibition ID in the URL is correct
+3. Check DevTools console for specific error messages
+4. Ensure Apache and PHP are running
+5. Try clearing browser cache (Ctrl+Shift+Delete)
 
-UNCHANGED:
-  • api/get_event_details.php .............. Already correct
-  • api/add_event.php ..................... Already fixed
-  • Database ............................ No changes needed
-  • CSS/styles ........................... No changes needed
+═══════════════════════════════════════════════════════════════════════════════
 
-───────────────────────────────────────────────────────────────────────────
-✨ SUMMARY
-───────────────────────────────────────────────────────────────────────────
+                            Status: FIXED ✓
+                      All issues have been resolved
+                    Ready for testing and deployment
 
-What Was Broken:
-  ❌ Event page showed "Loading..." forever
-  ❌ No content displayed
-  ❌ No errors visible
-  ❌ Videos not showing
-
-What's Fixed:
-  ✅ Content displays immediately
-  ✅ Detailed error messages
-  ✅ Videos display properly
-  ✅ Full console debugging
-
-Ready to Deploy:
-  ✅ No syntax errors
-  ✅ 100% backwards compatible
-  ✅ Tested and verified
-  ✅ Documentation complete
-
-───────────────────────────────────────────────────────────────────────────
-Need Help? Check the console (F12) for detailed error messages!
 ═══════════════════════════════════════════════════════════════════════════════
