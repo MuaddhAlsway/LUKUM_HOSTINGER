@@ -493,7 +493,21 @@
                                         body: JSON.stringify(newEvent)
                                     });
 
-                                    const result = await response.json();
+                                    // Check if response is ok
+                                    if (!response.ok) {
+                                        const errorText = await response.text();
+                                        console.error('API Error Response:', response.status, errorText);
+                                        throw new Error(`API returned ${response.status}: ${errorText || 'No response body'}`);
+                                    }
+                                    
+                                    const responseText = await response.text();
+                                    console.log('Raw API response:', responseText);
+                                    
+                                    if (!responseText) {
+                                        throw new Error('API returned empty response');
+                                    }
+                                    
+                                    const result = JSON.parse(responseText);
                                     console.log('Add response:', result);
                                     
                                     if (result.success) {

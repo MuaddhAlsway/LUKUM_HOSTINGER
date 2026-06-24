@@ -2,6 +2,7 @@
 require_once __DIR__ . '/config.php';
 /**
  * LAKUM Artspace - Edit Event API (Simple)
+ * Handles bilingual event updates with prepared statements for security
  */
 
 header('Content-Type: application/json');
@@ -21,116 +22,203 @@ try {
     error_log('Event ID: ' . $event_id);
     error_log('Input data: ' . json_encode($input));
     
-    $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+    $db = Database::getInstance();
     
-    if ($conn->connect_error) {
-        throw new Exception('Database connection failed: ' . $conn->connect_error);
+    if (!$db->isConnected()) {
+        throw new Exception('Database connection failed');
     }
     
+    $conn = $db->getConnection();
+    
     // Extract English fields
-    $title_en = $conn->real_escape_string($input['title_en'] ?? $input['title'] ?? '');
-    $description_en = $conn->real_escape_string($input['description_en'] ?? $input['description'] ?? '');
-    $location_en = $conn->real_escape_string($input['location_en'] ?? $input['location'] ?? '');
+    $title_en = $input['title_en'] ?? $input['title'] ?? '';
+    $description_en = $input['description_en'] ?? $input['description'] ?? '';
+    $location_en = $input['location_en'] ?? $input['location'] ?? '';
     
     // Extract Arabic fields
-    $title_ar = isset($input['title_ar']) ? $conn->real_escape_string($input['title_ar']) : '';
-    $description_ar = isset($input['description_ar']) ? $conn->real_escape_string($input['description_ar']) : '';
-    $location_ar = isset($input['location_ar']) ? $conn->real_escape_string($input['location_ar']) : '';
+    $title_ar = $input['title_ar'] ?? '';
+    $description_ar = $input['description_ar'] ?? '';
+    $location_ar = $input['location_ar'] ?? '';
     
     // Extract other fields
     $event_date = $input['event_date'] ?? null;
     $event_time = $input['event_time'] ?? null;
     $event_end_time = $input['event_end_time'] ?? null;
     $end_date = $input['end_date'] ?? null;
-    $cover_image = isset($input['cover_image']) ? $conn->real_escape_string($input['cover_image']) : null;
-    $video_url = $conn->real_escape_string($input['video_url'] ?? '');
-    $category = $conn->real_escape_string($input['category'] ?? '');
+    $cover_image = isset($input['cover_image']) ? $input['cover_image'] : null;
+    $video_url = $input['video_url'] ?? '';
+    $category = $input['category'] ?? 'exhibition';
     $is_featured = isset($input['is_featured']) ? (int)$input['is_featured'] : null;
     
-    // Build update query for events table with bilingual columns
+    // Build update query for events table with bilingual columns using prepared statement
     $updates = [];
+    $params = [];
+    $types = '';
+    
     if (!empty($title_en)) {
-        $updates[] = "title = '$title_en'";
-        $updates[] = "title_en = '$title_en'";
+        $updates[] = "title = ?";
+        $updates[] = "title_en = ?";
+        $params[] = $title_en;
+        $params[] = $title_en;
+        $types .= 'ss';
     }
     if (!empty($description_en)) {
-        $updates[] = "description = '$description_en'";
-        $updates[] = "description_en = '$description_en'";
+        $updates[] = "description = ?";
+        $updates[] = "description_en = ?";
+        $params[] = $description_en;
+        $params[] = $description_en;
+        $types .= 'ss';
     }
     if (!empty($location_en)) {
-        $updates[] = "location = '$location_en'";
-        $updates[] = "location_en = '$location_en'";
+        $updates[] = "location = ?";
+        $updates[] = "location_en = ?";
+        $params[] = $location_en;
+        $params[] = $location_en;
+        $types .= 'ss';
     }
     
     // Update Arabic columns if provided
-    if (isset($input['title_ar'])) $updates[] = "title_ar = '$title_ar'";
-    if (isset($input['description_ar'])) $updates[] = "description_ar = '$description_ar'";
-    if (isset($input['location_ar'])) $updates[] = "location_ar = '$location_ar'";
-    
-    if ($event_date) $updates[] = "event_date = '$event_date'";
-    if ($event_time) $updates[] = "event_time = '$event_time'";
-    if ($event_end_time) $updates[] = "event_end_time = '$event_end_time'";
-    if ($end_date) $updates[] = "end_date = '$end_date'";
-    if ($cover_image) $updates[] = "cover_image = '$cover_image'";
-    
-    // Handle video_url - allow clearing it (empty string)
-    if (isset($input['video_url'])) {
-        $updates[] = "video_url = " . ($video_url === '' ? "NULL" : "'$video_url'");
+    if (!empty($title_ar)) {
+        $updates[] = "title_ar = ?";
+        $params[] = $title_ar;
+        $types .= 's';
+    }
+    if (!empty($description_ar)) {
+        $updates[] = "description_ar = ?";
+        $params[] = $description_ar;
+        $types .= 's';
+    }
+    if (!empty($location_ar)) {
+        $updates[] = "location_ar = ?";
+        $params[] = $location_ar;
+        $types .= 's';
     }
     
-    if (!empty($category)) $updates[] = "category = '$category'";
-    if ($is_featured !== null) $updates[] = "is_featured = $is_featured";
+    if (!empty($event_date)) {
+        $updates[] = "event_date = ?";
+        $params[] = $event_date;
+        $types .= 's';
+    }
+    if (!empty($event_time)) {
+        $updates[] = "event_time = ?";
+        $params[] = $event_time;
+        $types .= 's';
+    }
+    if (!empty($event_end_time)) {
+        $updates[] = "event_end_time = ?";
+        $params[] = $event_end_time;
+        $types .= 's';
+    }
+    if (!empty($end_date)) {
+        $updates[] = "end_date = ?";
+        $params[] = $end_date;
+        $types .= 's';
+    }
+    if ($cover_image !== null) {
+        $updates[] = "cover_image = ?";
+        $params[] = $cover_image;
+        $types .= 's';
+    }
+    
+    // Handle video_url - allow clearing it (empty string or NULL)
+    if (isset($input['video_url'])) {
+        if ($video_url === '') {
+            $updates[] = "video_url = NULL";
+        } else {
+            $updates[] = "video_url = ?";
+            $params[] = $video_url;
+            $types .= 's';
+        }
+    }
+    
+    if (!empty($category)) {
+        $updates[] = "category = ?";
+        $params[] = $category;
+        $types .= 's';
+    }
+    if ($is_featured !== null) {
+        $updates[] = "is_featured = ?";
+        $params[] = $is_featured;
+        $types .= 'i';
+    }
     
     if (!empty($updates)) {
-        $query = "UPDATE events SET " . implode(", ", $updates) . " WHERE id = $event_id";
+        // Add event_id to params for WHERE clause
+        $params[] = $event_id;
+        $types .= 'i';
+        
+        $query = "UPDATE events SET " . implode(", ", $updates) . " WHERE id = ?";
         error_log('Update query: ' . $query);
         
-        if (!$conn->query($query)) {
-            throw new Exception('Update failed: ' . $conn->error);
+        $stmt = $conn->prepare($query);
+        if (!$stmt) {
+            throw new Exception('Prepare failed: ' . $conn->error);
         }
+        
+        // Dynamically bind parameters
+        $stmt->bind_param($types, ...$params);
+        
+        if (!$stmt->execute()) {
+            throw new Exception('Update failed: ' . $stmt->error);
+        }
+        $stmt->close();
     }
     
-    // Update English translation in event_translations table
+    // Update translations table with English and Arabic
+    // Only update if we have at least one field to update
     if (!empty($title_en) || !empty($description_en) || !empty($location_en)) {
-        $insertEnglishQuery = "
+        // Update or insert English translation
+        $translationQuery = "
             INSERT INTO event_translations (event_id, language, title, description, location)
-            VALUES ($event_id, 'en', '$title_en', '$description_en', '$location_en')
+            VALUES (?, 'en', ?, ?, ?)
             ON DUPLICATE KEY UPDATE
-                title = '$title_en',
-                description = '$description_en',
-                location = '$location_en',
+                title = VALUES(title),
+                description = VALUES(description),
+                location = VALUES(location),
                 updated_at = CURRENT_TIMESTAMP
         ";
         
-        error_log('English translation query: ' . $insertEnglishQuery);
+        error_log('English translation query: ' . $translationQuery);
         
-        if (!$conn->query($insertEnglishQuery)) {
-            error_log('Warning: English translation update failed: ' . $conn->error);
+        $translationStmt = $conn->prepare($translationQuery);
+        if (!$translationStmt) {
+            error_log('Warning: Prepare English translation failed: ' . $conn->error);
+        } else {
+            $translationStmt->bind_param('isss', $event_id, $title_en, $description_en, $location_en);
+            if (!$translationStmt->execute()) {
+                error_log('Warning: English translation update failed: ' . $translationStmt->error);
+            }
+            $translationStmt->close();
         }
     }
     
-    // Update Arabic translation in event_translations table if provided
-    if (isset($input['title_ar']) || isset($input['description_ar']) || isset($input['location_ar'])) {
-        $insertArabicQuery = "
+    // Update Arabic translation if provided
+    if (!empty($title_ar) || !empty($description_ar) || !empty($location_ar)) {
+        $translationQuery = "
             INSERT INTO event_translations (event_id, language, title, description, location)
-            VALUES ($event_id, 'ar', '$title_ar', '$description_ar', '$location_ar')
+            VALUES (?, 'ar', ?, ?, ?)
             ON DUPLICATE KEY UPDATE
-                title = '$title_ar',
-                description = '$description_ar',
-                location = '$location_ar',
+                title = VALUES(title),
+                description = VALUES(description),
+                location = VALUES(location),
                 updated_at = CURRENT_TIMESTAMP
         ";
         
-        error_log('Arabic translation query: ' . $insertArabicQuery);
+        error_log('Arabic translation query: ' . $translationQuery);
         
-        if (!$conn->query($insertArabicQuery)) {
-            error_log('Warning: Arabic translation update failed: ' . $conn->error);
+        $translationStmt = $conn->prepare($translationQuery);
+        if (!$translationStmt) {
+            error_log('Warning: Prepare Arabic translation failed: ' . $conn->error);
+        } else {
+            $translationStmt->bind_param('isss', $event_id, $title_ar, $description_ar, $location_ar);
+            if (!$translationStmt->execute()) {
+                error_log('Warning: Arabic translation update failed: ' . $translationStmt->error);
+            }
+            $translationStmt->close();
         }
     }
     
     error_log('Event updated successfully');
-    
-    $conn->close();
     
     http_response_code(200);
     echo json_encode([
@@ -140,6 +228,7 @@ try {
     ]);
     
 } catch (Exception $e) {
+    error_log('Edit Event Error: ' . $e->getMessage());
     http_response_code(400);
     echo json_encode([
         'success' => false,

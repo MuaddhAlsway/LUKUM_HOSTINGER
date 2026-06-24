@@ -808,7 +808,21 @@
                         body: formData
                     });
                     
-                    const uploadResult = await uploadResponse.json();
+                    // Check if response is ok
+                    if (!uploadResponse.ok) {
+                        const errorText = await uploadResponse.text();
+                        console.error('API Error Response:', uploadResponse.status, errorText);
+                        throw new Error(`API returned ${uploadResponse.status}: ${errorText || 'No response body'}`);
+                    }
+                    
+                    const uploadResponseText = await uploadResponse.text();
+                    console.log('Raw upload response:', uploadResponseText);
+                    
+                    if (!uploadResponseText) {
+                        throw new Error('API returned empty response');
+                    }
+                    
+                    const uploadResult = JSON.parse(uploadResponseText);
                     console.log('Upload response:', uploadResult);
                     
                     if (uploadResult.success) {
@@ -850,7 +864,21 @@
                         body: formData
                     });
                     
-                    const uploadResult = await uploadResponse.json();
+                    // Check if response is ok
+                    if (!uploadResponse.ok) {
+                        const errorText = await uploadResponse.text();
+                        console.error('Gallery API Error Response:', uploadResponse.status, errorText);
+                        throw new Error(`Gallery API returned ${uploadResponse.status}: ${errorText || 'No response body'}`);
+                    }
+                    
+                    const uploadResponseText = await uploadResponse.text();
+                    console.log('Raw gallery upload response:', uploadResponseText);
+                    
+                    if (!uploadResponseText) {
+                        throw new Error('Gallery API returned empty response');
+                    }
+                    
+                    const uploadResult = JSON.parse(uploadResponseText);
                     console.log('Gallery upload response:', uploadResult);
                     
                     if (uploadResult.success && uploadResult.images) {
@@ -863,9 +891,11 @@
                         console.log('Gallery images uploaded:', galleryImages);
                     } else {
                         console.warn('Gallery upload failed:', uploadResult.message);
+                        alert('Gallery upload failed: ' + (uploadResult.message || 'Unknown error'));
                     }
                 } catch (error) {
                     console.error('Gallery upload error:', error);
+                    alert('Error uploading gallery images: ' + error.message);
                 }
             } else {
                 console.log('No gallery images selected');
@@ -924,7 +954,21 @@
                     body: JSON.stringify(updatedEvent)
                 });
 
-                const result = await response.json();
+                // Check if response is ok
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error('API Error Response:', response.status, errorText);
+                    throw new Error(`API returned ${response.status}: ${errorText || 'No response body'}`);
+                }
+                
+                const responseText = await response.text();
+                console.log('Raw API response:', responseText);
+                
+                if (!responseText) {
+                    throw new Error('API returned empty response');
+                }
+                
+                const result = JSON.parse(responseText);
                 console.log('Update response:', result);
                 
                 if (result.success) {
@@ -935,7 +979,7 @@
                 }
             } catch (error) {
                 console.error('Error updating event:', error);
-                alert('Error updating event. Please try again.');
+                alert('Error updating event: ' + error.message);
             }
         });
 
