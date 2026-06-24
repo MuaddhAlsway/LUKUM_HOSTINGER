@@ -23,11 +23,15 @@ $configPath = __DIR__ . '/../config.local.php';
 
 if (!file_exists($configPath)) {
     error_log('CRITICAL: config.local.php not found at ' . $configPath);
+    ob_end_clean();
     http_response_code(500);
-    die(json_encode([
+    echo json_encode([
         'success' => false,
-        'message' => 'Server configuration error. Contact administrator.'
-    ]));
+        'message' => 'Server configuration error. Contact administrator.',
+        'error_code' => 'CONFIG_NOT_FOUND',
+        'timestamp' => date('Y-m-d H:i:s')
+    ]);
+    exit;
 }
 
 // Load configuration
@@ -48,21 +52,29 @@ $requiredSections = [
 foreach ($requiredSections as $section => $requiredKeys) {
     if (!isset($config[$section]) || !is_array($config[$section])) {
         error_log("CRITICAL: Missing or invalid config section: $section");
+        ob_end_clean();
         http_response_code(500);
-        die(json_encode([
+        echo json_encode([
             'success' => false,
-            'message' => 'Server configuration error. Contact administrator.'
-        ]));
+            'message' => 'Server configuration error. Contact administrator.',
+            'error_code' => 'CONFIG_INVALID_SECTION',
+            'timestamp' => date('Y-m-d H:i:s')
+        ]);
+        exit;
     }
     
     foreach ($requiredKeys as $key) {
         if (empty($config[$section][$key])) {
             error_log("CRITICAL: Missing required config key: $section.$key");
+            ob_end_clean();
             http_response_code(500);
-            die(json_encode([
+            echo json_encode([
                 'success' => false,
-                'message' => 'Server configuration error. Contact administrator.'
-            ]));
+                'message' => 'Server configuration error. Contact administrator.',
+                'error_code' => 'CONFIG_MISSING_KEY',
+                'timestamp' => date('Y-m-d H:i:s')
+            ]);
+            exit;
         }
     }
 }
@@ -74,11 +86,15 @@ foreach ($requiredSections as $section => $requiredKeys) {
 $jwtSecret = $config['security']['jwt_secret'] ?? '';
 if (empty($jwtSecret) || $jwtSecret === 'change-this-secret-key-in-production') {
     error_log('CRITICAL SECURITY: JWT_SECRET is not configured or using default value');
+    ob_end_clean();
     http_response_code(500);
-    die(json_encode([
+    echo json_encode([
         'success' => false,
-        'message' => 'Server configuration error. Contact administrator.'
-    ]));
+        'message' => 'Server configuration error. Contact administrator.',
+        'error_code' => 'CONFIG_INVALID_JWT_SECRET',
+        'timestamp' => date('Y-m-d H:i:s')
+    ]);
+    exit;
 }
 
 // ============================================================================
@@ -319,16 +335,21 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'OPTIONS
 // ============================================================================
 
 // ✅ CRITICAL: session_set_cookie_params() MUST come BEFORE session_start()
-session_set_cookie_params([
-    'lifetime' => SESSION_TIMEOUT,
-    'path' => '/',
-    'secure' => isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on',
-    'httponly' => true,
-    'samesite' => 'Lax'
-]);
-
-// Now start the session with proper cookie parameters
-session_start();
+// Check if session is already active before trying to configure it
+if (session_status() === PHP_SESSION_NONE) {
+    session_set_cookie_params([
+        'lifetime' => SESSION_TIMEOUT,
+        'path' => '/',
+        'secure' => isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on',
+        'httponly' => true,
+        'samesite' => 'Lax'
+    ]);
+    
+    // Now start the session with proper cookie parameters
+    session_start();
+} else if (session_status() === PHP_SESSION_DISABLED) {
+    error_log('Warning: Sessions are disabled in PHP configuration');
+}
 
 // ============================================================================
 // STEP 14: SET TIMEZONE
