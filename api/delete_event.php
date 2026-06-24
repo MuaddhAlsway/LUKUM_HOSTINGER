@@ -89,11 +89,12 @@ try {
     if (!$event_stmt->execute()) {
         throw new Exception('Delete event failed: ' . $event_stmt->error);
     }
+    
+    // Get affected rows BEFORE closing the statement
+    $affectedRows = $event_stmt->affected_rows;
     $event_stmt->close();
     
-    $affectedRows = $event_stmt->affected_rows;
-    
-    if ($affectedRows === 0) {
+    if ($affectedRows <= 0) {
         throw new Exception('Event not found or already deleted');
     }
     
