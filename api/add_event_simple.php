@@ -11,10 +11,14 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST, OPTIONS');
 
 try {
-    $input = json_decode(file_get_contents('php://input'), true);
+    // Get raw input
+    $rawInput = file_get_contents('php://input');
+    error_log('Add Event - Raw input: ' . substr($rawInput, 0, 200));
+    
+    $input = json_decode($rawInput, true);
     
     if (!$input) {
-        throw new Exception('Invalid JSON input');
+        throw new Exception('Invalid JSON input: ' . json_last_error_msg());
     }
     
     // Validate required fields - support both title and title_en
@@ -24,11 +28,18 @@ try {
         throw new Exception('Event title is required');
     }
     
+    error_log('Add Event - Processing event: ' . $title_en);
+    
     $db = Database::getInstance();
     
     if (!$db->isConnected()) {
-        throw new Exception('Database connection failed');
+        $conn = $db->getConnection();
+        $connError = $conn ? $conn->connect_error : 'Connection object is null';
+        error_log('Add Event - DB Connection Error: ' . $connError);
+        throw new Exception('Database connection failed: ' . $connError);
     }
+    
+    error_log('Add Event - Database connected successfully');
     
     $conn = $db->getConnection();
     
@@ -53,6 +64,7 @@ try {
     
     // Generate slug from English title
     $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $title_en), '-'));
+    error_log('Add Event - Generated initial slug: ' . $slug);
     
     // Make slug unique by adding a number if it already exists using prepared statement
     $original_slug = $slug;
@@ -70,10 +82,12 @@ try {
         $result = $check_stmt->get_result();
         if ($result->num_rows === 0) {
             $check_stmt->close();
+            error_log('Add Event - Final slug: ' . $slug);
             break; // Slug is unique
         }
         $check_stmt->close();
         $slug = $original_slug . '-' . $counter;
+        error_log('Add Event - Slug already exists, trying: ' . $slug);
         $counter++;
     }
     
@@ -94,11 +108,13 @@ try {
         )
     ";
     
+    error_log('Add Event - Preparing insert statement');
     $stmt = $conn->prepare($query);
     if (!$stmt) {
         throw new Exception('Insert prepare failed: ' . $conn->error);
     }
     
+    error_log('Add Event - Binding parameters');
     // Bind parameters - all as strings (s) or integers (i)
     $stmt->bind_param(
         'sssssssssssssssis',
@@ -109,16 +125,20 @@ try {
         $cover_image, $video_url, $is_featured, $category
     );
     
+    error_log('Add Event - Executing insert');
     if (!$stmt->execute()) {
         throw new Exception('Insert execute failed: ' . $stmt->error);
     }
     
+    error_log('Add Event - Insert successful');
     $event_id = $conn->insert_id;
     $stmt->close();
     
     if (!$event_id) {
         throw new Exception('Failed to get inserted event ID');
     }
+    
+    error_log('Add Event - Event created successfully with ID: ' . $event_id);
     
     http_response_code(200);
     echo json_encode([
@@ -145,11 +165,17 @@ try {
     ]);
     
 } catch (Exception $e) {
-    error_log('Add Event Error: ' . $e->getMessage());
-    http_response_code(400);
+    $errorMsg = $e->getMessage();
+    error_log('Add Event Error: ' . $errorMsg);
+    error_log('Add Event Error Trace: ' . $e->getTraceAsString());
+    
+    http_response_code(500);
     echo json_encode([
         'success' => false,
-        'message' => $e->getMessage()
+        'message' => $errorMsg,
+        'error_code' => 'ADD_EVENT_FAILED',
+        'timestamp' => date('Y-m-d H:i:s')
     ]);
+    exit;
 }
 ?>

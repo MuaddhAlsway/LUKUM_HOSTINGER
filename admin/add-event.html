@@ -495,9 +495,18 @@
 
                                     // Check if response is ok
                                     if (!response.ok) {
-                                        const errorText = await response.text();
-                                        console.error('API Error Response:', response.status, errorText);
-                                        throw new Error(`API returned ${response.status}: ${errorText || 'No response body'}`);
+                                        let errorMessage = 'API Error';
+                                        try {
+                                            const errorResponse = await response.json();
+                                            errorMessage = errorResponse.message || `Server error (${response.status})`;
+                                            console.error('API Error Response:', response.status, errorResponse);
+                                        } catch (e) {
+                                            // If JSON parsing fails, try text
+                                            const errorText = await response.text();
+                                            console.error('API Error Response:', response.status, errorText);
+                                            errorMessage = errorText ? errorText.substring(0, 100) : `Server error (${response.status})`;
+                                        }
+                                        throw new Error(errorMessage);
                                     }
                                     
                                     const responseText = await response.text();
@@ -606,7 +615,18 @@
                                     }
                                 } catch (error) {
                                     console.error('Error:', error);
-                                    showPopup('Error: ' + error.message, 'error');
+                                    
+                                    // Build more helpful error message
+                                    let displayMessage = error.message;
+                                    if (error.message.includes('Database')) {
+                                        displayMessage = 'Database connection error. Please ensure the server is properly configured and the database is running.';
+                                    } else if (error.message.includes('JSON')) {
+                                        displayMessage = 'Invalid response from server. Please contact administrator.';
+                                    } else if (error.message.includes('Network')) {
+                                        displayMessage = 'Network error. Please check your internet connection.';
+                                    }
+                                    
+                                    showPopup('Error: ' + displayMessage, 'error');
                                     
                                     // Reset button
                                     submitBtn.disabled = false;
