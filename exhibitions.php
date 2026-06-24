@@ -195,8 +195,10 @@ require_once 'includes/hero-settings.php';
         };
 
         const getEventUrl = (event) => {
-            // Link to admin events management page
-            return `admin/events.html?id=${event.id}`;
+            // Link to public event details page
+            const slug = slugify(event.title);
+            const lang = LanguageManager.getLanguage();
+            return `event.php?title=${slug}&lang=${lang}`;
         };
 
         function displayFeaturedEvent(event) {
