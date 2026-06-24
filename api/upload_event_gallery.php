@@ -1,4 +1,6 @@
 <?php
+ob_start();
+
 require_once __DIR__ . '/config.php';
 /**
  * LAKUM Artspace - Upload Event Gallery Images API
@@ -31,11 +33,13 @@ try {
     
     // Verify directory is writable
     if (!is_writable($uploadDir)) {
+        error_log('ERROR: Upload directory is not writable: ' . $uploadDir);
         throw new Exception('Upload directory is not writable');
     }
     
     error_log('=== GALLERY UPLOAD API CALLED ===');
     error_log('REQUEST METHOD: ' . $_SERVER['REQUEST_METHOD']);
+    error_log('POST keys: ' . json_encode(array_keys($_POST)));
     error_log('FILES keys: ' . json_encode(array_keys($_FILES)));
     
     $eventId = (int)($_POST['event_id'] ?? 0);
@@ -45,11 +49,24 @@ try {
         throw new Exception('Event ID is required and must be a positive integer');
     }
     
-    if (!isset($_FILES['images']) || empty($_FILES['images']['name'][0])) {
+    // Check for images - handle both 'images' and 'images[]' keys
+    $hasImages = false;
+    $imagesKey = null;
+    
+    if (isset($_FILES['images']) && !empty($_FILES['images']['name'])) {
+        $hasImages = true;
+        $imagesKey = 'images';
+    } elseif (isset($_FILES['images[]']) && !empty($_FILES['images[]']['name'])) {
+        $hasImages = true;
+        $imagesKey = 'images[]';
+    }
+    
+    if (!$hasImages) {
         throw new Exception('No images provided');
     }
     
-    error_log('Images count: ' . (is_array($_FILES['images']['name']) ? count($_FILES['images']['name']) : 1));
+    error_log('Images key: ' . $imagesKey);
+    error_log('Images count: ' . (is_array($_FILES[$imagesKey]['name']) ? count($_FILES[$imagesKey]['name']) : 1));
     
     // Get database connection
     $db = Database::getInstance();
@@ -75,8 +92,10 @@ try {
     }
     $checkStmt->close();
     
+    error_log('Event found with ID: ' . $eventId);
+    
     $uploadedImages = [];
-    $files = $_FILES['images'];
+    $files = $_FILES[$imagesKey];
     
     // Handle single or multiple files
     $fileCount = is_array($files['name']) ? count($files['name']) : 1;
@@ -89,11 +108,17 @@ try {
         $fileSize = is_array($files['size']) ? $files['size'][$i] : $files['size'];
         $fileError = is_array($files['error']) ? $files['error'][$i] : $files['error'];
         
-        error_log('File ' . $i . ': ' . $fileName . ' (size: ' . $fileSize . ', error: ' . $fileError . ')');
+        error_log('File ' . $i . ': ' . $fileName . ' (size: ' . $fileSize . ', error: ' . $fileError . ', tmp: ' . $fileTmp . ')');
         
         // Validate file
         if ($fileError !== UPLOAD_ERR_OK) {
             error_log('File error: ' . $fileError);
+            continue;
+        }
+        
+        // Verify temp file exists
+        if (!file_exists($fileTmp)) {
+            error_log('ERROR: Temp file does not exist: ' . $fileTmp);
             continue;
         }
         
@@ -117,7 +142,13 @@ try {
         
         // Move uploaded file
         if (!move_uploaded_file($fileTmp, $uploadPath)) {
-            error_log('File move failed for: ' . $fileName);
+            error_log('File move failed for: ' . $fileName . ' from ' . $fileTmp);
+            continue;
+        }
+        
+        // Verify file was moved
+        if (!file_exists($uploadPath)) {
+            error_log('ERROR: File not found after move: ' . $uploadPath);
             continue;
         }
         
@@ -154,6 +185,7 @@ try {
         throw new Exception('No images were uploaded successfully');
     }
     
+    ob_end_clean();
     http_response_code(200);
     echo json_encode([
         'success' => true,
@@ -164,6 +196,7 @@ try {
     
 } catch (Exception $e) {
     error_log('Gallery Upload Exception: ' . $e->getMessage());
+    ob_end_clean();
     http_response_code(400);
     echo json_encode([
         'success' => false,

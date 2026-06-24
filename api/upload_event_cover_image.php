@@ -1,4 +1,6 @@
 <?php
+ob_start();
+
 require_once __DIR__ . '/config.php';
 /**
  * LAKUM Artspace - Upload Event Cover Image API
@@ -16,6 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    ob_end_clean();
     http_response_code(405);
     echo json_encode(['success' => false, 'message' => 'Method not allowed']);
     exit;
@@ -28,6 +31,8 @@ try {
     }
     
     $file = $_FILES['file'];
+    
+    error_log('Cover image upload - file: ' . $file['name'] . ', size: ' . $file['size'] . ', type: ' . $file['type']);
     
     // Validate file type - check both MIME type and extension
     $allowed_types = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/heic', 'image/heif'];
@@ -62,6 +67,7 @@ try {
     
     // Verify directory is writable
     if (!is_writable($upload_dir)) {
+        error_log('ERROR: Upload directory is not writable: ' . $upload_dir);
         throw new Exception('Upload directory is not writable');
     }
     
@@ -70,9 +76,16 @@ try {
     $filename = 'event-cover-' . time() . '-' . uniqid() . '.' . $ext;
     $filepath = $upload_dir . $filename;
     
+    error_log('Moving file to: ' . $filepath);
+    
     // Move uploaded file
     if (!move_uploaded_file($file['tmp_name'], $filepath)) {
         throw new Exception('Failed to move uploaded file');
+    }
+    
+    // Verify file was moved
+    if (!file_exists($filepath)) {
+        throw new Exception('File upload verification failed - file does not exist after move');
     }
     
     // Return relative path for database storage
@@ -80,6 +93,7 @@ try {
     
     error_log('Event cover image uploaded successfully: ' . $relative_path);
     
+    ob_end_clean();
     http_response_code(200);
     echo json_encode([
         'success' => true,
@@ -90,6 +104,7 @@ try {
     
 } catch (Exception $e) {
     error_log('Event Cover Image Upload Error: ' . $e->getMessage());
+    ob_end_clean();
     http_response_code(400);
     echo json_encode([
         'success' => false,

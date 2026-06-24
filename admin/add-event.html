@@ -546,10 +546,10 @@
                                             const formData = new FormData();
                                             formData.append('event_id', eventId);
                                             
-                                            // Add all files to FormData
+                                            // Add all files to FormData using 'images' key (not 'images[]')
                                             for (let i = 0; i < window.galleryFiles.length; i++) {
                                                 console.log('Adding file to FormData:', window.galleryFiles[i].name);
-                                                formData.append('images[]', window.galleryFiles[i]);
+                                                formData.append('images', window.galleryFiles[i]);
                                             }
                                             
                                             // Debug: Log FormData contents
