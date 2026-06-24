@@ -1,13 +1,13 @@
 {
-  "page_title": "Shop - LAKUM Artspace",
-  "page_description": "Discover LAKUM Concept Shop. Browse our curated collection of art, merchandise, and cultural products.",
+  "page_title": "Shop - Lakum Artspace",
+  "page_description": "Discover Lakum Concept Shop. Browse our curated collection of art, merchandise, and cultural products.",
   
   "hero_title": "Discover Lakum Concept Shop",
   "hero_subtitle": "Explore our curated collection of art, merchandise, and cultural products",
   "hero_button": "Explore Shop",
   "hero_button_tooltip": "Visit our online shop",
   
-  "shop_description": "Welcome to LAKUM Concept Shop",
+  "shop_description": "Welcome to Lakum Concept Shop",
   "shop_intro": "Discover a carefully curated collection of art, merchandise, and cultural products that celebrate creativity and cultural exchange.",
   
   "shop_categories": "Shop Categories",
@@ -69,7 +69,7 @@
   "shop_no_results_message": "Try adjusting your search or filter criteria",
   
   "shop_about": "About Our Shop",
-  "shop_about_text": "LAKUM Concept Shop offers a carefully curated selection of art, merchandise, and cultural products that celebrate creativity and cultural exchange. Each item is selected to reflect our commitment to supporting artists and promoting cultural appreciation.",
+  "shop_about_text": "Lakum Concept Shop offers a carefully curated selection of art, merchandise, and cultural products that celebrate creativity and cultural exchange. Each item is selected to reflect our commitment to supporting artists and promoting cultural appreciation.",
   
   "shop_shipping": "Shipping & Delivery",
   "shop_shipping_text": "We offer fast and reliable shipping to all locations. Standard delivery takes 3-5 business days.",
@@ -107,7 +107,7 @@
   "shop_newsletter_subscribe": "Subscribe",
   
   "shop_follow_us": "Follow Us",
-  "shop_follow_text": "Stay connected with LAKUM Artspace on social media",
+  "shop_follow_text": "Stay connected with Lakum Artspace on social media",
   
   "shop_secure": "Secure Shopping",
   "shop_secure_text": "Your security is our priority. All transactions are encrypted and secure.",
@@ -132,7 +132,7 @@
   "footer_explore": "Explore",
   "footer_connect": "Connect",
   "footer_tagline": "Where Encounters Shape Culture",
-  "footer_copyright": "© 2025 - 2027 LAKUM Artspace. All rights reserved.",
+  "footer_copyright": "© 2025 - 2027 Lakum Artspace. All rights reserved.",
   "footer_terms": "Terms & Conditions",
   "footer_privacy": "Privacy Policy"
 }
