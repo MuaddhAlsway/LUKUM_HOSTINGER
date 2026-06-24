@@ -494,30 +494,32 @@
                                     });
 
                                     // Check if response is ok
-                                    if (!response.ok) {
-                                        let errorMessage = 'API Error';
-                                        try {
-                                            const errorResponse = await response.json();
-                                            errorMessage = errorResponse.message || `Server error (${response.status})`;
-                                            console.error('API Error Response:', response.status, errorResponse);
-                                        } catch (e) {
-                                            // If JSON parsing fails, try text
-                                            const errorText = await response.text();
-                                            console.error('API Error Response:', response.status, errorText);
-                                            errorMessage = errorText ? errorText.substring(0, 100) : `Server error (${response.status})`;
-                                        }
-                                        throw new Error(errorMessage);
-                                    }
-                                    
+                                    // Get response text first (stream can only be read once)
                                     const responseText = await response.text();
                                     console.log('Raw API response:', responseText);
+                                    console.log('Response status:', response.status);
                                     
                                     if (!responseText) {
                                         throw new Error('API returned empty response');
                                     }
                                     
-                                    const result = JSON.parse(responseText);
+                                    let result;
+                                    try {
+                                        result = JSON.parse(responseText);
+                                    } catch (parseError) {
+                                        console.error('JSON Parse Error:', parseError);
+                                        console.error('Failed to parse response:', responseText);
+                                        throw new Error('API returned invalid JSON: ' + responseText.substring(0, 100));
+                                    }
+                                    
                                     console.log('Add response:', result);
+                                    
+                                    // Check if response indicates an error
+                                    if (!response.ok || !result.success) {
+                                        const errorMessage = result.message || `Server error (${response.status})`;
+                                        console.error('API Error Response:', response.status, result);
+                                        throw new Error(errorMessage);
+                                    }
                                     
                                     if (result.success) {
                                         const eventId = result.event_id;

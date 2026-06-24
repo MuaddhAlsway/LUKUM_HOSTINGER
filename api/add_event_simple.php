@@ -1,14 +1,28 @@
 <?php
+// Set JSON header FIRST before anything else
+header('Content-Type: application/json; charset=utf-8');
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: POST, OPTIONS');
+
+// Set error handler to prevent HTML output
+set_error_handler(function($errno, $errstr, $errfile, $errline) {
+    error_log("PHP Error [$errno]: $errstr in $errfile:$errline");
+    http_response_code(500);
+    echo json_encode([
+        'success' => false,
+        'message' => 'Internal server error: ' . $errstr,
+        'error_code' => 'PHP_ERROR',
+        'timestamp' => date('Y-m-d H:i:s')
+    ]);
+    exit;
+}, E_ALL);
+
 require_once __DIR__ . '/config.php';
 /**
  * LAKUM Artspace - Add Event API (Simple)
  * Handles bilingual event creation with Arabic translations
  * Uses prepared statements for security
  */
-
-header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: POST, OPTIONS');
 
 try {
     // Get raw input
@@ -116,13 +130,27 @@ try {
     
     error_log('Add Event - Binding parameters');
     // Bind parameters - all as strings (s) or integers (i)
+    // Note: First 3 columns (title, description, location) are copies of the _en versions
     $stmt->bind_param(
         'sssssssssssssssis',
-        $title_en, $description_en, $location_en, $slug,
-        $title_en, $description_en, $location_en,
-        $title_ar, $description_ar, $location_ar,
-        $event_date, $event_time, $event_end_time, $end_date,
-        $cover_image, $video_url, $is_featured, $category
+        $title_en,          // title (copy of title_en)
+        $description_en,    // description (copy of description_en)
+        $location_en,       // location (copy of location_en)
+        $slug,
+        $title_en,          // title_en
+        $description_en,    // description_en
+        $location_en,       // location_en
+        $title_ar,          // title_ar
+        $description_ar,    // description_ar
+        $location_ar,       // location_ar
+        $event_date,        // event_date
+        $event_time,        // event_time
+        $event_end_time,    // event_end_time
+        $end_date,          // end_date
+        $cover_image,       // cover_image
+        $video_url,         // video_url
+        $is_featured,       // is_featured (integer)
+        $category           // category
     );
     
     error_log('Add Event - Executing insert');
