@@ -17,7 +17,7 @@ if (!$title) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="page-title">Press - LAKUM Artspace</title>
+    <title id="page-title">Press - Lakum Artspace</title>
     <link rel="icon" type="image/png" sizes="32x32" href="assest/logo/right_section.png">
     <link rel="icon" type="image/png" sizes="16x16" href="assest/logo/right_section.png">
     <link rel="apple-touch-icon" href="assest/logo/right_section.png">
@@ -125,7 +125,7 @@ if (!$title) {
         }
         
         function displayPress(press, lang) {
-            document.getElementById('page-title').textContent = press.title + ' - LAKUM Artspace';
+            document.getElementById('page-title').textContent = press.title + ' - Lakum Artspace';
             document.getElementById('press-title').textContent = press.title;
             document.getElementById('press-date').textContent = new Date(press.press_date).toLocaleDateString();
             document.getElementById('press-content').innerHTML = press.content || press.excerpt || 'No content available';

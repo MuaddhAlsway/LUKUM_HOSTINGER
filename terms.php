@@ -7,7 +7,7 @@ require_once 'lang/loader.php';
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terms & Conditions - LAKUM Artspace</title>
+    <title>Terms & Conditions - Lakum Artspace</title>
     <link rel="icon" href="assest/favicon.png" type="image/png">
 
     <!-- Preload Hero Image (Critical for LCP) -->

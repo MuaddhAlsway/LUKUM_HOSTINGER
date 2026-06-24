@@ -8,7 +8,7 @@ require_once 'includes/hero-settings.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo t('blog_page_title', 'Blog - LAKUM Artspace'); ?></title>
+    <title><?php echo t('blog_page_title', 'Blog - Lakum Artspace'); ?></title>
     <link rel="icon" type="image/png" sizes="32x32" href="assest/logo/right_section.png">
     <link rel="icon" type="image/png" sizes="16x16" href="assest/logo/right_section.png">
     <link rel="apple-touch-icon" href="assest/logo/right_section.png">

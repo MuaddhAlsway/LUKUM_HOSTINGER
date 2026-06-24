@@ -17,7 +17,7 @@ if (!$title) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="page-title">Event - LAKUM Artspace</title>
+    <title id="page-title">Event - Lakum Artspace</title>
     <link rel="icon" type="image/png" sizes="32x32" href="assest/logo/right_section.png">
     <link rel="icon" type="image/png" sizes="16x16" href="assest/logo/right_section.png">
     <link rel="apple-touch-icon" href="assest/logo/right_section.png">
@@ -453,7 +453,7 @@ if (!$title) {
             }
 
             // Update page title and meta tags
-            document.getElementById('page-title').textContent = `${title} - LAKUM Artspace`;
+            document.getElementById('page-title').textContent = `${title} - Lakum Artspace`;
             
             // Update meta description
             const metaDesc = document.querySelector('meta[name="description"]');

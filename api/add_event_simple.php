@@ -3,6 +3,7 @@ require_once __DIR__ . '/config.php';
 /**
  * LAKUM Artspace - Add Event API (Simple)
  * Handles bilingual event creation with Arabic translations
+ * Uses prepared statements for security
  */
 
 header('Content-Type: application/json');
@@ -23,49 +24,60 @@ try {
         throw new Exception('Event title is required');
     }
     
-    $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+    $db = Database::getInstance();
     
-    if ($conn->connect_error) {
-        throw new Exception('Database connection failed: ' . $conn->connect_error);
+    if (!$db->isConnected()) {
+        throw new Exception('Database connection failed');
     }
     
+    $conn = $db->getConnection();
+    
     // Extract English fields
-    $description_en = $conn->real_escape_string($input['description_en'] ?? $input['description'] ?? '');
-    $location_en = $conn->real_escape_string($input['location_en'] ?? $input['location'] ?? '');
+    $description_en = $input['description_en'] ?? $input['description'] ?? '';
+    $location_en = $input['location_en'] ?? $input['location'] ?? '';
     
     // Extract Arabic fields (optional)
-    // IMPORTANT: Save Arabic fields even if empty, so they exist in the database
-    $title_ar = isset($input['title_ar']) ? $conn->real_escape_string($input['title_ar']) : '';
-    $description_ar = isset($input['description_ar']) ? $conn->real_escape_string($input['description_ar']) : '';
-    $location_ar = isset($input['location_ar']) ? $conn->real_escape_string($input['location_ar']) : '';
+    $title_ar = $input['title_ar'] ?? '';
+    $description_ar = $input['description_ar'] ?? '';
+    $location_ar = $input['location_ar'] ?? '';
     
     // Extract base fields
     $event_date = $input['event_date'] ?? date('Y-m-d');
     $event_time = $input['event_time'] ?? '10:00:00';
     $event_end_time = $input['event_end_time'] ?? '18:00:00';
-    $end_date = $input['end_date'] ?? null;
-    $cover_image = $conn->real_escape_string($input['cover_image'] ?? 'assest/img-4.png');
-    $video_url = $conn->real_escape_string($input['video_url'] ?? '');
-    $category = $conn->real_escape_string($input['category'] ?? 'exhibition');
+    $end_date = empty($input['end_date']) ? null : $input['end_date'];
+    $cover_image = $input['cover_image'] ?? 'assest/img-4.png';
+    $video_url = $input['video_url'] ?? '';
+    $category = $input['category'] ?? 'event';
     $is_featured = (int)($input['is_featured'] ?? 0);
     
     // Generate slug from English title
     $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $title_en), '-'));
     
-    // Make slug unique by adding a number if it already exists
+    // Make slug unique by adding a number if it already exists using prepared statement
     $original_slug = $slug;
     $counter = 1;
     while (true) {
-        $check_query = "SELECT id FROM events WHERE slug = '$slug' LIMIT 1";
-        $result = $conn->query($check_query);
-        if (!$result || $result->num_rows === 0) {
+        $check_query = "SELECT id FROM events WHERE slug = ? LIMIT 1";
+        $check_stmt = $conn->prepare($check_query);
+        if (!$check_stmt) {
+            throw new Exception('Prepare slug check failed: ' . $conn->error);
+        }
+        $check_stmt->bind_param('s', $slug);
+        if (!$check_stmt->execute()) {
+            throw new Exception('Execute slug check failed: ' . $check_stmt->error);
+        }
+        $result = $check_stmt->get_result();
+        if ($result->num_rows === 0) {
+            $check_stmt->close();
             break; // Slug is unique
         }
+        $check_stmt->close();
         $slug = $original_slug . '-' . $counter;
         $counter++;
     }
     
-    // Insert event into events table with bilingual columns
+    // Insert event into events table with bilingual columns using prepared statement
     $query = "
         INSERT INTO events (
             title, description, location, slug,
@@ -74,56 +86,39 @@ try {
             event_date, event_time, event_end_time, end_date,
             cover_image, video_url, is_featured, category
         ) VALUES (
-            '$title_en', '$description_en', '$location_en', '$slug',
-            '$title_en', '$description_en', '$location_en',
-            '$title_ar', '$description_ar', '$location_ar',
-            '$event_date', '$event_time', '$event_end_time', " . ($end_date ? "'$end_date'" : "NULL") . ",
-            '$cover_image', '$video_url', $is_featured, '$category'
+            ?, ?, ?, ?,
+            ?, ?, ?,
+            ?, ?, ?,
+            ?, ?, ?, ?,
+            ?, ?, ?, ?
         )
     ";
     
-    if (!$conn->query($query)) {
-        throw new Exception('Insert failed: ' . $conn->error);
+    $stmt = $conn->prepare($query);
+    if (!$stmt) {
+        throw new Exception('Insert prepare failed: ' . $conn->error);
+    }
+    
+    // Bind parameters - all as strings (s) or integers (i)
+    $stmt->bind_param(
+        'sssssssssssssssis',
+        $title_en, $description_en, $location_en, $slug,
+        $title_en, $description_en, $location_en,
+        $title_ar, $description_ar, $location_ar,
+        $event_date, $event_time, $event_end_time, $end_date,
+        $cover_image, $video_url, $is_featured, $category
+    );
+    
+    if (!$stmt->execute()) {
+        throw new Exception('Insert execute failed: ' . $stmt->error);
     }
     
     $event_id = $conn->insert_id;
+    $stmt->close();
     
-    // Insert English translation into event_translations table
-    $insertEnglishQuery = "
-        INSERT INTO event_translations (event_id, language, title, description, location)
-        VALUES ($event_id, 'en', '$title_en', '$description_en', '$location_en')
-        ON DUPLICATE KEY UPDATE
-            title = '$title_en',
-            description = '$description_en',
-            location = '$location_en',
-            updated_at = CURRENT_TIMESTAMP
-    ";
-    
-    if (!$conn->query($insertEnglishQuery)) {
-        error_log('Warning: English translation insert failed: ' . $conn->error);
+    if (!$event_id) {
+        throw new Exception('Failed to get inserted event ID');
     }
-    
-    // Insert Arabic translation if provided
-    $arabicInserted = false;
-    // ALWAYS try to save Arabic translation, even if fields are empty
-    // This ensures the translation record exists in the database
-    $insertArabicQuery = "
-        INSERT INTO event_translations (event_id, language, title, description, location)
-        VALUES ($event_id, 'ar', '$title_ar', '$description_ar', '$location_ar')
-        ON DUPLICATE KEY UPDATE
-            title = '$title_ar',
-            description = '$description_ar',
-            location = '$location_ar',
-            updated_at = CURRENT_TIMESTAMP
-    ";
-    
-    if (!$conn->query($insertArabicQuery)) {
-        error_log('Warning: Arabic translation insert failed: ' . $conn->error);
-    } else {
-        $arabicInserted = true;
-    }
-    
-    $conn->close();
     
     http_response_code(200);
     echo json_encode([
@@ -131,13 +126,26 @@ try {
         'message' => 'Event created successfully',
         'event_id' => $event_id,
         'slug' => $slug,
-        'translations' => [
-            'en' => true,
-            'ar' => $arabicInserted
+        'event' => [
+            'id' => $event_id,
+            'title_en' => $title_en,
+            'title_ar' => $title_ar,
+            'description_en' => $description_en,
+            'description_ar' => $description_ar,
+            'location_en' => $location_en,
+            'location_ar' => $location_ar,
+            'event_date' => $event_date,
+            'event_time' => $event_time,
+            'event_end_time' => $event_end_time,
+            'end_date' => $end_date,
+            'cover_image' => $cover_image,
+            'video_url' => $video_url,
+            'slug' => $slug
         ]
     ]);
     
 } catch (Exception $e) {
+    error_log('Add Event Error: ' . $e->getMessage());
     http_response_code(400);
     echo json_encode([
         'success' => false,
@@ -145,6 +153,3 @@ try {
     ]);
 }
 ?>
-
-
-

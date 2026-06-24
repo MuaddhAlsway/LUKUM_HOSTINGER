@@ -17,7 +17,7 @@ if (!$title) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="page-title">Blog - LAKUM Artspace</title>
+    <title id="page-title">Blog - Lakum Artspace</title>
     <link rel="icon" type="image/png" sizes="32x32" href="assest/logo/right_section.png">
     <link rel="icon" type="image/png" sizes="16x16" href="assest/logo/right_section.png">
     <link rel="apple-touch-icon" href="assest/logo/right_section.png">
@@ -278,7 +278,7 @@ if (!$title) {
 
                     // Update page title
                     document.title = `${blog.title} - LAKUM Artspace`;
-                    document.getElementById('page-title').textContent = `${blog.title} - LAKUM Artspace`;
+                    document.getElementById('page-title').textContent = `${blog.title} - Lakum Artspace`;
                     
                     // SET THE BLOG TITLE IN THE HERO
                     document.getElementById('blog-title').textContent = blog.title;
