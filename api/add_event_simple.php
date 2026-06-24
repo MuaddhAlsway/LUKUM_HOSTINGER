@@ -183,9 +183,9 @@ try {
         error_log('Add Event - Binding parameters (bilingual)');
         
         if ($hasSlugColumn) {
-            // With slug
+            // With slug (18 params: 3 base + 1 slug + 3 en + 3 ar + 4 dates + 2 media + 1 flag + 1 category)
             $stmt->bind_param(
-                'sssssssssssssssis',
+                'sssssssssssssssssi',
                 $title_en,          // title (copy of title_en)
                 $description_en,    // description (copy of description_en)
                 $location_en,       // location (copy of location_en)
@@ -206,7 +206,7 @@ try {
                 $category           // category
             );
         } else {
-            // Without slug
+            // Without slug (17 params: 3 base + 3 en + 3 ar + 4 dates + 2 media + 1 flag + 1 category)
             $stmt->bind_param(
                 'ssssssssssssssis',
                 $title_en,          // title (copy of title_en)
@@ -251,9 +251,9 @@ try {
         error_log('Add Event - Binding parameters (legacy)');
         
         if ($hasSlugColumn) {
-            // With slug
+            // With slug (12 params: 3 base + 1 slug + 4 dates + 2 media + 1 flag + 1 category)
             $stmt->bind_param(
-                'sssssssssssis',
+                'sssssssssssi',
                 $title_en,          // title
                 $description_en,    // description
                 $location_en,       // location
@@ -268,9 +268,9 @@ try {
                 $category           // category
             );
         } else {
-            // Without slug
+            // Without slug (11 params: 3 base + 4 dates + 2 media + 1 flag + 1 category)
             $stmt->bind_param(
-                'ssssssssssis',
+                'ssssssssssi',
                 $title_en,          // title
                 $description_en,    // description
                 $location_en,       // location
