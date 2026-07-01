@@ -110,7 +110,7 @@ require_once 'includes/site-settings.php';
         <div class="lakum-container">
             <div class="lakum-cta__content">
                 <h2 class="lakum-cta__title"><?php echo ss('home','cta1_title_en','cta_title','Driven by Soul, Made by Hands'); ?></h2>
-                <p class="lakum-cta__text"><?php echo ss('home','cta1_desc_en','cta_description','Explore our diverse spaces and discover how LAKUM can bring your artistic vision to life'); ?></p>
+                <p class="lakum-cta__text" style="text-align: center !important;"><?php echo ss('home','cta1_desc_en','cta_description','Explore our diverse spaces and discover how LAKUM can bring your artistic vision to life'); ?></p>
                 <a href="spaces.php" class="lakum-btn lakum-btn--primary"><?php echo t('discover_more', 'Discover More'); ?></a>
             </div>
         </div>
