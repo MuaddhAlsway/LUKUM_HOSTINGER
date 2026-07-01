@@ -555,6 +555,53 @@
     <script src="form-reset.js"></script>
     <script src="event-form.js"></script>
     <script src="../assest/popup-notification.js?v=5.0.0" defer></script>
+    
+    <script>
+        // Make cover preview clickable to open file input
+        document.addEventListener('DOMContentLoaded', function() {
+            const coverPreview = document.getElementById('coverPreview');
+            const coverImageInput = document.getElementById('cover_image');
+            
+            if (coverPreview && coverImageInput) {
+                coverPreview.addEventListener('click', function(e) {
+                    // Don't trigger if clicking the remove button
+                    if (e.target.closest('#removeCover')) return;
+                    coverImageInput.click();
+                });
+                
+                // Handle file selection
+                coverImageInput.addEventListener('change', function(e) {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function(event) {
+                            const coverImg = document.getElementById('coverImg');
+                            const placeholder = document.querySelector('.cover-placeholder');
+                            const removeBtn = document.getElementById('removeCover');
+                            
+                            coverImg.src = event.target.result;
+                            coverImg.style.display = 'block';
+                            if (placeholder) placeholder.style.display = 'none';
+                            if (removeBtn) removeBtn.style.display = 'block';
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+                
+                // Handle remove button
+                const removeBtn = document.getElementById('removeCover');
+                if (removeBtn) {
+                    removeBtn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        coverImageInput.value = '';
+                        document.getElementById('coverImg').style.display = 'none';
+                        document.querySelector('.cover-placeholder').style.display = 'block';
+                        removeBtn.style.display = 'none';
+                    });
+                }
+            }
+        });
+    </script>
 </body>
 
 </html>
