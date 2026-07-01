@@ -330,7 +330,6 @@ function buildEditors() {
             </div>
 
             <!-- Text Fields -->
-            ${p.key === 'exhibitions' ? '' : `
             <div class="section-label">Text Content</div>
             <div class="form-grid">
                 <div class="form-group">
@@ -367,7 +366,7 @@ function buildEditors() {
             </div>
             <button class="btn-save" onclick="saveText('${p.key}')">
                 <i class="ri-save-line"></i> Save Changes
-            </button>`}
+            </button>
         </div>
     `).join('');
 }
