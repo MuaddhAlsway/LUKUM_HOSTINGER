@@ -65,6 +65,9 @@ require_once 'includes/hero-settings.php';
     <!-- Hero Section -->
     <section class="lakum-hero" style="aspect-ratio: 16/9">
         <?php renderHero('exhibitions', 'Exhibitions'); ?>
+        <div class="lakum-hero__content">
+            <h1 class="lakum-hero__title"><?php echo getHeroTitle('exhibitions', 'exhibitions_page_title', 'Discover Lakum Artspace Events, & Workshops'); ?></h1>
+        </div>
     </section>
 
     <!-- Upcoming Section -->
