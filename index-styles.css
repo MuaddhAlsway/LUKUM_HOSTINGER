@@ -388,7 +388,7 @@
     color: inherit;
     margin-bottom: 40px;
     line-height: 1.8;
-    text-align: center;
+    text-align: center !important;
     text-justify: inter-word;
 }
 
